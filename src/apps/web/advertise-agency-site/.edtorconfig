@@ -1,0 +1,12 @@
+root = true  # Указывает, что это главный конфиг (не ищет выше по файловой системе)
+
+[*]  # Применяется ко всем файлам
+charset = utf-8
+end_of_line = lf  # LF для Linux/WSL (можно поставить "crlf" для Windows)
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true  # Добавляет пустую строку в конце файла
+
+[*.md]  # Особые правила для Markdown
+trim_trailing_whitespace = false  # В MD пробелы в конце строк иногда важны
