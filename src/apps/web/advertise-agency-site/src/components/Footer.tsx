@@ -5,6 +5,8 @@ import {FaVk, FaTelegram, FaWhatsapp} from "react-icons/fa"
 import Logo from "@/components/Logo";
 import FooterSocialIcons from "@/components/footer/FooterSocialIcons";
 import FooterContacts from "@/components/footer/FooterContacts";
+import FooterCompanyLinks from "@/components/footer/FooterCompanyLinks";
+import FooterServicesLinks from "@/components/footer/FooterServicesLinks";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear()
@@ -30,25 +32,17 @@ export default function Footer() {
         },
     ]
 
-    const footerLinks = [
-        {
-            title: "Компания",
-            links: [
-                {name: "О нас", href: "/about"},
-                {name: "Команда", href: "/team"},
-                {name: "Вакансии", href: "/careers"}
-            ]
-        },
-        {
-            title: "Услуги",
-            links: [
-                {name: "Наружная реклама", href: "/services/outdoor"},
-                {name: "Полиграфия", href: "/services/printing"},
-                {name: "Брендирование", href: "/services/branding"}
-            ]
-        }
+    const companyLinks = [
+        {name: "О нас", href: "/about"},
+        {name: "Новости", href: "/news"},
+        {name: "Статьи", href: "/articles"}
     ]
 
+    const servicesLinks = [
+        {name: "Наружная реклама", href: "/services/outdoor"},
+        {name: "Полиграфия", href: "/services/printing"},
+        {name: "Брендирование", href: "/services/branding"}
+    ]
     return (
         <footer className="bg-gray-50 dark:bg-gray-900 border-t">
             <div className="container px-4 py-12 mx-auto">
@@ -61,6 +55,7 @@ export default function Footer() {
                         </p>
                     </div>
 
+                    {/* Пустая ячейка */}
                     <div className="space-y-4"></div>
 
                     {/* Социальные сети с икноками */}
@@ -71,33 +66,28 @@ export default function Footer() {
                         <FooterSocialIcons socialLinks={socialLinks} className="mt-4" />
                     </div>
 
-                    {/* Навигационные ссылки */}
-                    {footerLinks.map((section, index) => (
-                        <div key={index} className="space-y-4">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                {section.title}
-                            </h3>
-                            <ul className="space-y-2">
-                                {section.links.map((link) => (
-                                    <li key={link.name}>
-                                        <Link href={link.href}
-                                              className={`text-gray-600 hover:text-gray-900 dark:text-gray-400 
-                                              dark:hover:text-white transition-colors hover:underline 
-                                              hover:underline-offset-4 hover:decoration-current`}>
-                                            {link.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
+                    {/* Ссылки Компания */}
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            Компания
+                        </h3>
+                        <FooterCompanyLinks companyLinks={companyLinks} />
+                    </div>
+
+                    {/* Ссылки Услуги */}
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            Услуги
+                        </h3>
+                        <FooterServicesLinks servicesLinks={servicesLinks} />
+                    </div>
 
                     {/* Контакты */}
                     <div className="space-y-3">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                             Контакты
                         </h3>
-                        <FooterContacts />
+                        <FooterContacts className="mt-4" />
                     </div>
                 </div>
 
