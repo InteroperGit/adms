@@ -1,5 +1,6 @@
 import {PhoneIcon, EnvelopeIcon, MapPinIcon} from "@heroicons/react/24/outline";
 import {cn} from "@/lib/utils";
+import YandexMap from "@/components/misc/YandexMap";
 
 interface ContactItem {
     icon: React.ReactNode;
@@ -53,27 +54,28 @@ export default function FooterContacts({
                             rel="noopener noreferrer"
                             className="group flex items-start space-x-2"
                         >
-                        <span className={cn(
-                            "h-5 w-5 text-gray-500 mt-0.5",
-                            contact.hoverColor
-                        )}>
-                          {contact.icon}
-                        </span>
                             <span className={cn(
-                                "text-gray-600 dark:text-gray-400",
-                                "group-hover:underline",
-                                "group-hover:underline-offset-4",
+                                "h-5 w-5 text-gray-500 mt-0.5",
+                                contact.hoverColor
                             )}>
-                          {contact.text}
-                        </span>
+                              {contact.icon}
+                            </span>
+                            <span className={cn(
+                                    "text-gray-600 dark:text-gray-400",
+                                    "group-hover:underline",
+                                    "group-hover:underline-offset-4",
+                                )}>
+                              {contact.text}
+                            </span>
                         </a>
                     </li>
                 ))}
             </ul>
 
-            <iframe
-                src="https://yandex.ru/map-widget/v1/?um=constructor%3A8e9d4dd92e269a69df84774136ae2871466aa55b34f941cb126cfc03efab1fb8&amp;source=constructor"
-                width="100%" height="320" frameBorder="0"></iframe>
+            <YandexMap
+                constructorId="8e9d4dd92e269a69df84774136ae2871466aa55b34f941cb126cfc03efab1fb8"
+                height="400px"
+            />
         </>
     );
 }
