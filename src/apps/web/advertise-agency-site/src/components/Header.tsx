@@ -1,6 +1,6 @@
 "use client"
 
-import Logo from "@/components/Logo";
+import Logo from "@/components/misc/Logo";
 import Toolbar from "@/components/Toolbar";
 
 export default function Header() {
