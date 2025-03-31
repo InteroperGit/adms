@@ -2,10 +2,9 @@
 
 import Link from "next/link"
 import {FaVk, FaTelegram, FaWhatsapp} from "react-icons/fa"
-import {PhoneIcon, MapPinIcon} from "@heroicons/react/24/outline"
-import {EnvelopeIcon} from "@heroicons/react/24/solid"
 import Logo from "@/components/Logo";
 import FooterSocialIcons from "@/components/footer/FooterSocialIcons";
+import FooterContacts from "@/components/footer/FooterContacts";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear()
@@ -98,26 +97,7 @@ export default function Footer() {
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                             Контакты
                         </h3>
-                        <ul className="space-y-2">
-                            <li className="flex items-start space-x-2">
-                                <PhoneIcon className="h-5 w-5 text-gray-500 mt-0.5"/>
-                                <span className="text-gray-600 dark:text-gray-400">
-                                    +7 911 505 35 03
-                                </span>
-                            </li>
-                            <li className="flex items-start space-x-2">
-                                <EnvelopeIcon className="h-5 w-5 text-gray-500 mt-0.5"/>
-                                <span className="text-gray-600 dark:text-gray-400">
-                                    info@rmaster35.ru
-                                </span>
-                            </li>
-                            <li className="flex items-start space-x-2">
-                                <MapPinIcon className="h-5 w-5 text-gray-500 mt-0.5"/>
-                                <span className="text-gray-600 dark:text-gray-400">
-                                    г. Череповец, ул. Металлургов, д. 9
-                                </span>
-                            </li>
-                        </ul>
+                        <FooterContacts />
                     </div>
                 </div>
 
