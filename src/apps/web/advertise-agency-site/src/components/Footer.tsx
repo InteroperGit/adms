@@ -5,7 +5,7 @@ import {FaVk, FaTelegram, FaWhatsapp} from "react-icons/fa"
 import {PhoneIcon, MapPinIcon} from "@heroicons/react/24/outline"
 import {EnvelopeIcon} from "@heroicons/react/24/solid"
 import Logo from "@/components/Logo";
-import {cn} from "@/lib/utils";
+import FooterSocialIcons from "@/components/footer/FooterSocialIcons";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear()
@@ -69,36 +69,7 @@ export default function Footer() {
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                             Мы в социальных сетях:
                         </h3>
-                        <div className="flex space-x-5">
-                            {socialLinks.map((social, index) => (
-                                <Link
-                                    key={index}
-                                    href={social.href}
-                                    className={cn(
-                                        // Базовые стили
-                                        "p-2 rounded-full",
-                                        "text-gray-500 dark:text-gray-400",
-
-                                        // Эффекты при наведении
-                                        "hover:scale-110",
-                                        "hover:bg-opacity-10",
-                                        social.color,
-
-                                        // Темная тема
-                                        `dark:${social.color.replace('hover:', 'hover:dark:')}`,
-
-                                        // Анимация
-                                        "transition-all duration-300 ease-in-out",
-
-                                        // Фокус-состояния для доступности
-                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                                        "focus-visible:ring-current"
-                                    )}
-                                    aria-label={social.label}>
-                                    {social.icon}
-                                </Link>
-                            ))}
-                        </div>
+                        <FooterSocialIcons socialLinks={socialLinks} className="mt-4" />
                     </div>
 
                     {/* Навигационные ссылки */}
