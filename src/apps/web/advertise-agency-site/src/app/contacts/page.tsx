@@ -1,9 +1,3 @@
-// app/contacts/page.tsx
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { PhoneIcon, EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/outline";
-import { cn } from "@/lib/utils";
 import YandexMap from "@/components/misc/YandexMap";
 import ContactsCard from "@/components/cards/ContactsCard";
 import FeedbackForm from "@/components/forms/FeedbackForm";
@@ -11,7 +5,7 @@ import FeedbackForm from "@/components/forms/FeedbackForm";
 export default function Contacts() {
     return (
         <div className={"container mx-auto px-4 py-12"}>
-            <h1 className={"text-2xl font-bold text-center mb-12"}>Контакты</h1>
+            <h1 className={"text-2xl font-bold text-left mb-12"}>Контакты</h1>
 
             <div className={"grid grid-cols-1 md:grid-cols-2 gap-8"}>
                 {/* Левая колонка - контактная информация */}
@@ -24,6 +18,7 @@ export default function Contacts() {
                     />
                 </div>
 
+                {/* Форма обратной связи */}
                 <FeedbackForm />
             </div>
         </div>
