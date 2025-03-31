@@ -10,8 +10,20 @@ export default function MobileNav({ navLinks }: { navLinks: { name: string; href
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
-                    <Bars3Icon className="h-5 w-5" />
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className={`
+                        md:hidden 
+                        h-14 w-14                // Больший размер кнопки
+                        border-2 border-gray-500  // Рамка
+                        rounded-lg                // Скругленные углы
+                        hover:bg-gray-100         // Эффект при наведении
+                        dark:border-gray-600      // Для темной темы
+                        dark:hover:bg-gray-800    // Для темной темы
+                    `}
+                >
+                    <Bars3Icon className="h-8 w-8 text-gray-700 dark:text-gray-300" /> {/* Увеличенная иконка */}
                 </Button>
             </SheetTrigger>
 
