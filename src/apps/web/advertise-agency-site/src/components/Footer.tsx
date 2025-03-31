@@ -5,14 +5,30 @@ import {FaVk, FaTelegram, FaWhatsapp} from "react-icons/fa"
 import {PhoneIcon, MapPinIcon} from "@heroicons/react/24/outline"
 import {EnvelopeIcon} from "@heroicons/react/24/solid"
 import Logo from "@/components/Logo";
+import {cn} from "@/lib/utils";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear()
 
     const socialLinks = [
-        {icon: <FaVk className="h-5 w-5"/>, href: "#", label: "VK"},
-        {icon: <FaTelegram className="h-5 w-5"/>, href: "#", label: "Telegram"},
-        {icon: <FaWhatsapp className="h-5 w-5"/>, href: "#", label: "WhatsApp"},
+        {
+            icon: <FaVk className="h-5 w-5"/>,
+            href: "#",
+            label: "VK",
+            color: "hover:text-[#4680C2]" // VK синий
+        },
+        {
+            icon: <FaTelegram className="h-5 w-5"/>,
+            href: "#",
+            label: "Telegram",
+            color: "hover:text-[#2AABEE]" // Telegram голубой
+        },
+        {
+            icon: <FaWhatsapp className="h-5 w-5"/>,
+            href: "#",
+            label: "WhatsApp",
+            color: "hover:text-[#25D366]" // WhatsApp зеленый
+        },
     ]
 
     const footerLinks = [
@@ -58,7 +74,26 @@ export default function Footer() {
                                 <Link
                                     key={index}
                                     href={social.href}
-                                    className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                    className={cn(
+                                        // Базовые стили
+                                        "p-2 rounded-full",
+                                        "text-gray-500 dark:text-gray-400",
+
+                                        // Эффекты при наведении
+                                        "hover:scale-110",
+                                        "hover:bg-opacity-10",
+                                        social.color,
+
+                                        // Темная тема
+                                        `dark:${social.color.replace('hover:', 'hover:dark:')}`,
+
+                                        // Анимация
+                                        "transition-all duration-300 ease-in-out",
+
+                                        // Фокус-состояния для доступности
+                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                                        "focus-visible:ring-current"
+                                    )}
                                     aria-label={social.label}>
                                     {social.icon}
                                 </Link>
