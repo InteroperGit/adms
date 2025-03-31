@@ -1,7 +1,7 @@
 "use client"
 
 import {FaVk, FaTelegram, FaWhatsapp} from "react-icons/fa"
-import Logo from "@/components/Logo";
+import Logo from "@/components/misc/Logo";
 import FooterSocialIcons from "@/components/footer/FooterSocialIcons";
 import FooterContacts from "@/components/footer/FooterContacts";
 import FooterCompanyLinks from "@/components/footer/FooterCompanyLinks";
