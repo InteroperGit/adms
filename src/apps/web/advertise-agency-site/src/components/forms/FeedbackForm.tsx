@@ -74,7 +74,7 @@ export default function FeedbackForm() {
                     />
                 </div>
 
-                <Button type="submit" className="w-full md:w-auto bg-amber-500 hover:bg-amber-800">
+                <Button type="submit" className="w-full md:w-auto">
                     Отправить запрос
                 </Button>
             </form>
