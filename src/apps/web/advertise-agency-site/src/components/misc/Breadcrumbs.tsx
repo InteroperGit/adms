@@ -9,14 +9,15 @@ import {
     BreadcrumbSeparator,
     BreadcrumbPage,
 } from '@/components/ui/breadcrumb'
-
 import { ChevronRight } from "lucide-react";
 import {cn} from "@/lib/utils";
+import { usePathname } from 'next/navigation'
 
 export function Breadcrumbs() {
     const { breadcrumbs } = useBreadcrumbs()
+    const pathname = usePathname()
 
-    if (breadcrumbs.length === 0)
+    if (breadcrumbs.length === 0 || pathname === "/")
     {
         return null
     }
