@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Navigation from "@/components/navigation/Navigation";
 import {Providers} from "@/app/providers";
-import Footer from "@/components/Footer";
+import Footer from "@/components/footer/Footer";
 import {Breadcrumbs} from "@/components/Breadcrumbs";
 
 const geistSans = Geist({
