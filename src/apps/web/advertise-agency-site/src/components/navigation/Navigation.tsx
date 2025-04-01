@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import { usePathname } from "next/navigation"
-import Toolbar from "@/components/Toolbar";
+import Toolbar from "@/components/navigation/Toolbar";
 import {navLinks} from "@/config/navigation";
 
 export default function Navigation() {
