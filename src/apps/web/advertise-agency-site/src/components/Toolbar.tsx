@@ -6,12 +6,7 @@ import { FaWhatsapp, FaTelegram } from "react-icons/fa";
 import MobileNav from "@/components/navigation/MobileNav";
 import {cn} from "@/lib/utils";
 import React from "react";
-
-const navLinks = [
-    { name: "Услуги", href: "/services" },
-    { name: "Портфолио", href: "/portfolio" },
-    { name: "Контакты", href: "/contacts" }
-]
+import {navLinks} from "@/config/navigation";
 
 interface ToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: "desktop" | "mobile";

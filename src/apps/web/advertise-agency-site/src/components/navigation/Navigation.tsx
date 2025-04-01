@@ -5,17 +5,10 @@ import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import { usePathname } from "next/navigation"
 import Toolbar from "@/components/Toolbar";
+import {navLinks} from "@/config/navigation";
 
 export default function Navigation() {
     const pathname = usePathname()
-
-    const navLinks = [
-        { name: "Услуги", href: "/services" },
-        { name: "Портфолио", href: "/portfolio" },
-        { name: "Статьи", href: '/articles' },
-        { name: "Новости", href: "/news" },
-        { name: "Контакты", href: "/contacts" }
-    ]
 
     return (
         <div className="border-b border-gray-200 dark:border-gray-800"> {/* Добавленная линия */}
