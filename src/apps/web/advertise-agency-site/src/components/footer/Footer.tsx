@@ -6,6 +6,7 @@ import FooterSocialIcons from "@/components/footer/FooterSocialIcons";
 import FooterContacts from "@/components/footer/FooterContacts";
 import FooterCompanyLinks from "@/components/footer/FooterCompanyLinks";
 import FooterServicesLinks from "@/components/footer/FooterServicesLinks";
+import {servicesLinks} from "@/config/navigation";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear()
@@ -37,38 +38,6 @@ export default function Footer() {
         {name: "Статьи", href: "/articles"}
     ]
 
-    const servicesLinks = [
-        {
-            name: "Наружная реклама",
-            href: '/services/outdoor',
-            subItems: [
-                { name: "световые короба", href: "/services/outdoor/light-boxes" },
-                { name: "световые буквы", href: "/services/outdoor/light-letters" },
-                { name: "кронштейны", href: "/services/outdoor/brackets" },
-                { name: "согласование", href: "/services/outdoor/approval" }
-            ]
-        },
-        {
-            name: "Брендирование",
-            href: '/services/branding',
-            subItems: [
-                { name: "брендирование авто", href: "/services/branding/car" },
-                { name: "брендирование интерьера", href: "/services/branding/interior" },
-                { name: "брендирование канцтоваров", href: "/services/branding/stationery" }
-            ]
-        },
-        {
-            name: "Полиграфия",
-            href: '/services/printing',
-            subItems: [
-                { name: "листовая печать", href: "/services/printing/sheet" },
-                { name: "широкоформатная печать", href: "/services/printing/large-format" },
-                { name: "цифровая печать", href: "/services/printing/digital" },
-                { name: "офсетная печать", href: "/services/printing/offset" },
-                { name: "уф-печать", href: "/services/printing/uv" }
-            ]
-        }
-    ]
     return (
         <footer className="bg-gray-50 dark:bg-gray-900 border-t">
             <div className="container px-4 py-12 mx-auto">
