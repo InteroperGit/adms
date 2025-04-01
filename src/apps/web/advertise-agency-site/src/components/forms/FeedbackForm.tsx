@@ -10,8 +10,19 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import {useEffect, useState} from "react";
 
 export default function FeedbackForm() {
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return null; // или возвращайте скелетон/заглушку
+    }
+
     return (
         <Card>
             <CardHeader>
