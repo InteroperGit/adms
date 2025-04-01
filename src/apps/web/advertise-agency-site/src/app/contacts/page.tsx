@@ -1,8 +1,21 @@
+"use client"
+
 import YandexMap from "@/components/misc/YandexMap";
 import ContactsCard from "@/components/cards/ContactsCard";
 import FeedbackForm from "@/components/forms/FeedbackForm";
+import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
+import {useEffect} from "react";
 
 export default function Contacts() {
+    const updateBreadcrumbs = useUpdateBreadcrumbs()
+
+    useEffect(() => {
+        updateBreadcrumbs([
+            { title: 'Главная', href: '/' },
+            { title: 'Контакты' }
+        ])
+    }, [])
+
     return (
         <div className={"container mx-auto px-4 py-12"}>
             <h1 className={"text-2xl font-bold text-left mb-12"}>Контакты</h1>
