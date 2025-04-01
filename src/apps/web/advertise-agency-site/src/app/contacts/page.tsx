@@ -5,8 +5,9 @@ import ContactsCard from "@/components/cards/ContactsCard";
 import FeedbackForm from "@/components/forms/FeedbackForm";
 import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
 import {useEffect} from "react";
+import PageHeader from "@/components/misc/PageHeader";
 
-export default function Contacts() {
+export default function ContactsPage() {
     const updateBreadcrumbs = useUpdateBreadcrumbs()
 
     useEffect(() => {
@@ -14,11 +15,11 @@ export default function Contacts() {
             { title: 'Главная', href: '/' },
             { title: 'Контакты' }
         ])
-    }, [])
+    }, []);
 
     return (
         <div className={"container mx-auto px-4 py-12"}>
-            <h1 className={"text-2xl font-bold text-left mb-12"}>Контакты</h1>
+            <PageHeader>Контакты</PageHeader>
 
             <div className={"grid grid-cols-1 md:grid-cols-2 gap-8"}>
                 {/* Левая колонка - контактная информация */}
