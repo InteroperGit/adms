@@ -6,6 +6,7 @@ import Navigation from "@/components/navigation/Navigation";
 import {Providers} from "@/app/providers";
 import Footer from "@/components/footer/Footer";
 import {Breadcrumbs} from "@/components/misc/Breadcrumbs";
+import {Container} from "@/components/container/Container";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,11 @@ export default function RootLayout({
             <Header />
             <Navigation />
             <Breadcrumbs />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow">
+                <Container>
+                    {children}
+                </Container>
+            </main>
             <Footer />
         </Providers>
       </body>

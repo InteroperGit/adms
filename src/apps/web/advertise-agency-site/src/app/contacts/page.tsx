@@ -18,7 +18,7 @@ export default function ContactsPage() {
     }, []);
 
     return (
-        <div className={"container mx-auto px-4 py-12"}>
+        <>
             <PageHeader>Контакты</PageHeader>
 
             <div className={"grid grid-cols-1 md:grid-cols-2 gap-8"}>
@@ -35,6 +35,6 @@ export default function ContactsPage() {
                 {/* Форма обратной связи */}
                 <FeedbackForm />
             </div>
-        </div>
+        </>
     );
 }

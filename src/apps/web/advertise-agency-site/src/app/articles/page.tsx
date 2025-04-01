@@ -15,8 +15,8 @@ export default function ArticlesPage() {
     }, []);
 
     return (
-        <div className={"container mx-auto px-4 py-12"}>
+        <>
             <PageHeader>Статьи</PageHeader>
-        </div>
+        </>
     );
 }
