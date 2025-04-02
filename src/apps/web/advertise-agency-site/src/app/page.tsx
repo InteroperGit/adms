@@ -6,6 +6,7 @@ import {recentProjects} from "@/data/projects-data";
 import {NewsSection} from "@/components/sections/NewsSection";
 import {recentNewsPreviews} from "@/data/news-data";
 import HeroSection from "@/components/sections/HeroSection";
+import {ClientsSection} from "@/components/sections/ClientsSection";
 
 export default function Home() {
     return (
@@ -127,15 +128,8 @@ export default function Home() {
             </div>
 
             {/* 11. Клиенты */}
-            <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6 dark:text-gray-200">Наши клиенты</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-                    {[1, 2, 3, 4, 5, 6].map(i => (
-                        <div key={i} className="h-20 bg-white dark:bg-gray-700 rounded border dark:border-gray-600 flex items-center justify-center">
-                            <span className="dark:text-gray-300">Лого {i}</span>
-                        </div>
-                    ))}
-                </div>
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700">
+                <ClientsSection />
             </div>
 
             {/* 12. FAQ */}
