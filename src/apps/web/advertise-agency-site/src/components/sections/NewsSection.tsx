@@ -2,32 +2,18 @@
 
 import { ArticlePreviewCard } from "@/components/cards/ArticlePreviewCard"
 import { cn } from "@/lib/utils"
-
-interface NewsArticle {
-    id: string
-    title: string
-    excerpt: string
-    category: string
-    date: string
-    readTime: string
-    imageUrl: string
-    slug: string
-}
+import {ArticlePreview} from "@/types/article";
 
 interface NewsSectionProps {
     /**
      * Массив новостных статей для отображения
      */
-    articles: NewsArticle[]
+    articles: ArticlePreview[]
     /**
      * Заголовок секции
      * @default "Новости и статьи"
      */
     title?: string
-    /**
-     * Описание секции
-     */
-    description?: string
     /**
      * Конфигурация колонок для разных разрешений экрана
      * @default {
@@ -94,7 +80,6 @@ interface NewsSectionProps {
 export const NewsSection = ({
                                 articles,
                                 title = "Новости и статьи",
-                                description,
                                 columns = {
                                     mobile: 1,
                                     tablet: 2,
@@ -117,15 +102,10 @@ export const NewsSection = ({
     )
 
     return (
-        <section className={cn("container mx-auto px-4 py-12", className)}>
+        <section className={cn(className)}>
             {/* Заголовок секции */}
-            <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">{title}</h2>
-                {description && (
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                        {description}
-                    </p>
-                )}
+            <div className="mb-6">
+                <h2 className="text-2xl font-bold mb-4">{title}</h2>
             </div>
 
             {/* Сетка статей */}

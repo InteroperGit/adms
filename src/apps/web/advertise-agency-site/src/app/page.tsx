@@ -3,18 +3,18 @@ import {serviceCategories} from "@/data/services-data";
 import {PortfolioSection} from "@/components/sections/PortfolioSection";
 import {categories} from "@/data/categories-data";
 import {recentProjects} from "@/data/projects-data";
+import {NewsSection} from "@/components/sections/NewsSection";
+import {recentNewsPreviews} from "@/data/news-data";
+import HeroSection from "@/components/sections/HeroSection";
 
 export default function Home() {
     return (
         <div className="space-y-12 pb-16 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
             {/* 1. Hero Banner */}
-            <div className="bg-blue-600 dark:bg-blue-800 text-white py-20 px-6 rounded-lg text-center">
-                <h1 className="text-4xl font-bold mb-4">Рекламное агентство полного цикла</h1>
-                <p className="text-xl mb-8">Создаем эффективные решения с 2010 года</p>
-                <button className="bg-white dark:bg-blue-100 text-blue-600 dark:text-blue-800 px-8 py-3 rounded-full font-bold hover:bg-gray-100 dark:hover:bg-blue-200 transition">
-                    Бесплатная консультация
-                </button>
-            </div>
+            <HeroSection
+                title={"Рекламное агентство полного цикла"}
+                description={"Создаем эффективные решения с 2009 года"}
+            />
 
             {/* 3. Преимущества */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -51,7 +51,7 @@ export default function Home() {
                         <ul className="space-y-2 dark:text-gray-300">
                             {['500+ проектов', '50+ постоянных клиентов', 'Собственное производство'].map((item, i) => (
                                 <li key={i} className="flex items-start">
-                                    <span className="mr-2 text-blue-600 dark:text-blue-400">✓</span>
+                                    <span className="mr-2 text-orange-600 dark:text-blue-400">✓</span>
                                     <span>{item}</span>
                                 </li>
                             ))}
@@ -85,7 +85,7 @@ export default function Home() {
                         {num: '5', title: 'Результат', desc: 'Готовый продукт'}
                     ].map((step, i) => (
                         <div key={i} className="flex flex-col items-center text-center">
-                            <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 text-white rounded-full flex items-center justify-center mb-2">
+                            <div className="w-12 h-12 bg-orange-400 dark:bg-orange-700 text-white rounded-full flex items-center justify-center mb-2">
                                 {step.num}
                             </div>
                             <h3 className="font-bold mb-1 dark:text-gray-200">{step.title}</h3>
@@ -113,18 +113,17 @@ export default function Home() {
 
             {/* 10. Новости */}
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6 dark:text-gray-200">Новости</h2>
-                <div className="space-y-6">
-                    {[1, 2, 3].map(i => (
-                        <div key={i} className="pb-4 border-b dark:border-gray-700 last:border-b-0">
-                            <h3 className="font-bold text-lg mb-2 dark:text-gray-200">Новость {i}</h3>
-                            <p className="text-gray-600 dark:text-gray-400 mb-3">Краткое описание новости...</p>
-                            <button className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
-                                Подробнее
-                            </button>
-                        </div>
-                    ))}
-                </div>
+                <NewsSection
+                    title="Последние события"
+                    articles={recentNewsPreviews}
+                    columns={{
+                        mobile: 1,
+                        tablet: 2,
+                        desktop: 3
+                    }}
+                    maxItems={6}
+                    className="py-6"
+                />
             </div>
 
             {/* 11. Клиенты */}
@@ -157,7 +156,7 @@ export default function Home() {
             </div>
 
             {/* 13. Форма заявки */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-lg border border-blue-100 dark:border-blue-800">
+            <div className="bg-orange-50 dark:bg-orange-900/20 p-8 rounded-lg border border-blue-100 dark:border-orange-800">
                 <h2 className="text-2xl font-bold mb-4 dark:text-white">Оставить заявку</h2>
                 <form className="space-y-4">
                     <div>
@@ -176,7 +175,7 @@ export default function Home() {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 rounded font-bold hover:bg-blue-700 dark:hover:bg-blue-800 transition"
+                        className="w-full bg-orange-600 dark:bg-orange-700 text-white py-3 rounded font-bold hover:bg-orange-700 dark:hover:bg-orange-800 transition"
                     >
                         Отправить
                     </button>

@@ -7,7 +7,7 @@ import { SearchIcon } from 'lucide-react'
 import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
 import {useEffect} from "react";
 import HeroSection from "@/components/sections/HeroSection";
-import {newsArticles} from "@/data/news-data";
+import {newsPreviews} from "@/data/news-data";
 
 export default function NewsPage() {
     const updateBreadcrumbs = useUpdateBreadcrumbs()
@@ -40,7 +40,7 @@ export default function NewsPage() {
 
             {/* Основной контент */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                {newsArticles.map((article, index) => (
+                {newsPreviews.map((article, index) => (
                     <ArticlePreviewCard
                         key={article.id}
                         article={article}
