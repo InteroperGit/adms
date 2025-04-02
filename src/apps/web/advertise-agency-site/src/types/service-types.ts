@@ -1,3 +1,14 @@
+import React from "react";
+
+export type ServiceCategory = {
+    icon: React.ReactNode
+    title: string
+    services: {
+        name: string
+        href: string
+    }[]
+}
+
 export type ServiceItem = {
     name: string;
     href: string;

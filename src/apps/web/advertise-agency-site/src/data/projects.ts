@@ -302,3 +302,5 @@ export const projects: Project[] = [
         description: 'Книжная вывеска для магазина'
     }
 ];
+
+export const recentProjects: Project[] = projects.slice(0, 6);
