@@ -40,7 +40,7 @@ export default function Footer() {
 
     return (
         <footer className="bg-gray-50 dark:bg-gray-900 border-t">
-            <div className="container px-4 py-12 mx-auto">
+            <div className="container px-8 py-12 mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grud-cols-4 gap-8">
                     {/* Лого */}
                     <div className="space-y-4">
