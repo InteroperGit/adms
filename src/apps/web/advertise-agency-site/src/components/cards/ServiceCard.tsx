@@ -4,7 +4,7 @@
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import React from "react";
-import {ServiceItem} from "@/types/service-types";
+import {ServiceItem} from "@/types/service";
 
 interface ServiceCategory {
     /**

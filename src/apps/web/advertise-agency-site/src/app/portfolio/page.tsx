@@ -3,13 +3,12 @@
 import {useEffect, useState} from 'react';
 import { cn } from '@/lib/utils';
 import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
-import {projects} from "@/data/projects";
-import {categories} from "@/data/categories";
+import {projects} from "@/data/projects-data";
+import {categories} from "@/data/categories-data";
 import HeroSection from "@/components/sections/HeroSection";
 import {CategoryFilter} from "@/components/navigation/CategoryFilter";
 import {CtaSection} from "@/components/sections/CtaSection";
 import {LoadingMoreButton} from "@/components/buttons/LoadingMoreButton";
-import {PortfolioCard} from "@/components/cards/PortfolioCard";
 import {PortfolioSection} from "@/components/sections/PortfolioSection";
 
 export default function PortfolioPage() {

@@ -4,7 +4,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Button } from "@/components/ui/button"
 import {Bars3Icon, PhoneIcon} from '@heroicons/react/24/outline'
 import Link from "next/link"
-import {NavigationLink} from "@/types/navigation-link";
+import {NavigationLink} from "@/types/navigation";
 import React from "react";
 import {cn} from "@/lib/utils";
 import {navLinks} from "@/config/navigation";

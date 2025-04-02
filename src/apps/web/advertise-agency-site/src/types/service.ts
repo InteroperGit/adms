@@ -1,6 +1,6 @@
 import React from "react";
 
-export type ServiceCategory = {
+export interface ServiceCategory {
     icon: React.ReactNode
     title: string
     services: {
@@ -9,12 +9,12 @@ export type ServiceCategory = {
     }[]
 }
 
-export type ServiceItem = {
+export interface ServiceItem {
     name: string;
     href: string;
 };
 
-export type SpecialServiceItem = {
+export interface SpecialServiceItem {
     title: string;
     description: string;
     features: ServiceItem[];
@@ -23,7 +23,7 @@ export type SpecialServiceItem = {
 /**
  * Ссылка на услугу
  */
-export type ServiceLink = {
+export interface ServiceLink {
     name: string,
     href: string,
     subItems?: ServiceItem[]

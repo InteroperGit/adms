@@ -2,7 +2,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import {SpecialServiceItem} from "@/types/service-types";
+import {SpecialServiceItem} from "@/types/service";
 import Link from "next/link";
 
 interface SpecialServiceCardProps {

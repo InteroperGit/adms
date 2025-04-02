@@ -1,8 +1,8 @@
 import {ServicesSection} from "@/components/sections/ServicesSection";
-import {serviceCategories} from "@/data/services";
+import {serviceCategories} from "@/data/services-data";
 import {PortfolioSection} from "@/components/sections/PortfolioSection";
-import {categories} from "@/data/categories";
-import {recentProjects} from "@/data/projects";
+import {categories} from "@/data/categories-data";
+import {recentProjects} from "@/data/projects-data";
 
 export default function Home() {
     return (
