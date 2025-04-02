@@ -1,5 +1,5 @@
 import {NavigationLink} from "@/types/navigation-link";
-import {ServiceLink} from "@/types/service-link";
+import {ServiceLink} from "@/types/service-type";
 
 export const navLinks: NavigationLink[] = [
     { name: "Услуги", href: "/services" },
