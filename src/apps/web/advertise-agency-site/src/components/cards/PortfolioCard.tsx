@@ -75,7 +75,7 @@ interface PortfolioItemProps {
  *   enableHoverEffects={false}
  * />
  */
-export const PortfolioItem = ({
+export const PortfolioCard = ({
                                   project,
                                   categories,
                                   index = 0,

@@ -1,3 +1,9 @@
+import {ServicesSection} from "@/components/sections/ServicesSection";
+import {serviceCategories} from "@/data/services";
+import {PortfolioSection} from "@/components/sections/PortfolioSection";
+import {categories} from "@/data/categories";
+import {recentProjects} from "@/data/projects";
+
 export default function Home() {
     return (
         <div className="space-y-12 pb-16 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
@@ -58,20 +64,13 @@ export default function Home() {
             </div>
 
             {/* 6. Услуги */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6">Наши услуги</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {[
-                        "Наружная реклама",
-                        "Брендирование",
-                        "Полиграфия",
-                        "Дизайн"
-                    ].map((service, i) => (
-                        <div key={i} className="h-32 bg-gray-50 dark:bg-gray-700 rounded-md flex items-center justify-center border dark:border-gray-600">
-                            <span className="dark:text-gray-200">{service}</span>
-                        </div>
-                    ))}
-                </div>
+            <div className="bg-white dark:bg-gray-800 px-6 rounded-lg border dark:border-gray-700">
+                <ServicesSection
+                    title="Наши услуги"
+                    services={serviceCategories}
+                    columns={4}
+                    className="my-9"
+                />
             </div>
 
             {/* 7. Этапы работы */}
@@ -98,14 +97,18 @@ export default function Home() {
 
             {/* 8. Портфолио */}
             <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6 dark:text-gray-200">Наши работы</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[1, 2, 3, 4, 5, 6].map(i => (
-                        <div key={i} className="h-64 bg-white dark:bg-gray-700 rounded-lg border dark:border-gray-600 flex items-center justify-center">
-                            <span className="dark:text-gray-200">Проект {i}</span>
-                        </div>
-                    ))}
-                </div>
+                <PortfolioSection
+                    title="Наше портфолио"
+                    description="Лучшие проекты за последние годы"
+                    projects={recentProjects}
+                    categories={categories}
+                    columns={{
+                        mobile: 1,
+                        tablet: 2,
+                        desktop: 3
+                    }}
+                    className="py-6"
+                />
             </div>
 
             {/* 10. Новости */}

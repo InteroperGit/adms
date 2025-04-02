@@ -9,7 +9,8 @@ import HeroSection from "@/components/sections/HeroSection";
 import {CategoryFilter} from "@/components/navigation/CategoryFilter";
 import {CtaSection} from "@/components/sections/CtaSection";
 import {LoadingMoreButton} from "@/components/buttons/LoadingMoreButton";
-import {PortfolioItem} from "@/components/portfolio/PortfolioItem";
+import {PortfolioCard} from "@/components/cards/PortfolioCard";
+import {PortfolioSection} from "@/components/sections/PortfolioSection";
 
 export default function PortfolioPage() {
     const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -87,16 +88,18 @@ export default function PortfolioPage() {
                         </div>
                     ) : (
                         <>
-                            <div className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8")}>
-                                {projectsToShow.map((project, index) => (
-                                    <PortfolioItem
-                                        key={project.id}
-                                        project={project}
-                                        categories={categories}
-                                        index={index}
-                                    />
-                                ))}
-                            </div>
+                            <PortfolioSection
+                                title="Наше портфолио"
+                                description="Лучшие проекты за последние годы"
+                                projects={projectsToShow}
+                                categories={categories}
+                                columns={{
+                                    mobile: 1,
+                                    tablet: 2,
+                                    desktop: 3
+                                }}
+                                className="py-16"
+                            />
 
                             {/* Кнопка загрузки и статус */}
                             <div className="mt-12 text-center">
