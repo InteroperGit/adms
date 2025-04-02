@@ -1,6 +1,9 @@
 import {ArticlePreview} from "@/types/article";
 
-export const newsArticles: ArticlePreview[] = [
+/**
+ * Новости (превью)
+ */
+export const newsPreviews: ArticlePreview[] = [
     {
         id: '1',
         title: 'Запуск новой линии широкоформатной печати',
@@ -92,3 +95,8 @@ export const newsArticles: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1548345680-f5475ea5df81?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
     }
 ];
+
+/**
+ * Самые свежие новости (превью)
+ */
+export const recentNewsPreviews: ArticlePreview[] = newsPreviews.slice(0, 6);
