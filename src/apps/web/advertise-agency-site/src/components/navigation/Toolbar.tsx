@@ -16,19 +16,18 @@ export default function Toolbar({ className }: ToolbarProps) {
     return (
         <div className={cn(
                 "flex",
-                "items-center gap-2 hidden sm:flex",
+                "items-center gap-3 hidden sm:flex",
                 className)}>
             {/* Позвонить */}
             <Button
                 asChild
                 variant="ghost"
-                size={"sm"}
+                size={"lg"}
             >
                 <Link
                     href="tel:+79115053503"
-                    className={cn("flex items-center", "gap-2")}
                 >
-                    <PhoneIcon className="h-5 w-5" />
+                    <PhoneIcon style={{ height: '1.5rem', width: '1.5rem' }} />
                 </Link>
             </Button>
 
@@ -36,15 +35,17 @@ export default function Toolbar({ className }: ToolbarProps) {
             <Button
                 asChild
                 variant="ghost"
-                size={"sm"}
+                size={"lg"}
             >
                 <Link
                     href="https://wa.me/79115050635"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={cn("flex items-center", "gap-2")}
                 >
-                    <FaWhatsapp className="h-5 w-5 text-green-600 hover:text-green-700" />
+                    <FaWhatsapp
+                        className="text-green-600 hover:text-green-700"
+                        style={{ height: '1.5rem', width: '1.5rem' }}
+                    />
                 </Link>
             </Button>
 
@@ -52,24 +53,22 @@ export default function Toolbar({ className }: ToolbarProps) {
             <Button
                 asChild
                 variant="ghost"
-                size={"sm"}
+                size={"lg"}
             >
                 <Link
                     href="https://t.me/username"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={cn("flex items-center", "gap-2")}
                 >
-                    <FaTelegram className="h-5 w-5 text-blue-500 hover:text-blue-600" />
+                    <FaTelegram
+                        className="text-blue-500 hover:text-blue-600"
+                        style={{ height: '1.5rem', width: '1.5rem' }}
+                    />
                 </Link>
             </Button>
 
             {/* Смена темы */}
-            <div className={cn(
-                "flex items-center",
-            )}>
-                <ThemeToggle />
-            </div>
+            <ThemeToggle />
         </div>
     )
 }
