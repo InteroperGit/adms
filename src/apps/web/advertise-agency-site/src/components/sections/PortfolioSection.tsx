@@ -3,14 +3,14 @@
 
 import { PortfolioCard } from "@/components/cards/PortfolioCard"
 import { cn } from "@/lib/utils"
-import {Project} from "@/types/project";
+import {ProjectPreview} from "@/types/project";
 import {Category} from "@/types/category";
 
 interface PortfolioSectionProps {
     /**
      * Массив проектов для отображения
      */
-    projects: Project[]
+    projects: ProjectPreview[]
     /**
      * Массив категорий для отображения меток
      */

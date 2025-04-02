@@ -5,7 +5,7 @@ import {useEffect} from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import {SpecialServiceCard} from "@/components/cards/SpecialServiceCard";
 import {CtaSection} from "@/components/sections/CtaSection";
-import {serviceCategories, specialServices} from "@/data/services";
+import {serviceCategories, specialServices} from "@/data/services-data";
 import {ServicesSection} from "@/components/sections/ServicesSection";
 
 export default function ServicesPage() {

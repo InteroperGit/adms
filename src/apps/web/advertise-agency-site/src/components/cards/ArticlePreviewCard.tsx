@@ -5,20 +5,13 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import {ArticlePreview} from "@/types/article";
 
-interface ArticleCardProps {
+interface ArticlePreviewCardProps {
     /**
      * Данные статьи для отображения
      */
-    article: {
-        id: string
-        title: string
-        excerpt: string
-        category: string
-        date: string
-        readTime: string
-        imageUrl: string
-    }
+    article: ArticlePreview
 
     /**
      * Дополнительные классы для кастомизации стилей карточки
@@ -74,13 +67,13 @@ interface ArticleCardProps {
  *   priority={true}
  * />
  */
-export const ArticleCard = ({
+export const ArticlePreviewCard = ({
                                 article,
                                 className,
                                 basePath = "/articles",
                                 enableHoverEffects = true,
                                 priority = false,
-                            }: ArticleCardProps) => {
+                            }: ArticlePreviewCardProps) => {
     return (
         <div
             className={cn(
@@ -110,12 +103,12 @@ export const ArticleCard = ({
             <div className="p-6 flex-1 flex flex-col">
                 {/* Мета-информация */}
                 <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-primary font-medium">
-            {article.category}
-          </span>
+                    <span className="text-sm text-primary font-medium">
+                        {article.category}
+                    </span>
                     <span className="text-sm text-muted-foreground">
-            {article.date} · {article.readTime}
-          </span>
+                        {article.date} · {article.readTime}
+                     </span>
                 </div>
 
                 {/* Заголовок и описание */}

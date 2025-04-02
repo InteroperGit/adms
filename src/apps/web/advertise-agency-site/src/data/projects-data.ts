@@ -1,6 +1,6 @@
-import {Project} from "@/types/project";
+import {ProjectPreview} from "@/types/project";
 
-export const projects: Project[] = [
+export const projects: ProjectPreview[] = [
     {
         id: 1,
         title: 'Брендирование кафе "Sunrise"',
@@ -303,4 +303,4 @@ export const projects: Project[] = [
     }
 ];
 
-export const recentProjects: Project[] = projects.slice(0, 6);
+export const recentProjects: ProjectPreview[] = projects.slice(0, 6);

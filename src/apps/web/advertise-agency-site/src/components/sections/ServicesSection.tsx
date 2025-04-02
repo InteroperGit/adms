@@ -4,7 +4,7 @@
 import { ServiceCard } from "@/components/cards/ServiceCard"
 import { cn } from "@/lib/utils"
 import React from "react";
-import {ServiceCategory} from "@/types/service-types";
+import {ServiceCategory} from "@/types/service";
 
 interface ServicesSectionProps {
     title?: string

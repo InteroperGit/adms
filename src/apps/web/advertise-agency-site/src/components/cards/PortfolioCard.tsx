@@ -4,14 +4,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import {Project} from "@/types/project";
+import {ProjectPreview} from "@/types/project";
 import {Category} from "@/types/category";
 
 interface PortfolioItemProps {
     /**
      * Данные проекта
      */
-    project: Project;
+    project: ProjectPreview;
 
     /**
      * Список категорий для отображения метки
