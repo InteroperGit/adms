@@ -123,7 +123,7 @@ export default function ArticlesPage() {
     }, []);
 
     return (
-        <div className="container md:px-4">
+        <div className="md:px-4">
             {/* Заголовок и описание */}
             <HeroSection
                 title={"Статьи и полезные материалы"}
