@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
-import Navigation from "@/components/navigation/Navigation";
+import DesktopNavigation from "@/components/navigation/DesktopNavigation";
 import {Providers} from "@/app/providers";
 import Footer from "@/components/footer/Footer";
 import {Breadcrumbs} from "@/components/misc/Breadcrumbs";
 import {Container} from "@/components/container/Container";
+import MobileNavigation from "@/components/navigation/MobileNavigation";
+import React from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +38,8 @@ export default function RootLayout({
       >
         <Providers>
             <Header />
-            <Navigation />
+            <DesktopNavigation />
+            <MobileNavigation />
             <Breadcrumbs />
             <main className="flex-grow">
                 <Container>
