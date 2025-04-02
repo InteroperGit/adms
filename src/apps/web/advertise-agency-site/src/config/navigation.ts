@@ -1,4 +1,7 @@
-export const navLinks = [
+import {NavigationLink} from "@/types/navigation-link";
+import {ServiceLink} from "@/types/service-link";
+
+export const navLinks: NavigationLink[] = [
     { name: "Услуги", href: "/services" },
     { name: "Портфолио", href: "/portfolio" },
     { name: "Статьи", href: '/articles' },
@@ -6,7 +9,7 @@ export const navLinks = [
     { name: "Контакты", href: "/contacts" }
 ]
 
-export const servicesLinks = [
+export const servicesLinks: ServiceLink[] = [
     {
         name: "Наружная реклама",
         href: '/services/outdoor',
