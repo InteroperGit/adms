@@ -20,9 +20,9 @@ export function ThemeToggle() {
             className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
         >
             {resolvedTheme === "dark" ? (
-                <SunIcon className="w-5 h-5" />
+                <SunIcon style={{ height: '1.5rem', width: '1.5rem' }} />
             ) : (
-                <MoonIcon className="w-5 h-5" />
+                <MoonIcon style={{ height: '1.5rem', width: '1.5rem' }} />
             )}
         </button>
     )
