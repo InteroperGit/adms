@@ -1,4 +1,3 @@
-// components/cards/ArticleCard.tsx
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -74,6 +73,9 @@ export const ArticlePreviewCard = ({
                                 enableHoverEffects = true,
                                 priority = false,
                             }: ArticlePreviewCardProps) => {
+
+    const articleUrl = `${basePath}/${article.slug}`
+
     return (
         <div
             className={cn(
@@ -86,17 +88,21 @@ export const ArticlePreviewCard = ({
         >
             {/* Область изображения */}
             <div className="relative aspect-video overflow-hidden">
-                <Image
-                    src={article.imageUrl}
-                    alt={article.title}
-                    fill
-                    className={cn(
-                        "object-cover transition-transform duration-500",
-                        enableHoverEffects && "group-hover:scale-105"
-                    )}
-                    priority={priority}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
+                <Link href={articleUrl} passHref legacyBehavior>
+                    <a className="block h-full w-full">
+                        <Image
+                            src={article.imageUrl}
+                            alt={article.title}
+                            fill
+                            className={cn(
+                                "object-cover transition-transform duration-500 cursor-pointer",
+                                enableHoverEffects && "group-hover:scale-105"
+                            )}
+                            priority={priority}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    </a>
+                </Link>
             </div>
 
             {/* Контент карточки */}
@@ -125,7 +131,7 @@ export const ArticlePreviewCard = ({
                     variant="link"
                     className="px-0 self-start mt-auto"
                 >
-                    <Link href={`${basePath}/${article.id}`}>
+                    <Link href={articleUrl}>
                         Читать далее
                     </Link>
                 </Button>
