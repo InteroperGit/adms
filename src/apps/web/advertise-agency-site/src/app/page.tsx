@@ -7,6 +7,7 @@ import {NewsSection} from "@/components/sections/NewsSection";
 import {recentNewsPreviews} from "@/data/news-data";
 import HeroSection from "@/components/sections/HeroSection";
 import {ClientsSection} from "@/components/sections/ClientsSection";
+import React from "react";
 
 export default function Home() {
     return (
