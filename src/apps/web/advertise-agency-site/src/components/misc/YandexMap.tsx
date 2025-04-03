@@ -13,16 +13,16 @@ export default function YandexMap({
                                   }: YandexMapProps) {
     return (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-            <iframe
-                src={`https://yandex.ru/map-widget/v1/?um=constructor%3A${constructorId}&source=constructor`}
-                width={width}
-                height={height}
-                frameBorder="0"
-                style={{ border: 0 }}
-                allowFullScreen
-                aria-hidden="false"
-                tabIndex={0}
-            />
+            {/*<iframe*/}
+            {/*    src={`https://yandex.ru/map-widget/v1/?um=constructor%3A${constructorId}&source=constructor`}*/}
+            {/*    width={width}*/}
+            {/*    height={height}*/}
+            {/*    frameBorder="0"*/}
+            {/*    style={{ border: 0 }}*/}
+            {/*    allowFullScreen*/}
+            {/*    aria-hidden="false"*/}
+            {/*    tabIndex={0}*/}
+            {/*/>*/}
         </div>
     );
 }

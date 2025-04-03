@@ -179,6 +179,67 @@ export const articles: Article[] = [{
             columns: 2
         },
         {
+            type: 'portfolio',
+            projects: [
+                {
+                    id: 1,
+                    title: 'Брендирование кафе "Sunrise"',
+                    category: {
+                        id: 1,
+                        slug: 'branding',
+                        name: "Брендирование"
+                    },
+                    client: 'Сеть кофеен Sunrise',
+                    year: '2023',
+                    imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format',
+                    slug: 'sunrise-cafe',
+                    description: 'Полный ребрендинг сети кофеен'
+                },
+                {
+                    id: 2,
+                    title: 'Вывеска для бутика "Elegance"',
+                    category: {
+                        id: 2,
+                        slug: 'outdoor',
+                        name: "Наружная реклама"
+                    },
+                    client: 'Бутик Elegance',
+                    year: '2023',
+                    imageUrl: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&auto=format',
+                    slug: 'elegance-sign',
+                    description: 'Световая вывеска для fashion-бутика'
+                },
+                {
+                    id: 3,
+                    title: 'Каталог продукции "TechLogic"',
+                    category: {
+                        id: 3,
+                        slug: 'printing',
+                        name: "Печать"
+                    },
+                    client: 'TechLogic',
+                    year: '2022',
+                    imageUrl: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&auto=format',
+                    slug: 'techlogic-catalog',
+                    description: 'Полиграфический каталог на 120 страниц'
+                },
+                {
+                    id: 4,
+                    title: 'Упаковка для косметики "PureLine"',
+                    category: {
+                        id: 4,
+                        slug: 'packaging',
+                        name: "Упаковка"
+                    },
+                    client: 'PureLine Cosmetics',
+                    year: '2023',
+                    imageUrl: 'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&auto=format',
+                    slug: 'pureline-packaging',
+                    description: 'Экологичная упаковка для косметики'
+                },
+            ]
+        },
+        {
             type: "quote",
             text: "К 2026 году доля цифровых носителей в OOH-рекламе достигнет 60%. Бренды, которые уже сейчас инвестируют в digital-форматы, получат значительное конкурентное преимущество.",
             author: "Максим Волков",
