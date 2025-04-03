@@ -1,5 +1,5 @@
 import {PhoneIcon, EnvelopeIcon, MapPinIcon} from "@heroicons/react/24/outline";
-import {cn} from "@/lib/utils";
+import {cn} from "@/libs/utils";
 import YandexMap from "@/components/misc/YandexMap";
 
 interface ContactItem {

@@ -2,7 +2,7 @@
 "use client"
 
 import { ServiceCard } from "@/components/cards/ServiceCard"
-import { cn } from "@/lib/utils"
+import { cn } from "@/libs/utils"
 import React from "react";
 import {ServiceCategory} from "@/types/service";
 

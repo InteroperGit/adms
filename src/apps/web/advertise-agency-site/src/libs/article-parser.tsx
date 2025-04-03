@@ -9,7 +9,7 @@ import {
     VideoBlock,
     QuoteBlock, CodeBlock, TableBlock, DividerBlock, EmbedBlock
 } from '@/types/article';
-import {cn} from "@/lib/utils";
+import {cn} from "@/libs/utils";
 import { parse } from 'node-html-parser';
 import {PortfolioSection} from "@/components/sections/PortfolioSection";
 import {

@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import {ProjectPreview} from "@/types/project";
 
 interface PortfolioItemProps {

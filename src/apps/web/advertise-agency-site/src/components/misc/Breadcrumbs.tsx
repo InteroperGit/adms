@@ -10,7 +10,7 @@ import {
     BreadcrumbPage,
 } from '@/components/ui/breadcrumb'
 import { ChevronRight } from "lucide-react";
-import {cn} from "@/lib/utils";
+import {cn} from "@/libs/utils";
 import { usePathname } from 'next/navigation'
 
 export function Breadcrumbs() {

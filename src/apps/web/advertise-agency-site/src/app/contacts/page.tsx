@@ -3,7 +3,7 @@
 import YandexMap from "@/components/misc/YandexMap";
 import ContactsCard from "@/components/cards/ContactsCard";
 import FeedbackForm from "@/components/forms/FeedbackForm";
-import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
+import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
 import {useEffect} from "react";
 import PageHeader from "@/components/misc/PageHeader";
 
