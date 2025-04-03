@@ -4,17 +4,12 @@
 import { PortfolioCard } from "@/components/cards/PortfolioCard"
 import { cn } from "@/lib/utils"
 import {ProjectPreview} from "@/types/project";
-import {Category} from "@/types/category";
 
 interface PortfolioSectionProps {
     /**
      * Массив проектов для отображения
      */
     projects: ProjectPreview[]
-    /**
-     * Массив категорий для отображения меток
-     */
-    categories: Category[]
     /**
      * Заголовок секции
      * @default "Наши работы"
@@ -75,7 +70,6 @@ interface PortfolioSectionProps {
  *   title="Реализованные проекты"
  *   description="Лучшие работы за 2024 год"
  *   projects={projects}
- *   categories={categories}
  *   columns={{
  *     mobile: 1,
  *     tablet: 3,
@@ -87,7 +81,6 @@ interface PortfolioSectionProps {
  */
 export const PortfolioSection = ({
                                      projects,
-                                     categories,
                                      title = "Наши работы",
                                      description,
                                      columns = {
@@ -120,7 +113,6 @@ export const PortfolioSection = ({
                     <PortfolioCard
                         key={project.id}
                         project={project}
-                        categories={categories}
                         index={index}
                     />
                 ))}

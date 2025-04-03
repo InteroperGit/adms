@@ -5,18 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import {ProjectPreview} from "@/types/project";
-import {Category} from "@/types/category";
 
 interface PortfolioItemProps {
     /**
      * Данные проекта
      */
     project: ProjectPreview;
-
-    /**
-     * Список категорий для отображения метки
-     */
-    categories: Array<Category>;
 
     /**
      * Индекс элемента в списке (для оптимизации загрузки изображений)
@@ -69,7 +63,6 @@ interface PortfolioItemProps {
  * // С кастомизацией
  * <PortfolioItem
  *   project={item}
- *   categories={categories}
  *   className="custom-shadow"
  *   basePath="/projects"
  *   enableHoverEffects={false}
@@ -77,7 +70,6 @@ interface PortfolioItemProps {
  */
 export const PortfolioCard = ({
                                   project,
-                                  categories,
                                   index = 0,
                                   className,
                                   basePath = "/portfolio",
@@ -151,7 +143,7 @@ export const PortfolioCard = ({
                             "bg-orange-100 dark:bg-orange-900/30",
                             "text-orange-800 dark:text-orange-200"
                         )}>
-                          {categories.find(c => c.slug === project.category)?.name}
+                            {project.category?.name}
                         </span>
                         <span className={cn("text-sm text-gray-500 dark:text-gray-400")}>
                           {project.year}
