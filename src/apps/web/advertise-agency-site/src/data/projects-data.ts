@@ -4,7 +4,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 1,
         title: 'Брендирование кафе "Sunrise"',
-        category: 'branding',
+        category: {
+            id: 1,
+            slug: 'branding',
+            name: "Брендирование"
+        },
         client: 'Сеть кофеен Sunrise',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format',
@@ -14,7 +18,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 2,
         title: 'Вывеска для бутика "Elegance"',
-        category: 'outdoor',
+        category: {
+            id: 2,
+            slug: 'outdoor',
+            name: "Наружная реклама"
+        },
         client: 'Бутик Elegance',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&auto=format',
@@ -24,7 +32,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 3,
         title: 'Каталог продукции "TechLogic"',
-        category: 'printing',
+        category: {
+            id: 3,
+            slug: 'printing',
+            name: "Печать"
+        },
         client: 'TechLogic',
         year: '2022',
         imageUrl: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&auto=format',
@@ -34,7 +46,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 4,
         title: 'Упаковка для косметики "PureLine"',
-        category: 'packaging',
+        category: {
+            id: 4,
+            slug: 'packaging',
+            name: "Упаковка"
+        },
         client: 'PureLine Cosmetics',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&auto=format',
@@ -44,7 +60,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 5,
         title: 'Брендбук "Global Finance"',
-        category: 'branding',
+        category: {
+            id: 1,
+            slug: 'branding',
+            name: "Брендирование"
+        },
         client: 'Global Finance',
         year: '2022',
         imageUrl: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format',
@@ -54,7 +74,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 6,
         title: 'Билборды для автосалона "Premium Motors"',
-        category: 'outdoor',
+        category: {
+            id: 2,
+            slug: 'outdoor',
+            name: "Наружная реклама"
+        },
         client: 'Premium Motors',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format',
@@ -64,7 +88,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 7,
         title: 'Фирменные бланки "LegalTrust"',
-        category: 'printing',
+        category: {
+            id: 3,
+            slug: 'printing',
+            name: "Печать"
+        },
         client: 'LegalTrust',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=800&auto=format',
@@ -74,7 +102,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 8,
         title: 'Упаковка для чая "Mountain Leaf"',
-        category: 'packaging',
+        category: {
+            id: 4,
+            slug: 'packaging',
+            name: "Упаковка"
+        },
         client: 'Mountain Leaf',
         year: '2022',
         imageUrl: 'https://images.unsplash.com/photo-1513531926349-466f15ec8cc7?w=800&auto=format',
@@ -84,7 +116,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 9,
         title: 'Логотип и айдентика "UrbanFit"',
-        category: 'branding',
+        category: {
+            id: 1,
+            slug: 'branding',
+            name: "Брендирование"
+        },
         client: 'UrbanFit Gym',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&auto=format',
@@ -94,7 +130,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 10,
         title: 'Световая вывеска "Grand Hotel"',
-        category: 'outdoor',
+        category: {
+            id: 2,
+            slug: 'outdoor',
+            name: "Наружная реклама"
+        },
         client: 'Grand Hotel',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format',
@@ -104,7 +144,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 11,
         title: 'Визитки "Architect Studio"',
-        category: 'printing',
+        category: {
+            id: 3,
+            slug: 'printing',
+            name: "Печать"
+        },
         client: 'Architect Studio',
         year: '2022',
         imageUrl: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800&auto=format',
@@ -114,7 +158,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 12,
         title: 'Упаковка для вина "Vineyard"',
-        category: 'packaging',
+        category: {
+            id: 4,
+            slug: 'packaging',
+            name: "Упаковка"
+        },
         client: 'Vineyard Estates',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&auto=format',
@@ -124,7 +172,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 13,
         title: 'Ребрендинг "CityBank"',
-        category: 'branding',
+        category: {
+            id: 1,
+            slug: 'branding',
+            name: "Брендирование"
+        },
         client: 'CityBank',
         year: '2021',
         imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&auto=format',
@@ -134,7 +186,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 14,
         title: 'Рекламный щит "Summer Sale"',
-        category: 'outdoor',
+        category: {
+            id: 2,
+            slug: 'outdoor',
+            name: "Наружная реклама"
+        },
         client: 'MegaMall',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&auto=format',
@@ -144,7 +200,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 15,
         title: 'Брошюра "HealthCare"',
-        category: 'printing',
+        category: {
+            id: 3,
+            slug: 'printing',
+            name: "Печать"
+        },
         client: 'HealthCare Clinic',
         year: '2022',
         imageUrl: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&auto=format',
@@ -154,7 +214,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 16,
         title: 'Упаковка для сладостей "SweetJoy"',
-        category: 'packaging',
+        category: {
+            id: 4,
+            slug: 'packaging',
+            name: "Упаковка"
+        },
         client: 'SweetJoy',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1575224300306-1b8da36134ec?w=800&auto=format',
@@ -164,7 +228,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 17,
         title: 'Фирменный стиль "EcoFood"',
-        category: 'branding',
+        category: {
+            id: 1,
+            slug: 'branding',
+            name: "Брендирование"
+        },
         client: 'EcoFood Market',
         year: '2022',
         imageUrl: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format',
@@ -174,7 +242,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 18,
         title: 'Вывеска "Coffee Time"',
-        category: 'outdoor',
+        category: {
+            id: 2,
+            slug: 'outdoor',
+            name: "Наружная реклама"
+        },
         client: 'Coffee Time',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=800&auto=format',
@@ -184,7 +256,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 19,
         title: 'Календарь "Art Gallery"',
-        category: 'printing',
+        category: {
+            id: 3,
+            slug: 'printing',
+            name: "Печать"
+        },
         client: 'Modern Art Gallery',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=800&auto=format',
@@ -194,7 +270,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 20,
         title: 'Упаковка для парфюмерии "Luxury Scents"',
-        category: 'packaging',
+        category: {
+            id: 4,
+            slug: 'packaging',
+            name: "Упаковка"
+        },
         client: 'Luxury Scents',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800&auto=format',
@@ -204,7 +284,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 21,
         title: 'Логотип "TechStart"',
-        category: 'branding',
+        category: {
+            id: 1,
+            slug: 'branding',
+            name: "Брендирование"
+        },
         client: 'TechStart',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format',
@@ -214,7 +298,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 22,
         title: 'Рекламный стенд "AutoExpo"',
-        category: 'outdoor',
+        category: {
+            id: 2,
+            slug: 'outdoor',
+            name: "Наружная реклама"
+        },
         client: 'AutoExpo',
         year: '2022',
         imageUrl: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&auto=format',
@@ -224,7 +312,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 23,
         title: 'Флаеры "NightClub"',
-        category: 'printing',
+        category: {
+            id: 3,
+            slug: 'printing',
+            name: "Печать"
+        },
         client: 'Pulse NightClub',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6a3?w=800&auto=format',
@@ -234,7 +326,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 24,
         title: 'Упаковка для кофе "Morning Brew"',
-        category: 'packaging',
+        category: {
+            id: 4,
+            slug: 'packaging',
+            name: "Упаковка"
+        },
         client: 'Morning Brew',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?w=800&auto=format',
@@ -244,7 +340,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 25,
         title: 'Айдентика "FitnessPro"',
-        category: 'branding',
+        category: {
+            id: 1,
+            slug: 'branding',
+            name: "Брендирование"
+        },
         client: 'FitnessPro',
         year: '2022',
         imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&auto=format',
@@ -254,7 +354,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 26,
         title: 'Баннеры "Summer Festival"',
-        category: 'outdoor',
+        category: {
+            id: 2,
+            slug: 'outdoor',
+            name: "Наружная реклама"
+        },
         client: 'City Events',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800&auto=format',
@@ -264,7 +368,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 27,
         title: 'Буклет "Dental Care"',
-        category: 'printing',
+        category: {
+            id: 3,
+            slug: 'printing',
+            name: "Печать"
+        },
         client: 'Dental Care Clinic',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&auto=format',
@@ -274,7 +382,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 28,
         title: 'Упаковка для чая "Green Valley"',
-        category: 'packaging',
+        category: {
+            id: 4,
+            slug: 'packaging',
+            name: "Упаковка"
+        },
         client: 'Green Valley',
         year: '2022',
         imageUrl: 'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=800&auto=format',
@@ -284,7 +396,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 29,
         title: 'Логотип "Law Partners"',
-        category: 'branding',
+        category: {
+            id: 1,
+            slug: 'branding',
+            name: "Брендирование"
+        },
         client: 'Law Partners',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&auto=format',
@@ -294,7 +410,11 @@ export const projects: ProjectPreview[] = [
     {
         id: 30,
         title: 'Вывеска "BookStore"',
-        category: 'outdoor',
+        category: {
+            id: 2,
+            slug: 'outdoor',
+            name: "Наружная реклама"
+        },
         client: 'BookStore',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=800&auto=format',
