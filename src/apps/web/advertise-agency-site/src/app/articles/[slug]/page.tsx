@@ -1,6 +1,6 @@
-import {getAllArticles, getArticleBySlug} from '@/lib/api/articles';
-import {ArticleParser} from "@/lib/article-parser";
-import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
+import {getAllArticles, getArticleBySlug} from '@/libs/api/articles';
+import {ArticleParser} from "@/libs/article-parser";
+import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
 import React from "react";
 
 interface Params {

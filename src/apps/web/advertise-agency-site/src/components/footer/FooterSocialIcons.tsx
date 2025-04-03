@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import React from "react";
 
 interface SocialLink {

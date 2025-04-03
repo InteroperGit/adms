@@ -1,7 +1,7 @@
 "use client"
 
 import { ArticlePreviewCard } from "@/components/cards/ArticlePreviewCard"
-import { cn } from "@/lib/utils"
+import { cn } from "@/libs/utils"
 import {ArticlePreview} from "@/types/article";
 
 interface NewsSectionProps {

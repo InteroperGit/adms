@@ -1,7 +1,7 @@
 // components/cards/SpecialServiceCard.tsx
 "use client"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/libs/utils"
 import {SpecialServiceItem} from "@/types/service";
 import Link from "next/link";
 

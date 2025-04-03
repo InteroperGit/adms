@@ -1,8 +1,8 @@
 "use client"
 
 import {useEffect, useState} from 'react';
-import { cn } from '@/lib/utils';
-import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
+import { cn } from '@/libs/utils';
+import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
 import {projects} from "@/data/projects-data";
 import {categories} from "@/data/categories-data";
 import HeroSection from "@/components/sections/HeroSection";

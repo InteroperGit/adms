@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 
 interface ServiceItem {
     name: string;

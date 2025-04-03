@@ -1,7 +1,7 @@
 // components/ui/LoadingMoreButton.tsx
 "use client"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import { ReactNode } from "react";
 
 interface LoadingMoreButtonProps {

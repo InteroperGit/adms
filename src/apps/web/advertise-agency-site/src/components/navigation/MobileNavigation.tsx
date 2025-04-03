@@ -6,7 +6,7 @@ import {Bars3Icon, PhoneIcon} from '@heroicons/react/24/outline'
 import Link from "next/link"
 import {NavigationLink} from "@/types/navigation";
 import React from "react";
-import {cn} from "@/lib/utils";
+import {cn} from "@/libs/utils";
 import {navLinks} from "@/config/navigation";
 import {FaWhatsapp} from "react-icons/fa";
 

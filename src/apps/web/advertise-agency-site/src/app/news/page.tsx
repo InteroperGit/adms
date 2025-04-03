@@ -4,7 +4,7 @@ import { ArticlePreviewCard } from '@/components/cards/ArticlePreviewCard'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { SearchIcon } from 'lucide-react'
-import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
+import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
 import {useEffect} from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import {newsPreviews} from "@/data/news-data";

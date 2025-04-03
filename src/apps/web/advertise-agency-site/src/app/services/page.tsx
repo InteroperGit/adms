@@ -1,6 +1,6 @@
 "use client"
 
-import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
+import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
 import {useEffect} from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import {SpecialServiceCard} from "@/components/cards/SpecialServiceCard";
