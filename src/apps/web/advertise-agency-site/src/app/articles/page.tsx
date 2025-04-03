@@ -7,7 +7,7 @@ import {useUpdateBreadcrumbs} from "@/lib/breadcrumbs";
 import {useEffect} from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import {ArticlePreviewCard} from "@/components/cards/ArticlePreviewCard";
-import {articles} from "@/data/article-data";
+import {articlesPreviews} from "@/data/article-data";
 
 export default function ArticlesPage() {
     const updateBreadcrumbs = useUpdateBreadcrumbs()
@@ -40,7 +40,7 @@ export default function ArticlesPage() {
 
             {/* Список статей */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {articles.map((article, index) => (
+                {articlesPreviews.map((article, index) => (
                     <ArticlePreviewCard
                         key={article.id}
                         article={article}
