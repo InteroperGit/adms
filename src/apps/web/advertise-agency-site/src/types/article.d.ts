@@ -1,5 +1,4 @@
-// types/article.d.ts
-import { ReactNode } from "react"
+import {ProjectPreview} from "@/types/project";
 
 /**
  * Основной интерфейс статьи
@@ -111,6 +110,7 @@ export type ArticleBlock =
     | ImageBlock
     | ImageGalleryBlock
     | VideoBlock
+    | PortfolioBlock
     | QuoteBlock
     | CodeBlock
     | TableBlock
@@ -165,6 +165,15 @@ export interface VideoBlock {
     source: 'youtube' | 'vimeo' | 'custom'
     caption?: string
     aspectRatio?: string // например "16:9"
+}
+
+/**
+ * Портфолио
+ */
+export interface PortfolioBlock {
+    type: 'portfolio';
+    projects: ProjectPreview[];
+    columns?: number;
 }
 
 /**
