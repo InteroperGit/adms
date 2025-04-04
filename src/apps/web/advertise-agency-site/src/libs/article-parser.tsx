@@ -470,9 +470,9 @@ export const ArticleParser = ({ blocks }: { blocks: ArticleBlock[] }) => {
 
                     case 'portfolio':
                         return (
-                            <Card>
+                            <Card key={index}>
                                 <CardContent>
-                                    <PortfolioBlockComponent key={index} {...block} />
+                                    <PortfolioBlockComponent {...block} />
                                 </CardContent>
                             </Card>
                         );
