@@ -1,6 +1,7 @@
 import {PhoneIcon, EnvelopeIcon, MapPinIcon} from "@heroicons/react/24/outline";
 import {cn} from "@/libs/utils";
 import YandexMap from "@/components/misc/YandexMap";
+import React from "react";
 
 interface ContactItem {
     icon: React.ReactNode;
@@ -39,8 +40,6 @@ const contacts_data = [
 
 export default function FooterContacts({
                                            className,
-                                           iconClassName = "h-5 w-5 text-gray-500 mt-0.5",
-                                           textClassName = "text-gray-600 dark:text-gray-400",
                                            contacts = contacts_data
                                        }: ContactsProps) {
     return (

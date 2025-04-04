@@ -24,13 +24,16 @@ export default function PortfolioPage() {
             { title: 'Главная', href: '/' },
             { title: 'Портфолио' }
         ]);
+    }, [updateBreadcrumbs]);
+
+    useEffect(() => {
         // Сброс видимых проектов при изменении категории
         setVisibleProjects(10);
     }, [activeCategory]);
 
     const filteredProjects = activeCategory === 'all'
         ? projects
-        : projects.filter(project => project.category === activeCategory);
+        : projects.filter(project => project.category?.name === activeCategory);
 
     const projectsToShow = filteredProjects.slice(0, visibleProjects);
     const hasMoreProjects = visibleProjects < filteredProjects.length;
@@ -91,7 +94,6 @@ export default function PortfolioPage() {
                                 title="Наше портфолио"
                                 description="Лучшие проекты за последние годы"
                                 projects={projectsToShow}
-                                categories={categories}
                                 columns={{
                                     mobile: 1,
                                     tablet: 2,

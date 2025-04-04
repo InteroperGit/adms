@@ -17,7 +17,7 @@ export default function NewsPage() {
             { title: 'Главная', href: '/' },
             { title: 'Новости' }
         ])
-    }, []);
+    }, [updateBreadcrumbs]);
 
     return (
         <>

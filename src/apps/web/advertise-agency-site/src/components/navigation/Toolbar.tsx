@@ -3,10 +3,8 @@ import Link from "next/link";
 import {PhoneIcon} from "@heroicons/react/24/outline";
 import {ThemeToggle} from "@/components/buttons/ThemeToggle";
 import { FaWhatsapp, FaTelegram } from "react-icons/fa";
-import MobileNavigation from "@/components/navigation/MobileNavigation";
 import {cn} from "@/libs/utils";
 import React from "react";
-import {navLinks} from "@/config/navigation";
 
 interface ToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
     className?: string;

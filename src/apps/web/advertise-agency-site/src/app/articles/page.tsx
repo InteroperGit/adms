@@ -17,7 +17,7 @@ export default function ArticlesPage() {
             { title: 'Главная', href: '/' },
             { title: 'Статьи' }
         ])
-    }, []);
+    }, [updateBreadcrumbs]);
 
     return (
         <div className="md:px-4">

@@ -54,7 +54,6 @@ const textStyles: TextStyles = {
     p: cn(
         'my-6 leading-relaxed',
         'text-gray-700 dark:text-gray-300',
-        'max-w-prose' // Ограничение ширины для читаемости
     ),
     ul: cn(
         'list-disc pl-6',
@@ -155,8 +154,6 @@ const ImageBlockComponent = ({
                         url,
                         alt,
                         caption,
-                        width = 800,
-                        height = 600,
                         fullWidth = false
                     }: ImageBlock) => (
     <figure className={`my-6 ${fullWidth ? 'w-full' : 'max-w-full'}`}>
@@ -233,7 +230,7 @@ const ImageGalleryBlockComponent = ({
  * @param columns
  * @constructor
  */
-const PortfolioBlockComponent = ({ projects, columns}: PortfolioBlock) => {
+const PortfolioBlockComponent = ({ projects }: PortfolioBlock) => {
     return (
         <PortfolioSection title={"Примеры работ"}
                           projects={projects}

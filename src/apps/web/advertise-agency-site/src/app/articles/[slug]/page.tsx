@@ -1,10 +1,19 @@
 import {getAllArticles, getArticleBySlug} from '@/libs/api/articles';
 import {ArticleParser} from "@/libs/article-parser";
-import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
+// import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
 import React from "react";
+import {Metadata} from "next";
 
 interface Params {
     slug: string;
+}
+
+interface PageProps {
+    params: Promise<Params>
+}
+
+export const metadata: Metadata = {
+    title: '...',
 }
 
 export async function generateStaticParams() {
@@ -14,8 +23,8 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function ArticlePage({ params }: { params: Params }) {
-    const { slug } = await params;
+export default async function ArticlePage(props: PageProps) {
+    const { slug } = await props.params;
     const article = await getArticleBySlug(slug);
 
     if (!article) {
@@ -24,11 +33,11 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
     //const updateBreadcrumbs = useUpdateBreadcrumbs()
 
-    const breadcrumbs: { title: string, href?: string}[] = [
+    /*const breadcrumbs: { title: string, href?: string}[] = [
         { title: 'Главная', href: '/' },
         { title: 'Статьи', href: '/articles' },
         { title: article.title }
-    ];
+    ];*/
 
     //updateBreadcrumbs(breadcrumbs);
 
