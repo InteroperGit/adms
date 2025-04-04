@@ -15,7 +15,7 @@ export default function ContactsPage() {
             { title: 'Главная', href: '/' },
             { title: 'Контакты' }
         ])
-    }, []);
+    }, [updateBreadcrumbs]);
 
     return (
         <>

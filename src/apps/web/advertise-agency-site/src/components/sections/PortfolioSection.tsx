@@ -82,7 +82,6 @@ interface PortfolioSectionProps {
 export const PortfolioSection = ({
                                      projects,
                                      title = "Наши работы",
-                                     description,
                                      columns = {
                                          mobile: 1,
                                          tablet: 2,

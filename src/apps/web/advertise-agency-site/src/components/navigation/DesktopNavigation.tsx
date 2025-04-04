@@ -45,16 +45,14 @@ export default function DesktopNavigation() {
                 <nav className="hidden md:flex justify-center w-full py-4"> {/* Добавлен padding */}
                     <div className="flex items-center space-x-2">
                         {navLinks.map((link) => (
-                            <Button
-                                key={link.href}
-                                asChild
-                                variant={pathname.startsWith(link.href) ? "secondary" : "ghost"}
-                                className="hover:text-primary"
-                            >
-                                <Link href={link.href}>
+                            <Link key={link.href} href={link.href}>
+                                <Button
+                                    variant={pathname.startsWith(link.href) ? "secondary" : "ghost"}
+                                    className="hover:text-primary"
+                                >
                                     {link.name}
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         ))}
                     </div>
                 </nav>
