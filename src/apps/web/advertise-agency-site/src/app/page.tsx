@@ -1,7 +1,7 @@
 import {ServicesSection} from "@/components/sections/ServicesSection";
 import {serviceCategories} from "@/data/services-data";
 import {PortfolioSection} from "@/components/sections/PortfolioSection";
-import {recentProjects} from "@/data/projects-data";
+import {recentProjectPreviews} from "@/data/projects-data";
 import {NewsSection} from "@/components/sections/NewsSection";
 import {recentNewsPreviews} from "@/data/news-data";
 import HeroSection from "@/components/sections/HeroSection";
@@ -101,7 +101,7 @@ export default function Home() {
                 <PortfolioSection
                     title="Наше портфолио"
                     description="Лучшие проекты за последние годы"
-                    projects={recentProjects}
+                    projects={recentProjectPreviews}
                     columns={{
                         mobile: 1,
                         tablet: 2,

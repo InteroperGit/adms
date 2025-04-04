@@ -1,19 +1,51 @@
 import {getAllArticles, getArticleBySlug} from '@/libs/api/articles';
 import {ArticleParser} from "@/libs/article-parser";
-// import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
 import React from "react";
 import {Metadata} from "next";
+import {PageProps, PromisePageProps} from "@/types/page";
 
-interface Params {
-    slug: string;
-}
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const article = await getArticleBySlug(params.slug);
 
-interface PageProps {
-    params: Promise<Params>
-}
+    if (!article) {
+        return {
+            title: 'Статья не найдена',
+            description: 'Запрошенная статья не существует или была удалена',
+        };
+    }
 
-export const metadata: Metadata = {
-    title: '...',
+    return {
+        title: article.seo?.title || article.title,
+        description: article.seo?.description || article.excerpt,
+        keywords: article.seo?.keywords || article.tags?.join(', '),
+        openGraph: {
+            title: article.seo?.title || article.title,
+            description: article.seo?.description || article.excerpt,
+            url: `https://rmaster35.ru/projects/${article.slug}`,
+            siteName: 'РА Рекламастер',
+            images: [
+                {
+                    url: article.seo?.ogImage || article.coverImage.url,
+                    width: article.coverImage.width || 1200,
+                    height: article.coverImage.height || 630,
+                    alt: article.coverImage.alt || article.title,
+                },
+            ],
+            locale: 'ru_RU',
+            type: 'article',
+            publishedTime: article.publishedAt,
+            modifiedTime: article.updatedAt,
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: article.seo?.title || article.title,
+            description: article.seo?.description || article.excerpt,
+            images: [article.seo?.ogImage || article.coverImage.url],
+        },
+        alternates: {
+            canonical: `https://rmaster35.ru/projects/${article.slug}`,
+        },
+    };
 }
 
 export async function generateStaticParams() {
@@ -23,23 +55,13 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function ArticlePage(props: PageProps) {
+export default async function ArticlePage(props: PromisePageProps) {
     const { slug } = await props.params;
     const article = await getArticleBySlug(slug);
 
     if (!article) {
         return <div>Статья не найдена</div>;
     }
-
-    //const updateBreadcrumbs = useUpdateBreadcrumbs()
-
-    /*const breadcrumbs: { title: string, href?: string}[] = [
-        { title: 'Главная', href: '/' },
-        { title: 'Статьи', href: '/articles' },
-        { title: article.title }
-    ];*/
-
-    //updateBreadcrumbs(breadcrumbs);
 
     return (
         <article>

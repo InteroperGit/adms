@@ -152,6 +152,10 @@ html, body {
  * Lists
  */
 
+/**
+ * Rounded list
+ */
+
 .rounded-list {
   counter-reset: li; /* Инициализация счетчика */
   list-style: none; /* Убираем стандартные маркеры */
@@ -213,5 +217,63 @@ html, body {
   .rounded-list li:before {
     background: #ea580c; /* Более темный orange-600 для темной темы */
     border-color: #1e1e1e;
+  }
+}
+
+/**
+ * Checkmark list
+ */
+
+.checkmark-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.checkmark-list li {
+  position: relative;
+  padding: 16px 16px 16px 52px;
+  margin-bottom: 10px;
+  background: #f8f8f8;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.checkmark-list li:hover {
+  background: #f0f0f0;
+}
+
+.checkmark-list li:before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background-color: #f97316;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 18px;
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .checkmark-list li {
+    background: #2d2d2d;
+    color: #e0e0e0;
+  }
+
+  .checkmark-list li:hover {
+    background: #383838;
+  }
+
+  .checkmark-list li:before {
+    background-color: #ea580c;
   }
 }

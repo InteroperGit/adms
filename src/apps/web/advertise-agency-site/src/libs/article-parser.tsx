@@ -55,11 +55,7 @@ const textStyles: TextStyles = {
         'my-6 leading-relaxed',
         'text-gray-700 dark:text-gray-300',
     ),
-    ul: cn(
-        'list-disc pl-6',
-        'my-4 space-y-2', // Улучшенные отступы между пунктами
-        'marker:text-gray-400 dark:marker:text-gray-500' // Стилизация маркеров
-    ),
+    ul: cn('checkmark-list'),
     ol: cn("rounded-list"),
     li: cn(),
     blockquote: cn(
@@ -435,7 +431,7 @@ const EmbededBlockComponent= ({ html, url, width, height }: EmbedBlock) => {
  */
 export const ArticleParser = ({ blocks }: { blocks: ArticleBlock[] }) => {
     return (
-        <div className="article-content">
+        <div>
             {blocks.map((block, index) => {
                 switch (block.type) {
                     case 'text':

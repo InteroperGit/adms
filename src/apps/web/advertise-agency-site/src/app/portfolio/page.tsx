@@ -3,7 +3,7 @@
 import {useEffect, useState} from 'react';
 import { cn } from '@/libs/utils';
 import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
-import {projects} from "@/data/projects-data";
+import {projectPreviews} from "@/data/projects-data";
 import {categories} from "@/data/categories-data";
 import HeroSection from "@/components/sections/HeroSection";
 import {CategoryFilter} from "@/components/navigation/CategoryFilter";
@@ -32,8 +32,8 @@ export default function PortfolioPage() {
     }, [activeCategory]);
 
     const filteredProjects = activeCategory === 'all'
-        ? projects
-        : projects.filter(project => project.category?.name === activeCategory);
+        ? projectPreviews
+        : projectPreviews.filter(project => project.category?.name === activeCategory);
 
     const projectsToShow = filteredProjects.slice(0, visibleProjects);
     const hasMoreProjects = visibleProjects < filteredProjects.length;
