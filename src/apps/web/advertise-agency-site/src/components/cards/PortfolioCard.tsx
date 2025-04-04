@@ -75,9 +75,11 @@ export const PortfolioCard = ({
                                   basePath = "/portfolio",
                                   enableHoverEffects = true,
                               }: PortfolioItemProps) => {
+
+    const projectUrl = `${basePath}/${project.slug}`
+
     return (
         <div
-            key={project.id}
             className={cn(
                 "group relative overflow-hidden rounded-lg shadow-md",
                 "transition-all duration-300 h-full flex flex-col project-card",
@@ -86,7 +88,7 @@ export const PortfolioCard = ({
             )}
         >
             <Link
-                href={`${basePath}/${project.id}`}
+                href={`${projectUrl}`}
                 className="flex-1 flex flex-col"
                 aria-label={`Посмотреть проект ${project.title}`}
             >

@@ -7,7 +7,7 @@ export interface Article {
     /**
      * Уникальный идентификатор статьи
      */
-    id: string
+    id: number
 
     /**
      * Заголовок статьи (h1)
@@ -240,7 +240,7 @@ export interface ArticleSEO {
  * Превью статьи
  */
 export interface ArticlePreview {
-    id: string
+    id: number
     slug: string
     title: string
     excerpt: string

@@ -1,6 +1,7 @@
 import {ProjectPreview} from "@/types/project";
+import {Article} from "@/types/article";
 
-export const projects: ProjectPreview[] = [
+export const projectPreviews: ProjectPreview[] = [
     {
         id: 1,
         title: 'Брендирование кафе "Sunrise"',
@@ -12,7 +13,7 @@ export const projects: ProjectPreview[] = [
         client: 'Сеть кофеен Sunrise',
         year: '2023',
         imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format',
-        slug: 'sunrise-cafe',
+        slug: 'case-sunrise-cafe-signage',
         description: 'Полный ребрендинг сети кофеен'
     },
     {
@@ -423,4 +424,175 @@ export const projects: ProjectPreview[] = [
     }
 ];
 
-export const recentProjects: ProjectPreview[] = projects.slice(0, 6);
+export const recentProjectPreviews: ProjectPreview[] = projectPreviews.slice(0, 6);
+
+export const projects: Article[] = [{
+    id: 1,
+    title: "Кейс: как световая вывеска увеличила поток гостей кафе на 30%",
+    excerpt: "Реальный пример того, как качественная наружная реклама помогла кафе Sunrise увеличить вечернюю посещаемость на 30% и повысить узнаваемость бренда.",
+    createdAt: "2023-10-15",
+    updatedAt: "2023-11-20",
+    publishedAt: "2023-11-25",
+    readingTime: 10, // Увеличено время чтения
+    slug: "case-sunrise-cafe-signage",
+    tags: ["наружная реклама", "световые буквы", "кейсы", "малый бизнес"],
+    coverImage: {
+        url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+        alt: "Световая вывеска кафе в вечернее время",
+        width: 2070,
+        height: 1380
+    },
+    category: {
+        name: "Кейсы",
+        slug: "cases"
+    },
+    author: {
+        name: "Алексей Петров",
+        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
+        position: "Главный дизайнер"
+    },
+    content: [
+        // 1. Добавлена фотография с итоговым результатом
+        {
+            type: "image",
+            url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+            alt: "Итоговый результат - световая вывеска кафе Sunrise",
+            caption: "Готовая световая вывеска кафе Sunrise в вечернее время",
+            fullWidth: true
+        },
+        {
+            type: "text",
+            content: "<h2>Проблема: невидимость = потеря клиентов</h2><p>Кафе Sunrise расположено в оживленном районе, но его старая вывеска была практически незаметна в вечернее время.</p>"
+        },
+        {
+            type: "image",
+            url: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+            alt: "Старая вывеска кафе днем",
+            caption: "Старая вывеска кафе Sunrise днем",
+            fullWidth: true
+        },
+        {
+            type: "text",
+            content: "<h3>Основные недостатки старой вывески:</h3><ul><li>Плохая читаемость из-за мелкого шрифта</li><li>Отсутствие подсветки в вечернее время</li><li>Не выделялась на фоне соседних заведений</li></ul>"
+        },
+        {
+            type: "divider",
+            style: "dashed"
+        },
+        {
+            type: "text",
+            content: "<h2>Решение: световые буквы с теплой подсветкой</h2>"
+        },
+        {
+            type: "imageGallery",
+            images: [
+                {
+                    url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                    alt: "Новая световая вывеска кафе",
+                    caption: "Новая вывеска кафе Sunrise с теплой подсветкой"
+                },
+                {
+                    url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                    alt: "Детали вывески крупным планом",
+                    caption: "Детализация световых букв"
+                }
+            ],
+            layout: "grid",
+            columns: 2
+        },
+        // 2. Добавлен раздел "Изготовление"
+        {
+            type: "text",
+            content: "<h2>Изготовление вывески</h2><p>Процесс производства световых букв включал несколько этапов:</p>"
+        },
+        {
+            type: "text",
+            content: "<h3>1. Подготовка материалов</h3><p>Для основы букв использовался акриловый лист толщиной 8 мм, который устойчив к ультрафиолету и перепадам температур. Для подсветки выбрали энергоэффективные светодиодные ленты с теплым свечением (3000K).</p>"
+        },
+        {
+            type: "image",
+            url: "https://images.unsplash.com/photo-1605001011156-cbf0b0f67a51?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+            alt: "Материалы для изготовления вывески",
+            caption: "Акриловые заготовки и светодиодные ленты",
+            fullWidth: false
+        },
+        {
+            type: "text",
+            content: "<h3>2. Лазерная резка</h3><p>Буквы были вырезаны на лазерном станке с высокой точностью (погрешность менее 0,1 мм). Это обеспечило идеальные формы и гладкие края.</p>"
+        },
+        {
+            type: "text",
+            content: "<h3>3. Монтаж подсветки</h3><p>Светодиодные ленты устанавливались с равномерным шагом 5 см для равномерного свечения без темных пятен. Все соединения были герметизированы.</p>"
+        },
+        {
+            type: "image",
+            url: "https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
+            alt: "Процесс монтажа подсветки",
+            caption: "Установка светодиодной подсветки в буквы",
+            fullWidth: false
+        },
+        // 3. Добавлен раздел "Согласование в архитектуре"
+        {
+            type: "text",
+            content: "<h2>Согласование в архитектуре</h2><p>Размещение вывески потребовало согласования с городской архитектурной комиссией. Наши специалисты подготовили полный пакет документов:</p>"
+        },
+        {
+            type: "text",
+            content: "<ul><li>Технический паспорт вывески с расчетами нагрузок</li><li>3D-визуализацию в контексте здания</li><li>Схему крепления и электропроводки</li><li>Гарантийные обязательства</li></ul>"
+        },
+        {
+            type: "text",
+            content: "<p>Благодаря профессиональному подходу, согласование заняло всего 7 рабочих дней. Мы учли все требования по безопасности и эстетике городской среды.</p>"
+        },
+        {
+            type: "image",
+            url: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+            alt: "Вывеска в городской среде",
+            caption: "Вывеска гармонично вписалась в архитектурный облик улицы",
+            fullWidth: true
+        },
+        {
+            type: "quote",
+            text: "Мы не ожидали такого эффекта! Теперь Sunrise видно издалека, а гости говорят: 'Мы вас нашли по вывеске'. Это лучшая инвестиция за последний год.",
+            author: "Анна, владелец кафе Sunrise"
+        },
+        {
+            type: "text",
+            content: "<h2>Результаты после установки</h2>"
+        },
+        {
+            type: "table",
+            headers: ["Показатель", "Результат"],
+            rows: [
+                ["Рост вечерней посещаемости", "+30%"],
+                ["Увеличение среднего чека", "+15%"],
+                ["Гарантийный срок", "5 лет"],
+                ["Срок согласования", "7 дней"]
+            ],
+            align: ["left", "center"]
+        },
+        {
+            type: "video",
+            url: "https://www.youtube.com/watch?v=example123",
+            source: "youtube",
+            caption: "Процесс монтажа вывески",
+            aspectRatio: "16:9"
+        },
+        {
+            type: "text",
+            content: "<h2>Хотите такой же результат для своего бизнеса?</h2><p>Мы изготовим для вас вывеску, которая будет привлекать клиентов 24/7.</p>"
+        },
+        {
+            type: "embed",
+            html: "<div class='cta-form'><h3>Оставьте заявку</h3><form>...</form></div>",
+            width: "100%"
+        }
+    ],
+    seo: {
+        title: "Кейс: световая вывеска для кафе Sunrise | Увеличение потока на 30%",
+        description: "Реальный пример увеличения посещаемости кафе на 30% после установки световой вывески. Подробный разбор проекта и результатов.",
+        keywords: ["световые буквы", "наружная реклама", "вывеска для кафе", "кейс", "согласование вывески"],
+        ogImage: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+    },
+    isFeatured: true,
+}];
