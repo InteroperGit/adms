@@ -75,7 +75,7 @@ export default function PortfolioPage() {
 
             {/* Фильтры */}
             <section className={cn("py-12 px-6")}>
-                <div className="container mx-auto">
+                <div>
                     <CategoryFilter
                         categories={categories}
                         activeCategory={activeCategory}
