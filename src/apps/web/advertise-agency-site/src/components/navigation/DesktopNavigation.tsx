@@ -2,58 +2,66 @@
 
 import React from "react";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
-import { usePathname } from "next/navigation"
-import {navLinks} from "@/config/navigation";
+import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
+import { navLinks } from "@/config/navigation";
+import { motion } from "framer-motion";
+import { cn } from "@/libs/utils"; // Предполагается, что у вас есть утилита cn
 
-/**
- * DesktopNavigation - Компонент горизонтального меню навигации для десктопных устройств.
- *
- * Отображает панель навигации в верхней части страницы с:
- * - Ссылками на основные разделы сайта
- * - Визуальным выделением активного раздела
- * - Поддержкой темной темы
- * - Адаптивным скрытием на мобильных устройствах
- *
- * Особенности:
- * - Автоматически определяет активный раздел по текущему URL
- * - Использует semantic-тег <nav> для доступности
- * - Центрированное расположение элементов
- * - Горизонтальный разделитель в верхней части
- * - Анимация перехода между состояниями
- *
- * @example
- * // Базовое использование (с импортированными ссылками)
- * <DesktopNavigation />
- *
- * @example
- * // С кастомными ссылками
- * const customLinks = [
- *   { name: 'Главная', href: '/' },
- *   { name: 'Блог', href: '/blog' }
- * ];
- *
- * <DesktopNavigation navLinks={customLinks} />
- */
 export default function DesktopNavigation() {
-    const pathname = usePathname()
+    const pathname = usePathname();
 
     return (
-        <div className="border-b border-gray-200 dark:border-gray-800"> {/* Добавленная линия */}
+        <div className={cn(
+            "sticky top-0 z-50 backdrop-blur-sm bg-background/80",
+            "border-b border-gray-200 dark:border-gray-800 shadow-sm"
+        )}>
             <div className="container mx-auto px-4">
-                {/* Десктопное меню - выровнено по центру */}
-                <nav className="hidden md:flex justify-center w-full py-4"> {/* Добавлен padding */}
-                    <div className="flex items-center space-x-2">
-                        {navLinks.map((link) => (
-                            <Link key={link.href} href={link.href}>
-                                <Button
-                                    variant={pathname.startsWith(link.href) ? "secondary" : "ghost"}
-                                    className="hover:text-primary"
+                <nav className="hidden md:flex justify-center w-full">
+                    <div className="flex items-center gap-1 h-16">
+                        {navLinks.map((link) => {
+                            const isActive = pathname.startsWith(link.href);
+
+                            return (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="relative group" // Добавляем group для hover-эффектов
                                 >
-                                    {link.name}
-                                </Button>
-                            </Link>
-                        ))}
+                                    <Button
+                                        variant="ghost"
+                                        className={cn(
+                                            "px-4 py-2 text-sm font-medium transition-all",
+                                            "hover:text-primary hover:bg-accent/50", // Плавные hover-эффекты
+                                            isActive ? "text-primary font-semibold" : "text-muted-foreground",
+                                            "relative overflow-hidden" // Для анимации
+                                        )}
+                                    >
+                                        <span className="relative z-10">{link.name}</span>
+
+                                        {isActive && (
+                                            <motion.div
+                                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                                                layoutId="activeIndicator"
+                                                transition={{
+                                                    type: "spring",
+                                                    stiffness: 300,
+                                                    damping: 30,
+                                                }}
+                                            />
+                                        )}
+
+                                        {/* Подчеркивание при hover */}
+                                        <motion.div
+                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/30"
+                                            initial={{ width: 0 }}
+                                            whileHover={{ width: "100%" }}
+                                            transition={{ duration: 0.3 }}
+                                        />
+                                    </Button>
+                                </Link>
+                            );
+                        })}
                     </div>
                 </nav>
             </div>
