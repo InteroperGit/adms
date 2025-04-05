@@ -32,7 +32,7 @@ export default function DesktopNavigation() {
                                         variant="ghost"
                                         className={cn(
                                             "px-4 py-2 text-sm font-medium transition-all",
-                                            "hover:text-primary hover:bg-accent/50", // Плавные hover-эффекты
+                                            "hover:text-primary hover:bg-accent/0", // Плавные hover-эффекты
                                             isActive ? "text-primary font-semibold" : "text-muted-foreground",
                                             "relative overflow-hidden" // Для анимации
                                         )}
