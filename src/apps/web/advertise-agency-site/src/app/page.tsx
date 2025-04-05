@@ -7,74 +7,51 @@ import {recentNewsPreviews} from "@/data/news-data";
 import HeroSection from "@/components/sections/HeroSection";
 import {ClientsSection} from "@/components/sections/ClientsSection";
 import React from "react";
+import AboutCompanySection from "@/components/sections/AboutCompanySection";
+import AdvantagesSection from "@/components/sections/AdvantagesSection";
+import CarouselSection from "@/components/sections/CarouselSection";
+import {getPromotions} from "@/libs/api/promotions";
+import {getCompanyProductionImages, getCompanyStats} from "@/libs/api/company-info";
+
+async function CarouselWrapper() {
+    const promotions = await getPromotions();
+    return <CarouselSection promotions={promotions} className={"hidden md:block"} />;
+}
+
+async function AboutCompanyWrapper() {
+    const companyStats = await getCompanyStats();
+    const companyProductImages = await getCompanyProductionImages();
+
+    return <AboutCompanySection stats={companyStats} productionImages={companyProductImages} />
+}
 
 export default function Home() {
     return (
         <div className="space-y-12 pb-16 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-            {/* 1. Hero Banner */}
+            {/* 1. Карусель спецпредложений */}
+            <CarouselWrapper />
+
+            {/* 2. Hero Banner */}
             <HeroSection
                 title={"Рекламное агентство полного цикла"}
                 description={"Создаем эффективные решения с 2009 года"}
             />
 
             {/* 3. Преимущества */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[
-                    { title: "10+ лет опыта", desc: "На рынке рекламных услуг" },
-                    { title: "Собственное производство", desc: "Полный контроль качества" },
-                    { title: "500+ проектов", desc: "Успешно реализовано" }
-                ].map((item, i) => (
-                    <div key={i} className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700">
-                        <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                        <p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
-                    </div>
-                ))}
-            </div>
+            <AdvantagesSection />
 
-            {/* 4. Карусель спецпредложений */}
-            <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
-                <h2 className="text-2xl font-bold mb-6">Специальные предложения</h2>
-                <div className="flex overflow-x-auto gap-4 pb-4">
-                    {[1, 2, 3].map(i => (
-                        <div key={i} className="flex-shrink-0 w-64 h-48 bg-white dark:bg-gray-700 rounded-lg shadow-sm dark:shadow-none flex items-center justify-center border dark:border-gray-600">
-                            <span className="dark:text-gray-200">Акция {i}</span>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            {/* 4. О компании */}
+            <AboutCompanyWrapper />
 
-            {/* 5. О компании */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-lg border dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-4">О компании</h2>
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div>
-                        <p className="mb-4 dark:text-gray-300">Мы — креативное рекламное агентство с полным циклом производства.</p>
-                        <ul className="space-y-2 dark:text-gray-300">
-                            {['500+ проектов', '50+ постоянных клиентов', 'Собственное производство'].map((item, i) => (
-                                <li key={i} className="flex items-start">
-                                    <span className="mr-2 text-orange-600 dark:text-blue-400">✓</span>
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                        <span className="dark:text-gray-300">[Фото производства]</span>
-                    </div>
-                </div>
-            </div>
+            {/* 5. Услуги */}
+            <ServicesSection
+                title="Наши услуги"
+                services={serviceCategories}
+                columns={4}
+                className="my-9 py-6 bg-white dark:bg-gray-800 px-6 rounded-lg border dark:border-gray-700"
+            />
 
-            {/* 6. Услуги */}
-            <div className="bg-white dark:bg-gray-800 px-6 rounded-lg border dark:border-gray-700">
-                <ServicesSection
-                    title="Наши услуги"
-                    services={serviceCategories}
-                    columns={4}
-                    className="my-9"
-                />
-            </div>
-
-            {/* 7. Этапы работы */}
+            {/* 6. Этапы работы */}
             <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-lg border dark:border-gray-700">
                 <h2 className="text-2xl font-bold mb-6">Как мы работаем</h2>
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -96,42 +73,36 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* 8. Портфолио */}
-            <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700">
-                <PortfolioSection
-                    title="Наше портфолио"
-                    description="Лучшие проекты за последние годы"
-                    projects={recentProjectPreviews}
-                    columns={{
-                        mobile: 1,
-                        tablet: 2,
-                        desktop: 3
-                    }}
-                    className="py-6"
-                />
-            </div>
+            {/* 7. Портфолио */}
+            <PortfolioSection
+                title="Наше портфолио"
+                description="Лучшие проекты за последние годы"
+                projects={recentProjectPreviews}
+                columns={{
+                    mobile: 1,
+                    tablet: 2,
+                    desktop: 3
+                }}
+                className="py-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700"
+            />
 
-            {/* 10. Новости */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700">
-                <NewsSection
-                    title="Последние события"
-                    articles={recentNewsPreviews}
-                    columns={{
-                        mobile: 1,
-                        tablet: 2,
-                        desktop: 3
-                    }}
-                    maxItems={6}
-                    className="py-6"
-                />
-            </div>
+            {/* 8. Новости */}
+            <NewsSection
+                title="Последние события"
+                articles={recentNewsPreviews}
+                columns={{
+                    mobile: 1,
+                    tablet: 2,
+                    desktop: 3
+                }}
+                maxItems={6}
+                className="py-6 bg-white dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700"
+            />
 
-            {/* 11. Клиенты */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700">
-                <ClientsSection />
-            </div>
+            {/* 9. Клиенты */}
+            <ClientsSection className="bg-white dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700" />
 
-            {/* 12. FAQ */}
+            {/* 10. FAQ */}
             <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-lg border dark:border-gray-700">
                 <h2 className="text-2xl font-bold mb-6 dark:text-gray-200">Частые вопросы</h2>
                 <div className="space-y-4">
@@ -148,7 +119,7 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* 13. Форма заявки */}
+            {/* 11. Форма заявки */}
             <div className="bg-orange-50 dark:bg-orange-900/20 p-8 rounded-lg border border-blue-100 dark:border-orange-800">
                 <h2 className="text-2xl font-bold mb-4 dark:text-white">Оставить заявку</h2>
                 <form className="space-y-4">

@@ -265,12 +265,12 @@ html, body {
 /* Темная тема */
 @media (prefers-color-scheme: dark) {
   .checkmark-list li {
-    background: #2d2d2d;
-    color: #e0e0e0;
+    background: #374151; /* dark:bg-gray-700 */
+    color: #ffffff; /* Белый текст */
   }
 
   .checkmark-list li:hover {
-    background: #383838;
+    background: #4B5563; /* Немного светлее для hover */
   }
 
   .checkmark-list li:before {

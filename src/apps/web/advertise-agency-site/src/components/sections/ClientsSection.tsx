@@ -67,9 +67,9 @@ interface ClientsSectionProps {
  * />
  */
 export const ClientsSection = ({
-                                   className,
                                    title = "Наши клиенты",
                                    columns = { sm: 3, md: 4, lg: 6 },
+                                   className,
                                }: ClientsSectionProps) => {
     // Генерация классов для сетки
     const gridClasses = cn(
