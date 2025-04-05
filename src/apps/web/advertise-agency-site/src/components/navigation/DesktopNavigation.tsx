@@ -22,18 +22,24 @@ export default function DesktopNavigation() {
                         {navLinks.map((link) => {
                             const isActive = pathname.startsWith(link.href);
 
+                            const underlineClass = cn(
+                                "absolute bottom-0 left-0 w-full h-0.5",
+                                "bg-orange-600 scale-x-0 group-hover:scale-x-100",
+                                "transition-transform duration-300 origin-left"
+                            )
+
                             return (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="relative group" // Добавляем group для hover-эффектов
+                                    className="relative group"
                                 >
                                     <Button
                                         variant="ghost"
                                         className={cn(
-                                            "px-4 py-2 text-sm font-medium transition-all",
+                                            "px-4 py-2 text-lg font-medium transition-all",
                                             "hover:text-primary hover:bg-accent/0", // Плавные hover-эффекты
-                                            isActive ? "text-primary font-semibold" : "text-muted-foreground",
+                                            isActive ? "text-primary" : "text-muted-foreground",
                                             "relative overflow-hidden" // Для анимации
                                         )}
                                     >
@@ -50,14 +56,6 @@ export default function DesktopNavigation() {
                                                 }}
                                             />
                                         )}
-
-                                        {/* Подчеркивание при hover */}
-                                        <motion.div
-                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/30"
-                                            initial={{ width: 0 }}
-                                            whileHover={{ width: "100%" }}
-                                            transition={{ duration: 0.3 }}
-                                        />
                                     </Button>
                                 </Link>
                             );
