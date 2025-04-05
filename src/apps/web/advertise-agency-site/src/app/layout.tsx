@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {Geist, Geist_Mono} from "next/font/google";
 import Header from "@/components/header/Header";
 import DesktopNavigation from "@/components/navigation/DesktopNavigation";
 import {Providers} from "@/app/providers";
@@ -10,7 +10,7 @@ import MobileNavigation from "@/components/navigation/MobileNavigation";
 import React from "react";
 import TailwindKeeper from "@/components/misc/TailwindKeeper";
 
-import "./globals.css";
+import "../styles/globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

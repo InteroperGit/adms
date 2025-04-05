@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@import "./theme.css";
+@import "./base.css";
+@import "./components/breadcrumb.css";
+@import "./components/rounded-list.css";
+@import "./components/checkmark-list.css";
