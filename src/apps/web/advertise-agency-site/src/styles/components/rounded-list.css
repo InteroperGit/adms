@@ -1,0 +1,63 @@
+.rounded-list {
+    counter-reset: li; /* Инициализация счетчика */
+    list-style: none; /* Убираем стандартные маркеры */
+    padding: 0;
+    margin: 20px;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.rounded-list li {
+    position: relative;
+    padding: 16px 16px 16px 68px; /* Отступ слева для номера */
+    margin-bottom: 10px; /* Отступ между элементами */
+    background: #f8f8f8;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.rounded-list li:hover {
+    background: #f0f0f0;
+}
+
+.rounded-list li:before {
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f97316; /* Tailwind orange-500 */
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    line-height: normal;
+    padding-top: 1px;
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+    .rounded-list li {
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    .rounded-list li:hover {
+        background: #383838;
+    }
+
+    .rounded-list li:before {
+        background: #ea580c; /* Более темный orange-600 для темной темы */
+        border-color: #1e1e1e;
+    }
+}

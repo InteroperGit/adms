@@ -1,0 +1,18 @@
+.breadcrumb-link {
+    position: relative;
+}
+
+.breadcrumb-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.breadcrumb-link:hover::after {
+    width: 100%;
+}
