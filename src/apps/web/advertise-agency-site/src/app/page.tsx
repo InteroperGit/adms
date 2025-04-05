@@ -13,6 +13,7 @@ import CarouselSection from "@/components/sections/CarouselSection";
 import {getPromotions} from "@/libs/api/promotions";
 import {getCompanyProductionImages, getCompanyStats} from "@/libs/api/company-info";
 import WorkStepsSection from "@/components/sections/WorkStepsSection";
+import FaqSection from "@/components/sections/FaqSection";
 
 async function CarouselWrapper() {
     const promotions = await getPromotions();
@@ -53,7 +54,7 @@ export default function Home() {
             />
 
             {/* 6. Этапы работы */}
-            <WorkStepsSection />
+            <WorkStepsSection className={"bg-gray-50 dark:bg-gray-800 p-8 rounded-lg border dark:border-gray-700"} />
 
             {/* 7. Портфолио */}
             <PortfolioSection
@@ -85,21 +86,7 @@ export default function Home() {
             <ClientsSection className="bg-white dark:bg-gray-800 p-6 rounded-lg border dark:border-gray-700" />
 
             {/* 10. FAQ */}
-            <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-lg border dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6 dark:text-gray-200">Частые вопросы</h2>
-                <div className="space-y-4">
-                    {[
-                        {q: 'Какой срок производства?', a: 'От 3 до 14 дней в зависимости от сложности'},
-                        {q: 'Есть ли доставка?', a: 'Да, доставляем по всему городу и области'},
-                        {q: 'Даете ли гарантию?', a: 'Гарантия от 6 месяцев на все работы'}
-                    ].map((item, i) => (
-                        <div key={i} className="border-b dark:border-gray-700 pb-4">
-                            <h3 className="font-bold mb-2 dark:text-gray-200">{item.q}</h3>
-                            <p className="text-gray-600 dark:text-gray-400">{item.a}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <FaqSection className={"bg-gray-50 dark:bg-gray-800 p-8 rounded-lg border dark:border-gray-700"} />
 
             {/* 11. Форма заявки */}
             <div className="bg-orange-50 dark:bg-orange-900/20 p-8 rounded-lg border border-blue-100 dark:border-orange-800">
