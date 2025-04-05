@@ -2,7 +2,7 @@ import {Article, ArticlePreview} from "@/types/article";
 
 export const articlesPreviews: ArticlePreview[] = [
     {
-        id: '1',
+        id: 1,
         slug: '1',
         title: 'Тренды в наружной рекламе 2024',
         excerpt: 'Обзор новых технологий и материалов для наружной рекламы в этом году.',
@@ -12,7 +12,7 @@ export const articlesPreviews: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Рекламные билборды
     },
     {
-        id: '2',
+        id: 2,
         slug: '2',
         title: 'Как выбрать шрифты для брендинга',
         excerpt: 'Полное руководство по подбору шрифтовых пар для логотипов.',
@@ -22,7 +22,7 @@ export const articlesPreviews: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Шрифты
     },
     {
-        id: '3',
+        id: 3,
         slug: '3',
         title: 'УФ-печать: преимущества и особенности',
         excerpt: 'Все что нужно знать о технологии УФ-печати.',
@@ -32,7 +32,7 @@ export const articlesPreviews: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Печатная продукция
     },
     {
-        id: '4',
+        id: 4,
         slug: '4',
         title: 'Нейромаркетинг в рекламе',
         excerpt: 'Как психологические приемы помогают увеличить конверсию.',
@@ -42,7 +42,7 @@ export const articlesPreviews: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Аналитика данных
     },
     {
-        id: '5',
+        id: 5,
         slug: '5',
         title: 'Брендирование транспорта',
         excerpt: 'Как сделать мобильную рекламу эффективной.',
@@ -52,7 +52,7 @@ export const articlesPreviews: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Брендированный транспорт
     },
     {
-        id: '6',
+        id: 6,
         slug: '6',
         title: 'Эффективные POS-материалы',
         excerpt: 'Какие рекламные материалы работают лучше всего.',
@@ -62,7 +62,7 @@ export const articlesPreviews: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Торговое оборудование
     },
     {
-        id: '7',
+        id: 7,
         slug: '7',
         title: '3D-вывески нового поколения',
         excerpt: 'Обзор современных технологий создания вывесок.',
@@ -72,7 +72,7 @@ export const articlesPreviews: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Неоновая вывеска
     },
     {
-        id: '8',
+        id: 8,
         slug: '8',
         title: 'Эко-подход в полиграфии',
         excerpt: 'Как снизить экологический след при печати.',
@@ -82,7 +82,7 @@ export const articlesPreviews: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Бумага и экология
     },
     {
-        id: '9',
+        id: 9,
         slug: '9',
         title: 'Гайд по фирменным стилям 2024',
         excerpt: 'Анализ трендов в корпоративной айдентике.',
@@ -92,7 +92,7 @@ export const articlesPreviews: ArticlePreview[] = [
         imageUrl: 'https://images.unsplash.com/photo-1560869713-61ca42041df8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Брендбук
     },
     {
-        id: '10',
+        id: 10,
         slug: '10',
         title: 'Digital-инструменты для рекламы',
         excerpt: 'Как интегрировать цифровые технологии.',
@@ -104,7 +104,7 @@ export const articlesPreviews: ArticlePreview[] = [
 ];
 
 export const articles: Article[] = [{
-    id: '1',
+    id: 1,
     title: 'Наружная реклама в 2024 году: главные тренды и кейсы',
     excerpt: 'Разбираем ключевые тенденции наружной рекламы: от цифровых билбордов до экологичных решений. Примеры успешных кампаний и метрики эффективности.',
     createdAt: '2024-03-15',
@@ -269,7 +269,7 @@ export const articles: Article[] = [{
 
     relatedArticles: [
         {
-            id: 'digital-billboards-2024',
+            id: 1,
             slug: 'digital-billboards-2024',
             title: 'Цифровые билборды: новые возможности',
             excerpt: 'Как технологии меняют рынок наружной рекламы',
@@ -279,7 +279,7 @@ export const articles: Article[] = [{
             imageUrl: 'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
         },
         {
-            id: 'ar-advertising',
+            id: 2,
             slug: 'ar-in-outdoor-ads',
             title: 'AR в наружной рекламе: кейсы 2024',
             excerpt: 'Как дополненная реальность увеличивает вовлеченность',
@@ -289,7 +289,7 @@ export const articles: Article[] = [{
             imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
         },
         {
-            id: 'eco-advertising',
+            id: 3,
             slug: 'sustainable-outdoor-ads',
             title: 'Эко-тренды в рекламе',
             excerpt: 'Зеленые технологии в OOH-кампаниях',
