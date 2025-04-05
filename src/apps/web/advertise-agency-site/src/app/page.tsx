@@ -29,8 +29,7 @@ async function AboutCompanyWrapper() {
     const companyProductImages = await getCompanyProductionImages();
 
     return (
-        <AboutCompanySection
-            stats={companyStats}
+        <AboutCompanySection stats={companyStats}
             productionImages={companyProductImages}
         />
     );
