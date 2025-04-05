@@ -12,6 +12,7 @@ import AdvantagesSection from "@/components/sections/AdvantagesSection";
 import CarouselSection from "@/components/sections/CarouselSection";
 import {getPromotions} from "@/libs/api/promotions";
 import {getCompanyProductionImages, getCompanyStats} from "@/libs/api/company-info";
+import WorkStepsSection from "@/components/sections/WorkStepsSection";
 
 async function CarouselWrapper() {
     const promotions = await getPromotions();
@@ -52,26 +53,7 @@ export default function Home() {
             />
 
             {/* 6. Этапы работы */}
-            <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-lg border dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6">Как мы работаем</h2>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                    {[
-                        {num: '1', title: 'Заявка', desc: 'Оставляете запрос'},
-                        {num: '2', title: 'Консультация', desc: 'Обсуждаем детали'},
-                        {num: '3', title: 'Макет', desc: 'Создаем дизайн'},
-                        {num: '4', title: 'Производство', desc: 'Изготавливаем'},
-                        {num: '5', title: 'Результат', desc: 'Готовый продукт'}
-                    ].map((step, i) => (
-                        <div key={i} className="flex flex-col items-center text-center">
-                            <div className="w-12 h-12 bg-orange-400 dark:bg-orange-700 text-white rounded-full flex items-center justify-center mb-2">
-                                {step.num}
-                            </div>
-                            <h3 className="font-bold mb-1 dark:text-gray-200">{step.title}</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">{step.desc}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <WorkStepsSection />
 
             {/* 7. Портфолио */}
             <PortfolioSection
