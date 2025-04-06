@@ -2,10 +2,11 @@ import {getAllArticles, getArticleBySlug} from '@/libs/api/articles';
 import {ArticleParser} from "@/libs/article-parser";
 import React from "react";
 import {Metadata} from "next";
-import {PageProps, PromisePageProps} from "@/types/page";
+import {PromisePageProps} from "@/types/page";
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const article = await getArticleBySlug(params.slug);
+export async function generateMetadata(props: PromisePageProps): Promise<Metadata> {
+    const { slug } = await props.params;
+    const article = await getArticleBySlug(slug);
 
     if (!article) {
         return {
