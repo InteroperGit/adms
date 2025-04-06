@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {Geist, Geist_Mono} from "next/font/google";
+import {Geist, Geist_Mono, Montserrat} from "next/font/google";
 import Header from "@/components/header/Header";
 import DesktopNavigation from "@/components/navigation/DesktopNavigation";
 import {Providers} from "@/app/providers";
@@ -20,6 +20,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const montserrat = Montserrat({
+    subsets: ["latin", "cyrillic"], // добавь "cyrillic", если нужен русский
+    variable: "--font-montserrat",
+    weight: ["400", "600", "700"], // нужные тебе веса
 });
 
 export const metadata: Metadata = {
