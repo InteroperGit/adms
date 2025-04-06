@@ -2,10 +2,11 @@ import {getAllProjects, getProjectBySlug} from '@/libs/api/projects';
 import {ArticleParser} from "@/libs/article-parser";
 import React from "react";
 import {Metadata} from "next";
-import {PromisePageProps, PageProps} from "@/types/page";
+import {PromisePageProps} from "@/types/page";
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const project = await getProjectBySlug(params.slug);
+export async function generateMetadata(props: PromisePageProps): Promise<Metadata> {
+    const { slug } = await props.params;
+    const project = await getProjectBySlug(slug);
 
     if (!project) {
         return {
