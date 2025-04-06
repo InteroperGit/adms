@@ -1,6 +1,5 @@
 import {PhoneIcon, EnvelopeIcon, MapPinIcon} from "@heroicons/react/24/outline";
 import {cn} from "@/libs/utils";
-import YandexMap from "@/components/misc/YandexMap";
 import React from "react";
 
 interface ContactItem {
@@ -70,11 +69,6 @@ export default function FooterContacts({
                     </li>
                 ))}
             </ul>
-
-            <YandexMap
-                constructorId="8e9d4dd92e269a69df84774136ae2871466aa55b34f941cb126cfc03efab1fb8"
-                height="400px"
-            />
         </>
     );
 }

@@ -22,12 +22,6 @@ export default function DesktopNavigation() {
                         {navLinks.map((link) => {
                             const isActive = pathname.startsWith(link.href);
 
-                            const underlineClass = cn(
-                                "absolute bottom-0 left-0 w-full h-0.5",
-                                "bg-orange-600 scale-x-0 group-hover:scale-x-100",
-                                "transition-transform duration-300 origin-left"
-                            )
-
                             return (
                                 <Link
                                     key={link.href}
