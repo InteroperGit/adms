@@ -1,9 +1,10 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, {useState, useEffect, useRef, useCallback} from 'react'
 import { cn } from '@/libs/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from "next/link"
+import Image from 'next/image';
 import { PromotionItem } from "@/types/misc"
 
 interface CarouselSectionProps {
@@ -31,6 +32,36 @@ const ArrowRightIcon = () => (
     </svg>
 )
 
+const slideVariants = {
+    enter: (direction: string) => ({
+        x: direction === 'right' ? 1000 : -1000,
+        opacity: 0
+    }),
+    center: {
+        x: 0,
+        opacity: 1,
+        transition: {
+            x: {
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+                bounce: 0.2
+            },
+            opacity: { duration: 0.2 }
+        }
+    },
+    exit: (direction: string) => ({
+        x: direction === 'right' ? -1000 : 1000,
+        opacity: 0,
+        transition: { duration: 0.3 }
+    })
+}
+
+const buttonVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1 }
+}
+
 const CarouselSection: React.FC<CarouselSectionProps> = ({
                                                              promotions,
                                                              autoScrollInterval = 5000,
@@ -41,61 +72,33 @@ const CarouselSection: React.FC<CarouselSectionProps> = ({
     const [isHovered, setIsHovered] = useState(false)
     const timerRef = useRef<NodeJS.Timeout | null>(null)
 
-    const nextSlide = () => {
+    const nextSlide = useCallback(() => {
         setDirection('right')
         setCurrentSlide((prev) => (prev + 1) % promotions.length)
         resetTimer()
-    }
+    }, [promotions]);
 
-    const prevSlide = () => {
+    const prevSlide = useCallback(() => {
         setDirection('left')
         setCurrentSlide((prev) => (prev - 1 + promotions.length) % promotions.length)
         resetTimer()
-    }
+    }, [promotions]);
 
-    const resetTimer = () => {
-        if (timerRef.current) clearTimeout(timerRef.current)
+    const resetTimer = useCallback(() => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current)
+        }
         timerRef.current = setTimeout(nextSlide, autoScrollInterval)
-    }
+    }, [autoScrollInterval, nextSlide]);
+
+    const currentPromo = promotions[currentSlide]
 
     useEffect(() => {
         resetTimer()
         return () => {
             if (timerRef.current) clearTimeout(timerRef.current)
         }
-    }, [currentSlide])
-
-    const slideVariants = {
-        enter: (direction: string) => ({
-            x: direction === 'right' ? 1000 : -1000,
-            opacity: 0
-        }),
-        center: {
-            x: 0,
-            opacity: 1,
-            transition: {
-                x: {
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 30,
-                    bounce: 0.2
-                },
-                opacity: { duration: 0.2 }
-            }
-        },
-        exit: (direction: string) => ({
-            x: direction === 'right' ? -1000 : 1000,
-            opacity: 0,
-            transition: { duration: 0.3 }
-        })
-    }
-
-    const buttonVariants = {
-        hidden: { opacity: 0, scale: 0.8 },
-        visible: { opacity: 1, scale: 1 }
-    }
-
-    const currentPromo = promotions[currentSlide]
+    }, [currentSlide, resetTimer])
 
     return (
         <section
@@ -125,10 +128,12 @@ const CarouselSection: React.FC<CarouselSectionProps> = ({
                             "border border-gray-200 dark:border-gray-600",
                             "overflow-hidden h-full w-full"
                         )}>
-                            <img
+                            <Image
                                 src={currentPromo.imageUrl}
                                 alt={currentPromo.title}
-                                className="w-full h-full object-cover"
+                                layout="fill" // Указываем fill, чтобы изображение заполнило контейнер
+                                objectFit="cover" // Это будет аналогично object-cover в <img>
+                                priority // Приоритет загрузки изображения
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                                 <h3 className="text-white font-bold text-xl">{currentPromo.title}</h3>

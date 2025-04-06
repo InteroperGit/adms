@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
+import Image from "next/image";
 import { cn } from '@/libs/utils';
 
 // Константы с SVG-иконками
@@ -54,13 +55,13 @@ const AboutCompanySection: React.FC<AboutCompanySectionProps> = ({
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    const nextImage = () => {
+    const nextImage = useCallback (() => {
         setCurrentImageIndex((prev) => (prev + 1) % productionImages.length);
-    };
+    }, [productionImages]);
 
-    const startTimer = () => {
+    const startTimer = useCallback(() => {
         timerRef.current = setInterval(nextImage, slideInterval);
-    };
+    }, [nextImage, slideInterval]); // Зависит от slideInterval
 
     const resetTimer = () => {
         if (timerRef.current) {
@@ -76,7 +77,7 @@ const AboutCompanySection: React.FC<AboutCompanySectionProps> = ({
                 clearInterval(timerRef.current);
             }
         };
-    }, [productionImages]);
+    }, [productionImages, startTimer]);
 
     return (
         <section className={cn(
@@ -130,10 +131,12 @@ const AboutCompanySection: React.FC<AboutCompanySectionProps> = ({
                                     index === currentImageIndex ? "opacity-100" : "opacity-0"
                                 )}
                             >
-                                <img
+                                <Image
                                     src={image}
                                     alt={`Производство ${index + 1}`}
                                     className="w-full h-full object-cover"
+                                    width={800} // Укажите желаемую ширину изображения
+                                    height={600} // Укажите желаемую высоту изображения
                                 />
                                 <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                                     <div className="text-white text-center p-4">
