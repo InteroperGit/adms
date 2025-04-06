@@ -52,8 +52,9 @@ const textStyles: TextStyles = {
         'text-gray-700 dark:text-gray-200'
     ),
     p: cn(
+        'text-xl',
         'my-6 leading-relaxed',
-        'text-gray-700 dark:text-gray-300',
+        'text-gray-700 dark:text-gray-300'
     ),
     ul: cn('checkmark-list'),
     ol: cn("rounded-list"),
@@ -283,15 +284,22 @@ const QuoteBlockComponent = ({
         className={cn(
             "my-8 border-l-4 border-orange-500 dark:border-orange-700",
             "bg-orange-50 dark:bg-gray-800",
-            "p-6 italic",
-            "text-gray-600 dark:text-gray-300",
+            "p-6",
+            "text-gray-700 dark:text-gray-200",
+            "rounded-md shadow-sm",
         )}
     >
-        <p className="text-lg mb-3">{text}</p>
+        <p className="text-2xl leading-relaxed font-light mb-3 text-balance font-sans">
+            {text}
+        </p>
         {(author || source) && (
-            <footer className="mt-10 not-italic text-sm">
-                {author && <span className="font-semibold">{author}</span>}
-                {source && <cite className="ml-2">{source}</cite>}
+            <footer className="mt-10 not-italic text-sm text-gray-500 dark:text-gray-400">
+                {author && (
+                    <span className="font-medium text-gray-700 dark:text-gray-200">
+          {author}
+        </span>
+                )}
+                {source && <cite className="ml-2 italic">{source}</cite>}
             </footer>
         )}
     </blockquote>
@@ -335,10 +343,11 @@ const TableBlockComponent = ({
                     <th
                         key={i}
                         className={cn(
-                            'p-3 font-semibold',
+                            'p-4 font-medium text-sm md:text-base font-semibold',
                             'bg-gray-100 dark:bg-gray-800',
                             'border-b border-gray-200 dark:border-gray-700',
                             'text-gray-700 dark:text-gray-300',
+                            'whitespace-nowrap tracking-wide',
                             align[i] === 'center' && 'text-center',
                             align[i] === 'right' && 'text-right',
                             i === 0 && 'rounded-tl-lg',
@@ -367,9 +376,10 @@ const TableBlockComponent = ({
                         <td
                             key={j}
                             className={cn(
-                                'p-3',
+                                'p-4 text-sm md:text-base leading-relaxed font-light',
                                 'text-gray-800 dark:text-gray-200',
                                 'border border-gray-100 dark:border-gray-700',
+                                'break-words',
                                 align[j] === 'center' && 'text-center',
                                 align[j] === 'right' && 'text-right',
                                 i === rows.length - 1 && j === 0 && 'rounded-bl-lg',
