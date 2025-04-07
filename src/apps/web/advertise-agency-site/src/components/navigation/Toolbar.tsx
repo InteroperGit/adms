@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { PhoneIcon } from "@heroicons/react/24/outline"
 import { ThemeToggle } from "@/components/buttons/ThemeToggle"
 import { FaWhatsapp, FaTelegram } from "react-icons/fa"
 import { cn } from "@/libs/utils"
