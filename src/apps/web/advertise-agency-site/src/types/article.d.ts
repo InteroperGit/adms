@@ -116,6 +116,7 @@ export type ArticleBlock =
     | TableBlock
     | DividerBlock
     | EmbedBlock
+    | ArticleFormBlock
 
 /**
  * Текстовый блок
@@ -225,6 +226,20 @@ export interface EmbedBlock {
     width?: string
     height?: string
 }
+
+/**
+ * Компонент Форма
+ */
+export interface ArticleFormBlock {
+    type: 'form',
+    formType: ArticleFormTypeKey       // Ключ типа формы
+    title?: string              // Заголовок формы (переопределение по желанию)
+}
+
+/**
+ * Тип формы
+ */
+export type ArticleFormTypeKey = 'lightLetters' | 'banner' | 'signboard' // и т.д.
 
 /**
  * SEO-метаданные статьи
