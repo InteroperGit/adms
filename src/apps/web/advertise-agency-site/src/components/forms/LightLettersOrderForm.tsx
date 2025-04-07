@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '@/libs/utils';
 
 const inputClass = cn(
@@ -39,6 +39,11 @@ const LightLettersOrderForm: React.FC = () => {
         name: '',
     });
     const [activeField, setActiveField] = useState<string | null>(null);
+    const [hasMounted, setHasMounted] = useState(false);
+
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -84,7 +89,7 @@ const LightLettersOrderForm: React.FC = () => {
         <div className={formCardClass}>
             <h2 className="text-2xl font-semibold mb-4">Заказ световых букв</h2>
 
-            <form className="space-y-6 grid grid-cols-2 gap-8">
+            <form className="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Левая часть формы: Поля ввода */}
                 <div className="space-y-6">
                     {/* Тип освещения */}
@@ -218,17 +223,32 @@ const LightLettersOrderForm: React.FC = () => {
                 </div>
 
                 {/* Правая часть формы: Пояснительная информация */}
-                <div className="space-y-6 p-4 bg-gray-50 dark:bg-zinc-800 rounded-xl border border-gray-300 dark:border-gray-600">
-                    <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                        </svg>
-                        Пояснение
-                    </h3>
-                    {activeField && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{getExplanation(activeField)}</p>
-                    )}
-                </div>
+                {hasMounted && (
+                    <div className={cn(
+                        "hidden md:block space-y-6 p-4 bg-gray-50 dark:bg-zinc-800 rounded-xl",
+                        "border border-gray-300 dark:border-gray-600"
+                    )}>
+                        <h3 className={cn(
+                            "text-lg font-semibold text-gray-700 dark:text-gray-300 flex items-center"
+                        )}>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 className="w-5 h-5 mr-2 text-orange-500"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Пояснение
+                        </h3>
+                        {activeField && (
+                            <p className={cn(
+                                "text-lg text-gray-600 dark:text-gray-400 transition-opacity duration-300 opacity-100"
+                            )}>
+                                {getExplanation(activeField)}
+                            </p>
+                        )}
+                    </div>
+                )}
             </form>
         </div>
     );
