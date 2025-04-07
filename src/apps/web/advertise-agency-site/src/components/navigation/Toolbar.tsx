@@ -21,33 +21,10 @@ export default function Toolbar({ className }: ToolbarProps) {
     return (
         <div
             className={cn(
-                "flex items-center gap-5 hidden sm:flex",
+                "flex items-center gap-5 hidden md:flex",
                 className
             )}
         >
-            {/* Позвонить */}
-            <Button
-                asChild
-                variant="ghost"
-                size="lg"
-                className="hover:bg-0"
-            >
-                <Link
-                    href="tel:+79115053503"
-                    className={cn(
-                        "relative group",
-                    )}
-                >
-                    <PhoneIcon
-                        className={cn(
-                            "text-orange-700",
-                        )}
-                        style={iconSize}
-                    />
-                    <span className={underlineClass} />
-                </Link>
-            </Button>
-
             {/* WhatsApp */}
             <Button
                 asChild
