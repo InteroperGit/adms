@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import {
     ArticleBlock,
@@ -7,7 +6,7 @@ import {
     TextBlock,
     ImageBlock,
     VideoBlock,
-    QuoteBlock, CodeBlock, TableBlock, DividerBlock, EmbedBlock
+    QuoteBlock, CodeBlock, TableBlock, DividerBlock, EmbedBlock, ArticleFormBlock
 } from '@/types/article';
 import {cn} from "@/libs/utils";
 import { parse } from 'node-html-parser';
@@ -15,6 +14,7 @@ import {PortfolioSection} from "@/components/sections/PortfolioSection";
 import {
     Card, CardContent,
 } from "@/components/ui/card"
+import LightLettersOrderForm from "@/components/forms/LightLettersOrderForm";
 
 //Типы для стилей
 interface TextStyles {
@@ -159,12 +159,12 @@ const ImageBlockComponent = ({
                 src={url}
                 alt={alt}
                 fill
-                className="object-cover"
+                className="object-cover rounded-xl"
                 sizes="(max-width: 768px) 100vw, 800px"
             />
         </div>
         {caption && (
-            <figcaption className="text-sm text-center mt-2 text-gray-500 dark:text-gray-400">
+            <figcaption className="text-md text-center mt-2 text-gray-500 dark:text-gray-400">
                 {caption}
             </figcaption>
         )}
@@ -207,7 +207,7 @@ const ImageGalleryBlockComponent = ({
                         src={img.url}
                         alt={img.alt}
                         fill
-                        className="rounded-lg object-cover"
+                        className="rounded-xl object-cover"
                         sizes={layout === 'grid' ? `(max-width: 768px) 100vw, ${800/columns}px` : '800px'}
                     />
                     {img.caption && (
@@ -286,7 +286,7 @@ const QuoteBlockComponent = ({
             "bg-orange-50 dark:bg-gray-800",
             "p-6",
             "text-gray-700 dark:text-gray-200",
-            "rounded-md shadow-sm",
+            "rounded-xl shadow-sm",
         )}
     >
         <p className="text-2xl leading-relaxed font-light mb-3 text-balance font-sans">
@@ -335,7 +335,7 @@ const TableBlockComponent = ({
                         rows,
                         align = []
                     }: TableBlock) => (
-    <div className="my-6 overflow-x-auto rounded-lg shadow-sm">
+    <div className="my-6 overflow-x-auto rounded-xl shadow-sm">
         <table className="w-full border-collapse">
             <thead>
             <tr>
@@ -413,7 +413,7 @@ const DividerBlockComponent = ({
     );
 };
 
-const EmbededBlockComponent= ({ html, url, width, height }: EmbedBlock) => {
+const EmbedBlockComponent= ({ html, url, width, height }: EmbedBlock) => {
     if (html) {
         return (
             <div
@@ -435,6 +435,26 @@ const EmbededBlockComponent= ({ html, url, width, height }: EmbedBlock) => {
         </div>
     );
 }
+
+const FormBlockComponent = ({ formType }: ArticleFormBlock) => {
+    const renderForm = () => {
+        switch (formType) {
+            case 'lightLetters':
+                return <LightLettersOrderForm />;
+            // Добавьте дополнительные формы по мере необходимости
+            // case 'anotherForm':
+            //    return <AnotherForm />;
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <div className="flex flex-col space-y-4">
+            {renderForm()} {/* Отображаем соответствующую форму */}
+        </div>
+    );
+};
 
 /**
  * Главный парсер статьи
@@ -514,10 +534,16 @@ export const ArticleParser = ({ blocks }: { blocks: ArticleBlock[] }) => {
                         />;
 
                     case 'embed':
-                        return <EmbededBlockComponent
+                        return <EmbedBlockComponent
                             key={index}
                             {...block}
                         />;
+
+                    case 'form':
+                        return <FormBlockComponent
+                            key={index}
+                            {...block}
+                        />
 
                     default:
                         return null;

@@ -583,9 +583,9 @@ export const projects: Article[] = [{
             content: "<h2>Хотите такой же результат для своего бизнеса?</h2><p>Мы изготовим для вас вывеску, которая будет привлекать клиентов 24/7.</p>"
         },
         {
-            type: "embed",
-            html: "<div class='cta-form'><h3>Оставьте заявку</h3><form>...</form></div>",
-            width: "100%"
+            type: "form",
+            formType: "lightLetters",
+            title: "Заказать световые буквы"
         }
     ],
     seo: {
