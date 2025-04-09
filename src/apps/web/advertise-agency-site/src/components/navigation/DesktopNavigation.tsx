@@ -42,7 +42,7 @@ export default function DesktopNavigation() {
     return (
         <div
             className={cn(
-                "sticky top-0 z-50 backdrop-blur-sm bg-background/80",
+                "top-0 z-50 backdrop-blur-sm bg-background/80",
                 "border-b border-gray-200 dark:border-gray-800 shadow-sm"
             )}
         >

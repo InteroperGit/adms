@@ -102,7 +102,7 @@ export const PortfolioSection = ({
     return (
         <section className={cn(className)}>
             {/* Заголовок секции */}
-            <div className="mb-6">
+            <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-4">{title}</h2>
             </div>
 

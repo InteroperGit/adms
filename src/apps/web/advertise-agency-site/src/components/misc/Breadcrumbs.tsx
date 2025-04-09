@@ -8,45 +8,44 @@ import {
     BreadcrumbSeparator,
     BreadcrumbPage,
 } from '@/components/ui/breadcrumb'
-import { ChevronRight } from "lucide-react";
-import {cn} from "@/libs/utils";
+import { ChevronRight } from "lucide-react"
+import { cn } from "@/libs/utils"
 import { usePathname } from 'next/navigation'
-import {useEffect, useState} from "react";
-import {BreadcrumbItem} from "@/types/breadcrumbs";
+import { useEffect, useState } from "react"
+import { BreadcrumbItem } from "@/types/breadcrumbs"
 
 export function Breadcrumbs() {
     const pathname = usePathname()
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([]);
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string | null>(null)
+    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([])
 
     useEffect(() => {
         const fetchBreadcrumbs = async () => {
             try {
-                const res = await fetch(`/api/breadcrumbs?path=${encodeURIComponent(pathname)}`);
+                const res = await fetch(`/api/breadcrumbs?path=${encodeURIComponent(pathname)}`)
                 if (!res.ok) {
-                    throw new Error("Network response failed");
+                    throw new Error("Network response failed")
                 }
-                const data = await res.json();
-                setBreadcrumbs(data);
+                const data = await res.json()
+                setBreadcrumbs(data)
+            } catch {
+                setError('Failed to fetch data')
+            } finally {
+                setLoading(false)
             }
-            catch {
-                setError('Failed to fetch data');
-            }
-            finally {
-                setLoading(false);
-            }
-        };
+        }
 
-        fetchBreadcrumbs();
-    }, [pathname]);
+        fetchBreadcrumbs()
+    }, [pathname])
 
     if (loading || error) {
-        return null;
+        return null
     }
 
     return (
-        <div className="m-6">
+        <div className="mx-6 my-8">
+            <hr className="mb-4 border-t border-gray-200 dark:border-gray-700" />
             <Breadcrumb>
                 <BreadcrumbList className="flex items-center gap-2">
                     {breadcrumbs.map((item, index) => (
@@ -78,6 +77,7 @@ export function Breadcrumbs() {
                     ))}
                 </BreadcrumbList>
             </Breadcrumb>
+            <hr className="mt-4 border-t border-gray-200 dark:border-gray-700" />
         </div>
     )
 }
