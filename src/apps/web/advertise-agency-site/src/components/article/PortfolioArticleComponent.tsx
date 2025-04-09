@@ -1,7 +1,5 @@
 import {PortfolioBlock} from "@/types/article";
 import {PortfolioSection} from "@/components/sections/PortfolioSection";
-import {CardContent} from "@/components/ui/card";
-import {Card} from "@radix-ui/themes";
 
 /**
  * Компонент-контейнер для отображения портфолио внутри статей, страниц или CMS-контента.

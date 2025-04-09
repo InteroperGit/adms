@@ -1,9 +1,6 @@
 import {
     ArticleBlock,
 } from '@/types/article';
-import {
-    Card, CardContent,
-} from "@/components/ui/card"
 import TableArticleComponent from "@/components/article/TableArticleComponent";
 import TextArticleComponent from "@/components/article/TextArticleComponent";
 import ImageArticleComponent from "@/components/article/ImageArticleComponent";
