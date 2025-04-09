@@ -2,7 +2,6 @@
 
 import {useEffect, useState} from 'react';
 import { cn } from '@/libs/utils';
-import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
 import {projectPreviews} from "@/data/projects-data";
 import {categories} from "@/data/categories-data";
 import HeroSection from "@/components/sections/HeroSection";
@@ -11,24 +10,17 @@ import {CtaSection} from "@/components/sections/CtaSection";
 import {LoadingMoreButton} from "@/components/buttons/LoadingMoreButton";
 import {PortfolioSection} from "@/components/sections/PortfolioSection";
 
+const INIT_VISIBLE_PROJECTS = 10;
+
 export default function PortfolioPage() {
     const [activeCategory, setActiveCategory] = useState<string>('all');
     const [isLoading, setIsLoading] = useState(false);
     const [visibleProjects, setVisibleProjects] = useState<number>(10);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-    const updateBreadcrumbs = useUpdateBreadcrumbs()
-
-    useEffect(() => {
-        updateBreadcrumbs([
-            { title: 'Главная', href: '/' },
-            { title: 'Портфолио' }
-        ]);
-    }, [updateBreadcrumbs]);
-
     useEffect(() => {
         // Сброс видимых проектов при изменении категории
-        setVisibleProjects(10);
+        setVisibleProjects(INIT_VISIBLE_PROJECTS);
     }, [activeCategory]);
 
     const filteredProjects = activeCategory === 'all'

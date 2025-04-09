@@ -3,20 +3,9 @@
 import YandexMap from "@/components/misc/YandexMap";
 import ContactsCard from "@/components/cards/ContactsCard";
 import FeedbackForm from "@/components/forms/FeedbackForm";
-import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
-import {useEffect} from "react";
 import PageHeader from "@/components/misc/PageHeader";
 
 export default function ContactsPage() {
-    const updateBreadcrumbs = useUpdateBreadcrumbs()
-
-    useEffect(() => {
-        updateBreadcrumbs([
-            { title: 'Главная', href: '/' },
-            { title: 'Контакты' }
-        ])
-    }, [updateBreadcrumbs]);
-
     return (
         <>
             <PageHeader>Контакты</PageHeader>

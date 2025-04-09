@@ -1,7 +1,5 @@
 "use client"
 
-import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
-import {useEffect} from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import {SpecialServiceCard} from "@/components/cards/SpecialServiceCard";
 import {CtaSection} from "@/components/sections/CtaSection";
@@ -9,15 +7,6 @@ import {serviceCategories, specialServices} from "@/data/services-data";
 import {ServicesSection} from "@/components/sections/ServicesSection";
 
 export default function ServicesPage() {
-    const updateBreadcrumbs = useUpdateBreadcrumbs()
-
-    useEffect(() => {
-        updateBreadcrumbs([
-            { title: 'Главная', href: '/' },
-            { title: 'Услуги' }
-        ])
-    }, [updateBreadcrumbs]);
-
     return (
         <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
             {/* Hero секция */}
