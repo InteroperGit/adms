@@ -3,22 +3,11 @@
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { SearchIcon } from 'lucide-react'
-import {useUpdateBreadcrumbs} from "@/libs/breadcrumbs";
-import {useEffect} from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import {ArticlePreviewCard} from "@/components/cards/ArticlePreviewCard";
 import {articlesPreviews} from "@/data/article-data";
 
 export default function ArticlesPage() {
-    const updateBreadcrumbs = useUpdateBreadcrumbs()
-
-    useEffect(() => {
-        updateBreadcrumbs([
-            { title: 'Главная', href: '/' },
-            { title: 'Статьи' }
-        ])
-    }, [updateBreadcrumbs]);
-
     return (
         <div className="md:px-4">
             {/* Заголовок и описание */}
