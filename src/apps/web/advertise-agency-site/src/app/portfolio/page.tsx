@@ -66,13 +66,12 @@ export default function PortfolioPage() {
             />
 
             {/* Фильтры */}
-            <section className={cn("py-12 px-6")}>
+            <section className={cn("py-12 px-2 md:px-6")}>
                 <div>
                     <CategoryFilter
                         categories={categories}
                         activeCategory={activeCategory}
                         onCategoryChange={(slug) => setActiveCategory(slug)}
-                        className="my-8" // Дополнительные стили
                     />
 
                     {/* Список проектов */}
@@ -91,7 +90,6 @@ export default function PortfolioPage() {
                                     tablet: 2,
                                     desktop: 3
                                 }}
-                                className="py-16"
                             />
 
                             {/* Кнопка загрузки и статус */}
