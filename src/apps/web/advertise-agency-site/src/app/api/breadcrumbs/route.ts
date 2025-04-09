@@ -129,7 +129,7 @@ async function getNewsBreadcrumbs(segments: string[]): Promise<BreadcrumbItem[]>
     return result;
 }
 
-async function getContactsBreadcrumbs(segments: string[]): Promise<BreadcrumbItem[]> {
+async function getContactsBreadcrumbs(): Promise<BreadcrumbItem[]> {
     return [
         getBaseBreadcrumbs(),
         {title: "Контакты", href: "/contacts", isCurrent: true},
@@ -151,7 +151,7 @@ async function getBreadcrumbs(path: string): Promise<BreadcrumbItem[]> {
         case "news":
             return getNewsBreadcrumbs(segments);
         case "contacts":
-            return getContactsBreadcrumbs(segments);
+            return getContactsBreadcrumbs();
         default:
             return Promise.resolve([]);
     }

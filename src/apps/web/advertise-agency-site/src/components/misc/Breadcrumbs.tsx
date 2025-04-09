@@ -30,7 +30,7 @@ export function Breadcrumbs() {
                 const data = await res.json();
                 setBreadcrumbs(data);
             }
-            catch (error) {
+            catch {
                 setError('Failed to fetch data');
             }
             finally {
