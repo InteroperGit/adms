@@ -1,62 +1,117 @@
 "use client"
 
-import React from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
-import { navLinks } from "@/config/navigation";
-import { motion } from "framer-motion";
-import { cn } from "@/libs/utils"; // Предполагается, что у вас есть утилита cn
+import React, { useRef, useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { motion, AnimatePresence } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/libs/utils"
+import { DesktopNavigationSubmenu } from "@/components/navigation/DesktopNavigationSubmenu"
+import { navLinks } from "@/config/navigation"
+import {NavigationLink} from "@/types/navigation";
+
+const SUBMENU_SHOW_HIDE_IDLE = 250
 
 export default function DesktopNavigation() {
-    const pathname = usePathname();
+    const pathname = usePathname()
+    const [hoveredMenu, setHoveredMenu] = useState<NavigationLink | null>(null)
+
+    const enterTimeout = useRef<NodeJS.Timeout | null>(null)
+    const leaveTimeout = useRef<NodeJS.Timeout | null>(null)
+
+    const handleMouseEnter = (link: NavigationLink) => {
+        if (leaveTimeout.current) {
+            clearTimeout(leaveTimeout.current)
+        }
+
+        enterTimeout.current = setTimeout(() => {
+            setHoveredMenu(link)
+        }, SUBMENU_SHOW_HIDE_IDLE)
+    }
+
+    const handleMouseLeave = () => {
+        if (enterTimeout.current) {
+            clearTimeout(enterTimeout.current)
+        }
+
+        leaveTimeout.current = setTimeout(() => {
+            setHoveredMenu(null)
+        }, SUBMENU_SHOW_HIDE_IDLE)
+    }
 
     return (
-        <div className={cn(
-            "sticky top-0 z-50 backdrop-blur-sm bg-background/80",
-            "border-b border-gray-200 dark:border-gray-800 shadow-sm"
-        )}>
+        <div
+            className={cn(
+                "sticky top-0 z-50 backdrop-blur-sm bg-background/80",
+                "border-b border-gray-200 dark:border-gray-800 shadow-sm"
+            )}
+        >
             <div className="container mx-auto px-4">
-                <nav className="hidden md:flex justify-center w-full">
-                    <div className="flex items-center gap-1 h-16">
-                        {navLinks.map((link) => {
-                            const isActive = pathname.startsWith(link.href);
-
-                            return (
-                                <Link
-                                    key={link.href}
-                                    href={link.href}
-                                    className="relative group"
-                                >
-                                    <Button
-                                        variant="ghost"
-                                        className={cn(
-                                            "px-4 py-2 text-lg font-medium transition-all",
-                                            "hover:text-primary hover:bg-accent/0", // Плавные hover-эффекты
-                                            isActive ? "text-primary" : "text-muted-foreground",
-                                            "relative overflow-hidden" // Для анимации
-                                        )}
+                {/* Оборачиваем всё в один контейнер для hover */}
+                <div onMouseLeave={handleMouseLeave}
+                     onMouseEnter={() => {
+                        if (leaveTimeout.current) {
+                            clearTimeout(leaveTimeout.current)
+                        }
+                }}>
+                    <nav className="hidden md:flex justify-center w-full relative">
+                        <div className="flex items-center gap-1 h-16">
+                            {navLinks.map((link) => {
+                                const isActive = pathname.startsWith(link.href)
+                                return (
+                                    <div
+                                        key={link.href}
+                                        className="relative"
+                                        onMouseEnter={() => handleMouseEnter(link)}
                                     >
-                                        <span className="relative z-10">{link.name}</span>
+                                        <Link href={link.href} className="relative group">
+                                            <Button
+                                                variant="ghost"
+                                                className={cn(
+                                                    "px-4 py-2 text-lg font-medium transition-all",
+                                                    "hover:text-primary hover:bg-accent/0",
+                                                    isActive ? "text-primary" : "text-muted-foreground",
+                                                    "relative overflow-hidden"
+                                                )}
+                                            >
+                                                <span className="relative z-10">{link.name}</span>
 
-                                        {isActive && (
-                                            <motion.div
-                                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                                                layoutId="activeIndicator"
-                                                transition={{
-                                                    type: "spring",
-                                                    stiffness: 300,
-                                                    damping: 30,
-                                                }}
-                                            />
-                                        )}
-                                    </Button>
-                                </Link>
-                            );
-                        })}
-                    </div>
-                </nav>
+                                                {isActive && (
+                                                    <motion.div
+                                                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                                                        layoutId="activeIndicator"
+                                                        transition={{
+                                                            type: "spring",
+                                                            stiffness: 300,
+                                                            damping: 30,
+                                                        }}
+                                                    />
+                                                )}
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </nav>
+
+                    {/* Подменю — строго по центру */}
+                    <AnimatePresence>
+                        {hoveredMenu && hoveredMenu.submenu && (
+                            <motion.div
+                                key="submenu"
+                                initial={{ opacity: 0, y: -5 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -5 }}
+                                transition={{ duration: 0.2 }}
+                                className="absolute top-full left-1/2 -translate-x-1/2 w-screen"
+                            >
+                                <DesktopNavigationSubmenu items={hoveredMenu.submenu} />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
             </div>
         </div>
-    );
+    )
 }
