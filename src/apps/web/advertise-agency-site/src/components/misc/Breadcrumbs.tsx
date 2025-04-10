@@ -12,54 +12,39 @@ import { ChevronRight } from "lucide-react"
 import { cn } from "@/libs/utils"
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from "react"
-import { BreadcrumbItem } from "@/types/breadcrumbs"
 import { Skeleton } from '@/components/ui/skeleton'
+import { useBreadcrumbs } from '@/providers/BreadcrumbsProvider'
+import {BreadcrumbItem} from "@/types/breadcrumbs";
 
+const TRANSITION_DURATION = 500;
+const SKELETON_HEIGHT = 24
 const INITIAL_SKELETON_COUNT = 2
-const TRANSITION_DURATION = 300 // 1 секунда для перехода
-const SKELETON_HEIGHT = 24 // фиксированная высота для скелетонов
 
 export function Breadcrumbs() {
     const pathname = usePathname()
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string | null>(null)
-    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([])
-    const [isPageChanging, setIsPageChanging] = useState<boolean>(false)
-    const [isSkeletonVisible, setIsSkeletonVisible] = useState<boolean>(true)
-    const isMainPage = pathname.length === 1 && pathname === "/"
+    const { breadcrumbs, loading, error } = useBreadcrumbs()
+    const [isTransitioning, setIsTransitioning] = useState(true)
+    const isMainPage = pathname === "/"
 
     useEffect(() => {
-        setIsPageChanging(true)
-        setIsSkeletonVisible(true)
+        // При изменении пути включаем анимацию перехода
+        setIsTransitioning(true)
 
-        const fetchBreadcrumbs = async () => {
-            try {
-                const res = await fetch(`/api/breadcrumbs?path=${encodeURIComponent(pathname)}`)
-                if (!res.ok) {
-                    throw new Error("Network response failed")
-                }
-                const data = await res.json()
-                setBreadcrumbs(data)
-            } catch {
-                setError('Failed to fetch data')
-            } finally {
-                setLoading(false)
-                setIsPageChanging(false)
+        // Таймер для плавного скрытия скелетона
+        const timer = setTimeout(() => {
+            setIsTransitioning(false)
+        }, TRANSITION_DURATION) // Длительность анимации
 
-                // Плавно скрываем скелетоны
-                setTimeout(() => {
-                    setIsSkeletonVisible(false)
-                }, TRANSITION_DURATION) // Устанавливаем задержку 1 секунда для скелетонов
-            }
-        }
-
-        fetchBreadcrumbs()
+        return () => clearTimeout(timer)
     }, [pathname])
 
-    // Если ошибка или главная страница — ничего не показываем
     if (error || isMainPage) {
         return null
     }
+
+    // Показываем скелетон только при загрузке или переходе между страницами
+    const showSkeleton = loading || isTransitioning
+    const showContent = !showSkeleton && breadcrumbs.length > 0
 
     return (
         <div className="mx-6 my-8">
@@ -67,11 +52,11 @@ export function Breadcrumbs() {
             <Breadcrumb>
                 <BreadcrumbList
                     className="flex items-center gap-2"
-                    style={{ minHeight: `${SKELETON_HEIGHT}px` }} // Устанавливаем минимальную высоту
+                    style={{ minHeight: `${SKELETON_HEIGHT}px` }}
                 >
-                    {isPageChanging || loading || isSkeletonVisible
+                    {showSkeleton
                         ? renderSkeletons(INITIAL_SKELETON_COUNT)
-                        : renderBreadcrumbs(breadcrumbs)
+                        : showContent && renderBreadcrumbs(breadcrumbs)
                     }
                 </BreadcrumbList>
             </Breadcrumb>
@@ -80,16 +65,9 @@ export function Breadcrumbs() {
     )
 }
 
-// 👉 Подкомпонент для отображения одного элемента хлебных крошек
 function renderBreadcrumbs(breadcrumbs: BreadcrumbItem[]) {
     return breadcrumbs.map((item, index) => (
-        <div
-            key={index}
-            className={cn(
-                "flex items-center",
-                "opacity-100"
-            )}
-        >
+        <div key={index} className="flex items-center opacity-100">
             <BreadcrumbItemUi className="text-sm">
                 {!item.isCurrent && item.href ? (
                     <BreadcrumbLink
@@ -117,15 +95,9 @@ function renderBreadcrumbs(breadcrumbs: BreadcrumbItem[]) {
     ))
 }
 
-// 👉 Подкомпонент для отображения скелетонов при загрузке
 function renderSkeletons(count: number) {
     return Array.from({ length: count }).map((_, index) => (
-        <div
-            key={index}
-            className={cn(
-                "flex items-center",
-            )}
-        >
+        <div key={index} className="flex items-center">
             <BreadcrumbItemUi>
                 <Skeleton className="h-4 w-20 rounded" />
             </BreadcrumbItemUi>
