@@ -19,6 +19,7 @@ export function Breadcrumbs() {
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
     const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([])
+    const isMainPage = pathname.length === 1 && pathname === "/";
 
     useEffect(() => {
         const fetchBreadcrumbs = async () => {
@@ -39,7 +40,7 @@ export function Breadcrumbs() {
         fetchBreadcrumbs()
     }, [pathname])
 
-    if (loading || error) {
+    if (loading || error || isMainPage) {
         return null
     }
 
