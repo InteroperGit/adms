@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  rmaster35-cloudflare-test-web-site:
+    build:
+      context: ../../../../../src/apps/web/advertise-agency-site
+      dockerfile: Dockerfile-cloudflare-test
+    container_name: rmaster35-cloudflare-test-web-site-container
+    restart: unless-stopped
+    ports:
+      - "3000:3000"  # Прокси на порт 3000
+    environment:
+      - NODE_ENV=production
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

@@ -1,0 +1,7 @@
+node_modules
+Dockerfile
+Dockerfile-cloudflare-test
+.dockerignore
+.git
+.gitignore
+*.log
