@@ -1,16 +1,20 @@
 "use client"
 
-import { ThemeProvider } from "next-themes";
 import React from "react";
+import { ThemeProvider } from "next-themes";
+import {BreadcrumbsProvider} from "@/providers/BreadcrumbsProvider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
+        <BreadcrumbsProvider>
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange>
                 {children}
-        </ThemeProvider>
+            </ThemeProvider>
+        </BreadcrumbsProvider>
+
     );
 }
