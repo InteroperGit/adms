@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  rmaster35-web-site-test-localtunnel:
+    build:
+      context: ../../../../../src/apps/web/advertise-agency-site
+      dockerfile: Dockerfile-localtunnel-test
+    container_name: rmaster35-web-site-test-localtunnel-container
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - backend
+
+  localtunnel-watchdog:
+    image: curlimages/curl:latest
+    container_name: rmaster35-localtunnel-watchdog
+    depends_on:
+      - rmaster35-web-site-test-localtunnel
+    entrypoint: >
+      sh -c '
+        while true; do
+          echo "⏱️ Checking https://rmaster35.loca.lt/";
+          if curl -sf https://rmaster35.loca.lt/ > /dev/null; then
+            echo "✅ LocalTunnel is UP";
+          else
+            echo "❌ LocalTunnel is DOWN. Restarting service...";
+            docker restart rmaster35-web-site-test-localtunnel-container;
+          fi
+          sleep 30;
+        done
+      '
+    networks:
+      - backend
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  backend:
+    driver: bridge
