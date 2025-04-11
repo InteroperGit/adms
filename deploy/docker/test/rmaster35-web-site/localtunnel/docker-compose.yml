@@ -13,10 +13,16 @@ services:
       - NODE_ENV=production
     networks:
       - backend
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
 
   localtunnel-watchdog:
     image: curlimages/curl:latest
-    container_name: rmaster35-localtunnel-watchdog
+    container_name: rmaster35-web-site-localtunnel-watchdog
     depends_on:
       - rmaster35-web-site-test-localtunnel
     entrypoint: >
@@ -37,6 +43,52 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  strapi:
+    image: strapi/strapi
+    container_name: rmaster35-web-site-test-strapi
+    environment:
+      - DATABASE_CLIENT=${STRAPI_DATABASE_CLIENT}
+      - DATABASE_HOST=strapi-db
+      - DATABASE_PORT=${STRAPI_DATABASE_PORT}
+      - DATABASE_NAME=${STRAPI_DATABASE_NAME}
+      - DATABASE_USERNAME=${STRAPI_DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${STRAPI_DATABASE_PASSWORD}
+    ports:
+      - "1337:1337"
+    volumes:
+      - ${STRAPI_DATA_PATH}:/srv/app
+    depends_on:
+      - strapi-db
+    networks:
+      - backend
+    healthcheck:
+      test: "curl --silent --fail http://${STRAPI_DATABASE_HOST}:${STRAPI_DATABASE_PORT}/health || exit 1"
+      interval: 30s
+      retries: 5
+      start_period: 10s
+      timeout: 10s
+
+  strapi-db:
+    image: postgres
+    container_name: rmaster35-web-site-test-strapi-postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+volumes:
+  postgres_data:
+    driver: local
 
 networks:
   backend:
