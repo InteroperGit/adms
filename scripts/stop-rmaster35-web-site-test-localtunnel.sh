@@ -7,7 +7,7 @@ COMPOSE_FILE="docker-compose.yml"  # или docker-compose.localtunnel.yml, ес
 # Имя сервиса
 SERVICE_NAME="rmaster35-web-site-test-localtunnel"
 
-echo "📦 Перезапуск контейнеров $SERVICE_NAME через docker-compose..."
+echo "📦 Останов контейнеров $SERVICE_NAME через docker-compose..."
 
 # Переходим в каталог с docker-compose
 cd "$COMPOSE_DIR" || {
@@ -17,6 +17,5 @@ cd "$COMPOSE_DIR" || {
 
 # Останавливаем и удаляем контейнеры, затем пересобираем и запускаем
 docker-compose -f "$COMPOSE_FILE" down
-docker-compose -f "$COMPOSE_FILE" up --build -d
 
-echo "✅ Контейнеры $SERVICE_NAME перезапущены."
+echo "✅ Контейнеры $SERVICE_NAME остановлены."
