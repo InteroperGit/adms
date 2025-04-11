@@ -3,12 +3,13 @@
 import {useEffect, useState} from 'react';
 import { cn } from '@/libs/utils';
 import {projectPreviews} from "@/data/projects-data";
-import {categories} from "@/data/categories-data";
 import HeroSection from "@/components/sections/HeroSection";
-import {CategoryFilter} from "@/components/navigation/CategoryFilter";
+import CategoryFilter from "@/components/navigation/CategoryFilter";
 import {CtaSection} from "@/components/sections/CtaSection";
 import {LoadingMoreButton} from "@/components/buttons/LoadingMoreButton";
 import {PortfolioSection} from "@/components/sections/PortfolioSection";
+import {serviceCategories} from "@/data/services-data";
+import {ProjectPreview} from "@/types/project";
 
 const INIT_VISIBLE_PROJECTS = 10;
 
@@ -17,15 +18,17 @@ export default function PortfolioPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [visibleProjects, setVisibleProjects] = useState<number>(10);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [filteredProjects, setFilteredProjects] = useState<ProjectPreview[]>(projectPreviews);
 
     useEffect(() => {
         // Сброс видимых проектов при изменении категории
         setVisibleProjects(INIT_VISIBLE_PROJECTS);
+        setFilteredProjects(
+            activeCategory === 'all'
+                ? projectPreviews
+                : projectPreviews.filter(project => project.category?.name === activeCategory)
+        );
     }, [activeCategory]);
-
-    const filteredProjects = activeCategory === 'all'
-        ? projectPreviews
-        : projectPreviews.filter(project => project.category?.name === activeCategory);
 
     const projectsToShow = filteredProjects.slice(0, visibleProjects);
     const hasMoreProjects = visibleProjects < filteredProjects.length;
@@ -62,14 +65,14 @@ export default function PortfolioPage() {
                 title={"Наши работы"}
                 description={activeCategory === 'all'
                     ? 'Реализованные проекты за последние годы'
-                    : `Проекты в категории "${categories.find(c => c.slug === activeCategory)?.name || ''}"`}
+                    : `Проекты в категории "${serviceCategories.find(c => c.name === activeCategory)?.title || ''}"`}
             />
 
             {/* Фильтры */}
             <section className={cn("py-12 px-2 md:px-6")}>
                 <div>
                     <CategoryFilter
-                        categories={categories}
+                        categories={serviceCategories}
                         activeCategory={activeCategory}
                         onCategoryChange={(slug) => setActiveCategory(slug)}
                     />
@@ -77,7 +80,10 @@ export default function PortfolioPage() {
                     {/* Список проектов */}
                     {isLoading ? (
                         <div className={cn("flex justify-center items-center h-64")}>
-                            <div className={cn("animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500")}></div>
+                            <div className={cn(
+                                "animate-spin rounded-full h-12 w-12",
+                                "border-t-2 border-b-2 border-orange-500")}>
+                            </div>
                         </div>
                     ) : (
                         <>

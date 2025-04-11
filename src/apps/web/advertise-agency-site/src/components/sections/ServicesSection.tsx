@@ -1,14 +1,13 @@
-// components/sections/ServicesSection.tsx
 "use client"
 
 import { ServiceCard } from "@/components/cards/ServiceCard"
 import { cn } from "@/libs/utils"
 import React from "react";
-import {ServiceCategory} from "@/types/service";
+import {ServiceItem} from "@/types/service";
 
 interface ServicesSectionProps {
     title?: string
-    services: ServiceCategory[]
+    services: ServiceItem[]
     className?: string
     columns?: 1 | 2 | 3 | 4
 }
@@ -60,10 +59,10 @@ export const ServicesSection = ({
 
             {/* Сетка карточек услуг */}
             <div className={cn("grid gap-6", gridClasses[columns])}>
-                {services.map((category, index) => (
+                {services.map((service, index) => (
                     <ServiceCard
                         key={index}
-                        category={category}
+                        service={service}
                         index={index}
                         className="h-full"
                     />

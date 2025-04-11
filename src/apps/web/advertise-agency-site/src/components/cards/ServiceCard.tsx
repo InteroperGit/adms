@@ -1,31 +1,16 @@
-// components/cards/ServiceCard.tsx
 "use client"
 
 import Link from "next/link"
 import { cn } from "@/libs/utils"
 import React from "react";
-import {ServiceItem} from "@/types/service";
-
-interface ServiceCategory {
-    /**
-     * Иконка категории (React-компонент или текст)
-     */
-    icon: React.ReactNode
-    /**
-     * Название категории услуг
-     */
-    title: string
-    /**
-     * Массив услуг в категории
-     */
-    services: ServiceItem[]
-}
+import { ServiceItem } from "@/types/service";
+import Image from "next/image";
 
 interface ServiceCardProps {
     /**
      * Данные категории услуг для отображения
      */
-    category: ServiceCategory
+    service: ServiceItem
     /**
      * Индекс элемента в списке (для ключа)
      */
@@ -72,7 +57,7 @@ interface ServiceCardProps {
  * />
  */
 export const ServiceCard = ({
-                                category,
+                                service,
                                 index,
                                 className,
                                 accentColor = "orange",
@@ -96,18 +81,26 @@ export const ServiceCard = ({
             )}
         >
             {/* Блок иконки */}
-            <div className="text-4xl mb-4">
-                {category.icon}
+            <div className="w-16 h-16 mb-4 relative border-2">
+                {service.previewImage && (
+                    <Image
+                        src={service.previewImage.src}
+                        alt={service.previewImage.alt || service.name}
+                        fill
+                        className="object-contain"
+                        sizes="64px"
+                    />
+                )}
             </div>
 
             {/* Заголовок категории */}
             <h2 className="text-xl font-bold mb-4">
-                {category.title}
+                {service.title}
             </h2>
 
             {/* Список услуг */}
             <ul className="space-y-2 flex-1">
-                {category.services.map((service, index) => (
+                {service.items?.map((subService, index) => (
                     <li key={index} className="flex items-start">
                         {/* Маркер списка */}
                         <span className={cn(
@@ -117,20 +110,23 @@ export const ServiceCard = ({
                           ✓
                         </span>
                         {/* Вывод с проверкой наличия ссылки */}
-                        {service.href ? (
+                        {subService.href ? (
                             <Link
-                                href={service.href}
+                                href={subService.href}
                                 className={cn(
-                                    "text-gray-700 dark:text-gray-300",
-                                    "hover:underline hover:text-primary dark:hover:text-primary-400",
-                                    "transition-colors duration-200"
+                                    "relative text-gray-700 dark:text-gray-300",
+                                    "hover:text-primary dark:hover:text-primary-400",
+                                    "transition-colors duration-200",
+                                    "after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px]", // Высота подчеркивания
+                                    "after:w-0 after:bg-orange-500 dark:after:bg-orange-400", // Цвет подчеркивания
+                                    "after:transition-all after:duration-300 hover:after:w-full" // Анимация расширения
                                 )}
                             >
-                                {service.name}
+                                {subService.title}
                             </Link>
                         ) : (
                             <span className="text-gray-700 dark:text-gray-300">
-                               {service.name}
+                               {subService.title}
                             </span>
                         )}
                     </li>

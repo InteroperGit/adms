@@ -1,5 +1,5 @@
 import { ServicesSection } from "@/components/sections/ServicesSection";
-import { serviceCategories } from "@/data/services-data";
+import { mainServices } from "@/data/services-data";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
 import { recentProjectPreviews } from "@/data/projects-data";
 import { NewsSection } from "@/components/sections/NewsSection";
@@ -57,7 +57,7 @@ export default function Home() {
             {/* 5. Услуги */}
             <ServicesSection
                 title="Наши услуги"
-                services={serviceCategories}
+                services={mainServices}
                 columns={4}
                 className={cn(
                     "my-9 py-6 bg-white dark:bg-gray-800 px-6 rounded-lg border",

@@ -1,10 +1,10 @@
 "use client"
 
 import { cn } from "@/libs/utils";
-import {Category} from "@/types/category";
+import {ServiceCategory} from "@/types/service";
 
 interface CategoryFilterProps {
-    categories: Category[];
+    categories: ServiceCategory[];
     activeCategory: string;
     onCategoryChange: (slug: string) => void;
     className?: string;
@@ -51,7 +51,7 @@ interface CategoryFilterProps {
  *   className="my-4 justify-start"
  * />
  */
-export const CategoryFilter = ({
+const CategoryFilter = ({
                                    categories,
                                    activeCategory,
                                    onCategoryChange,
@@ -62,17 +62,19 @@ export const CategoryFilter = ({
             {categories.map(category => (
                 <button
                     key={category.id}
-                    onClick={() => onCategoryChange(category.slug)}
+                    onClick={() => onCategoryChange(category.name)}
                     className={cn(
                         "px-4 py-2 rounded-full text-sm md:text-base transition-colors duration-200",
-                        activeCategory === category.slug
+                        activeCategory === category.name
                             ? "bg-orange-600 text-white"
                             : "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
                     )}
                 >
-                    {category.name}
+                    {category.title}
                 </button>
             ))}
         </div>
     );
 };
+
+export default CategoryFilter;

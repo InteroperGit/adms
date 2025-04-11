@@ -145,7 +145,7 @@ export const PortfolioCard = ({
                             "bg-orange-100 dark:bg-orange-900/30",
                             "text-orange-800 dark:text-orange-200"
                         )}>
-                            {project.category?.name}
+                            {project.category?.title}
                         </span>
                         <span className={cn("text-sm text-gray-500 dark:text-gray-400")}>
                           {project.year}
