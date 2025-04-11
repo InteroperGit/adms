@@ -186,8 +186,8 @@ export const articles: Article[] = [{
                     title: 'Брендирование кафе "Sunrise"',
                     category: {
                         id: 1,
-                        slug: 'branding',
-                        name: "Брендирование"
+                        name: 'branding',
+                        title: "Брендирование"
                     },
                     client: 'Сеть кофеен Sunrise',
                     year: '2023',
@@ -200,8 +200,8 @@ export const articles: Article[] = [{
                     title: 'Вывеска для бутика "Elegance"',
                     category: {
                         id: 2,
-                        slug: 'outdoor',
-                        name: "Наружная реклама"
+                        name: 'outdoor',
+                        title: "Наружная реклама"
                     },
                     client: 'Бутик Elegance',
                     year: '2023',
@@ -214,8 +214,8 @@ export const articles: Article[] = [{
                     title: 'Каталог продукции "TechLogic"',
                     category: {
                         id: 3,
-                        slug: 'printing',
-                        name: "Печать"
+                        name: 'printing',
+                        title: "Печать"
                     },
                     client: 'TechLogic',
                     year: '2022',
@@ -228,8 +228,8 @@ export const articles: Article[] = [{
                     title: 'Упаковка для косметики "PureLine"',
                     category: {
                         id: 4,
-                        slug: 'packaging',
-                        name: "Упаковка"
+                        name: 'packaging',
+                        title: "Упаковка"
                     },
                     client: 'PureLine Cosmetics',
                     year: '2023',

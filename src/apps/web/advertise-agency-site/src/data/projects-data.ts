@@ -7,8 +7,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Брендирование кафе "Sunrise"',
         category: {
             id: 1,
-            slug: 'branding',
-            name: "Брендирование"
+            name: 'branding',
+            title: "Брендирование"
         },
         client: 'Сеть кофеен Sunrise',
         year: '2023',
@@ -21,8 +21,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Вывеска для бутика "Elegance"',
         category: {
             id: 2,
-            slug: 'outdoor',
-            name: "Наружная реклама"
+            name: 'outdoor',
+            title: "Наружная реклама"
         },
         client: 'Бутик Elegance',
         year: '2023',
@@ -35,8 +35,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Каталог продукции "TechLogic"',
         category: {
             id: 3,
-            slug: 'printing',
-            name: "Печать"
+            name: 'printing',
+            title: "Печать"
         },
         client: 'TechLogic',
         year: '2022',
@@ -49,8 +49,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Упаковка для косметики "PureLine"',
         category: {
             id: 4,
-            slug: 'packaging',
-            name: "Упаковка"
+            name: 'packaging',
+            title: "Упаковка"
         },
         client: 'PureLine Cosmetics',
         year: '2023',
@@ -63,8 +63,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Брендбук "Global Finance"',
         category: {
             id: 1,
-            slug: 'branding',
-            name: "Брендирование"
+            name: 'branding',
+            title: "Брендирование"
         },
         client: 'Global Finance',
         year: '2022',
@@ -77,8 +77,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Билборды для автосалона "Premium Motors"',
         category: {
             id: 2,
-            slug: 'outdoor',
-            name: "Наружная реклама"
+            name: 'outdoor',
+            title: "Наружная реклама"
         },
         client: 'Premium Motors',
         year: '2023',
@@ -91,8 +91,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Фирменные бланки "LegalTrust"',
         category: {
             id: 3,
-            slug: 'printing',
-            name: "Печать"
+            name: 'printing',
+            title: "Печать"
         },
         client: 'LegalTrust',
         year: '2023',
@@ -105,8 +105,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Упаковка для чая "Mountain Leaf"',
         category: {
             id: 4,
-            slug: 'packaging',
-            name: "Упаковка"
+            name: 'packaging',
+            title: "Упаковка"
         },
         client: 'Mountain Leaf',
         year: '2022',
@@ -119,8 +119,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Логотип и айдентика "UrbanFit"',
         category: {
             id: 1,
-            slug: 'branding',
-            name: "Брендирование"
+            name: 'branding',
+            title: "Брендирование"
         },
         client: 'UrbanFit Gym',
         year: '2023',
@@ -133,8 +133,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Световая вывеска "Grand Hotel"',
         category: {
             id: 2,
-            slug: 'outdoor',
-            name: "Наружная реклама"
+            name: 'outdoor',
+            title: "Наружная реклама"
         },
         client: 'Grand Hotel',
         year: '2023',
@@ -147,8 +147,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Визитки "Architect Studio"',
         category: {
             id: 3,
-            slug: 'printing',
-            name: "Печать"
+            name: 'printing',
+            title: "Печать"
         },
         client: 'Architect Studio',
         year: '2022',
@@ -161,8 +161,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Упаковка для вина "Vineyard"',
         category: {
             id: 4,
-            slug: 'packaging',
-            name: "Упаковка"
+            name: 'packaging',
+            title: "Упаковка"
         },
         client: 'Vineyard Estates',
         year: '2023',
@@ -175,8 +175,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Ребрендинг "CityBank"',
         category: {
             id: 1,
-            slug: 'branding',
-            name: "Брендирование"
+            name: 'branding',
+            title: "Брендирование"
         },
         client: 'CityBank',
         year: '2021',
@@ -189,8 +189,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Рекламный щит "Summer Sale"',
         category: {
             id: 2,
-            slug: 'outdoor',
-            name: "Наружная реклама"
+            name: 'outdoor',
+            title: "Наружная реклама"
         },
         client: 'MegaMall',
         year: '2023',
@@ -203,8 +203,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Брошюра "HealthCare"',
         category: {
             id: 3,
-            slug: 'printing',
-            name: "Печать"
+            name: 'printing',
+            title: "Печать"
         },
         client: 'HealthCare Clinic',
         year: '2022',
@@ -217,8 +217,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Упаковка для сладостей "SweetJoy"',
         category: {
             id: 4,
-            slug: 'packaging',
-            name: "Упаковка"
+            name: 'packaging',
+            title: "Упаковка"
         },
         client: 'SweetJoy',
         year: '2023',
@@ -231,8 +231,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Фирменный стиль "EcoFood"',
         category: {
             id: 1,
-            slug: 'branding',
-            name: "Брендирование"
+            name: 'branding',
+            title: "Брендирование"
         },
         client: 'EcoFood Market',
         year: '2022',
@@ -245,8 +245,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Вывеска "Coffee Time"',
         category: {
             id: 2,
-            slug: 'outdoor',
-            name: "Наружная реклама"
+            name: 'outdoor',
+            title: "Наружная реклама"
         },
         client: 'Coffee Time',
         year: '2023',
@@ -259,8 +259,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Календарь "Art Gallery"',
         category: {
             id: 3,
-            slug: 'printing',
-            name: "Печать"
+            name: 'printing',
+            title: "Печать"
         },
         client: 'Modern Art Gallery',
         year: '2023',
@@ -273,8 +273,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Упаковка для парфюмерии "Luxury Scents"',
         category: {
             id: 4,
-            slug: 'packaging',
-            name: "Упаковка"
+            name: 'packaging',
+            title: "Упаковка"
         },
         client: 'Luxury Scents',
         year: '2023',
@@ -287,8 +287,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Логотип "TechStart"',
         category: {
             id: 1,
-            slug: 'branding',
-            name: "Брендирование"
+            name: 'branding',
+            title: "Брендирование"
         },
         client: 'TechStart',
         year: '2023',
@@ -301,8 +301,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Рекламный стенд "AutoExpo"',
         category: {
             id: 2,
-            slug: 'outdoor',
-            name: "Наружная реклама"
+            name: 'outdoor',
+            title: "Наружная реклама"
         },
         client: 'AutoExpo',
         year: '2022',
@@ -315,8 +315,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Флаеры "NightClub"',
         category: {
             id: 3,
-            slug: 'printing',
-            name: "Печать"
+            name: 'printing',
+            title: "Печать"
         },
         client: 'Pulse NightClub',
         year: '2023',
@@ -329,8 +329,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Упаковка для кофе "Morning Brew"',
         category: {
             id: 4,
-            slug: 'packaging',
-            name: "Упаковка"
+            name: 'packaging',
+            title: "Упаковка"
         },
         client: 'Morning Brew',
         year: '2023',
@@ -343,8 +343,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Айдентика "FitnessPro"',
         category: {
             id: 1,
-            slug: 'branding',
-            name: "Брендирование"
+            name: 'branding',
+            title: "Брендирование"
         },
         client: 'FitnessPro',
         year: '2022',
@@ -357,8 +357,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Баннеры "Summer Festival"',
         category: {
             id: 2,
-            slug: 'outdoor',
-            name: "Наружная реклама"
+            name: 'outdoor',
+            title: "Наружная реклама"
         },
         client: 'City Events',
         year: '2023',
@@ -371,8 +371,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Буклет "Dental Care"',
         category: {
             id: 3,
-            slug: 'printing',
-            name: "Печать"
+            name: 'printing',
+            title: "Печать"
         },
         client: 'Dental Care Clinic',
         year: '2023',
@@ -385,8 +385,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Упаковка для чая "Green Valley"',
         category: {
             id: 4,
-            slug: 'packaging',
-            name: "Упаковка"
+            name: 'packaging',
+            title: "Упаковка"
         },
         client: 'Green Valley',
         year: '2022',
@@ -399,8 +399,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Логотип "Law Partners"',
         category: {
             id: 1,
-            slug: 'branding',
-            name: "Брендирование"
+            name: 'branding',
+            title: "Брендирование"
         },
         client: 'Law Partners',
         year: '2023',
@@ -413,8 +413,8 @@ export const projectPreviews: ProjectPreview[] = [
         title: 'Вывеска "BookStore"',
         category: {
             id: 2,
-            slug: 'outdoor',
-            name: "Наружная реклама"
+            name: 'outdoor',
+            title: "Наружная реклама"
         },
         client: 'BookStore',
         year: '2023',

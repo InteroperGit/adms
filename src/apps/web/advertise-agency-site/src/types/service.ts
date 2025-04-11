@@ -1,30 +1,22 @@
-import React from "react";
+import {ImageMeta} from "@/types/image";
 
+/**
+ * Категория услуг
+ */
 export interface ServiceCategory {
-    icon: React.ReactNode
-    title: string
-    services: {
-        name: string
-        href: string
-    }[]
-}
-
-export interface ServiceItem {
+    id: number;
     name: string;
-    href: string;
-};
-
-export interface SpecialServiceItem {
     title: string;
-    description: string;
-    features: ServiceItem[];
 }
 
 /**
- * Ссылка на услугу
+ * Услуга
  */
-export interface ServiceLink {
-    name: string,
-    href: string,
-    subItems?: ServiceItem[]
+export interface ServiceItem {
+    name: string;
+    title: string;
+    description?: string;
+    href?: string;
+    previewImage?: ImageMeta;
+    items?: ServiceItem[];
 }

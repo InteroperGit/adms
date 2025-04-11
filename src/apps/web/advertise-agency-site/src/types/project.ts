@@ -1,12 +1,12 @@
-import {Category} from "@/types/category";
+import {ServiceCategory} from "@/types/service";
 
 export interface ProjectPreview {
     id: number;
     title: string;
-    category: Category;
+    category: ServiceCategory;
     client: string;
     year: string;
     imageUrl: string;
     slug: string;
     description?: string;
-};
+}
