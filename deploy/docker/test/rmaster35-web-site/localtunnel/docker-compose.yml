@@ -62,12 +62,6 @@ services:
       - strapi-db
     networks:
       - backend
-    healthcheck:
-      test: "curl --silent --fail http://${STRAPI_DATABASE_HOST}:${STRAPI_DATABASE_PORT}/health || exit 1"
-      interval: 30s
-      retries: 5
-      start_period: 10s
-      timeout: 10s
 
   strapi-db:
     image: postgres
@@ -77,7 +71,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ${POSTGRES_DATA_PATH}:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
       interval: 10s
