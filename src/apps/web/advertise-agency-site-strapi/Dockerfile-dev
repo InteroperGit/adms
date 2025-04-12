@@ -12,16 +12,16 @@ COPY package.json pnpm-lock.yaml ./
 # Устанавливаем зависимости
 RUN pnpm install --frozen-lockfile
 
-# Копируем оставшиеся файлы проекта
-COPY . .
-
 # Собираем Strapi
 RUN pnpm build
 
 # 2. Stage: Production
 FROM node:20-alpine
 
-ENV NODE_ENV=production
+ARG NODE_ENV=production
+ARG PORT=1337
+
+ENV NODE_ENV=${NODE_ENV}
 
 # Включаем pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -38,6 +38,6 @@ RUN pnpm install --prod --frozen-lockfile
 # Удаляем потенциально чувствительные файлы
 RUN rm -f .env .env.* *.log
 
-EXPOSE 1337
+EXPOSE ${PORT}
 
-CMD ["pnpm", "start"]
+CMD ["pnpm", "dev"]

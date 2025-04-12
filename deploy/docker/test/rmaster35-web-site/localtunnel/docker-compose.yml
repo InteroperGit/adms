@@ -47,7 +47,10 @@ services:
   strapi:
     build:
       context: ../../../../../src/apps/web/advertise-agency-site-strapi
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-dev
+      args:
+        NODE_ENV: ${STRAPI_NODE_ENV}
+        PORT: ${STRAPI_PORT_DEV}
     container_name: rmaster35-web-site-test-strapi
     environment:
       - DATABASE_CLIENT=${STRAPI_DATABASE_CLIENT}
@@ -63,15 +66,17 @@ services:
       - API_TOKEN_SALT=${STRAPI_API_TOKEN_SALT}
       - ADMIN_JWT_SECRET=${STRAPI_ADMIN_JWT_SECRET}
       - TRANSFER_TOKEN_SALT=${STRAPI_TRANSFER_TOKEN_SALT}
-      - HOST=${STRAPI_HOST}
-      - PORT=${STRAPI_PORT}
+      - HOST=${STRAPI_SERVER_HOST}
+      - PORT=${STRAPI_SERVER_PORT}
     ports:
-      - "1337:1337"
+      - ${STRAPI_PORT_DEV}:${STRAPI_SERVER_PORT}
     depends_on:
       - strapi-db
     networks:
       - backend
     volumes:
+      - ${STRAPI_PROJECT_PATH}:/app
+      - strapi_node_modules:/app/node_modules
       - ${STRAPI_DATA_PATH}/public:/app/public
       - ${STRAPI_DATA_PATH}/data:/app/data
 
@@ -93,7 +98,7 @@ services:
       - backend
 
 volumes:
-  postgres_data:
+  strapi_node_modules:
     driver: local
 
 networks:
