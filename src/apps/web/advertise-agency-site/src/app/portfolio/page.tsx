@@ -96,7 +96,7 @@ export default function PortfolioPage() {
             { id: 1, name: 'all', title: 'Все работы' },
             ...serviceCategories,
         ];
-    }, [serviceCategoriesLoading]);
+    }, [serviceCategoriesLoading, serviceCategories]);
 
     const projectsToShow = filteredProjects.slice(0, visibleProjects);
     const hasMoreProjects = visibleProjects < filteredProjects.length;

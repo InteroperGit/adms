@@ -1,11 +1,4 @@
-import {ServiceCategory, ServiceItem} from "@/types/service";
-
-export const serviceCategories: ServiceCategory[] = [
-    { id: 1, title: 'Все работы', name: 'all' },
-    { id: 2, title: 'Наружная реклама', name: 'outdoor' },
-    { id: 3, title: 'Брендирование', name: 'branding' },
-    { id: 4, title: 'Полиграфия', name: 'printing' },
-];
+import {ServiceItem} from "@/types/service";
 
 export const mainServices: ServiceItem[] = [
     {
