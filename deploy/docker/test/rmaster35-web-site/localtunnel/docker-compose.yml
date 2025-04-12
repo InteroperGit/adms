@@ -45,35 +45,47 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
   strapi:
-    image: strapi/strapi
+    build:
+      context: ../../../../../src/apps/web/advertise-agency-site-strapi
+      dockerfile: Dockerfile
     container_name: rmaster35-web-site-test-strapi
     environment:
       - DATABASE_CLIENT=${STRAPI_DATABASE_CLIENT}
-      - DATABASE_HOST=strapi-db
+      - DATABASE_HOST=${STRAPI_DATABASE_HOST}
       - DATABASE_PORT=${STRAPI_DATABASE_PORT}
       - DATABASE_NAME=${STRAPI_DATABASE_NAME}
       - DATABASE_USERNAME=${STRAPI_DATABASE_USERNAME}
       - DATABASE_PASSWORD=${STRAPI_DATABASE_PASSWORD}
+      - DATABASE_SSL=${STRAPI_DATABASE_SSL}
+      - DATABASE_FILENAME=${STRAPI_DATABASE_FILENAME}
+      - JWT_SECRET=${STRAPI_JWT_SECRET}
+      - APP_KEYS=${STRAPI_APP_KEYS}
+      - API_TOKEN_SALT=${STRAPI_API_TOKEN_SALT}
+      - ADMIN_JWT_SECRET=${STRAPI_ADMIN_JWT_SECRET}
+      - TRANSFER_TOKEN_SALT=${STRAPI_TRANSFER_TOKEN_SALT}
+      - HOST=${STRAPI_HOST}
+      - PORT=${STRAPI_PORT}
     ports:
       - "1337:1337"
-    volumes:
-      - ${STRAPI_DATA_PATH}:/srv/app
     depends_on:
       - strapi-db
     networks:
       - backend
+    volumes:
+      - ${STRAPI_DATA_PATH}/public:/app/public
+      - ${STRAPI_DATA_PATH}/data:/app/data
 
   strapi-db:
     image: postgres
     container_name: rmaster35-web-site-test-strapi-postgres
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${STRAPI_DATABASE_NAME}
+      - POSTGRES_USER=${STRAPI_DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${STRAPI_DATABASE_PASSWORD}
     volumes:
       - ${POSTGRES_DATA_PATH}:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      test: ["CMD-SHELL", "pg_isready -U $STRAPI_DATABASE_USERNAME"]
       interval: 10s
       timeout: 5s
       retries: 5

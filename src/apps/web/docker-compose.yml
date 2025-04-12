@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: strapi-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
+      POSTGRES_DB: strapi
+    volumes:
+      - /home/mmatveev/projects/adms/data/rmaster35-web-site/strapi/db/postgres:/var/lib/postgresql/data
+      - ./strapi_backup.sql:/docker-entrypoint-initdb.d/strapi_backup.sql
+    ports:
+      - "5433:5432"
+
+volumes:
+  strapi_pg_data:

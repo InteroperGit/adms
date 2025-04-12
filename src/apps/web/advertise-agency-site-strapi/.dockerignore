@@ -1,0 +1,11 @@
+node_modules
+build
+.cache
+.env
+.env.*
+Dockerfile
+.dockerignore
+README.md
+*.log
+tests
+coverage
