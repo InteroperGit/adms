@@ -1,17 +1,73 @@
-"use client"
+"use client";
 
-import {useEffect, useState} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/libs/utils';
-import {projectPreviews} from "@/data/projects-data";
+import { projectPreviews } from "@/data/projects-data";
 import HeroSection from "@/components/sections/HeroSection";
 import CategoryFilter from "@/components/navigation/CategoryFilter";
-import {CtaSection} from "@/components/sections/CtaSection";
-import {LoadingMoreButton} from "@/components/buttons/LoadingMoreButton";
-import {PortfolioSection} from "@/components/sections/PortfolioSection";
-import {serviceCategories} from "@/data/services-data";
-import {ProjectPreview} from "@/types/project";
+import { CtaSection } from "@/components/sections/CtaSection";
+import { LoadingMoreButton } from "@/components/buttons/LoadingMoreButton";
+import { PortfolioSection } from "@/components/sections/PortfolioSection";
+import { ProjectPreview } from "@/types/project";
+import useServiceCategories from "@/hooks/useServiceCategories";
 
 const INIT_VISIBLE_PROJECTS = 10;
+
+interface LoadingProjectsButtonProps {
+    isLoadingMore: boolean;
+    hasMoreProjects: boolean;
+    onLoadMore: () => void;
+    filteredProjectsLength: number;
+}
+
+function LoadingProjectsButton({
+                                  isLoadingMore,
+                                  hasMoreProjects,
+                                  onLoadMore,
+                                  filteredProjectsLength,
+                              }: LoadingProjectsButtonProps) {
+    return hasMoreProjects ? (
+        <LoadingMoreButton isLoading={isLoadingMore} onClick={onLoadMore}>
+            Показать еще
+        </LoadingMoreButton>
+    ) : (
+        <div className="text-gray-500 dark:text-gray-400 py-4">
+            {filteredProjectsLength > 10 ? 'Все проекты загружены' : ''}
+        </div>
+    );
+}
+
+interface ShowAllProjectsButtonProps {
+    onClick: () => void;
+}
+
+function ShowAllProjectsButton({ onClick }: ShowAllProjectsButtonProps) {
+    return (
+        <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+            <p className="text-lg">В этой категории пока нет проектов</p>
+            <button
+                onClick={onClick}
+                className={cn(
+                    "mt-4 px-4 py-2",
+                    "bg-orange-100 dark:bg-orange-900/30",
+                    "text-orange-600 dark:text-orange-300",
+                    "rounded-md hover:bg-orange-200 dark:hover:bg-orange-800/50",
+                    "transition-colors duration-200"
+                )}
+            >
+                Показать все работы
+            </button>
+        </div>
+    );
+}
+
+function LoadingIndicator() {
+    return (
+        <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+        </div>
+    );
+}
 
 export default function PortfolioPage() {
     const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -19,6 +75,7 @@ export default function PortfolioPage() {
     const [visibleProjects, setVisibleProjects] = useState<number>(10);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [filteredProjects, setFilteredProjects] = useState<ProjectPreview[]>(projectPreviews);
+    const { categories: serviceCategories, loading: serviceCategoriesLoading } = useServiceCategories();
 
     useEffect(() => {
         // Сброс видимых проектов при изменении категории
@@ -29,6 +86,17 @@ export default function PortfolioPage() {
                 : projectPreviews.filter(project => project.category?.name === activeCategory)
         );
     }, [activeCategory]);
+
+    const uiServiceCategories = useMemo(() => {
+        if (serviceCategoriesLoading) {
+            return [];
+        }
+
+        return [
+            { id: 1, name: 'all', title: 'Все работы' },
+            ...serviceCategories,
+        ];
+    }, [serviceCategoriesLoading]);
 
     const projectsToShow = filteredProjects.slice(0, visibleProjects);
     const hasMoreProjects = visibleProjects < filteredProjects.length;
@@ -65,26 +133,23 @@ export default function PortfolioPage() {
                 title={"Наши работы"}
                 description={activeCategory === 'all'
                     ? 'Реализованные проекты за последние годы'
-                    : `Проекты в категории "${serviceCategories.find(c => c.name === activeCategory)?.title || ''}"`}
+                    : `Проекты в категории "${uiServiceCategories.find(c => c.name === activeCategory)?.title || ''}"`}
             />
 
             {/* Фильтры */}
             <section className={cn("py-12 px-2 md:px-6")}>
                 <div>
+                    {/* Показываем скелетон во время загрузки */}
                     <CategoryFilter
-                        categories={serviceCategories}
+                        categories={uiServiceCategories}
                         activeCategory={activeCategory}
                         onCategoryChange={(slug) => setActiveCategory(slug)}
+                        loading={serviceCategoriesLoading}
                     />
 
                     {/* Список проектов */}
                     {isLoading ? (
-                        <div className={cn("flex justify-center items-center h-64")}>
-                            <div className={cn(
-                                "animate-spin rounded-full h-12 w-12",
-                                "border-t-2 border-b-2 border-orange-500")}>
-                            </div>
-                        </div>
+                        <LoadingIndicator />
                     ) : (
                         <>
                             <PortfolioSection
@@ -100,34 +165,17 @@ export default function PortfolioPage() {
 
                             {/* Кнопка загрузки и статус */}
                             <div className="mt-12 text-center">
-                                {hasMoreProjects ? (
-                                    <LoadingMoreButton
-                                        isLoading={isLoadingMore}
-                                        onClick={loadMoreProjects}>
-                                        Показать еше
-                                    </LoadingMoreButton>
-                                ) : (
-                                    <div className="text-gray-500 dark:text-gray-400 py-4">
-                                        {filteredProjects.length > 10 ? 'Все проекты загружены' : ''}
-                                    </div>
-                                )}
+                                <LoadingProjectsButton
+                                    isLoadingMore={isLoadingMore}
+                                    hasMoreProjects={hasMoreProjects}
+                                    onLoadMore={loadMoreProjects}
+                                    filteredProjectsLength={filteredProjects.length}
+                                />
 
                                 {projectsToShow.length === 0 && (
-                                    <div className={cn("text-center py-12 text-gray-500 dark:text-gray-400")}>
-                                        <p className="text-lg">В этой категории пока нет проектов</p>
-                                        <button
-                                            onClick={() => handleCategoryChange('all')}
-                                            className={cn(
-                                                "mt-4 px-4 py-2",
-                                                "bg-orange-100 dark:bg-orange-900/30",
-                                                "text-orange-600 dark:text-orange-300",
-                                                "rounded-md hover:bg-orange-200 dark:hover:bg-orange-800/50",
-                                                "transition-colors duration-200"
-                                            )}
-                                        >
-                                            Показать все работы
-                                        </button>
-                                    </div>
+                                    <ShowAllProjectsButton
+                                        onClick={() => handleCategoryChange('all')}
+                                    />
                                 )}
                             </div>
                         </>
