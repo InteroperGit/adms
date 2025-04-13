@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/libs/utils"
-import {ArticlePreview} from "@/types/article";
+import {Article} from "@/types/article";
 
 interface ArticlePreviewCardProps {
     /**
      * Данные статьи для отображения
      */
-    article: ArticlePreview
+    article: Article
 
     /**
      * Дополнительные классы для кастомизации стилей карточки
@@ -91,7 +91,7 @@ export const ArticlePreviewCard = ({
                 <Link href={articleUrl} passHref legacyBehavior>
                     <a className="block h-full w-full">
                         <Image
-                            src={article.imageUrl}
+                            src={article.coverImage?.url || '#'}
                             alt={article.title}
                             fill
                             className={cn(
@@ -110,10 +110,10 @@ export const ArticlePreviewCard = ({
                 {/* Мета-информация */}
                 <div className="flex justify-between items-center mb-2">
                     <span className="text-sm text-primary font-medium">
-                        {article.category}
+                        {article.category?.title}
                     </span>
                     <span className="text-sm text-muted-foreground">
-                        {article.date} · {article.readTime}
+                        {article.publishedAt} · {article.readingTime}
                      </span>
                 </div>
 
@@ -122,7 +122,7 @@ export const ArticlePreviewCard = ({
                     {article.title}
                 </h3>
                 <p className="text-muted-foreground mb-4 line-clamp-3 flex-1">
-                    {article.excerpt}
+                    {article.description}
                 </p>
 
                 {/* Кнопка "Читать далее" */}

@@ -4,6 +4,9 @@ import React from "react";
 import {Metadata} from "next";
 import {PromisePageProps} from "@/types/page";
 
+const DEFAULT_IMAGE_WIDTH = 1200;
+const DEFAULT_IMAGE_HEIGHT = 630;
+
 export async function generateMetadata(props: PromisePageProps): Promise<Metadata> {
     const { slug } = await props.params;
     const project = await getProjectBySlug(slug);
@@ -17,19 +20,19 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
 
     return {
         title: project.seo?.title || project.title,
-        description: project.seo?.description || project.excerpt,
+        description: project.seo?.description || project.description,
         keywords: project.seo?.keywords || project.tags?.join(', '),
         openGraph: {
             title: project.seo?.title || project.title,
-            description: project.seo?.description || project.excerpt,
+            description: project.seo?.description || project.description,
             url: `https://rmaster35.ru/projects/${project.slug}`,
             siteName: 'РА Рекламастер',
             images: [
                 {
-                    url: project.seo?.ogImage || project.coverImage.url,
-                    width: project.coverImage.width || 1200,
-                    height: project.coverImage.height || 630,
-                    alt: project.coverImage.alt || project.title,
+                    url: project.seo?.ogImage || project.coverImage?.url || "#",
+                    width: project.coverImage?.width || DEFAULT_IMAGE_WIDTH,
+                    height: project.coverImage?.height || DEFAULT_IMAGE_HEIGHT,
+                    alt: project.coverImage?.alt || project.title,
                 },
             ],
             locale: 'ru_RU',
@@ -40,8 +43,8 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
         twitter: {
             card: 'summary_large_image',
             title: project.seo?.title || project.title,
-            description: project.seo?.description || project.excerpt,
-            images: [project.seo?.ogImage || project.coverImage.url],
+            description: project.seo?.description || project.description,
+            images: [project.seo?.ogImage || project.coverImage?.url || "#"],
         },
         alternates: {
             canonical: `https://rmaster35.ru/projects/${project.slug}`,
@@ -67,7 +70,7 @@ export default async function ProjectPage(props: PromisePageProps) {
     return (
         <article className="mx-5">
             <h1 className="text-3xl font-bold mb-10">{project.title}</h1>
-            <ArticleParser blocks={project.content} />
+            <ArticleParser blocks={project.blocks || []} />
         </article>
     );
 }

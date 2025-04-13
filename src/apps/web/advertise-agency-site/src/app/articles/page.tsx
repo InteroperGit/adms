@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { SearchIcon } from 'lucide-react'
 import HeroSection from "@/components/sections/HeroSection";
 import {ArticlePreviewCard} from "@/components/cards/ArticlePreviewCard";
-import {articlesPreviews} from "@/data/article-data";
+import {articles} from "@/data/article-data";
 
 export default function ArticlesPage() {
     return (
@@ -29,7 +29,7 @@ export default function ArticlesPage() {
 
             {/* Список статей */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {articlesPreviews.map((article, index) => (
+                {articles.map((article, index) => (
                     <ArticlePreviewCard
                         key={article.id}
                         article={article}

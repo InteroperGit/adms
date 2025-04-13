@@ -1,85 +1,76 @@
 import {ProjectPreview} from "@/types/project";
+import {ImageMeta} from "@/types/image";
+import {Entity} from "@/types/base";
+import {Author} from "@/types/author";
+
+/**
+ * Категория статьи
+ */
+export interface ArticleCategory extends Entity {
+    /**
+     * Название
+     */
+    name: string;
+
+    /**
+     * Заголовок
+     */
+    title: string;
+
+    /**
+     * slug
+     */
+    slug: string;
+}
 
 /**
  * Основной интерфейс статьи
  */
-export interface Article {
-    /**
-     * Уникальный идентификатор статьи
-     */
-    id: number
-
+export interface Article extends Entity {
     /**
      * Заголовок статьи (h1)
      */
     title: string
 
     /**
-     * Краткое описание для превью
+     * Краткое описание
      */
-    excerpt: string
-
-    /**
-     * Дата создания в формате ISO (YYYY-MM-DD)
-     */
-    createdAt: string
-
-    /**
-     * Дата обновления в формате ISO (YYYY-MM-DD)
-     */
-    updatedAt: string
-
-    /**
-     * Дата публикации в формате ISO (YYYY-MM-DD)
-     */
-    publishedAt: string
+    description: string
 
     /**
      * Время чтения в минутах
      */
-    readingTime: number
+    readingTime?: number
 
     /**
-     * URL-адрес статьи (slug)
+     * slug
      */
     slug: string
 
     /**
      * Теги
      */
-    tags: string[]
+    tags?: string[]
 
     /**
      * Основное изображение статьи
      */
-    coverImage: {
-        url: string
-        alt: string
-        width?: number
-        height?: number
-    }
+    coverImage?: ImageMeta
 
     /**
      * Категория статьи
      */
-    category: {
-        name: string
-        slug: string
-    }
+    category: ArticleCategory
 
     /**
      * Автор статьи
      */
-    author: {
-        name: string
-        avatar?: string
-        position?: string
-    }
+    author?: Author
 
     /**
      * Контент статьи в виде массива блоков
      */
-    content: ArticleBlock[]
+    blocks?: ArticleBlock[]
 
     /**
      * SEO-метаданные
@@ -99,7 +90,7 @@ export interface Article {
     /**
      * Связанные статьи (опционально)
      */
-    relatedArticles?: ArticlePreview[]
+    relatedArticles?: Article[]
 }
 
 /**
@@ -249,18 +240,4 @@ export interface ArticleSEO {
     description?: string
     keywords?: string[]
     ogImage?: string
-}
-
-/**
- * Превью статьи
- */
-export interface ArticlePreview {
-    id: number
-    slug: string
-    title: string
-    excerpt: string
-    category: string
-    date: string
-    readTime: string
-    imageUrl: string
 }

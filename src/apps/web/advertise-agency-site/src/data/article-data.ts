@@ -1,112 +1,9 @@
-import {Article, ArticlePreview} from "@/types/article";
-
-export const articlesPreviews: ArticlePreview[] = [
-    {
-        id: 1,
-        slug: '1',
-        title: 'Тренды в наружной рекламе 2024',
-        excerpt: 'Обзор новых технологий и материалов для наружной рекламы в этом году.',
-        category: 'Наружная реклама',
-        date: '15.05.2024',
-        readTime: '5 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Рекламные билборды
-    },
-    {
-        id: 2,
-        slug: '2',
-        title: 'Как выбрать шрифты для брендинга',
-        excerpt: 'Полное руководство по подбору шрифтовых пар для логотипов.',
-        category: 'Брендинг',
-        date: '10.05.2024',
-        readTime: '7 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Шрифты
-    },
-    {
-        id: 3,
-        slug: '3',
-        title: 'УФ-печать: преимущества и особенности',
-        excerpt: 'Все что нужно знать о технологии УФ-печати.',
-        category: 'Полиграфия',
-        date: '05.05.2024',
-        readTime: '6 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Печатная продукция
-    },
-    {
-        id: 4,
-        slug: '4',
-        title: 'Нейромаркетинг в рекламе',
-        excerpt: 'Как психологические приемы помогают увеличить конверсию.',
-        category: 'Маркетинг',
-        date: '28.04.2024',
-        readTime: '8 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Аналитика данных
-    },
-    {
-        id: 5,
-        slug: '5',
-        title: 'Брендирование транспорта',
-        excerpt: 'Как сделать мобильную рекламу эффективной.',
-        category: 'Брендинг',
-        date: '22.04.2024',
-        readTime: '10 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Брендированный транспорт
-    },
-    {
-        id: 6,
-        slug: '6',
-        title: 'Эффективные POS-материалы',
-        excerpt: 'Какие рекламные материалы работают лучше всего.',
-        category: 'Маркетинг',
-        date: '18.04.2024',
-        readTime: '4 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Торговое оборудование
-    },
-    {
-        id: 7,
-        slug: '7',
-        title: '3D-вывески нового поколения',
-        excerpt: 'Обзор современных технологий создания вывесок.',
-        category: 'Наружная реклама',
-        date: '12.04.2024',
-        readTime: '6 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Неоновая вывеска
-    },
-    {
-        id: 8,
-        slug: '8',
-        title: 'Эко-подход в полиграфии',
-        excerpt: 'Как снизить экологический след при печати.',
-        category: 'Полиграфия',
-        date: '05.04.2024',
-        readTime: '7 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Бумага и экология
-    },
-    {
-        id: 9,
-        slug: '9',
-        title: 'Гайд по фирменным стилям 2024',
-        excerpt: 'Анализ трендов в корпоративной айдентике.',
-        category: 'Брендинг',
-        date: '30.03.2024',
-        readTime: '9 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1560869713-61ca42041df8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Брендбук
-    },
-    {
-        id: 10,
-        slug: '10',
-        title: 'Digital-инструменты для рекламы',
-        excerpt: 'Как интегрировать цифровые технологии.',
-        category: 'Маркетинг',
-        date: '25.03.2024',
-        readTime: '5 мин',
-        imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Цифровые технологии
-    }
-];
+import {Article} from "@/types/article";
 
 export const articles: Article[] = [{
     id: 1,
     title: 'Наружная реклама в 2024 году: главные тренды и кейсы',
-    excerpt: 'Разбираем ключевые тенденции наружной рекламы: от цифровых билбордов до экологичных решений. Примеры успешных кампаний и метрики эффективности.',
+    description: 'Разбираем ключевые тенденции наружной рекламы: от цифровых билбордов до экологичных решений. Примеры успешных кампаний и метрики эффективности.',
     createdAt: '2024-03-15',
     updatedAt: '2024-03-18',
     publishedAt: '2024-03-18',
@@ -115,6 +12,7 @@ export const articles: Article[] = [{
     tags: ['реклама', 'OOH', 'digital', 'тренды'],
 
     coverImage: {
+        id: 1,
         url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         alt: 'Современный цифровой билборд в городской среде',
         width: 1200,
@@ -122,20 +20,28 @@ export const articles: Article[] = [{
     },
 
     category: {
-        name: 'Маркетинг',
+        id: 1,
+        name: 'narketing',
+        title: 'Маркетинг',
         slug: 'marketing'
     },
 
     author: {
+        id: 1,
         name: 'Анна Смирнова',
-        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
+        avatar: {
+            id: 1,
+            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
+            height: 1000,
+            width: 800
+        },
         position: 'Главный редактор AdTrends'
     },
 
     isFeatured: true,
     isNew: true,
 
-    content: [
+    blocks: [
         {
             type: "text",
             content: "<p>В 2024 году наружная реклама переживает настоящую революцию. Традиционные билборды уступают место интеллектуальным digital-экранам, а экологичность становится must-have для брендов. Разберём ключевые изменения отрасли.</p>"
@@ -272,31 +178,225 @@ export const articles: Article[] = [{
             id: 1,
             slug: 'digital-billboards-2024',
             title: 'Цифровые билборды: новые возможности',
-            excerpt: 'Как технологии меняют рынок наружной рекламы',
-            category: 'Технологии',
-            date: '2024-02-10',
-            readTime: '4 минуты',
-            imageUrl: 'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            description: 'Как технологии меняют рынок наружной рекламы',
+            category: {
+                id: 2,
+                name: 'tech',
+                title: 'Технологии',
+                slug: 'tech'
+            },
+            publishedAt: '2024-02-10',
+            readingTime: 4,
+            coverImage: {
+                id: 1,
+                url: 'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            }
         },
         {
             id: 2,
             slug: 'ar-in-outdoor-ads',
             title: 'AR в наружной рекламе: кейсы 2024',
-            excerpt: 'Как дополненная реальность увеличивает вовлеченность',
-            category: 'Инновации',
-            date: '2024-01-28',
-            readTime: '6 минут',
-            imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            description: 'Как дополненная реальность увеличивает вовлеченность',
+            category: {
+                id: 3,
+                name: 'innovations',
+                title: 'Инновации',
+                slug: 'innovations'
+            },
+            publishedAt: '2024-01-28',
+            readingTime: 6,
+            coverImage: {
+                id: 1,
+                url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            }
         },
         {
             id: 3,
             slug: 'sustainable-outdoor-ads',
             title: 'Эко-тренды в рекламе',
-            excerpt: 'Зеленые технологии в OOH-кампаниях',
-            category: 'Экология',
-            date: '2023-12-15',
-            readTime: '5 минут',
-            imageUrl: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            description: 'Зеленые технологии в OOH-кампаниях',
+            category: {
+                id: 3,
+                name: 'innovations',
+                title: 'Инновации',
+                slug: 'innovations'
+            },
+            publishedAt: '2024-01-28',
+            readingTime: 6,
+            coverImage: {
+                id: 1,
+                url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            }
         }
     ]
+}, {
+    id: 2,
+    slug: '1',
+    title: 'Тренды в наружной рекламе 2024',
+    description: 'Обзор новых технологий и материалов для наружной рекламы в этом году.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
+}, {
+    id: 3,
+    slug: '2',
+    title: 'Как выбрать шрифты для брендинга',
+    description: 'Полное руководство по подбору шрифтовых пар для логотипов.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
+}, {
+    id: 4,
+    slug: '3',
+    title: 'УФ-печать: преимущества и особенности',
+    description: 'Все что нужно знать о технологии УФ-печати.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
+}, {
+    id: 5,
+    slug: '4',
+    title: 'Нейромаркетинг в рекламе',
+    description: 'Как психологические приемы помогают увеличить конверсию.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
+}, {
+    id: 6,
+    slug: '5',
+    title: 'Брендирование транспорта',
+    description: 'Как сделать мобильную рекламу эффективной.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
+}, {
+    id: 7,
+    slug: '6',
+    title: 'Эффективные POS-материалы',
+    description: 'Какие рекламные материалы работают лучше всего.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
+}, {
+    id: 8,
+    slug: '7',
+    title: '3D-вывески нового поколения',
+    description: 'Обзор современных технологий создания вывесок.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
+}, {
+    id: 9,
+    slug: '8',
+    title: 'Эко-подход в полиграфии',
+    description: 'Как снизить экологический след при печати.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
+}, {
+    id: 10,
+    slug: '9',
+    title: 'Гайд по фирменным стилям 2024',
+    description: 'Анализ трендов в корпоративной айдентике.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1560869713-61ca42041df8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
+}, {
+    id: 11,
+    slug: '10',
+    title: 'Digital-инструменты для рекламы',
+    description: 'Как интегрировать цифровые технологии.',
+    category: {
+        id: 1,
+        name: 'outdoor',
+        title: 'Наружная реклама',
+        slug: 'outdoor'
+    },
+    publishedAt: '15.05.2024',
+    readingTime: 5,
+    coverImage: {
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
 }]
