@@ -1,7 +1,30 @@
+# Игнорируем node_modules (локальные модули могут быть собраны в контейнере)
 node_modules
-Dockerfile
-Dockerfile-cloudflare-test
-.dockerignore
+build
+.cache
+
+# Игнорируем файлы конфигурации среды и секреты
+.env
+.env.*
+
+# Игнорируем систему контроля версий
 .git
-.gitignore
+
+# Игнорируем журналы
 *.log
+
+# Игнорируем временные файлы и папки
+*.tmp
+*.swp
+.DS_Store
+
+# Игнорируем файлы Docker
+Dockerfile*
+.dockerignore
+
+# Игнорируем тесты
+tests
+coverage
+
+# Игнориуем иные файлы
+README.md

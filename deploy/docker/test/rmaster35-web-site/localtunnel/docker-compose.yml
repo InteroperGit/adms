@@ -5,6 +5,8 @@ services:
     build:
       context: ../../../../../src/apps/web/advertise-agency-site
       dockerfile: Dockerfile-localtunnel-test
+      args:
+        NEXT_PUBLIC_STRAPI_API_URL: ${NEXT_PUBLIC_STRAPI_API_URL}
     container_name: rmaster35-web-site-test-localtunnel-container
     restart: unless-stopped
     ports:
