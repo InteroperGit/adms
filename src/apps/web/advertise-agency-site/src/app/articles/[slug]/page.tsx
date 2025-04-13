@@ -4,6 +4,9 @@ import React from "react";
 import {Metadata} from "next";
 import {PromisePageProps} from "@/types/page";
 
+const DEFAULT_IMAGE_WIDTH = 1200;
+const DEFAULT_IMAGE_HEIGHT = 630;
+
 export async function generateMetadata(props: PromisePageProps): Promise<Metadata> {
     const { slug } = await props.params;
     const article = await getArticleBySlug(slug);
@@ -17,19 +20,19 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
 
     return {
         title: article.seo?.title || article.title,
-        description: article.seo?.description || article.excerpt,
+        description: article.seo?.description || article.description,
         keywords: article.seo?.keywords || article.tags?.join(', '),
         openGraph: {
             title: article.seo?.title || article.title,
-            description: article.seo?.description || article.excerpt,
+            description: article.seo?.description || article.description,
             url: `https://rmaster35.ru/projects/${article.slug}`,
             siteName: 'РА Рекламастер',
             images: [
                 {
-                    url: article.seo?.ogImage || article.coverImage.url,
-                    width: article.coverImage.width || 1200,
-                    height: article.coverImage.height || 630,
-                    alt: article.coverImage.alt || article.title,
+                    url: article.seo?.ogImage || article.coverImage?.url || "#",
+                    width: article.coverImage?.width || DEFAULT_IMAGE_WIDTH,
+                    height: article.coverImage?.height || DEFAULT_IMAGE_HEIGHT,
+                    alt: article.coverImage?.alt || article.title,
                 },
             ],
             locale: 'ru_RU',
@@ -40,8 +43,8 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
         twitter: {
             card: 'summary_large_image',
             title: article.seo?.title || article.title,
-            description: article.seo?.description || article.excerpt,
-            images: [article.seo?.ogImage || article.coverImage.url],
+            description: article.seo?.description || article.description,
+            images: [article.seo?.ogImage || article.coverImage?.url || "#"],
         },
         alternates: {
             canonical: `https://rmaster35.ru/projects/${article.slug}`,
@@ -67,7 +70,7 @@ export default async function ArticlePage(props: PromisePageProps) {
     return (
         <article>
             <h1 className="text-3xl font-bold mb-10">{article.title}</h1>
-            <ArticleParser blocks={article.content} />
+            <ArticleParser blocks={article.blocks || []} />
         </article>
     );
 }

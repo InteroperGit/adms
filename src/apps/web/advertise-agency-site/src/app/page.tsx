@@ -3,7 +3,7 @@ import { mainServices } from "@/data/services-data";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
 import { recentProjectPreviews } from "@/data/projects-data";
 import { NewsSection } from "@/components/sections/NewsSection";
-import { recentNewsPreviews } from "@/data/news-data";
+import { recentNewsArticles } from "@/data/news-data";
 import HeroSection from "@/components/sections/HeroSection";
 import { ClientsSection } from "@/components/sections/ClientsSection";
 import React from "react";
@@ -92,7 +92,7 @@ export default function Home() {
             {/* 8. Новости */}
             <NewsSection
                 title="Последние события"
-                articles={recentNewsPreviews}
+                articles={recentNewsArticles}
                 columns={{
                     mobile: 1,
                     tablet: 2,

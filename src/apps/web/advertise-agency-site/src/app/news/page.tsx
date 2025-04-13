@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { SearchIcon } from 'lucide-react'
 import HeroSection from "@/components/sections/HeroSection";
-import {newsPreviews} from "@/data/news-data";
+import {newsArticles} from "@/data/news-data";
 
 export default function NewsPage() {
     return (
@@ -29,7 +29,7 @@ export default function NewsPage() {
 
             {/* Основной контент */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                {newsPreviews.map((article, index) => (
+                {newsArticles.map((article, index) => (
                     <ArticlePreviewCard
                         key={article.id}
                         article={article}

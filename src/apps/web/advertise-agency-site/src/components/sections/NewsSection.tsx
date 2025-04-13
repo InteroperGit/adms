@@ -2,13 +2,13 @@
 
 import { ArticlePreviewCard } from "@/components/cards/ArticlePreviewCard"
 import { cn } from "@/libs/utils"
-import {ArticlePreview} from "@/types/article";
+import {Article} from "@/types/article";
 
 interface NewsSectionProps {
     /**
      * Массив новостных статей для отображения
      */
-    articles: ArticlePreview[]
+    articles: Article[]
     /**
      * Заголовок секции
      * @default "Новости и статьи"
