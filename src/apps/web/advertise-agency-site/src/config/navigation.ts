@@ -59,7 +59,7 @@ export const navLinks: NavigationLink[] = [
             ]
         }],
     },
-    { name: "Статьи", href: '/articles' },
+    { name: "Статьи", href: '/articles/page/1' },
     { name: "Новости", href: "/news" },
     { name: "Контакты", href: "/contacts" }
 ]
