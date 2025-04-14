@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {ServiceCategory} from "@/types/service";
 
-const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 /**
  * Кастомный хук для получения списка категорий услуг из Strapi API.
@@ -12,7 +12,7 @@ export default function useServiceCategories() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${API_URL}/api/service-categories`)
+        fetch(`${STRAPI_URL}/api/service-categories`)
         .then(res => res.json())
         .then(categories => setCategories(categories.data))
         .finally(() => {

@@ -1,10 +1,10 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/libs/utils"
 import {Article} from "@/types/article";
+import ArticleImage from "@/components/misc/ArticleImage";
 
 interface ArticlePreviewCardProps {
     /**
@@ -90,16 +90,14 @@ export const ArticlePreviewCard = ({
             <div className="relative aspect-video overflow-hidden">
                 <Link href={articleUrl} passHref legacyBehavior>
                     <a className="block h-full w-full">
-                        <Image
-                            src={article.coverImage?.url || '#'}
+                        <ArticleImage
+                            image={article.cover}
                             alt={article.title}
-                            fill
+                            priority={priority}
                             className={cn(
                                 "object-cover transition-transform duration-500 cursor-pointer",
                                 enableHoverEffects && "group-hover:scale-105"
                             )}
-                            priority={priority}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                     </a>
                 </Link>

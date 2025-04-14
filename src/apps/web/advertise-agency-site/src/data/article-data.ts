@@ -11,12 +11,26 @@ export const articles: Article[] = [{
     slug: '1',
     tags: ['реклама', 'OOH', 'digital', 'тренды'],
 
-    coverImage: {
+    cover: {
         id: 1,
-        url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-        alt: 'Современный цифровой билборд в городской среде',
-        width: 1200,
-        height: 800
+        formats: {
+            small: {
+                url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                width: 600,
+                height: 400
+            },
+            medium: {
+                url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                width: 1200,
+                height: 800
+            },
+            large: {
+                url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80',
+                width: 1800,
+                height: 1200
+            }
+        },
+        alt: 'Современный цифровой билборд в городской среде'
     },
 
     category: {
@@ -31,7 +45,23 @@ export const articles: Article[] = [{
         name: 'Анна Смирнова',
         avatar: {
             id: 1,
-            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
+            formats: {
+                small: {
+                    url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                    width: 400,
+                    height: 267
+                },
+                medium: {
+                    url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    width: 800,
+                    height: 534
+                },
+                large: {
+                    url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                    width: 1200,
+                    height: 800
+                }
+            },
             height: 1000,
             width: 800
         },
@@ -187,216 +217,27 @@ export const articles: Article[] = [{
             },
             publishedAt: '2024-02-10',
             readingTime: 4,
-            coverImage: {
+            cover: {
                 id: 1,
-                url: 'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-            }
-        },
-        {
-            id: 2,
-            slug: 'ar-in-outdoor-ads',
-            title: 'AR в наружной рекламе: кейсы 2024',
-            description: 'Как дополненная реальность увеличивает вовлеченность',
-            category: {
-                id: 3,
-                name: 'innovations',
-                title: 'Инновации',
-                slug: 'innovations'
-            },
-            publishedAt: '2024-01-28',
-            readingTime: 6,
-            coverImage: {
-                id: 1,
-                url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-            }
-        },
-        {
-            id: 3,
-            slug: 'sustainable-outdoor-ads',
-            title: 'Эко-тренды в рекламе',
-            description: 'Зеленые технологии в OOH-кампаниях',
-            category: {
-                id: 3,
-                name: 'innovations',
-                title: 'Инновации',
-                slug: 'innovations'
-            },
-            publishedAt: '2024-01-28',
-            readingTime: 6,
-            coverImage: {
-                id: 1,
-                url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+                formats: {
+                    small: {
+                        url: 'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                        width: 600,
+                        height: 400
+                    },
+                    medium: {
+                        url: 'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                        width: 800,
+                        height: 533
+                    },
+                    large: {
+                        url: 'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        width: 1200,
+                        height: 800
+                    }
+                }
             }
         }
     ]
-}, {
-    id: 2,
-    slug: '1',
-    title: 'Тренды в наружной рекламе 2024',
-    description: 'Обзор новых технологий и материалов для наружной рекламы в этом году.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}, {
-    id: 3,
-    slug: '2',
-    title: 'Как выбрать шрифты для брендинга',
-    description: 'Полное руководство по подбору шрифтовых пар для логотипов.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}, {
-    id: 4,
-    slug: '3',
-    title: 'УФ-печать: преимущества и особенности',
-    description: 'Все что нужно знать о технологии УФ-печати.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}, {
-    id: 5,
-    slug: '4',
-    title: 'Нейромаркетинг в рекламе',
-    description: 'Как психологические приемы помогают увеличить конверсию.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}, {
-    id: 6,
-    slug: '5',
-    title: 'Брендирование транспорта',
-    description: 'Как сделать мобильную рекламу эффективной.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}, {
-    id: 7,
-    slug: '6',
-    title: 'Эффективные POS-материалы',
-    description: 'Какие рекламные материалы работают лучше всего.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}, {
-    id: 8,
-    slug: '7',
-    title: '3D-вывески нового поколения',
-    description: 'Обзор современных технологий создания вывесок.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}, {
-    id: 9,
-    slug: '8',
-    title: 'Эко-подход в полиграфии',
-    description: 'Как снизить экологический след при печати.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}, {
-    id: 10,
-    slug: '9',
-    title: 'Гайд по фирменным стилям 2024',
-    description: 'Анализ трендов в корпоративной айдентике.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1560869713-61ca42041df8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}, {
-    id: 11,
-    slug: '10',
-    title: 'Digital-инструменты для рекламы',
-    description: 'Как интегрировать цифровые технологии.',
-    category: {
-        id: 1,
-        name: 'outdoor',
-        title: 'Наружная реклама',
-        slug: 'outdoor'
-    },
-    publishedAt: '15.05.2024',
-    readingTime: 5,
-    coverImage: {
-        id: 1,
-        url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
-}]
+}];
+

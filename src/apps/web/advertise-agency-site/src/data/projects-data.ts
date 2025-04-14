@@ -436,19 +436,61 @@ export const projects: Article[] = [{
     readingTime: 10, // Увеличено время чтения
     slug: "case-sunrise-cafe-signage",
     tags: ["наружная реклама", "световые буквы", "кейсы", "малый бизнес"],
-    coverImage: {
-        url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    cover: {
+        id: 1,
         alt: "Световая вывеска кафе в вечернее время",
         width: 2070,
-        height: 1380
+        height: 1380,
+        formats: {
+            small: {
+                url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                width: 600,
+                height: 400
+            },
+            medium: {
+                url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                width: 1200,
+                height: 800
+            },
+            large: {
+                url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                width: 1800,
+                height: 1200
+            }
+        }
     },
     category: {
+        id: 1,
         name: "Кейсы",
+        title: "Кейсы",
         slug: "cases"
     },
     author: {
+        id: 1,
         name: "Алексей Петров",
-        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
+        avatar: {
+            id: 1,
+            alt: "Алексей Петров",
+            width: 2070,
+            height: 1380,
+            formats: {
+                small: {
+                    url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80',
+                    width: 600,
+                    height: 400
+                },
+                medium: {
+                    url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80',
+                    width: 1200,
+                    height: 800
+                },
+                large: {
+                    url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80',
+                    width: 1800,
+                    height: 1200
+                }
+            }
+        },
         position: "Главный дизайнер"
     },
     blocks: [
