@@ -55,7 +55,7 @@ export interface Article extends Entity {
     /**
      * Основное изображение статьи
      */
-    coverImage?: ImageMeta
+    cover?: ImageMeta
 
     /**
      * Категория статьи

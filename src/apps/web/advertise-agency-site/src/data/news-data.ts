@@ -15,7 +15,7 @@ export const newsArticles: Article[] = [
             title: 'Производство',
             slug: 'производство'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }
@@ -31,7 +31,7 @@ export const newsArticles: Article[] = [
             title: 'Экология',
             slug: 'экология'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1560807707-8cc77767d783?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }
@@ -47,7 +47,7 @@ export const newsArticles: Article[] = [
             title: 'Дизайн',
             slug: 'дизайн'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1514899720986-38b7a1ba8ff9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }
@@ -63,7 +63,7 @@ export const newsArticles: Article[] = [
             title: 'Маркетинг',
             slug: 'маркетинг'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }
@@ -79,7 +79,7 @@ export const newsArticles: Article[] = [
             title: 'Технологии',
             slug: 'технологии'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }
@@ -95,7 +95,7 @@ export const newsArticles: Article[] = [
             title: 'Обслуживание',
             slug: 'обслуживание'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1521747116042-5a810fda9664?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }
@@ -111,7 +111,7 @@ export const newsArticles: Article[] = [
             title: 'Производство',
             slug: 'производство'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }
@@ -127,7 +127,7 @@ export const newsArticles: Article[] = [
             title: 'Конструирование',
             slug: 'конструирование'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1570528561537-466ade512b00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }
@@ -143,7 +143,7 @@ export const newsArticles: Article[] = [
             title: 'Выставки',
             slug: 'выставки'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1572025448129-32f7c3e8cc12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }
@@ -159,7 +159,7 @@ export const newsArticles: Article[] = [
             title: 'Освещение',
             slug: 'освещение'
         },
-        coverImage: {
+        cover: {
             id: 0,
             url: 'https://images.unsplash.com/photo-1548345680-f5475ea5df81?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         }

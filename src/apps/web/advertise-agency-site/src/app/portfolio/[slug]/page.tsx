@@ -29,10 +29,10 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
             siteName: 'РА Рекламастер',
             images: [
                 {
-                    url: project.seo?.ogImage || project.coverImage?.url || "#",
-                    width: project.coverImage?.width || DEFAULT_IMAGE_WIDTH,
-                    height: project.coverImage?.height || DEFAULT_IMAGE_HEIGHT,
-                    alt: project.coverImage?.alt || project.title,
+                    url: project.seo?.ogImage || project.cover?.url || "",
+                    width: project.cover?.width || DEFAULT_IMAGE_WIDTH,
+                    height: project.cover?.height || DEFAULT_IMAGE_HEIGHT,
+                    alt: project.cover?.alt || project.title,
                 },
             ],
             locale: 'ru_RU',
@@ -44,7 +44,7 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
             card: 'summary_large_image',
             title: project.seo?.title || project.title,
             description: project.seo?.description || project.description,
-            images: [project.seo?.ogImage || project.coverImage?.url || "#"],
+            images: [project.seo?.ogImage || project.cover?.url || ""],
         },
         alternates: {
             canonical: `https://rmaster35.ru/projects/${project.slug}`,

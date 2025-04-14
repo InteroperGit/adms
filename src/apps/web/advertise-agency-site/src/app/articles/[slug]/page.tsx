@@ -1,4 +1,4 @@
-import {getAllArticles, getArticleBySlug} from '@/libs/api/articles';
+import {getArticleBySlug} from '@/libs/api/articles';
 import {ArticleParser} from "@/libs/article-parser";
 import React from "react";
 import {Metadata} from "next";
@@ -6,6 +6,9 @@ import {PromisePageProps} from "@/types/page";
 
 const DEFAULT_IMAGE_WIDTH = 1200;
 const DEFAULT_IMAGE_HEIGHT = 630;
+
+// ✅ ISR: страница будет пересоздаваться максимум раз в 60 секунд
+export const revalidate = 60;
 
 export async function generateMetadata(props: PromisePageProps): Promise<Metadata> {
     const { slug } = await props.params;
@@ -29,10 +32,10 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
             siteName: 'РА Рекламастер',
             images: [
                 {
-                    url: article.seo?.ogImage || article.coverImage?.url || "#",
-                    width: article.coverImage?.width || DEFAULT_IMAGE_WIDTH,
-                    height: article.coverImage?.height || DEFAULT_IMAGE_HEIGHT,
-                    alt: article.coverImage?.alt || article.title,
+                    url: article.seo?.ogImage || article.cover?.formats?.large?.url || "",
+                    width: article.cover?.width || DEFAULT_IMAGE_WIDTH,
+                    height: article.cover?.height || DEFAULT_IMAGE_HEIGHT,
+                    alt: article.cover?.alt || article.title,
                 },
             ],
             locale: 'ru_RU',
@@ -44,19 +47,12 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
             card: 'summary_large_image',
             title: article.seo?.title || article.title,
             description: article.seo?.description || article.description,
-            images: [article.seo?.ogImage || article.coverImage?.url || "#"],
+            images: [article.seo?.ogImage || article.cover?.formats?.large?.url || ""],
         },
         alternates: {
             canonical: `https://rmaster35.ru/projects/${article.slug}`,
         },
     };
-}
-
-export async function generateStaticParams() {
-    const articles = await getAllArticles();
-    return articles.map(article => ({
-        slug: article.slug,
-    }));
 }
 
 export default async function ArticlePage(props: PromisePageProps) {

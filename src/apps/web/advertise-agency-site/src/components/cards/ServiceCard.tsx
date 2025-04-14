@@ -84,7 +84,7 @@ export const ServiceCard = ({
             <div className="w-16 h-16 mb-4 relative border-2">
                 {service.previewImage && (
                     <Image
-                        src={service.previewImage.url}
+                        src={service.previewImage?.url || ""}
                         alt={service.previewImage.alt || service.name}
                         fill
                         className="object-contain"

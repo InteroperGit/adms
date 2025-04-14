@@ -5,9 +5,27 @@ import { Button } from '@/components/ui/button'
 import { SearchIcon } from 'lucide-react'
 import HeroSection from "@/components/sections/HeroSection";
 import {ArticlePreviewCard} from "@/components/cards/ArticlePreviewCard";
-import {articles} from "@/data/article-data";
+import {useEffect, useState} from "react";
+import {getAllArticles} from "@/libs/api/articles";
+import {Article} from "@/types/article";
+import {Skeleton} from "@/components/ui/skeleton";
 
 export default function ArticlesPage() {
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getAllArticles()
+            .then((data) => {
+                setArticles(data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error('Ошибка загрузки статей:', error);
+                setLoading(false);
+            })
+    }, [])
+
     return (
         <div className="md:px-4">
             {/* Заголовок и описание */}
@@ -29,13 +47,27 @@ export default function ArticlesPage() {
 
             {/* Список статей */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {articles.map((article, index) => (
-                    <ArticlePreviewCard
-                        key={article.id}
-                        article={article}
-                        priority={index < 3} // Приоритет для первых 3 изображений
-                    />
-                ))}
+                {loading ? (
+                    // Если данные еще загружаются, показываем скелетоны
+                    Array(6)
+                        .fill(null)
+                        .map((_, index) => (
+                            <div key={index} className="space-y-4">
+                                <Skeleton className="h-6 w-3/4" /> {/* Заголовок */}
+                                <Skeleton className="h-4 w-full" /> {/* Описание */}
+                                <Skeleton className="h-4 w-1/2" /> {/* Другие элементы */}
+                            </div>
+                        ))
+                ) : (
+                    // Если данные загружены, показываем статьи
+                    articles.map((article, index) => (
+                        <ArticlePreviewCard
+                            key={article.id}
+                            article={article}
+                            priority={index < 3} // Приоритет для первых 3 изображений
+                        />
+                    ))
+                )}
             </div>
 
             {/* Пагинация */}

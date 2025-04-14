@@ -3,7 +3,7 @@ import {Entity} from "@/types/base";
 /**
  * Формат изображения
  */
-interface ImageFormat {
+export interface ImageFormat {
     url: string;
     width?: number;
     height?: number;
@@ -11,7 +11,7 @@ interface ImageFormat {
     mime?: string;
 }
 
-interface ImageFormats {
+export interface ImageFormats {
     large?: ImageFormat;
     medium?: ImageFormat;
     small?: ImageFormat;
@@ -23,9 +23,9 @@ interface ImageFormats {
  */
 export interface ImageMeta extends Entity {
     /**
-     * URL-адрес
+     * URL изображения
      */
-    url: string;
+    url?: string;
 
     /**
      * Текст при невозможности загрузить изображение браузером
@@ -50,7 +50,7 @@ export interface ImageMeta extends Entity {
     /**
      * Форматы изображения (разные размеры)
      */
-    format?: ImageFormats;
+    formats?: ImageFormats;
 
     /**
      * Формат изображения
