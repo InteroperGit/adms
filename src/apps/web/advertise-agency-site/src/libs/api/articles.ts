@@ -2,10 +2,25 @@ import {articles} from "@/data/article-data";
 import {Article} from "@/types/article";
 import {ImageFormat, ImageFormats} from "@/types/image";
 
+interface PaginationMeta {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
+}
+
+interface Result {
+    articles: Article[],
+    pagination: PaginationMeta
+}
+
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
-export async function getAllArticles(): Promise<Article[]> {
-    const res = await fetch(`${STRAPI_URL}/api/articles?populate=*`);
+export async function getAllArticles({ page = 1, pageSize = 10 } = {}): Promise<Result> {
+    const res = await fetch(
+        `${STRAPI_URL}/api/articles?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
+        { next: { revalidate: 60 } }
+    );
 
     if (!res.ok) {
         throw new Error(`Ошибка при получении статей: ${res.statusText}`);
@@ -13,7 +28,7 @@ export async function getAllArticles(): Promise<Article[]> {
 
     const json = await res.json();
 
-    return json.data.map((item: Article) => ({
+    const articles: Article[] = json.data.map((item: Article) => ({
         id: item.id,
         title: item.title,
         description: item.description,
@@ -44,6 +59,10 @@ export async function getAllArticles(): Promise<Article[]> {
             }
             : null // Если cover пустое, то возвращаем null
     }));
+
+    const pagination: PaginationMeta = json.meta.pagination;
+
+    return { articles, pagination };
 }
 
 export const getArticleBySlug = (requestSlug: string): Promise<Article | undefined> => {
