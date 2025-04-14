@@ -6,7 +6,7 @@ import FooterSocialIcons from "@/components/footer/FooterSocialIcons";
 import FooterContacts from "@/components/footer/FooterContacts";
 import FooterCompanyLinks from "@/components/footer/FooterCompanyLinks";
 import FooterServicesLinks from "@/components/footer/FooterServicesLinks";
-import {mainServices} from "@/data/services-data";
+import {services} from "@/data/services-data";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear()
@@ -73,7 +73,7 @@ export default function Footer() {
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                         Услуги
                     </h3>
-                    <FooterServicesLinks services={mainServices} />
+                    <FooterServicesLinks services={services} />
                 </div>
 
                 {/* Контакты */}
