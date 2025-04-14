@@ -1,3 +1,5 @@
+"use client"
+
 import Image from 'next/image'
 import {ImageMeta} from "@/types/image";
 import {useEffect, useRef, useState} from "react";
