@@ -32,7 +32,7 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
                     url: project.seo?.ogImage || project.cover?.url || "",
                     width: project.cover?.width || DEFAULT_IMAGE_WIDTH,
                     height: project.cover?.height || DEFAULT_IMAGE_HEIGHT,
-                    alt: project.cover?.alt || project.title,
+                    alt: project.cover?.alternativeText || project.title,
                 },
             ],
             locale: 'ru_RU',

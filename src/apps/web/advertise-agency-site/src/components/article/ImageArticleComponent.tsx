@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import {ImageBlock} from "@/types/article";
+import ArticleImage from "@/components/misc/ArticleImage";
 
 /**
  * ImageArticleComponent
@@ -22,24 +22,20 @@ import {ImageBlock} from "@/types/article";
  * - В блоках иллюстраций, скриншотов или баннеров, сопровождаемых подписью.
  */
 const ImageArticleComponent = ({
-                                          url,
-                                          alt,
-                                          caption,
+                                          image,
                                           fullWidth = false
                                       }: ImageBlock) => (
     <figure className={`my-6 ${fullWidth ? 'w-full' : 'max-w-full'}`}>
         <div className="relative aspect-video rounded-lg overflow-hidden">
-            <Image
-                src={url}
-                alt={alt}
-                fill
+            <ArticleImage
+                image={image}
                 className="object-cover rounded-xl"
                 sizes="(max-width: 768px) 100vw, 800px"
             />
         </div>
-        {caption && (
-            <figcaption className="text-md text-center mt-2 text-gray-500 dark:text-gray-400">
-                {caption}
+        {image.caption && (
+            <figcaption className="text-lg text-center mt-2 text-gray-500 dark:text-gray-400">
+                {image.caption}
             </figcaption>
         )}
     </figure>

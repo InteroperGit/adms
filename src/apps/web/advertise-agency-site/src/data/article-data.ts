@@ -30,7 +30,7 @@ export const articles: Article[] = [{
                 height: 1200
             }
         },
-        alt: 'Современный цифровой билборд в городской среде'
+        alternativeText: 'Современный цифровой билборд в городской среде'
     },
 
     category: {
@@ -78,9 +78,31 @@ export const articles: Article[] = [{
         },
         {
             type: "image",
-            url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            alt: "Цифровой билборд в ночном городе",
-            caption: "LED-экраны позволяют менять контент в реальном времени",
+            image: {
+                id: 1,
+                formats: {
+                    small: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                        width: 400,
+                        height: 267
+                    },
+                    medium: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                        width: 800,
+                        height: 534
+                    },
+                    large: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        width: 1200,
+                        height: 800
+                    }
+                },
+                url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                height: 1000,
+                width: 800,
+                alternativeText: "Цифровой билборд в ночном городе",
+                caption: "LED-экраны позволяют менять контент в реальном времени",
+            },
             fullWidth: true
         },
         {
@@ -101,15 +123,55 @@ export const articles: Article[] = [{
             type: "imageGallery",
             images: [
                 {
+                    id: 1,
+                    formats: {
+                        small: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            width: 400,
+                            height: 267
+                        },
+                        medium: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                            width: 800,
+                            height: 534
+                        },
+                        large: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                            width: 1200,
+                            height: 800
+                        }
+                    },
                     url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    alt: "Реклама на остановке общественного транспорта",
-                    caption: "Локализованный таргетинг повышает эффективность на 40%"
+                    height: 1000,
+                    width: 800,
+                    alternativeText: "Реклама на остановке общественного транспорта",
+                    caption: "Локализованный таргетинг повышает эффективность на 40%",
                 },
                 {
+                    id: 2,
+                    formats: {
+                        small: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            width: 400,
+                            height: 267
+                        },
+                        medium: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                            width: 800,
+                            height: 534
+                        },
+                        large: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                            width: 1200,
+                            height: 800
+                        }
+                    },
                     url: "https://images.unsplash.com/photo-1600711725407-2ea4733a38c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    alt: "Креативный рекламный постер",
-                    caption: "Нестандартные форматы привлекают в 3 раза больше внимания"
-                }
+                    height: 1000,
+                    width: 800,
+                    alternativeText: "Креативный рекламный постер",
+                    caption: "Нестандартные форматы привлекают в 3 раза больше внимания",
+                },
             ],
             layout: "grid",
             columns: 2

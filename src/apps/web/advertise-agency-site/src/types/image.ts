@@ -30,7 +30,7 @@ export interface ImageMeta extends Entity {
     /**
      * Текст при невозможности загрузить изображение браузером
      */
-    alt?: string;
+    alternativeText?: string;
 
     /**
      * Описание

@@ -438,7 +438,7 @@ export const projects: Article[] = [{
     tags: ["наружная реклама", "световые буквы", "кейсы", "малый бизнес"],
     cover: {
         id: 1,
-        alt: "Световая вывеска кафе в вечернее время",
+        alternativeText: "Световая вывеска кафе в вечернее время",
         width: 2070,
         height: 1380,
         formats: {
@@ -470,7 +470,7 @@ export const projects: Article[] = [{
         name: "Алексей Петров",
         avatar: {
             id: 1,
-            alt: "Алексей Петров",
+            alternativeText: "Алексей Петров",
             width: 2070,
             height: 1380,
             formats: {
@@ -497,9 +497,31 @@ export const projects: Article[] = [{
         // 1. Добавлена фотография с итоговым результатом
         {
             type: "image",
-            url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-            alt: "Итоговый результат - световая вывеска кафе Sunrise",
-            caption: "Готовая световая вывеска кафе Sunrise в вечернее время",
+            image: {
+                id: 1,
+                formats: {
+                    small: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                        width: 400,
+                        height: 267
+                    },
+                    medium: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                        width: 800,
+                        height: 534
+                    },
+                    large: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        width: 1200,
+                        height: 800
+                    }
+                },
+                url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                height: 1000,
+                width: 800,
+                alternativeText: "Реклама на остановке общественного транспорта",
+                caption: "Локализованный таргетинг повышает эффективность на 40%",
+            },
             fullWidth: true
         },
         {
@@ -508,9 +530,31 @@ export const projects: Article[] = [{
         },
         {
             type: "image",
-            url: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-            alt: "Старая вывеска кафе днем",
-            caption: "Старая вывеска кафе Sunrise днем",
+            image: {
+                id: 1,
+                formats: {
+                    small: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                        width: 400,
+                        height: 267
+                    },
+                    medium: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                        width: 800,
+                        height: 534
+                    },
+                    large: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        width: 1200,
+                        height: 800
+                    }
+                },
+                url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                height: 1000,
+                width: 800,
+                alternativeText: "Реклама на остановке общественного транспорта",
+                caption: "Локализованный таргетинг повышает эффективность на 40%",
+            },
             fullWidth: true
         },
         {
@@ -529,15 +573,55 @@ export const projects: Article[] = [{
             type: "imageGallery",
             images: [
                 {
-                    url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-                    alt: "Новая световая вывеска кафе",
-                    caption: "Новая вывеска кафе Sunrise с теплой подсветкой"
+                    id: 1,
+                    formats: {
+                        small: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            width: 400,
+                            height: 267
+                        },
+                        medium: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                            width: 800,
+                            height: 534
+                        },
+                        large: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                            width: 1200,
+                            height: 800
+                        }
+                    },
+                    url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    height: 1000,
+                    width: 800,
+                    alternativeText: "Реклама на остановке общественного транспорта",
+                    caption: "Локализованный таргетинг повышает эффективность на 40%",
                 },
                 {
-                    url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-                    alt: "Детали вывески крупным планом",
-                    caption: "Детализация световых букв"
-                }
+                    id: 2,
+                    formats: {
+                        small: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            width: 400,
+                            height: 267
+                        },
+                        medium: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                            width: 800,
+                            height: 534
+                        },
+                        large: {
+                            url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                            width: 1200,
+                            height: 800
+                        }
+                    },
+                    url: "https://images.unsplash.com/photo-1600711725407-2ea4733a38c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    height: 1000,
+                    width: 800,
+                    alternativeText: "Креативный рекламный постер",
+                    caption: "Нестандартные форматы привлекают в 3 раза больше внимания",
+                },
             ],
             layout: "grid",
             columns: 2
@@ -553,9 +637,31 @@ export const projects: Article[] = [{
         },
         {
             type: "image",
-            url: "https://images.unsplash.com/photo-1605001011156-cbf0b0f67a51?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-            alt: "Материалы для изготовления вывески",
-            caption: "Акриловые заготовки и светодиодные ленты",
+            image: {
+                id: 1,
+                formats: {
+                    small: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                        width: 400,
+                        height: 267
+                    },
+                    medium: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                        width: 800,
+                        height: 534
+                    },
+                    large: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        width: 1200,
+                        height: 800
+                    }
+                },
+                url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                height: 1000,
+                width: 800,
+                alternativeText: "Реклама на остановке общественного транспорта",
+                caption: "Локализованный таргетинг повышает эффективность на 40%",
+            },
             fullWidth: false
         },
         {
@@ -568,9 +674,31 @@ export const projects: Article[] = [{
         },
         {
             type: "image",
-            url: "https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
-            alt: "Процесс монтажа подсветки",
-            caption: "Установка светодиодной подсветки в буквы",
+            image: {
+                id: 1,
+                formats: {
+                    small: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                        width: 400,
+                        height: 267
+                    },
+                    medium: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                        width: 800,
+                        height: 534
+                    },
+                    large: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        width: 1200,
+                        height: 800
+                    }
+                },
+                url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                height: 1000,
+                width: 800,
+                alternativeText: "Реклама на остановке общественного транспорта",
+                caption: "Локализованный таргетинг повышает эффективность на 40%",
+            },
             fullWidth: false
         },
         // 3. Добавлен раздел "Согласование в архитектуре"
@@ -588,9 +716,31 @@ export const projects: Article[] = [{
         },
         {
             type: "image",
-            url: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-            alt: "Вывеска в городской среде",
-            caption: "Вывеска гармонично вписалась в архитектурный облик улицы",
+            image: {
+                id: 1,
+                formats: {
+                    small: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                        width: 400,
+                        height: 267
+                    },
+                    medium: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                        width: 800,
+                        height: 534
+                    },
+                    large: {
+                        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        width: 1200,
+                        height: 800
+                    }
+                },
+                url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                height: 1000,
+                width: 800,
+                alternativeText: "Реклама на остановке общественного транспорта",
+                caption: "Локализованный таргетинг повышает эффективность на 40%",
+            },
             fullWidth: true
         },
         {

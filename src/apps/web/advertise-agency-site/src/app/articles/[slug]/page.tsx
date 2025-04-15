@@ -35,7 +35,7 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
                     url: article.seo?.ogImage || article.cover?.formats?.large?.url || "",
                     width: article.cover?.width || DEFAULT_IMAGE_WIDTH,
                     height: article.cover?.height || DEFAULT_IMAGE_HEIGHT,
-                    alt: article.cover?.alt || article.title,
+                    alt: article.cover?.alternativeText || article.title,
                 },
             ],
             locale: 'ru_RU',

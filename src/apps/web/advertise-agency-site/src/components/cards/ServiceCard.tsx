@@ -85,7 +85,7 @@ export const ServiceCard = ({
                 {service.previewImage && (
                     <Image
                         src={service.previewImage?.url || ""}
-                        alt={service.previewImage.alt || service.name}
+                        alt={service.previewImage.alternativeText || service.name}
                         fill
                         className="object-contain"
                         sizes="64px"
