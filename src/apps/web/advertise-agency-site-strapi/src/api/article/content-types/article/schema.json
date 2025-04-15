@@ -53,7 +53,8 @@
         "shared.rich-text",
         "shared.slider",
         "shared.video",
-        "shared.divider"
+        "shared.divider",
+        "shared.embed"
       ]
     }
   }

@@ -11,6 +11,21 @@ export interface SharedDivider extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedEmbed extends Struct.ComponentSchema {
+  collectionName: 'components_shared_embeds';
+  info: {
+    displayName: 'Embed';
+    icon: 'code';
+  };
+  attributes: {
+    height: Schema.Attribute.String;
+    html: Schema.Attribute.String;
+    provider: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+    width: Schema.Attribute.String;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -90,6 +105,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'shared.divider': SharedDivider;
+      'shared.embed': SharedEmbed;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

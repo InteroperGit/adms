@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_embeds",
+  "info": {
+    "displayName": "Embed",
+    "icon": "code"
+  },
+  "options": {},
+  "attributes": {
+    "html": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "width": {
+      "type": "string"
+    },
+    "height": {
+      "type": "string"
+    }
+  }
+}
