@@ -1,8 +1,17 @@
-import {Article, ArticleBlock, ArticleImageBlock, ArticleImageGalleryBlock, ArticleQuoteBlock, ArticleTextBlock, ArticleVideoBlock} from "@/types/article";
+import {
+    Article,
+    ArticleBlock,
+    ArticleDividerBlock,
+    ArticleImageBlock,
+    ArticleImageGalleryBlock,
+    ArticleQuoteBlock,
+    ArticleTextBlock,
+    ArticleVideoBlock
+} from "@/types/article";
 import {ImageFormats, ImageMeta} from "@/types/image";
 import {
     StrapiArticle,
-    StrapiArticleBlock,
+    StrapiArticleBlock, StrapiDividerBlock,
     StrapiImageBlock,
     StrapiQuoteBlock, StrapiSliderBlock,
     StrapiTextBlock, StrapiVideoBlock
@@ -91,6 +100,12 @@ async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUr
                 url: strapiVideoBlock.url,
                 caption: strapiVideoBlock.caption,
             } as ArticleVideoBlock
+
+            break;
+        case "shared.divider":
+            result = {
+                type: "divider",
+            } as ArticleDividerBlock
 
             break;
         default: return undefined;
