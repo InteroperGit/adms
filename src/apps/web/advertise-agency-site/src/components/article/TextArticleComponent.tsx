@@ -1,10 +1,6 @@
 import { parse } from 'node-html-parser';
 import { cn } from '@/libs/utils';
-
-interface TextBlock {
-    content: string;
-    align?: 'left' | 'center' | 'right';
-}
+import {ArticleTextBlock} from "@/types/article";
 
 interface TextStyles {
     h1: string;
@@ -118,7 +114,7 @@ const parseHtml = (html: string) => {
  *   где приходит готовая HTML-разметка и нужна строгая визуальная консистентность.
  */
 
-const TextArticleComponent = ({ content, align = 'left' }: TextBlock) => (
+const TextArticleComponent = ({ content, align = 'left' }: ArticleTextBlock) => (
     <article
         className={cn('prose dark:prose-invert max-w-none', `text-${align}`)}
         dangerouslySetInnerHTML={parseHtml(content)}

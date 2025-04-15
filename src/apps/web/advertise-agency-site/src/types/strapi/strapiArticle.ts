@@ -107,3 +107,9 @@ export interface StrapiVideoBlock extends StrapiBaseBlock {
     url: string;
     caption?: string;
 }
+
+/**
+ * Блок разделителя
+ */
+export interface StrapiDividerBlock extends StrapiBaseBlock {
+}
