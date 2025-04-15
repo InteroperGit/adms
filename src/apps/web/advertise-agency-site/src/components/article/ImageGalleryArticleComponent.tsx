@@ -1,6 +1,6 @@
 import {cn} from "@/libs/utils";
 import {ImageGalleryBlock} from "@/types/article";
-import Image from 'next/image';
+import ArticleImage from "@/components/misc/ArticleImage";
 
 /**
  * ImageGalleryArticleComponent
@@ -42,35 +42,37 @@ const ImageGalleryArticleComponent = ({
             'columns-3': layout === 'masonry' && columns === 3,
             'columns-2': layout === 'masonry' && columns === 2,
             [`grid-cols-${columns}`]: layout === 'grid',
-        }
-    );
-
-    const itemClasses = cn(
-        'relative',
-        {
-            'aspect-video': layout !== 'masonry',
-            'min-w-[300px]': layout === 'carousel',
-            'break-inside-avoid mb-4': layout === 'masonry',
-        }
+        },
+        layout === 'grid' && 'items-stretch' // 👈 Растягивает все элементы по высоте
     );
 
     return (
         <div className={galleryClasses}>
             {images.map((img, idx) => (
-                <figure key={idx} className={itemClasses}>
-                    <Image
-                        src={img.url}
-                        alt={img.alt}
-                        fill
-                        className="rounded-xl object-cover"
-                        sizes={layout === 'grid' ? `(max-width: 768px) 100vw, ${800 / columns}px` : '800px'}
-                    />
-                    {img.caption && (
-                        <figcaption className="text-sm mt-2 text-center text-gray-500 dark:text-gray-400">
-                            {img.caption}
-                        </figcaption>
+                <div
+                    key={idx}
+                    className={cn(
+                        'flex flex-col justify-between',
+                        {
+                            'min-w-[300px]': layout === 'carousel',
+                            'break-inside-avoid': layout === 'masonry',
+                        }
                     )}
-                </figure>
+                >
+                    <div className="relative w-full aspect-[16/9]">
+                        <ArticleImage
+                            image={img}
+                            className="rounded-xl object-cover w-full h-full"
+                            sizes={layout === 'grid' ? `(max-width: 768px) 100vw, ${800 / columns}px` : '800px'}
+                        />
+                    </div>
+
+                    {img.caption && (
+                        <div className="text-sm text-center text-gray-500 dark:text-gray-400 mt-2">
+                            {img.caption}
+                        </div>
+                    )}
+                </div>
             ))}
         </div>
     );

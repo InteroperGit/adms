@@ -123,11 +123,7 @@ export interface TextBlock {
  */
 export interface ImageBlock {
     type: 'image'
-    url: string
-    alt: string
-    caption?: string
-    width?: number
-    height?: number
+    image: ImageMeta,
     align?: 'left' | 'center' | 'right'
     fullWidth?: boolean
 }
@@ -137,13 +133,7 @@ export interface ImageBlock {
  */
 export interface ImageGalleryBlock {
     type: 'imageGallery';
-    images: {
-        url: string;
-        alt: string;
-        caption?: string;
-        width?: number;
-        height?: number;
-    }[];
+    images: ImageMeta[];
     layout: 'grid' | 'carousel' | 'masonry';
     columns?: number; // Для grid layout
 }

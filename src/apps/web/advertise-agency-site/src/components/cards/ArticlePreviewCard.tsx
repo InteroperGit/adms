@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { cn } from "@/libs/utils"
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { cn } from "@/libs/utils";
 import {Article} from "@/types/article";
 import ArticleImage from "@/components/misc/ArticleImage";
 
@@ -90,12 +90,12 @@ export const ArticlePreviewCard = ({
                     <a className="block h-full w-full">
                         <ArticleImage
                             image={article.cover}
-                            alt={article.title}
                             priority={priority}
                             className={cn(
                                 "object-cover transition-transform duration-500 cursor-pointer",
                                 enableHoverEffects && "group-hover:scale-105"
                             )}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                     </a>
                 </Link>
