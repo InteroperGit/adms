@@ -1,7 +1,7 @@
 import {
     Article,
     ArticleBlock,
-    ArticleDividerBlock,
+    ArticleDividerBlock, ArticleEmbedBlock,
     ArticleImageBlock,
     ArticleImageGalleryBlock,
     ArticleQuoteBlock,
@@ -11,10 +11,13 @@ import {
 import {ImageFormats, ImageMeta} from "@/types/image";
 import {
     StrapiArticle,
-    StrapiArticleBlock, StrapiDividerBlock,
+    StrapiArticleBlock,
+    StrapiEmbedBlock,
     StrapiImageBlock,
-    StrapiQuoteBlock, StrapiSliderBlock,
-    StrapiTextBlock, StrapiVideoBlock
+    StrapiQuoteBlock,
+    StrapiSliderBlock,
+    StrapiTextBlock,
+    StrapiVideoBlock
 } from "@/types/strapi/strapiArticle";
 import {markdownToHtml} from "@/libs/converters/markdownToHtml";
 
@@ -107,6 +110,17 @@ async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUr
                 type: "divider",
             } as ArticleDividerBlock
 
+            break;
+        case "shared.embed":
+            const strapiEmbedBlock = block as StrapiEmbedBlock;
+            result = {
+                type: "embed",
+                html: strapiEmbedBlock.html,
+                url: strapiEmbedBlock.url,
+                provider: strapiEmbedBlock.provider,
+                width: strapiEmbedBlock.width,
+                height: strapiEmbedBlock.height,
+            } as ArticleEmbedBlock;
             break;
         default: return undefined;
     }

@@ -30,67 +30,67 @@ export interface Article extends Entity {
     /**
      * Заголовок статьи (h1)
      */
-    title: string
+    title: string;
 
     /**
      * Краткое описание
      */
-    description: string
+    description: string;
 
     /**
      * Время чтения в минутах
      */
-    readingTime?: number
+    readingTime?: number;
 
     /**
      * slug
      */
-    slug: string
+    slug: string;
 
     /**
      * Теги
      */
-    tags?: string[]
+    tags?: string[];
 
     /**
      * Основное изображение статьи
      */
-    cover?: ImageMeta
+    cover?: ImageMeta;
 
     /**
      * Категория статьи
      */
-    category: ArticleCategory
+    category: ArticleCategory;
 
     /**
      * Автор статьи
      */
-    author?: Author
+    author?: Author;
 
     /**
      * Контент статьи в виде массива блоков
      */
-    blocks?: ArticleBlock[]
+    blocks?: ArticleBlock[];
 
     /**
      * SEO-метаданные
      */
-    seo?: ArticleSEO
+    seo?: ArticleSEO;
 
     /**
      * Флаг популярной статьи
      */
-    isFeatured?: boolean
+    isFeatured?: boolean;
 
     /**
      * Флаг новинки (опционально)
      */
-    isNew?: boolean
+    isNew?: boolean;
 
     /**
      * Связанные статьи (опционально)
      */
-    relatedArticles?: Article[]
+    relatedArticles?: Article[];
 }
 
 /**
@@ -113,19 +113,19 @@ export type ArticleBlock =
  * Текстовый блок
  */
 export interface ArticleTextBlock {
-    type: 'text'
-    content: string // HTML-форматированный текст
-    align?: 'left' | 'center' | 'right'
+    type: 'text';
+    content: string; // HTML-форматированный текст
+    align?: 'left' | 'center' | 'right';
 }
 
 /**
  * Блок с изображением
  */
 export interface ArticleImageBlock {
-    type: 'image'
-    image: ImageMeta,
-    align?: 'left' | 'center' | 'right'
-    fullWidth?: boolean
+    type: 'image';
+    image: ImageMeta;
+    align?: 'left' | 'center' | 'right';
+    fullWidth?: boolean;
 }
 
 /**
@@ -142,11 +142,11 @@ export interface ArticleImageGalleryBlock {
  * Блок с видео
  */
 export interface ArticleVideoBlock {
-    type: 'video'
-    url: string
-    source: 'youtube' | 'vimeo' | 'custom'
-    caption?: string
-    aspectRatio?: string // например "16:9"
+    type: 'video';
+    url: string;
+    source: 'youtube' | 'vimeo' | 'custom';
+    caption?: string;
+    aspectRatio?: string; // например "16:9"
 }
 
 /**
@@ -162,59 +162,59 @@ export interface ArticlePortfolioBlock {
  * Блок цитаты
  */
 export interface ArticleQuoteBlock {
-    type: 'quote'
-    text: string
-    author?: string
-    source?: string
+    type: 'quote';
+    text: string;
+    author?: string;
+    source?: string;
 }
 
 /**
  * Блок с кодом
  */
 export interface ArticleCodeBlock {
-    type: 'code'
-    code: string
-    language?: string
-    showLineNumbers?: boolean
+    type: 'code';
+    code: string;
+    language?: string;
+    showLineNumbers?: boolean;
 }
 
 /**
  * Таблица
  */
 export interface ArticleTableBlock {
-    type: 'table'
-    headers: string[]
-    rows: string[][]
-    align?: ('left' | 'center' | 'right')[]
+    type: 'table';
+    headers: string[];
+    rows: string[][];
+    align?: ('left' | 'center' | 'right')[];
 }
 
 /**
  * Разделитель
  */
 export interface ArticleDividerBlock {
-    type: 'divider'
-    style?: 'solid' | 'dashed' | 'dotted'
+    type: 'divider';
+    style?: 'solid' | 'dashed' | 'dotted';
 }
 
 /**
  * Встроенный контент (iframe)
  */
 export interface ArticleEmbedBlock {
-    type: 'embed'
+    type: 'embed';
     html?: string;  // if you want to support raw HTML
     url?: string;   // if you want to support URL-based embeds
-    provider?: string
-    width?: string
-    height?: string
+    provider?: string;
+    width?: string;
+    height?: string;
 }
 
 /**
  * Компонент Форма
  */
 export interface ArticleFormBlock {
-    type: 'form',
-    formType: ArticleFormTypeKey       // Ключ типа формы
-    title?: string              // Заголовок формы (переопределение по желанию)
+    type: 'form';
+    formType: ArticleFormTypeKey;       // Ключ типа формы
+    title?: string;              // Заголовок формы (переопределение по желанию)
 }
 
 /**
@@ -226,8 +226,8 @@ export type ArticleFormTypeKey = 'lightLetters' | 'banner' | 'signboard' // и �
  * SEO-метаданные статьи
  */
 export interface ArticleSEO {
-    title?: string
-    description?: string
-    keywords?: string[]
-    ogImage?: string
+    title?: string;
+    description?: string;
+    keywords?: string[];
+    ogImage?: string;
 }
