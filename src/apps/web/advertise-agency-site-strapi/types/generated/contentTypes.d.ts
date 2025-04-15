@@ -420,6 +420,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         'shared.video',
         'shared.divider',
         'shared.embed',
+        'shared.form',
       ]
     >;
     category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
@@ -504,6 +505,35 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFormTypeFormType extends Struct.CollectionTypeSchema {
+  collectionName: 'form_types';
+  info: {
+    displayName: 'FormType';
+    pluralName: 'form-types';
+    singularName: 'form-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::form-type.form-type'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1085,6 +1115,7 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::form-type.form-type': ApiFormTypeFormType;
       'api::global.global': ApiGlobalGlobal;
       'api::service-category.service-category': ApiServiceCategoryServiceCategory;
       'plugin::content-releases.release': PluginContentReleasesRelease;

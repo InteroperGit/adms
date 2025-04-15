@@ -54,7 +54,8 @@
         "shared.slider",
         "shared.video",
         "shared.divider",
-        "shared.embed"
+        "shared.embed",
+        "shared.form"
       ]
     }
   }

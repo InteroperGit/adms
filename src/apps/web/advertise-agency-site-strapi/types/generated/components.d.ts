@@ -26,6 +26,21 @@ export interface SharedEmbed extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedForm extends Struct.ComponentSchema {
+  collectionName: 'components_shared_forms';
+  info: {
+    displayName: 'Form';
+    icon: 'bulletList';
+  };
+  attributes: {
+    form_type: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::form-type.form-type'
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -106,6 +121,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'shared.divider': SharedDivider;
       'shared.embed': SharedEmbed;
+      'shared.form': SharedForm;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

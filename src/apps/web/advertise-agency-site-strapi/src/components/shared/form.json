@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_forms",
+  "info": {
+    "displayName": "Form",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "form_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-type.form-type"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}
