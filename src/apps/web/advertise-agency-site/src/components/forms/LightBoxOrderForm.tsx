@@ -22,19 +22,16 @@ const formCardClass = cn(
     "grid grid-cols-1 md:grid-cols-2 gap-8"
 );
 
-const lightingTypes = [
-    { value: 'Lighted', label: 'Световые' },
-    { value: 'Non-lighted', label: 'Несветовые' }
+const boxShapes = [
+    { value: 'Rectangle', label: 'Прямоугольный' },
+    { value: 'Round', label: 'Круглый' },
+    { value: 'Custom', label: 'Индивидуальный' }
 ];
 
-const letterColors = [
-    { value: 'White', label: 'Белый' },
-    { value: 'Red', label: 'Красный' },
-    { value: 'Blue', label: 'Синий' },
-    { value: 'Green', label: 'Зелёный' },
-    { value: 'Yellow', label: 'Жёлтый' },
-    { value: 'Black', label: 'Чёрный' },
-    { value: 'Custom', label: 'Индивидуальный' }
+const illuminationTypes = [
+    { value: 'Internal', label: 'Внутренняя подсветка' },
+    { value: 'External', label: 'Внешняя подсветка' },
+    { value: 'None', label: 'Без подсветки' }
 ];
 
 interface FieldExplanationProps {
@@ -45,22 +42,22 @@ interface FieldExplanationProps {
 const FieldExplanation: React.FC<FieldExplanationProps> = ({ activeField, formData }) => {
     const getExplanation = (field: string) => {
         switch (field) {
-            case 'lightingType':
-                return formData.lightingType === 'Lighted'
-                    ? 'Выберите световые буквы, если они будут освещены изнутри.'
-                    : 'Несветовые буквы не имеют внутреннего освещения.';
-            case 'letterColor':
-                return 'Выберите цвет букв для вашего заказа.';
+            case 'boxShape':
+                return 'Форма короба влияет на визуальное восприятие и стоимость.';
+            case 'illuminationType':
+                return 'Выберите тип подсветки, если она требуется.';
             case 'height':
-                return 'Укажите высоту букв в сантиметрах.';
+                return 'Укажите высоту короба в сантиметрах.';
             case 'width':
-                return 'Укажите ширину букв в сантиметрах.';
+                return 'Укажите ширину короба в сантиметрах.';
+            case 'depth':
+                return 'Укажите глубину (толщину) короба.';
             case 'address':
-                return 'Введите полный адрес для доставки заказа.';
+                return 'Введите полный адрес доставки.';
             case 'phone':
-                return 'Укажите контактный телефон для связи.';
+                return 'Укажите номер телефона для связи.';
             case 'name':
-                return 'Введите ваше имя для персонализации заказа.';
+                return 'Введите имя заказчика.';
             default:
                 return '';
         }
@@ -71,9 +68,7 @@ const FieldExplanation: React.FC<FieldExplanationProps> = ({ activeField, formDa
             "hidden md:block space-y-6 p-4 bg-gray-50 dark:bg-zinc-800 rounded-xl",
             "border border-gray-300 dark:border-gray-600"
         )}>
-            <h3 className={cn(
-                "text-lg font-semibold text-gray-700 dark:text-gray-300 flex items-center"
-            )}>
+            <h3 className={cn("text-lg font-semibold text-gray-700 dark:text-gray-300 flex items-center")}>
                 <svg xmlns="http://www.w3.org/2000/svg"
                      className="w-5 h-5 mr-2 text-orange-500"
                      fill="none"
@@ -83,9 +78,7 @@ const FieldExplanation: React.FC<FieldExplanationProps> = ({ activeField, formDa
                 </svg>
                 Пояснение
             </h3>
-            <p className={cn(
-                "text-lg text-gray-600 dark:text-gray-400 transition-opacity duration-300 opacity-100"
-            )}>
+            <p className="text-lg text-gray-600 dark:text-gray-400 transition-opacity duration-300 opacity-100">
                 {activeField && getExplanation(activeField)}
             </p>
         </div>
@@ -93,30 +86,33 @@ const FieldExplanation: React.FC<FieldExplanationProps> = ({ activeField, formDa
 };
 
 interface FormData {
-    lightingType: string;
-    letterColor: string;
+    boxShape: string;
+    illuminationType: string;
     height: string;
     width: string;
+    depth: string;
     address: string;
     phone: string;
     name: string;
-    [key: string]: string;  // Индексная сигнатура для любых строковых ключей
+    [key: string]: string;
 }
 
-interface LightLettersOrderFormProps {
+interface LightBoxOrderFormProps {
     title?: string;
 }
 
-const LightLettersOrderForm: React.FC<LightLettersOrderFormProps> = ({title}: LightLettersOrderFormProps) => {
+const LightBoxOrderForm: React.FC<LightBoxOrderFormProps> = ({title}: LightBoxOrderFormProps) => {
     const [formData, setFormData] = useState<FormData>({
-        lightingType: 'Lighted',
-        letterColor: 'White',
+        boxShape: 'Rectangle',
+        illuminationType: 'Internal',
         height: '',
         width: '',
+        depth: '',
         address: '',
         phone: '',
         name: '',
     });
+
     const [activeField, setActiveField] = useState<string | null>(null);
     const [hasMounted, setHasMounted] = useState(false);
 
@@ -126,10 +122,7 @@ const LightLettersOrderForm: React.FC<LightLettersOrderFormProps> = ({title}: Li
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -140,31 +133,48 @@ const LightLettersOrderForm: React.FC<LightLettersOrderFormProps> = ({title}: Li
         setActiveField(null);
     };
 
-    if (!hasMounted) {
-        return null;  // Пока компонент не смонтирован, не рендерим ничего
-    }
+    if (!hasMounted) return null;
 
     return (
         <div className={formCardClass}>
             <div className="w-full">
-                <h2 className="text-2xl font-semibold mb-4">{title || 'Заказ световых букв'}</h2>
+                <h2 className="text-2xl font-semibold mb-4">{title || 'Заказ светового короба'}</h2>
 
                 <form className="space-y-6">
-                    {/* Левая часть формы: Поля ввода */}
                     <div className="space-y-6">
-                        {/* Тип освещения */}
+                        {/* Форма короба */}
                         <div>
-                            <label htmlFor="lightingType" className={labelClass}>Тип освещения</label>
+                            <label htmlFor="boxShape" className={labelClass}>Форма короба</label>
                             <select
-                                id="lightingType"
-                                name="lightingType"
-                                value={formData.lightingType}
+                                id="boxShape"
+                                name="boxShape"
+                                value={formData.boxShape}
                                 onChange={handleInputChange}
                                 onFocus={handleFocus}
                                 onBlur={handleBlur}
                                 className={inputClass}
                             >
-                                {lightingTypes.map((type) => (
+                                {boxShapes.map((shape) => (
+                                    <option key={shape.value} value={shape.value}>
+                                        {shape.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* Тип подсветки */}
+                        <div>
+                            <label htmlFor="illuminationType" className={labelClass}>Тип подсветки</label>
+                            <select
+                                id="illuminationType"
+                                name="illuminationType"
+                                value={formData.illuminationType}
+                                onChange={handleInputChange}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                className={inputClass}
+                            >
+                                {illuminationTypes.map((type) => (
                                     <option key={type.value} value={type.value}>
                                         {type.label}
                                     </option>
@@ -172,28 +182,8 @@ const LightLettersOrderForm: React.FC<LightLettersOrderFormProps> = ({title}: Li
                             </select>
                         </div>
 
-                        {/* Цвет букв */}
-                        <div>
-                            <label htmlFor="letterColor" className={labelClass}>Цвет букв</label>
-                            <select
-                                id="letterColor"
-                                name="letterColor"
-                                value={formData.letterColor}
-                                onChange={handleInputChange}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                                className={inputClass}
-                            >
-                                {letterColors.map((color) => (
-                                    <option key={color.value} value={color.value}>
-                                        {color.label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
                         {/* Размеры */}
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-3 gap-4">
                             <div>
                                 <label htmlFor="height" className={labelClass}>Высота (см)</label>
                                 <input
@@ -220,6 +210,20 @@ const LightLettersOrderForm: React.FC<LightLettersOrderFormProps> = ({title}: Li
                                     onBlur={handleBlur}
                                     className={inputClass}
                                     placeholder="Введите ширину"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="depth" className={labelClass}>Глубина (см)</label>
+                                <input
+                                    type="number"
+                                    id="depth"
+                                    name="depth"
+                                    value={formData.depth}
+                                    onChange={handleInputChange}
+                                    onFocus={handleFocus}
+                                    onBlur={handleBlur}
+                                    className={inputClass}
+                                    placeholder="Введите глубину"
                                 />
                             </div>
                         </div>
@@ -272,7 +276,7 @@ const LightLettersOrderForm: React.FC<LightLettersOrderFormProps> = ({title}: Li
                             />
                         </div>
 
-                        {/* Кнопка отправки формы */}
+                        {/* Кнопка */}
                         <div>
                             <button
                                 type="submit"
@@ -285,7 +289,6 @@ const LightLettersOrderForm: React.FC<LightLettersOrderFormProps> = ({title}: Li
                 </form>
             </div>
 
-            {/* Пояснение */}
             <div className="w-full">
                 <FieldExplanation activeField={activeField} formData={formData} />
             </div>
@@ -293,4 +296,4 @@ const LightLettersOrderForm: React.FC<LightLettersOrderFormProps> = ({title}: Li
     );
 };
 
-export default LightLettersOrderForm;
+export default LightBoxOrderForm;
