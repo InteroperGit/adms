@@ -418,6 +418,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         'shared.rich-text',
         'shared.slider',
         'shared.video',
+        'shared.divider',
       ]
     >;
     category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
