@@ -1,7 +1,7 @@
 import {
     Article,
     ArticleBlock,
-    ArticleDividerBlock, ArticleEmbedBlock,
+    ArticleDividerBlock, ArticleEmbedBlock, ArticleFormBlock,
     ArticleImageBlock,
     ArticleImageGalleryBlock,
     ArticleQuoteBlock,
@@ -12,7 +12,7 @@ import {ImageFormats, ImageMeta} from "@/types/image";
 import {
     StrapiArticle,
     StrapiArticleBlock,
-    StrapiEmbedBlock,
+    StrapiEmbedBlock, StrapiFormBlock,
     StrapiImageBlock,
     StrapiQuoteBlock,
     StrapiSliderBlock,
@@ -121,6 +121,16 @@ async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUr
                 width: strapiEmbedBlock.width,
                 height: strapiEmbedBlock.height,
             } as ArticleEmbedBlock;
+
+            break;
+        case "shared.form":
+            const strapiFormBlock = block as StrapiFormBlock;
+            result = {
+                type: "form",
+                title: strapiFormBlock.title,
+                formType: strapiFormBlock.form_type?.name
+            } as ArticleFormBlock
+
             break;
         default: return undefined;
     }

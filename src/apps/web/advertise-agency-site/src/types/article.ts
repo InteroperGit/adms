@@ -220,7 +220,26 @@ export interface ArticleFormBlock {
 /**
  * Тип формы
  */
-export type ArticleFormTypeKey = 'lightLetters' | 'banner' | 'signboard' // и т.д.
+export type ArticleFormTypeKey =
+    'light-letters'
+    | 'light-boxes'
+    | 'brackets'
+    | 'technical-design'
+    | 'approval'
+    | 'installation'
+    | 'interior-logo'
+    | 'navigation'
+    | 'stands-signs'
+    | 'opening-hours'
+    | 'neon-signs'
+    | 'pavilion-decoration'
+    | 'exhibition-decoration'
+    | 'souvenir-products-branding'
+    | 'clothing-branding'
+    | 'business-cards'
+    | 'flyers'
+    | 'euro-booklets'
+    | 'postcards'
 
 /**
  * SEO-метаданные статьи
