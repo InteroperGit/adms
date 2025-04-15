@@ -61,6 +61,7 @@ export type StrapiArticleBlock =
     | StrapiImageBlock
     | StrapiSliderBlock
     | StrapiQuoteBlock
+    | StrapiVideoBlock
 
 /**
  * Интерфейс базового блока
@@ -97,4 +98,12 @@ export interface StrapiSliderBlock extends StrapiBaseBlock {
 export interface StrapiQuoteBlock extends StrapiBaseBlock {
     title: string;
     body: string;
+}
+
+/**
+ * Блок видео с внешнего источника
+ */
+export interface StrapiVideoBlock extends StrapiBaseBlock {
+    url: string;
+    caption?: string;
 }

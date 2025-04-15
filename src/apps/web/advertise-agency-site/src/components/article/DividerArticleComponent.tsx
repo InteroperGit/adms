@@ -1,4 +1,4 @@
-import {DividerBlock} from "@/types/article";
+import {ArticleDividerBlock} from "@/types/article";
 
 /**
  * Компонент для отображения горизонтальной линии-разделителя между контентными блоками.
@@ -25,7 +25,7 @@ import {DividerBlock} from "@/types/article";
  */
 const DividerBlockArticleComponent = ({
                                           style = 'solid'
-                                      }: DividerBlock) => {
+                                      }: ArticleDividerBlock) => {
     const borderStyle = {
         solid: 'border-solid',
         dashed: 'border-dashed',

@@ -1,11 +1,11 @@
-import {Article, ArticleBlock, ImageBlock, ImageGalleryBlock, QuoteBlock, TextBlock} from "@/types/article";
+import {Article, ArticleBlock, ArticleImageBlock, ArticleImageGalleryBlock, ArticleQuoteBlock, ArticleTextBlock, ArticleVideoBlock} from "@/types/article";
 import {ImageFormats, ImageMeta} from "@/types/image";
 import {
     StrapiArticle,
     StrapiArticleBlock,
     StrapiImageBlock,
     StrapiQuoteBlock, StrapiSliderBlock,
-    StrapiTextBlock
+    StrapiTextBlock, StrapiVideoBlock
 } from "@/types/strapi/strapiArticle";
 import {markdownToHtml} from "@/libs/converters/markdownToHtml";
 
@@ -52,7 +52,8 @@ async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUr
                 type: "text",
                 align: "left",
                 content: await markdownToHtml(strapiTextBlock.body)
-            } as TextBlock;
+            } as ArticleTextBlock;
+
             break;
         case "shared.media":
             const strapiImageBlock = block as StrapiImageBlock;
@@ -60,7 +61,8 @@ async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUr
                 type: "image",
                 align: "left",
                 image: normalizeImageMeta(strapiImageBlock.file, strapiUrl)
-            } as ImageBlock;
+            } as ArticleImageBlock;
+
             break;
         case "shared.slider":
             const strapiSliderBlock = block as StrapiSliderBlock;
@@ -70,7 +72,8 @@ async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUr
                             && strapiSliderBlock.files.map((file) => normalizeImageMeta(file, strapiUrl)),
                 columns: 2,
                 layout: "grid"
-            } as ImageGalleryBlock
+            } as ArticleImageGalleryBlock
+
             break;
         case "shared.quote":
             const strapiQuoteBlock = block as StrapiQuoteBlock;
@@ -78,7 +81,17 @@ async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUr
                 type: "quote",
                 author: strapiQuoteBlock.title,
                 text: strapiQuoteBlock.body
-            } as QuoteBlock;
+            } as ArticleQuoteBlock;
+
+            break;
+        case "shared.video":
+            const strapiVideoBlock = block as StrapiVideoBlock;
+            result = {
+                type: "video",
+                url: strapiVideoBlock.url,
+                caption: strapiVideoBlock.caption,
+            } as ArticleVideoBlock
+
             break;
         default: return undefined;
     }
@@ -96,13 +109,15 @@ export async function convertStrapiArticle(article: StrapiArticle | undefined, s
         return Promise.resolve(undefined);
     }
 
+    const filterUndefinedBlocks = (b: ArticleBlock | undefined): b is ArticleBlock => !!b
+
     const result: Article = {
         ...article,
         cover: article.cover ? normalizeImageMeta(article.cover, strapiUrl) : undefined,
         blocks: article.blocks
             ? (
                 await Promise.all(article.blocks.map((block) => parseDynamicBlock(block, strapiUrl)))
-              ).filter((b): b is ArticleBlock => !!b)
+              ).filter(filterUndefinedBlocks)
             : undefined
     };
 

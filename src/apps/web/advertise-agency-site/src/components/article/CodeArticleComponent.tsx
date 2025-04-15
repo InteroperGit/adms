@@ -1,4 +1,4 @@
-import {CodeBlock} from "@/types/article";
+import {ArticleCodeBlock} from "@/types/article";
 
 /**
  * Компонент для отображения блоков кода с подсветкой синтаксиса и опциональными номерами строк.
@@ -28,7 +28,7 @@ const CodeBlockArticleComponent = ({
                                        code,
                                        language,
                                        showLineNumbers = false
-                                   }: CodeBlock) => (
+                                   }: ArticleCodeBlock) => (
     <div className="my-6 bg-gray-800 rounded-lg overflow-hidden">
         {language && (
             <div className="px-4 py-2 text-xs text-gray-300 bg-gray-700">

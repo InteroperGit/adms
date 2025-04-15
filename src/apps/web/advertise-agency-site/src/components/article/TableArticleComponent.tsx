@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils'
-import type { TableBlock } from '@/types/article'
+import type { ArticleTableBlock } from '@/types/article'
 
 /**
  * TableArticleComponent
@@ -25,7 +25,7 @@ const TableArticleComponent = ({
                                           headers,
                                           rows,
                                           align = [],
-                                      }: TableBlock) => {
+                                      }: ArticleTableBlock) => {
     return (
         <div className="my-6 overflow-x-auto rounded-xl shadow-sm">
             {renderDesktopTable(headers, rows, align)}
