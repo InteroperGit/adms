@@ -62,6 +62,7 @@ export type StrapiArticleBlock =
     | StrapiSliderBlock
     | StrapiQuoteBlock
     | StrapiVideoBlock
+    | StrapiEmbedBlock
 
 /**
  * Интерфейс базового блока
@@ -112,4 +113,16 @@ export interface StrapiVideoBlock extends StrapiBaseBlock {
  * Блок разделителя
  */
 export interface StrapiDividerBlock extends StrapiBaseBlock {
+    show?: boolean;
+}
+
+/**
+ * Блок Встроенный контент (iframe)
+ */
+export interface StrapiEmbedBlock extends StrapiBaseBlock {
+    html?: string;  // if you want to support raw HTML
+    url?: string;   // if you want to support URL-based embeds
+    provider?: string
+    width?: number
+    height?: number
 }
