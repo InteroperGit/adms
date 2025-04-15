@@ -126,3 +126,19 @@ export interface StrapiEmbedBlock extends StrapiBaseBlock {
     width?: number
     height?: number
 }
+
+/**
+ * Тип формы
+ */
+export interface StrapiFormType extends StrapiBaseBlock {
+    name?: string;
+    title?: string;
+}
+
+/**
+ * Блок формы
+ */
+export interface StrapiFormBlock extends StrapiBaseBlock {
+    title?: string;
+    "form_type"?: StrapiFormType;
+}
