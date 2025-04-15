@@ -1,4 +1,4 @@
-import {PortfolioBlock} from "@/types/article";
+import {ArticlePortfolioBlock} from "@/types/article";
 import {PortfolioSection} from "@/components/sections/PortfolioSection";
 
 /**
@@ -21,7 +21,7 @@ import {PortfolioSection} from "@/components/sections/PortfolioSection";
  * - В блогах, кейс-стади, страницах с отзывами и примерами проектов.
  * - При генерации контента из CMS или структуры JSON для генерации контентных блоков.
  */
-const PortfolioArticleComponent = ({ projects }: PortfolioBlock) => {
+const PortfolioArticleComponent = ({ projects }: ArticlePortfolioBlock) => {
     return (
                 <PortfolioSection
                     title="Примеры работ"

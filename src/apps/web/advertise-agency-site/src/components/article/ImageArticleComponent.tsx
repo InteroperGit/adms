@@ -1,4 +1,4 @@
-import {ImageBlock} from "@/types/article";
+import {ArticleImageBlock} from "@/types/article";
 import ArticleImage from "@/components/misc/ArticleImage";
 
 /**
@@ -24,7 +24,7 @@ import ArticleImage from "@/components/misc/ArticleImage";
 const ImageArticleComponent = ({
                                           image,
                                           fullWidth = false
-                                      }: ImageBlock) => (
+                                      }: ArticleImageBlock) => (
     <figure className={`my-6 ${fullWidth ? 'w-full' : 'max-w-full'}`}>
         <div className="relative aspect-video rounded-lg overflow-hidden">
             <ArticleImage

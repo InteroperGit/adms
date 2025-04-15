@@ -1,5 +1,5 @@
 import {cn} from "@/libs/utils";
-import {ImageGalleryBlock} from "@/types/article";
+import {ArticleImageGalleryBlock} from "@/types/article";
 import ArticleImage from "@/components/misc/ArticleImage";
 
 /**
@@ -33,7 +33,7 @@ const ImageGalleryArticleComponent = ({
                                           images,
                                           layout = 'grid',
                                           columns = 3,
-                                      }: ImageGalleryBlock) => {
+                                      }: ArticleImageGalleryBlock) => {
     const galleryClasses = cn(
         'my-8 gap-4',
         {
@@ -68,7 +68,7 @@ const ImageGalleryArticleComponent = ({
                     </div>
 
                     {img.caption && (
-                        <div className="text-sm text-center text-gray-500 dark:text-gray-400 mt-2">
+                        <div className="text-lg text-center text-gray-500 dark:text-gray-400 mt-2">
                             {img.caption}
                         </div>
                     )}

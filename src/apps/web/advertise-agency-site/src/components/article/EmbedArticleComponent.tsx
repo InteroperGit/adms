@@ -1,4 +1,4 @@
-import {EmbedBlock} from "@/types/article";
+import {ArticleEmbedBlock} from "@/types/article";
 
 /**
  * Компонент для встраивания HTML-контента или iframe на страницу.
@@ -30,7 +30,7 @@ const EmbedBlockArticleComponent = ({
                                         url,
                                         width,
                                         height
-                                    }: EmbedBlock) => {
+                                    }: ArticleEmbedBlock) => {
     if (html) {
         return (
             <div

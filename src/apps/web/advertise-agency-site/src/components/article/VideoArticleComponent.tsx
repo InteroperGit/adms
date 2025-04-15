@@ -1,4 +1,4 @@
-import {VideoBlock} from "@/types/article";
+import {ArticleVideoBlock} from "@/types/article";
 
 /**
  * Компонент для отображения встроенных видеороликов в статьях, блогах или CMS-контенте.
@@ -31,7 +31,7 @@ const VideoArticleComponent = ({
                                    source,
                                    caption,
                                    aspectRatio = '16:9'
-                               }: VideoBlock) => {
+                               }: ArticleVideoBlock) => {
     // Преобразование пропорции (aspect ratio) в padding-bottom для обеспечения корректных пропорций.
     const [width, height] = aspectRatio.split(':').map(Number);
     const paddingBottom = `${(height / width) * 100}%`;
@@ -54,7 +54,7 @@ const VideoArticleComponent = ({
                 />
             </div>
             {caption && (
-                <figcaption className="text-sm mt-2 text-center text-gray-500 dark:text-gray-400">
+                <figcaption className="text-lg mt-2 text-center text-gray-500 dark:text-gray-400">
                     {caption}
                 </figcaption>
             )}

@@ -1,4 +1,4 @@
-import {QuoteBlock} from "@/types/article";
+import {ArticleQuoteBlock} from "@/types/article";
 import {cn} from "@/libs/utils";
 
 /**
@@ -28,7 +28,7 @@ const QuoteArticleComponent = ({
                                    text,
                                    author,
                                    source,
-                               }: QuoteBlock) => (
+                               }: ArticleQuoteBlock) => (
     <blockquote
         className={cn(
             "my-8 border-l-4 border-orange-500 dark:border-orange-700",

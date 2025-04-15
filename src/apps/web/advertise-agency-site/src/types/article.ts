@@ -97,22 +97,22 @@ export interface Article extends Entity {
  * Блоки контента статьи (union-тип)
  */
 export type ArticleBlock =
-    | TextBlock
-    | ImageBlock
-    | ImageGalleryBlock
-    | VideoBlock
-    | PortfolioBlock
-    | QuoteBlock
-    | CodeBlock
-    | TableBlock
-    | DividerBlock
-    | EmbedBlock
+    | ArticleTextBlock
+    | ArticleImageBlock
+    | ArticleImageGalleryBlock
+    | ArticleVideoBlock
+    | ArticlePortfolioBlock
+    | ArticleQuoteBlock
+    | ArticleCodeBlock
+    | ArticleTableBlock
+    | ArticleDividerBlock
+    | ArticleEmbedBlock
     | ArticleFormBlock
 
 /**
  * Текстовый блок
  */
-export interface TextBlock {
+export interface ArticleTextBlock {
     type: 'text'
     content: string // HTML-форматированный текст
     align?: 'left' | 'center' | 'right'
@@ -121,7 +121,7 @@ export interface TextBlock {
 /**
  * Блок с изображением
  */
-export interface ImageBlock {
+export interface ArticleImageBlock {
     type: 'image'
     image: ImageMeta,
     align?: 'left' | 'center' | 'right'
@@ -131,7 +131,7 @@ export interface ImageBlock {
 /**
  * Галерея изображений
  */
-export interface ImageGalleryBlock {
+export interface ArticleImageGalleryBlock {
     type: 'imageGallery';
     images: ImageMeta[];
     layout: 'grid' | 'carousel' | 'masonry';
@@ -141,7 +141,7 @@ export interface ImageGalleryBlock {
 /**
  * Блок с видео
  */
-export interface VideoBlock {
+export interface ArticleVideoBlock {
     type: 'video'
     url: string
     source: 'youtube' | 'vimeo' | 'custom'
@@ -152,7 +152,7 @@ export interface VideoBlock {
 /**
  * Портфолио
  */
-export interface PortfolioBlock {
+export interface ArticlePortfolioBlock {
     type: 'portfolio';
     projects: ProjectPreview[];
     columns?: number;
@@ -161,7 +161,7 @@ export interface PortfolioBlock {
 /**
  * Блок цитаты
  */
-export interface QuoteBlock {
+export interface ArticleQuoteBlock {
     type: 'quote'
     text: string
     author?: string
@@ -171,7 +171,7 @@ export interface QuoteBlock {
 /**
  * Блок с кодом
  */
-export interface CodeBlock {
+export interface ArticleCodeBlock {
     type: 'code'
     code: string
     language?: string
@@ -181,7 +181,7 @@ export interface CodeBlock {
 /**
  * Таблица
  */
-export interface TableBlock {
+export interface ArticleTableBlock {
     type: 'table'
     headers: string[]
     rows: string[][]
@@ -191,7 +191,7 @@ export interface TableBlock {
 /**
  * Разделитель
  */
-export interface DividerBlock {
+export interface ArticleDividerBlock {
     type: 'divider'
     style?: 'solid' | 'dashed' | 'dotted'
 }
@@ -199,7 +199,7 @@ export interface DividerBlock {
 /**
  * Встроенный контент (iframe)
  */
-export interface EmbedBlock {
+export interface ArticleEmbedBlock {
     type: 'embed'
     html?: string;  // if you want to support raw HTML
     url?: string;   // if you want to support URL-based embeds
