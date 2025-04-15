@@ -1,5 +1,8 @@
 import {ArticleFormBlock} from "@/types/article";
 import LightLettersOrderForm from "@/components/forms/LightLettersOrderForm";
+import LightBoxOrderForm from "@/components/forms/LightBoxOrderForm";
+import BracketOrderForm from "@/components/forms/BracketOrderForm";
+import TechnicalDesignOrderForm from "@/components/forms/TechnicalDesignOrderForm";
 
 /**
  * Компонент для отображения формы на основе типа формы, переданного через пропс `formType`.
@@ -19,14 +22,17 @@ import LightLettersOrderForm from "@/components/forms/LightLettersOrderForm";
  * - Этот компонент может быть использован для создания формы заказа или других типов интерактивных форм на страницах,
  * где нужно предложить пользователю различные варианты в зависимости от контекста.
  */
-const FormBlockArticleComponent = ({ formType }: ArticleFormBlock) => {
+const FormBlockArticleComponent = ({ formType, title }: ArticleFormBlock) => {
     const renderForm = () => {
         switch (formType) {
             case 'light-letters':
-                return <LightLettersOrderForm />; // Форма для заказа световых букв
-            // Добавьте дополнительные формы по мере необходимости
-            // case 'anotherForm':
-            //    return <AnotherForm />;
+                return <LightLettersOrderForm title={title} />; // Форма для заказа световых букв
+            case 'light-boxes':
+                return <LightBoxOrderForm title={title} />;
+            case 'brackets':
+                return <BracketOrderForm title={title} />;
+            case 'technical-design':
+                return <TechnicalDesignOrderForm title={title} />;
             default:
                 return null; // По умолчанию не отображаем форму
         }
