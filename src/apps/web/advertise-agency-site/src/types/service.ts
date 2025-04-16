@@ -6,7 +6,11 @@ import {ImageMeta} from "@/types/image";
 export interface ServiceCategory {
     id: number;
     name: string;
-    title: string;
+    title?: string;
+    description?: string;
+    href?: string;
+    cover?: ImageMeta;
+    items?: ServiceCategory[];
 }
 
 /**

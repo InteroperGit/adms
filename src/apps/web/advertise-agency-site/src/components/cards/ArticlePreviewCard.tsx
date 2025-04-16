@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/libs/utils";
 import {Article} from "@/types/article";
-import ArticleImage from "@/components/misc/ArticleImage";
+import ContentImage from "@/components/misc/ContentImage";
 
 interface ArticlePreviewCardProps {
     /**
@@ -88,7 +88,7 @@ export const ArticlePreviewCard = ({
             <div className="relative aspect-video overflow-hidden">
                 <Link href={articleUrl} passHref legacyBehavior>
                     <a className="block h-full w-full">
-                        <ArticleImage
+                        <ContentImage
                             image={article.cover}
                             priority={priority}
                             className={cn(

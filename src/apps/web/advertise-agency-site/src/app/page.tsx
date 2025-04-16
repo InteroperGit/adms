@@ -1,5 +1,5 @@
 import { ServicesSection } from "@/components/sections/ServicesSection";
-import { services } from "@/data/services-data";
+// import { services } from "@/data/services-data";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
 import { recentProjectPreviews } from "@/data/projects-data";
 import { NewsSection } from "@/components/sections/NewsSection";
@@ -10,12 +10,13 @@ import React from "react";
 import AboutCompanySection from "@/components/sections/AboutCompanySection";
 import AdvantagesSection from "@/components/sections/AdvantagesSection";
 import CarouselSection from "@/components/sections/CarouselSection";
-import { getPromotions } from "@/libs/api/promotions";
-import { getCompanyProductionImages, getCompanyStats } from "@/libs/api/company-info";
+import { getPromotions } from "@/libs/api/promotions-api";
+import { getCompanyProductionImages, getCompanyStats } from "@/libs/api/company-info-api";
 import WorkStepsSection from "@/components/sections/WorkStepsSection";
 import FaqSection from "@/components/sections/FaqSection";
 import OrderFormSection from "@/components/sections/OrderFormSection";
-import { cn } from "@/libs/utils"; // Импорт утилиты cn
+import { cn } from "@/libs/utils";
+import {getAllServiceCategories} from "@/libs/api/services-api";
 
 async function CarouselWrapper() {
     const promotions = await getPromotions();
@@ -35,7 +36,9 @@ async function AboutCompanyWrapper() {
     );
 }
 
-export default function Home() {
+export default async function Home() {
+    const services = await getAllServiceCategories();
+
     return (
         <div className={cn("space-y-12 pb-16 bg-white dark:bg-gray-900",
             " text-gray-900 dark:text-gray-100")}>

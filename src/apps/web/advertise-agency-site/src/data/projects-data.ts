@@ -776,7 +776,7 @@ export const projects: Article[] = [{
         },
         {
             type: "form",
-            formType: "lightLetters",
+            formType: "light-letters",
             title: "Заказать световые буквы"
         }
     ],

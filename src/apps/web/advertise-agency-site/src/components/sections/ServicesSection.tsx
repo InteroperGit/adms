@@ -3,11 +3,11 @@
 import { ServiceCard } from "@/components/cards/ServiceCard"
 import { cn } from "@/libs/utils"
 import React from "react";
-import {ServiceItem} from "@/types/service";
+import {ServiceCategory} from "@/types/service";
 
 interface ServicesSectionProps {
     title?: string
-    services: ServiceItem[]
+    services: ServiceCategory[]
     className?: string
     columns?: 1 | 2 | 3 | 4
 }
