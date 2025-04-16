@@ -576,6 +576,7 @@ export interface ApiServiceCategoryServiceCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'service_categories';
   info: {
+    description: '';
     displayName: 'ServiceCategory';
     pluralName: 'service-categories';
     singularName: 'service-category';
@@ -584,9 +585,17 @@ export interface ApiServiceCategoryServiceCategory
     draftAndPublish: true;
   };
   attributes: {
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    href: Schema.Attribute.String;
+    is_header: Schema.Attribute.Boolean;
+    items: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-category.service-category'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -594,6 +603,10 @@ export interface ApiServiceCategoryServiceCategory
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
+    parent: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::service-category.service-category'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
