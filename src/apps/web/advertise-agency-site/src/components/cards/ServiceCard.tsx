@@ -3,14 +3,14 @@
 import Link from "next/link"
 import { cn } from "@/libs/utils"
 import React from "react";
-import { ServiceItem } from "@/types/service";
+import {ServiceCategory} from "@/types/service";
 import Image from "next/image";
 
 interface ServiceCardProps {
     /**
      * Данные категории услуг для отображения
      */
-    service: ServiceItem
+    service: ServiceCategory
     /**
      * Индекс элемента в списке (для ключа)
      */
@@ -82,10 +82,10 @@ export const ServiceCard = ({
         >
             {/* Блок иконки */}
             <div className="w-16 h-16 mb-4 relative border-2">
-                {service.previewImage && (
+                {service.cover && (
                     <Image
-                        src={service.previewImage?.url || ""}
-                        alt={service.previewImage.alternativeText || service.name}
+                        src={service.cover?.url || ""}
+                        alt={service.cover.alternativeText || service.name}
                         fill
                         className="object-contain"
                         sizes="64px"

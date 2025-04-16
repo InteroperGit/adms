@@ -1,5 +1,5 @@
 import {ArticleImageBlock} from "@/types/article";
-import ArticleImage from "@/components/misc/ArticleImage";
+import ContentImage from "@/components/misc/ContentImage";
 
 /**
  * ImageArticleComponent
@@ -27,7 +27,7 @@ const ImageArticleComponent = ({
                                       }: ArticleImageBlock) => (
     <figure className={`my-6 ${fullWidth ? 'w-full' : 'max-w-full'}`}>
         <div className="relative aspect-video rounded-lg overflow-hidden">
-            <ArticleImage
+            <ContentImage
                 image={image}
                 className="object-cover rounded-xl"
                 sizes="(max-width: 768px) 100vw, 800px"

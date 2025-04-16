@@ -8,7 +8,6 @@ import {
     ArticleTextBlock,
     ArticleVideoBlock
 } from "@/types/article";
-import {ImageFormats, ImageMeta} from "@/types/image";
 import {
     StrapiArticle,
     StrapiArticleBlock,
@@ -20,35 +19,7 @@ import {
     StrapiVideoBlock
 } from "@/types/strapi/strapiArticle";
 import {markdownToHtml} from "@/libs/converters/markdownToHtml";
-
-function toAbsoluteUrl(url: string | undefined, strapiUrl: string | undefined): string | undefined {
-    if (!url || !strapiUrl) {
-        return undefined;
-    }
-    return url.startsWith("http") ? url : `${strapiUrl}${url}`;
-}
-
-function normalizeImageMeta(image: ImageMeta | undefined, strapiUrl: string | undefined): ImageMeta | undefined {
-    if (!image || !strapiUrl) {
-        return undefined;
-    }
-
-    const formats = image.formats
-        ? Object.entries(image.formats).reduce((acc, [key, format]) => {
-            acc[key as keyof ImageFormats] = {
-                ...format,
-                url: toAbsoluteUrl(format.url, strapiUrl),
-            };
-            return acc;
-        }, {} as ImageFormats)
-        : undefined;
-
-    return {
-        ...image,
-        url: toAbsoluteUrl(image.url, strapiUrl),
-        formats,
-    };
-}
+import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
 
 async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUrl: string | undefined): Promise<ArticleBlock | undefined> {
     if (!block || !strapiUrl) {
@@ -72,7 +43,7 @@ async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUr
             result = {
                 type: "image",
                 align: "left",
-                image: normalizeImageMeta(strapiImageBlock.file, strapiUrl)
+                image: convertStrapiImage(strapiImageBlock.file, strapiUrl)
             } as ArticleImageBlock;
 
             break;
@@ -81,7 +52,7 @@ async function parseDynamicBlock(block: StrapiArticleBlock | undefined, strapiUr
             result = {
                 type: "imageGallery",
                 images: strapiSliderBlock.files
-                            && strapiSliderBlock.files.map((file) => normalizeImageMeta(file, strapiUrl)),
+                            && strapiSliderBlock.files.map((file) => convertStrapiImage(file, strapiUrl)),
                 columns: 2,
                 layout: "grid"
             } as ArticleImageGalleryBlock
@@ -152,7 +123,7 @@ export async function convertStrapiArticle(article: StrapiArticle | undefined, s
 
     const result: Article = {
         ...article,
-        cover: article.cover ? normalizeImageMeta(article.cover, strapiUrl) : undefined,
+        cover: article.cover ? convertStrapiImage(article.cover, strapiUrl) : undefined,
         blocks: article.blocks
             ? (
                 await Promise.all(article.blocks.map((block) => parseDynamicBlock(block, strapiUrl)))

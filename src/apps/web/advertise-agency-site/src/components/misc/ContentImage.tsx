@@ -4,19 +4,45 @@ import Image from 'next/image'
 import {ImageMeta} from "@/types/image";
 import {useEffect, useRef, useState} from "react";
 
-interface ArticleImageProps {
+interface ContentImageProps {
     image?: ImageMeta
     priority?: boolean
     className?: string
     sizes?: string
 }
 
-const ArticleImage = ({
+/**
+ * Компонент ContentImage предназначен для рендеринга изображений из Strapi (или аналогичной CMS),
+ * с учётом адаптивных форматов (small, medium, large, default), предоставляемых сервером.
+ *
+ * Особенности:
+ * - Использует ResizeObserver для определения ширины контейнера и выбора наиболее подходящего формата изображения.
+ * - Поддерживает приоритетную загрузку (priority) и адаптивные размеры (sizes), как у компонента next/image.
+ * - Оборачивает <Image> в <div>, чтобы можно было отслеживать размер через useRef.
+ * - Поддерживает graceful fallback: если нужного формата нет, используется оригинальный URL изображения.
+ * - Учитывает переданный className и alt-текст, если задан.
+ *
+ * Пример использования:
+ * <ContentImage image={article.cover} priority className="rounded-lg" />
+ *
+ * Параметры:
+ * - image (ImageMeta): объект изображения с разными форматами и метаданными.
+ * - priority (boolean): если true — изображение будет загружено приоритетно (для выше вьюпорта).
+ * - className (string): дополнительные CSS-классы для стилизации изображения.
+ * - sizes (string): параметр для адаптивной загрузки изображений (как у <Image>).
+ *
+ * Поведение выбора формата:
+ * - small: контейнер < 500px
+ * - medium: 500px <= ширина < 750px
+ * - large: 750px <= ширина < 1000px
+ * - default: >= 1000px или отсутствует подходящий формат
+ */
+const ContentImage = ({
                           image,
                           priority = false,
                           className,
                           sizes
-                      }: ArticleImageProps) => {
+                      }: ContentImageProps) => {
     const [size, setSize] = useState<'small' | 'medium' | 'large' | 'default'>('medium');
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -75,4 +101,4 @@ const ArticleImage = ({
     )
 }
 
-export default ArticleImage
+export default ContentImage

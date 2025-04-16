@@ -1,4 +1,4 @@
-import {getArticleBySlug} from '@/libs/api/articles';
+import {getArticleBySlug} from '@/libs/api/articles-api';
 import {ArticleParser} from "@/libs/article-parser";
 import React from "react";
 import {Metadata} from "next";

@@ -1,6 +1,6 @@
 import {cn} from "@/libs/utils";
 import {ArticleImageGalleryBlock} from "@/types/article";
-import ArticleImage from "@/components/misc/ArticleImage";
+import ContentImage from "@/components/misc/ContentImage";
 
 /**
  * ImageGalleryArticleComponent
@@ -60,7 +60,7 @@ const ImageGalleryArticleComponent = ({
                     )}
                 >
                     <div className="relative w-full aspect-[16/9]">
-                        <ArticleImage
+                        <ContentImage
                             image={img}
                             className="rounded-xl object-cover w-full h-full"
                             sizes={layout === 'grid' ? `(max-width: 768px) 100vw, ${800 / columns}px` : '800px'}

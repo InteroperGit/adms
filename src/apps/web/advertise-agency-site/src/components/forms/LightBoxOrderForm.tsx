@@ -39,7 +39,7 @@ interface FieldExplanationProps {
     formData: Record<string, string>;
 }
 
-const FieldExplanation: React.FC<FieldExplanationProps> = ({ activeField, formData }) => {
+const FieldExplanation: React.FC<FieldExplanationProps> = ({ activeField }) => {
     const getExplanation = (field: string) => {
         switch (field) {
             case 'boxShape':
