@@ -603,6 +603,7 @@ export interface ApiServiceCategoryServiceCategory
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
+    order: Schema.Attribute.Integer;
     parent: Schema.Attribute.Relation<
       'manyToOne',
       'api::service-category.service-category'
