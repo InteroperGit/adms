@@ -1,8 +1,9 @@
-import {getArticleBySlug} from '@/libs/api/articles-api';
+import {PromisePageProps} from "@/types/page";
+import {Metadata} from "next";
+import {getArticleBySlug} from "@/libs/api/articles-api";
 import {ArticleParser} from "@/libs/article-parser";
 import React from "react";
-import {Metadata} from "next";
-import {PromisePageProps} from "@/types/page";
+import {getServiceArticleBySlug} from "@/libs/api/services-api";
 
 const DEFAULT_IMAGE_WIDTH = 1200;
 const DEFAULT_IMAGE_HEIGHT = 630;
@@ -60,13 +61,13 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
 }
 
 /**
- * Страница "Статья"
+ * Страница "Статья об услуге"
  * @param props
  * @constructor
  */
-export default async function ArticlePage(props: PromisePageProps) {
+export default async function ServiceArticlePage(props: PromisePageProps) {
     const { slug } = await props.params;
-    const article = await getArticleBySlug(slug);
+    const article = await getServiceArticleBySlug(slug);
 
     if (!article) {
         return <div>Статья не найдена</div>;
@@ -74,6 +75,7 @@ export default async function ArticlePage(props: PromisePageProps) {
 
     return (
         <article>
+            <h1 className="text-3xl font-bold mb-10">{article.title}</h1>
             <ArticleParser blocks={article.blocks || []} />
         </article>
     );
