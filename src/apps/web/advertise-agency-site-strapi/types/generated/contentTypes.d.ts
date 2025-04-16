@@ -573,6 +573,57 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiServiceArticleServiceArticle
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'service_articles';
+  info: {
+    description: '';
+    displayName: 'ServiceArticle';
+    pluralName: 'service-articles';
+    singularName: 'service-article';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    author: Schema.Attribute.Relation<'oneToOne', 'api::author.author'>;
+    blocks: Schema.Attribute.DynamicZone<
+      [
+        'shared.rich-text',
+        'shared.quote',
+        'shared.media',
+        'shared.form',
+        'shared.embed',
+        'shared.divider',
+        'shared.slider',
+        'shared.video',
+      ]
+    >;
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-article.service-article'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    service_category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::service-category.service-category'
+    >;
+    slug: Schema.Attribute.UID;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiServiceCategoryServiceCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'service_categories';
@@ -1132,6 +1183,7 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::form-type.form-type': ApiFormTypeFormType;
       'api::global.global': ApiGlobalGlobal;
+      'api::service-article.service-article': ApiServiceArticleServiceArticle;
       'api::service-category.service-category': ApiServiceCategoryServiceCategory;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
