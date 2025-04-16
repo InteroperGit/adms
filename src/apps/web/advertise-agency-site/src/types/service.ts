@@ -9,6 +9,8 @@ export interface ServiceCategory {
     title?: string;
     description?: string;
     href?: string;
+    order?: number;
+    is_header?: boolean;
     cover?: ImageMeta;
     items?: ServiceCategory[];
 }

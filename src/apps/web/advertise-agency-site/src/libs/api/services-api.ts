@@ -3,15 +3,22 @@ import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
+const sortFunction = ((a: ServiceCategory, b: ServiceCategory) => {
+    const orderA = a.order ?? 0;
+    const orderB = b.order ?? 0;
+    return orderA - orderB;
+})
+
 function sanitizeCategory(category: ServiceCategory): ServiceCategory {
-    const { cover, items, ...rest } = category;
+    const { cover, items } = category;
 
     return {
         id: category.id,
         name: category.name,
         title: category.title,
-        href: category.href,
         description: category.description,
+        href: category.href,
+        order: category.order,
         cover: convertStrapiImage(cover, STRAPI_URL),
         items: items?.map(sanitizeCategory) ?? [] // рекурсивно обрабатываем детей
     };
@@ -31,7 +38,16 @@ export async function getAllServiceCategories(): Promise<ServiceCategory[]> {
     }
 
     const json = await res.json();
-    return await Promise.all(
+    const serviceCategories = await Promise.all(
         json.data.map(sanitizeCategory)
     );
+
+    const sortedServiceCategories = [...serviceCategories].sort(sortFunction);
+    sortedServiceCategories.forEach((serviceCategory: ServiceCategory) => {
+        if (Array.isArray(serviceCategory.items)) {
+            serviceCategory.items.sort(sortFunction);
+        }
+    });
+
+    return sortedServiceCategories;
 }
