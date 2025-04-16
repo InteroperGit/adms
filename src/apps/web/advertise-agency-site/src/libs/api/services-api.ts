@@ -1,5 +1,8 @@
 import {ServiceCategory} from "@/types/service";
 import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
+import {Article} from "@/types/article";
+import {StrapiArticle} from "@/types/strapi/strapiArticle";
+import {convertStrapiArticle} from "@/libs/converters/strapiArticleConverter";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
@@ -50,4 +53,29 @@ export async function getAllServiceCategories(): Promise<ServiceCategory[]> {
     });
 
     return sortedServiceCategories;
+}
+
+/**
+ * Получить статью по slug
+ * @param requestSlug
+ */
+export async function getServiceArticleBySlug(requestSlug: string): Promise<Article | undefined> {
+    const res = await fetch(
+        `${STRAPI_URL}/api/service-articles?filters[slug][$eq]=${requestSlug}&customPopulate=nested`,
+        { next: { revalidate: 60 } }
+    );
+
+    if (!res.ok) {
+        throw new Error(`Ошибка при получении статей: ${res.statusText}`);
+    }
+
+    const json = await res.json();
+    const strapiArticles: StrapiArticle[] = json.data;
+
+    if (strapiArticles.length === 0) {
+        return undefined;
+    }
+
+    const strapiArticle = strapiArticles[0];
+    return convertStrapiArticle(strapiArticle, STRAPI_URL);
 }

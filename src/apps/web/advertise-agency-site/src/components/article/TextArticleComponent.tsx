@@ -13,6 +13,7 @@ interface TextStyles {
     blockquote: string;
     table: string;
     th: string;
+    tr: string;
     td: string;
     a: string;
     code: string;
@@ -34,7 +35,12 @@ const textStyles: TextStyles = {
         'bg-gray-50 dark:bg-gray-800/50',
         'text-gray-600 dark:text-gray-300'
     ),
-    table: cn('w-full my-6', 'border-collapse', 'rounded-lg overflow-hidden'),
+    table: cn(
+        'w-full my-6',
+        'border border-2 border-gray-200 dark:border-gray-600',
+        'border-collapse',
+        'overflow-hidden'
+    ),
     th: cn(
         'p-3 text-left font-semibold',
         'bg-gray-100 dark:bg-gray-700',
@@ -45,6 +51,14 @@ const textStyles: TextStyles = {
         'p-3',
         'border-b border-gray-100 dark:border-gray-700',
         'text-gray-600 dark:text-gray-300'
+    ),
+    tr: cn(
+        // Зебра: только на четных строках
+        'even:bg-gray-50 dark:even:bg-gray-800',
+        // Hover-эффект
+        'hover:bg-gray-100 dark:hover:bg-gray-700',
+        // Плавный переход
+        'transition-colors'
     ),
     a: cn(
         'text-primary hover:text-primary/80',

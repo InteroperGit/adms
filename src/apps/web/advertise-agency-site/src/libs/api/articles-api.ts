@@ -41,7 +41,7 @@ export async function getAllArticles({ page = 1, pageSize = 10 } = {}): Promise<
 }
 
 /**
- * Получить стать по slug
+ * Получить статью по slug
  * @param requestSlug
  */
 export async function getArticleBySlug(requestSlug: string): Promise<Article | undefined> {
