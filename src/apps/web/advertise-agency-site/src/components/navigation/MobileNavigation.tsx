@@ -7,10 +7,10 @@ import Link from "next/link"
 import {NavigationLink} from "@/types/navigation";
 import React from "react";
 import {cn} from "@/libs/utils";
-import {navLinks} from "@/config/navigation";
 import {FaWhatsapp} from "react-icons/fa";
 
 type MobileNavigationProps = {
+    navLinks: NavigationLink[];
     className?: string;
 }
 
@@ -41,14 +41,23 @@ const mobileMenu = (navLinks: NavigationLink[]): React.ReactNode => (
             <div className="flex flex-col gap-2">
                 {navLinks.map((link) => (
                     <Button
-                        key={link.href}
+                        key={link.name}
                         asChild
                         variant="ghost"
                         className="justify-center"
                     >
-                        <Link href={link.href}>
-                            {link.name}
-                        </Link>
+                        {
+                            link.href
+                                ? (
+                                    <Link href={link.href}>
+                                        {link.title}
+                                    </Link>
+                                )
+                                : (
+                                    <span>{link.title}</span>
+                                )
+                        }
+
                     </Button>
                 ))}
             </div>
@@ -90,7 +99,7 @@ const mobileMenu = (navLinks: NavigationLink[]): React.ReactNode => (
  *   className="custom-class"
  * />
  */
-export default function MobileNavigation({ className }: MobileNavigationProps) {
+export default function MobileNavigation({ navLinks, className }: MobileNavigationProps) {
     return (
         <div className={cn("flex", "w-full justify-between px-4 py-2 bg-background border-t md:hidden", className)}>
             <Button
@@ -126,7 +135,7 @@ export default function MobileNavigation({ className }: MobileNavigationProps) {
                 </Link>
             </Button>
 
-            {mobileMenu(navLinks)}
+            {navLinks && navLinks.length > 0 && mobileMenu(navLinks)}
         </div>
     )
 }
