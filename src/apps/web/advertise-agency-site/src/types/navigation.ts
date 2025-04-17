@@ -1,13 +1,11 @@
-export interface SubMenuItem {
-    title: string;
-    links: NavigationLink[];
-}
-
 /**
  * Навигационная ссылка
  */
 export interface NavigationLink {
+    id: number;
     name: string;
-    href: string;
-    submenu?: SubMenuItem[];
+    title: string;
+    href?: string;
+    order?: number;
+    links?: NavigationLink[];
 }

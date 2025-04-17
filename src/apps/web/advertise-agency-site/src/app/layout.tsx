@@ -11,6 +11,7 @@ import React from "react";
 import TailwindKeeper from "@/components/misc/TailwindKeeper";
 
 import "../styles/globals.css";
+import {fetchNavigationLinks} from "@/libs/api/navLinksApi";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,31 +28,33 @@ export const metadata: Metadata = {
   description: "Изготовление вывесок, согласование в архитектуре, брендирование, полиграфия",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
     children: React.ReactNode;
 }) {
-  return (
-    <html lang="ru"
-          suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
-      >
-        <Providers>
-            <Header />
-            <DesktopNavigation />
-            <MobileNavigation />
-            <Breadcrumbs />
-            <main className="flex-grow">
-                <Container>
-                    {children}
-                </Container>
-            </main>
-            <Footer />
-            <TailwindKeeper />
-        </Providers>
-      </body>
-    </html>
-  );
+    const navLinks = await fetchNavigationLinks();
+
+    return (
+        <html lang="ru"
+              suppressHydrationWarning>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
+          >
+            <Providers>
+                <Header />
+                <DesktopNavigation navLinks={navLinks} />
+                <MobileNavigation navLinks={navLinks} />
+                <Breadcrumbs />
+                <main className="flex-grow">
+                    <Container>
+                        {children}
+                    </Container>
+                </main>
+                <Footer />
+                <TailwindKeeper />
+            </Providers>
+          </body>
+        </html>
+      );
 }

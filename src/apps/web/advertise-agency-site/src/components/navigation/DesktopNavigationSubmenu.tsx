@@ -3,14 +3,14 @@
 import React from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { SubMenuItem } from "@/types/navigation"
 import { cn } from "@/libs/utils"
+import {NavigationLink} from "@/types/navigation";
 
 interface Props {
-    items: SubMenuItem[]
+    links: NavigationLink[]
 }
 
-export const DesktopNavigationSubmenu: React.FC<Props> = ({ items }) => {
+export const DesktopNavigationSubmenu: React.FC<Props> = ({ links }) => {
     return (
         <motion.div
             initial={{ y: -20 }}
@@ -27,7 +27,7 @@ export const DesktopNavigationSubmenu: React.FC<Props> = ({ items }) => {
                 // Контрастные бордеры по бокам и снизу
                 "border-l-2 border-r-2 border-b-2",                   // включаем остальные стороны
                 "border-gray-300 dark:border-gray-700",          // контрастные цвета
-                "w-full max-w-[800px]"
+                "w-full md:max-w-[600px] lg:max-w-[1000px]",
             )}
         >
             <motion.div
@@ -39,20 +39,21 @@ export const DesktopNavigationSubmenu: React.FC<Props> = ({ items }) => {
                 <div
                     className={cn(
                         "grid gap-6 w-full",
-                        `grid-cols-${Math.min(items.length, 4)}`
+                        `lg:grid-cols-${Math.min(links.length, 4)}`,
+                        `md:grid-cols-${Math.min(links.length, 2)}`,
                     )}
                 >
-                    {items.map((col) => (
+                    {links.map((col) => (
                         <div key={col.title}>
                             <h4 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
                                 {col.title}
                             </h4>
                             <hr className="border-t border-gray-200 dark:border-gray-700 mb-3" />
                             <ul className="space-y-1 text-sm">
-                                {col.links.map((link) => (
+                                {col.links?.map((link) => (
                                     <li key={link.name}>
                                         <Link
-                                            href={link.href}
+                                            href={link.href || ""}
                                             className={cn(
                                                 "relative inline-block text-lg",
                                                 "text-gray-700 dark:text-gray-300",
@@ -63,7 +64,7 @@ export const DesktopNavigationSubmenu: React.FC<Props> = ({ items }) => {
                                                 "after:transition-all after:duration-300 hover:after:w-full"
                                             )}
                                         >
-                                            {link.name}
+                                            {link.title}
                                         </Link>
                                     </li>
                                 ))}

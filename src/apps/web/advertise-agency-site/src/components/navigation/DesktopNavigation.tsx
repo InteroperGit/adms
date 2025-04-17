@@ -1,18 +1,21 @@
 "use client"
 
-import React, { useRef, useState } from "react"
+import React, {useRef, useState} from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/libs/utils"
 import { DesktopNavigationSubmenu } from "@/components/navigation/DesktopNavigationSubmenu"
-import { navLinks } from "@/config/navigation"
 import {NavigationLink} from "@/types/navigation";
 
 const SUBMENU_SHOW_HIDE_IDLE = 250
 
-export default function DesktopNavigation() {
+interface DesktopNavigationProps {
+    navLinks: NavigationLink[]
+}
+
+export default function DesktopNavigation({ navLinks }: DesktopNavigationProps) {
     const pathname = usePathname()
     const [hoveredMenu, setHoveredMenu] = useState<NavigationLink | null>(null)
 
@@ -57,14 +60,15 @@ export default function DesktopNavigation() {
                     <nav className="hidden md:flex justify-center w-full relative">
                         <div className="flex items-center gap-1 h-16">
                             {navLinks.map((link) => {
-                                const isActive = pathname.startsWith(link.href)
+                                const href = link.href || "";
+                                const isActive = pathname.startsWith(href)
                                 return (
                                     <div
-                                        key={link.href}
+                                        key={link.name}
                                         className="relative"
                                         onMouseEnter={() => handleMouseEnter(link)}
                                     >
-                                        <Link href={link.href} className="relative group">
+                                        <Link href={href || "#"} className="relative group">
                                             <Button
                                                 variant="ghost"
                                                 className={cn(
@@ -74,7 +78,7 @@ export default function DesktopNavigation() {
                                                     "relative overflow-hidden"
                                                 )}
                                             >
-                                                <span className="relative z-10">{link.name}</span>
+                                                <span className="relative z-10">{link.title}</span>
 
                                                 {isActive && (
                                                     <motion.div
@@ -97,7 +101,7 @@ export default function DesktopNavigation() {
 
                     {/* Подменю — строго по центру */}
                     <AnimatePresence>
-                        {hoveredMenu && hoveredMenu.submenu && (
+                        {hoveredMenu && hoveredMenu.links && hoveredMenu.links.length > 0 && (
                             <motion.div
                                 key="submenu"
                                 initial={{ opacity: 0, y: -5 }}
@@ -106,7 +110,7 @@ export default function DesktopNavigation() {
                                 transition={{ duration: 0.2 }}
                                 className="absolute top-full left-1/2 -translate-x-1/2 w-screen"
                             >
-                                <DesktopNavigationSubmenu items={hoveredMenu.submenu} />
+                                <DesktopNavigationSubmenu links={hoveredMenu.links} />
                             </motion.div>
                         )}
                     </AnimatePresence>
