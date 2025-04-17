@@ -573,6 +573,49 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiNavigationLinkNavigationLink
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'navigation_links';
+  info: {
+    description: '';
+    displayName: 'NavigationLink';
+    pluralName: 'navigation-links';
+    singularName: 'navigation-link';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cover: Schema.Attribute.Component<'shared.media', false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    href: Schema.Attribute.String;
+    is_header: Schema.Attribute.Boolean;
+    links: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::navigation-link.navigation-link'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::navigation-link.navigation-link'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    order: Schema.Attribute.Integer;
+    parent: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::navigation-link.navigation-link'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiServiceArticleServiceArticle
   extends Struct.CollectionTypeSchema {
   collectionName: 'service_articles';
@@ -1183,6 +1226,7 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::form-type.form-type': ApiFormTypeFormType;
       'api::global.global': ApiGlobalGlobal;
+      'api::navigation-link.navigation-link': ApiNavigationLinkNavigationLink;
       'api::service-article.service-article': ApiServiceArticleServiceArticle;
       'api::service-category.service-category': ApiServiceCategoryServiceCategory;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "navigation_links",
+  "info": {
+    "singularName": "navigation-link",
+    "pluralName": "navigation-links",
+    "displayName": "NavigationLink",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "cover": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "is_header": {
+      "type": "boolean"
+    },
+    "links": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::navigation-link.navigation-link",
+      "mappedBy": "parent"
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::navigation-link.navigation-link",
+      "inversedBy": "links"
+    }
+  }
+}
