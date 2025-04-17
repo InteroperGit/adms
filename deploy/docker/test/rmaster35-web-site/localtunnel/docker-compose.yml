@@ -1,51 +1,6 @@
 version: '3.8'
 
 services:
-  rmaster35-web-site-test-localtunnel:
-    build:
-      context: ../../../../../src/apps/web/advertise-agency-site
-      dockerfile: Dockerfile-localtunnel-test
-      args:
-        NEXT_PUBLIC_STRAPI_URL: ${NEXT_PUBLIC_STRAPI_URL}
-    container_name: rmaster35-web-site-test-localtunnel-container
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-    networks:
-      - backend
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
-
-  localtunnel-watchdog:
-    image: curlimages/curl:latest
-    container_name: rmaster35-web-site-localtunnel-watchdog
-    depends_on:
-      - rmaster35-web-site-test-localtunnel
-    entrypoint: >
-      sh -c '
-        while true; do
-          echo "⏱️ Checking https://rmaster35.loca.lt/";
-          if curl -sf https://rmaster35.loca.lt/ > /dev/null; then
-            echo "✅ LocalTunnel is UP";
-          else
-            echo "❌ LocalTunnel is DOWN. Restarting service...";
-            docker restart rmaster35-web-site-test-localtunnel-container;
-          fi
-          sleep 30;
-        done
-      '
-    networks:
-      - backend
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-
   strapi:
     build:
       context: ../../../../../src/apps/web/advertise-agency-site-strapi
@@ -92,12 +47,59 @@ services:
     volumes:
       - ${POSTGRES_DATA_PATH}:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $STRAPI_DATABASE_USERNAME"]
+      test: [ "CMD-SHELL", "pg_isready -U $STRAPI_DATABASE_USERNAME" ]
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
       - backend
+
+  rmaster35-web-site-test-localtunnel:
+    build:
+      context: ../../../../../src/apps/web/advertise-agency-site
+      dockerfile: Dockerfile-localtunnel-test
+      args:
+        NEXT_PUBLIC_STRAPI_URL: ${NEXT_PUBLIC_STRAPI_URL}
+    container_name: rmaster35-web-site-test-localtunnel-container
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - backend
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      - strapi
+
+  localtunnel-watchdog:
+    image: curlimages/curl:latest
+    container_name: rmaster35-web-site-localtunnel-watchdog
+    depends_on:
+      - rmaster35-web-site-test-localtunnel
+    entrypoint: >
+      sh -c '
+        while true; do
+          echo "⏱️ Checking https://rmaster35.loca.lt/";
+          if curl -sf https://rmaster35.loca.lt/ > /dev/null; then
+            echo "✅ LocalTunnel is UP";
+          else
+            echo "❌ LocalTunnel is DOWN. Restarting service...";
+            docker restart rmaster35-web-site-test-localtunnel-container;
+          fi
+          sleep 30;
+        done
+      '
+    networks:
+      - backend
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
 volumes:
   strapi_node_modules:
