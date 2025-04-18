@@ -4,16 +4,17 @@ import HeroSection from '@/components/sections/HeroSection';
 import ArticlesPagination from "@/components/misc/ArticlePagination";
 
 const DEFAULT_PAGE_SIZE = 10;
+const ARTICLE_URL_BASE_PATTERN = "/articles/page";
 
-interface Params {
+interface ArticlePageParams {
     page: string;
 }
 
-interface Props {
-    params: Promise<Params>
+interface ArticlePageProps {
+    params: Promise<ArticlePageParams>
 }
 
-export default async function ArticlesPage(props: Props) {
+export default async function ArticlesPage(props: ArticlePageProps) {
     const { page } = await props.params;
     const currentPage = parseInt(page || '1', 10);
     const pageSize = DEFAULT_PAGE_SIZE;
@@ -37,7 +38,13 @@ export default async function ArticlesPage(props: Props) {
                 ))}
             </div>
 
-            <ArticlesPagination currentPage={currentPage} totalPages={pagination.pageCount} />
+            {pagination.pageCount > 1
+                && <ArticlesPagination
+                        urlBasePattern={ARTICLE_URL_BASE_PATTERN}
+                        currentPage={currentPage}
+                        totalPages={pagination.pageCount}
+                />
+            }
         </div>
     );
 }

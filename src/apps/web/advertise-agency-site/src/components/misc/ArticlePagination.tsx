@@ -8,13 +8,14 @@ import {
     PaginationEllipsis,
 } from "@/components/ui/pagination"
 
-interface Props {
+interface ArticlePaginationProps {
+    urlBasePattern: string;
     currentPage: number
     totalPages: number
 }
 
-export default function ArticlesPagination({ currentPage, totalPages }: Props) {
-    const createPageLink = (page: number) => `/articles/page/${page}`
+export default function ArticlesPagination({ urlBasePattern, currentPage, totalPages }: ArticlePaginationProps) {
+    const createPageLink = (page: number) => `${urlBasePattern}/${page}`
     const renderedPageNumbers: number[] = []
 
     const renderPages = () => {
