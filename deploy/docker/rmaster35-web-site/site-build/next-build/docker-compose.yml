@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  rmaster35-web-site-build-test:
+    build:
+      context: ../../../../../src/apps/web/advertise-agency-site
+      dockerfile: Dockerfile-build
+      target: build
+    container_name: rmaster35-web-site-build-test-container
+    networks:
+      - rmaster35
+    volumes:
+      - ./output:/app/output
+    environment:
+      - INTERNAL_STRAPI_URL=${INTERNAL_STRAPI_URL}
+
+networks:
+  rmaster35:
+    external: true
+    driver: bridge
