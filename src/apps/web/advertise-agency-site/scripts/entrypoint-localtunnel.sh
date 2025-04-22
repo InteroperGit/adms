@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Устанавливаем зависимости, если они еще не установлены
+if [ ! -d "/app/node_modules" ]; then
+  echo "Устанавливаем зависимости..."
+  pnpm install --prod --frozen-lockfile
+fi
+
 # Запускаем сервер Next.js в фоне
 pnpm start &
 

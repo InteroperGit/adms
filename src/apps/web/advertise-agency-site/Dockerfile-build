@@ -1,0 +1,18 @@
+# --- Стадия сборки ---
+FROM node:20-alpine AS build
+
+RUN apk add --no-cache curl && \
+    corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+
+# Копируем скрипт и делаем его исполняемым
+COPY scripts/entrypoint-build.sh /entrypoint-build.sh
+RUN chmod +x /entrypoint-build.sh
+
+CMD ["/entrypoint-build.sh"]
