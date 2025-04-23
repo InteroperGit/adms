@@ -33,28 +33,47 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const navLinks = await fetchNavigationLinks();
+    try {
+        const navLinks = await fetchNavigationLinks();
 
-    return (
-        <html lang="ru"
-              suppressHydrationWarning>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
-          >
-            <Providers>
-                <Header />
-                <DesktopNavigation navLinks={navLinks} />
-                <MobileNavigation navLinks={navLinks} />
-                <Breadcrumbs />
-                <main className="flex-grow">
-                    <Container>
-                        {children}
-                    </Container>
-                </main>
-                <Footer />
-                <TailwindKeeper />
-            </Providers>
-          </body>
-        </html>
-      );
+        return (
+            <html lang="ru"
+                  suppressHydrationWarning>
+                <body
+                    className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
+                >
+                    <Providers>
+                        <Header />
+                        <DesktopNavigation navLinks={navLinks} />
+                        <MobileNavigation navLinks={navLinks} />
+                        <Breadcrumbs />
+                        <main className="flex-grow">
+                            <Container>
+                                {children}
+                            </Container>
+                        </main>
+                        <Footer />
+                        <TailwindKeeper />
+                    </Providers>
+                </body>
+            </html>
+        );
+    }
+    catch (error) {
+        console.error(error);
+
+        return (
+            <html lang="ru"
+                  suppressHydrationWarning>
+                <body
+                    className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
+                >
+                    <div className="min-h-screen flex items-center justify-center text-center p-4">
+                        <h1 className="text-xl text-red-600">Сервис временно недоступен. Попробуйте позже.</h1>
+                    </div>
+                </body>
+            </html>
+        );
+    }
+
 }

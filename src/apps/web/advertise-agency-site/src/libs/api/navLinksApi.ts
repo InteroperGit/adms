@@ -1,6 +1,6 @@
 import {NavigationLink} from "@/types/navigation";
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
+const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
 
 const sortFunction = ((a: NavigationLink, b: NavigationLink) => {
     const orderA = a.order ?? 0;
