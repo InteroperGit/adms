@@ -1,6 +1,6 @@
 import HeroSection from "@/components/sections/HeroSection";
 import {CtaSection} from "@/components/sections/CtaSection";
-import { getServiceCategories } from "@/libs/api/services-api";
+import { getServiceCategories } from "@/libs/api/servicesApi";
 import { ServiceCategoryPreviewCard } from "@/components/cards/ServiceCategoryPreviewCard";
 
 export default async function ServicesPage() {

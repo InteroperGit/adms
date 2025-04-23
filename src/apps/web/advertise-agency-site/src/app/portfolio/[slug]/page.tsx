@@ -1,5 +1,5 @@
-import {getAllProjects, getProjectBySlug} from '@/libs/api/projects-api';
-import {ArticleParser} from "@/libs/article-parser";
+import {getAllProjects, getProjectBySlug} from '@/libs/api/projectsApi';
+import {ArticleParser} from "@/libs/articleParser";
 import React from "react";
 import {Metadata} from "next";
 import {PageSlugParams, PageSlugProps} from "@/types/page";

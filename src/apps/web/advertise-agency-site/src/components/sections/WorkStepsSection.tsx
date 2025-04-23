@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { cn } from "@/libs/utils";
-import {workSteps} from "@/data/work-steps-data";
+import {workSteps} from "@/data/workStepsData";
 
 interface WorkSectionProps {
     className?: string;

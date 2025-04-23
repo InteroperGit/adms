@@ -6,7 +6,7 @@ import FooterSocialIcons from "@/components/footer/FooterSocialIcons";
 import FooterContacts from "@/components/footer/FooterContacts";
 import FooterCompanyLinks from "@/components/footer/FooterCompanyLinks";
 import FooterServicesLinks from "@/components/footer/FooterServicesLinks";
-import {services} from "@/data/services-data";
+import {services} from "@/data/servicesData";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear()

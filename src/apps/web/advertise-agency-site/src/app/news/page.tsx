@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { SearchIcon } from 'lucide-react'
 import HeroSection from "@/components/sections/HeroSection";
-import {newsArticles} from "@/data/news-data";
+import {newsArticles} from "@/data/newsData";
 
 export default function NewsPage() {
     return (

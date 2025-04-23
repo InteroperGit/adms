@@ -1,21 +1,21 @@
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
-import { recentProjectPreviews } from "@/data/projects-data";
+import { recentProjectPreviews } from "@/data/projectsData";
 import { NewsSection } from "@/components/sections/NewsSection";
-import { recentNewsArticles } from "@/data/news-data";
+import { recentNewsArticles } from "@/data/newsData";
 import HeroSection from "@/components/sections/HeroSection";
 import { ClientsSection } from "@/components/sections/ClientsSection";
 import React from "react";
 import AboutCompanySection from "@/components/sections/AboutCompanySection";
 import AdvantagesSection from "@/components/sections/AdvantagesSection";
 import CarouselSection from "@/components/sections/CarouselSection";
-import { getPromotions } from "@/libs/api/promotions-api";
-import { getCompanyProductionImages, getCompanyStats } from "@/libs/api/company-info-api";
+import { getPromotions } from "@/libs/api/promotionsApi";
+import { getCompanyProductionImages, getCompanyStats } from "@/libs/api/companyInfoApi";
 import WorkStepsSection from "@/components/sections/WorkStepsSection";
 import FaqSection from "@/components/sections/FaqSection";
 import OrderFormSection from "@/components/sections/OrderFormSection";
 import { cn } from "@/libs/utils";
-import {getServiceCategories} from "@/libs/api/services-api";
+import {getServiceCategories} from "@/libs/api/servicesApi";
 
 async function CarouselWrapper() {
     const promotions = await getPromotions();
