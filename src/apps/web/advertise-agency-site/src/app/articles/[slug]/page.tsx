@@ -2,7 +2,7 @@ import {getArticleBySlug} from '@/libs/api/articles-api';
 import {ArticleParser} from "@/libs/article-parser";
 import React from "react";
 import {Metadata} from "next";
-import {PromisePageProps} from "@/types/page";
+import {PageSlugProps} from "@/types/page";
 
 const DEFAULT_IMAGE_WIDTH = 1200;
 const DEFAULT_IMAGE_HEIGHT = 630;
@@ -14,7 +14,7 @@ export const revalidate = 60;
  * Сгенерировать метаданные
  * @param props
  */
-export async function generateMetadata(props: PromisePageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageSlugProps): Promise<Metadata> {
     const { slug } = await props.params;
     const article = await getArticleBySlug(slug);
 
@@ -64,7 +64,7 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
  * @param props
  * @constructor
  */
-export default async function ArticlePage(props: PromisePageProps) {
+export default async function ArticlePage(props: PageSlugProps) {
     const { slug } = await props.params;
     const article = await getArticleBySlug(slug);
 

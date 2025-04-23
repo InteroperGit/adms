@@ -1,20 +1,28 @@
 /**
- * Параметры
+ * Параметры slug
  */
-interface Params {
+export interface PageSlugParams {
     slug: string;
 }
 
 /**
- * Свойства страницы
+ * Свойства страницы со slug
  */
-export interface PageProps {
-    params: Params
+export interface PageSlugProps {
+    params: Promise<PageSlugParams>;
 }
 
 /**
- * Свойства страницы
+ * Параметры category, page
  */
-export interface PromisePageProps {
-    params: Promise<Params>
+export interface PageCategoryParams {
+    category: string;
+    page: string;
+}
+
+/**
+ * Свойства страницы с category, page
+ */
+export interface PageCategoryProps {
+    params: Promise<PageCategoryParams>;
 }
