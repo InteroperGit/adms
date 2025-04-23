@@ -1,6 +1,3 @@
-// components/sections/PortfolioSection.tsx
-"use client"
-
 import { PortfolioCard } from "@/components/cards/PortfolioCard"
 import { cn } from "@/libs/utils"
 import {ProjectPreview} from "@/types/project";
