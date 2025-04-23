@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
-import {getArticleBySlug} from "@/libs/api/articles-api";
+import {getArticleBySlug} from "@/libs/api/articlesApi";
 import {BreadcrumbItem} from "@/types/breadcrumbs";
-import {getProjectBySlug} from "@/libs/api/projects-api";
+import {getProjectBySlug} from "@/libs/api/projectsApi";
 
 function getBaseBreadcrumbs(): BreadcrumbItem {
     return { title: "Главная", href: "/" }

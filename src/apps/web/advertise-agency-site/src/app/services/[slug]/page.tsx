@@ -1,9 +1,9 @@
 import {PageSlugProps} from "@/types/page";
 import {Metadata} from "next";
-import {getArticleBySlug} from "@/libs/api/articles-api";
-import {ArticleParser} from "@/libs/article-parser";
+import {getArticleBySlug} from "@/libs/api/articlesApi";
+import {ArticleParser} from "@/libs/articleParser";
 import React from "react";
-import {getServiceArticleBySlug} from "@/libs/api/services-api";
+import {getServiceArticleBySlug} from "@/libs/api/servicesApi";
 
 const DEFAULT_IMAGE_WIDTH = 1200;
 const DEFAULT_IMAGE_HEIGHT = 630;

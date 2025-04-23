@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/libs/utils';
-import { projectPreviews } from "@/data/projects-data";
+import { projectPreviews } from "@/data/projectsData";
 import HeroSection from "@/components/sections/HeroSection";
 import CategoryFilter from "@/components/navigation/CategoryFilter";
 import { CtaSection } from "@/components/sections/CtaSection";

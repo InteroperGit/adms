@@ -1,4 +1,4 @@
-import { getAllArticles } from '@/libs/api/articles-api';
+import { getAllArticles } from '@/libs/api/articlesApi';
 import { ArticlePreviewCard } from '@/components/cards/ArticlePreviewCard';
 import HeroSection from '@/components/sections/HeroSection';
 import ArticlesPagination from "@/components/misc/ArticlePagination";

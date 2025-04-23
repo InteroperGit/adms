@@ -1,4 +1,4 @@
-import {companyProductionImages, companyStats} from "@/data/company-data";
+import {companyProductionImages, companyStats} from "@/data/companyData";
 
 export function getCompanyStats(): Promise<string[]> {
     return Promise.resolve(companyStats);

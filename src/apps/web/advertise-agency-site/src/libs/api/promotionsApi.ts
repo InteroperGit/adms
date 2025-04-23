@@ -1,5 +1,5 @@
 import {PromotionItem} from "@/types/misc";
-import {promotions} from "@/data/promotion-data";
+import {promotions} from "@/data/promotionData";
 
 /**
  * Получить список специальных предложений

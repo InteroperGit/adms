@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/libs/utils";
-import {faqData} from "@/data/faq-data";
+import {faqData} from "@/data/faqData";
 
 interface FaqSectionProps {
     className?: string;

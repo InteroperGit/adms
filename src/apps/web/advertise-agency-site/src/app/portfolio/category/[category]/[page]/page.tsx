@@ -1,4 +1,4 @@
-import {getServiceCategories, getServiceCategoryByName} from "@/libs/api/services-api";
+import {getServiceCategories, getServiceCategoryByName} from "@/libs/api/servicesApi";
 import {PageCategoryParams, PageCategoryProps} from "@/types/page";
 import {notFound} from "next/navigation";
 import {cn} from "@/libs/utils";

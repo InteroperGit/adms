@@ -1,4 +1,4 @@
-import {projects} from "@/data/projects-data";
+import {projects} from "@/data/projectsData";
 import {Article} from "@/types/article";
 
 export function getAllProjects(): Promise<Article[]> {
