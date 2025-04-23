@@ -7,8 +7,8 @@ import { ServiceCategory } from "@/types/service";
 interface CategoryFilterProps {
     categories: ServiceCategory[];
     activeCategory: string;
-    onCategoryChange: (slug: string) => void;
-    loading: boolean;
+    onCategoryChange?: (slug: string) => void;
+    loading?: boolean;
     className?: string;
 }
 
@@ -80,7 +80,7 @@ const CategoryFilter = ({
                 {categories.map((category) => (
                     <button
                         key={category.id}
-                        onClick={() => onCategoryChange(category.name)}
+                        onClick={() => onCategoryChange && onCategoryChange(category.name)}
                         className={cn(
                             "px-4 py-2 rounded-full text-sm md:text-base transition-colors duration-200",
                             activeCategory === category.name
