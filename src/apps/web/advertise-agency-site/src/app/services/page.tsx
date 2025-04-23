@@ -1,10 +1,10 @@
 import HeroSection from "@/components/sections/HeroSection";
 import {CtaSection} from "@/components/sections/CtaSection";
-import { getAllServiceCategories } from "@/libs/api/services-api";
+import { getServiceCategories } from "@/libs/api/services-api";
 import { ServiceCategoryPreviewCard } from "@/components/cards/ServiceCategoryPreviewCard";
 
 export default async function ServicesPage() {
-    const serviceCategories = await getAllServiceCategories();
+    const serviceCategories = await getServiceCategories("header");
 
     return (
         <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
