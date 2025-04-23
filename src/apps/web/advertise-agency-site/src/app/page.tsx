@@ -1,5 +1,4 @@
 import { ServicesSection } from "@/components/sections/ServicesSection";
-// import { services } from "@/data/services-data";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
 import { recentProjectPreviews } from "@/data/projects-data";
 import { NewsSection } from "@/components/sections/NewsSection";
@@ -16,7 +15,7 @@ import WorkStepsSection from "@/components/sections/WorkStepsSection";
 import FaqSection from "@/components/sections/FaqSection";
 import OrderFormSection from "@/components/sections/OrderFormSection";
 import { cn } from "@/libs/utils";
-import {getAllServiceCategories} from "@/libs/api/services-api";
+import {getServiceCategories} from "@/libs/api/services-api";
 
 async function CarouselWrapper() {
     const promotions = await getPromotions();
@@ -37,7 +36,7 @@ async function AboutCompanyWrapper() {
 }
 
 export default async function Home() {
-    const services = await getAllServiceCategories();
+    const serviceCategories = await getServiceCategories("header");
 
     return (
         <div className={cn("space-y-12 pb-16 bg-white dark:bg-gray-900",
@@ -60,7 +59,7 @@ export default async function Home() {
             {/* 5. Услуги */}
             <ServicesSection
                 title="Наши услуги"
-                services={services}
+                services={serviceCategories}
                 columns={4}
                 className={cn(
                     "my-9 py-6 bg-white dark:bg-gray-800 px-6 rounded-lg border",

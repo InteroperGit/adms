@@ -4,7 +4,7 @@ import {Article} from "@/types/article";
 import {StrapiArticle} from "@/types/strapi/strapiArticle";
 import {convertStrapiArticle} from "@/libs/converters/strapiArticleConverter";
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
+const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
 
 const sortFunction = ((a: ServiceCategory, b: ServiceCategory) => {
     const orderA = a.order ?? 0;
@@ -30,14 +30,21 @@ function sanitizeCategory(category: ServiceCategory): ServiceCategory {
 /**
  * Получить все категории услуг
  */
-export async function getAllServiceCategories(): Promise<ServiceCategory[]> {
+export async function getServiceCategories(filter: "all" | "header" | "nonheader" = "all"): Promise<ServiceCategory[]> {
+    const url = filter === "all"
+        ? `${STRAPI_URL}/api/service-categories?customPopulate=nested&pagination[pageSize]=100`
+        : filter === "header"
+            ? `${STRAPI_URL}/api/service-categories?filters[is_header][$eq]=true&customPopulate=nested&pagination[pageSize]=100`
+            : `${STRAPI_URL}/api/service-categories?filters[$or][0][is_header][$eq]=false&filters[$or][1][is_header][$null]=true&customPopulate=nested&pagination[pageSize]=100`
+
     const res = await fetch(
-        `${STRAPI_URL}/api/service-categories?filters[is_header][$eq]=true&customPopulate=nested&pagination[pageSize]=100`,
+        url,
         { next: { revalidate: 60 } }
     );
 
     if (!res.ok) {
-        throw new Error(`Ошибка при получении категорий услуг: ${res.statusText}`);
+        console.error(`Ошибка при получении категорий услуг: ${res.statusText}`);
+        throw new Error("Failed to fetch service categories");
     }
 
     const json = await res.json();
@@ -53,6 +60,28 @@ export async function getAllServiceCategories(): Promise<ServiceCategory[]> {
     });
 
     return sortedServiceCategories;
+}
+
+/**
+ * Получить категорию услуг по имени (name)
+ * @param name - Название категории (например, "indoor")
+ * @returns Объект категории или undefined, если не найдено
+ */
+export async function getServiceCategoryByName(name: string): Promise<ServiceCategory> {
+    const res = await fetch(
+        `${STRAPI_URL}/api/service-categories?filters[name][$eq]=${name}&populate=*`,
+        { next: { revalidate: 60 } }
+    );
+
+    if (!res.ok) {
+        console.error(`Ошибка при получении категории "${name}": ${res.statusText}`);
+        throw new Error("Failed to fetch service category by name");
+    }
+
+    const json = await res.json();
+    const categories = json.data as ServiceCategory[];
+
+    return categories?.[0];
 }
 
 /**
