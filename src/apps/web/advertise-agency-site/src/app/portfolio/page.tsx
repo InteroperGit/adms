@@ -10,6 +10,7 @@ import { LoadingMoreButton } from "@/components/buttons/LoadingMoreButton";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
 import { ProjectPreview } from "@/types/project";
 import useServiceCategories from "@/hooks/useServiceCategories";
+import {ServiceCategory} from "@/types/service";
 
 const INIT_VISIBLE_PROJECTS = 10;
 
@@ -87,7 +88,7 @@ export default function PortfolioPage() {
         );
     }, [activeCategory]);
 
-    const uiServiceCategories = useMemo(() => {
+    const uiServiceCategories: ServiceCategory[] = useMemo(() => {
         if (serviceCategoriesLoading) {
             return [];
         }
@@ -138,49 +139,50 @@ export default function PortfolioPage() {
 
             {/* Фильтры */}
             <section className={cn("py-12 px-2 md:px-6")}>
-                <div>
-                    {/* Показываем скелетон во время загрузки */}
-                    <CategoryFilter
-                        categories={uiServiceCategories}
-                        activeCategory={activeCategory}
-                        onCategoryChange={(slug) => setActiveCategory(slug)}
-                        loading={serviceCategoriesLoading}
-                    />
+                {/* Показываем скелетон во время загрузки */}
+                <CategoryFilter
+                    categories={uiServiceCategories}
+                    activeCategory={activeCategory}
+                    onCategoryChange={(slug) => setActiveCategory(slug)}
+                    loading={serviceCategoriesLoading}
+                />
+            </section>
 
-                    {/* Список проектов */}
-                    {isLoading ? (
-                        <LoadingIndicator />
-                    ) : (
-                        <>
-                            <PortfolioSection
-                                title="Наше портфолио"
-                                description="Лучшие проекты за последние годы"
-                                projects={projectsToShow}
-                                columns={{
-                                    mobile: 1,
-                                    tablet: 2,
-                                    desktop: 3
-                                }}
+            {/* Секция портфолио */}
+            <section className={cn("pb-12 px-2 md:px-6")}>
+                {/* Список проектов */}
+                {isLoading ? (
+                    <LoadingIndicator />
+                ) : (
+                    <>
+                        <PortfolioSection
+                            title="Наше портфолио"
+                            description="Лучшие проекты за последние годы"
+                            projects={projectsToShow}
+                            columns={{
+                                mobile: 1,
+                                tablet: 2,
+                                desktop: 3
+                            }}
+                        />
+
+                        {/* Кнопка загрузки и статус */}
+                        <div className="mt-12 text-center">
+                            <LoadingProjectsButton
+                                isLoadingMore={isLoadingMore}
+                                hasMoreProjects={hasMoreProjects}
+                                onLoadMore={loadMoreProjects}
+                                filteredProjectsLength={filteredProjects.length}
                             />
 
-                            {/* Кнопка загрузки и статус */}
-                            <div className="mt-12 text-center">
-                                <LoadingProjectsButton
-                                    isLoadingMore={isLoadingMore}
-                                    hasMoreProjects={hasMoreProjects}
-                                    onLoadMore={loadMoreProjects}
-                                    filteredProjectsLength={filteredProjects.length}
+                            {projectsToShow.length === 0 && (
+                                <ShowAllProjectsButton
+                                    onClick={() => handleCategoryChange('all')}
                                 />
-
-                                {projectsToShow.length === 0 && (
-                                    <ShowAllProjectsButton
-                                        onClick={() => handleCategoryChange('all')}
-                                    />
-                                )}
-                            </div>
-                        </>
-                    )}
-                </div>
+                            )}
+                        </div>
+                    </>
+                )}
             </section>
 
             {/* CTA секция */}
