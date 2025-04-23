@@ -2,12 +2,12 @@ import {getAllProjects, getProjectBySlug} from '@/libs/api/projects-api';
 import {ArticleParser} from "@/libs/article-parser";
 import React from "react";
 import {Metadata} from "next";
-import {PromisePageProps} from "@/types/page";
+import {PageSlugParams, PageSlugProps} from "@/types/page";
 
 const DEFAULT_IMAGE_WIDTH = 1200;
 const DEFAULT_IMAGE_HEIGHT = 630;
 
-export async function generateMetadata(props: PromisePageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageSlugProps): Promise<Metadata> {
     const { slug } = await props.params;
     const project = await getProjectBySlug(slug);
 
@@ -52,14 +52,14 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
     };
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<PageSlugParams[]> {
     const projects = await getAllProjects();
     return projects.map(project => ({
         slug: project.slug,
     }));
 }
 
-export default async function ProjectPage(props: PromisePageProps) {
+export default async function ProjectPage(props: PageSlugProps) {
     const { slug } = await props.params;
     const project = await getProjectBySlug(slug);
 

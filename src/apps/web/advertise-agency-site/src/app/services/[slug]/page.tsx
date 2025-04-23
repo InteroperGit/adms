@@ -1,4 +1,4 @@
-import {PromisePageProps} from "@/types/page";
+import {PageSlugProps} from "@/types/page";
 import {Metadata} from "next";
 import {getArticleBySlug} from "@/libs/api/articles-api";
 import {ArticleParser} from "@/libs/article-parser";
@@ -15,7 +15,7 @@ export const revalidate = 60;
  * Сгенерировать метаданные
  * @param props
  */
-export async function generateMetadata(props: PromisePageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageSlugProps): Promise<Metadata> {
     const { slug } = await props.params;
     const article = await getArticleBySlug(slug);
 
@@ -65,7 +65,7 @@ export async function generateMetadata(props: PromisePageProps): Promise<Metadat
  * @param props
  * @constructor
  */
-export default async function ServiceArticlePage(props: PromisePageProps) {
+export default async function ServiceArticlePage(props: PageSlugProps) {
     const { slug } = await props.params;
     const article = await getServiceArticleBySlug(slug);
 
