@@ -616,6 +616,58 @@ export interface ApiNavigationLinkNavigationLink
   };
 }
 
+export interface ApiProjectArticleProjectArticle
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'project_articles';
+  info: {
+    description: '';
+    displayName: 'ProjectArticle';
+    pluralName: 'project-articles';
+    singularName: 'project-article';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    author: Schema.Attribute.Relation<'oneToOne', 'api::author.author'>;
+    blocks: Schema.Attribute.DynamicZone<
+      [
+        'shared.video',
+        'shared.slider',
+        'shared.rich-text',
+        'shared.quote',
+        'shared.media',
+        'shared.form',
+        'shared.embed',
+        'shared.divider',
+      ]
+    >;
+    category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::service-category.service-category'
+    >;
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project-article.project-article'
+    > &
+      Schema.Attribute.Private;
+    projectDate: Schema.Attribute.Date;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiServiceArticleServiceArticle
   extends Struct.CollectionTypeSchema {
   collectionName: 'service_articles';
@@ -642,6 +694,10 @@ export interface ApiServiceArticleServiceArticle
         'shared.video',
       ]
     >;
+    category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::service-category.service-category'
+    >;
     cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -655,10 +711,6 @@ export interface ApiServiceArticleServiceArticle
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
-    service_category: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::service-category.service-category'
-    >;
     slug: Schema.Attribute.UID;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1227,6 +1279,7 @@ declare module '@strapi/strapi' {
       'api::form-type.form-type': ApiFormTypeFormType;
       'api::global.global': ApiGlobalGlobal;
       'api::navigation-link.navigation-link': ApiNavigationLinkNavigationLink;
+      'api::project-article.project-article': ApiProjectArticleProjectArticle;
       'api::service-article.service-article': ApiServiceArticleServiceArticle;
       'api::service-category.service-category': ApiServiceCategoryServiceCategory;
       'plugin::content-releases.release': PluginContentReleasesRelease;
