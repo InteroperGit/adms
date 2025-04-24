@@ -2,11 +2,12 @@
   "collectionName": "components_shared_forms",
   "info": {
     "displayName": "Form",
-    "icon": "bulletList"
+    "icon": "bulletList",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "form_type": {
+    "formType": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::form-type.form-type"

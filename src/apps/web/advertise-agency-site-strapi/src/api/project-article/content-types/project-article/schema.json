@@ -41,7 +41,7 @@
       "relation": "oneToOne",
       "target": "api::service-category.service-category"
     },
-    "projectDate": {
+    "publishDate": {
       "type": "date"
     },
     "seo": {
