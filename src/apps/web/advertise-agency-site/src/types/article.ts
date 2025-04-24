@@ -24,6 +24,15 @@ export interface ArticleCategory extends Entity {
 }
 
 /**
+ * SEO-метаданные статьи
+ */
+export interface ArticleSEO {
+    title?: string;
+    description?: string;
+    ogImage?: ImageMeta;
+}
+
+/**
  * Основной интерфейс статьи
  */
 export interface Article extends Entity {
@@ -240,13 +249,3 @@ export type ArticleFormTypeKey =
     | 'flyers'
     | 'euro-booklets'
     | 'postcards'
-
-/**
- * SEO-метаданные статьи
- */
-export interface ArticleSEO {
-    title?: string;
-    description?: string;
-    keywords?: string[];
-    ogImage?: string;
-}

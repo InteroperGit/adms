@@ -23,7 +23,7 @@ function sanitizeLink(link: NavigationLink): NavigationLink {
  * Загрухить данные о навигационных ссылках из Strapi
  */
 export async function fetchNavigationLinks(): Promise<NavigationLink[]> {
-    const res = await fetch(`${STRAPI_URL}/api/navigation-links?filters[is_header][$eq]=true&customPopulate=nested`, {
+    const res = await fetch(`${STRAPI_URL}/api/navigation-links?filters[isHeader][$eq]=true&customPopulate=nested`, {
         next: { revalidate: 60 }, // ISR
     });
     const json = await res.json();
