@@ -506,6 +506,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -591,7 +592,7 @@ export interface ApiNavigationLinkNavigationLink
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     href: Schema.Attribute.String;
-    is_header: Schema.Attribute.Boolean;
+    isHeader: Schema.Attribute.Boolean;
     links: Schema.Attribute.Relation<
       'oneToMany',
       'api::navigation-link.navigation-link'
@@ -657,7 +658,7 @@ export interface ApiProjectArticleProjectArticle
       'api::project-article.project-article'
     > &
       Schema.Attribute.Private;
-    projectDate: Schema.Attribute.Date;
+    publishDate: Schema.Attribute.Date;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID;
@@ -738,7 +739,7 @@ export interface ApiServiceCategoryServiceCategory
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
     href: Schema.Attribute.String;
-    is_header: Schema.Attribute.Boolean;
+    isHeader: Schema.Attribute.Boolean;
     items: Schema.Attribute.Relation<
       'oneToMany',
       'api::service-category.service-category'
@@ -756,6 +757,7 @@ export interface ApiServiceCategoryServiceCategory
       'api::service-category.service-category'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

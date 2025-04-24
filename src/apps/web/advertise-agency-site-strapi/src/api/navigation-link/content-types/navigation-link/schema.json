@@ -28,7 +28,7 @@
     "order": {
       "type": "integer"
     },
-    "is_header": {
+    "isHeader": {
       "type": "boolean"
     },
     "links": {

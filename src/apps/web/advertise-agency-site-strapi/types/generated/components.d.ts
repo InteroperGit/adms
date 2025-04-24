@@ -29,14 +29,12 @@ export interface SharedEmbed extends Struct.ComponentSchema {
 export interface SharedForm extends Struct.ComponentSchema {
   collectionName: 'components_shared_forms';
   info: {
+    description: '';
     displayName: 'Form';
     icon: 'bulletList';
   };
   attributes: {
-    form_type: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::form-type.form-type'
-    >;
+    formType: Schema.Attribute.Relation<'oneToOne', 'api::form-type.form-type'>;
     title: Schema.Attribute.String;
   };
 }
