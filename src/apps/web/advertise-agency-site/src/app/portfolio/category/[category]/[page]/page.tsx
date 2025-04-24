@@ -28,9 +28,9 @@ export async function generateStaticParams(): Promise<PageCategoryParams[]> {
 }
 
 export default async function PortfolioPage(props: PageCategoryProps) {
-    let category: string | null = null;
-    let serviceCategory: ServiceCategory | null = null;
-    let categories: ServiceCategory[] | null = null;
+    let category: string | null | undefined = undefined;
+    let serviceCategory: ServiceCategory | null | undefined = undefined;
+    let categories: ServiceCategory[] | null | undefined = undefined;
 
     try {
         category = (await props.params).category;

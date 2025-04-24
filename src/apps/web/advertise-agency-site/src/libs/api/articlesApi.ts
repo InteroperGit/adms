@@ -1,5 +1,5 @@
 import {Article} from "@/types/article";
-import {convertStrapiArticle} from "@/libs/converters/strapiArticleConverter";
+import {convertStrapiArticleToArticle} from "@/libs/converters/strapiArticleConverter";
 import {StrapiArticle} from "@/types/strapi/strapiArticle";
 
 interface PaginationMeta {
@@ -33,7 +33,7 @@ export async function getAllArticles({ page = 1, pageSize = 10 } = {}): Promise<
 
     const json = await res.json();
     const articles: Article[] = await Promise.all(
-        json.data.map((item: StrapiArticle) => (convertStrapiArticle(item, STRAPI_URL)))
+        json.data.map((item: StrapiArticle) => (convertStrapiArticleToArticle(item, STRAPI_URL)))
     );
     const pagination: PaginationMeta = json.meta.pagination;
 
@@ -62,5 +62,5 @@ export async function getArticleBySlug(requestSlug: string): Promise<Article | u
     }
 
     const strapiArticle = strapiArticles[0];
-    return convertStrapiArticle(strapiArticle, STRAPI_URL);
+    return convertStrapiArticleToArticle(strapiArticle, STRAPI_URL);
 }
