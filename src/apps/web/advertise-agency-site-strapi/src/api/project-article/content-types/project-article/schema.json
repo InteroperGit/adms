@@ -59,7 +59,8 @@
         "shared.media",
         "shared.form",
         "shared.embed",
-        "shared.divider"
+        "shared.divider",
+        "shared.project-articles-ref"
       ]
     }
   }

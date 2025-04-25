@@ -50,6 +50,20 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedProjectArticlesRef extends Struct.ComponentSchema {
+  collectionName: 'components_shared_project_articles_refs';
+  info: {
+    displayName: 'ProjectArticlesRef';
+    icon: 'hashtag';
+  };
+  attributes: {
+    articles: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project-article.project-article'
+    >;
+  };
+}
+
 export interface SharedQuote extends Struct.ComponentSchema {
   collectionName: 'components_shared_quotes';
   info: {
@@ -121,6 +135,7 @@ declare module '@strapi/strapi' {
       'shared.embed': SharedEmbed;
       'shared.form': SharedForm;
       'shared.media': SharedMedia;
+      'shared.project-articles-ref': SharedProjectArticlesRef;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;

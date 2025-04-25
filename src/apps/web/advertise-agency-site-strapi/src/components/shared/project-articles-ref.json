@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_project_articles_refs",
+  "info": {
+    "displayName": "ProjectArticlesRef",
+    "icon": "hashtag"
+  },
+  "options": {},
+  "attributes": {
+    "articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::project-article.project-article"
+    }
+  }
+}
