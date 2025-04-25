@@ -26,6 +26,7 @@ const PortfolioArticleComponent = ({ projects }: ArticlePortfolioBlock) => {
         <PortfolioSection
             title="Примеры работ"
             projects={projects}
+            className={"mb-10"}
         />
     );
 };

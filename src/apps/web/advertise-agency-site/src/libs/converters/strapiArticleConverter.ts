@@ -3,7 +3,7 @@ import {
     ArticleBlock, ArticleCategory,
     ArticleDividerBlock, ArticleEmbedBlock, ArticleFormBlock,
     ArticleImageBlock,
-    ArticleImageGalleryBlock,
+    ArticleImageGalleryBlock, ArticlePortfolioBlock,
     ArticleQuoteBlock, ArticleSEO,
     ArticleTextBlock,
     ArticleVideoBlock
@@ -16,7 +16,7 @@ import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
 import {Author} from "@/types/author";
 import {
     StrapiArticleBlock, StrapiEmbedBlock, StrapiFormBlock,
-    StrapiImageBlock, StrapiQuoteBlock,
+    StrapiImageBlock, StrapiProjectArticleRefBlock, StrapiQuoteBlock,
     StrapiSliderBlock,
     StrapiTextBlock, StrapiVideoBlock
 } from "@/types/strapi/strapiArticleBlock";
@@ -92,6 +92,27 @@ async function parseDynamicBlock(block?: StrapiArticleBlock, strapiUrl?: string)
                 width: strapiEmbedBlock.width,
                 height: strapiEmbedBlock.height,
             } as ArticleEmbedBlock;
+
+            break;
+        case "shared.project-articles-ref":
+            const strapiProjectArticleRefBlock = block as StrapiProjectArticleRefBlock;
+            result = {
+                type: "portfolio",
+                projects: strapiProjectArticleRefBlock.articles.map((article) => ({
+                    id: article.id,
+                    slug: article.slug,
+                    title: article.title,
+                    description: article.description,
+                    cover: convertStrapiImage(article.cover, strapiUrl),
+                    category: {
+                        id: article.category.id,
+                        name: article.category.name,
+                        slug: article.category.slug,
+                        title: article.category.title,
+                        description: article.description,
+                    } as ArticleCategory
+                } as Article))
+            } as ArticlePortfolioBlock;
 
             break;
         case "shared.form":
