@@ -1,4 +1,5 @@
 import {ImageMeta} from "@/types/image";
+import {StrapiArticle} from "@/types/strapi/strapiArticle";
 
 /**
  * Тип блока статьи Strapi
@@ -15,29 +16,29 @@ export type StrapiArticleBlock =
  * Интерфейс базового блока
  */
 export interface StrapiBaseBlock {
-    __component: string,
-    id: number
+    __component: string;
+    id: number;
 }
 
 /**
  * Текстовый блок Strapi
  */
 export interface StrapiTextBlock extends StrapiBaseBlock {
-    body: string
+    body: string;
 }
 
 /**
  * Блок изображения Strapi
  */
 export interface StrapiImageBlock extends StrapiBaseBlock {
-    file: ImageMeta
+    file: ImageMeta;
 }
 
 /**
  * Блок слайдера изображений
  */
 export interface StrapiSliderBlock extends StrapiBaseBlock {
-    files: ImageMeta[]
+    files: ImageMeta[];
 }
 
 /**
@@ -69,9 +70,16 @@ export interface StrapiDividerBlock extends StrapiBaseBlock {
 export interface StrapiEmbedBlock extends StrapiBaseBlock {
     html?: string;  // if you want to support raw HTML
     url?: string;   // if you want to support URL-based embeds
-    provider?: string
-    width?: number
-    height?: number
+    provider?: string;
+    width?: number;
+    height?: number;
+}
+
+/**
+ * Блок ссылок на статьи проектов
+ */
+export interface StrapiProjectArticleRefBlock extends StrapiBaseBlock {
+    articles: StrapiArticle[];
 }
 
 /**
