@@ -28,7 +28,7 @@ export default async function ArticlesPage(props: ArticlePageProps) {
                 description="Экспертные статьи о рекламе, брендинге и маркетинге для вашего бизнеса"
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
                 {articles.map((article, index) => (
                     <ArticlePreviewCard
                         key={article.id}
@@ -36,15 +36,17 @@ export default async function ArticlesPage(props: ArticlePageProps) {
                         priority={index < 3}
                     />
                 ))}
-            </div>
+            </section>
 
-            {pagination.pageCount > 1
-                && <ArticlesPagination
+            <section>
+                {pagination.pageCount > 1
+                    && <ArticlesPagination
                         urlBasePattern={ARTICLE_URL_BASE_PATTERN}
                         currentPage={currentPage}
                         totalPages={pagination.pageCount}
-                />
-            }
+                    />
+                }
+            </section>
         </div>
     );
 }

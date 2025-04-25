@@ -1,27 +1,29 @@
 import {Article} from "@/types/article";
 import {convertStrapiArticleToArticle} from "@/libs/converters/strapiArticleConverter";
 import {StrapiArticle} from "@/types/strapi/strapiArticle";
+import {PaginationMeta} from "@/types/pagination";
 
-interface PaginationMeta {
-    page: number;
-    pageSize: number;
-    pageCount: number;
-    total: number;
-}
+const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
 
 interface Result {
     articles: Article[],
     pagination: PaginationMeta
 }
 
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+/**
+ * Аргументы для paging
+ */
+export interface PaginationArguments {
+    page: number;
+    pageSize: number;
+}
 
 /**
  * Получить список всех статей
  * @param page
  * @param pageSize
  */
-export async function getAllArticles({ page = 1, pageSize = 10 } = {}): Promise<Result> {
+export async function getAllArticles({ page = 1, pageSize }: PaginationArguments): Promise<Result> {
     const res = await fetch(
         `${STRAPI_URL}/api/articles?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
         { next: { revalidate: 60 } }
