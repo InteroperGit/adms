@@ -3,30 +3,7 @@
 
 import { cn } from "@/libs/utils"
 import Image from "next/image"
-
-// Массив с логотипами (можно заменить на свои)
-const clients = [
-    {
-        name: "Google",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
-    },
-    {
-        name: "Microsoft",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg"
-    },
-    {
-        name: "Apple",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
-    },
-    {
-        name: "Amazon",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
-    },
-    {
-        name: "Facebook",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-    },
-]
+import {clients} from "@/data/clientsData";
 
 interface ClientsSectionProps {
     className?: string
@@ -68,40 +45,37 @@ interface ClientsSectionProps {
  */
 export const ClientsSection = ({
                                    title = "Наши клиенты",
-                                   columns = { sm: 3, md: 4, lg: 6 },
-                                   className,
+                                   columns = { sm: 5, md: 6, lg: 8 },
+                                   className
                                }: ClientsSectionProps) => {
-    // Генерация классов для сетки
     const gridClasses = cn(
         "grid gap-4",
-        `grid-cols-2 sm:grid-cols-${columns.sm ?? 3}`,
-        `md:grid-cols-${columns.md ?? 4}`,
-        `lg:grid-cols-${columns.lg ?? 6}`
+        `grid-cols-5 sm:grid-cols-${columns.sm ?? 5}`,
+        `md:grid-cols-${columns.md ?? 6}`,
+        `lg:grid-cols-${columns.lg ?? 8}`
     )
 
     return (
-        <div className={cn(
-            "bg-white dark:bg-gray-800",
-            "p-6 rounded-lg",
-            className
-        )}>
+        <div className={cn("bg-white dark:bg-gray-800 p-6 rounded-lg", className)}>
             <h2 className="text-2xl font-bold mb-6 dark:text-gray-200">{title}</h2>
 
             <div className={gridClasses}>
                 {clients.map((client, i) => (
                     <div
                         key={i}
-                        className={cn("h-20 bg-white dark:bg-gray-700 rounded-lg ",
-                            "border border-gray-100 dark:border-gray-600",
-                            "flex items-center justify-center p-3 shadow-md")}
+                        className={cn(
+                            "w-48 h-48 bg-white dark:bg-gray-700 rounded-lg",
+                            "flex items-center justify-center p-3",
+                            "transition-transform hover:scale-105"
+                        )}
                     >
                         <Image
                             src={client.logo}
                             alt={client.name}
-                            width={120}
-                            height={60}
-                            className="object-contain h-full w-full"
-                            unoptimized // Для SVG можно отключить оптимизацию
+                            width={200}
+                            height={200}
+                            className="object-contain w-full h-full filter grayscale hover:grayscale-0 transition-all duration-500"
+                            unoptimized
                         />
                     </div>
                 ))}
