@@ -1,16 +1,39 @@
-// components/portfolio/PortfolioItem.tsx
 "use client"
 
 import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/libs/utils";
-import {ProjectPreview} from "@/types/project";
+import {Article} from "@/types/article";
+import ContentImage from "@/components/misc/ContentImage";
+
+/**
+ * Форматирует дату публикации статьи в виде "полное название месяца, год".
+ *
+ * @param articleDate - строка даты (ISO 8601) из projectArticle.publishAt.
+ * @param locale - локаль для форматирования (по умолчанию 'ru-RU').
+ * @returns отформатированная строка, например: "апрель 2024".
+ */
+export function formatArticleDate(articleDate?: string, locale: string = 'ru-RU'): string {
+    if (!articleDate) {
+        return "";
+    }
+
+    const date = new Date(articleDate);
+
+    if (isNaN(date.getTime())) {
+        throw new Error(`Некорректная дата: ${articleDate}`);
+    }
+
+    return date.toLocaleDateString(locale, {
+        month: 'long',
+        year: 'numeric',
+    });
+}
 
 interface PortfolioItemProps {
     /**
      * Данные проекта
      */
-    project: ProjectPreview;
+    project: Article;
 
     /**
      * Индекс элемента в списке (для оптимизации загрузки изображений)
@@ -77,6 +100,7 @@ export const PortfolioCard = ({
                               }: PortfolioItemProps) => {
 
     const projectUrl = `${basePath}/${project.slug}`
+    const articleDate = formatArticleDate(project.publishedAt);
 
     return (
         <div
@@ -96,16 +120,13 @@ export const PortfolioCard = ({
                 <div className={cn(
                     "aspect-w-16 aspect-h-9 bg-gray-200 dark:bg-gray-800 overflow-hidden flex-1"
                 )}>
-                    <Image
-                        src={project.imageUrl}
-                        alt={`Проект: ${project.title}`}
-                        width={800}
-                        height={600}
+                    <ContentImage
+                        image={project.cover}
+                        priority={index < 6}
                         className={cn(
                             "object-cover w-full h-full transition-transform duration-500",
                             enableHoverEffects && "group-hover:scale-105"
                         )}
-                        priority={index < 6}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 </div>
@@ -125,7 +146,7 @@ export const PortfolioCard = ({
                                 {project.title}
                             </h3>
                             <p className={cn("text-orange-200 text-sm")}>
-                                {project.client} • {project.year}
+                                {articleDate}
                             </p>
                         </div>
                     </div>
@@ -139,6 +160,9 @@ export const PortfolioCard = ({
                     <h3 className={cn("font-bold line-clamp-1")}>
                         {project.title}
                     </h3>
+                    <p className={cn("text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2")}>
+                        {project.description}
+                    </p>
                     <div className={cn("flex justify-between items-center mt-2")}>
                         <span className={cn(
                             "text-sm px-2 py-1 rounded",
@@ -148,7 +172,7 @@ export const PortfolioCard = ({
                             {project.category?.title}
                         </span>
                         <span className={cn("text-sm text-gray-500 dark:text-gray-400")}>
-                          {project.year}
+                          {articleDate}
                         </span>
                     </div>
                 </div>

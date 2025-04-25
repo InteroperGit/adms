@@ -5,8 +5,17 @@ import {cn} from "@/libs/utils";
 import HeroSection from "@/components/sections/HeroSection";
 import {ServiceCategory} from "@/types/service";
 import ServiceCategoryFilter from "@/components/navigation/ServiceCategoryFilter";
+import {getProjectArticles, getProjectsArticlesCount, ProjectArticlesProps} from "@/libs/api/projectsApi";
+import ArticlesPagination from "@/components/misc/ArticlePagination";
+import {Article} from "@/types/article";
+import {PortfolioCard} from "@/components/cards/PortfolioCard";
 
 const SERVICE_CATEGORY_ALL_NAME = "all";
+
+/**
+ * Кол-во проектов, выводимых на одной странице
+ */
+const PROJECTS_PER_PAGE = 9;
 
 export async function generateStaticParams(): Promise<PageCategoryParams[]> {
     try {
@@ -29,13 +38,30 @@ export async function generateStaticParams(): Promise<PageCategoryParams[]> {
 
 export default async function PortfolioPage(props: PageCategoryProps) {
     let category: string | null | undefined = undefined;
+    let page: string = "1";
     let serviceCategory: ServiceCategory | null | undefined = undefined;
     let categories: ServiceCategory[] | null | undefined = undefined;
+    let projectsCount: number | null | undefined = undefined;
+    let pageCount: number = 0;
+    let currentPage: number = 0;
+    let projects: Article[];
 
     try {
-        category = (await props.params).category;
+        const params: PageCategoryParams = await props.params;
+        category = params.category;
+        page = params.page;
         serviceCategory = await getServiceCategoryByName(category);
         categories = await getServiceCategories("nonheader");
+        projectsCount = await getProjectsArticlesCount(category);
+        pageCount = Math.ceil(projectsCount / PROJECTS_PER_PAGE);
+        currentPage = parseInt(page);
+        const args = {
+            category: category,
+            page: currentPage,
+            pageSize: PROJECTS_PER_PAGE,
+        } as ProjectArticlesProps;
+        const { articles } = await getProjectArticles(args);
+        projects = articles;
     } catch (error) {
         console.error("Ошибка при получении данных с сервера:", error);
         return (
@@ -45,7 +71,12 @@ export default async function PortfolioPage(props: PageCategoryProps) {
         );
     }
 
-    if (category !== SERVICE_CATEGORY_ALL_NAME && !serviceCategory) {
+    const PROJECT_URL_BASE_PATTERN = `/portfolio/category/${category}`;
+
+    const isNotFound = (category !== SERVICE_CATEGORY_ALL_NAME && !serviceCategory)
+        || (isNaN(currentPage) || !Number.isInteger(currentPage) || currentPage <= 0 || currentPage > pageCount)
+
+    if (isNotFound) {
         notFound();
     }
 
@@ -59,6 +90,14 @@ export default async function PortfolioPage(props: PageCategoryProps) {
             href: item.href ? `/portfolio/category/${item.name}/1` : undefined,
         })),
     ]
+
+    const gridClasses = cn(
+        "grid",
+        `grid-cols-1`,
+        `sm:grid-cols-2`,
+        `lg:grid-cols-3`,
+        "gap-6 md:gap-8"
+    )
 
     return (
         <div className={cn("bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen")}>
@@ -76,6 +115,31 @@ export default async function PortfolioPage(props: PageCategoryProps) {
                     categories={serviceCategories}
                     activeCategory={category}
                 />
+            </section>
+
+            {/* Портфолио */}
+            <section className={cn("mb-16")}>
+                {/* Сетка проектов */}
+                <div className={gridClasses}>
+                    {projects.map((project, index) => (
+                        <PortfolioCard
+                            key={project.id}
+                            project={project}
+                            index={index}
+                        />
+                    ))}
+                </div>
+            </section>
+
+            {/* Pagination */}
+            <section>
+                {pageCount > 1
+                    && <ArticlesPagination
+                        urlBasePattern={PROJECT_URL_BASE_PATTERN}
+                        currentPage={currentPage}
+                        totalPages={pageCount}
+                    />
+                }
             </section>
         </div>
     );
