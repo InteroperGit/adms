@@ -23,10 +23,10 @@ import {PortfolioSection} from "@/components/sections/PortfolioSection";
  */
 const PortfolioArticleComponent = ({ projects }: ArticlePortfolioBlock) => {
     return (
-                <PortfolioSection
-                    title="Примеры работ"
-                    projects={projects}
-                />
+        <PortfolioSection
+            title="Примеры работ"
+            projects={projects}
+        />
     );
 };
 

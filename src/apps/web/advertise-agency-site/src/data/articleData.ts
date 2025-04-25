@@ -185,11 +185,34 @@ export const articles: Article[] = [{
                     category: {
                         id: 1,
                         name: 'branding',
-                        title: "Брендирование"
+                        slug: "branding",
+                        title: "Брендирование",
                     },
-                    client: 'Сеть кофеен Sunrise',
-                    year: '2023',
-                    imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format',
+                    cover: {
+                        id: 1,
+                        formats: {
+                            small: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                width: 400,
+                                height: 267
+                            },
+                            medium: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                                width: 800,
+                                height: 534
+                            },
+                            large: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                                width: 1200,
+                                height: 800
+                            }
+                        },
+                        url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                        height: 1000,
+                        width: 800,
+                        alternativeText: "Реклама на остановке общественного транспорта",
+                        caption: "Локализованный таргетинг повышает эффективность на 40%",
+                    },
                     slug: 'sunrise-cafe',
                     description: 'Полный ребрендинг сети кофеен'
                 },
@@ -199,11 +222,34 @@ export const articles: Article[] = [{
                     category: {
                         id: 2,
                         name: 'outdoor',
-                        title: "Наружная реклама"
+                        slug: "outdoor",
+                        title: "Наружная реклама",
                     },
-                    client: 'Бутик Elegance',
-                    year: '2023',
-                    imageUrl: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&auto=format',
+                    cover: {
+                        id: 1,
+                        formats: {
+                            small: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                width: 400,
+                                height: 267
+                            },
+                            medium: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                                width: 800,
+                                height: 534
+                            },
+                            large: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                                width: 1200,
+                                height: 800
+                            }
+                        },
+                        url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                        height: 1000,
+                        width: 800,
+                        alternativeText: "Реклама на остановке общественного транспорта",
+                        caption: "Локализованный таргетинг повышает эффективность на 40%",
+                    },
                     slug: 'elegance-sign',
                     description: 'Световая вывеска для fashion-бутика'
                 },
@@ -213,27 +259,73 @@ export const articles: Article[] = [{
                     category: {
                         id: 3,
                         name: 'printing',
+                        slug: "printing",
                         title: "Печать"
                     },
-                    client: 'TechLogic',
-                    year: '2022',
-                    imageUrl: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&auto=format',
+                    cover: {
+                        id: 1,
+                        formats: {
+                            small: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                width: 400,
+                                height: 267
+                            },
+                            medium: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                                width: 800,
+                                height: 534
+                            },
+                            large: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                                width: 1200,
+                                height: 800
+                            }
+                        },
+                        url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                        height: 1000,
+                        width: 800,
+                        alternativeText: "Реклама на остановке общественного транспорта",
+                        caption: "Локализованный таргетинг повышает эффективность на 40%",
+                    },
                     slug: 'techlogic-catalog',
                     description: 'Полиграфический каталог на 120 страниц'
                 },
                 {
                     id: 4,
+                    slug: 'pureline-packaging',
+                    description: 'Экологичная упаковка для косметики',
                     title: 'Упаковка для косметики "PureLine"',
                     category: {
                         id: 4,
                         name: 'packaging',
+                        slug: "packaging",
                         title: "Упаковка"
                     },
-                    client: 'PureLine Cosmetics',
-                    year: '2023',
-                    imageUrl: 'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&auto=format',
-                    slug: 'pureline-packaging',
-                    description: 'Экологичная упаковка для косметики'
+                    cover: {
+                        id: 1,
+                        formats: {
+                            small: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                width: 400,
+                                height: 267
+                            },
+                            medium: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                                width: 800,
+                                height: 534
+                            },
+                            large: {
+                                url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                                width: 1200,
+                                height: 800
+                            }
+                        },
+                        url: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                        height: 1000,
+                        width: 800,
+                        alternativeText: "Реклама на остановке общественного транспорта",
+                        caption: "Локализованный таргетинг повышает эффективность на 40%",
+                    },
                 },
             ]
         },
@@ -262,7 +354,6 @@ export const articles: Article[] = [{
     seo: {
         title: "Тренды наружной рекламы 2024: полный гид",
         description: "Актуальные технологии и кейсы наружной рекламы. Как добиться максимальной эффективности OOH-кампаний в 2024 году.",
-        keywords: ["наружная реклама", "OOH", "digital билборды", "рекламные тренды"]
     },
 
     relatedArticles: [

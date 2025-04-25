@@ -1,4 +1,3 @@
-import {ProjectPreview} from "@/types/project";
 import {Article} from "@/types/article";
 
 export const projects: Article[] = [{
