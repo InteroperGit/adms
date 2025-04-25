@@ -641,6 +641,7 @@ export interface ApiProjectArticleProjectArticle
         'shared.form',
         'shared.embed',
         'shared.divider',
+        'shared.project-articles-ref',
       ]
     >;
     category: Schema.Attribute.Relation<
@@ -693,6 +694,7 @@ export interface ApiServiceArticleServiceArticle
         'shared.divider',
         'shared.slider',
         'shared.video',
+        'shared.project-articles-ref',
       ]
     >;
     category: Schema.Attribute.Relation<
