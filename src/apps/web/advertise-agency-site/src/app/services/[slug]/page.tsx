@@ -29,7 +29,6 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
     return {
         title: article.seo?.title || article.title,
         description: article.seo?.description || article.description,
-        keywords: article.seo?.keywords || article.tags?.join(', '),
         openGraph: {
             title: article.seo?.title || article.title,
             description: article.seo?.description || article.description,
@@ -37,7 +36,7 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
             siteName: 'РА Рекламастер',
             images: [
                 {
-                    url: article.seo?.ogImage || article.cover?.formats?.large?.url || "",
+                    url: article.seo?.ogImage?.url || article.cover?.formats?.large?.url || "",
                     width: article.cover?.width || DEFAULT_IMAGE_WIDTH,
                     height: article.cover?.height || DEFAULT_IMAGE_HEIGHT,
                     alt: article.cover?.alternativeText || article.title,
@@ -52,10 +51,10 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
             card: 'summary_large_image',
             title: article.seo?.title || article.title,
             description: article.seo?.description || article.description,
-            images: [article.seo?.ogImage || article.cover?.formats?.large?.url || ""],
+            images: [article.seo?.ogImage?.url || article.cover?.formats?.large?.url || ""],
         },
         alternates: {
-            canonical: `https://rmaster35.ru/projects/${article.slug}`,
+            canonical: `https://rmaster35.ru/services/${article.slug}`,
         },
     };
 }

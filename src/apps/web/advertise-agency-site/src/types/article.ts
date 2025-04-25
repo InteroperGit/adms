@@ -1,4 +1,3 @@
-import {ProjectPreview} from "@/types/project";
 import {ImageMeta} from "@/types/image";
 import {Entity} from "@/types/base";
 import {Author} from "@/types/author";
@@ -163,7 +162,7 @@ export interface ArticleVideoBlock {
  */
 export interface ArticlePortfolioBlock {
     type: 'portfolio';
-    projects: ProjectPreview[];
+    projects: Article[];
     columns?: number;
 }
 

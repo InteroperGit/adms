@@ -50,7 +50,9 @@ export async function getProjectsArticlesCount(category: string = ALL_SERVICE_CA
         headers: {
             'Content-Type': 'application/json'
         },
-        cache: 'no-store', // чтобы не кешировалось в dev
+        next: {
+            revalidate: 60,
+        },
     });
 
     if (!res.ok) {
@@ -76,7 +78,9 @@ export async function getProjectSlugs(): Promise<string[]> {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                cache: "no-store", // отключаем кэш в dev
+                next: {
+                    revalidate: 60,
+                },
             }
         );
 
@@ -105,7 +109,14 @@ async function getProjectArticlesFromStrapi({ category, page, pageSize }: Projec
 
     const res = await fetch(
         FETCH_URL,
-        { next: { revalidate: 60 } }
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            next: {
+                revalidate: 60
+            }
+        }
     );
 
     if (!res.ok) {
@@ -177,6 +188,21 @@ async function getDevProjectArticles(page: number,
     return Promise.resolve(result);
 }
 
+/**
+ * Получает список проектных статей с учетом пагинации и выбранной категории.
+ *
+ * В продакшене возвращает только реальные статьи из Strapi.
+ * В режиме разработки (`IS_DEV_MODE`) добавляет дополнительные mock-статьи,
+ * сгенерированные локально через `getDevProjectArticles`, чтобы упростить тестирование.
+ *
+ * Основной источник данных — метод `getProjectArticlesFromStrapi`, который делает запрос к Strapi
+ * с параметрами фильтрации по категории, пагинации и размеру страницы.
+ *
+ * @param category - Название категории для фильтрации (опционально)
+ * @param page - Номер страницы (для пагинации)
+ * @param pageSize - Количество статей на странице
+ * @returns Объект `Result`, содержащий массив статей (`articles`) и метаинформацию о пагинации (`pagination`)
+ */
 export async function getProjectArticles({ category, page, pageSize }: ProjectArticlesProps): Promise<Result> {
     const result = await getProjectArticlesFromStrapi({ category, page, pageSize });
 
@@ -195,11 +221,33 @@ export async function getProjectArticles({ category, page, pageSize }: ProjectAr
     return result;
 }
 
+/**
+ * Получает статью проекта из Strapi по указанному slug.
+ *
+ * Метод выполняет запрос к Strapi API с фильтрацией по slug.
+ * Используется параметр `customPopulate=nested` для получения вложенных данных
+ * (например, категория, обложка, и прочее, что определено в Strapi).
+ *
+ * Запрос кэшируется с помощью `revalidate: 60`, что означает: страница будет
+ * пересобираться не чаще, чем раз в 60 секунд.
+ *
+ * Если статья не найдена (ответ пустой), возвращается `undefined`.
+ * В случае ошибки HTTP выбрасывается исключение с текстом ошибки.
+ *
+ * @param requestSlug - slug статьи, которую нужно получить
+ * @returns Преобразованная статья типа `Article`, либо `undefined`, если не найдена
+ */
 export async function getProjectArticleBySlug(requestSlug: string): Promise<Article | undefined> {
-    // return Promise.resolve(projects.find(({ slug }) => requestSlug === slug));
     const res = await fetch(
         `${STRAPI_URL}/api/project-articles?filters[slug][$eq]=${requestSlug}&customPopulate=nested`,
-        { next: { revalidate: 60 } }
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            next: {
+                revalidate: 60
+            }
+        }
     );
 
     if (!res.ok) {
