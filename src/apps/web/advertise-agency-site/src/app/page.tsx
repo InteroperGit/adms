@@ -1,6 +1,5 @@
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
-import { recentProjectPreviews } from "@/data/projectsData";
 import { NewsSection } from "@/components/sections/NewsSection";
 import { recentNewsArticles } from "@/data/newsData";
 import HeroSection from "@/components/sections/HeroSection";
@@ -16,6 +15,8 @@ import FaqSection from "@/components/sections/FaqSection";
 import OrderFormSection from "@/components/sections/OrderFormSection";
 import { cn } from "@/libs/utils";
 import {getServiceCategories} from "@/libs/api/servicesApi";
+import {getProjectArticles} from "@/libs/api/projectsApi";
+import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
 
 async function CarouselWrapper() {
     const promotions = await getPromotions();
@@ -37,6 +38,12 @@ async function AboutCompanyWrapper() {
 
 export default async function Home() {
     const serviceCategories = await getServiceCategories("header");
+    const projectsResult = await getProjectArticles({
+        category: ALL_SERVICE_CATEGORY_NAME,
+        page: 1,
+        pageSize: DEFAULT_PORTFOLIO_PAGE_SIZE
+    });
+    const projects = projectsResult.articles;
 
     return (
         <div className={cn("space-y-12 pb-16 bg-white dark:bg-gray-900",
@@ -79,7 +86,7 @@ export default async function Home() {
             <PortfolioSection
                 title="Наше портфолио"
                 description="Лучшие проекты за последние годы"
-                projects={recentProjectPreviews}
+                projects={projects}
                 columns={{
                     mobile: 1,
                     tablet: 2,

@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import {getArticleBySlug} from "@/libs/api/articlesApi";
 import {BreadcrumbItem} from "@/types/breadcrumbs";
-import {getProjectBySlug} from "@/libs/api/projectsApi";
+import {getProjectArticleBySlug} from "@/libs/api/projectsApi";
 
 function getBaseBreadcrumbs(): BreadcrumbItem {
     return { title: "Главная", href: "/" }
@@ -83,7 +83,7 @@ async function getPortfolioBreadcrumbs(segments: string[]): Promise<BreadcrumbIt
     try {
         result.push(portfolioBreadcrumbs);
         const slug = segments[1];
-        const project = await getProjectBySlug(slug);
+        const project = await getProjectArticleBySlug(slug);
 
         if (!project) {
             return result;

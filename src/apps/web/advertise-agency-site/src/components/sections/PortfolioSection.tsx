@@ -1,12 +1,12 @@
 import { PortfolioCard } from "@/components/cards/PortfolioCard"
 import { cn } from "@/libs/utils"
-import {ProjectPreview} from "@/types/project";
+import {Article} from "@/types/article";
 
 interface PortfolioSectionProps {
     /**
      * Массив проектов для отображения
      */
-    projects: ProjectPreview[]
+    projects: Article[]
     /**
      * Заголовок секции
      * @default "Наши работы"

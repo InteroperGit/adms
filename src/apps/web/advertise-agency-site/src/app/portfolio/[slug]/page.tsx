@@ -1,4 +1,4 @@
-import {getAllProjects, getProjectBySlug} from '@/libs/api/projectsApi';
+import {getProjectArticleBySlug, getProjectSlugs} from '@/libs/api/projectsApi';
 import {ArticleParser} from "@/libs/articleParser";
 import React from "react";
 import {Metadata} from "next";
@@ -9,7 +9,7 @@ const DEFAULT_IMAGE_HEIGHT = 630;
 
 export async function generateMetadata(props: PageSlugProps): Promise<Metadata> {
     const { slug } = await props.params;
-    const project = await getProjectBySlug(slug);
+    const project = await getProjectArticleBySlug(slug);
 
     if (!project) {
         return {
@@ -21,7 +21,6 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
     return {
         title: project.seo?.title || project.title,
         description: project.seo?.description || project.description,
-        keywords: project.seo?.keywords || project.tags?.join(', '),
         openGraph: {
             title: project.seo?.title || project.title,
             description: project.seo?.description || project.description,
@@ -29,9 +28,9 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
             siteName: 'РА Рекламастер',
             images: [
                 {
-                    url: project.seo?.ogImage || project.cover?.url || "",
-                    width: project.cover?.width || DEFAULT_IMAGE_WIDTH,
-                    height: project.cover?.height || DEFAULT_IMAGE_HEIGHT,
+                    url: project.seo?.ogImage?.url || project.cover?.url || "",
+                    width: project.seo?.ogImage?.width || DEFAULT_IMAGE_WIDTH,
+                    height: project.seo?.ogImage?.height || DEFAULT_IMAGE_HEIGHT,
                     alt: project.cover?.alternativeText || project.title,
                 },
             ],
@@ -44,24 +43,22 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
             card: 'summary_large_image',
             title: project.seo?.title || project.title,
             description: project.seo?.description || project.description,
-            images: [project.seo?.ogImage || project.cover?.url || ""],
+            images: [project.seo?.ogImage?.url || project.cover?.url || ""],
         },
         alternates: {
-            canonical: `https://rmaster35.ru/projects/${project.slug}`,
+            canonical: `https://rmaster35.ru/portfolio/${project.slug}`,
         },
     };
 }
 
 export async function generateStaticParams(): Promise<PageSlugParams[]> {
-    const projects = await getAllProjects();
-    return projects.map(project => ({
-        slug: project.slug,
-    }));
+    const slugs = await getProjectSlugs();
+    return slugs.map((slug) => ({ slug }))
 }
 
 export default async function ProjectPage(props: PageSlugProps) {
     const { slug } = await props.params;
-    const project = await getProjectBySlug(slug);
+    const project = await getProjectArticleBySlug(slug);
 
     if (!project) {
         return <div>Проект не найден</div>;
