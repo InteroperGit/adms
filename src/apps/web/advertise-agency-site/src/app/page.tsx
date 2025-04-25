@@ -17,6 +17,9 @@ import { cn } from "@/libs/utils";
 import {getServiceCategories} from "@/libs/api/servicesApi";
 import {getProjectArticles} from "@/libs/api/projectsApi";
 import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
+import {ReviewsSection} from "@/components/sections/ReviewsSection";
+
+const YANDEX_COMPANY_ID = process.env.YANDEX_COMPANY_ID;
 
 async function CarouselWrapper() {
     const promotions = await getPromotions();
@@ -69,7 +72,7 @@ export default async function Home() {
                 services={serviceCategories}
                 columns={4}
                 className={cn(
-                    "my-9 py-6 bg-white dark:bg-gray-800 px-6 rounded-lg border",
+                    "my-9 p-6 bg-white dark:bg-gray-800 rounded-lg border",
                     "dark:border-gray-700"
                 )}
             />
@@ -77,7 +80,7 @@ export default async function Home() {
             {/* 6. Этапы работы */}
             <WorkStepsSection
                 className={cn(
-                    "bg-gray-50 dark:bg-gray-800 p-8 rounded-lg border",
+                    "bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border",
                     "dark:border-gray-700"
                 )}
             />
@@ -93,7 +96,7 @@ export default async function Home() {
                     desktop: 3,
                 }}
                 className={cn(
-                    "py-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border",
+                    "bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border",
                     "dark:border-gray-700"
                 )}
             />
@@ -109,12 +112,21 @@ export default async function Home() {
                 }}
                 maxItems={6}
                 className={cn(
-                    "py-6 bg-white dark:bg-gray-800 p-6 rounded-lg border",
+                    "bg-white dark:bg-gray-800 p-6 rounded-lg border",
                     "dark:border-gray-700"
                 )}
             />
 
-            {/* 9. Клиенты */}
+            {/* 9. Отзывы */}
+            <ReviewsSection
+                yandexCompanyId={YANDEX_COMPANY_ID}
+                className={cn(
+                    "bg-gray-50 dark:bg-gray-800 p-1 md:p-6 rounded-lg border",
+                    "dark:border-gray-700"
+                )}
+            />
+
+            {/* 10. Клиенты */}
             <ClientsSection
                 className={cn(
                     "bg-white dark:bg-gray-800 p-6 rounded-lg border",
@@ -122,7 +134,7 @@ export default async function Home() {
                 )}
             />
 
-            {/* 10. FAQ */}
+            {/* 11. FAQ */}
             <FaqSection
                 className={cn(
                     "bg-gray-50 dark:bg-gray-800 p-8 rounded-lg border",
@@ -130,7 +142,7 @@ export default async function Home() {
                 )}
             />
 
-            {/* 11. Форма заявки */}
+            {/* 12. Форма заявки */}
             <OrderFormSection
                 className={cn(
                     "bg-orange-50 dark:bg-orange-900/20 p-8 rounded-lg border",
