@@ -46,7 +46,7 @@ export default function DesktopNavigation({ navLinks }: DesktopNavigationProps) 
         <div
             className={cn(
                 "top-0 z-50 backdrop-blur-sm bg-background/80",
-                "border-b border-gray-200 dark:border-gray-800 shadow-sm"
+                "border-b border-gray-200 dark:border-gray-800"
             )}
         >
             <div className="container mx-auto px-4">
