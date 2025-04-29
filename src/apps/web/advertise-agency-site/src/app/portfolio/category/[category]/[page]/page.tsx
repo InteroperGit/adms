@@ -8,32 +8,20 @@ import ServiceCategoryFilter from "@/components/navigation/ServiceCategoryFilter
 import {getProjectArticles, getProjectsArticlesCount, ProjectArticlesProps} from "@/libs/api/projectsApi";
 import ArticlesPagination from "@/components/misc/ArticlePagination";
 import {Article} from "@/types/article";
-import {PortfolioCard} from "@/components/cards/PortfolioCard";
-
-const SERVICE_CATEGORY_ALL_NAME = "all";
-
-/**
- * Кол-во проектов, выводимых на одной странице
- */
-const PROJECTS_PER_PAGE = 9;
+import {ArticleCard} from "@/components/cards/ArticleCard";
+import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
 
 export async function generateStaticParams(): Promise<PageCategoryParams[]> {
-    try {
-        const categories: ServiceCategory[] | null = await getServiceCategories("nonheader");
+    const categories: ServiceCategory[] | null = await getServiceCategories("nonheader");
 
-        if (!Array.isArray(categories)) {
-            return [];
-        }
-
-        return categories?.map(category => ({
-            category: category.name,
-            page: "1"
-        }));
-    }
-    catch (error) {
-        console.error("Ошибка при генерации путей категорий:", error);
+    if (!Array.isArray(categories)) {
         return [];
     }
+
+    return categories?.map(category => ({
+        category: category.name,
+        page: "1"
+    }));
 }
 
 export default async function PortfolioPage(props: PageCategoryProps) {
@@ -53,12 +41,12 @@ export default async function PortfolioPage(props: PageCategoryProps) {
         serviceCategory = await getServiceCategoryByName(category);
         categories = await getServiceCategories("nonheader");
         projectsCount = await getProjectsArticlesCount(category);
-        pageCount = Math.ceil(projectsCount / PROJECTS_PER_PAGE);
+        pageCount = Math.ceil(projectsCount / DEFAULT_PORTFOLIO_PAGE_SIZE);
         currentPage = parseInt(page);
         const args = {
             category: category,
             page: currentPage,
-            pageSize: PROJECTS_PER_PAGE,
+            pageSize: DEFAULT_PORTFOLIO_PAGE_SIZE,
         } as ProjectArticlesProps;
         const { articles } = await getProjectArticles(args);
         projects = articles;
@@ -73,7 +61,7 @@ export default async function PortfolioPage(props: PageCategoryProps) {
 
     const PROJECT_URL_BASE_PATTERN = `/portfolio/category/${category}`;
 
-    const isNotFound = (category !== SERVICE_CATEGORY_ALL_NAME && !serviceCategory)
+    const isNotFound = (category !== ALL_SERVICE_CATEGORY_NAME && !serviceCategory)
         || (isNaN(currentPage) || !Number.isInteger(currentPage) || currentPage <= 0 || currentPage > pageCount)
 
     if (isNotFound) {
@@ -81,7 +69,7 @@ export default async function PortfolioPage(props: PageCategoryProps) {
     }
 
     const serviceCategories: ServiceCategory[] = [
-        { id: 1, name: SERVICE_CATEGORY_ALL_NAME, title: 'Все работы', href: `/portfolio/category/${SERVICE_CATEGORY_ALL_NAME}/1`},
+        { id: 1, name: ALL_SERVICE_CATEGORY_NAME, title: 'Все работы', href: `/portfolio/category/${ALL_SERVICE_CATEGORY_NAME}/1`},
         ...(categories ?? []).map(item => ({
             id: item.id,
             name: item.name,
@@ -104,7 +92,7 @@ export default async function PortfolioPage(props: PageCategoryProps) {
             {/* Hero секция */}
             <HeroSection
                 title={"Наши работы"}
-                description={category === SERVICE_CATEGORY_ALL_NAME
+                description={category === ALL_SERVICE_CATEGORY_NAME
                     ? 'Реализованные проекты за последние годы'
                     : `Проекты в категории "${serviceCategory?.title}"`}
             />
@@ -122,9 +110,9 @@ export default async function PortfolioPage(props: PageCategoryProps) {
                 {/* Сетка проектов */}
                 <div className={gridClasses}>
                     {projects.map((project, index) => (
-                        <PortfolioCard
+                        <ArticleCard
                             key={project.id}
-                            project={project}
+                            item={project}
                             index={index}
                         />
                     ))}
