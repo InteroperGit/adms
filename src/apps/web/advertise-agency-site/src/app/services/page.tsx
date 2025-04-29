@@ -1,7 +1,7 @@
 import HeroSection from "@/components/sections/HeroSection";
 import {CtaSection} from "@/components/sections/CtaSection";
 import { getServiceCategories } from "@/libs/api/servicesApi";
-import { ServiceCategoryPreviewCard } from "@/components/cards/ServiceCategoryPreviewCard";
+import { ServiceCategoryCard } from "@/components/cards/ServiceCategoryCard";
 
 export default async function ServicesPage() {
     const serviceCategories = await getServiceCategories("header");
@@ -15,9 +15,9 @@ export default async function ServicesPage() {
             />
 
             {/* Основной контент */}
-            <div className="px-5 my-16 space-y-24">
+            <section className="px-5 my-16 space-y-24">
                 {serviceCategories.map(category => (
-                    <section key={category.id}>
+                    <div key={category.id}>
                         {/* Заголовок основной категории */}
                         <h2 className="text-3xl font-bold mb-8">
                             {category.title || category.name}
@@ -26,15 +26,15 @@ export default async function ServicesPage() {
                         {/* Список карточек вложенных категорий */}
                         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                             {(category.items || []).map(subCategory => (
-                                <ServiceCategoryPreviewCard
+                                <ServiceCategoryCard
                                     key={subCategory.id}
                                     category={subCategory}
                                 />
                             ))}
                         </div>
-                    </section>
+                    </div>
                 ))}
-            </div>
+            </section>
 
             {/* CTA блок */}
             <CtaSection
