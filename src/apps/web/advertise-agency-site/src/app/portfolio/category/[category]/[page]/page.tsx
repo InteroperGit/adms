@@ -10,6 +10,7 @@ import ArticlesPagination from "@/components/misc/ArticlePagination";
 import {Article} from "@/types/article";
 import {ArticleCard} from "@/components/cards/ArticleCard";
 import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
+import ServiceIsNotRespondedError from "@/components/error/ServiceIsNotRespondedError";
 
 export async function generateStaticParams(): Promise<PageCategoryParams[]> {
     const categories: ServiceCategory[] | null = await getServiceCategories("nonheader");
@@ -53,10 +54,8 @@ export default async function PortfolioPage(props: PageCategoryProps) {
     } catch (error) {
         console.error("Ошибка при получении данных с сервера:", error);
         return (
-            <div className="min-h-screen flex items-center justify-center text-center p-4">
-                <h1 className="text-xl text-red-600">Сервис временно недоступен. Попробуйте позже.</h1>
-            </div>
-        );
+            <ServiceIsNotRespondedError />
+        )
     }
 
     const PROJECT_URL_BASE_PATTERN = `/portfolio/category/${category}`;
