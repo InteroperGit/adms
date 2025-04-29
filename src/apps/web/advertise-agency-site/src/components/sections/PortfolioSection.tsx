@@ -1,4 +1,4 @@
-import { PortfolioCard } from "@/components/cards/PortfolioCard"
+import { ArticleCard } from "@/components/cards/ArticleCard"
 import { cn } from "@/libs/utils"
 import {Article} from "@/types/article";
 
@@ -106,9 +106,9 @@ export const PortfolioSection = ({
             {/* Сетка проектов */}
             <div className={gridClasses}>
                 {projects.map((project, index) => (
-                    <PortfolioCard
+                    <ArticleCard
                         key={project.id}
-                        project={project}
+                        item={project}
                         index={index}
                     />
                 ))}

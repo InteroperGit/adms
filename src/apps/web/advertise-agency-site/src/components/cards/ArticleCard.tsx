@@ -33,7 +33,7 @@ interface PortfolioItemProps {
     /**
      * Данные проекта
      */
-    project: Article;
+    item: Article;
 
     /**
      * Индекс элемента в списке (для оптимизации загрузки изображений)
@@ -59,7 +59,7 @@ interface PortfolioItemProps {
 }
 
 /**
- * PortfolioItem - Карточка проекта в портфолио.
+ * PortfolioItem - Карточка статьи.
  *
  * Отображает:
  * - Изображение проекта с hover-эффектом
@@ -85,22 +85,23 @@ interface PortfolioItemProps {
  * @example
  * // С кастомизацией
  * <PortfolioItem
- *   project={item}
+ *   item={item}
+ *   index=0
  *   className="custom-shadow"
  *   basePath="/projects"
  *   enableHoverEffects={false}
  * />
  */
-export const PortfolioCard = ({
-                                  project,
+export const ArticleCard = ({
+                                  item,
                                   index = 0,
                                   className,
                                   basePath = "/portfolio",
                                   enableHoverEffects = true,
                               }: PortfolioItemProps) => {
 
-    const projectUrl = `${basePath}/${project.slug}`
-    const articleDate = formatArticleDate(project.publishedAt);
+    const projectUrl = `${basePath}/${item.slug}`
+    const articleDate = formatArticleDate(item.publishedAt);
 
     return (
         <div
@@ -114,14 +115,14 @@ export const PortfolioCard = ({
             <Link
                 href={`${projectUrl}`}
                 className="flex-1 flex flex-col"
-                aria-label={`Посмотреть проект ${project.title}`}
+                aria-label={`Посмотреть проект ${item.title}`}
             >
                 {/* Область изображения */}
                 <div className={cn(
                     "aspect-w-16 aspect-h-9 bg-gray-200 dark:bg-gray-800 overflow-hidden flex-1"
                 )}>
                     <ContentImage
-                        image={project.cover}
+                        image={item.cover}
                         priority={index < 6}
                         className={cn(
                             "object-cover w-full h-full transition-transform duration-500",
@@ -143,7 +144,7 @@ export const PortfolioCard = ({
                             "transition-transform duration-300 w-full"
                         )}>
                             <h3 className={cn("text-white text-xl font-bold mb-1")}>
-                                {project.title}
+                                {item.title}
                             </h3>
                             <p className={cn("text-orange-200 text-sm")}>
                                 {articleDate}
@@ -158,10 +159,10 @@ export const PortfolioCard = ({
                     "border-t border-gray-100 dark:border-gray-700"
                 )}>
                     <h3 className={cn("font-bold line-clamp-1")}>
-                        {project.title}
+                        {item.title}
                     </h3>
                     <p className={cn("text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2")}>
-                        {project.description}
+                        {item.description}
                     </p>
                     <div className={cn("flex justify-between items-center mt-2")}>
                         <span className={cn(
@@ -169,7 +170,7 @@ export const PortfolioCard = ({
                             "bg-orange-100 dark:bg-orange-900/30",
                             "text-orange-800 dark:text-orange-200"
                         )}>
-                            {project.category?.title}
+                            {item.category?.title}
                         </span>
                         <span className={cn("text-sm text-gray-500 dark:text-gray-400")}>
                           {articleDate}
