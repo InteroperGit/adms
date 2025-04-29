@@ -4,7 +4,7 @@ import { cn } from "@/libs/utils";
 import { ServiceCategory } from "@/types/service";
 import ContentImage from "@/components/misc/ContentImage";
 
-interface ServiceCategoryPreviewCardProps {
+interface ServiceCategoryCardProps {
     /**
      * Данные категории услуг для отображения
      */
@@ -35,20 +35,20 @@ interface ServiceCategoryPreviewCardProps {
 }
 
 /**
- * ServicePreviewCard - Карточка превью категории услуг.
+ * ServiceCard - Карточка категории услуг.
  *
  * Компонент отображает:
  * - Изображение категории
  * - Название и описание
  * - Кнопку "Подробнее"
  */
-export const ServiceCategoryPreviewCard = ({
+export const ServiceCategoryCard = ({
                                                category,
                                                className,
                                                basePath = "/services",
                                                enableHoverEffects = true,
                                                priority = false,
-                                           }: ServiceCategoryPreviewCardProps) => {
+                                           }: ServiceCategoryCardProps) => {
     const categoryUrl = category.href ?? `${basePath}/${category.id}`;
 
     return (
