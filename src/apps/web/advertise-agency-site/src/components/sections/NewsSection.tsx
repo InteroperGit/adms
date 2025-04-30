@@ -1,8 +1,8 @@
 "use client"
 
-import { ArticlePreviewCard } from "@/components/cards/ArticlePreviewCard"
 import { cn } from "@/libs/utils"
 import {Article} from "@/types/article";
+import {ArticleCard} from "@/components/cards/ArticleCard";
 
 const DEFAULT_MAX_ITEMS: number = 10;
 
@@ -116,10 +116,11 @@ export const NewsSection = ({
                 ? (
                     <div className={gridClasses}>
                         {displayedNews.map((article, index) => (
-                            <ArticlePreviewCard
+                            <ArticleCard
                                 key={article.id}
-                                article={article}
-                                priority={index < 3} // Приоритетная загрузка первых 3 изображений
+                                item={article}
+                                index={index}
+                                basePath="/news"
                             />
                         ))}
                     </div>
