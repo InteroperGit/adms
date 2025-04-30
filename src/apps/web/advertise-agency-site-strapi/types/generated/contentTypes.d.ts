@@ -753,6 +753,39 @@ export interface ApiProjectArticleProjectArticle
   };
 }
 
+export interface ApiPromotionPromotion extends Struct.CollectionTypeSchema {
+  collectionName: 'promotions';
+  info: {
+    description: '';
+    displayName: 'Promotion';
+    pluralName: 'promotions';
+    singularName: 'promotion';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    articleUrl: Schema.Attribute.String;
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::promotion.promotion'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiServiceArticleServiceArticle
   extends Struct.CollectionTypeSchema {
   collectionName: 'service_articles';
@@ -1369,6 +1402,7 @@ declare module '@strapi/strapi' {
       'api::news-article.news-article': ApiNewsArticleNewsArticle;
       'api::news-category.news-category': ApiNewsCategoryNewsCategory;
       'api::project-article.project-article': ApiProjectArticleProjectArticle;
+      'api::promotion.promotion': ApiPromotionPromotion;
       'api::service-article.service-article': ApiServiceArticleServiceArticle;
       'api::service-category.service-category': ApiServiceCategoryServiceCategory;
       'plugin::content-releases.release': PluginContentReleasesRelease;
