@@ -1,7 +1,6 @@
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
 import { NewsSection } from "@/components/sections/NewsSection";
-import { recentNewsArticles } from "@/data/newsData";
 import HeroSection from "@/components/sections/HeroSection";
 import { ClientsSection } from "@/components/sections/ClientsSection";
 import React from "react";
@@ -16,8 +15,9 @@ import OrderFormSection from "@/components/sections/OrderFormSection";
 import { cn } from "@/libs/utils";
 import {getServiceCategories} from "@/libs/api/servicesApi";
 import {getProjectArticles} from "@/libs/api/projectsApi";
-import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
+import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_NEWS_PAGE_SIZE, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
 import {ReviewsSection} from "@/components/sections/ReviewsSection";
+import {getNewsArticles} from "@/libs/api/newsApi";
 
 const YANDEX_COMPANY_ID = process.env.YANDEX_COMPANY_ID;
 
@@ -41,12 +41,17 @@ async function AboutCompanyWrapper() {
 
 export default async function Home() {
     const serviceCategories = await getServiceCategories("header");
-    const projectsResult = await getProjectArticles({
+    const { articles: articles } = await getProjectArticles({
         category: ALL_SERVICE_CATEGORY_NAME,
         page: 1,
         pageSize: DEFAULT_PORTFOLIO_PAGE_SIZE
     });
-    const projects = projectsResult.articles;
+    const projects = articles;
+    const { articles: articles2 } = await getNewsArticles({
+        page: 1,
+        pageSize: DEFAULT_NEWS_PAGE_SIZE
+    })
+    const news = articles2;
 
     return (
         <div className={cn("space-y-12 pb-16 bg-white dark:bg-gray-900",
@@ -104,7 +109,7 @@ export default async function Home() {
             {/* 8. Новости */}
             <NewsSection
                 title="Последние события"
-                articles={recentNewsArticles}
+                news={news}
                 columns={{
                     mobile: 1,
                     tablet: 2,
