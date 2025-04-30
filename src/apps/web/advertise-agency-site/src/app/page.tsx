@@ -22,36 +22,51 @@ import {getNewsArticles} from "@/libs/api/newsApi";
 const YANDEX_COMPANY_ID = process.env.YANDEX_COMPANY_ID;
 
 async function CarouselWrapper() {
-    const promotions = await getPromotions();
-    return (
-        <CarouselSection promotions={promotions} className={cn("hidden md:block")} />
-    );
+    try {
+        const promotions = await getPromotions();
+        return (
+            <CarouselSection promotions={promotions} className={cn("hidden md:block")} />
+        );
+    } catch (error) {
+        console.error("Ошибка при загрузке карусели:", error instanceof Error ? error.message : error);
+        return <div className="text-red-500">Не удалось загрузить карусель.</div>;
+    }
 }
 
 async function AboutCompanyWrapper() {
-    const companyStats = await getCompanyStats();
-    const companyProductImages = await getCompanyProductionImages();
-
-    return (
-        <AboutCompanySection stats={companyStats}
-            productionImages={companyProductImages}
-        />
-    );
+    try {
+        const companyStats = await getCompanyStats();
+        const companyProductImages = await getCompanyProductionImages();
+        return (
+            <AboutCompanySection stats={companyStats} productionImages={companyProductImages} />
+        );
+    } catch (error) {
+        console.error("Ошибка при загрузке информации о компании:", error instanceof Error ? error.message : error);
+        return <div className="text-red-500">Не удалось загрузить информацию о компании.</div>;
+    }
 }
 
 export default async function Home() {
-    const serviceCategories = await getServiceCategories("header");
-    const { articles: articles } = await getProjectArticles({
-        category: ALL_SERVICE_CATEGORY_NAME,
-        page: 1,
-        pageSize: DEFAULT_PORTFOLIO_PAGE_SIZE
-    });
-    const projects = articles;
-    const { articles: articles2 } = await getNewsArticles({
-        page: 1,
-        pageSize: DEFAULT_NEWS_PAGE_SIZE
-    })
-    const news = articles2;
+    let serviceCategories, projects, news;
+
+    try {
+        serviceCategories = await getServiceCategories("header");
+        const { articles: projectArticles } = await getProjectArticles({
+            category: ALL_SERVICE_CATEGORY_NAME,
+            page: 1,
+            pageSize: DEFAULT_PORTFOLIO_PAGE_SIZE
+        });
+        projects = projectArticles;
+
+        const { articles: newsArticles } = await getNewsArticles({
+            page: 1,
+            pageSize: DEFAULT_NEWS_PAGE_SIZE
+        });
+        news = newsArticles;
+    } catch (error) {
+        console.error("Ошибка при загрузке данных:", error instanceof Error ? error.message : error);
+        return <div className="text-red-500">Произошла ошибка при загрузке данных.</div>;
+    }
 
     return (
         <div className={cn("space-y-12 pb-16 bg-white dark:bg-gray-900",
