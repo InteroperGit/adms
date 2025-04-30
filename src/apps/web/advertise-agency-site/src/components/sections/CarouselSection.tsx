@@ -4,8 +4,8 @@ import React, {useState, useEffect, useRef, useCallback} from 'react'
 import { cn } from '@/libs/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from "next/link"
-import Image from 'next/image';
-import { PromotionItem } from "@/types/misc"
+import { PromotionItem } from "@/types/promotionItem"
+import ContentImage from "@/components/misc/ContentImage";
 
 interface CarouselSectionProps {
     promotions: PromotionItem[]
@@ -128,14 +128,13 @@ const CarouselSection: React.FC<CarouselSectionProps> = ({
                             "border border-gray-200 dark:border-gray-600",
                             "overflow-hidden h-full w-full"
                         )}>
-                            <Image
-                                src={currentPromo.imageUrl}
-                                alt={currentPromo.title}
-                                layout="fill" // Указываем fill, чтобы изображение заполнило контейнер
-                                objectFit="cover" // Это будет аналогично object-cover в <img>
-                                priority // Приоритет загрузки изображения
+                            <ContentImage
+                                image={currentPromo.cover}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                priority
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
+                            <div className={cn("absolute inset-0 bg-gradient-to-t from-black/70 ",
+                                "via-black/30 to-transparent flex flex-col justify-end p-6")}>
                                 <h3 className="text-white font-bold text-xl">{currentPromo.title}</h3>
                                 <p className="text-gray-200">{currentPromo.description}</p>
                             </div>
