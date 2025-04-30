@@ -153,7 +153,8 @@ export async function convertStrapiArticleToArticle(article?: StrapiArticle, str
             id: article.category?.id,
             name: article.category?.name,
             slug: article.category?.slug,
-            title: article.category?.title
+            title: article.category?.title,
+            description: article.category?.description,
         } as ArticleCategory,
         cover: article.cover ? convertStrapiImage(article.cover, strapiUrl) : undefined,
         author: {
