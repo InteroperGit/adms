@@ -4,11 +4,13 @@ import { ArticlePreviewCard } from "@/components/cards/ArticlePreviewCard"
 import { cn } from "@/libs/utils"
 import {Article} from "@/types/article";
 
+const DEFAULT_MAX_ITEMS: number = 10;
+
 interface NewsSectionProps {
     /**
      * Массив новостных статей для отображения
      */
-    articles: Article[]
+    news: Article[]
     /**
      * Заголовок секции
      * @default "Новости и статьи"
@@ -78,7 +80,7 @@ interface NewsSectionProps {
  * />
  */
 export const NewsSection = ({
-                                articles,
+                                news,
                                 title = "Новости и статьи",
                                 columns = {
                                     mobile: 1,
@@ -86,11 +88,11 @@ export const NewsSection = ({
                                     desktop: 3
                                 },
                                 gap = "gap-6 md:gap-8",
-                                maxItems,
+                                maxItems = DEFAULT_MAX_ITEMS,
                                 className,
                             }: NewsSectionProps) => {
     // Обрезаем массив если указан maxItems
-    const displayedArticles = maxItems ? articles.slice(0, maxItems) : articles
+    const displayedNews = news.slice(0, maxItems);
 
     // Генерация классов для сетки
     const gridClasses = cn(
@@ -109,15 +111,26 @@ export const NewsSection = ({
             </div>
 
             {/* Сетка статей */}
-            <div className={gridClasses}>
-                {displayedArticles.map((article, index) => (
-                    <ArticlePreviewCard
-                        key={article.id}
-                        article={article}
-                        priority={index < 3} // Приоритетная загрузка первых 3 изображений
-                    />
-                ))}
-            </div>
+            {
+                displayedNews.length > 0
+                ? (
+                    <div className={gridClasses}>
+                        {displayedNews.map((article, index) => (
+                            <ArticlePreviewCard
+                                key={article.id}
+                                article={article}
+                                priority={index < 3} // Приоритетная загрузка первых 3 изображений
+                            />
+                        ))}
+                    </div>
+                )
+                : (
+                    <div className="flex items-center justify-center p-6 bg-gray-100 text-gray-400">
+                        <p className="text-lg font-semibold">События отсутствуют</p>
+                    </div>
+                )
+            }
+
         </section>
     )
 }
