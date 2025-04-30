@@ -513,6 +513,37 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCompanyAdvantageCompanyAdvantage
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'company_advantages';
+  info: {
+    displayName: 'CompanyAdvantage';
+    pluralName: 'company-advantages';
+    singularName: 'company-advantage';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::company-advantage.company-advantage'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiFormTypeFormType extends Struct.CollectionTypeSchema {
   collectionName: 'form_types';
   info: {
@@ -1396,6 +1427,7 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::company-advantage.company-advantage': ApiCompanyAdvantageCompanyAdvantage;
       'api::form-type.form-type': ApiFormTypeFormType;
       'api::global.global': ApiGlobalGlobal;
       'api::navigation-link.navigation-link': ApiNavigationLinkNavigationLink;

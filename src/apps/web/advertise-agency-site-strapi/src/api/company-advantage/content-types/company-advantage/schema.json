@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_advantages",
+  "info": {
+    "singularName": "company-advantage",
+    "pluralName": "company-advantages",
+    "displayName": "CompanyAdvantage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}
