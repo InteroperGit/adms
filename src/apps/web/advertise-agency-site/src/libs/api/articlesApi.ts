@@ -23,7 +23,7 @@ export interface PaginationArguments {
  * @param page
  * @param pageSize
  */
-export async function getAllArticles({ page = 1, pageSize }: PaginationArguments): Promise<Result> {
+export async function getArticles({ page = 1, pageSize }: PaginationArguments): Promise<Result> {
     const res = await fetch(
         `${STRAPI_URL}/api/articles?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
         { next: { revalidate: 60 } }
@@ -37,7 +37,7 @@ export async function getAllArticles({ page = 1, pageSize }: PaginationArguments
     const articles: Article[] = await Promise.all(
         json.data.map((item: StrapiArticle) => (convertStrapiArticleToArticle(item, STRAPI_URL)))
     );
-    const pagination: PaginationMeta = json.meta.pagination;
+    const pagination: PaginationMeta = json.meta?.pagination;
 
     return { articles, pagination };
 }
