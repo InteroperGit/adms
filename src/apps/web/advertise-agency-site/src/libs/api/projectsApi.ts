@@ -37,8 +37,6 @@ export interface Result {
  *
  * В случае ошибки возвращает 0 и логирует ее в консоль.
  *
- * Требует переменной окружения `NEXT_PUBLIC_STRAPI_API_URL`.
- *
  * @param category - Категория проектоа
  */
 export async function getProjectsArticlesCount(category: string = ALL_SERVICE_CATEGORY_NAME): Promise<number> {
@@ -66,6 +64,24 @@ export async function getProjectsArticlesCount(category: string = ALL_SERVICE_CA
         : json?.meta?.pagination?.total ?? 0;
 }
 
+/**
+ * Функция `getProjectSlugs` выполняет асинхронный запрос к API Strapi для получения списка всех слагов проектов.
+ *
+ * Алгоритм работы:
+ * - Запрашивает данные из Strapi с использованием пагинации.
+ * - Для каждой страницы (до достижения последней) получает массив слагов (`slug`) проектов.
+ * - Обрабатывает ответ API, извлекает слаги и добавляет их в итоговый массив.
+ * - Возвращает итоговый массив слагов для всех проектов.
+ *
+ * Параметры:
+ * - Не принимает параметров.
+ *
+ * Возвращаемое значение:
+ * - Возвращает промис, который разрешается в массив строк (слагов проектов).
+ *
+ * Исключения:
+ * - В случае ошибки запроса API (например, если страница не существует или сервер недоступен), будет выброшено исключение с ошибкой запроса.
+ */
 export async function getProjectSlugs(): Promise<string[]> {
     const slugs: string[] = [];
     let page = 1;
