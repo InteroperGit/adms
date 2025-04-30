@@ -20,6 +20,11 @@ export interface ArticleCategory extends Entity {
      * slug
      */
     slug: string;
+
+    /**
+     * Описание
+     */
+    description?: string;
 }
 
 /**

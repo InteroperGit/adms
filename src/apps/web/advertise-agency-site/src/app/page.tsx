@@ -123,7 +123,7 @@ export default async function Home() {
 
             {/* 8. Новости */}
             <NewsSection
-                title="Последние события"
+                title="Новости"
                 news={news}
                 columns={{
                     mobile: 1,
