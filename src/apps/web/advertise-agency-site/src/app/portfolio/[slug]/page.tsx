@@ -3,9 +3,8 @@ import {ArticleParser} from "@/libs/articleParser";
 import React from "react";
 import {Metadata} from "next";
 import {PageSlugParams, PageSlugProps} from "@/types/page";
-
-const DEFAULT_IMAGE_WIDTH = 1200;
-const DEFAULT_IMAGE_HEIGHT = 630;
+import {DEFAULT_IMAGE_HEIGHT, DEFAULT_IMAGE_WIDTH} from "@/config/constants";
+import {notFound} from "next/navigation";
 
 export async function generateMetadata(props: PageSlugProps): Promise<Metadata> {
     const { slug } = await props.params;
@@ -24,7 +23,7 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
         openGraph: {
             title: project.seo?.title || project.title,
             description: project.seo?.description || project.description,
-            url: `https://rmaster35.ru/projects/${project.slug}`,
+            url: `https://rmaster35.ru/portfolio/${project.slug}`,
             siteName: 'РА Рекламастер',
             images: [
                 {
@@ -61,7 +60,7 @@ export default async function ProjectPage(props: PageSlugProps) {
     const project = await getProjectArticleBySlug(slug);
 
     if (!project) {
-        return <div>Проект не найден</div>;
+        return notFound();
     }
 
     return (
