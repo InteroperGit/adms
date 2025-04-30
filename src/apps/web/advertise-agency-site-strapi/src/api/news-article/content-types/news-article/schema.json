@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "news_articles",
+  "info": {
+    "singularName": "news-article",
+    "pluralName": "news-articles",
+    "displayName": "NewsArticle",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::news-category.news-category"
+    },
+    "cover": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.media"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::author.author"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.video",
+        "shared.slider",
+        "shared.rich-text",
+        "shared.quote",
+        "shared.project-articles-ref",
+        "shared.media",
+        "shared.form",
+        "shared.embed",
+        "shared.divider"
+      ]
+    }
+  }
+}
