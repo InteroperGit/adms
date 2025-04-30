@@ -18,20 +18,9 @@ import {getProjectArticles} from "@/libs/api/projectsApi";
 import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_NEWS_PAGE_SIZE, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
 import {ReviewsSection} from "@/components/sections/ReviewsSection";
 import {getNewsArticles} from "@/libs/api/newsApi";
+import {getCompanyAdvantages} from "@/libs/api/companyAdvantagesApi";
 
 const YANDEX_COMPANY_ID = process.env.YANDEX_COMPANY_ID;
-
-async function CarouselWrapper() {
-    try {
-        const promotions = await getPromotions();
-        return (
-            <CarouselSection promotions={promotions} className={cn("hidden md:block")} />
-        );
-    } catch (error) {
-        console.error("Ошибка при загрузке карусели:", error instanceof Error ? error.message : error);
-        return <div className="text-red-500">Не удалось загрузить карусель.</div>;
-    }
-}
 
 async function AboutCompanyWrapper() {
     try {
@@ -47,7 +36,7 @@ async function AboutCompanyWrapper() {
 }
 
 export default async function Home() {
-    let serviceCategories, projects, news;
+    let serviceCategories, projects, news, promotions, advantages;
 
     try {
         serviceCategories = await getServiceCategories("header");
@@ -63,6 +52,9 @@ export default async function Home() {
             pageSize: DEFAULT_NEWS_PAGE_SIZE
         });
         news = newsArticles;
+        promotions = await getPromotions();
+        advantages = await getCompanyAdvantages();
+
     } catch (error) {
         console.error("Ошибка при загрузке данных:", error instanceof Error ? error.message : error);
         return <div className="text-red-500">Произошла ошибка при загрузке данных.</div>;
@@ -72,7 +64,7 @@ export default async function Home() {
         <div className={cn("space-y-12 pb-16 bg-white dark:bg-gray-900",
             " text-gray-900 dark:text-gray-100")}>
             {/* 1. Карусель спецпредложений */}
-            <CarouselWrapper />
+            <CarouselSection promotions={promotions} className={cn("hidden md:block")} />
 
             {/* 2. Hero Banner */}
             <HeroSection
@@ -81,7 +73,7 @@ export default async function Home() {
             />
 
             {/* 3. Преимущества */}
-            <AdvantagesSection />
+            <AdvantagesSection advantages={advantages} />
 
             {/* 4. О компании */}
             <AboutCompanyWrapper />
