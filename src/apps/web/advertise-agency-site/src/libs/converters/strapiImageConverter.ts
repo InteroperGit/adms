@@ -7,7 +7,7 @@ function toAbsoluteUrl(url: string | undefined, strapiUrl: string | undefined): 
     return url.startsWith("http") ? url : `${strapiUrl}${url}`;
 }
 
-export function convertStrapiImage(image: ImageMeta | undefined, strapiUrl: string | undefined): ImageMeta | undefined {
+export function convertStrapiImage(image?: ImageMeta, strapiUrl?: string): ImageMeta | undefined {
     if (!image || !strapiUrl) {
         return undefined;
     }
