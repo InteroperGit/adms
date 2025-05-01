@@ -3,7 +3,7 @@
 import YandexMap from "@/components/misc/YandexMap";
 import ContactsCard from "@/components/cards/ContactsCard";
 import FeedbackForm from "@/components/forms/FeedbackForm";
-import PageHeader from "@/components/misc/PageHeader";
+import PageHeader from "@/components/header/PageHeader";
 
 export default function ContactsPage() {
     return (
