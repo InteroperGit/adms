@@ -144,10 +144,10 @@ const AboutCompanySection: React.FC<AboutCompanySectionProps> = ({
             <div className="flex flex-col md:flex-row gap-8 items-center">
                 {/* Левая колонка - текст и статистика */}
                 <div className="w-full md:w-1/2">
-                    <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">О компании</h2>
+                    <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">{aboutCompany.title}</h2>
 
                     <p className="mb-6 text-gray-600 dark:text-gray-300 leading-relaxed">
-                        Мы — креативное рекламное агентство с полным циклом производства.
+                        {aboutCompany.description}
                     </p>
 
                     <CompanyHighlights highlights={aboutCompany.highlights} />
