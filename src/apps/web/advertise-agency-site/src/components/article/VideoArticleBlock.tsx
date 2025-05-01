@@ -26,12 +26,12 @@ import {ArticleVideoBlock} from "@/types/article";
  * - В статьях, где нужно встроить видео с YouTube, Vimeo или другого видеохостинга.
  * - Для проектов, где важно отображение видеоконтента в адаптивном формате.
  */
-const VideoArticleComponent = ({
+export default function VideoArticleBlock({
                                    url,
                                    source,
                                    caption,
                                    aspectRatio = '16:9'
-                               }: ArticleVideoBlock) => {
+                               }: ArticleVideoBlock) {
     // Преобразование пропорции (aspect ratio) в padding-bottom для обеспечения корректных пропорций.
     const [width, height] = aspectRatio.split(':').map(Number);
     const paddingBottom = `${(height / width) * 100}%`;
@@ -61,5 +61,3 @@ const VideoArticleComponent = ({
         </div>
     );
 };
-
-export default VideoArticleComponent;

@@ -24,23 +24,23 @@ import {ArticleCodeBlock} from "@/types/article";
  * - В технической документации для демонстрации фрагментов программ.
  * - В обучающих материалах и на образовательных платформах для отображения примеров программирования.
  */
-const CodeBlockArticleComponent = ({
+export default function CodeBlockArticleBlock({
                                        code,
                                        language,
                                        showLineNumbers = false
-                                   }: ArticleCodeBlock) => (
-    <div className="my-6 bg-gray-800 rounded-lg overflow-hidden">
-        {language && (
-            <div className="px-4 py-2 text-xs text-gray-300 bg-gray-700">
-                {language}
-            </div>
-        )}
-        <pre className={`p-4 overflow-x-auto text-sm ${showLineNumbers ? 'line-numbers' : ''}`}>
-            <code className={`language-${language || 'plaintext'}`}>
-                {code}
-            </code>
-        </pre>
-    </div>
-);
-
-export default CodeBlockArticleComponent;
+                                   }: ArticleCodeBlock) {
+    return (
+        <div className="my-6 bg-gray-800 rounded-lg overflow-hidden">
+            {language && (
+                <div className="px-4 py-2 text-xs text-gray-300 bg-gray-700">
+                    {language}
+                </div>
+            )}
+            <pre className={`p-4 overflow-x-auto text-sm ${showLineNumbers ? 'line-numbers' : ''}`}>
+                <code className={`language-${language || 'plaintext'}`}>
+                    {code}
+                </code>
+            </pre>
+        </div>
+    );
+};

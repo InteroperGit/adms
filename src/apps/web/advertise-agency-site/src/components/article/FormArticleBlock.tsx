@@ -22,7 +22,7 @@ import TechnicalDesignOrderForm from "@/components/forms/TechnicalDesignOrderFor
  * - Этот компонент может быть использован для создания формы заказа или других типов интерактивных форм на страницах,
  * где нужно предложить пользователю различные варианты в зависимости от контекста.
  */
-const FormBlockArticleComponent = ({ formType, title }: ArticleFormBlock) => {
+export default function FormBlockArticleBlock({ formType, title }: ArticleFormBlock) {
     const renderForm = () => {
         switch (formType) {
             case 'light-letters':
@@ -44,5 +44,3 @@ const FormBlockArticleComponent = ({ formType, title }: ArticleFormBlock) => {
         </div>
     );
 };
-
-export default FormBlockArticleComponent;

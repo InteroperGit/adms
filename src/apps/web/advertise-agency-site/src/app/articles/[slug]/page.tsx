@@ -1,5 +1,5 @@
 import {getArticleBySlug} from '@/libs/api/articlesApi';
-import {ArticleParser} from "@/libs/articleParser";
+import Article from "@/components/article/Article";
 import React from "react";
 import {Metadata} from "next";
 import {PageSlugProps} from "@/types/page";
@@ -73,7 +73,7 @@ export default async function ArticlePage(props: PageSlugProps) {
 
     return (
         <article>
-            <ArticleParser blocks={article.blocks || []} />
+            <Article blocks={article.blocks || []} />
         </article>
     );
 }

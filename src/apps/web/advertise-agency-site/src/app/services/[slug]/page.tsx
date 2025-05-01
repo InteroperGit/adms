@@ -1,7 +1,7 @@
 import {PageSlugProps} from "@/types/page";
 import {Metadata} from "next";
 import {getArticleBySlug} from "@/libs/api/articlesApi";
-import {ArticleParser} from "@/libs/articleParser";
+import Article from "@/components/article/Article";
 import React from "react";
 import {getServiceArticleBySlug} from "@/libs/api/servicesApi";
 
@@ -75,7 +75,7 @@ export default async function ServiceArticlePage(props: PageSlugProps) {
     return (
         <article>
             <h1 className="text-3xl font-bold mb-10">{article.title}</h1>
-            <ArticleParser blocks={article.blocks || []} />
+            <Article blocks={article.blocks || []} />
         </article>
     );
 }
