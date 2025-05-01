@@ -33,7 +33,7 @@ interface ReviewsSectionProps {
  *   yandexCompanyId="123456789012"
  * />
  */
-export const ReviewsSection = ({ googleCompanySrc, yandexCompanyId, className }: ReviewsSectionProps ) => {
+export default function ReviewsSection({ googleCompanySrc, yandexCompanyId, className }: ReviewsSectionProps ) {
     return (
         <section className={cn(className ? className : "w-full px-4 py-8 bg-white dark:bg-gray-900")}>
             <div className="m-4">

@@ -43,11 +43,11 @@ interface ClientsSectionProps {
  *   className="my-12"
  * />
  */
-export const ClientsSection = ({
+export default function ClientsSection({
                                    title = "Наши клиенты",
                                    columns = { sm: 5, md: 6, lg: 8 },
                                    className
-                               }: ClientsSectionProps) => {
+                               }: ClientsSectionProps) {
     const gridClasses = cn(
         "grid gap-4",
         `grid-cols-5 sm:grid-cols-${columns.sm ?? 5}`,

@@ -79,7 +79,7 @@ interface NewsSectionProps {
  *   className="my-16"
  * />
  */
-export const NewsSection = ({
+export default function NewsSection({
                                 news,
                                 title = "Новости и статьи",
                                 columns = {
@@ -90,7 +90,7 @@ export const NewsSection = ({
                                 gap = "gap-6 md:gap-8",
                                 maxItems = DEFAULT_MAX_ITEMS,
                                 className,
-                            }: NewsSectionProps) => {
+                            }: NewsSectionProps) {
     // Обрезаем массив если указан maxItems
     const displayedNews = news.slice(0, maxItems);
 

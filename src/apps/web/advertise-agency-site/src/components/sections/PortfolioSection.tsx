@@ -76,7 +76,7 @@ interface PortfolioSectionProps {
  *   className="my-12"
  * />
  */
-export const PortfolioSection = ({
+export default function PortfolioSection({
                                      projects,
                                      title = "Наши работы",
                                      columns = {
@@ -86,7 +86,7 @@ export const PortfolioSection = ({
                                      },
                                      gap = "gap-6 md:gap-8",
                                      className,
-                                 }: PortfolioSectionProps) => {
+                                 }: PortfolioSectionProps) {
     // Генерация классов для сетки на основе пропсов
     const gridClasses = cn(
         "grid",
