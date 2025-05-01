@@ -2,8 +2,6 @@ import {ArticleImageBlock} from "@/types/article";
 import ContentImage from "@/components/misc/ContentImage";
 
 /**
- * ImageArticleComponent
- *
  * Компонент для отображения изображений внутри текстовых или медиастатей
  * с адаптацией под тёмную тему, поддержкой подписей и адаптивной ширины.
  *
@@ -21,24 +19,24 @@ import ContentImage from "@/components/misc/ContentImage";
  * - Внутри CMS-контента (например, статьи, блоги).
  * - В блоках иллюстраций, скриншотов или баннеров, сопровождаемых подписью.
  */
-const ImageArticleComponent = ({
+export default function ImageArticleBlock({
                                           image,
                                           fullWidth = false
-                                      }: ArticleImageBlock) => (
-    <figure className={`my-6 ${fullWidth ? 'w-full' : 'max-w-full'}`}>
-        <div className="relative aspect-video rounded-lg overflow-hidden">
-            <ContentImage
-                image={image}
-                className="object-cover rounded-xl"
-                sizes="(max-width: 768px) 100vw, 800px"
-            />
-        </div>
-        {image.caption && (
-            <figcaption className="text-lg text-center mt-2 text-gray-500 dark:text-gray-400">
-                {image.caption}
-            </figcaption>
-        )}
-    </figure>
-);
-
-export default ImageArticleComponent;
+                                      }: ArticleImageBlock) {
+    return (
+        <figure className={`my-6 ${fullWidth ? 'w-full' : 'max-w-full'}`}>
+            <div className="relative aspect-video rounded-lg overflow-hidden">
+                <ContentImage
+                    image={image}
+                    className="object-cover rounded-xl"
+                    sizes="(max-width: 768px) 100vw, 800px"
+                />
+            </div>
+            {image?.caption && (
+                <figcaption className="text-lg text-center mt-2 text-gray-500 dark:text-gray-400">
+                    {image.caption}
+                </figcaption>
+            )}
+        </figure>
+    )
+};

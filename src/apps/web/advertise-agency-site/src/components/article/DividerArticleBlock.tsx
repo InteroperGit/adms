@@ -23,9 +23,9 @@ import {ArticleDividerBlock} from "@/types/article";
  * - На страницах, где необходимо разделить разделы текста или блоки контента.
  * - Для визуальной разгрузки контента и улучшения читабельности.
  */
-const DividerBlockArticleComponent = ({
+export default function DividerBlockArticleBlock({
                                           style = 'solid'
-                                      }: ArticleDividerBlock) => {
+                                      }: ArticleDividerBlock) {
     const borderStyle = {
         solid: 'border-solid',
         dashed: 'border-dashed',
@@ -36,5 +36,3 @@ const DividerBlockArticleComponent = ({
         <hr className={`my-8 border-t ${borderStyle} border-gray-200 dark:border-gray-700`} />
     );
 };
-
-export default DividerBlockArticleComponent;

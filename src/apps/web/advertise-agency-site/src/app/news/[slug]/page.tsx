@@ -2,7 +2,7 @@ import {PageSlugParams, PageSlugProps} from "@/types/page";
 import {Metadata} from "next";
 import {getProjectArticleBySlug} from "@/libs/api/projectsApi";
 import {DEFAULT_IMAGE_HEIGHT, DEFAULT_IMAGE_WIDTH} from "@/config/constants";
-import {ArticleParser} from "@/libs/articleParser";
+import Article from "@/components/article/Article";
 import React from "react";
 import {getNewsArticleBySlug, getNewsSlugs} from "@/libs/api/newsApi";
 import {notFound} from "next/navigation";
@@ -67,7 +67,7 @@ export default async function NewsPage(props: PageSlugProps) {
     return (
         <article className="mx-5">
             <h1 className="text-3xl font-bold mb-10">{news.title}</h1>
-            <ArticleParser blocks={news.blocks || []} />
+            <Article blocks={news.blocks || []} />
         </article>
     );
 }

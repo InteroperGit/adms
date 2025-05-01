@@ -3,8 +3,6 @@ import {ArticleImageGalleryBlock} from "@/types/article";
 import ContentImage from "@/components/misc/ContentImage";
 
 /**
- * ImageGalleryArticleComponent
- *
  * Компонент для отображения галереи изображений в статьях, блогах или CMS-контенте
  * с поддержкой трёх макетов: сетка (grid), карусель (carousel) и кирпичная кладка (masonry).
  *
@@ -29,11 +27,11 @@ import ContentImage from "@/components/misc/ContentImage";
  * - В статьях, презентациях, маркетинговых страницах и документации.
  * - В CMS, где автору нужно выбрать способ отображения галереи без ручного кодинга.
  */
-const ImageGalleryArticleComponent = ({
+export default function ImageGalleryArticleBlock({
                                           images,
                                           layout = 'grid',
                                           columns = 3,
-                                      }: ArticleImageGalleryBlock) => {
+                                      }: ArticleImageGalleryBlock) {
     const galleryClasses = cn(
         'my-8 gap-4',
         {
@@ -77,5 +75,3 @@ const ImageGalleryArticleComponent = ({
         </div>
     );
 };
-
-export default ImageGalleryArticleComponent;

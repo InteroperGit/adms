@@ -25,12 +25,12 @@ import {ArticleEmbedBlock} from "@/types/article";
  * - Для отображения внешнего контента на страницах, таких как видео, карты, виджеты и другие встроенные элементы.
  * - Может быть использован в блогах, статьях, презентациях и других типах контента, где необходимо встраивание сторонних ресурсов.
  */
-const EmbedBlockArticleComponent = ({
+export default function EmbedBlockArticleBlock({
                                         html,
                                         url,
                                         width,
                                         height
-                                    }: ArticleEmbedBlock) => {
+                                    }: ArticleEmbedBlock) {
     if (html) {
         return (
             <div
@@ -52,5 +52,3 @@ const EmbedBlockArticleComponent = ({
         </div>
     );
 };
-
-export default EmbedBlockArticleComponent;

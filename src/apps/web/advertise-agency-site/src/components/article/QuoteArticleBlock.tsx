@@ -24,34 +24,34 @@ import {cn} from "@/libs/utils";
  * - В статьях и блогах для выделения ключевых цитат.
  * - Для использования в портфолио, кейс-стади и других контентных блоках, где важны цитаты или отзывы.
  */
-const QuoteArticleComponent = ({
+export default function QuoteArticleBlock({
                                    text,
                                    author,
                                    source,
-                               }: ArticleQuoteBlock) => (
-    <blockquote
-        className={cn(
-            "my-8 border-l-4 border-orange-500 dark:border-orange-700",
-            "bg-orange-50 dark:bg-gray-800",
-            "p-6",
-            "text-gray-700 dark:text-gray-200",
-            "rounded-xl shadow-sm",
-        )}
-    >
-        <p className="text-2xl leading-relaxed font-light mb-3 text-balance font-sans">
-            {text}
-        </p>
-        {(author || source) && (
-            <footer className="mt-10 not-italic text-sm text-gray-500 dark:text-gray-400">
-                {author && (
-                    <span className="font-medium text-gray-700 dark:text-gray-200">
+                               }: ArticleQuoteBlock) {
+    return (
+        <blockquote
+            className={cn(
+                "my-8 border-l-4 border-orange-500 dark:border-orange-700",
+                "bg-orange-50 dark:bg-gray-800",
+                "p-6",
+                "text-gray-700 dark:text-gray-200",
+                "rounded-xl shadow-sm",
+            )}
+        >
+            <p className="text-2xl leading-relaxed font-light mb-3 text-balance font-sans">
+                {text}
+            </p>
+            {(author || source) && (
+                <footer className="mt-10 not-italic text-sm text-gray-500 dark:text-gray-400">
+                    {author && (
+                        <span className="font-medium text-gray-700 dark:text-gray-200">
                         {author}
                     </span>
-                )}
-                {source && <cite className="ml-2 italic">{source}</cite>}
-            </footer>
-        )}
-    </blockquote>
-);
-
-export default QuoteArticleComponent;
+                    )}
+                    {source && <cite className="ml-2 italic">{source}</cite>}
+                </footer>
+            )}
+        </blockquote>
+    );
+}

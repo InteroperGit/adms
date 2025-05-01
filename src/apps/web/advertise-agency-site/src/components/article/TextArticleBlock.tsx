@@ -30,10 +30,11 @@ const textStyles: TextStyles = {
     ol: cn('rounded-list'),
     li: cn(),
     blockquote: cn(
-        'border-l-4 border-primary',
-        'pl-6 pr-4 py-2 my-6 italic',
-        'bg-gray-50 dark:bg-gray-800/50',
-        'text-gray-600 dark:text-gray-300'
+        "my-8 border-l-4 border-orange-500 dark:border-orange-700",
+        "bg-orange-50 dark:bg-gray-800",
+        "p-6",
+        "text-gray-700 dark:text-gray-200",
+        "rounded-xl shadow-sm",
     ),
     table: cn(
         'w-full my-6',
@@ -111,8 +112,6 @@ const parseHtml = (html: string) => {
 };
 
 /**
- * TextArticleComponent
- *
  * Компонент для рендеринга HTML-контента (например, из CMS или Markdown),
  * автоматически применяя предопределённые стили Tailwind для всех стандартных тегов.
  *
@@ -127,12 +126,11 @@ const parseHtml = (html: string) => {
  * - Внутри статей, блогов, документации, заметок и других текстовых блоков,
  *   где приходит готовая HTML-разметка и нужна строгая визуальная консистентность.
  */
-
-const TextArticleComponent = ({ content, align = 'left' }: ArticleTextBlock) => (
-    <article
-        className={cn('prose dark:prose-invert max-w-none', `text-${align}`)}
-        dangerouslySetInnerHTML={parseHtml(content)}
-    />
-);
-
-export default TextArticleComponent;
+export default function TextArticleBlock({ content, align = 'left' }: ArticleTextBlock) {
+    return (
+        <article
+            className={cn('prose dark:prose-invert max-w-none', `text-${align}`)}
+            dangerouslySetInnerHTML={parseHtml(content)}
+        />
+    );
+};

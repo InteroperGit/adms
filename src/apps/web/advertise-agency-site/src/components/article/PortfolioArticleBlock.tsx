@@ -21,7 +21,7 @@ import PortfolioSection from "@/components/sections/PortfolioSection";
  * - В блогах, кейс-стади, страницах с отзывами и примерами проектов.
  * - При генерации контента из CMS или структуры JSON для генерации контентных блоков.
  */
-const PortfolioArticleComponent = ({ projects }: ArticlePortfolioBlock) => {
+export default function PortfolioArticleBlock({ projects }: ArticlePortfolioBlock) {
     return (
         <PortfolioSection
             title="Примеры работ"
@@ -30,5 +30,3 @@ const PortfolioArticleComponent = ({ projects }: ArticlePortfolioBlock) => {
         />
     );
 };
-
-export default PortfolioArticleComponent;
