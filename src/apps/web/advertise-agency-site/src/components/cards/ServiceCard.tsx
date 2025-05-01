@@ -4,7 +4,7 @@ import Link from "next/link"
 import { cn } from "@/libs/utils"
 import React from "react";
 import {ServiceCategory} from "@/types/service";
-import Image from "next/image";
+import ContentImage from "@/components/image/ContentImage";
 
 interface ServiceCardProps {
     /**
@@ -24,6 +24,58 @@ interface ServiceCardProps {
      * @default "orange"
      */
     accentColor?: "orange" | "blue" | "green"
+}
+
+// Динамические классы для цветов акцента
+const accentColorClasses = {
+    orange: "text-orange-600 dark:text-orange-400",
+    blue: "text-blue-600 dark:text-blue-400",
+    green: "text-green-600 dark:text-green-400",
+}
+
+// 👇 Внутренний компонент списка услуг
+function ServiceList({
+                         items,
+                         accentColor,
+                     }: {
+    items: ServiceCategory["items"]
+    accentColor: "orange" | "blue" | "green"
+}) {
+    return (
+        <ul className="space-y-2 flex-1">
+            {items?.map((subService, index) => (
+                <li key={index} className="flex items-start">
+                    <span
+                        className={cn(
+                            "mr-2 mt-0.5 flex-shrink-0",
+                            accentColorClasses[accentColor]
+                        )}
+                    >
+                        ✓
+                    </span>
+                    {subService.href ? (
+                        <Link
+                            href={subService.href}
+                            className={cn(
+                                "relative text-gray-700 dark:text-gray-300",
+                                "hover:text-primary dark:hover:text-primary-400",
+                                "transition-colors duration-200",
+                                "after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px]",
+                                "after:w-0 after:bg-orange-500 dark:after:bg-orange-400",
+                                "after:transition-all after:duration-300 hover:after:w-full"
+                            )}
+                        >
+                            {subService.title}
+                        </Link>
+                    ) : (
+                        <span className="text-gray-700 dark:text-gray-300">
+                            {subService.title}
+                        </span>
+                    )}
+                </li>
+            ))}
+        </ul>
+    )
 }
 
 /**
@@ -56,24 +108,17 @@ interface ServiceCardProps {
  *   accentColor="blue"
  * />
  */
-export const ServiceCard = ({
+export default function ServiceCard({
                                 service,
                                 index,
                                 className,
                                 accentColor = "orange",
-                            }: ServiceCardProps) => {
-    // Динамические классы для цветов акцента
-    const accentColorClasses = {
-        orange: "text-orange-600 dark:text-orange-400",
-        blue: "text-blue-600 dark:text-blue-400",
-        green: "text-green-600 dark:text-green-400",
-    }
-
+                            }: ServiceCardProps) {
     return (
         <div
             key={index}
             className={cn(
-                "bg-gray-50 dark:bg-gray-800 rounded-lg p-6",
+                "bg-gray-50 dark:bg-gray-800 rounded-lg",
                 "border border-gray-200 dark:border-gray-700",
                 "hover:shadow-lg transition-shadow duration-300",
                 "flex flex-col h-full",
@@ -81,57 +126,25 @@ export const ServiceCard = ({
             )}
         >
             {/* Блок иконки */}
-            <div className="w-16 h-16 mb-4 relative border-2">
+            <div className="w-full h-[150px] mb-4 relative overflow-hidden flex items-center justify-center">
                 {service.cover && (
-                    <Image
-                        src={service.cover?.url || ""}
-                        alt={service.cover.alternativeText || service.name}
-                        fill
-                        className="object-contain"
-                        sizes="64px"
+                    <ContentImage
+                        image={service.cover}
+                        className="w-full h-full object-contain"
+                        sizes="100vw"
                     />
                 )}
             </div>
 
-            {/* Заголовок категории */}
-            <h2 className="text-xl font-bold mb-4">
-                {service.title}
-            </h2>
+            <div className={"p-6"}>
+                {/* Заголовок категории */}
+                <h2 className="text-xl font-bold mb-4">
+                    {service.title}
+                </h2>
 
-            {/* Список услуг */}
-            <ul className="space-y-2 flex-1">
-                {service.items?.map((subService, index) => (
-                    <li key={index} className="flex items-start">
-                        {/* Маркер списка */}
-                        <span className={cn(
-                            "mr-2 mt-0.5 flex-shrink-0",
-                            accentColorClasses[accentColor]
-                        )}>
-                          ✓
-                        </span>
-                        {/* Вывод с проверкой наличия ссылки */}
-                        {subService.href ? (
-                            <Link
-                                href={subService.href}
-                                className={cn(
-                                    "relative text-gray-700 dark:text-gray-300",
-                                    "hover:text-primary dark:hover:text-primary-400",
-                                    "transition-colors duration-200",
-                                    "after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px]", // Высота подчеркивания
-                                    "after:w-0 after:bg-orange-500 dark:after:bg-orange-400", // Цвет подчеркивания
-                                    "after:transition-all after:duration-300 hover:after:w-full" // Анимация расширения
-                                )}
-                            >
-                                {subService.title}
-                            </Link>
-                        ) : (
-                            <span className="text-gray-700 dark:text-gray-300">
-                               {subService.title}
-                            </span>
-                        )}
-                    </li>
-                ))}
-            </ul>
+                {/* Список услуг */}
+                <ServiceList items={service.items} accentColor={accentColor} />
+            </div>
         </div>
     )
 }
