@@ -37,12 +37,12 @@ interface ServicesSectionProps {
  *   className="my-12"
  * />
  */
-export const ServicesSection = ({
+export default function ServicesSection({
                                     title = "Наши услуги",
                                     services,
                                     className,
                                     columns = 3,
-                                }: ServicesSectionProps) => {
+                                }: ServicesSectionProps) {
     const gridClasses = {
         1: "grid-cols-1",
         2: "grid-cols-1 md:grid-cols-2",

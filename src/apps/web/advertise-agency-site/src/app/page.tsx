@@ -1,17 +1,17 @@
 import React from "react";
 
-import { ServicesSection } from "@/components/sections/ServicesSection";
-import { PortfolioSection } from "@/components/sections/PortfolioSection";
-import { NewsSection } from "@/components/sections/NewsSection";
+import ServicesSection from "@/components/sections/ServicesSection";
+import PortfolioSection from "@/components/sections/PortfolioSection";
+import NewsSection from "@/components/sections/NewsSection";
 import HeroSection from "@/components/sections/HeroSection";
-import { ClientsSection } from "@/components/sections/ClientsSection";
+import ClientsSection from "@/components/sections/ClientsSection";
 import AboutCompanySection from "@/components/sections/AboutCompanySection";
 import AdvantagesSection from "@/components/sections/AdvantagesSection";
 import CarouselSection from "@/components/sections/CarouselSection";
 import WorkStepsSection from "@/components/sections/WorkStepsSection";
 import FaqSection from "@/components/sections/FaqSection";
 import OrderFormSection from "@/components/sections/OrderFormSection";
-import { ReviewsSection } from "@/components/sections/ReviewsSection";
+import ReviewsSection from "@/components/sections/ReviewsSection";
 import { cn } from "@/libs/utils";
 import { getServiceCategories } from "@/libs/api/servicesApi";
 import { getProjectArticles } from "@/libs/api/projectsApi";
