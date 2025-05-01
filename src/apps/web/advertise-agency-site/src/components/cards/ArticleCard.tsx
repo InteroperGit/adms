@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { cn } from "@/libs/utils";
 import {Article} from "@/types/article";
-import ContentImage from "@/components/misc/ContentImage";
+import ContentImage from "@/components/image/ContentImage";
 
 /**
  * Форматирует дату публикации статьи в виде "полное название месяца, год".

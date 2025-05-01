@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/libs/utils";
 import { ServiceCategory } from "@/types/service";
-import ContentImage from "@/components/misc/ContentImage";
+import ContentImage from "@/components/image/ContentImage";
 
 interface ServiceCategoryCardProps {
     /**

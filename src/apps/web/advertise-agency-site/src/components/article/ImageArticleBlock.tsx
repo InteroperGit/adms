@@ -1,5 +1,5 @@
 import {ArticleImageBlock} from "@/types/article";
-import ContentImage from "@/components/misc/ContentImage";
+import ContentImage from "@/components/image/ContentImage";
 
 /**
  * Компонент для отображения изображений внутри текстовых или медиастатей

@@ -3,7 +3,7 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import { cn } from '@/libs/utils';
 import {AboutCompany} from "@/types/aboutCompany";
-import ContentImage from "@/components/misc/ContentImage";
+import ContentImage from "@/components/image/ContentImage";
 
 // Константы с SVG-иконками
 const CheckIcon = ({ className = "w-4 h-4" }: { className?: string }) => (

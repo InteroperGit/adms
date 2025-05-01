@@ -5,7 +5,7 @@ import { cn } from '@/libs/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from "next/link"
 import { PromotionItem } from "@/types/promotionItem"
-import ContentImage from "@/components/misc/ContentImage";
+import ContentImage from "@/components/image/ContentImage";
 
 interface CarouselSectionProps {
     promotions: PromotionItem[]

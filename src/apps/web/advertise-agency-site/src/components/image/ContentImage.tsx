@@ -37,12 +37,12 @@ interface ContentImageProps {
  * - large: 750px <= ширина < 1000px
  * - default: >= 1000px или отсутствует подходящий формат
  */
-const ContentImage = ({
+export default function ContentImage({
                           image,
                           priority = false,
                           className,
                           sizes
-                      }: ContentImageProps) => {
+                      }: ContentImageProps) {
     const [size, setSize] = useState<'small' | 'medium' | 'large' | 'default'>('medium');
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -100,5 +100,3 @@ const ContentImage = ({
         </div>
     )
 }
-
-export default ContentImage

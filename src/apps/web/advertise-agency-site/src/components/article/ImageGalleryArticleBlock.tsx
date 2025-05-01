@@ -1,6 +1,6 @@
 import {cn} from "@/libs/utils";
 import {ArticleImageGalleryBlock} from "@/types/article";
-import ContentImage from "@/components/misc/ContentImage";
+import ContentImage from "@/components/image/ContentImage";
 
 /**
  * Компонент для отображения галереи изображений в статьях, блогах или CMS-контенте
