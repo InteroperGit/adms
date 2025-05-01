@@ -1,8 +1,9 @@
 "use client"
 
 import React, {useState, useEffect, useRef, useCallback} from 'react';
-import Image from "next/image";
 import { cn } from '@/libs/utils';
+import {AboutCompany} from "@/types/aboutCompany";
+import ContentImage from "@/components/misc/ContentImage";
 
 // Константы с SVG-иконками
 const CheckIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
@@ -22,63 +23,119 @@ const CheckIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
     </svg>
 );
 
-const PhotoIcon = ({ className = "w-16 h-16" }: { className?: string }) => (
-    <svg
-        className={className}
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-    >
-        <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1}
-            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-        />
-    </svg>
-);
-
 interface AboutCompanySectionProps {
-    stats: string[];
-    productionImages: string[];
+    aboutCompany: AboutCompany;
     slideInterval?: number;
     className?: string;
 }
 
-const AboutCompanySection: React.FC<AboutCompanySectionProps> = ({
-                                                                     stats,
-                                                                     productionImages,
-                                                                     slideInterval = 5000,
-                                                                     className,
-                                                                 }) => {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+interface ImageSliderProps {
+    images: AboutCompany["images"];
+    interval?: number;
+}
+
+const CompanyHighlights = ({ highlights }: { highlights: string[] }) => (
+    <ul className="space-y-3">
+        {highlights.map((item, index) => (
+            <li
+                key={index}
+                className={cn(
+                    "relative pl-12 py-4",
+                    "bg-gray-100 dark:bg-gray-700",
+                    "text-gray-800 dark:text-white",
+                    "hover:bg-gray-100 dark:hover:bg-gray-600",
+                    "rounded-lg transition-colors duration-200"
+                )}
+            >
+                <span className={cn("absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6",
+                    "bg-orange-500 dark:bg-orange-600 rounded-full flex items-center justify-center")}>
+                    <CheckIcon className="w-4 h-4 text-white" />
+                </span>
+                {item}
+            </li>
+        ))}
+    </ul>
+);
+
+const ImageSlider = ({ images, interval = 5000 }: ImageSliderProps) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    const nextImage = useCallback (() => {
-        setCurrentImageIndex((prev) => (prev + 1) % productionImages.length);
-    }, [productionImages]);
+    const nextImage = useCallback(() => {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, [images]);
 
     const startTimer = useCallback(() => {
-        timerRef.current = setInterval(nextImage, slideInterval);
-    }, [nextImage, slideInterval]); // Зависит от slideInterval
+        timerRef.current = setInterval(nextImage, interval);
+    }, [nextImage, interval]);
 
     const resetTimer = () => {
-        if (timerRef.current) {
-            clearInterval(timerRef.current);
-        }
+        if (timerRef.current) clearInterval(timerRef.current);
         startTimer();
     };
 
     useEffect(() => {
         startTimer();
         return () => {
-            if (timerRef.current) {
-                clearInterval(timerRef.current);
-            }
+            if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [productionImages, startTimer]);
+    }, [images, startTimer]);
 
+    return (
+        <div className="relative h-80 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
+            {images.map((image, index) => (
+                <div
+                    key={index}
+                    className={cn(
+                        "absolute inset-0 transition-opacity duration-500",
+                        "flex items-center justify-center",
+                        index === currentIndex ? "opacity-100" : "opacity-0"
+                    )}
+                >
+                    <ContentImage
+                        image={image}
+                        className="absolute inset-0 w-full h-full object-cover"
+                    />
+                </div>
+            ))}
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                {images.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => {
+                            setCurrentIndex(index);
+                            resetTimer();
+                        }}
+                        className={cn(
+                            "w-3 h-3 rounded-full transition-colors",
+                            index === currentIndex
+                                ? "bg-orange-500"
+                                : "bg-white/50 hover:bg-white/80"
+                        )}
+                        aria-label={`Показать фото ${index + 1}`}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
+
+/**
+ * Секция "О компании", отображающая описание, ключевые преимущества и слайдер с фотографиями.
+ *
+ * Props:
+ * - `aboutCompany`: объект с данными о компании, включая описание, список особенностей и изображения.
+ * - `slideInterval`: интервал переключения слайдов (по умолчанию 5000 мс).
+ * - `className`: дополнительный CSS-класс для стилизации секции.
+ *
+ * Компонент реализует автоматический слайдер с ручным управлением и индикаторами,
+ * а также список ключевых преимуществ компании.
+ */
+const AboutCompanySection: React.FC<AboutCompanySectionProps> = ({
+                                                                     aboutCompany,
+                                                                     slideInterval = 5000,
+                                                                     className,
+                                                                 }) => {
     return (
         <section className={cn(
             "bg-white dark:bg-gray-800 p-8 rounded-lg border dark:border-gray-700",
@@ -93,80 +150,12 @@ const AboutCompanySection: React.FC<AboutCompanySectionProps> = ({
                         Мы — креативное рекламное агентство с полным циклом производства.
                     </p>
 
-                    <ul className="space-y-3">
-                        {stats.map((item, index) => (
-                            <li
-                                key={index}
-                                className={cn(
-                                    "relative pl-12 py-4",
-                                    "bg-gray-50 dark:bg-gray-700",
-                                    "text-gray-800 dark:text-white",
-                                    "hover:bg-gray-100 dark:hover:bg-gray-600",
-                                    "rounded-lg transition-colors duration-200"
-                                )}
-                            >
-                <span className={cn(
-                    "absolute left-4 top-1/2 -translate-y-1/2",
-                    "w-6 h-6",
-                    "bg-orange-500 dark:bg-orange-600",
-                    "rounded-full flex items-center justify-center"
-                )}>
-                  <CheckIcon className="w-4 h-4 text-white" />
-                </span>
-                                {item}
-                            </li>
-                        ))}
-                    </ul>
+                    <CompanyHighlights highlights={aboutCompany.highlights} />
                 </div>
 
                 {/* Правая колонка - слайдер */}
                 <div className="w-full md:w-1/2">
-                    <div className="relative h-80 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
-                        {productionImages.map((image, index) => (
-                            <div
-                                key={index}
-                                className={cn(
-                                    "absolute inset-0 transition-opacity duration-500",
-                                    "flex items-center justify-center",
-                                    index === currentImageIndex ? "opacity-100" : "opacity-0"
-                                )}
-                            >
-                                <Image
-                                    src={image}
-                                    alt={`Производство ${index + 1}`}
-                                    className="w-full h-full object-cover"
-                                    width={800} // Укажите желаемую ширину изображения
-                                    height={600} // Укажите желаемую высоту изображения
-                                />
-                                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                                    <div className="text-white text-center p-4">
-                                        <PhotoIcon className="w-16 h-16 mx-auto mb-2" />
-                                        <span className="text-sm">Фото производства</span>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-
-                        {/* Индикаторы слайдов */}
-                        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                            {productionImages.map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => {
-                                        setCurrentImageIndex(index);
-                                        resetTimer();
-                                    }}
-                                    className={cn(
-                                        "w-3 h-3 rounded-full transition-colors",
-                                        index === currentImageIndex
-                                            ? "bg-orange-500"
-                                            : "bg-white/50 hover:bg-white/80"
-                                    )}
-                                    aria-label={`Показать фото ${index + 1}`}
-                                />
-                            ))}
-                        </div>
-                    </div>
+                    <ImageSlider images={aboutCompany.images} interval={slideInterval} />
                 </div>
             </div>
         </section>
