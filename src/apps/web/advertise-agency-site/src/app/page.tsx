@@ -1,42 +1,36 @@
+import React from "react";
+
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
 import { NewsSection } from "@/components/sections/NewsSection";
 import HeroSection from "@/components/sections/HeroSection";
 import { ClientsSection } from "@/components/sections/ClientsSection";
-import React from "react";
 import AboutCompanySection from "@/components/sections/AboutCompanySection";
 import AdvantagesSection from "@/components/sections/AdvantagesSection";
 import CarouselSection from "@/components/sections/CarouselSection";
-import { getPromotions } from "@/libs/api/promotionsApi";
-import { getCompanyProductionImages, getCompanyStats } from "@/libs/api/companyInfoApi";
 import WorkStepsSection from "@/components/sections/WorkStepsSection";
 import FaqSection from "@/components/sections/FaqSection";
 import OrderFormSection from "@/components/sections/OrderFormSection";
+import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { cn } from "@/libs/utils";
-import {getServiceCategories} from "@/libs/api/servicesApi";
-import {getProjectArticles} from "@/libs/api/projectsApi";
-import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_NEWS_PAGE_SIZE, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
-import {ReviewsSection} from "@/components/sections/ReviewsSection";
-import {getNewsArticles} from "@/libs/api/newsApi";
-import {getCompanyAdvantages} from "@/libs/api/companyAdvantagesApi";
+import { getServiceCategories } from "@/libs/api/servicesApi";
+import { getProjectArticles } from "@/libs/api/projectsApi";
+
+import { getNewsArticles } from "@/libs/api/newsApi";
+import { getCompanyAdvantages } from "@/libs/api/companyAdvantagesApi";
+import { getPromotions } from "@/libs/api/promotionsApi";
+import { getAboutCompany } from "@/libs/api/aboutCompanyApi";
+
+import {
+    ALL_SERVICE_CATEGORY_NAME,
+    DEFAULT_NEWS_PAGE_SIZE,
+    DEFAULT_PORTFOLIO_PAGE_SIZE
+} from "@/config/constants";
 
 const YANDEX_COMPANY_ID = process.env.YANDEX_COMPANY_ID;
 
-async function AboutCompanyWrapper() {
-    try {
-        const companyStats = await getCompanyStats();
-        const companyProductImages = await getCompanyProductionImages();
-        return (
-            <AboutCompanySection stats={companyStats} productionImages={companyProductImages} />
-        );
-    } catch (error) {
-        console.error("Ошибка при загрузке информации о компании:", error instanceof Error ? error.message : error);
-        return <div className="text-red-500">Не удалось загрузить информацию о компании.</div>;
-    }
-}
-
 export default async function Home() {
-    let serviceCategories, projects, news, promotions, advantages;
+    let serviceCategories, projects, news, promotions, advantages, aboutCompany;
 
     try {
         serviceCategories = await getServiceCategories("header");
@@ -54,6 +48,7 @@ export default async function Home() {
         news = newsArticles;
         promotions = await getPromotions();
         advantages = await getCompanyAdvantages();
+        aboutCompany = await getAboutCompany();
 
     } catch (error) {
         console.error("Ошибка при загрузке данных:", error instanceof Error ? error.message : error);
@@ -76,7 +71,7 @@ export default async function Home() {
             <AdvantagesSection advantages={advantages} />
 
             {/* 4. О компании */}
-            <AboutCompanyWrapper />
+            <AboutCompanySection aboutCompany={aboutCompany} />
 
             {/* 5. Услуги */}
             <ServicesSection
