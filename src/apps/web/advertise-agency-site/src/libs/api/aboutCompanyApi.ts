@@ -27,7 +27,7 @@ const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
  */
 export async function getAboutCompany(): Promise<AboutCompany> {
     const res = await fetch(
-        `${STRAPI_URL}/api/about-company?customPopulate=nested`,
+        `${STRAPI_URL}/api/about?customPopulate=nested`,
         { next: { revalidate: 60 } }
     );
 
