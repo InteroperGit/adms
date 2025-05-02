@@ -1,5 +1,5 @@
 import {ArticleImageBlock} from "@/types/article";
-import ContentImage from "@/components/image/ContentImage";
+import ContentImageViewer from "@/components/image/ContentImageViewer";
 
 /**
  * Компонент для отображения изображений внутри текстовых или медиастатей
@@ -26,8 +26,9 @@ export default function ImageArticleBlock({
     return (
         <figure className={`my-6 ${fullWidth ? 'w-full' : 'max-w-full'}`}>
             <div className="relative aspect-video rounded-lg overflow-hidden">
-                <ContentImage
-                    image={image}
+                <ContentImageViewer
+                    images={[image]}
+                    caption={image?.caption}
                     className="object-cover rounded-xl"
                     sizes="(max-width: 768px) 100vw, 800px"
                 />
