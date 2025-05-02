@@ -1,10 +1,8 @@
 "use client"
 
-import React, {useState, useEffect, useRef, useCallback} from 'react';
+import React from 'react';
 import { cn } from '@/libs/utils';
 import {AboutCompany} from "@/types/aboutCompany";
-import ContentImage from "@/components/image/ContentImage";
-import {ImageMeta} from "@/types/image";
 import ImageSlider from "@/components/image/ImageSlider";
 
 // Константы с SVG-иконками
