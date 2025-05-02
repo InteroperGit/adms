@@ -46,9 +46,12 @@ export default function ImageGalleryArticleBlock({
             'flex overflow-x-auto pb-4': layout === 'carousel',
             'columns-3': layout === 'masonry' && columns === 3,
             'columns-2': layout === 'masonry' && columns === 2,
-            [`grid-cols-${columns}`]: layout === 'grid',
         },
-        layout === 'grid' && 'items-stretch' // 👈 Растягивает все элементы по высоте
+        layout === 'grid' && 'items-stretch',
+        'grid-cols-1',
+        `sm:grid-cols-${images.length >= 2 ? 2 : images.length}`,
+        `md:grid-cols-${images.length >= 3 ? 3 : images.length}`,
+        `lg:grid-cols-${images.length >= 4 ? 4 : images.length}`,
     );
 
     return (
@@ -64,7 +67,13 @@ export default function ImageGalleryArticleBlock({
                         }
                     )}
                 >
-                    <div onClick={() => { setOpen(true); setCurrentIndex(idx) }} className="relative w-full aspect-[16/9] cursor-zoom-in">
+                    <div
+                        onClick={() => {
+                            setOpen(true);
+                            setCurrentIndex(idx)
+                        }}
+                        className="relative w-full aspect-[16/9] cursor-zoom-in">
+
                         <ContentImage
                             image={img}
                             className="rounded-xl object-cover w-full h-full"
