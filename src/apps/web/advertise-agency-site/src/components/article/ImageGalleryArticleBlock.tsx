@@ -1,6 +1,10 @@
+"use client"
+
 import {cn} from "@/libs/utils";
 import {ArticleImageGalleryBlock} from "@/types/article";
 import ContentImage from "@/components/image/ContentImage";
+import ContentImageViewer from "@/components/image/ContentImageViewer";
+import React, {useState} from "react";
 
 /**
  * Компонент для отображения галереи изображений в статьях, блогах или CMS-контенте
@@ -32,6 +36,9 @@ export default function ImageGalleryArticleBlock({
                                           layout = 'grid',
                                           columns = 3,
                                       }: ArticleImageGalleryBlock) {
+    const [open, setOpen] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
     const galleryClasses = cn(
         'my-8 gap-4',
         {
@@ -57,7 +64,7 @@ export default function ImageGalleryArticleBlock({
                         }
                     )}
                 >
-                    <div className="relative w-full aspect-[16/9]">
+                    <div onClick={() => { setOpen(true); setCurrentIndex(idx) }} className="relative w-full aspect-[16/9] cursor-zoom-in">
                         <ContentImage
                             image={img}
                             className="rounded-xl object-cover w-full h-full"
@@ -72,6 +79,18 @@ export default function ImageGalleryArticleBlock({
                     )}
                 </div>
             ))}
+
+            { open &&
+                <ContentImageViewer
+                    images={images}
+                    caption={images[currentIndex].caption}
+                    startIndex={currentIndex}
+                    className="object-cover rounded-xl"
+                    sizes="(max-width: 768px) 100vw, 800px"
+                    open={open}
+                    setOpen={setOpen}
+                />
+            }
         </div>
     );
 };
