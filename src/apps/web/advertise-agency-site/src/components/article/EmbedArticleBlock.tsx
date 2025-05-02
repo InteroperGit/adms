@@ -28,8 +28,6 @@ import {ArticleEmbedBlock} from "@/types/article";
 export default function EmbedBlockArticleBlock({
                                         html,
                                         url,
-                                        width,
-                                        height
                                     }: ArticleEmbedBlock) {
     if (html) {
         return (
@@ -41,14 +39,16 @@ export default function EmbedBlockArticleBlock({
     }
     return (
         <div className="my-6">
-            <iframe
-                src={url}
-                width={width || '100%'}
-                height={height || '400px'}
-                frameBorder="0"
-                allowFullScreen
-                className="rounded-lg"
-            />
+            <div className="relative pb-[56.25%] w-full h-0">
+                <iframe
+                    src={url}
+                    width="100%"
+                    height="100%"
+                    frameBorder="0"
+                    allowFullScreen
+                    className="absolute top-0 left-0 w-full h-full rounded-lg"
+                />
+            </div>
         </div>
     );
 };
