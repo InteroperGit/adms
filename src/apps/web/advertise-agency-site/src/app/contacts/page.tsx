@@ -1,5 +1,3 @@
-"use client"
-
 import YandexMap from "@/components/misc/YandexMap";
 import ContactsCard from "@/components/cards/ContactsCard";
 import FeedbackForm from "@/components/forms/FeedbackForm";
