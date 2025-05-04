@@ -4,8 +4,7 @@ import {
     ArticleDividerBlock, ArticleEmbedBlock, ArticleFormBlock,
     ArticleImageBlock,
     ArticleImageGalleryBlock, ArticlePortfolioBlock,
-    ArticleQuoteBlock, ArticleSEO,
-    ArticleTextBlock,
+    ArticleQuoteBlock, ArticleTextBlock,
     ArticleVideoBlock
 } from "@/types/article";
 import {
@@ -20,6 +19,7 @@ import {
     StrapiSliderBlock,
     StrapiTextBlock, StrapiVideoBlock
 } from "@/types/strapi/strapiArticleBlock";
+import {Seo} from "@/types/seo";
 
 async function parseDynamicBlock(block?: StrapiArticleBlock, strapiUrl?: string): Promise<ArticleBlock | undefined> {
     if (!block || !strapiUrl) {
@@ -173,7 +173,7 @@ export async function convertStrapiArticleToArticle(article?: StrapiArticle, str
                 title: article.seo.metaTitle,
                 description: article.seo.metaDescription,
                 ogImage: article.seo.shareImage
-              } as ArticleSEO
+              } as Seo
             : undefined
     };
 

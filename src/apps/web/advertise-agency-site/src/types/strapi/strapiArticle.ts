@@ -3,7 +3,7 @@ import {ImageMeta} from "@/types/image";
 import {Author} from "@/types/author";
 import {StrapiArticleCategory} from "@/types/strapi/strapiArticleCategory";
 import {StrapiArticleBlock} from "@/types/strapi/strapiArticleBlock";
-import {StrapiArticleSeo} from "@/types/strapi/strapiArticleSeo";
+import {StrapiSeo} from "@/types/strapi/strapiSeo";
 
 /**
  * Основной интерфейс статьи Strapi
@@ -62,5 +62,5 @@ export interface StrapiArticle extends Entity {
     /**
      * SEO
      */
-    seo?: StrapiArticleSeo;
+    seo?: StrapiSeo;
 }
