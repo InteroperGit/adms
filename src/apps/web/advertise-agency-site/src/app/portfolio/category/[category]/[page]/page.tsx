@@ -12,17 +12,34 @@ import {ArticleCard} from "@/components/cards/ArticleCard";
 import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
 import ServiceIsNotRespondedError from "@/components/error/ServiceIsNotRespondedError";
 
+const PORTFOLIO_PAGE_SIZE = process.env.PORTFOLIO_PAGE_SIZE && !isNaN(Number(process.env.PORTFOLIO_PAGE_SIZE))
+    ? parseInt(process.env.PORTFOLIO_PAGE_SIZE, 10)
+    : DEFAULT_PORTFOLIO_PAGE_SIZE;
+
 export async function generateStaticParams(): Promise<PageCategoryParams[]> {
     const categories: ServiceCategory[] | null = await getServiceCategories("nonheader");
 
     if (!Array.isArray(categories)) {
-        return [];
+        throw new Error("categories is not an array");
     }
 
-    return categories?.map(category => ({
-        category: category.name,
-        page: "1"
+    const params = await Promise.all(categories?.map(async (category) => {
+        const projectsCount = await getProjectsArticlesCount(category.name);
+
+        if (projectsCount === null || projectsCount === undefined) {
+            throw new Error(`Error fetching projects count for category: ${category.name}`);
+        }
+
+        // Рассчитываем количество страниц
+        const totalPages = Math.ceil(projectsCount / PORTFOLIO_PAGE_SIZE);
+
+        return Array.from({ length: totalPages }, (_, index) => ({
+            category: category.name,
+            page: (index + 1).toString()
+        }));
     }));
+
+    return params.flat();
 }
 
 export default async function PortfolioPage(props: PageCategoryProps) {
@@ -42,12 +59,12 @@ export default async function PortfolioPage(props: PageCategoryProps) {
         serviceCategory = await getServiceCategoryByName(category);
         categories = await getServiceCategories("nonheader");
         projectsCount = await getProjectsArticlesCount(category);
-        pageCount = Math.ceil(projectsCount / DEFAULT_PORTFOLIO_PAGE_SIZE);
+        pageCount = Math.ceil(projectsCount / PORTFOLIO_PAGE_SIZE);
         currentPage = parseInt(page);
         const args = {
             category: category,
             page: currentPage,
-            pageSize: DEFAULT_PORTFOLIO_PAGE_SIZE,
+            pageSize: PORTFOLIO_PAGE_SIZE,
         } as ProjectArticlesProps;
         const { articles } = await getProjectArticles(args);
         projects = articles;
