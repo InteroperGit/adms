@@ -1,6 +1,7 @@
 import {ImageMeta} from "@/types/image";
 import {Entity} from "@/types/base";
 import {Author} from "@/types/author";
+import {Seo} from "@/types/seo";
 
 /**
  * Категория статьи
@@ -25,15 +26,6 @@ export interface ArticleCategory extends Entity {
      * Описание
      */
     description?: string;
-}
-
-/**
- * SEO-метаданные статьи
- */
-export interface ArticleSEO {
-    title?: string;
-    description?: string;
-    ogImage?: ImageMeta;
 }
 
 /**
@@ -88,7 +80,7 @@ export interface Article extends Entity {
     /**
      * SEO-метаданные
      */
-    seo?: ArticleSEO;
+    seo?: Seo;
 
     /**
      * Флаг популярной статьи
