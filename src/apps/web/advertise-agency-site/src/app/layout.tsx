@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import Header from "@/components/header/Header";
 import DesktopNavigation from "@/components/navigation/DesktopNavigation";
@@ -12,6 +11,9 @@ import TailwindKeeper from "@/components/misc/TailwindKeeper";
 
 import "../styles/globals.css";
 import {fetchNavigationLinks} from "@/libs/api/navLinksApi";
+import {getSiteGlobalData} from "@/libs/api/globalApi";
+import {NavigationLink} from "@/types/navigation";
+import {SiteGlobal} from "@/types/siteGlobal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,41 +25,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Рекламное агентство Рекламастер",
-  description: "Изготовление вывесок, согласование в архитектуре, брендирование, полиграфия",
-};
+export async function generateMetadata() {
+    const siteGlobal: SiteGlobal = await getSiteGlobalData();
+    return {
+        title: siteGlobal?.seo?.title,
+        description: siteGlobal?.seo?.description,
+    };
+}
 
 export default async function RootLayout({
   children,
 }: {
     children: React.ReactNode;
 }) {
-    try {
-        const navLinks = await fetchNavigationLinks();
+    let navLinks: NavigationLink[];
 
-        return (
-            <html lang="ru"
-                  suppressHydrationWarning>
-                <body
-                    className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
-                >
-                    <Providers>
-                        <Header />
-                        <DesktopNavigation navLinks={navLinks} />
-                        <MobileNavigation navLinks={navLinks} />
-                        <Breadcrumbs />
-                        <main className="flex-grow">
-                            <Container>
-                                {children}
-                            </Container>
-                        </main>
-                        <Footer />
-                        <TailwindKeeper />
-                    </Providers>
-                </body>
-            </html>
-        );
+    try {
+        navLinks = await fetchNavigationLinks();
     }
     catch (error) {
         console.error(error);
@@ -76,4 +60,26 @@ export default async function RootLayout({
         );
     }
 
+    return (
+        <html lang="ru"
+              suppressHydrationWarning>
+            <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
+            >
+                <Providers>
+                    <Header />
+                    <DesktopNavigation navLinks={navLinks} />
+                    <MobileNavigation navLinks={navLinks} />
+                    <Breadcrumbs />
+                    <main className="flex-grow">
+                        <Container>
+                            {children}
+                        </Container>
+                    </main>
+                    <Footer />
+                    <TailwindKeeper />
+                </Providers>
+            </body>
+        </html>
+    );
 }
