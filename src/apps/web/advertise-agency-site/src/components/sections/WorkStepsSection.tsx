@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { cn } from "@/libs/utils";
-import {workSteps} from "@/data/workStepsData";
+import {CompanyWorkStep} from "@/types/companyWorkStep";
 
 interface WorkSectionProps {
+    workSteps: CompanyWorkStep[];
     className?: string;
 }
 
-const WorkStepsSection = ({ className }: WorkSectionProps) => {
+const WorkStepsSection = ({ workSteps, className }: WorkSectionProps) => {
     // Состояние для текущего выделенного шага
     const [highlightedStep, setHighlightedStep] = useState<number | null>(null);
 
@@ -41,12 +42,12 @@ const WorkStepsSection = ({ className }: WorkSectionProps) => {
                                 }
                             )}
                         >
-                            {step.num}
+                            {step.stepNumber}
                         </div>
 
                         {/* Заголовок и описание */}
                         <h3 className={cn("font-bold mb-1 dark:text-gray-200")}>{step.title}</h3>
-                        <p className={cn("text-sm text-gray-600 dark:text-gray-400")}>{step.desc}</p>
+                        <p className={cn("text-sm text-gray-600 dark:text-gray-400")}>{step.description}</p>
                     </div>
                 ))}
             </div>
