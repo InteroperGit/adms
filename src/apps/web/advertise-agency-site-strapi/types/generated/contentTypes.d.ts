@@ -550,6 +550,37 @@ export interface ApiCompanyAdvantageCompanyAdvantage
   };
 }
 
+export interface ApiCompanyWorkStepCompanyWorkStep
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'company_work_steps';
+  info: {
+    displayName: 'CompanyWorkStep';
+    pluralName: 'company-work-steps';
+    singularName: 'company-work-step';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::company-work-step.company-work-step'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    stepNumber: Schema.Attribute.Integer;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiFormTypeFormType extends Struct.CollectionTypeSchema {
   collectionName: 'form_types';
   info: {
@@ -1434,6 +1465,7 @@ declare module '@strapi/strapi' {
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
       'api::company-advantage.company-advantage': ApiCompanyAdvantageCompanyAdvantage;
+      'api::company-work-step.company-work-step': ApiCompanyWorkStepCompanyWorkStep;
       'api::form-type.form-type': ApiFormTypeFormType;
       'api::global.global': ApiGlobalGlobal;
       'api::navigation-link.navigation-link': ApiNavigationLinkNavigationLink;
