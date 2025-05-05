@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_work_steps",
+  "info": {
+    "singularName": "company-work-step",
+    "pluralName": "company-work-steps",
+    "displayName": "CompanyWorkStep"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "stepNumber": {
+      "type": "integer"
+    }
+  }
+}
