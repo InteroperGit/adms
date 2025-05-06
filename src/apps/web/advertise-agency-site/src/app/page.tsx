@@ -27,6 +27,7 @@ import {
     DEFAULT_PORTFOLIO_PAGE_SIZE
 } from "@/config/constants";
 import {getCompanyWorkSteps} from "@/libs/api/companyWorkStepsApi";
+import {getFaq} from "@/libs/api/fawApi";
 
 const YANDEX_COMPANY_ID = process.env.YANDEX_COMPANY_ID;
 
@@ -37,7 +38,8 @@ export default async function Home() {
         promotions,
         advantages,
         aboutCompany,
-        workSteps;
+        workSteps,
+        faq;
 
     try {
         serviceCategories = await getServiceCategories("header");
@@ -57,6 +59,7 @@ export default async function Home() {
         advantages = await getCompanyAdvantages();
         aboutCompany = await getAboutCompany();
         workSteps = await getCompanyWorkSteps();
+        faq = await getFaq();
 
     } catch (error) {
         console.error("Ошибка при загрузке данных:", error instanceof Error ? error.message : error);
@@ -152,6 +155,7 @@ export default async function Home() {
 
             {/* 11. FAQ */}
             <FaqSection
+                faq={faq}
                 className={cn(
                     "bg-gray-50 dark:bg-gray-800 p-8 rounded-lg border",
                     "dark:border-gray-700"
