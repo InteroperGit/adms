@@ -97,8 +97,8 @@ export default function NewsSection({
     // Генерация классов для сетки
     const gridClasses = cn(
         "grid",
-        `grid-cols-${columns.mobile ?? 1}`,
-        `sm:grid-cols-${columns.tablet ?? 2}`,
+        `sm:grid-cols-${columns.mobile ?? 1}`,
+        `md:grid-cols-${columns.tablet ?? 2}`,
         `lg:grid-cols-${columns.desktop ?? 3}`,
         gap
     )
