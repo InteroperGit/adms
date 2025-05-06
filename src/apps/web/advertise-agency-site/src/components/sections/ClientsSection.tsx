@@ -3,20 +3,12 @@
 
 import { cn } from "@/libs/utils"
 import Image from "next/image"
-import {clients} from "@/data/clientsData";
+import { Client } from "@/types/client";
 
 interface ClientsSectionProps {
-    className?: string
-    title?: string
-    /**
-     * Количество колонок на разных разрешениях
-     * @default { sm: 3, md: 4, lg: 6 }
-     */
-    columns?: {
-        sm?: number
-        md?: number
-        lg?: number
-    }
+    clients: Client[];
+    title?: string;
+    className?: string;
 }
 
 /**
@@ -39,43 +31,44 @@ interface ClientsSectionProps {
  * // С кастомизацией
  * <ClientsSection
  *   title="Наши партнеры"
- *   columns={{ sm: 2, md: 3, lg: 5 }}
  *   className="my-12"
  * />
  */
 export default function ClientsSection({
-                                   title = "Наши клиенты",
-                                   columns = { sm: 5, md: 6, lg: 8 },
-                                   className
-                               }: ClientsSectionProps) {
+                                           clients,
+                                           title = "Наши клиенты",
+                                           className,
+                                       }: ClientsSectionProps) {
+    // Используем правильные классы для сетки
     const gridClasses = cn(
-        "grid gap-4",
-        `grid-cols-5 sm:grid-cols-${columns.sm ?? 5}`,
-        `md:grid-cols-${columns.md ?? 6}`,
-        `lg:grid-cols-${columns.lg ?? 8}`
+        "flex flex-wrap justify-center gap-4", // Гибкая обертка с отступами между элементами
+        "w-full", // ширина на 100% для всех устройств
+        "sm:flex-col sm:justify-center", // Для мобильных устройств: один столбец
+        `md:flex-row md:justify-start`, // Для md экранов: несколько колонок
+        `lg:flex-row lg:justify-start` // Для lg экранов: несколько колонок
     )
 
     return (
         <div className={cn("bg-white dark:bg-gray-800 p-6 rounded-lg", className)}>
             <h2 className="text-2xl font-bold mb-6 dark:text-gray-200">{title}</h2>
 
-            <div className={gridClasses}>
+            <div className={cn(gridClasses)}>
                 {clients.map((client, i) => (
                     <div
                         key={i}
                         className={cn(
                             "w-48 h-48 bg-white dark:bg-gray-700 rounded-lg",
-                            "flex items-center justify-center p-3",
+                            "border-2 border-gray-200",
+                            "flex items-center justify-center",
                             "transition-transform hover:scale-105"
                         )}
                     >
                         <Image
-                            src={client.logo}
+                            src={client.logo?.url || ""}
                             alt={client.name}
-                            width={200}
-                            height={200}
-                            className="object-contain w-full h-full filter grayscale hover:grayscale-0 transition-all duration-500"
-                            unoptimized
+                            width={40}
+                            height={40}
+                            className="w-40 h-40 object-contain filter grayscale hover:grayscale-0 transition-all duration-500"
                         />
                     </div>
                 ))}
