@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/libs/utils";
 
 import ServicesSection from "@/components/sections/ServicesSection";
 import PortfolioSection from "@/components/sections/PortfolioSection";
@@ -12,22 +13,22 @@ import WorkStepsSection from "@/components/sections/WorkStepsSection";
 import FaqSection from "@/components/sections/FaqSection";
 import OrderFormSection from "@/components/sections/OrderFormSection";
 import ReviewsSection from "@/components/sections/ReviewsSection";
-import { cn } from "@/libs/utils";
+
 import { getServiceCategories } from "@/libs/api/servicesApi";
 import { getProjectArticles } from "@/libs/api/projectsApi";
-
 import { getNewsArticles } from "@/libs/api/newsApi";
 import { getCompanyAdvantages } from "@/libs/api/companyAdvantagesApi";
 import { getPromotions } from "@/libs/api/promotionsApi";
 import { getAboutCompany } from "@/libs/api/aboutCompanyApi";
+import { getCompanyWorkSteps } from "@/libs/api/companyWorkStepsApi";
+import { getFaq } from "@/libs/api/faqApi";
+import { getClients } from "@/libs/api/clientApi";
 
 import {
     ALL_SERVICE_CATEGORY_NAME,
     DEFAULT_NEWS_PAGE_SIZE,
     DEFAULT_PORTFOLIO_PAGE_SIZE
 } from "@/config/constants";
-import {getCompanyWorkSteps} from "@/libs/api/companyWorkStepsApi";
-import {getFaq} from "@/libs/api/fawApi";
 
 const YANDEX_COMPANY_ID = process.env.YANDEX_COMPANY_ID;
 
@@ -39,7 +40,8 @@ export default async function Home() {
         advantages,
         aboutCompany,
         workSteps,
-        faq;
+        faq,
+        clients;
 
     try {
         serviceCategories = await getServiceCategories("header");
@@ -60,6 +62,7 @@ export default async function Home() {
         aboutCompany = await getAboutCompany();
         workSteps = await getCompanyWorkSteps();
         faq = await getFaq();
+        clients = await getClients();
 
     } catch (error) {
         console.error("Ошибка при загрузке данных:", error instanceof Error ? error.message : error);
@@ -147,6 +150,7 @@ export default async function Home() {
 
             {/* 10. Клиенты */}
             <ClientsSection
+                clients={clients}
                 className={cn(
                     "bg-white dark:bg-gray-800 p-6 rounded-lg border",
                     "dark:border-gray-700"
