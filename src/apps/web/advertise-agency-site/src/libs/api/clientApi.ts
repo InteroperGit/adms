@@ -4,6 +4,21 @@ import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
 
 const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
 
+/**
+ * Получает список клиентов с сервера Strapi.
+ *
+ * Этот метод выполняет запрос к API Strapi, чтобы получить данные о клиентах, включая их логотипы и описание.
+ * Он обрабатывает получение и преобразование данных, включая ссылки на изображения и правильное их отображение.
+ *
+ * @returns {Promise<Client[]>} Список клиентов, преобразованный в формат, подходящий для использования в приложении.
+ * @throws {Error} Если не задан URL Strapi или произошла ошибка при запросе данных.
+ *
+ * Пример использования:
+ * ```
+ * const clients = await getClients();
+ * console.log(clients);
+ * ```
+ */
 export const getClients = async (): Promise<Client[]> => {
     if (!STRAPI_URL) {
         throw new Error("URL API Strapi не задан.");
