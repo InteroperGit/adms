@@ -1,26 +1,20 @@
 import Link from "next/link";
 import { cn } from "@/libs/utils";
 import React from "react";
-
-interface SocialLink {
-    icon: React.ReactNode;
-    href: string;
-    label: string;
-    color: string;
-}
+import {SocialIcon} from "@/types/socialLink";
 
 interface FooterSocialIconsProps {
-    socialLinks: SocialLink[];
+    socialIcons: SocialIcon[];
     className?: string;
 }
 
-export default function FooterSocialIcons({ socialLinks, className }: FooterSocialIconsProps) {
+export default function FooterSocialIcons({ socialIcons, className }: FooterSocialIconsProps) {
     return (
         <div className={cn("flex space-x-5", className)}>
-            {socialLinks.map((social, index) => (
+            {socialIcons.map((social, index) => (
                 <Link
                     key={index}
-                    href={social.href}
+                    href={social.link?.url}
                     className={cn(
                         // Базовые стили
                         "p-2 rounded-full",
@@ -32,7 +26,7 @@ export default function FooterSocialIcons({ socialLinks, className }: FooterSoci
                         social.color,
 
                         // Темная тема
-                        `dark:${social.color.replace('hover:', 'hover:dark:')}`,
+                        "dark:" + social.color,
 
                         // Анимация
                         "transition-all duration-300 ease-in-out",
@@ -41,7 +35,7 @@ export default function FooterSocialIcons({ socialLinks, className }: FooterSoci
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
                         "focus-visible:ring-current"
                     )}
-                    aria-label={social.label}
+                    aria-label={social.link?.title}
                 >
                     {social.icon}
                 </Link>
