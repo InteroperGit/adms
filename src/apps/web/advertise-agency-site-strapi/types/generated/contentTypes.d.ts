@@ -613,6 +613,39 @@ export interface ApiCompanyWorkStepCompanyWorkStep
   };
 }
 
+export interface ApiContactItemContactItem extends Struct.CollectionTypeSchema {
+  collectionName: 'contact_items';
+  info: {
+    description: '';
+    displayName: 'ContactItem';
+    pluralName: 'contact-items';
+    singularName: 'contact-item';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    info: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-item.contact-item'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    order: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface ApiFaqFaq extends Struct.SingleTypeSchema {
   collectionName: 'faqs';
   info: {
@@ -1005,6 +1038,38 @@ export interface ApiServiceCategoryServiceCategory
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSocialLinkSocialLink extends Struct.CollectionTypeSchema {
+  collectionName: 'social_links';
+  info: {
+    displayName: 'SocialLink';
+    pluralName: 'social-links';
+    singularName: 'social-link';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::social-link.social-link'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.String;
   };
 }
 
@@ -1524,6 +1589,7 @@ declare module '@strapi/strapi' {
       'api::client.client': ApiClientClient;
       'api::company-advantage.company-advantage': ApiCompanyAdvantageCompanyAdvantage;
       'api::company-work-step.company-work-step': ApiCompanyWorkStepCompanyWorkStep;
+      'api::contact-item.contact-item': ApiContactItemContactItem;
       'api::faq.faq': ApiFaqFaq;
       'api::form-type.form-type': ApiFormTypeFormType;
       'api::global.global': ApiGlobalGlobal;
@@ -1534,6 +1600,7 @@ declare module '@strapi/strapi' {
       'api::promotion.promotion': ApiPromotionPromotion;
       'api::service-article.service-article': ApiServiceArticleServiceArticle;
       'api::service-category.service-category': ApiServiceCategoryServiceCategory;
+      'api::social-link.social-link': ApiSocialLinkSocialLink;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
