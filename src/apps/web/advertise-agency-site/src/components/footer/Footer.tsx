@@ -1,42 +1,70 @@
-"use client"
-
 import {FaVk, FaTelegram, FaWhatsapp} from "react-icons/fa"
 import Logo from "@/components/misc/Logo";
 import FooterSocialIcons from "@/components/footer/FooterSocialIcons";
 import FooterContacts from "@/components/footer/FooterContacts";
-import FooterCompanyLinks from "@/components/footer/FooterCompanyLinks";
+import FooterNavigationLinks from "@/components/footer/FooterNavigationLinks";
 import FooterServicesLinks from "@/components/footer/FooterServicesLinks";
-import {services} from "@/data/servicesData";
+import React, {JSX} from "react";
+import {SocialIcon, SocialLink} from "@/types/socialLink";
+import {ServiceCategory} from "@/types/service";
+import {NavigationLink} from "@/types/navigation";
+import {cn} from "@/libs/utils";
 
-export default function Footer() {
+const getSocialIcons = (socialLinks: SocialLink[]): SocialIcon[] => {
+    const icons: Record<string, { icon: JSX.Element, color: string}> = {
+        "vkontakte": {
+            icon: <FaVk className="h-9 w-9" />,
+            color: "hover:text-[#4680C2]"
+        },
+        "whatsapp": {
+            icon: <FaWhatsapp className="h-9 w-9" />,
+            color: "hover:text-[#25D366]"
+        },
+        "telegram": {
+            icon: <FaTelegram className="h-9 w-9" />,
+            color: "hover:text-[#2AABEE]"
+        }
+    }
+
+    return socialLinks.map((item: SocialLink) => ({
+        icon: icons[item.slug]?.icon ?? <></>,
+        color: icons[item.slug]?.color ?? "hover:text-[#000000]",
+        link: item
+    } as SocialIcon))
+}
+
+interface FooterProps {
+    socialLinks: SocialLink[];
+    serviceCategories: ServiceCategory[];
+    navigationLinks: NavigationLink[];
+}
+
+/**
+ * Компонент футера, который отображает контактную информацию, ссылки на социальные сети,
+ * ссылки на страницы компании и услуги, а также копирайт.
+ *
+ * @returns {JSX.Element} - Разметка футера, включая лого, социальные сети, ссылки на компанию,
+ * услуги и контакты, а также копирайт.
+ *
+ * Пример использования:
+ * <Footer />
+ */
+const Footer = async ({
+    socialLinks,
+    serviceCategories,
+    navigationLinks,
+}: FooterProps): Promise<JSX.Element> => {
+    let socialIcons: SocialIcon[];
+
+    try {
+        socialIcons = getSocialIcons(socialLinks);
+    }
+    catch (error) {
+        console.error(error);
+        return <div className="text-red-500">Произошла ошибка при загрузке данных.</div>;
+    }
+
     const currentYear = new Date().getFullYear()
-
-    const socialLinks = [
-        {
-            icon: <FaVk className="h-5 w-5"/>,
-            href: "#",
-            label: "VK",
-            color: "hover:text-[#4680C2]" // VK синий
-        },
-        {
-            icon: <FaTelegram className="h-5 w-5"/>,
-            href: "#",
-            label: "Telegram",
-            color: "hover:text-[#2AABEE]" // Telegram голубой
-        },
-        {
-            icon: <FaWhatsapp className="h-5 w-5"/>,
-            href: "#",
-            label: "WhatsApp",
-            color: "hover:text-[#25D366]" // WhatsApp зеленый
-        },
-    ]
-
-    const companyLinks = [
-        {name: "О нас", href: "/about"},
-        {name: "Новости", href: "/news"},
-        {name: "Статьи", href: "/articles"}
-    ]
 
     return (
         <footer className="bg-gray-50 dark:bg-gray-900 border-t p-10">
@@ -57,7 +85,7 @@ export default function Footer() {
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                         Мы в социальных сетях:
                     </h3>
-                    <FooterSocialIcons socialLinks={socialLinks} className="mt-4" />
+                    <FooterSocialIcons socialIcons={socialIcons} className="mt-4" />
                 </div>
 
                 {/* Ссылки Компания */}
@@ -65,7 +93,7 @@ export default function Footer() {
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                         Компания
                     </h3>
-                    <FooterCompanyLinks companyLinks={companyLinks} />
+                    <FooterNavigationLinks navigationLinks={navigationLinks} />
                 </div>
 
                 {/* Ссылки Услуги */}
@@ -73,7 +101,7 @@ export default function Footer() {
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                         Услуги
                     </h3>
-                    <FooterServicesLinks services={services} />
+                    <FooterServicesLinks serviceCategories={serviceCategories} />
                 </div>
 
                 {/* Контакты */}
@@ -87,9 +115,13 @@ export default function Footer() {
 
             {/* Копирайт */}
             <div
-                className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+                className={cn("border-t border-gray-200 dark:border-gray-800",
+                    "mt-12 pt-8 text-center",
+                    "text-gray-500 dark:text-gray-400 text-sm")}>
                 © {currentYear} Рекламастер. Все права защищены.
             </div>
         </footer>
     )
 }
+
+export default Footer;
