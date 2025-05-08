@@ -9,6 +9,7 @@ import {SocialIcon, SocialLink} from "@/types/socialLink";
 import {ServiceCategory} from "@/types/service";
 import {NavigationLink} from "@/types/navigation";
 import {cn} from "@/libs/utils";
+import {ContactItem} from "@/types/contacts";
 
 const getSocialIcons = (socialLinks: SocialLink[]): SocialIcon[] => {
     const icons: Record<string, { icon: JSX.Element, color: string}> = {
@@ -37,6 +38,7 @@ interface FooterProps {
     socialLinks: SocialLink[];
     serviceCategories: ServiceCategory[];
     navigationLinks: NavigationLink[];
+    contacts: ContactItem[];
 }
 
 /**
@@ -53,6 +55,7 @@ const Footer = async ({
     socialLinks,
     serviceCategories,
     navigationLinks,
+    contacts
 }: FooterProps): Promise<JSX.Element> => {
     let socialIcons: SocialIcon[];
 
@@ -109,7 +112,10 @@ const Footer = async ({
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                         Контакты
                     </h3>
-                    <FooterContacts className="mt-4" />
+                    <FooterContacts
+                        contacts={contacts}
+                        className="mt-4"
+                    />
                 </div>
             </div>
 

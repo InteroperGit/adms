@@ -19,6 +19,8 @@ import {SocialLink} from "@/types/socialLink";
 import {getSocialLinks} from "@/libs/api/socialLinkApi";
 import {ServiceCategory} from "@/types/service";
 import {getServiceCategories} from "@/libs/api/servicesApi";
+import {ContactItem} from "@/types/contacts";
+import {getContacts} from "@/libs/api/contactsApi";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -69,11 +71,13 @@ const RootLayout = async ({
     let navLinks: NavigationLink[];
     let socialLinks: SocialLink[];
     let serviceCategories: ServiceCategory[];
+    let contacts: ContactItem[];
 
     try {
         navLinks = await fetchNavigationLinks();
         socialLinks = await getSocialLinks();
         serviceCategories = await getServiceCategories("header");
+        contacts = await getContacts();
     }
     catch (error) {
         console.error(error);
@@ -112,6 +116,7 @@ const RootLayout = async ({
                         socialLinks={socialLinks}
                         serviceCategories={serviceCategories}
                         navigationLinks={navLinks}
+                        contacts={contacts}
                     />
                     <TailwindKeeper />
                 </Providers>
