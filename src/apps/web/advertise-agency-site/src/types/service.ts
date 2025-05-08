@@ -14,15 +14,3 @@ export interface ServiceCategory {
     cover?: ImageMeta;
     items?: ServiceCategory[];
 }
-
-/**
- * Услуга
- */
-export interface ServiceItem {
-    name: string;
-    title: string;
-    description?: string;
-    href?: string;
-    previewImage?: ImageMeta;
-    items?: ServiceItem[];
-}
