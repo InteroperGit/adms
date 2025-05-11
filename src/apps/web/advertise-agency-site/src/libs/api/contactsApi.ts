@@ -37,6 +37,7 @@ export const getContacts = async (): Promise<ContactItem[]> => {
         id: item.id,
         name: item.name,
         slug: item.slug,
+        title: item.title,
         info: item.info,
         url: item.url,
         order: item.order,

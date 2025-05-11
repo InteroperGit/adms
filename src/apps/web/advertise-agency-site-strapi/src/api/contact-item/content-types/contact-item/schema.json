@@ -17,6 +17,9 @@
     "slug": {
       "type": "uid"
     },
+    "title": {
+      "type": "string"
+    },
     "info": {
       "type": "string"
     },
