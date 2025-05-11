@@ -5,22 +5,23 @@ import DesktopNavigation from "@/components/navigation/DesktopNavigation";
 import {Providers} from "@/app/providers";
 import Footer from "@/components/footer/Footer";
 import {Breadcrumbs} from "@/components/misc/Breadcrumbs";
-import {Container} from "@/components/container/Container";
+import Container from "@/components/container/Container";
 import MobileNavigation from "@/components/navigation/MobileNavigation";
 import TailwindKeeper from "@/components/misc/TailwindKeeper";
-
-import {fetchNavigationLinks} from "@/libs/api/navLinksApi";
-import {getSiteGlobalData} from "@/libs/api/globalApi";
 import {NavigationLink} from "@/types/navigation";
 import {SiteGlobal} from "@/types/siteGlobal";
 
-import "../styles/globals.css";
-import {SocialLink} from "@/types/socialLink";
+import {fetchNavigationLinks} from "@/libs/api/navLinksApi";
+import {getSiteGlobalData} from "@/libs/api/globalApi";
 import {getSocialLinks} from "@/libs/api/socialLinkApi";
-import {ServiceCategory} from "@/types/service";
 import {getServiceCategories} from "@/libs/api/servicesApi";
-import {ContactItem} from "@/types/contacts";
 import {getContacts} from "@/libs/api/contactsApi";
+
+import {SocialLink} from "@/types/socialLink";
+import {ServiceCategory} from "@/types/service";
+import {ContactItem} from "@/types/contacts";
+
+import "../styles/globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -103,7 +104,7 @@ const RootLayout = async ({
                 className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
             >
                 <Providers>
-                    <Header />
+                    <Header contacts={contacts} />
                     <DesktopNavigation navLinks={navLinks} />
                     <MobileNavigation navLinks={navLinks} />
                     <Breadcrumbs />
