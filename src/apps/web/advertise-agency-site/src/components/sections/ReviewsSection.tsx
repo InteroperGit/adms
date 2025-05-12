@@ -1,8 +1,8 @@
 // components/sections/ReviewsSection.tsx
 "use client"
 
-import { YandexReviews } from "@/components/reviews/YandexReviews"
-import { GoogleReviews } from "@/components/reviews/GoogleReviews"
+import YandexReviews from "@/components/reviews/YandexReviews"
+import GoogleReviews from "@/components/reviews/GoogleReviews"
 import {cn} from "@/libs/utils";
 
 interface ReviewsSectionProps {

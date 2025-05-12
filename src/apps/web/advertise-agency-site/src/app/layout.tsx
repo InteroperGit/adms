@@ -4,7 +4,7 @@ import Header from "@/components/header/Header";
 import DesktopNavigation from "@/components/navigation/DesktopNavigation";
 import {Providers} from "@/app/providers";
 import Footer from "@/components/footer/Footer";
-import {Breadcrumbs} from "@/components/misc/Breadcrumbs";
+import Breadcrumbs from "@/components/misc/Breadcrumbs";
 import Container from "@/components/container/Container";
 import MobileNavigation from "@/components/navigation/MobileNavigation";
 import TailwindKeeper from "@/components/misc/TailwindKeeper";

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { cn } from "@/libs/utils";
 import { ServiceCategory } from "@/types/service";
 import ContentImage from "@/components/image/ContentImage";
+import {JSX} from "react";
 
 interface ServiceCategoryCardProps {
     /**
@@ -42,13 +43,13 @@ interface ServiceCategoryCardProps {
  * - Название и описание
  * - Кнопку "Подробнее"
  */
-export const ServiceCategoryCard = ({
+const ServiceCategoryCard = ({
                                                category,
                                                className,
                                                basePath = "/services",
                                                enableHoverEffects = true,
                                                priority = false,
-                                           }: ServiceCategoryCardProps) => {
+                                           }: ServiceCategoryCardProps): JSX.Element => {
     const categoryUrl = category.href ?? `${basePath}/${category.id}`;
 
     return (
@@ -109,4 +110,6 @@ export const ServiceCategoryCard = ({
         </div>
     );
 };
+
+export default ServiceCategoryCard;
 

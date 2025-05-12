@@ -2,6 +2,7 @@
 
 import { cn } from "@/libs/utils";
 import { ServiceCategory } from "@/types/service";
+import React, {JSX} from "react";
 
 // Новый параметр loading
 interface CategoryFilterProps {
@@ -66,13 +67,13 @@ function renderSkeletons() {
  *   className="my-4 justify-start"
  * />
  */
-const CategoryFilter = ({
+const CategoryFilter: React.FC<CategoryFilterProps> = ({
                             categories,
                             activeCategory,
                             onCategoryChange,
                             loading,
                             className,
-                        }: CategoryFilterProps) => {
+                        }: CategoryFilterProps): JSX.Element => {
     return loading
         ? renderSkeletons()
         : (

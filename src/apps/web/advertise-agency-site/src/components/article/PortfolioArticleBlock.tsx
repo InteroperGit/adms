@@ -1,5 +1,6 @@
 import {ArticlePortfolioBlock} from "@/types/article";
 import PortfolioSection from "@/components/sections/PortfolioSection";
+import {JSX} from "react";
 
 /**
  * Компонент-контейнер для отображения портфолио внутри статей, страниц или CMS-контента.
@@ -21,7 +22,7 @@ import PortfolioSection from "@/components/sections/PortfolioSection";
  * - В блогах, кейс-стади, страницах с отзывами и примерами проектов.
  * - При генерации контента из CMS или структуры JSON для генерации контентных блоков.
  */
-export default function PortfolioArticleBlock({ projects }: ArticlePortfolioBlock) {
+const PortfolioArticleBlock = ({ projects }: ArticlePortfolioBlock): JSX.Element => {
     return (
         <PortfolioSection
             title="Примеры работ"
@@ -30,3 +31,5 @@ export default function PortfolioArticleBlock({ projects }: ArticlePortfolioBloc
         />
     );
 };
+
+export default PortfolioArticleBlock;

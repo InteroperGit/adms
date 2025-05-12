@@ -1,6 +1,7 @@
 "use client"
 
 import { cn } from "@/libs/utils";
+import React, {JSX} from "react";
 
 interface HeroSectionProps {
     title: string;
@@ -32,11 +33,11 @@ interface HeroSectionProps {
  *   className="mb-10"
  * />
  */
-export default function HeroSection({
+const HeroSection: React.FC<HeroSectionProps> = ({
                                 title,
                                 description,
                                 className,
-                            }: HeroSectionProps) {
+                            }: HeroSectionProps): JSX.Element => {
     return (
         <section className={cn(
             "relative bg-orange-50 dark:bg-orange-900/20 py-20 px-6",
@@ -49,3 +50,5 @@ export default function HeroSection({
         </section>
     );
 };
+
+export default HeroSection;

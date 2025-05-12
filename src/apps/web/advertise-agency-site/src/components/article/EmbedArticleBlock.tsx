@@ -1,4 +1,5 @@
 import {ArticleEmbedBlock} from "@/types/article";
+import {JSX} from "react";
 
 /**
  * Компонент для встраивания HTML-контента или iframe на страницу.
@@ -25,10 +26,10 @@ import {ArticleEmbedBlock} from "@/types/article";
  * - Для отображения внешнего контента на страницах, таких как видео, карты, виджеты и другие встроенные элементы.
  * - Может быть использован в блогах, статьях, презентациях и других типах контента, где необходимо встраивание сторонних ресурсов.
  */
-export default function EmbedBlockArticleBlock({
+const EmbedBlockArticleBlock = ({
                                         html,
                                         url,
-                                    }: ArticleEmbedBlock) {
+                                    }: ArticleEmbedBlock): JSX.Element => {
     if (html) {
         return (
             <div
@@ -52,3 +53,5 @@ export default function EmbedBlockArticleBlock({
         </div>
     );
 };
+
+export default EmbedBlockArticleBlock;

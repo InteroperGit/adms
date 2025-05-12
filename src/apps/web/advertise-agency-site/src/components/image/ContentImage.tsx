@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import {ImageMeta} from "@/types/image";
-import {useEffect, useRef, useState} from "react";
+import {JSX, useEffect, useRef, useState} from "react";
 
 interface ContentImageProps {
     image?: ImageMeta
@@ -10,6 +10,20 @@ interface ContentImageProps {
     className?: string
     sizes?: string
 }
+
+// Хелпер: метод для обработки изменения размера контейнера
+const getImageSizeByContainerWidth = (width: number): 'small' | 'medium' | 'large' | 'default' => {
+    if (width < 500) {
+        return 'small';
+    }
+    if (width >= 500 && width < 750) {
+        return 'medium';
+    }
+    if (width >= 750 && width < 1000) {
+        return 'large';
+    }
+    return 'default';
+};
 
 /**
  * Компонент ContentImage предназначен для рендеринга изображений из Strapi (или аналогичной CMS),
@@ -37,32 +51,21 @@ interface ContentImageProps {
  * - large: 750px <= ширина < 1000px
  * - default: >= 1000px или отсутствует подходящий формат
  */
-export default function ContentImage({
+const ContentImage = ({
                           image,
                           priority = false,
                           className,
                           sizes
-                      }: ContentImageProps) {
+                      }: ContentImageProps): JSX.Element | null => {
     const [size, setSize] = useState<'small' | 'medium' | 'large' | 'default'>('medium');
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver((entries) => {
             const entry = entries && entries[0];
-
             const width = entry.contentRect.width;
-            if (width < 500) {
-                setSize('small');
-            }
-            else if (width >= 500 && width < 750) {
-                setSize('medium');
-            }
-            else if (width >= 750 && width < 1000) {
-                setSize('large');
-            }
-            else {
-                setSize('default');
-            }
+            const size = getImageSizeByContainerWidth(width);
+            setSize(size);
         });
 
         if (containerRef.current) {
@@ -100,3 +103,5 @@ export default function ContentImage({
         </div>
     )
 }
+
+export default ContentImage;

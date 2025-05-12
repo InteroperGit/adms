@@ -2,7 +2,7 @@
 "use client"
 
 import { cn } from "@/libs/utils";
-import { ReactNode } from "react";
+import {JSX, ReactNode} from "react";
 
 interface LoadingMoreButtonProps {
     /**
@@ -83,7 +83,7 @@ interface LoadingMoreButtonProps {
  *   Загрузить больше
  * </LoadingMoreButton>
  */
-export const LoadingMoreButton = ({
+const LoadingMoreButton = ({
                                       isLoading,
                                       onClick,
                                       disabled = false,
@@ -91,7 +91,7 @@ export const LoadingMoreButton = ({
                                       loadingText = "Загрузка...",
                                       className,
                                       spinnerSize = 20,
-                                  }: LoadingMoreButtonProps) => {
+                                  }: LoadingMoreButtonProps): JSX.Element => {
     // Рассчитываем классы для индикатора загрузки на основе размера
     const spinnerClass = `animate-spin rounded-full border-t-2 border-b-2 border-white`;
 
@@ -127,3 +127,5 @@ export const LoadingMoreButton = ({
         </button>
     );
 };
+
+export default LoadingMoreButton

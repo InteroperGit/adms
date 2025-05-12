@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, JSX} from 'react';
 import { cn } from '@/libs/utils';
 
 const inputClass = cn(
@@ -101,7 +101,21 @@ interface LightBoxOrderFormProps {
     title?: string;
 }
 
-const LightBoxOrderForm: React.FC<LightBoxOrderFormProps> = ({title}: LightBoxOrderFormProps) => {
+/**
+ * LightBoxOrderForm — форма для оформления заказа на световой короб с выбором параметров.
+ * Компонент позволяет пользователю указать все необходимые характеристики для заказа светового короба:
+ * форма, тип подсветки, размеры (высота, ширина, глубина), адрес, телефон и имя заказчика.
+ *
+ * Основные особенности:
+ * 1. В форме используются компоненты ввода (select, input) для различных параметров заказа.
+ * 2. Используются хуки состояния (`useState` и `useEffect`) для управления данными формы и активности полей.
+ * 3. В зависимости от активного поля, отображается пояснение, которое помогает пользователю понять, что необходимо ввести.
+ * 4. Реализован динамический вывод пояснений с помощью компонента `FieldExplanation`.
+ * 5. Форма адаптивна и имеет сетку для размещения полей в несколько колонок на больших экранах.
+ *
+ * Компонент подходит для сайтов, предлагающих услуги по производству и доставке световых коробов.
+ */
+const LightBoxOrderForm: React.FC<LightBoxOrderFormProps> = ({title}: LightBoxOrderFormProps): JSX.Element | null => {
     const [formData, setFormData] = useState<FormData>({
         boxShape: 'Rectangle',
         illuminationType: 'Internal',
@@ -133,7 +147,9 @@ const LightBoxOrderForm: React.FC<LightBoxOrderFormProps> = ({title}: LightBoxOr
         setActiveField(null);
     };
 
-    if (!hasMounted) return null;
+    if (!hasMounted) {
+        return null;
+    }
 
     return (
         <div className={formCardClass}>

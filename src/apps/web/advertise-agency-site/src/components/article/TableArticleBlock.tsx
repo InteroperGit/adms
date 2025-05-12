@@ -1,5 +1,6 @@
 import { cn } from '@/libs/utils'
 import type { ArticleTableBlock } from '@/types/article'
+import {JSX} from "react";
 
 /**
  * Функция возвращает стандартную таблицу (table layout) с заголовками и строками.
@@ -13,7 +14,7 @@ import type { ArticleTableBlock } from '@/types/article'
  * - Добавлены скругления углов для первой и последней ячеек.
  * - Реализована чередующаяся заливка строк и эффект наведения.
  */
-function renderDesktopTable(headers: string[], rows: string[][], align: string[]) {
+const renderDesktopTable = (headers: string[], rows: string[][], align: string[]): JSX.Element => {
     return (
         <table className="w-full border-collapse hidden md:table">
             <thead>
@@ -88,7 +89,7 @@ function renderDesktopTable(headers: string[], rows: string[][], align: string[]
  * - Используется адаптивный `flex`-layout и скруглённые контейнеры.
  * - Отображаются только строки — заголовки используются как подписи к ячейкам.
  */
-function renderMobileList(headers: string[], rows: string[][]) {
+const renderMobileList = (headers: string[], rows: string[][]): JSX.Element => {
     return (
         <div className="space-y-4 md:hidden">
             {rows.map((row, i) => (
@@ -131,18 +132,19 @@ function renderMobileList(headers: string[], rows: string[][]) {
  *
  * Особенности:
  * - Использует семантические элементы `<table>`, `<thead>`, `<tbody>`, `<th>`, `<td>` на десктопе.
- * - Мобильный режим (через `md:hidden`) отображает строки в виде отдельных блоков, где каждая пара «заголовок — значение» показана в отдельной строке.
+ * - Мобильный режим (через `md:hidden`) отображает строки в виде отдельных блоков,
+ * де каждая пара «заголовок — значение» показана в отдельной строке.
  * - Стилизация с тёмной темой, поддержка скруглений, чередующихся строк и плавных эффектов наведения.
  *
  * Где использовать:
  * - В контенте из CMS, Markdown или JSON, где нужно красиво отрисовать таблицу без ручного верстки.
  * - В блогах, технических статьях, отчётах и любых текстовых публикациях с табличными данными.
  */
-export default function TableArticleBlock({
+const TableArticleBlock = ({
                                headers,
                                rows,
                                align = [],
-                           }: ArticleTableBlock) {
+                           }: ArticleTableBlock): JSX.Element => {
     return (
         <div className="my-6 overflow-x-auto rounded-xl shadow-sm">
             {renderDesktopTable(headers, rows, align)}
@@ -150,3 +152,5 @@ export default function TableArticleBlock({
         </div>
     )
 }
+
+export default TableArticleBlock;

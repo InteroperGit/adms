@@ -4,7 +4,7 @@ import {cn} from "@/libs/utils";
 import {ArticleImageGalleryBlock} from "@/types/article";
 import ContentImage from "@/components/image/ContentImage";
 import ContentImageViewer from "@/components/image/ContentImageViewer";
-import React, {useState} from "react";
+import React, {JSX, useState} from "react";
 
 /**
  * Компонент для отображения галереи изображений в статьях, блогах или CMS-контенте
@@ -31,11 +31,11 @@ import React, {useState} from "react";
  * - В статьях, презентациях, маркетинговых страницах и документации.
  * - В CMS, где автору нужно выбрать способ отображения галереи без ручного кодинга.
  */
-export default function ImageGalleryArticleBlock({
+const ImageGalleryArticleBlock = ({
                                           images,
                                           layout = 'grid',
                                           columns = 3,
-                                      }: ArticleImageGalleryBlock) {
+                                      }: ArticleImageGalleryBlock): JSX.Element => {
     const [open, setOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -103,3 +103,5 @@ export default function ImageGalleryArticleBlock({
         </div>
     );
 };
+
+export default ImageGalleryArticleBlock;

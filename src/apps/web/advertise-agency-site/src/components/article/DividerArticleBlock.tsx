@@ -1,4 +1,5 @@
 import {ArticleDividerBlock} from "@/types/article";
+import {JSX} from "react";
 
 /**
  * Компонент для отображения горизонтальной линии-разделителя между контентными блоками.
@@ -23,9 +24,9 @@ import {ArticleDividerBlock} from "@/types/article";
  * - На страницах, где необходимо разделить разделы текста или блоки контента.
  * - Для визуальной разгрузки контента и улучшения читабельности.
  */
-export default function DividerBlockArticleBlock({
+const DividerBlockArticleBlock = ({
                                           style = 'solid'
-                                      }: ArticleDividerBlock) {
+                                      }: ArticleDividerBlock): JSX.Element => {
     const borderStyle = {
         solid: 'border-solid',
         dashed: 'border-dashed',
@@ -36,3 +37,5 @@ export default function DividerBlockArticleBlock({
         <hr className={`my-8 border-t ${borderStyle} border-gray-200 dark:border-gray-700`} />
     );
 };
+
+export default DividerBlockArticleBlock;

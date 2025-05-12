@@ -1,4 +1,5 @@
 import {ArticleVideoBlock} from "@/types/article";
+import {JSX} from "react";
 
 /**
  * Компонент для отображения встроенных видеороликов в статьях, блогах или CMS-контенте.
@@ -26,12 +27,12 @@ import {ArticleVideoBlock} from "@/types/article";
  * - В статьях, где нужно встроить видео с YouTube, Vimeo или другого видеохостинга.
  * - Для проектов, где важно отображение видеоконтента в адаптивном формате.
  */
-export default function VideoArticleBlock({
+const VideoArticleBlock = ({
                                    url,
                                    source,
                                    caption,
                                    aspectRatio = '16:9'
-                               }: ArticleVideoBlock) {
+                               }: ArticleVideoBlock): JSX.Element => {
     // Преобразование пропорции (aspect ratio) в padding-bottom для обеспечения корректных пропорций.
     const [width, height] = aspectRatio.split(':').map(Number);
     const paddingBottom = `${(height / width) * 100}%`;
@@ -61,3 +62,5 @@ export default function VideoArticleBlock({
         </div>
     );
 };
+
+export default VideoArticleBlock;

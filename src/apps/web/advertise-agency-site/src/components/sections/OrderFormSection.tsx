@@ -1,11 +1,17 @@
-import React from "react";
+import React, {JSX} from "react";
 import { cn } from "@/libs/utils";
 
 interface OrderFormSectionProps {
     className?: string;
 }
 
-const OrderFormSection = ({ className }: OrderFormSectionProps) => {
+/**
+ * OrderFormSection — компонент, который отображает форму для отправки заявки.
+ * Включает в себя поля для ввода имени и телефона, а также кнопку отправки.
+ * Компонент использует подкомпоненты для поля ввода (InputField) и кнопки отправки (SubmitButton),
+ * что повышает читаемость и упрощает поддержку кода.
+ */
+const OrderFormSection: React.FC<OrderFormSectionProps> = ({ className }: OrderFormSectionProps): JSX.Element => {
     return (
         <div className={cn(`${className}`)}>
             <h2 className={cn("text-2xl font-bold mb-4 dark:text-white")}>Оставить заявку</h2>

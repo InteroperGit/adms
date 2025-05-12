@@ -1,4 +1,4 @@
-import { ArticleCard } from "@/components/cards/ArticleCard"
+import ArticleCard from "@/components/cards/ArticleCard"
 import { cn } from "@/libs/utils"
 import {Article} from "@/types/article";
 

@@ -2,7 +2,7 @@
 
 import { cn } from "@/libs/utils"
 import {Article} from "@/types/article";
-import {ArticleCard} from "@/components/cards/ArticleCard";
+import ArticleCard from "@/components/cards/ArticleCard";
 
 const DEFAULT_MAX_ITEMS: number = 10;
 

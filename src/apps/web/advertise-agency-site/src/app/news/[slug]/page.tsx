@@ -3,11 +3,24 @@ import {Metadata} from "next";
 import {getProjectArticleBySlug} from "@/libs/api/projectsApi";
 import {DEFAULT_IMAGE_HEIGHT, DEFAULT_IMAGE_WIDTH} from "@/config/constants";
 import Article from "@/components/article/Article";
-import React from "react";
+import React, {JSX} from "react";
 import {getNewsArticleBySlug, getNewsSlugs} from "@/libs/api/newsApi";
 import {notFound} from "next/navigation";
 
-export async function generateMetadata(props: PageSlugProps): Promise<Metadata> {
+/**
+ * Функция для генерации метаданных страницы на основе параметров из запроса.
+ * Используется для настройки SEO, Open Graph и Twitter данных для страницы.
+ *
+ * @param {PageSlugProps} props - Параметры, передаваемые компонентом, которые включают параметры маршрута.
+ * @param {PageSlugProps.params} props.params - Объект, содержащий параметры маршрута.
+ * @param {string} props.params.slug - Уникальный идентификатор (slug) новости для поиска в базе данных.
+ *
+ * @returns {Promise<Metadata>} - Объект с метаданными, такими как title, description, Open Graph и Twitter данные.
+ *
+ * Пример использования:
+ * const metadata = await generateMetadata({ params: { slug: 'news-article-1' } });
+ */
+export const generateMetadata = async (props: PageSlugProps): Promise<Metadata> => {
     const { slug } = await props.params;
     const news = await getProjectArticleBySlug(slug);
 
@@ -51,12 +64,34 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
     };
 }
 
-export async function generateStaticParams(): Promise<PageSlugParams[]> {
+/**
+ * Функция для генерации статичных параметров (slug) для страницы.
+ * Используется для статической генерации страниц с данными о новостях.
+ *
+ * @returns {Promise<PageSlugParams[]>} - Массив объектов, содержащих slug для каждой новости.
+ *
+ * Пример использования:
+ * const params = await generateStaticParams();
+ */
+export const generateStaticParams = async (): Promise<PageSlugParams[]> => {
     const slugs = await getNewsSlugs();
     return slugs.map((slug) => ({ slug }))
 }
 
-export default async function NewsPage(props: PageSlugProps) {
+/**
+ * Основная компонента страницы новостей, которая отвечает за рендеринг статьи
+ * на основе данных, полученных через slug, и отображение содержимого новости.
+ *
+ * @param {PageSlugProps} props - Параметры, передаваемые компонентом, которые включают параметры маршрута.
+ * @param {PageSlugProps.params} props.params - Объект, содержащий параметры маршрута.
+ * @param {string} props.params.slug - Уникальный идентификатор (slug) новости для поиска в базе данных.
+ *
+ * @returns {JSX.Element} - Разметка статьи, которая отображает заголовок и содержимое новости.
+ *
+ * Пример использования:
+ * <NewsPage params={{ slug: 'news-article-1' }} />
+ */
+const NewsPage = async (props: PageSlugProps): Promise<JSX.Element> => {
     const { slug } = await props.params;
     const news = await getNewsArticleBySlug(slug);
 
@@ -71,3 +106,5 @@ export default async function NewsPage(props: PageSlugProps) {
         </article>
     );
 }
+
+export default NewsPage;

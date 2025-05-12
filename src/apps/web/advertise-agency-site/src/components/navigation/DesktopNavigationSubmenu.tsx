@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, {JSX} from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { cn } from "@/libs/utils"
@@ -10,7 +10,23 @@ interface Props {
     links: NavigationLink[]
 }
 
-export const DesktopNavigationSubmenu: React.FC<Props> = ({ links }) => {
+/**
+ * DesktopNavigationSubmenu — компонент для отображения подменю в навигационном меню.
+ * Этот компонент отвечает за рендеринг списка ссылок, которые сгруппированы по категориям
+ * и отображаются с плавной анимацией при открытии. Подменю имеет стилизованный фон, тени
+ * и адаптивные сетки для разных экранов.
+ *
+ * Основные особенности:
+ * 1. Использование анимации с помощью `motion.div` для плавного появления и скрытия подменю.
+ * 2. Контент подменю разделён на колонки, количество которых зависит от количества ссылок.
+ * 3. Каждая ссылка в подменю имеет анимацию изменения ширины подчеркивания при наведении.
+ * 4. Используется `Tailwind CSS` для стилизации, включая бордеры, фон, скругления и тени.
+ * 5. Адаптивное поведение: на больших экранах используется 4 колонки, на средних — 2.
+ *
+ * Этот компонент полезен для реализации сложных подменю в навигационных панелях, где
+ * требуется отображение разных категорий с возможностью перехода по ссылкам.
+ */
+const DesktopNavigationSubmenu: React.FC<Props> = ({ links }): JSX.Element => {
     return (
         <motion.div
             initial={{ y: -20 }}
@@ -76,3 +92,5 @@ export const DesktopNavigationSubmenu: React.FC<Props> = ({ links }) => {
         </motion.div>
     )
 }
+
+export default DesktopNavigationSubmenu;

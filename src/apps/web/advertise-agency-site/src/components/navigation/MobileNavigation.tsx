@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button"
 import {Bars3Icon, PhoneIcon} from '@heroicons/react/24/outline'
 import Link from "next/link"
 import {NavigationLink} from "@/types/navigation";
-import React from "react";
+import React, {JSX} from "react";
 import {cn} from "@/libs/utils";
 import {FaWhatsapp} from "react-icons/fa";
 
-type MobileNavigationProps = {
+interface MobileNavigationProps {
     navLinks: NavigationLink[];
     className?: string;
 }
@@ -99,7 +99,7 @@ const mobileMenu = (navLinks: NavigationLink[]): React.ReactNode => (
  *   className="custom-class"
  * />
  */
-export default function MobileNavigation({ navLinks, className }: MobileNavigationProps) {
+const MobileNavigation: React.FC<MobileNavigationProps> = ({ navLinks, className }: MobileNavigationProps): JSX.Element => {
     return (
         <div className={cn("flex", "w-full justify-between px-4 py-2 bg-background border-t md:hidden", className)}>
             <Button
@@ -139,3 +139,5 @@ export default function MobileNavigation({ navLinks, className }: MobileNavigati
         </div>
     )
 }
+
+export default MobileNavigation;

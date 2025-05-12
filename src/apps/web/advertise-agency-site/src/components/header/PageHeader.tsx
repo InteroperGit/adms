@@ -6,8 +6,22 @@ interface PageHeaderProps {
     className?: string;
 }
 
-export default function PageHeader({ children, className }: PageHeaderProps): React.ReactNode {
+/**
+ * PageHeader — компонент, который отображает заголовок страницы с возможностью кастомизации стилей.
+ * Этот компонент используется для отображения заголовков на страницах, оборачивая переданный текст в элемент `<h1>`.
+ *
+ * Основные особенности:
+ * 1. Заголовок всегда отображается как элемент `<h1>` с жирным шрифтом и отступом снизу (margin).
+ * 2. Возможность передать дополнительный класс через `className` для изменения внешнего вида заголовка.
+ * 3. Использует хелпер `cn` для объединения классов, что позволяет легко добавлять или переопределять стили.
+ * 4. Компонент принимает `children`, что позволяет вставлять любой текст или JSX-контент в заголовок.
+ *
+ * Этот компонент полезен для создания унифицированных заголовков на страницах сайта.
+ */
+const PageHeader = ({ children, className }: PageHeaderProps): React.ReactNode => {
     return (
         <h1 className={cn("text-2xl font-bold text-left mb-12", className)}>{children}</h1>
     );
 }
+
+export default PageHeader;

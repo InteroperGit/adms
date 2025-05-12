@@ -12,6 +12,7 @@ import CodeArticleBlock from "@/components/article/CodeArticleBlock";
 import DividerArticleBlock from "@/components/article/DividerArticleBlock";
 import EmbedArticleBlock from "@/components/article/EmbedArticleBlock";
 import FormArticleBlock from "@/components/article/FormArticleBlock";
+import {JSX} from "react";
 
 /**
  * Компонент `Article` отвечает за рендеринг массива блоков статьи, каждый из которых имеет собственный тип.
@@ -24,7 +25,7 @@ import FormArticleBlock from "@/components/article/FormArticleBlock";
  *
  * Это позволяет гибко и масштабируемо отображать произвольный набор контентных блоков на странице статьи.
  */
-export default function Article({ blocks }: { blocks: ArticleBlock[] }) {
+const Article = ({ blocks }: { blocks: ArticleBlock[] }): JSX.Element =>  {
     return (
         <div>
             {blocks.map((block, index) => {
@@ -116,3 +117,5 @@ export default function Article({ blocks }: { blocks: ArticleBlock[] }) {
         </div>
     );
 };
+
+export default Article;

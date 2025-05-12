@@ -5,20 +5,47 @@ import {DEFAULT_NEWS_PAGE_SIZE} from "@/config/constants";
 import HeroSection from "@/components/sections/HeroSection";
 import {cn} from "@/libs/utils";
 import ArticlesPagination from "@/components/misc/ArticlePagination";
-import {ArticleCard} from "@/components/cards/ArticleCard";
+import ArticleCard from "@/components/cards/ArticleCard";
 import {Article} from "@/types/article";
+import {JSX} from "react";
 
 const URL_BASE_PATTERN = "/news/page";
 
+/**
+ * Параметры маршрута, включая номер текущей страницы.
+ *
+ * @param {Promise<NewsPageParams>} params - Обещание, которое возвращает параметры маршрута.
+ */
+interface NewsPageProps {
+    params: Promise<NewsPageParams>;
+}
+
+/**
+ * Интерфейс для параметров маршрута страницы новостей.
+ *
+ * @param {string} page - Номер страницы в формате строки.
+ */
 interface NewsPageParams {
     page: string;
 }
 
-interface NewsPageProps {
-    params: Promise<NewsPageParams>
-}
-
-export default async function NewsPage(props: NewsPageProps) {
+/**
+ * Компонент страницы новостей, который отображает список новостей с пагинацией.
+ * Загружает новости с сервера, отображает их на странице и обеспечивает
+ * пагинацию по страницам.
+ *
+ * @param {NewsPageProps} props - Параметры, передаваемые компонентом.
+ * @param {Promise<NewsPageParams>} props.params - Обещание, которое возвращает
+ * параметры маршрута, включая номер текущей страницы.
+ * @param {string} props.params.page - Строка, представляющая номер текущей страницы.
+ *
+ * @returns {JSX.Element} - Разметка страницы, включающая шапку страницы, список
+ * новостей и компонент пагинации.
+ *
+ * Пример использования:
+ * <NewsPage params={{ page: '2' }} />
+ */
+const NewsPage = async (props: NewsPageProps): Promise<JSX.Element> => {
     let page: string = "1";
     let currentPage: number = 0;
     let newsCount: number | null | undefined = undefined;
@@ -84,3 +111,5 @@ export default async function NewsPage(props: NewsPageProps) {
         </div>
     )
 }
+
+export default NewsPage;

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { cn } from "@/libs/utils";
 import { ServiceCategory } from "@/types/service";
+import {JSX} from "react";
 
 interface ServiceCategoryFilterProps {
     categories: ServiceCategory[];
@@ -26,11 +27,11 @@ const CONTAINER_CLASSES = "flex flex-wrap justify-center gap-2 md:gap-4 mb-12";
  * @param {string} activeCategory - Текущий активный slug (или name)
  * @param {string} [className] - Кастомные классы для обёртки
  */
-const ServiceCategoryFilter = ({
+const ServiceCategoryFilter: React.FC<ServiceCategoryFilterProps> = ({
                                    categories,
                                    activeCategory,
                                    className,
-                               }: ServiceCategoryFilterProps) => {
+                               }: ServiceCategoryFilterProps): JSX.Element => {
     return (
         <div className={cn(CONTAINER_CLASSES, className)}>
             {categories.map((category) => (

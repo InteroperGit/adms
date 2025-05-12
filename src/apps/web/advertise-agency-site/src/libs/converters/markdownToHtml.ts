@@ -15,7 +15,21 @@ renderer.listitem = (token: Tokens.ListItem): string => {
         return `<li>${cleanText}</li>\n`;
 }
 
-export async function markdownToHtml(markdown: string): Promise<string> {
+/**
+ * Преобразует строку в формате Markdown в HTML с использованием библиотеки
+ * `marked` и очищает результат с помощью `purify` для предотвращения XSS-уязвимостей.
+ *
+ * @param {string} markdown — строка с текстом в формате Markdown, которую необходимо преобразовать в HTML.
+ *
+ * @returns {Promise<string>} Возвращает промис, который резолвится в строку, содержащую безопасный HTML.
+ *
+ * Пример использования:
+ * ```ts
+ * const htmlContent = await markdownToHtml('# Привет, мир!');
+ * console.log(htmlContent); // <h1>Привет, мир!</h1>
+ * ```
+ */
+export const markdownToHtml= async (markdown: string): Promise<string> => {
     const dirty = await marked(markdown, {
         async: true,
         renderer

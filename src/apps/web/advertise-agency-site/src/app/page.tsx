@@ -1,4 +1,4 @@
-import React from "react";
+import React, {JSX} from "react";
 import { cn } from "@/libs/utils";
 
 import ServicesSection from "@/components/sections/ServicesSection";
@@ -32,7 +32,17 @@ import {
 
 const YANDEX_COMPANY_ID = process.env.YANDEX_COMPANY_ID;
 
-export default async function Home() {
+/**
+ * Главная страница сайта, которая отображает различные секции с контентом:
+ * карусель спецпредложений, информацию о компании, услуги, портфолио,
+ * новости, отзывы, FAQ, форму заявки и другие.
+ *
+ * @returns {JSX.Element} - Разметка главной страницы, включая все секции.
+ *
+ * Пример использования:
+ * <Home />
+ */
+const Home = async (): Promise<JSX.Element> => {
     let serviceCategories,
         projects,
         news,
@@ -176,3 +186,5 @@ export default async function Home() {
         </div>
     );
 }
+
+export default Home;

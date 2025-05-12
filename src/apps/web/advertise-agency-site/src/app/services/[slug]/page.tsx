@@ -2,7 +2,7 @@ import {PageSlugProps} from "@/types/page";
 import {Metadata} from "next";
 import {getArticleBySlug} from "@/libs/api/articlesApi";
 import Article from "@/components/article/Article";
-import React from "react";
+import React, {JSX} from "react";
 import {getServiceArticleBySlug} from "@/libs/api/servicesApi";
 
 const DEFAULT_IMAGE_WIDTH = 1200;
@@ -12,10 +12,22 @@ const DEFAULT_IMAGE_HEIGHT = 630;
 export const revalidate = 60;
 
 /**
- * Сгенерировать метаданные
- * @param props
+ * Функция для генерации метаданных страницы на основе параметров из запроса.
+ * Используется для настройки SEO, Open Graph и Twitter данных для страницы.
+ *
+ * @param {PageSlugProps} props - Параметры, передаваемые компонентом, которые
+ * включают параметры маршрута.
+ * @param {PageSlugProps.params} props.params - Объект, содержащий параметры маршрута.
+ * @param {string} props.params.slug - Уникальный идентификатор (slug) статьи для
+ * поиска в базе данных.
+ *
+ * @returns {Promise<Metadata>} - Объект с метаданными, такими как title,
+ * description, Open Graph и Twitter данные.
+ *
+ * Пример использования:
+ * const metadata = await generateMetadata({ params: { slug: 'service-article-1' } });
  */
-export async function generateMetadata(props: PageSlugProps): Promise<Metadata> {
+export const generateMetadata = async (props: PageSlugProps): Promise<Metadata> => {
     const { slug } = await props.params;
     const article = await getArticleBySlug(slug);
 
@@ -60,11 +72,22 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
 }
 
 /**
- * Страница "Статья об услуге"
- * @param props
- * @constructor
+ * Страница "Статья об услуге", которая рендерит статью по slug, полученному
+ * из параметров маршрута.
+ *
+ * @param {PageSlugProps} props - Параметры, передаваемые компонентом, которые
+ * включают параметры маршрута.
+ * @param {PageSlugProps.params} props.params - Объект, содержащий параметры маршрута.
+ * @param {string} props.params.slug - Уникальный идентификатор (slug) статьи для
+ * поиска в базе данных.
+ *
+ * @returns {JSX.Element} - Разметка страницы, которая отображает заголовок и
+ * содержимое статьи.
+ *
+ * Пример использования:
+ * <ServiceArticlePage params={{ slug: 'service-article-1' }} />
  */
-export default async function ServiceArticlePage(props: PageSlugProps) {
+const ServiceArticlePage = async (props: PageSlugProps): Promise<JSX.Element> => {
     const { slug } = await props.params;
     const article = await getServiceArticleBySlug(slug);
 
@@ -79,3 +102,5 @@ export default async function ServiceArticlePage(props: PageSlugProps) {
         </article>
     );
 }
+
+export default ServiceArticlePage;
