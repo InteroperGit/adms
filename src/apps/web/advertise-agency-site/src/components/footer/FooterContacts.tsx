@@ -1,4 +1,4 @@
-import { PhoneIcon, EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/outline";
+import { PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { cn } from "@/libs/utils";
 import React, {JSX} from "react";
 import Link from "next/link";
@@ -34,6 +34,10 @@ const contactsData: Record<string, { icon: React.ReactNode, hoverColor: string  
         icon: <MapPinIcon />,
         hoverColor: "hover:text-red-600",
     },
+    "workHours": {
+        icon: <ClockIcon />,
+        hoverColor: "hover:text-red-600",
+    }
 }
 
 const getContactElements = (contacts?: ContactItem[]): ContactElement[] => {
