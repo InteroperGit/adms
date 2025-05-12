@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { cn } from "@/libs/utils";
+import React, {JSX} from "react";
 
 interface CtaSectionProps {
     /**
@@ -80,7 +81,7 @@ interface CtaSectionProps {
  *   buttonClassName="hover:scale-105 transform transition-all"
  * />
  */
-export const CtaSection = ({
+const CtaSection: React.FC<CtaSectionProps> = ({
                                title = "Хотите такой же результат?",
                                description = "Оставьте заявку и мы обсудим ваш проект",
                                buttonText = "Обсудить проект",
@@ -89,7 +90,7 @@ export const CtaSection = ({
                                titleClassName,
                                descriptionClassName,
                                buttonClassName,
-                           }: CtaSectionProps) => {
+                           }: CtaSectionProps): JSX.Element => {
     return (
         <section className={cn(
             "bg-orange-600 dark:bg-orange-800 text-white py-16 px-6",
@@ -125,3 +126,5 @@ export const CtaSection = ({
         </section>
     );
 };
+
+export default CtaSection;

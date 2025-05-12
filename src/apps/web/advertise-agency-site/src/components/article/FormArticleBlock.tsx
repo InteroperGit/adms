@@ -3,6 +3,7 @@ import LightLettersOrderForm from "@/components/forms/LightLettersOrderForm";
 import LightBoxOrderForm from "@/components/forms/LightBoxOrderForm";
 import BracketOrderForm from "@/components/forms/BracketOrderForm";
 import TechnicalDesignOrderForm from "@/components/forms/TechnicalDesignOrderForm";
+import {JSX} from "react";
 
 /**
  * Компонент для отображения формы на основе типа формы, переданного через пропс `formType`.
@@ -22,7 +23,7 @@ import TechnicalDesignOrderForm from "@/components/forms/TechnicalDesignOrderFor
  * - Этот компонент может быть использован для создания формы заказа или других типов интерактивных форм на страницах,
  * где нужно предложить пользователю различные варианты в зависимости от контекста.
  */
-export default function FormBlockArticleBlock({ formType, title }: ArticleFormBlock) {
+const FormBlockArticleBlock = ({ formType, title }: ArticleFormBlock): JSX.Element => {
     const renderForm = () => {
         switch (formType) {
             case 'light-letters':
@@ -44,3 +45,5 @@ export default function FormBlockArticleBlock({ formType, title }: ArticleFormBl
         </div>
     );
 };
+
+export default FormBlockArticleBlock;

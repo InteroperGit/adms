@@ -1,4 +1,5 @@
 import {ArticleCodeBlock} from "@/types/article";
+import {JSX} from "react";
 
 /**
  * Компонент для отображения блоков кода с подсветкой синтаксиса и опциональными номерами строк.
@@ -24,11 +25,11 @@ import {ArticleCodeBlock} from "@/types/article";
  * - В технической документации для демонстрации фрагментов программ.
  * - В обучающих материалах и на образовательных платформах для отображения примеров программирования.
  */
-export default function CodeBlockArticleBlock({
+const CodeBlockArticleBlock = ({
                                        code,
                                        language,
                                        showLineNumbers = false
-                                   }: ArticleCodeBlock) {
+                                   }: ArticleCodeBlock): JSX.Element => {
     return (
         <div className="my-6 bg-gray-800 rounded-lg overflow-hidden">
             {language && (
@@ -44,3 +45,5 @@ export default function CodeBlockArticleBlock({
         </div>
     );
 };
+
+export default CodeBlockArticleBlock;

@@ -135,7 +135,7 @@ async function parseDynamicBlock(block?: StrapiArticleBlock, strapiUrl?: string)
  * @param article Статья
  * @param strapiUrl URL Strapi
  */
-export async function convertStrapiArticleToArticle(article?: StrapiArticle, strapiUrl?: string): Promise<Article | undefined> {
+export const convertStrapiArticleToArticle = async (article?: StrapiArticle, strapiUrl?: string): Promise<Article | undefined> => {
     if (!article || !strapiUrl) {
         return Promise.resolve(undefined);
     }

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { cn } from "@/libs/utils"
-import React from "react";
+import React, {JSX} from "react";
 import {ServiceCategory} from "@/types/service";
 import ContentImage from "@/components/image/ContentImage";
 
@@ -34,13 +34,13 @@ const accentColorClasses = {
 }
 
 // 👇 Внутренний компонент списка услуг
-function ServiceList({
+const ServiceList = ({
                          items,
                          accentColor,
                      }: {
     items: ServiceCategory["items"]
     accentColor: "orange" | "blue" | "green"
-}) {
+}): JSX.Element => {
     return (
         <ul className="space-y-2 flex-1">
             {items?.map((subService, index) => (
@@ -108,12 +108,12 @@ function ServiceList({
  *   accentColor="blue"
  * />
  */
-export default function ServiceCard({
+const ServiceCard = ({
                                 service,
                                 index,
                                 className,
                                 accentColor = "orange",
-                            }: ServiceCardProps) {
+                            }: ServiceCardProps): JSX.Element => {
     return (
         <div
             key={index}
@@ -148,3 +148,5 @@ export default function ServiceCard({
         </div>
     )
 }
+
+export default ServiceCard;

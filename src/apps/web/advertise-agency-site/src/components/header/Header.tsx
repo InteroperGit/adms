@@ -3,7 +3,7 @@
 import { cn } from '@/libs/utils'
 import Logo from '@/components/misc/Logo'
 import Toolbar from '@/components/navigation/Toolbar'
-import { HeaderContacts } from '@/components/header/HeaderContacts'
+import HeaderContacts from '@/components/header/HeaderContacts'
 import {JSX} from "react";
 import {ContactItem} from "@/types/contacts";
 

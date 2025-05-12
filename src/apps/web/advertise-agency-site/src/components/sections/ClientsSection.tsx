@@ -1,9 +1,7 @@
-// components/sections/ClientsSection.tsx
-"use client"
-
 import { cn } from "@/libs/utils"
 import Image from "next/image"
 import { Client } from "@/types/client";
+import React, {JSX} from "react";
 
 interface ClientsSectionProps {
     clients: Client[];
@@ -34,11 +32,11 @@ interface ClientsSectionProps {
  *   className="my-12"
  * />
  */
-export default function ClientsSection({
+const ClientsSection: React.FC<ClientsSectionProps> = ({
                                            clients,
                                            title = "Наши клиенты",
                                            className,
-                                       }: ClientsSectionProps) {
+                                       }: ClientsSectionProps): JSX.Element => {
     // Используем правильные классы для сетки
     const gridClasses = cn(
         "flex flex-wrap justify-center gap-4", // Гибкая обертка с отступами между элементами
@@ -76,3 +74,5 @@ export default function ClientsSection({
         </div>
     )
 }
+
+export default ClientsSection;

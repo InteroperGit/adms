@@ -3,11 +3,11 @@ import {getArticleBySlug} from "@/libs/api/articlesApi";
 import {BreadcrumbItem} from "@/types/breadcrumbs";
 import {getProjectArticleBySlug} from "@/libs/api/projectsApi";
 
-function getBaseBreadcrumbs(): BreadcrumbItem {
+const getBaseBreadcrumbs = (): BreadcrumbItem => {
     return { title: "Главная", href: "/" }
 }
 
-async function getServiceBreadcrumbs(segments: string[]): Promise<BreadcrumbItem[]> {
+const getServiceBreadcrumbs = async (segments: string[]): Promise<BreadcrumbItem[]> => {
     const result: BreadcrumbItem[] = [
         getBaseBreadcrumbs(),
     ];
@@ -34,7 +34,7 @@ async function getServiceBreadcrumbs(segments: string[]): Promise<BreadcrumbItem
     return result;
 }
 
-async function getArticleBreadcrumbs(segments: string[]): Promise<BreadcrumbItem[]> {
+const getArticleBreadcrumbs = async (segments: string[]): Promise<BreadcrumbItem[]> => {
     const result: BreadcrumbItem[] = [
         getBaseBreadcrumbs(),
     ];
@@ -68,7 +68,7 @@ async function getArticleBreadcrumbs(segments: string[]): Promise<BreadcrumbItem
     return result;
 }
 
-async function getPortfolioBreadcrumbs(segments: string[]): Promise<BreadcrumbItem[]> {
+const getPortfolioBreadcrumbs = async (segments: string[]): Promise<BreadcrumbItem[]> => {
     const result: BreadcrumbItem[] = [
         getBaseBreadcrumbs(),
     ];
@@ -102,7 +102,7 @@ async function getPortfolioBreadcrumbs(segments: string[]): Promise<BreadcrumbIt
     return result;
 }
 
-async function getNewsBreadcrumbs(segments: string[]): Promise<BreadcrumbItem[]> {
+const getNewsBreadcrumbs = async (segments: string[]): Promise<BreadcrumbItem[]> => {
     const result: BreadcrumbItem[] = [
         getBaseBreadcrumbs(),
     ];
@@ -129,14 +129,14 @@ async function getNewsBreadcrumbs(segments: string[]): Promise<BreadcrumbItem[]>
     return result;
 }
 
-async function getContactsBreadcrumbs(): Promise<BreadcrumbItem[]> {
+const getContactsBreadcrumbs = async (): Promise<BreadcrumbItem[]> => {
     return [
         getBaseBreadcrumbs(),
         {title: "Контакты", href: "/contacts", isCurrent: true},
     ];
 }
 
-async function getBreadcrumbs(path: string): Promise<BreadcrumbItem[]> {
+const getBreadcrumbs = async (path: string): Promise<BreadcrumbItem[]> => {
     const segments = path.split("/").filter(Boolean);
 
     const rootPage = segments[0];
@@ -157,7 +157,7 @@ async function getBreadcrumbs(path: string): Promise<BreadcrumbItem[]> {
     }
 }
 
-export async function GET(req: NextRequest) {
+export const GET = async (req: NextRequest) => {
     const { searchParams } = new URL(req.url);
     const path = searchParams.get("path");
 

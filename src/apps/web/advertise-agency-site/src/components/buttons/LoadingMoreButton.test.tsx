@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { LoadingMoreButton } from './LoadingMoreButton';
+import LoadingMoreButton from './LoadingMoreButton';
 
 describe('LoadingMoreButton', () => {
     it('renders default text when not loading', () => {

@@ -7,6 +7,7 @@ import {
     PaginationPrevious,
     PaginationEllipsis,
 } from "@/components/ui/pagination"
+import {JSX} from "react";
 
 interface ArticlePaginationProps {
     urlBasePattern: string;
@@ -14,7 +15,28 @@ interface ArticlePaginationProps {
     totalPages: number
 }
 
-export default function ArticlesPagination({ urlBasePattern, currentPage, totalPages }: ArticlePaginationProps) {
+/**
+ * ArticlesPagination — компонент пагинации для статей с возможностью перехода между страницами.
+ * Он отображает кнопки для перехода на предыдущую и следующую страницы,
+ * а также номера страниц с возможностью перехода на определённую страницу.
+ * Если общее количество страниц велико, используются многоточия для сокращения количества отображаемых ссылок.
+ *
+ * Основные особенности:
+ * 1. Поддержка навигации по страницам с динамическим формированием ссылок для каждой страницы.
+ * 2. Пагинация отображает текущую страницу и позволяет пользователю перейти на предыдущую и следующую страницу.
+ * 3. Используются многоточия (`PaginationEllipsis`), чтобы скрыть промежуточные страницы,
+ * если их слишком много.
+ * 4. Вычисление видимых страниц с учетом текущей страницы и общего числа страниц
+ * (максимум 3 страницы отображаются рядом с текущей).
+ * 5. Формирование ссылок с базовым паттерном URL и номером страницы, что позволяет
+ * гибко адаптировать пагинацию для разных структур URL.
+ *
+ * Этот компонент полезен для реализации пагинации на страницах с большим количеством статей или контента.
+ */
+const ArticlesPagination = ({
+                                urlBasePattern,
+                                currentPage,
+                                totalPages }: ArticlePaginationProps): JSX.Element => {
     const createPageLink = (page: number) => `${urlBasePattern}/${page}`
     const renderedPageNumbers: number[] = []
 
@@ -89,3 +111,5 @@ export default function ArticlesPagination({ urlBasePattern, currentPage, totalP
         </Pagination>
     )
 }
+
+export default ArticlesPagination;

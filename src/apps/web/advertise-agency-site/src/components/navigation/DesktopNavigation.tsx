@@ -1,12 +1,12 @@
 "use client"
 
-import React, {useRef, useState} from "react"
+import React, {JSX, useRef, useState} from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/libs/utils"
-import { DesktopNavigationSubmenu } from "@/components/navigation/DesktopNavigationSubmenu"
+import DesktopNavigationSubmenu from "@/components/navigation/DesktopNavigationSubmenu"
 import {NavigationLink} from "@/types/navigation";
 
 const SUBMENU_SHOW_HIDE_IDLE = 250
@@ -15,7 +15,24 @@ interface DesktopNavigationProps {
     navLinks: NavigationLink[]
 }
 
-export default function DesktopNavigation({ navLinks }: DesktopNavigationProps) {
+/**
+ * DesktopNavigation — компонент для отображения навигационного меню с подменю.
+ * Этот компонент отвечает за рендеринг горизонтального меню с ссылками, которые при наведении
+ * отображают подменю. Подменю появляется с анимацией, а сам компонент использует фреймворк
+ * `framer-motion` для плавных переходов и анимаций.
+ *
+ * Основные особенности:
+ * 1. Навигация отображает список ссылок, каждая из которых может иметь подменю.
+ * 2. При наведении на ссылку с подменю появляется дополнительное меню с анимацией.
+ * 3. Использование состояний `hoveredMenu` для управления отображением подменю.
+ * 4. Подменю скрывается через определённый таймаут с помощью `setTimeout`, чтобы избежать слишком быстрого исчезновения.
+ * 5. Анимации при отображении и скрытии подменю с использованием `motion.div` из `framer-motion`.
+ * 6. Применение классов из `Tailwind CSS` для стилизации и адаптивности.
+ *
+ * Этот компонент полезен для создания адаптивного и интерактивного меню с подменю для
+ * десктопных версий сайтов, где требуется плавная анимация переходов и подменю.
+ */
+const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ navLinks }: DesktopNavigationProps): JSX.Element => {
     const pathname = usePathname()
     const [hoveredMenu, setHoveredMenu] = useState<NavigationLink | null>(null)
 
@@ -119,3 +136,5 @@ export default function DesktopNavigation({ navLinks }: DesktopNavigationProps) 
         </div>
     )
 }
+
+export default DesktopNavigation;

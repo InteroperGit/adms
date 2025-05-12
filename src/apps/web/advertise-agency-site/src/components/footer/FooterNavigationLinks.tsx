@@ -7,7 +7,20 @@ interface FooterNavigationLinksProps {
     navigationLinks: NavigationLink[];
 }
 
-export default function FooterNavigationLinks({ navigationLinks }: FooterNavigationLinksProps): JSX.Element {
+/**
+ * FooterNavigationLinks — компонент для отображения списка навигационных ссылок в футере.
+ * Он принимает массив навигационных ссылок и рендерит их в виде списка `<ul>`, где каждая ссылка представлена
+ * элементом `<Link>` из библиотеки `next/link`. Каждая ссылка стилизована с использованием классов Tailwind CSS,
+ * с добавлением анимации подчеркивания при наведении.
+ *
+ * Основные особенности:
+ * 1. Массив ссылок `navigationLinks` рендерится динамически с использованием метода `map`.
+ * 2. Для каждой ссылки применяется плавное расширение подчеркивания, которое анимируется при наведении.
+ * 3. Использование библиотеки `clsx` (`cn`), чтобы динамически объединять классы CSS.
+ *
+ * Компонент удобно использовать для футеров и других областей сайта, где нужно отобразить список ссылок с эффектами.
+ */
+const FooterNavigationLinks = ({ navigationLinks }: FooterNavigationLinksProps): JSX.Element => {
     return (
         <ul className="space-y-2">
             {navigationLinks.map((link) => (
@@ -28,3 +41,5 @@ export default function FooterNavigationLinks({ navigationLinks }: FooterNavigat
         </ul>
     );
 }
+
+export default FooterNavigationLinks;

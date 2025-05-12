@@ -1,9 +1,11 @@
 import {ArticleQuoteBlock} from "@/types/article";
 import {cn} from "@/libs/utils";
+import {JSX} from "react";
 
 /**
  * Компонент для отображения цитат с автором и источником.
- * Предназначен для использования в статьях, блогах или других текстовых блоках, где требуется отображение цитаты с возможностью указания автора и источника.
+ * Предназначен для использования в статьях, блогах или других текстовых блоках,
+ * где требуется отображение цитаты с возможностью указания автора и источника.
  *
  * Зачем нужен:
  * - Отображает цитату в виде блочного элемента с выделенной левой границей и стильным фоном.
@@ -24,11 +26,11 @@ import {cn} from "@/libs/utils";
  * - В статьях и блогах для выделения ключевых цитат.
  * - Для использования в портфолио, кейс-стади и других контентных блоках, где важны цитаты или отзывы.
  */
-export default function QuoteArticleBlock({
+const QuoteArticleBlock = ({
                                    text,
                                    author,
                                    source,
-                               }: ArticleQuoteBlock) {
+                               }: ArticleQuoteBlock): JSX.Element => {
     return (
         <blockquote
             className={cn(
@@ -55,3 +57,5 @@ export default function QuoteArticleBlock({
         </blockquote>
     );
 }
+
+export default QuoteArticleBlock;

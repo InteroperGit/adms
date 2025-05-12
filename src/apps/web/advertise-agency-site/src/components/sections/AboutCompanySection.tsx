@@ -1,6 +1,4 @@
-"use client"
-
-import React from 'react';
+import React, {JSX} from 'react';
 import { cn } from '@/libs/utils';
 import {AboutCompany} from "@/types/aboutCompany";
 import ImageSlider from "@/components/image/ImageSlider";
@@ -67,7 +65,7 @@ const AboutCompanySection: React.FC<AboutCompanySectionProps> = ({
                                                                      aboutCompany,
                                                                      slideInterval = 5000,
                                                                      className,
-                                                                 }) => {
+                                                                 }): JSX.Element => {
     return (
         <section className={cn(
             "bg-white dark:bg-gray-800 p-8 rounded-lg border dark:border-gray-700",

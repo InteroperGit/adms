@@ -1,5 +1,5 @@
 import { cn } from "@/libs/utils";
-import { ReactNode } from "react";
+import {JSX, ReactNode} from "react";
 
 /**
  * Компонент-контейнер для единообразного размещения контента на страницах.
@@ -12,16 +12,18 @@ import { ReactNode } from "react";
  * @param children - Содержимое контейнера
  * @param className - Дополнительные классы для кастомизации
  */
-export function Container({
+const Container = ({
                               children,
                               className,
                           }: {
     children: ReactNode;
     className?: string;
-}) {
+}): JSX.Element => {
     return (
         <div className={cn("w-full sm:max-w-7xl sm:mx-auto px-4 py-6", className)}>
             {children}
         </div>
     );
 }
+
+export default Container;

@@ -1,22 +1,34 @@
-import {getServiceCategories, getServiceCategoryByName} from "@/libs/api/servicesApi";
-import {PageCategoryParams, PageCategoryProps} from "@/types/page";
+import {JSX} from "react";
 import {notFound} from "next/navigation";
 import {cn} from "@/libs/utils";
+import {getServiceCategories, getServiceCategoryByName} from "@/libs/api/servicesApi";
+import {getProjectArticles, getProjectsArticlesCount, ProjectArticlesProps} from "@/libs/api/projectsApi";
+import {PageCategoryParams, PageCategoryProps} from "@/types/page";
 import HeroSection from "@/components/sections/HeroSection";
 import {ServiceCategory} from "@/types/service";
 import ServiceCategoryFilter from "@/components/navigation/ServiceCategoryFilter";
-import {getProjectArticles, getProjectsArticlesCount, ProjectArticlesProps} from "@/libs/api/projectsApi";
 import ArticlesPagination from "@/components/misc/ArticlePagination";
 import {Article} from "@/types/article";
-import {ArticleCard} from "@/components/cards/ArticleCard";
-import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
+import ArticleCard from "@/components/cards/ArticleCard";
 import ServiceIsNotRespondedError from "@/components/error/ServiceIsNotRespondedError";
+import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
 
 const PORTFOLIO_PAGE_SIZE = process.env.PORTFOLIO_PAGE_SIZE && !isNaN(Number(process.env.PORTFOLIO_PAGE_SIZE))
     ? parseInt(process.env.PORTFOLIO_PAGE_SIZE, 10)
     : DEFAULT_PORTFOLIO_PAGE_SIZE;
 
-export async function generateStaticParams(): Promise<PageCategoryParams[]> {
+/**
+ * Функция для генерации статичных параметров (slug) для страницы категории,
+ * используемая для статической генерации страниц с данными о проектах для
+ * каждой категории.
+ *
+ * @returns {Promise<PageCategoryParams[]>} - Массив объектов, содержащих slug
+ * для каждой категории и страницы в этой категории.
+ *
+ * Пример использования:
+ * const params = await generateStaticParams();
+ */
+export const generateStaticParams = async (): Promise<PageCategoryParams[]> => {
     const categories: ServiceCategory[] | null = await getServiceCategories("nonheader");
 
     if (!Array.isArray(categories)) {
@@ -42,7 +54,22 @@ export async function generateStaticParams(): Promise<PageCategoryParams[]> {
     return params.flat();
 }
 
-export default async function PortfolioPage(props: PageCategoryProps) {
+/**
+ * Основная компонента страницы портфолио, которая отвечает за рендеринг списка
+ * проектов, фильтрацию по категории и пагинацию по страницам.
+ *
+ * @param {PageCategoryProps} props - Параметры, передаваемые компонентом, которые
+ * включают параметры маршрута.
+ * @param {PageCategoryParams} props.params - Объект с параметрами маршрута, включая
+ * category (категория) и page (номер страницы).
+ *
+ * @returns {JSX.Element} - Разметка страницы, которая включает заголовок, фильтры,
+ * список проектов и пагинацию.
+ *
+ * Пример использования:
+ * <PortfolioPage params={{ category: 'web-design', page: '1' }} />
+ */
+const PortfolioPage = async (props: PageCategoryProps): Promise<JSX.Element> => {
     let category: string | null | undefined = undefined;
     let page: string = "1";
     let serviceCategory: ServiceCategory | null | undefined = undefined;
@@ -148,3 +175,5 @@ export default async function PortfolioPage(props: PageCategoryProps) {
         </div>
     );
 }
+
+export default PortfolioPage;

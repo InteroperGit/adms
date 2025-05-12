@@ -1,10 +1,32 @@
 import HeroSection from "@/components/sections/HeroSection";
-import {CtaSection} from "@/components/sections/CtaSection";
+import CtaSection from "@/components/sections/CtaSection";
 import { getServiceCategories } from "@/libs/api/servicesApi";
-import { ServiceCategoryCard } from "@/components/cards/ServiceCategoryCard";
+import ServiceCategoryCard from "@/components/cards/ServiceCategoryCard";
+import ServiceIsNotRespondedError from "@/components/error/ServiceIsNotRespondedError";
+import {ServiceCategory} from "@/types/service";
 
-export default async function ServicesPage() {
-    const serviceCategories = await getServiceCategories("header");
+/**
+ * Страница "Услуги", которая отображает список категорий услуг и вложенных
+ * категорий для предоставления информации о предлагаемых услугах.
+ *
+ * @returns {JSX.Element} - Разметка страницы, которая включает Hero секцию с
+ * описанием, список категорий и вложенных категорий, а также CTA блок с кнопкой.
+ *
+ * Пример использования:
+ * <ServicesPage />
+ */
+const ServicesPage = async () => {
+    let serviceCategories: ServiceCategory[];
+
+    try {
+        serviceCategories = await getServiceCategories("header");
+    }
+    catch (error) {
+        console.error("Ошибка при получении данных с сервера:", error);
+        return (
+            <ServiceIsNotRespondedError />
+        )
+    }
 
     return (
         <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
@@ -47,3 +69,5 @@ export default async function ServicesPage() {
         </div>
     )
 }
+
+export default ServicesPage;

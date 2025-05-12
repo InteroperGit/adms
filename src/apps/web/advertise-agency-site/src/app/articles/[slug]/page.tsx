@@ -1,6 +1,6 @@
 import {getArticleBySlug} from '@/libs/api/articlesApi';
 import Article from "@/components/article/Article";
-import React from "react";
+import React, {JSX} from "react";
 import {Metadata} from "next";
 import {PageSlugProps} from "@/types/page";
 
@@ -11,10 +11,29 @@ const DEFAULT_IMAGE_HEIGHT = 630;
 export const revalidate = 60;
 
 /**
- * Сгенерировать метаданные
- * @param props
+ * Генерация метаданных страницы на основе данных статьи.
+ *
+ * Этот метод выполняет запрос к API для получения статьи по ее slug
+ * (идентификатору). На основе полученных данных генерируются метаданные
+ * для страницы, такие как:
+ * - Заголовок страницы (title)
+ * - Описание страницы (description)
+ * - Метаданные Open Graph для социальных сетей
+ * - Метаданные для Twitter
+ * - Канонический URL страницы
+ *
+ * В случае, если статья не найдена, возвращаются дефолтные значения для
+ * метаданных.
+ *
+ * @param {PageSlugProps} props - параметры страницы, содержащие slug статьи.
+ * @returns {Promise<Metadata>} Объект метаданных, включающий информацию для
+ * SEO, Open Graph, Twitter и другие данные.
+ *
+ * @example
+ * const metadata = await generateMetadata(props);
+ * console.log(metadata);
  */
-export async function generateMetadata(props: PageSlugProps): Promise<Metadata> {
+export const generateMetadata = async (props: PageSlugProps): Promise<Metadata> => {
     const { slug } = await props.params;
     const article = await getArticleBySlug(slug);
 
@@ -59,11 +78,21 @@ export async function generateMetadata(props: PageSlugProps): Promise<Metadata> 
 }
 
 /**
- * Страница "Статья"
- * @param props
- * @constructor
+ * Страница отображения статьи.
+ *
+ * Этот компонент выполняет запрос к API для получения полной статьи по ее
+ * slug. Если статья найдена, она отображается с использованием компонента
+ * `Article`, который рендерит содержимое блоков статьи. Если статья не
+ * найдена, выводится сообщение "Статья не найдена".
+ *
+ * @param {PageSlugProps} props - параметры страницы, содержащие slug статьи.
+ * @returns {JSX.Element} Разметка страницы статьи, либо сообщение о том, что
+ * статья не найдена.
+ *
+ * @example
+ * <ArticlePage slug="example-article" />
  */
-export default async function ArticlePage(props: PageSlugProps) {
+const ArticlePage = async (props: PageSlugProps): Promise<JSX.Element> => {
     const { slug } = await props.params;
     const article = await getArticleBySlug(slug);
 
@@ -77,3 +106,5 @@ export default async function ArticlePage(props: PageSlugProps) {
         </article>
     );
 }
+
+export default ArticlePage;

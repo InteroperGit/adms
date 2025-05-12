@@ -2,7 +2,7 @@
 
 import {ArticleImageBlock} from "@/types/article";
 import ContentImageViewer from "@/components/image/ContentImageViewer";
-import React, {useEffect, useState} from "react";
+import React, {JSX, useEffect, useState} from "react";
 import ContentImage from "@/components/image/ContentImage";
 
 /**
@@ -23,10 +23,10 @@ import ContentImage from "@/components/image/ContentImage";
  * - Внутри CMS-контента (например, статьи, блоги).
  * - В блоках иллюстраций, скриншотов или баннеров, сопровождаемых подписью.
  */
-export default function ImageArticleBlock({
+const ImageArticleBlock = ({
                                           image,
                                           fullWidth = false
-                                      }: ArticleImageBlock) {
+                                      }: ArticleImageBlock): JSX.Element => {
     const [open, setOpen] = useState(false);
 
     // Закрытие модалки при нажатии на клавишу Esc
@@ -74,3 +74,5 @@ export default function ImageArticleBlock({
         </figure>
     )
 };
+
+export default ImageArticleBlock;

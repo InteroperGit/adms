@@ -1,8 +1,6 @@
-"use client"
-
 import ServiceCard from "@/components/cards/ServiceCard"
 import { cn } from "@/libs/utils"
-import React from "react";
+import React, {JSX} from "react";
 import {ServiceCategory} from "@/types/service";
 
 interface ServicesSectionProps {
@@ -37,12 +35,12 @@ interface ServicesSectionProps {
  *   className="my-12"
  * />
  */
-export default function ServicesSection({
+const ServicesSection: React.FC<ServicesSectionProps> = ({
                                     title = "Наши услуги",
                                     services,
                                     className,
                                     columns = 3,
-                                }: ServicesSectionProps) {
+                                }: ServicesSectionProps): JSX.Element => {
     const gridClasses = {
         1: "grid-cols-1",
         2: "grid-cols-1 md:grid-cols-2",
@@ -71,3 +69,5 @@ export default function ServicesSection({
         </section>
     )
 }
+
+export default ServicesSection;

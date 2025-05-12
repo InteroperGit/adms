@@ -1,4 +1,4 @@
-import React from "react";
+import React, {JSX} from "react";
 import { cn } from "@/libs/utils";
 import {Faq} from "@/types/faq";
 
@@ -25,7 +25,7 @@ interface FaqSectionProps {
  *
  * @returns {JSX.Element} - Разметка с вопросами и ответами в виде списка.
  */
-export default function FaqSection({ faq, className }: FaqSectionProps) {
+const FaqSection: React.FC<FaqSectionProps> = ({ faq, className }: FaqSectionProps): JSX.Element => {
     return (
         <div className={cn(`${className}`)}>
             <h2 className={cn("text-2xl font-bold mb-6 dark:text-gray-200")}>Частые вопросы</h2>
@@ -40,3 +40,5 @@ export default function FaqSection({ faq, className }: FaqSectionProps) {
         </div>
     );
 };
+
+export default FaqSection;

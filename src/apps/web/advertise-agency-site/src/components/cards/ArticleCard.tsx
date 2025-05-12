@@ -4,6 +4,7 @@ import Link from "next/link";
 import { cn } from "@/libs/utils";
 import {Article} from "@/types/article";
 import ContentImage from "@/components/image/ContentImage";
+import {JSX} from "react";
 
 /**
  * Форматирует дату публикации статьи в виде "полное название месяца, год".
@@ -12,7 +13,7 @@ import ContentImage from "@/components/image/ContentImage";
  * @param locale - локаль для форматирования (по умолчанию 'ru-RU').
  * @returns отформатированная строка, например: "апрель 2024".
  */
-export function formatArticleDate(articleDate?: string, locale: string = 'ru-RU'): string {
+export const formatArticleDate = (articleDate?: string, locale: string = 'ru-RU'): string => {
     if (!articleDate) {
         return "";
     }
@@ -59,7 +60,7 @@ interface PortfolioItemProps {
 }
 
 // Компонент области изображения
-function ImageSection({
+const ImageSection = ({
                           image,
                           index,
                           enableHoverEffects,
@@ -67,7 +68,7 @@ function ImageSection({
     image: Article["cover"];
     index: number;
     enableHoverEffects: boolean;
-}) {
+}): JSX.Element => {
     return (
         <div className="basis-2/3 overflow-hidden flex items-center justify-center">
             <ContentImage
@@ -84,13 +85,13 @@ function ImageSection({
 }
 
 // Оверлей с деталями
-function OverlayDetails({
+const OverlayDetails = ({
                             title,
                             articleDate,
                         }: {
     title: string;
     articleDate: string;
-}) {
+}): JSX.Element => {
     return (
         <div
             className={cn(
@@ -113,7 +114,7 @@ function OverlayDetails({
 }
 
 // Нижняя секция информации
-function InfoSection({
+const InfoSection = ({
                          title,
                          description,
                          category,
@@ -123,7 +124,7 @@ function InfoSection({
     description: string;
     category?: string;
     articleDate: string;
-}) {
+}): JSX.Element => {
     return (
         <div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
             <h3 className="font-bold line-clamp-1">{title}</h3>
@@ -178,13 +179,13 @@ function InfoSection({
  *   enableHoverEffects={false}
  * />
  */
-export const ArticleCard = ({
+const ArticleCard = ({
                                   item,
                                   index = 0,
                                   className,
                                   basePath = "/portfolio",
                                   enableHoverEffects = true,
-                              }: PortfolioItemProps) => {
+                              }: PortfolioItemProps): JSX.Element => {
 
     const projectUrl = `${basePath}/${item.slug}`
     const articleDate = formatArticleDate(item.publishedAt);
@@ -230,3 +231,5 @@ export const ArticleCard = ({
         </div>
     );
 };
+
+export default ArticleCard;
