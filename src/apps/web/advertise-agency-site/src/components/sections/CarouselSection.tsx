@@ -33,10 +33,6 @@ const ArrowRightIcon = () => (
 )
 
 const slideVariants = {
-    enter: (direction: string) => ({
-        x: direction === 'right' ? 1000 : -1000,
-        opacity: 0
-    }),
     center: {
         x: 0,
         opacity: 1,
@@ -205,7 +201,7 @@ const SlideIndicator: React.FC<SlideIndicatorProps> = ({ promotions, currentSlid
 )
 
 interface CarouselSlideProps {
-    currentPromo: any; // Типы пропсов можно уточнить в зависимости от структуры данных
+    currentPromo: PromotionItem; // Типы пропсов можно уточнить в зависимости от структуры данных
 }
 
 const CarouselSlide: React.FC<CarouselSlideProps> = ({ currentPromo }) => {
