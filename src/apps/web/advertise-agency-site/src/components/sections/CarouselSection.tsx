@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState, useEffect, useRef, useCallback} from 'react'
+import React, {useState, useEffect, useRef, useCallback, JSX} from 'react'
 import { cn } from '@/libs/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from "next/link"
@@ -62,11 +62,196 @@ const buttonVariants = {
     visible: { opacity: 1, scale: 1 }
 }
 
+interface SlideTransitionWrapperProps {
+    currentSlide: number;
+    direction: 'left' | 'right';
+    children: React.ReactNode;
+}
+
+// Подкомпонент для анимации слайдов
+const SlideTransitionWrapper: React.FC<SlideTransitionWrapperProps> = ({ currentSlide, direction, children }) => (
+    <AnimatePresence custom={direction} initial={false}>
+        <motion.div
+            key={currentSlide}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="absolute inset-0"
+        >
+            {children}
+        </motion.div>
+    </AnimatePresence>
+)
+
+interface NavigationButtonsProps {
+    isHovered: boolean;
+    prevSlide: () => void;
+    nextSlide: () => void;
+}
+
+// Подкомпонент для навигационных кнопок
+const NavigationButtons: React.FC<NavigationButtonsProps> = ({ isHovered, prevSlide, nextSlide }) => {
+    return (
+        <AnimatePresence>
+            {isHovered && (
+                <>
+                    <motion.button
+                        onClick={prevSlide}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
+                        aria-label="Предыдущий слайд"
+                        variants={buttonVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className={cn(
+                            "bg-white/80 hover:bg-white",
+                            "dark:bg-gray-700/80 dark:hover:bg-gray-600",
+                            "text-gray-800 dark:text-white",
+                            "rounded-full w-10 h-10 flex items-center justify-center",
+                            "shadow-md transition-colors"
+                        )}>
+                            <ChevronLeftIcon />
+                        </div>
+                    </motion.button>
+
+                    <motion.button
+                        onClick={nextSlide}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
+                        aria-label="Следующий слайд"
+                        variants={buttonVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className={cn(
+                            "bg-white/80 hover:bg-white",
+                            "dark:bg-gray-700/80 dark:hover:bg-gray-600",
+                            "text-gray-800 dark:text-white",
+                            "rounded-full w-10 h-10 flex items-center justify-center",
+                            "shadow-md transition-colors"
+                        )}>
+                            <ChevronRightIcon />
+                        </div>
+                    </motion.button>
+                </>
+            )}
+        </AnimatePresence>
+    )
+}
+
+interface TransitionLinkButtonProps {
+    url: string;
+    isVisible: boolean;
+}
+
+const TransitionLinkButton: React.FC<TransitionLinkButtonProps> = ({ url, isVisible }) => {
+    return (
+        <AnimatePresence>
+            {isVisible && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute bottom-6 right-6 z-20"
+                >
+                    <Link
+                        href={url}
+                        className={cn(
+                            "px-4 py-2 rounded-lg",
+                            "bg-orange-500 hover:bg-orange-600 text-white",
+                            "font-medium shadow-md",
+                            "flex items-center gap-2",
+                            "transition-colors duration-200"
+                        )}
+                    >
+                        Перейти
+                        <ArrowRightIcon />
+                    </Link>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
+};
+
+interface SlideIndicatorProps {
+    promotions: PromotionItem[];
+    currentSlide: number;
+    onClick: (index: number) => void;
+}
+
+// Подкомпонент для индикаторов слайдов
+const SlideIndicator: React.FC<SlideIndicatorProps> = ({ promotions, currentSlide, onClick }) => (
+    <div className="flex justify-center mt-4 gap-2">
+        {promotions.map((_, index) => (
+            <button
+                key={index}
+                onClick={() => onClick(index)}
+                className={cn(
+                    "w-3 h-3 rounded-full cursor-pointer transition-colors",
+                    index === currentSlide
+                        ? "bg-orange-500"
+                        : "bg-gray-300 dark:bg-gray-600"
+                )}
+                aria-label={`Перейти к слайду ${index + 1}`}
+            />
+        ))}
+    </div>
+)
+
+interface CarouselSlideProps {
+    currentPromo: any; // Типы пропсов можно уточнить в зависимости от структуры данных
+}
+
+const CarouselSlide: React.FC<CarouselSlideProps> = ({ currentPromo }) => {
+    return (
+        <div
+            className={cn(
+                "absolute inset-0",
+                "bg-white dark:bg-gray-700 rounded-lg",
+                "shadow-sm dark:shadow-none",
+                "border border-gray-200 dark:border-gray-600",
+                "overflow-hidden h-full w-full"
+            )}
+        >
+            <ContentImage
+                image={currentPromo.cover}
+                className="absolute inset-0 w-full h-full object-cover"
+                priority
+            />
+            <div
+                className={cn(
+                    "absolute inset-0 bg-gradient-to-t from-black/70 ",
+                    "via-black/30 to-transparent flex flex-col justify-end p-6"
+                )}
+            >
+                <h3 className="text-white font-bold text-xl">{currentPromo.title}</h3>
+                <p className="text-gray-200">{currentPromo.description}</p>
+            </div>
+        </div>
+    )
+}
+
+/**
+ * TransitionLinkButton — компонент, который отображает анимированную кнопку
+ * для перехода по заданной ссылке. Кнопка появляется при наведении на слайд
+ * и исчезает, когда пользователь уводит курсор. Анимация плавного появления
+ * и скрытия кнопки осуществляется с помощью `AnimatePresence` и `motion.div`
+ * из `framer-motion`.
+ *
+ * Этот компонент полезен для добавления переходов с анимацией в слайдерах или
+ * других местах, где требуется интерактивная кнопка для перехода между страницами.
+ */
 const CarouselSection: React.FC<CarouselSectionProps> = ({
                                                              promotions,
                                                              autoScrollInterval = 5000,
                                                              className
-                                                         }) => {
+                                                         }): JSX.Element => {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [direction, setDirection] = useState<'left'|'right'>('right')
     const [isHovered, setIsHovered] = useState(false)
@@ -111,133 +296,22 @@ const CarouselSection: React.FC<CarouselSectionProps> = ({
             onMouseLeave={() => setIsHovered(false)}
         >
             <div className="relative h-96 w-full">
-                <AnimatePresence custom={direction} initial={false}>
-                    <motion.div
-                        key={currentSlide}
-                        custom={direction}
-                        variants={slideVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        className="absolute inset-0"
-                    >
-                        <div className={cn(
-                            "absolute inset-0",
-                            "bg-white dark:bg-gray-700 rounded-lg",
-                            "shadow-sm dark:shadow-none",
-                            "border border-gray-200 dark:border-gray-600",
-                            "overflow-hidden h-full w-full"
-                        )}>
-                            <ContentImage
-                                image={currentPromo.cover}
-                                className="absolute inset-0 w-full h-full object-cover"
-                                priority
-                            />
-                            <div className={cn("absolute inset-0 bg-gradient-to-t from-black/70 ",
-                                "via-black/30 to-transparent flex flex-col justify-end p-6")}>
-                                <h3 className="text-white font-bold text-xl">{currentPromo.title}</h3>
-                                <p className="text-gray-200">{currentPromo.description}</p>
-                            </div>
-                        </div>
-                    </motion.div>
-                </AnimatePresence>
+                <SlideTransitionWrapper currentSlide={currentSlide} direction={direction}>
+                    <CarouselSlide currentPromo={currentPromo} />
+                </SlideTransitionWrapper>
 
-                {/* Navigation buttons */}
-                <AnimatePresence>
-                    {isHovered && (
-                        <>
-                            <motion.button
-                                onClick={prevSlide}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
-                                aria-label="Предыдущий слайд"
-                                variants={buttonVariants}
-                                initial="hidden"
-                                animate="visible"
-                                exit="hidden"
-                                transition={{ duration: 0.2 }}
-                            >
-                                <div className={cn(
-                                    "bg-white/80 hover:bg-white",
-                                    "dark:bg-gray-700/80 dark:hover:bg-gray-600",
-                                    "text-gray-800 dark:text-white",
-                                    "rounded-full w-10 h-10 flex items-center justify-center",
-                                    "shadow-md transition-colors"
-                                )}>
-                                    <ChevronLeftIcon />
-                                </div>
-                            </motion.button>
+                {/* Навигационные кнопки */}
+                <NavigationButtons isHovered={isHovered} prevSlide={prevSlide} nextSlide={nextSlide} />
 
-                            <motion.button
-                                onClick={nextSlide}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
-                                aria-label="Следующий слайд"
-                                variants={buttonVariants}
-                                initial="hidden"
-                                animate="visible"
-                                exit="hidden"
-                                transition={{ duration: 0.2 }}
-                            >
-                                <div className={cn(
-                                    "bg-white/80 hover:bg-white",
-                                    "dark:bg-gray-700/80 dark:hover:bg-gray-600",
-                                    "text-gray-800 dark:text-white",
-                                    "rounded-full w-10 h-10 flex items-center justify-center",
-                                    "shadow-md transition-colors"
-                                )}>
-                                    <ChevronRightIcon />
-                                </div>
-                            </motion.button>
-                        </>
-                    )}
-                </AnimatePresence>
-
-                {/* Go button */}
-                <AnimatePresence>
-                    {isHovered && currentPromo.articleUrl && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 20 }}
-                            transition={{ duration: 0.3 }}
-                            className="absolute bottom-6 right-6 z-20"
-                        >
-                            <Link
-                                href={currentPromo.articleUrl}
-                                className={cn(
-                                    "px-4 py-2 rounded-lg",
-                                    "bg-orange-500 hover:bg-orange-600 text-white",
-                                    "font-medium shadow-md",
-                                    "flex items-center gap-2",
-                                    "transition-colors duration-200"
-                                )}
-                            >
-                                Перейти
-                                <ArrowRightIcon />
-                            </Link>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                {/* Кнопка для перехода */}
+                <TransitionLinkButton
+                    url={currentPromo.articleUrl}
+                    isVisible={isHovered && !!currentPromo.articleUrl}
+                />
             </div>
 
-            {/* Indicators */}
-            <div className="flex justify-center mt-4 gap-2">
-                {promotions.map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => {
-                            setCurrentSlide(index)
-                            resetTimer()
-                        }}
-                        className={cn(
-                            "w-3 h-3 rounded-full cursor-pointer transition-colors",
-                            index === currentSlide
-                                ? "bg-orange-500"
-                                : "bg-gray-300 dark:bg-gray-600"
-                        )}
-                        aria-label={`Перейти к слайду ${index + 1}`}
-                    />
-                ))}
-            </div>
+            {/* Индикаторы слайдов */}
+            <SlideIndicator promotions={promotions} currentSlide={currentSlide} onClick={setCurrentSlide} />
         </section>
     )
 }
