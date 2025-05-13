@@ -1,4 +1,4 @@
-import {JSX} from "react";
+import React, {JSX} from "react";
 import {notFound} from "next/navigation";
 import {cn} from "@/libs/utils";
 import {getServiceCategories, getServiceCategoryByName} from "@/libs/api/servicesApi";
@@ -16,6 +16,22 @@ import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/c
 const PORTFOLIO_PAGE_SIZE = process.env.PORTFOLIO_PAGE_SIZE && !isNaN(Number(process.env.PORTFOLIO_PAGE_SIZE))
     ? parseInt(process.env.PORTFOLIO_PAGE_SIZE, 10)
     : DEFAULT_PORTFOLIO_PAGE_SIZE;
+
+// Компонент для отображения сообщения "Статьи не найдены"
+const NoProjectsFound: React.FC = (): JSX.Element => {
+    return (
+        <div className="flex justify-center items-center min-h-[300px]">
+            <div className="text-center">
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Статьи не найдены
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                    К сожалению, в этой категории нет проектов. Попробуйте выбрать другую категорию.
+                </p>
+            </div>
+        </div>
+    );
+}
 
 /**
  * Функция для генерации статичных параметров (slug) для страницы категории,
@@ -105,7 +121,10 @@ const PortfolioPage = async (props: PageCategoryProps): Promise<JSX.Element> => 
     const PROJECT_URL_BASE_PATTERN = `/portfolio/category/${category}`;
 
     const isNotFound = (category !== ALL_SERVICE_CATEGORY_NAME && !serviceCategory)
-        || (isNaN(currentPage) || !Number.isInteger(currentPage) || currentPage <= 0 || currentPage > pageCount)
+        || (isNaN(currentPage)
+        || !Number.isInteger(currentPage)
+        || currentPage <= 0
+        || (pageCount > 0 && currentPage > pageCount))
 
     if (isNotFound) {
         notFound();
@@ -150,16 +169,20 @@ const PortfolioPage = async (props: PageCategoryProps): Promise<JSX.Element> => 
 
             {/* Портфолио */}
             <section className={cn("mb-16")}>
-                {/* Сетка проектов */}
-                <div className={gridClasses}>
-                    {projects.map((project, index) => (
-                        <ArticleCard
-                            key={project.id}
-                            item={project}
-                            index={index}
-                        />
-                    ))}
-                </div>
+                {
+                    projects.length === 0
+                        ? <NoProjectsFound />
+                        :
+                        <div className={gridClasses}>
+                            {projects.map((project, index) => (
+                                <ArticleCard
+                                    key={project.id}
+                                    item={project}
+                                    index={index}
+                                />
+                            ))}
+                        </div>
+                }
             </section>
 
             {/* Pagination */}
