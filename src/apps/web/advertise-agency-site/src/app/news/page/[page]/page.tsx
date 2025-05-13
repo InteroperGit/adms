@@ -29,6 +29,22 @@ interface NewsPageParams {
     page: string;
 }
 
+// Компонент для отображения сообщения "Статьи не найдены"
+const NoNewsFound: React.FC = (): JSX.Element => {
+    return (
+        <div className="flex justify-center items-center min-h-[300px]">
+            <div className="text-center">
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Новости не найдены
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                    К сожалению, новости не найдены
+                </p>
+            </div>
+        </div>
+    );
+}
+
 /**
  * Компонент страницы новостей, который отображает список новостей с пагинацией.
  * Загружает новости с сервера, отображает их на странице и обеспечивает
@@ -68,6 +84,10 @@ const NewsPage = async (props: NewsPageProps): Promise<JSX.Element> => {
     catch (error) {
         console.error("Ошибка при получении данных с сервера:", error);
         return (<ServiceIsNotRespondedError />);
+    }
+
+    if (newsCount === 0) {
+        return <NoNewsFound />;
     }
 
     const isNotFound = isNaN(currentPage)
