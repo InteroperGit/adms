@@ -13,10 +13,7 @@ interface ContentImageProps {
 
 // Хелпер: метод для обработки изменения размера контейнера
 const getImageSizeByContainerWidth = (width: number): 'small' | 'medium' | 'large' | 'default' => {
-    if (width < 500) {
-        return 'small';
-    }
-    if (width >= 500 && width < 750) {
+    if (width < 750) {
         return 'medium';
     }
     if (width >= 750 && width < 1000) {
@@ -90,7 +87,8 @@ const ContentImage = ({
     const height = selectedFormat?.height || image.height;
 
     return (
-        <div ref={containerRef}>
+        <div ref={containerRef}
+             className="flex flex-1 justify-center items-center w-full h-full">
             <Image
                 src={imageUrl}
                 alt={image.alternativeText || 'Изображение'} // fallback на alt из cover если не передан
