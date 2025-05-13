@@ -42,7 +42,7 @@ const ArticlesPage = async (props: ArticlePageProps): Promise<JSX.Element> => {
                 description="Экспертные статьи о рекламе, брендинге и маркетинге для вашего бизнеса"
             />
 
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
                 {articles.map((article, index) => (
                     <ArticleCard
                         key={article.id}
