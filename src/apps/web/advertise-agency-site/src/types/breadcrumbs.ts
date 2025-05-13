@@ -1,3 +1,5 @@
+import React from "react";
+
 // Тип для каждого элемента хлебных крошек (breadcrumbs)
 export type BreadcrumbItem = {
     title: string // Заголовок элемента хлебных крошек
