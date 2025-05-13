@@ -88,7 +88,7 @@ const NewsPage = async (props: NewsPageProps): Promise<JSX.Element> => {
             />
 
             {/* Основной контент */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-12">
                 {news.map((item, index) => (
                     <ArticleCard
                         key={item.id}
