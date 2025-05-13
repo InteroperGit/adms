@@ -13,7 +13,7 @@ import { cn } from "@/libs/utils"
 import { usePathname } from 'next/navigation'
 import {JSX, useEffect, useState} from "react"
 import { Skeleton } from '@/components/ui/skeleton'
-import { useBreadcrumbs } from '@/providers/BreadcrumbsProvider'
+import { useBreadcrumbs } from '@/libs/providers/BreadcrumbsProvider'
 import {BreadcrumbItem} from "@/types/breadcrumbs";
 
 const TRANSITION_DURATION = 500;
