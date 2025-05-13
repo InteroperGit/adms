@@ -116,7 +116,7 @@ const Breadcrumbs = (): JSX.Element | null => {
     return (
         <div className="mx-6 my-8">
             <hr className="mb-4 border-t border-gray-200 dark:border-gray-700" />
-            <Breadcrumb>
+            <Breadcrumb className="ml-6">
                 <BreadcrumbList
                     className="flex items-center gap-2"
                     style={{ minHeight: `${SKELETON_HEIGHT}px` }}

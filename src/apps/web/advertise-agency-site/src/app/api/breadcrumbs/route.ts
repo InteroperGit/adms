@@ -2,6 +2,8 @@ import {NextRequest, NextResponse} from "next/server";
 import {getArticleBySlug} from "@/libs/api/articlesApi";
 import {BreadcrumbItem} from "@/types/breadcrumbs";
 import {getProjectArticleBySlug} from "@/libs/api/projectsApi";
+import {getServiceArticleBySlug} from "@/libs/api/servicesApi";
+import {getNewsArticleBySlug} from "@/libs/api/newsApi";
 
 const getBaseBreadcrumbs = (): BreadcrumbItem => {
     return { title: "Главная", href: "/" }
@@ -16,40 +18,15 @@ const getServiceBreadcrumbs = async (segments: string[]): Promise<BreadcrumbItem
 
     if (segments.length <= 1) {
         result.push({ ...serviceBreadcrumbs, isCurrent: true });
-        return result;
+        return Promise.resolve(result);
     }
-
-    try {
+    else {
         result.push(serviceBreadcrumbs);
-        const service: BreadcrumbItem | null = null;
-
-        if (!service) {
-            return result;
-        }
-    }
-    catch (error) {
-        console.error(error);
-    }
-
-    return result;
-}
-
-const getArticleBreadcrumbs = async (segments: string[]): Promise<BreadcrumbItem[]> => {
-    const result: BreadcrumbItem[] = [
-        getBaseBreadcrumbs(),
-    ];
-
-    const articleBreadcrumbs = { title: "Статьи", href: "/articles" };
-
-    if (segments.length <= 1) {
-        result.push({ ...articleBreadcrumbs, isCurrent: true });
-        return result;
     }
 
     try {
-        result.push(articleBreadcrumbs);
         const slug = segments[1];
-        const article = await getArticleBySlug(slug);
+        const article = await getServiceArticleBySlug(slug);
 
         if (!article) {
             return result;
@@ -57,12 +34,12 @@ const getArticleBreadcrumbs = async (segments: string[]): Promise<BreadcrumbItem
 
         result.push({
             title: article.title,
-            href: `/articles/${article.slug}`,
             isCurrent: true
-        })
+        } as BreadcrumbItem);
     }
     catch (error) {
         console.error(error);
+        return Promise.reject([]);
     }
 
     return result;
@@ -73,15 +50,17 @@ const getPortfolioBreadcrumbs = async (segments: string[]): Promise<BreadcrumbIt
         getBaseBreadcrumbs(),
     ];
 
-    const portfolioBreadcrumbs = { title: "Портфолио", href: "/portfolio" }
+    const portfolioBreadcrumbs = { title: "Портфолио", href: "/portfolio/category/all/1" }
 
-    if (segments.length <= 1) {
+    if (segments.length <= 1 || segments[1] === "category") {
         result.push({ ...portfolioBreadcrumbs, isCurrent: true });
-        return result;
+        return Promise.resolve(result);
+    }
+    else {
+        result.push(portfolioBreadcrumbs);
     }
 
     try {
-        result.push(portfolioBreadcrumbs);
         const slug = segments[1];
         const project = await getProjectArticleBySlug(slug);
 
@@ -91,12 +70,48 @@ const getPortfolioBreadcrumbs = async (segments: string[]): Promise<BreadcrumbIt
 
         result.push({
             title: project.title,
-            href: `/portfolio/${project.slug}`,
             isCurrent: true
         })
     }
     catch (error) {
         console.error(error);
+        return Promise.reject([]);
+    }
+
+    return result;
+}
+
+const getArticleBreadcrumbs = async (segments: string[]): Promise<BreadcrumbItem[]> => {
+    const result: BreadcrumbItem[] = [
+        getBaseBreadcrumbs(),
+    ];
+
+    const articleBreadcrumbs = { title: "Статьи", href: "/articles/page/1" };
+
+    if (segments.length <= 1 || segments[1] === "page") {
+        result.push({ ...articleBreadcrumbs, isCurrent: true });
+        return result;
+    }
+    else {
+        result.push(articleBreadcrumbs);
+    }
+
+    try {
+        const slug = segments[1];
+        const article = await getArticleBySlug(slug);
+
+        if (!article) {
+            return result;
+        }
+
+        result.push({
+            title: article.title,
+            isCurrent: true
+        })
+    }
+    catch (error) {
+        console.error(error);
+        return Promise.reject([]);
     }
 
     return result;
@@ -107,23 +122,32 @@ const getNewsBreadcrumbs = async (segments: string[]): Promise<BreadcrumbItem[]>
         getBaseBreadcrumbs(),
     ];
 
-    const newsBreadcrumbs = { title: "Новости", href: "/news" };
+    const newsBreadcrumbs = { title: "Новости", href: "/news/page/1" };
 
     if (segments.length <= 1) {
         result.push({ ...newsBreadcrumbs, isCurrent: true });
         return result;
     }
+    else {
+        result.push(newsBreadcrumbs);
+    }
 
     try {
-        result.push(newsBreadcrumbs);
-        const news: BreadcrumbItem | null = null;
+        const slug = segments[1];
+        const article = await getNewsArticleBySlug(slug);
 
-        if (!news) {
+        if (!article) {
             return result;
         }
+
+        result.push({
+            title: article.title,
+            isCurrent: true
+        } as BreadcrumbItem);
     }
     catch (error) {
         console.error(error);
+        return Promise.reject([]);
     }
 
     return result;
@@ -138,16 +162,15 @@ const getContactsBreadcrumbs = async (): Promise<BreadcrumbItem[]> => {
 
 const getBreadcrumbs = async (path: string): Promise<BreadcrumbItem[]> => {
     const segments = path.split("/").filter(Boolean);
-
     const rootPage = segments[0];
 
     switch (rootPage) {
         case "services":
             return getServiceBreadcrumbs(segments);
-        case "articles":
-            return getArticleBreadcrumbs(segments);
         case "portfolio":
             return getPortfolioBreadcrumbs(segments);
+        case "articles":
+            return getArticleBreadcrumbs(segments);
         case "news":
             return getNewsBreadcrumbs(segments);
         case "contacts":
@@ -166,6 +189,5 @@ export const GET = async (req: NextRequest) => {
     }
 
     const breadcrumbs = await getBreadcrumbs(path);
-
     return NextResponse.json(breadcrumbs);
 }

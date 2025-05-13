@@ -4,12 +4,10 @@ import Header from "@/components/header/Header";
 import DesktopNavigation from "@/components/navigation/DesktopNavigation";
 import {Providers} from "@/app/providers";
 import Footer from "@/components/footer/Footer";
-import Breadcrumbs from "@/components/misc/Breadcrumbs";
 import Container from "@/components/container/Container";
 import MobileNavigation from "@/components/navigation/MobileNavigation";
 import TailwindKeeper from "@/components/misc/TailwindKeeper";
-import {NavigationLink} from "@/types/navigation";
-import {SiteGlobal} from "@/types/siteGlobal";
+import Breadcrumbs from "@/components/breadcrumbs/Breadcrumbs";
 
 import {fetchNavigationLinks} from "@/libs/api/navLinksApi";
 import {getSiteGlobalData} from "@/libs/api/globalApi";
@@ -17,6 +15,8 @@ import {getSocialLinks} from "@/libs/api/socialLinkApi";
 import {getServiceCategories} from "@/libs/api/servicesApi";
 import {getContacts} from "@/libs/api/contactsApi";
 
+import {NavigationLink} from "@/types/navigation";
+import {SiteGlobal} from "@/types/siteGlobal";
 import {SocialLink} from "@/types/socialLink";
 import {ServiceCategory} from "@/types/service";
 import {ContactItem} from "@/types/contacts";
@@ -65,7 +65,7 @@ export const generateMetadata = async () => {
  * <RootLayout>{children}</RootLayout>
  */
 const RootLayout = async ({
-  children,
+    children,
 }: {
     children: React.ReactNode;
 }) => {
