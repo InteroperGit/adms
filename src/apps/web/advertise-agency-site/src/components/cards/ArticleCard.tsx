@@ -70,12 +70,13 @@ const ImageSection = ({
     enableHoverEffects: boolean;
 }): JSX.Element => {
     return (
-        <div className="basis-2/3 overflow-hidden flex items-center justify-center">
+        <div className={cn("min-h-[250px] basis-2/3 overflow-hidden",
+                "flex items-center justify-center")}>
             <ContentImage
                 image={image}
                 priority={index < 6}
                 className={cn(
-                    "object-contain w-full h-full transition-transform duration-500",
+                    "object-cover w-full h-full transition-transform duration-500",
                     enableHoverEffects && "group-hover:scale-105"
                 )}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -126,7 +127,10 @@ const InfoSection = ({
     articleDate: string;
 }): JSX.Element => {
     return (
-        <div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
+        <div className={cn("flex-1 p-4",
+                "bg-white dark:bg-gray-800",
+                "border-t border-gray-100 dark:border-gray-700")
+        }>
             <h3 className="font-bold line-clamp-1">{title}</h3>
             <p className="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">{description}</p>
             <div className="flex justify-between items-center mt-2">
