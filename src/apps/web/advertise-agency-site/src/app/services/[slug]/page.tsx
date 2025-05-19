@@ -11,6 +11,22 @@ const DEFAULT_IMAGE_HEIGHT = 630;
 // ✅ ISR: страница будет пересоздаваться максимум раз в 60 секунд
 export const revalidate = 60;
 
+// Компонент для отображения сообщения "Статьи не найдены"
+const NoArticleFound: React.FC = (): JSX.Element => {
+    return (
+        <div className="flex justify-center items-center min-h-[300px]">
+            <div className="text-center">
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Статья не найдена
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                    К сожалению, статья не найдена
+                </p>
+            </div>
+        </div>
+    );
+}
+
 /**
  * Функция для генерации метаданных страницы на основе параметров из запроса.
  * Используется для настройки SEO, Open Graph и Twitter данных для страницы.
@@ -92,7 +108,7 @@ const ServiceArticlePage = async (props: PageSlugProps): Promise<JSX.Element> =>
     const article = await getServiceArticleBySlug(slug);
 
     if (!article) {
-        return <div>Статья не найдена</div>;
+        return <NoArticleFound />;
     }
 
     return (
