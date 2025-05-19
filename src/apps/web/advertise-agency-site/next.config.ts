@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
                 pathname: '/uploads/**',
             }, {
                 protocol: 'http',
+                hostname: 'localhost',
+                port: '3002',
+                pathname: '/strapi/uploads/**',
+            }, {
+                protocol: 'http',
                 hostname: 'strapi',
                 port: '1337',
                 pathname: '/uploads/**',
