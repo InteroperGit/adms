@@ -5,20 +5,33 @@ import {healthRoute} from "./routes/healthRoute";
 import {proxyRoute} from "./routes/proxyRoute";
 import {strapiRoute} from "./routes/strapiRoute";
 import {breadcrumbsRoute} from "./routes/breadcrumbsRoute";
+import fastifyCors from '@fastify/cors';
+import * as process from "node:process";
 
-const SERVICE_PORT = getServicePort();
+const SERVICE_PORT: number = getServicePort();
+const ALLOW_SITE_CORS: string[] = process.env.ALLOW_SITE_CORS
+    ? process.env.ALLOW_SITE_CORS.split(";")
+    : [];
 
-const app = Fastify();
+const bootstrap = async () => {
+    const app = Fastify();
 
-app.register(healthRoute);
-app.register(proxyRoute);
-app.register(strapiRoute);
-app.register(breadcrumbsRoute);
+    await app.register(fastifyCors, {
+        origin: ALLOW_SITE_CORS,
+    });
 
-app.listen({ port: SERVICE_PORT }, (err, address) => {
-    if (err) {
-        app.log.error(err);
-        process.exit(1);
-    }
-    console.log(`🚀 API Gateway listening at ${address}`);
-});
+    app.register(healthRoute);
+    app.register(proxyRoute);
+    app.register(strapiRoute);
+    app.register(breadcrumbsRoute);
+
+    app.listen({ port: SERVICE_PORT }, (err, address) => {
+        if (err) {
+            app.log.error(err);
+            process.exit(1);
+        }
+        console.log(`🚀 API Gateway listening at ${address}`);
+    });
+}
+
+bootstrap().catch(console.error);
