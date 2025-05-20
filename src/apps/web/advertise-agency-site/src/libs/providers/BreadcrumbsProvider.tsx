@@ -4,10 +4,16 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { BreadcrumbItem } from '@/types/breadcrumbs'
 
+const BREADCRUMBS_URL = process.env.NEXT_PUBLIC_BREADCRUMBS_URL;
+
+if (!BREADCRUMBS_URL) {
+    throw new Error("BREADCRUMB_URL environment variable is missing");
+}
+
 interface BreadcrumbsContextType {
-    breadcrumbs: BreadcrumbItem[]
-    loading: boolean
-    error: string | null
+    breadcrumbs: BreadcrumbItem[];
+    loading: boolean;
+    error: string | null;
 }
 
 const BreadcrumbsContext = createContext<BreadcrumbsContextType>({
@@ -72,22 +78,24 @@ export function BreadcrumbsProvider({ children }: { children: React.ReactNode })
     useEffect(() => {
         const fetchBreadcrumbs = async () => {
             try {
-                setState(prev => ({ ...prev, loading: true }))
+                setState(prev => ({ ...prev, loading: true }));
 
-                const res = await fetch(`/api/breadcrumbs?path=${encodeURIComponent(pathname)}`)
+                const res = await fetch(`${BREADCRUMBS_URL}${pathname}`)
                 if (!res.ok) {
                     throw new Error("Network response failed")
                 }
 
-                const data = await res.json()
+                const data = await res.json();
                 setState({ breadcrumbs: data, loading: false, error: null })
-            } catch {
+            }
+            catch(err) {
+                console.error(`Failed to fetch breadcrumbs: ${err}`);
                 setState({ breadcrumbs: [], loading: false, error: 'Failed to fetch data' })
             }
         }
 
         fetchBreadcrumbs()
-    }, [pathname])
+    }, [pathname, BREADCRUMBS_URL])
 
     return (
         <BreadcrumbsContext.Provider value={state}>
