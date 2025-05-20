@@ -57,7 +57,7 @@ export const getArticleTitle = async (slug: string): Promise<string | null> => {
  * Внутри используется универсальная функция getTitle.
  */
 export const getServiceTitle = async (slug: string): Promise<string | null> => {
-    const query = `/services?filters[slug][$eq]=${slug}&fields=title,slug`;
+    const query = `/service-articles?filters[slug][$eq]=${slug}&fields=title,slug`;
     return await getTitle(query);
 }
 
@@ -71,7 +71,7 @@ export const getServiceTitle = async (slug: string): Promise<string | null> => {
  * Использует getTitle для получения данных.
  */
 export const getNewsTitle = async (slug: string): Promise<string | null> => {
-    const query = `/news?filters[slug][$eq]=${slug}&fields=title,slug`;
+    const query = `/news-articles?filters[slug][$eq]=${slug}&fields=title,slug`;
     return await getTitle(query);
 }
 
@@ -85,6 +85,6 @@ export const getNewsTitle = async (slug: string): Promise<string | null> => {
  * Использует универсальную функцию getTitle для выполнения запроса и обработки ответа.
  */
 export const getPortfolioTitle = async (slug: string): Promise<string | null> => {
-    const query = `/portfolio?filters[slug][$eq]=${slug}&fields=title,slug`;
+    const query = `/project-articles?filters[slug][$eq]=${slug}&fields=title,slug`;
     return await getTitle(query);
 }

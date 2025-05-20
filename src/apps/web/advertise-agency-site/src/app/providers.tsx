@@ -2,7 +2,11 @@ import React from "react";
 import { ThemeProvider } from "next-themes";
 import {BreadcrumbsProvider} from "@/libs/providers/BreadcrumbsProvider";
 
-export const Providers = ({ children }: { children: React.ReactNode }) => {
+export interface ProvidersProps {
+    children: React.ReactNode;
+}
+
+export const Providers = ({ children }: ProvidersProps) => {
     return (
         <BreadcrumbsProvider>
             <ThemeProvider
