@@ -1,4 +1,3 @@
-import {FeedbackFormContent} from "@/types/forms/feedbackForm";
 import {FormSendResult} from "@/types/forms/formSendResult";
 
 const FORM_DATA_URL = process.env.NEXT_PUBLIC_FORM_DATA_URL;
@@ -8,12 +7,12 @@ if (!FORM_DATA_URL) {
 }
 
 /**
- * Отправляет данные формы обратной связи на внешний сервис.
+ * Отправляет данные формы связи на внешний сервис.
  *
  * Использует URL из переменной окружения `NEXT_PUBLIC_FORM_DATA_URL`.
  * В случае ошибки возвращает объект с ошибкой и статусом "error".
  *
- * @param {FeedbackFormContent} data - Объект с данными формы.
+ * @param {BaseFormContent} data - Объект с данными формы.
  * @returns {Promise<FormSendResult>} Результат отправки формы.
  *
  * @throws {Error} Если переменная окружения FORM_DATA_URL не определена.
@@ -33,8 +32,8 @@ if (!FORM_DATA_URL) {
  *   console.error("Feedback submission failed:", result.message);
  * }
  */
-export const sendFeedbackFormData = async (
-    data: FeedbackFormContent
+export const sendFormData = async (
+    data: BaseFormContent
 ): Promise<FormSendResult> => {
     try {
         const url = `${FORM_DATA_URL}/feedback`;
@@ -45,21 +44,21 @@ export const sendFeedbackFormData = async (
         });
 
         if (!response.ok) {
-            console.error("Failed to send feedback form data");
+            console.error("Failed to send form data");
             return {
-                message: "Failed to send feedback form data",
+                message: "Failed to send form data",
                 status: "error",
             };
         }
 
         return {
-            message: "Successfully send feedback form data",
+            message: "Successfully send form data",
             status: "success",
         };
     } catch (error) {
         console.error(error);
         return {
-            message: "Failed to send feedback form data",
+            message: "Failed to send form data",
             status: "error",
         };
     }
