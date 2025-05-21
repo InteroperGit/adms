@@ -1,4 +1,4 @@
-import { FastifyPluginAsync } from 'fastify';
+import {FastifyInstance, FastifyPluginAsync} from 'fastify';
 import { request } from 'undici';
 import {getBreadcrumbsApi} from "../libs/envUtils";
 
@@ -17,10 +17,10 @@ import {getBreadcrumbsApi} from "../libs/envUtils";
  * // на GET http://<BREADCRUMBS_API>/test/page
  * fastify.register(breadcrumbsRoute);
  *
- * @param {FastifyInstance} app - Экземпляр Fastify, в который регистрируется маршрут.
+ * @param {FastifyInstance} fastify - Экземпляр Fastify, в который регистрируется маршрут.
  */
-export const breadcrumbsRoute: FastifyPluginAsync = async (app) => {
-    app.get('/breadcrumbs/*', async (req, reply) => {
+export const breadcrumbsRoute: FastifyPluginAsync = async (fastify: FastifyInstance) => {
+    fastify.get('/breadcrumbs/*', async (req, reply) => {
         const breadcrumbsBaseUrl = getBreadcrumbsApi();
 
         // Извлекаем подстроку после /breadcrumbs
@@ -47,7 +47,7 @@ export const breadcrumbsRoute: FastifyPluginAsync = async (app) => {
             // Проксируем тело ответа
             return breadcrumbsRes.body;
         } catch (error) {
-            app.log.error(error);
+            fastify.log.error(error);
             return reply.code(502).send({ error: 'Bad Gateway', details: error });
         }
     });

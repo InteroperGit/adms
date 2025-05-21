@@ -1,4 +1,4 @@
-import { FastifyPluginAsync } from 'fastify';
+import {FastifyInstance, FastifyPluginAsync} from 'fastify';
 
 /**
  * Плагин Fastify, регистрирующий маршрут для проверки работоспособности
@@ -18,8 +18,8 @@ import { FastifyPluginAsync } from 'fastify';
  *
  * @type {FastifyPluginAsync}
  */
-export const healthRoute: FastifyPluginAsync = async (app) => {
-    app.get("/health", async () => {
+export const healthRoute: FastifyPluginAsync = async (fastify: FastifyInstance) => {
+    fastify.get("/health", async () => {
         return { status: "ok" }
     });
 }
