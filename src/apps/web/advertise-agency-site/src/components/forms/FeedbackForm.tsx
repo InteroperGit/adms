@@ -13,10 +13,21 @@ import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {JSX, useEffect, useState} from "react";
-import {FeedbackFormContent} from "@/types/forms/feedbackForm";
 import {sendFormData} from "@/libs/api/formApi";
 import {FormError} from "@/components/forms/FormError";
+import {sendToastMessage} from "@/libs/message/toastUtils";
 
+/**
+ * Схема валидации для формы обратной связи.
+ *
+ * Использует Zod для проверки:
+ * - Имя обязательно.
+ * - Телефон должен быть корректным.
+ * - Сообщение обязательно.
+ *
+ * @example
+ * schema.parse({ name: "Alex", phone: "+79991234567", message: "Hi!" });
+ */
 const schema = z.object({
     name: z.string().min(1, "Имя обязательно для заполнения."),
     phone: z
@@ -26,27 +37,31 @@ const schema = z.object({
     message: z.string().min(1, "Пожалуйста, опишите ваш запрос."),
 });
 
+/**
+ * Тип значений формы обратной связи, определённый по схеме валидации.
+ *
+ * Используется в типизации `react-hook-form`.
+ *
+ * @example
+ * const form: FeedbackFormValues = {
+ *   name: "Alex",
+ *   phone: "+79991234567",
+ *   message: "I'd like to know more about your service."
+ * };
+ */
 type FeedbackFormValues = z.infer<typeof schema>;
 
-const onSubmitHandler = (data: FeedbackFormContent) => {
-    sendFormData(data)
-        .then(() => (console.log("Successfully sent feedback form data")))
-        .catch(() => (console.error("Failed to send feedback form data")));
-}
-
 /**
- * FeedbackForm — форма для отправки заявки с полями для ввода имени, email, телефона, темы обращения и сообщения.
- * Компонент используется для сбора данных от пользователей, которые хотят оставить запрос или обратную связь.
- * Он включает в себя формы для ввода текстовых данных, такие как имя, email, телефон, тема обращения и сообщение.
+ * Компонент формы обратной связи с валидацией и отправкой данных.
  *
- * Основные особенности:
- * 1. Используются компоненты `Input` и `Textarea` для удобства ввода данных.
- * 2. Хук `useState` и `useEffect` применяются для отслеживания монтирования компонента, чтобы избежать ошибок с серверным рендерингом.
- * 3. Все поля формы, кроме телефона, являются обязательными для заполнения (через атрибут `required`).
- * 4. Взаимодействие с пользователем: при сабмите формы данные можно будет обработать.
- * 5. Используются компоненты UI, такие как `Card`, для красивого оформления формы.
+ * Форма использует `react-hook-form`, Zod и `sendFormData` для отправки
+ * запроса на сервер. После успешной отправки отображается уведомление,
+ * а форма сбрасывается.
  *
- * Этот компонент можно использовать на страницах обратной связи или на странице контактной формы сайта.
+ * @returns {JSX.Element | null} Карточка с формой либо null, если не смонтирована.
+ *
+ * @example
+ * <FeedbackForm />
  */
 const FeedbackForm = (): JSX.Element | null => {
     const {
@@ -64,12 +79,20 @@ const FeedbackForm = (): JSX.Element | null => {
         setIsMounted(true);
     }, []);
 
-    const onSubmit = (values: FeedbackFormValues) => {
-        onSubmitHandler({
-            id: "feedback",
-            ...values,
-        });
-        reset();
+    const onSubmit = async (values: FeedbackFormValues) => {
+        try {
+            await sendFormData({
+                id: "feedback",
+                ...values,
+            });
+
+            sendToastMessage("Ваша заявка успешно отправлена!", "success");
+            reset();
+        }
+        catch (error) {
+            sendToastMessage("Ошибка при отправке формы. Попробуйте снова.", "error");
+            console.error("Failed to send feedback form data", error);
+        }
     };
 
     if (!isMounted) {
