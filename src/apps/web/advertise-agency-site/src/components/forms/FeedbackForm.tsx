@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/card"
 import {JSX, useEffect, useState, useRef} from "react";
 import {FeedbackFormContent} from "@/types/forms/feedbackForm";
-import {sendFeedbackFormData} from "@/libs/api/forms/feedbackFormApi";
+import {sendFormData} from "@/libs/api/formApi";
 
 const onSubmitHandler = (data: FeedbackFormContent) => {
-    sendFeedbackFormData(data)
+    sendFormData(data)
         .then(() => (console.log("Successfully sent feedback form data")))
         .catch(() => (console.error("Failed to send feedback form data")));
 }
