@@ -8,6 +8,7 @@ import Container from "@/components/container/Container";
 import MobileNavigation from "@/components/navigation/MobileNavigation";
 import TailwindKeeper from "@/components/misc/TailwindKeeper";
 import Breadcrumbs from "@/components/breadcrumbs/Breadcrumbs";
+import {Toaster} from "sonner";
 
 import {fetchNavigationLinks} from "@/libs/api/navLinksApi";
 import {getSiteGlobalData} from "@/libs/api/globalApi";
@@ -121,6 +122,8 @@ const RootLayout = async ({
                     />
                     <TailwindKeeper />
                 </Providers>
+
+                <Toaster richColors position="top-right" />
             </body>
         </html>
     );
