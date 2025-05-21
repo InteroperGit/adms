@@ -10,7 +10,15 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import {JSX, useEffect, useState} from "react";
+import {JSX, useEffect, useState, useRef} from "react";
+import {FeedbackFormContent} from "@/types/forms/feedbackForm";
+import {sendFeedbackFormData} from "@/libs/api/forms/feedbackFormApi";
+
+const onSubmitHandler = (data: FeedbackFormContent) => {
+    sendFeedbackFormData(data)
+        .then(() => (console.log("Successfully sent feedback form data")))
+        .catch(() => (console.error("Failed to send feedback form data")));
+}
 
 /**
  * FeedbackForm — форма для отправки заявки с полями для ввода имени, email, телефона, темы обращения и сообщения.
@@ -29,9 +37,32 @@ import {JSX, useEffect, useState} from "react";
 const FeedbackForm = (): JSX.Element | null => {
     const [isMounted, setIsMounted] = useState(false);
 
+    const nameRef = useRef<HTMLInputElement>(null);
+    const phoneRef = useRef<HTMLInputElement>(null);
+    const messageRef = useRef<HTMLTextAreaElement>(null);
+
     useEffect(() => {
         setIsMounted(true);
     }, []);
+
+    //const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = () => {
+        const name = nameRef.current?.value.trim() || "";
+        const phone = phoneRef.current?.value.trim() || "";
+        const message = messageRef.current?.value.trim() || "";
+
+        if (!name || !phone || !message) {
+            // Критичную валидацию можно дублировать здесь, если нужно
+            return;
+        }
+
+        onSubmitHandler({
+            id: "feedback",
+            name,
+            phone,
+            message,
+        });
+    };
 
     if (!isMounted) {
         return null; // или возвращайте скелетон/заглушку
@@ -55,19 +86,7 @@ const FeedbackForm = (): JSX.Element | null => {
                             placeholder="Иван Иванов"
                             className="w-full"
                             required
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium mb-1">
-                            Email
-                        </label>
-                        <Input
-                            id="email"
-                            type="email"
-                            placeholder="example@mail.com"
-                            className="w-full"
-                            required
+                            ref={nameRef}
                         />
                     </div>
 
@@ -80,19 +99,8 @@ const FeedbackForm = (): JSX.Element | null => {
                             type="tel"
                             placeholder="+7 (XXX) XXX-XX-XX"
                             className="w-full"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="subject" className="block text-sm font-medium mb-1">
-                            Тема обращения
-                        </label>
-                        <Input
-                            id="subject"
-                            type="text"
-                            placeholder="Заказ наружной рекламы"
-                            className="w-full"
                             required
+                            ref={phoneRef}
                         />
                     </div>
 
@@ -106,13 +114,14 @@ const FeedbackForm = (): JSX.Element | null => {
                             rows={5}
                             className="w-full"
                             required
+                            ref={messageRef}
                         />
                     </div>
                 </form>
             </CardContent>
 
-            <CardFooter className={"flex justify-end"}>
-                <Button className="w-full md:w-auto">
+            <CardFooter className="flex justify-end">
+                <Button type="button" onClick={handleSubmit} className="w-full md:w-auto">
                     Отправить запрос
                 </Button>
             </CardFooter>
