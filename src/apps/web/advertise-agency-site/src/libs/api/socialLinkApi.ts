@@ -1,7 +1,8 @@
 import {SocialLink} from "@/types/socialLink";
 import {StrapiSocialLink} from "@/types/strapi/strapiSocialLink";
+import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+const STRAPI_URL = getStrapiUrl();
 
 /**
  * Функция для получения списка социальных ссылок с API Strapi.

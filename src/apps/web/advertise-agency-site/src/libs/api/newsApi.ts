@@ -3,9 +3,10 @@ import {StrapiArticle} from "@/types/strapi/strapiArticle";
 import {convertStrapiArticleToArticle} from "@/libs/converters/strapiArticleConverter";
 import {PaginationMeta} from "@/types/pagination";
 import {newsArticles} from "@/data/newsData";
+import {getNodeEnv, getStrapiUrl} from "@/libs/envUtils";
 
-const NODE_ENV = process.env.NODE_ENV;
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+const NODE_ENV = getNodeEnv();
+const STRAPI_URL = getStrapiUrl();
 const DEV_NEWS_ARTICLES_COUNT = 100;
 const DEV_MODE = "development";
 const IS_DEV_MODE = NODE_ENV === DEV_MODE;

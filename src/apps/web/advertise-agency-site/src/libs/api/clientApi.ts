@@ -1,8 +1,9 @@
 import {Client} from "@/types/client";
 import {StrapiClient} from "@/types/strapi/strapiClient";
 import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
+import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+const STRAPI_URL = getStrapiUrl();
 
 /**
  * Получает список клиентов с сервера Strapi.
