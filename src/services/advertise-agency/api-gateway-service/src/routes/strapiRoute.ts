@@ -1,4 +1,4 @@
-import { FastifyPluginAsync } from 'fastify';
+import {FastifyInstance, FastifyPluginAsync} from 'fastify';
 import { request } from 'undici';
 import {getStrapiApi} from "../libs/envUtils";
 
@@ -11,8 +11,8 @@ import {getStrapiApi} from "../libs/envUtils";
  *
  * @type {FastifyPluginAsync}
  */
-export const strapiRoute: FastifyPluginAsync = async (app) => {
-    app.get('/strapi/*', async (req, reply) => {
+export const strapiRoute: FastifyPluginAsync = async (fastify: FastifyInstance) => {
+    fastify.get('/strapi/*', async (req, reply) => {
         const strapiBaseUrl = getStrapiApi();
 
         // Извлекаем подстроку после /strapi
@@ -39,7 +39,7 @@ export const strapiRoute: FastifyPluginAsync = async (app) => {
             // Проксируем тело ответа
             return strapiRes.body;
         } catch (error) {
-            app.log.error(error);
+            fastify.log.error(error);
             return reply.code(502).send({ error: 'Bad Gateway', details: error });
         }
     });

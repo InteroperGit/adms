@@ -73,11 +73,37 @@ export const getStrapiApi = (): string => {
  * const res = await fetch(`${breadcrumbsUrl}/current`);
  */
 export const getBreadcrumbsApi = (): string => {
-    const BREADCRUMBS_API = process.env.BREADCRUMBS_API;
+    const BREADCRUMBS_API = process.env.BREADCRUMBS_SERVICE_API;
 
     if (!BREADCRUMBS_API) {
         throw new Error("BREADCRUMBS_API environment variable required");
     }
 
     return BREADCRUMBS_API;
+}
+
+/**
+ * Получает URL API сервиса для работы с данными форм из переменных окружения.
+ *
+ * Бросает ошибку, если переменная окружения не определена.
+ *
+ * @returns {string} URL API сервиса.
+ * @throws {Error} Если переменная окружения FORM_DATA_SERVICE_API не задана.
+ *
+ * @example
+ * try {
+ *   const apiUrl = getFormDataApi();
+ *   console.log(`API URL: ${apiUrl}`);
+ * } catch (error) {
+ *   console.error(error.message);
+ * }
+ */
+export const getFormDataApi = (): string => {
+    const FORM_DATA_API = process.env.FORM_DATA_SERVICE_API;
+
+    if (!FORM_DATA_API) {
+        throw new Error("FORM_DATA_API environment variable required");
+    }
+
+    return FORM_DATA_API;
 }

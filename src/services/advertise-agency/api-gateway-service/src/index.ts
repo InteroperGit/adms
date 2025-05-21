@@ -5,6 +5,7 @@ import {healthRoute} from "./routes/healthRoute";
 import {proxyRoute} from "./routes/proxyRoute";
 import {strapiRoute} from "./routes/strapiRoute";
 import {breadcrumbsRoute} from "./routes/breadcrumbsRoute";
+import {formsRoute} from "./routes/formsRoute";
 import fastifyCors from '@fastify/cors';
 import * as process from "node:process";
 
@@ -13,9 +14,11 @@ const ALLOW_SITE_CORS: string[] = process.env.ALLOW_SITE_CORS
     ? process.env.ALLOW_SITE_CORS.split(";")
     : [];
 
-const bootstrap = async () => {
-    const app = Fastify();
+const app = Fastify({
+    logger: process.env.NODE_ENV === "development",
+});
 
+const bootstrap = async () => {
     await app.register(fastifyCors, {
         origin: ALLOW_SITE_CORS,
     });
@@ -24,6 +27,7 @@ const bootstrap = async () => {
     app.register(proxyRoute);
     app.register(strapiRoute);
     app.register(breadcrumbsRoute);
+    app.register(formsRoute);
 
     app.listen({ port: SERVICE_PORT }, (err, address) => {
         if (err) {

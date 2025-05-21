@@ -1,4 +1,4 @@
-import { FastifyPluginAsync } from 'fastify';
+import {FastifyInstance, FastifyPluginAsync} from 'fastify';
 import { request } from "undici";
 import {getStrapiApi} from "../libs/envUtils";
 
@@ -31,8 +31,8 @@ const targetMap: Record<string, string> = {
  *
  * @type {FastifyPluginAsync}
  */
-export const proxyRoute: FastifyPluginAsync = async (app) => {
-    app.get("/api/proxy/:target/*", async (req, reply) => {
+export const proxyRoute: FastifyPluginAsync = async (fastify: FastifyInstance) => {
+    fastify.get("/api/proxy/:target/*", async (req, reply) => {
        const { target } = req.params as { target: string };
        const subPath = req.url.split(`/api/proxy/${target}`)[1];
 
