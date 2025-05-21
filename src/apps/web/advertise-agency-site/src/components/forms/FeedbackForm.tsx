@@ -6,13 +6,27 @@ import {Button} from "@/components/ui/button";
 import {
     Card,
     CardContent,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import {JSX, useEffect, useState, useRef} from "react";
+import {useForm} from "react-hook-form";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {JSX, useEffect, useState} from "react";
 import {FeedbackFormContent} from "@/types/forms/feedbackForm";
 import {sendFormData} from "@/libs/api/formApi";
+import {FormError} from "@/components/forms/FormError";
+
+const schema = z.object({
+    name: z.string().min(1, "Имя обязательно для заполнения."),
+    phone: z
+        .string()
+        .min(1, "Телефон обязателен для заполнения.")
+        .regex(/^\+?\d[\d\s\-()]{7,}$/, "Введите корректный номер телефона."),
+    message: z.string().min(1, "Пожалуйста, опишите ваш запрос."),
+});
+
+type FeedbackFormValues = z.infer<typeof schema>;
 
 const onSubmitHandler = (data: FeedbackFormContent) => {
     sendFormData(data)
@@ -35,33 +49,27 @@ const onSubmitHandler = (data: FeedbackFormContent) => {
  * Этот компонент можно использовать на страницах обратной связи или на странице контактной формы сайта.
  */
 const FeedbackForm = (): JSX.Element | null => {
-    const [isMounted, setIsMounted] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        formState: {errors, isSubmitting},
+        reset,
+    } = useForm<FeedbackFormValues>({
+        resolver: zodResolver(schema),
+    });
 
-    const nameRef = useRef<HTMLInputElement>(null);
-    const phoneRef = useRef<HTMLInputElement>(null);
-    const messageRef = useRef<HTMLTextAreaElement>(null);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
-    //const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    const handleSubmit = () => {
-        const name = nameRef.current?.value.trim() || "";
-        const phone = phoneRef.current?.value.trim() || "";
-        const message = messageRef.current?.value.trim() || "";
-
-        if (!name || !phone || !message) {
-            // Критичную валидацию можно дублировать здесь, если нужно
-            return;
-        }
-
+    const onSubmit = (values: FeedbackFormValues) => {
         onSubmitHandler({
             id: "feedback",
-            name,
-            phone,
-            message,
+            ...values,
         });
+        reset();
     };
 
     if (!isMounted) {
@@ -75,7 +83,7 @@ const FeedbackForm = (): JSX.Element | null => {
             </CardHeader>
 
             <CardContent>
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium mb-1">
                             Ваше имя
@@ -85,9 +93,12 @@ const FeedbackForm = (): JSX.Element | null => {
                             type="text"
                             placeholder="Иван Иванов"
                             className="w-full"
-                            required
-                            ref={nameRef}
+                            {...register("name")}
                         />
+                        {
+                            errors.name
+                                && <FormError message={errors.name?.message} />
+                        }
                     </div>
 
                     <div>
@@ -99,9 +110,12 @@ const FeedbackForm = (): JSX.Element | null => {
                             type="tel"
                             placeholder="+7 (XXX) XXX-XX-XX"
                             className="w-full"
-                            required
-                            ref={phoneRef}
+                            {...register("phone")}
                         />
+                        {
+                            errors.phone
+                            && <FormError message={errors.phone?.message} />
+                        }
                     </div>
 
                     <div>
@@ -113,18 +127,21 @@ const FeedbackForm = (): JSX.Element | null => {
                             placeholder="Опишите ваш запрос..."
                             rows={5}
                             className="w-full"
-                            required
-                            ref={messageRef}
+                            {...register("message")}
                         />
+                        {
+                            errors.message
+                                && <FormError message={errors.message?.message} />
+                        }
+                    </div>
+
+                    <div className="w-full md:w-auto flex justify-end">
+                        <Button type="submit" disabled={isSubmitting} className="">
+                            Отправить запрос
+                        </Button>
                     </div>
                 </form>
             </CardContent>
-
-            <CardFooter className="flex justify-end">
-                <Button type="button" onClick={handleSubmit} className="w-full md:w-auto">
-                    Отправить запрос
-                </Button>
-            </CardFooter>
         </Card>
     )
 }
