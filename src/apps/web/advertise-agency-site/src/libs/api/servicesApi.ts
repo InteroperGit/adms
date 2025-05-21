@@ -3,8 +3,9 @@ import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
 import {Article} from "@/types/article";
 import {StrapiArticle} from "@/types/strapi/strapiArticle";
 import {convertStrapiArticleToArticle} from "@/libs/converters/strapiArticleConverter";
+import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+const STRAPI_URL = getStrapiUrl();
 
 const sortFunction = ((a: ServiceCategory, b: ServiceCategory) => {
     const orderA = a.order ?? 0;

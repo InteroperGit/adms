@@ -1,8 +1,9 @@
 import {PromotionItem} from "@/types/promotionItem";
 import {StrapiPromotion} from "@/types/strapi/strapiPromotion";
 import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
+import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+const STRAPI_URL = getStrapiUrl();
 
 /**
  * Получить список специальных предложений

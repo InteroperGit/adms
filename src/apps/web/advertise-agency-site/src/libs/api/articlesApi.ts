@@ -2,8 +2,9 @@ import {Article} from "@/types/article";
 import {convertStrapiArticleToArticle} from "@/libs/converters/strapiArticleConverter";
 import {StrapiArticle} from "@/types/strapi/strapiArticle";
 import {PaginationMeta} from "@/types/pagination";
+import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+const STRAPI_URL = getStrapiUrl();
 
 interface Result {
     articles: Article[],

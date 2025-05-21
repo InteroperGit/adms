@@ -1,8 +1,9 @@
 import {AboutCompany} from "@/types/aboutCompany";
 import {StrapiAboutCompany} from "@/types/strapi/strapiAboutCompany";
 import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
+import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+const STRAPI_URL = getStrapiUrl();
 
 /**
  * Получает данные о компании из Strapi CMS.

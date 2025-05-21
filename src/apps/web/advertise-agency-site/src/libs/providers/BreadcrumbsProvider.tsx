@@ -3,12 +3,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { BreadcrumbItem } from '@/types/breadcrumbs'
+import {getBreadcrumbsApiUrl} from "@/libs/envUtils";
 
-const BREADCRUMBS_URL = process.env.NEXT_PUBLIC_BREADCRUMBS_URL;
-
-if (!BREADCRUMBS_URL) {
-    throw new Error("BREADCRUMB_URL environment variable is missing");
-}
+const BREADCRUMBS_API_URL = getBreadcrumbsApiUrl();
 
 interface BreadcrumbsContextType {
     breadcrumbs: BreadcrumbItem[];
@@ -80,7 +77,7 @@ export function BreadcrumbsProvider({ children }: { children: React.ReactNode })
             try {
                 setState(prev => ({ ...prev, loading: true }));
 
-                const res = await fetch(`${BREADCRUMBS_URL}${pathname}`)
+                const res = await fetch(`${BREADCRUMBS_API_URL}${pathname}`)
                 if (!res.ok) {
                     throw new Error("Network response failed")
                 }
@@ -95,7 +92,7 @@ export function BreadcrumbsProvider({ children }: { children: React.ReactNode })
         }
 
         fetchBreadcrumbs()
-    }, [pathname, BREADCRUMBS_URL])
+    }, [pathname, BREADCRUMBS_API_URL])
 
     return (
         <BreadcrumbsContext.Provider value={state}>

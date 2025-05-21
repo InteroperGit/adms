@@ -11,11 +11,10 @@ import ArticlesPagination from "@/components/misc/ArticlePagination";
 import {Article} from "@/types/article";
 import ArticleCard from "@/components/cards/ArticleCard";
 import ServiceIsNotRespondedError from "@/components/error/ServiceIsNotRespondedError";
-import {ALL_SERVICE_CATEGORY_NAME, DEFAULT_PORTFOLIO_PAGE_SIZE} from "@/config/constants";
+import {ALL_SERVICE_CATEGORY_NAME} from "@/config/constants";
+import {getPortfolioPageSize} from "@/libs/envUtils";
 
-const PORTFOLIO_PAGE_SIZE = process.env.PORTFOLIO_PAGE_SIZE && !isNaN(Number(process.env.PORTFOLIO_PAGE_SIZE))
-    ? parseInt(process.env.PORTFOLIO_PAGE_SIZE, 10)
-    : DEFAULT_PORTFOLIO_PAGE_SIZE;
+const PORTFOLIO_PAGE_SIZE = getPortfolioPageSize();
 
 // Компонент для отображения сообщения "Статьи не найдены"
 const NoProjectsFound: React.FC = (): JSX.Element => {

@@ -1,10 +1,7 @@
 import {FormSendResult} from "@/types/forms/formSendResult";
+import {getFormDataApiUrl} from "@/libs/envUtils";
 
-const FORM_DATA_URL = process.env.NEXT_PUBLIC_FORM_DATA_URL;
-
-if (!FORM_DATA_URL) {
-    throw new Error("Failed to get ford-data service url");
-}
+const FORM_DATA_URL = getFormDataApiUrl();
 
 /**
  * Отправляет данные формы связи на внешний сервис.

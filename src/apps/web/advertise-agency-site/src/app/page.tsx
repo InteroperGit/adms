@@ -29,8 +29,9 @@ import {
     DEFAULT_NEWS_PAGE_SIZE,
     DEFAULT_PORTFOLIO_PAGE_SIZE
 } from "@/config/constants";
+import {getYandexCompanyId} from "@/libs/envUtils";
 
-const YANDEX_COMPANY_ID = process.env.YANDEX_COMPANY_ID;
+const YANDEX_COMPANY_ID = getYandexCompanyId();
 
 /**
  * Главная страница сайта, которая отображает различные секции с контентом:

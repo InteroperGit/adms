@@ -6,9 +6,10 @@ import {projects} from "@/data/projectsData";
 import {getServiceCategories} from "@/libs/api/servicesApi";
 import {ServiceCategory} from "@/types/service";
 import {ALL_SERVICE_CATEGORY_NAME} from "@/config/constants";
+import {getNodeEnv, getStrapiUrl} from "@/libs/envUtils";
 
-const NODE_ENV = process.env.NODE_ENV;
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+const NODE_ENV = getNodeEnv();
+const STRAPI_URL = getStrapiUrl();
 const DEV_PROJECT_ARTICLES_COUNT = 100;
 const DEV_MODE = "development";
 const IS_DEV_MODE = NODE_ENV === DEV_MODE;

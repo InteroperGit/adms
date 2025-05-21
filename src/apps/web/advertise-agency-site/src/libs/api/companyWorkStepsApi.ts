@@ -1,7 +1,8 @@
 import {CompanyWorkStep} from "@/types/companyWorkStep";
 import {StrapiCompanyWorkStep} from "@/types/strapi/strapiCompanyWorkStep";
+import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = process.env.INTERNAL_STRAPI_URL;
+const STRAPI_URL = getStrapiUrl();
 
 /**
  * Получить список шагов выполнения работы компании.
