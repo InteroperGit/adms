@@ -92,7 +92,7 @@ export function BreadcrumbsProvider({ children }: { children: React.ReactNode })
         }
 
         fetchBreadcrumbs()
-    }, [pathname, BREADCRUMBS_API_URL])
+    }, [pathname])
 
     return (
         <BreadcrumbsContext.Provider value={state}>
