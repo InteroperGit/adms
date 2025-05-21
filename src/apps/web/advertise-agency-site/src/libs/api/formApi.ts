@@ -1,5 +1,6 @@
 import {FormSendResult} from "@/types/forms/formSendResult";
 import {getFormDataApiUrl} from "@/libs/envUtils";
+import {BaseFormContent} from "@/types/forms/formBase";
 
 const FORM_DATA_URL = getFormDataApiUrl();
 
@@ -29,8 +30,8 @@ const FORM_DATA_URL = getFormDataApiUrl();
  *   console.error("Feedback submission failed:", result.message);
  * }
  */
-export const sendFormData = async (
-    data: BaseFormContent
+export const sendFormData = async <T extends BaseFormContent>(
+    data: T
 ): Promise<FormSendResult> => {
     try {
         const url = `${FORM_DATA_URL}/feedback`;

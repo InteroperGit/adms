@@ -11,6 +11,6 @@
  *   id: "abc123"
  * };
  */
-interface BaseFormContent {
+export interface BaseFormContent {
     id: string;
 }
