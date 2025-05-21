@@ -16,6 +16,7 @@ import {JSX, useEffect, useState} from "react";
 import {sendFormData} from "@/libs/api/formApi";
 import {FormError} from "@/components/forms/FormError";
 import {sendToastMessage} from "@/libs/message/toastUtils";
+import {FeedbackFormContent} from "@/types/forms/feedbackForm";
 
 /**
  * Схема валидации для формы обратной связи.
@@ -29,12 +30,24 @@ import {sendToastMessage} from "@/libs/message/toastUtils";
  * schema.parse({ name: "Alex", phone: "+79991234567", message: "Hi!" });
  */
 const schema = z.object({
-    name: z.string().min(1, "Имя обязательно для заполнения."),
+    name: z
+        .string()
+        .min(6, {
+            message: "Имя обязательно для заполнения."
+        }),
     phone: z
         .string()
-        .min(1, "Телефон обязателен для заполнения.")
-        .regex(/^\+?\d[\d\s\-()]{7,}$/, "Введите корректный номер телефона."),
-    message: z.string().min(1, "Пожалуйста, опишите ваш запрос."),
+        .min(6, {
+            message: "Телефон обязателен для заполнения."
+        })
+        .regex(/^\+?\d[\d\s\-()]{7,}$/, {
+            message: "Введите корректный номер телефона."
+        }),
+    message: z.
+        string()
+        .min(6, {
+            message: "Пожалуйста, опишите ваш запрос."
+        }),
 });
 
 /**
@@ -81,7 +94,7 @@ const FeedbackForm = (): JSX.Element | null => {
 
     const onSubmit = async (values: FeedbackFormValues) => {
         try {
-            await sendFormData({
+            await sendFormData<FeedbackFormContent>({
                 id: "feedback",
                 ...values,
             });

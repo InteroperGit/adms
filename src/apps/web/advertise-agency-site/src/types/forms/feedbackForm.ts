@@ -1,3 +1,5 @@
+import {BaseFormContent} from "@/types/forms/formBase";
+
 /**
  * Интерфейс описывает содержимое формы обратной связи.
  *
