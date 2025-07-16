@@ -11,8 +11,14 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - INTERNAL_STRAPI_URL=${INTERNAL_STRAPI_URL}
-      - NEXT_PUBLIC_STRAPI_URL=${NEXT_PUBLIC_STRAPI_URL}
+      - STRAPI_SERVICE_URL=${STRAPI_SERVICE_URL}
+      - NEXT_PUBLIC_STRAPI_SERVICE_URL=${NEXT_PUBLIC_STRAPI_SERVICE_URL}
+      - BREADCRUMBS_SERVICE_URL=${BREADCRUMBS_SERVICE_URL}
+      - NEXT_PUBLIC_BREADCRUMBS_SERVICE_URL=${NEXT_PUBLIC_BREADCRUMBS_SERVICE_URL}
+      - FORM_DATA_SERVICE_URL=${FORM_DATA_SERVICE_URL}
+      - NEXT_PUBLIC_FORM_DATA_SERVICE_URL=${NEXT_PUBLIC_FORM_DATA_SERVICE_URL}
+      - YANDEX_COMPANY_ID=${YANDEX_COMPANY_ID}
+      - PORTFOLIO_PAGE_SIZE=${PORTFOLIO_PAGE_SIZE}
     volumes:
       - ./output:/app
     networks:
@@ -31,13 +37,24 @@ services:
       - rmaster35-web-site-test-localtunnel
     entrypoint: >
       sh -c '
+        echo "⏱️ Жду локальный сайт...";
+        until curl -sf http://rmaster35-web-site-test-localtunnel:3000/ > /dev/null; do
+          echo "⏳ Сайт ещё не доступен...";
+          sleep 5;
+        done;
+        echo "✅ Сайт поднялся.";
+      
         while true; do
-          echo "⏱️ Checking https://rmaster35.loca.lt/";
+          echo "⏱️ Проверяю https://rmaster35.loca.lt/";
           if curl -sf https://rmaster35.loca.lt/ > /dev/null; then
-            echo "✅ LocalTunnel is UP";
+            echo "✅ LocalTunnel активен";
           else
-            echo "❌ LocalTunnel is DOWN. Restarting service...";
+            echo "❌ LocalTunnel упал. Перезапуск...";
             docker restart rmaster35-web-site-test-localtunnel-container;
+            echo "⏳ Жду повторного старта сайта...";
+            until curl -sf http://rmaster35-web-site-test-localtunnel:3000/ > /dev/null; do
+              sleep 5;
+            done;
           fi
           sleep 30;
         done
