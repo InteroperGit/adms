@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  form-data-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: form-data-service-container
+    environment:
+      - NODE_ENV=production
+      - SERVICE_PORT=${SERVICE_PORT}
+    ports:
+      - "${SERVICE_PORT}:${SERVICE_PORT}"
+    networks:
+      - rmaster35
+    restart: unless-stopped
+
+networks:
+  rmaster35:
+    external: true
