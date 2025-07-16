@@ -1,9 +1,9 @@
 import {FastifyInstance, FastifyPluginAsync} from 'fastify';
 import { request } from "undici";
-import {getStrapiApi} from "../libs/envUtils";
+import {getStrapiUrl} from "../libs/envUtils.js";
 
 const targetMap: Record<string, string> = {
-    strapi: getStrapiApi(),
+    strapi: getStrapiUrl(),
 };
 
 /**

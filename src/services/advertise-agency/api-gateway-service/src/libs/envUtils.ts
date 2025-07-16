@@ -46,14 +46,14 @@ export const getServicePort = (): number => {
  * const strapiBaseUrl = getStrapiApi();
  * const res = await fetch(`${strapiBaseUrl}/api/articles`);
  */
-export const getStrapiApi = (): string => {
-    const STRAPI_API = process.env.STRAPI_API;
+export const getStrapiUrl = (): string => {
+    const STRAPI_URL = process.env.STRAPI_URL;
 
-    if (!STRAPI_API) {
-        throw new Error("STRAPI_API environment variable required");
+    if (!STRAPI_URL) {
+        throw new Error("STRAPI_URL environment variable required");
     }
 
-    return STRAPI_API;
+    return STRAPI_URL;
 }
 
 /**

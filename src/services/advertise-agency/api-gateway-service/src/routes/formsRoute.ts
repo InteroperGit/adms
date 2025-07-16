@@ -1,6 +1,6 @@
 import {FastifyInstance, FastifyPluginAsync} from 'fastify';
 import { request } from 'undici';
-import { getFormDataApi } from "../libs/envUtils";
+import { getFormDataApi } from "../libs/envUtils.js";
 
 /**
  * Прокси-маршрут для передачи данных форм в внешний API (например, Strapi).

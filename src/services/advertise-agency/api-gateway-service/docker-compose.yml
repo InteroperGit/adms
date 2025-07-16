@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api-gateway-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-gateway-service-container
+    environment:
+      - NODE_ENV=production
+      - STRAPI_URL=${STRAPI_URL}
+      - SERVICE_PORT=${SERVICE_PORT}
+      - BREADCRUMBS_SERVICE_API=${BREADCRUMBS_SERVICE_API}
+      - FORM_DATA_SERVICE_API=${FORM_DATA_SERVICE_API}
+      - ALLOW_SITE_CORS=${ALLOW_SITE_CORS}
+    ports:
+      - "${SERVICE_PORT}:${SERVICE_PORT}"
+    networks:
+      - rmaster35
+    restart: unless-stopped
+
+networks:
+  rmaster35:
+    external: true
+    driver: bridge

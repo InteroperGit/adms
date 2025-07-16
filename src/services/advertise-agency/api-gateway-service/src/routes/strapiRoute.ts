@@ -1,6 +1,6 @@
 import {FastifyInstance, FastifyPluginAsync} from 'fastify';
 import { request } from 'undici';
-import {getStrapiApi} from "../libs/envUtils";
+import {getStrapiUrl} from "../libs/envUtils.js";
 
 /**
  * Плагин Fastify, реализующий маршрут для получения данных из Strapi
@@ -13,7 +13,7 @@ import {getStrapiApi} from "../libs/envUtils";
  */
 export const strapiRoute: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     fastify.get('/strapi/*', async (req, reply) => {
-        const strapiBaseUrl = getStrapiApi();
+        const strapiBaseUrl = getStrapiUrl();
 
         // Извлекаем подстроку после /strapi
         const strapiPath = req.url.replace(/^\/strapi/, '');
@@ -40,7 +40,7 @@ export const strapiRoute: FastifyPluginAsync = async (fastify: FastifyInstance) 
             return strapiRes.body;
         } catch (error) {
             fastify.log.error(error);
-            return reply.code(502).send({ error: 'Bad Gateway', details: error });
+            return reply.code(502).send({ error: `Bad Gateway: ${strapiUrl}`, details: error });
         }
     });
 };
