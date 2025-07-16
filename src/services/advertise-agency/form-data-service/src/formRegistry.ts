@@ -1,6 +1,6 @@
-import { feedbackFormScheme } from "./schemes/feedbackFormScheme";
-import { FormRegistry } from "./libs/types/formTypes";
-import loggerFormHandler from "./handlers/LoggerFormHandler";
+import { feedbackFormScheme } from "./schemes/feedbackFormScheme.js";
+import { FormRegistry } from "./libs/types/formTypes.js";
+import loggerFormHandler from "./handlers/LoggerFormHandler.js";
 
 /**
  * Реестр форм и соответствующих обработчиков.

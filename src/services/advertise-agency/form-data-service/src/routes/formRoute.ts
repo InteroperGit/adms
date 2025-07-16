@@ -1,10 +1,10 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
-import { formRegistry } from "../formRegistry";
+import { formRegistry } from "../formRegistry.js";
 import {
     FormId,
     formIdList,
     FormDataHandleResponse,
-} from "../libs/types/formTypes";
+} from "../libs/types/formTypes.js";
 
 /**
  * Асинхронный плагин Fastify для обработки POST-запросов на формы.
