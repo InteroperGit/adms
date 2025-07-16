@@ -1,6 +1,6 @@
 import {FastifyInstance, FastifyPluginAsync} from 'fastify';
 import { request } from 'undici';
-import {getBreadcrumbsApi} from "../libs/envUtils";
+import {getBreadcrumbsApi} from "../libs/envUtils.js";
 
 /**
  * Регистрирует маршрут Fastify для проксирования запросов к API хлебных крошек.
