@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  breadcrumbs-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: breadcrumbs-service-container
+    environment:
+      - NODE_ENV=production
+      - STRAPI_URL=${STRAPI_URL}
+      - SERVICE_PORT=${SERVICE_PORT}
+    ports:
+      - "${SERVICE_PORT}:${SERVICE_PORT}"
+    networks:
+      - rmaster35
+    restart: unless-stopped
+
+networks:
+  rmaster35:
+    external: true
+    driver: bridge

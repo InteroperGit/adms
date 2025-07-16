@@ -1,9 +1,10 @@
 import "dotenv/config"
 import express, { Request, Response } from 'express';
-import {getBreadcrumbs} from "./breadcrumbs";
-import {getServicePort} from "./libs/envUtils";
+import {getBreadcrumbs} from "./breadcrumbs.js";
+import {getServicePort} from "./libs/envUtils.js";
 
 const app = express();
+const HOST = "0.0.0.0";
 const port = getServicePort();
 
 app.get(/^\/(.*)/, async (req: Request, res: Response) => {
@@ -24,6 +25,6 @@ app.get(/^\/(.*)/, async (req: Request, res: Response) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Server running at http://::${port}`);
+app.listen(port, HOST, () => {
+    console.log(`🚀 Breadcrumbs Service is listening at http://::${port}`);
 });

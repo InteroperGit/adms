@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, beforeAll, afterAll } from 'vitest';
-import { getBreadcrumbs } from './breadcrumbs';
-import * as strapiApi from './strapiApi';
+import { getBreadcrumbs } from './breadcrumbs.js';
+import * as strapiApi from './strapiApi.js';
 
 vi.mock('./strapiApi', () => ({
     getServiceTitle: vi.fn(),
