@@ -5,7 +5,8 @@ import { usePathname } from 'next/navigation'
 import { BreadcrumbItem } from '@/types/breadcrumbs'
 import {getBreadcrumbsApiUrl} from "@/libs/envUtils";
 
-const BREADCRUMBS_API_URL = getBreadcrumbsApiUrl();
+const RUNNING_ON_SERVER = false;
+const BREADCRUMBS_API_URL = getBreadcrumbsApiUrl(RUNNING_ON_SERVER);
 
 interface BreadcrumbsContextType {
     breadcrumbs: BreadcrumbItem[];

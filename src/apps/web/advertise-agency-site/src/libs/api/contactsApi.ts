@@ -2,7 +2,8 @@ import {ContactItem} from "@/types/contacts";
 import {StrapiContactItem} from "@/types/strapi/strapiContacts";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
 
 /**
  * Функция для получения списка контактных элементов с API Strapi.

@@ -2,10 +2,10 @@
 
 set -e
 
-echo "Жду доступности Strapi на $INTERNAL_STRAPI_URL..."
+echo "Жду доступности Strapi на $STRAPI_SERVICE_URL..."
 
 # Ждем, пока Strapi не станет доступен
-until curl -s "$INTERNAL_STRAPI_URL" > /dev/null; do
+until curl -s "$STRAPI_SERVICE_URL" > /dev/null; do
   echo "Strapi еще не доступен..."
   sleep 2
 done
@@ -13,7 +13,8 @@ done
 echo "Strapi доступен. Начинаю сборку..."
 
 # Чистим папку output
-rm -rf /app/output && mkdir /app/output
+rm -rf /app/output/*
+rm -rf /app/output/.[!.]* /app/output/..?*
 
 # Собираем Next.js приложение
 pnpm build

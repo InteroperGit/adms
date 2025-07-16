@@ -3,7 +3,9 @@ import {StrapiAboutCompany} from "@/types/strapi/strapiAboutCompany";
 import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true
+const INNER_STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
+const PUBLIC_STRAPI_URL = getStrapiUrl(!RUNNING_ON_SERVER);
 
 /**
  * Получает данные о компании из Strapi CMS.
@@ -28,7 +30,7 @@ const STRAPI_URL = getStrapiUrl();
  */
 export async function getAboutCompany(): Promise<AboutCompany> {
     const res = await fetch(
-        `${STRAPI_URL}/api/about?customPopulate=nested`,
+        `${INNER_STRAPI_URL}/api/about?customPopulate=nested`,
         { next: { revalidate: 60 } }
     );
 
@@ -45,6 +47,7 @@ export async function getAboutCompany(): Promise<AboutCompany> {
         slug: strapiAboutCompany.slug,
         description: strapiAboutCompany.description,
         highlights: strapiAboutCompany.highlights,
-        images: strapiAboutCompany.images.map((image) => convertStrapiImage(image, STRAPI_URL))
+        images: strapiAboutCompany.images.map((image) => (
+            convertStrapiImage(image, PUBLIC_STRAPI_URL)))
     } as AboutCompany;
 }

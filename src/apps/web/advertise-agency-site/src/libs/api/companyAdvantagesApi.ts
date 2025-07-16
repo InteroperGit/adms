@@ -2,7 +2,8 @@ import {CompanyAdvantageItem} from "@/types/companyAdvantageItem";
 import {StrapiCompanyAdvantage} from "@/types/strapi/strapiCompanyAdvantage";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
 
 /**
  * Получить список преимуществ компании

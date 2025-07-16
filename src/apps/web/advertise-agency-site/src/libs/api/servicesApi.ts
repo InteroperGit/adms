@@ -5,7 +5,9 @@ import {StrapiArticle} from "@/types/strapi/strapiArticle";
 import {convertStrapiArticleToArticle} from "@/libs/converters/strapiArticleConverter";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const INNER_STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
+const PUBLIC_STRAPI_URL = getStrapiUrl(!RUNNING_ON_SERVER);
 
 const sortFunction = ((a: ServiceCategory, b: ServiceCategory) => {
     const orderA = a.order ?? 0;
@@ -27,7 +29,7 @@ function sanitizeCategory(category?: ServiceCategory): ServiceCategory | undefin
         description: category.description,
         href: category.href,
         order: category.order,
-        cover: convertStrapiImage(cover, STRAPI_URL),
+        cover: convertStrapiImage(cover, PUBLIC_STRAPI_URL),
         items: items?.map(sanitizeCategory).filter((category) => !!category) ?? [] // рекурсивно обрабатываем детей
     };
 }
@@ -37,10 +39,10 @@ function sanitizeCategory(category?: ServiceCategory): ServiceCategory | undefin
  */
 export async function getServiceCategories(filter: "all" | "header" | "nonheader" = "all"): Promise<ServiceCategory[]> {
     const url = filter === "all"
-        ? `${STRAPI_URL}/api/service-categories?customPopulate=nested&pagination[pageSize]=100`
+        ? `${INNER_STRAPI_URL}/api/service-categories?customPopulate=nested&pagination[pageSize]=100`
         : filter === "header"
-            ? `${STRAPI_URL}/api/service-categories?filters[isHeader][$eq]=true&customPopulate=nested&pagination[pageSize]=100`
-            : `${STRAPI_URL}/api/service-categories?filters[$or][0][isHeader][$eq]=false&filters[$or][1][isHeader][$null]=true&customPopulate=nested&pagination[pageSize]=100`
+            ? `${INNER_STRAPI_URL}/api/service-categories?filters[isHeader][$eq]=true&customPopulate=nested&pagination[pageSize]=100`
+            : `${INNER_STRAPI_URL}/api/service-categories?filters[$or][0][isHeader][$eq]=false&filters[$or][1][isHeader][$null]=true&customPopulate=nested&pagination[pageSize]=100`
 
     const res = await fetch(
         url,
@@ -53,8 +55,14 @@ export async function getServiceCategories(filter: "all" | "header" | "nonheader
     }
 
     const json = await res.json();
+
+    if (!json || !Array.isArray(json.data)) {
+        console.error("Не удалось загрузить категории услуг");
+        throw new Error("Failed to fetch service categories");
+    }
+
     const serviceCategories = await Promise.all(
-        json.data.map(sanitizeCategory)
+        json?.data.map(sanitizeCategory)
     );
 
     const sortedServiceCategories = [...serviceCategories].sort(sortFunction);
@@ -74,7 +82,7 @@ export async function getServiceCategories(filter: "all" | "header" | "nonheader
  */
 export async function getServiceCategoryByName(name: string): Promise<ServiceCategory | undefined> {
     const res = await fetch(
-        `${STRAPI_URL}/api/service-categories?filters[name][$eq]=${name}&populate=*`,
+        `${INNER_STRAPI_URL}/api/service-categories?filters[name][$eq]=${name}&populate=*`,
         { next: { revalidate: 60 } }
     );
 
@@ -95,7 +103,7 @@ export async function getServiceCategoryByName(name: string): Promise<ServiceCat
  */
 export async function getServiceArticleBySlug(requestSlug: string): Promise<Article | undefined> {
     const res = await fetch(
-        `${STRAPI_URL}/api/service-articles?filters[slug][$eq]=${requestSlug}&customPopulate=nested`,
+        `${INNER_STRAPI_URL}/api/service-articles?filters[slug][$eq]=${requestSlug}&customPopulate=nested`,
         { next: { revalidate: 60 } }
     );
 
@@ -111,5 +119,5 @@ export async function getServiceArticleBySlug(requestSlug: string): Promise<Arti
     }
 
     const strapiArticle = strapiArticles[0];
-    return convertStrapiArticleToArticle(strapiArticle, STRAPI_URL);
+    return convertStrapiArticleToArticle(strapiArticle, PUBLIC_STRAPI_URL);
 }
