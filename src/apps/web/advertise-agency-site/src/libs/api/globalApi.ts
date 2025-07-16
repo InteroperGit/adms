@@ -3,14 +3,16 @@ import {SiteGlobal} from "@/types/siteGlobal";
 import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const INNER_STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
+const PUBLIC_STRAPI_URL = getStrapiUrl(!RUNNING_ON_SERVER);
 
 /**
  * Получить основные данные по сайту
  */
 export async function getSiteGlobalData(): Promise<SiteGlobal> {
     const res = await fetch(
-        `${STRAPI_URL}/api/global?customPopulate=nested`,
+        `${INNER_STRAPI_URL}/api/global?customPopulate=nested`,
         { next: { revalidate: 60 } }
     );
 
@@ -28,11 +30,11 @@ export async function getSiteGlobalData(): Promise<SiteGlobal> {
     return {
         siteName: strapiGlobal.siteName,
         siteDescription: strapiGlobal.siteDescription,
-        favicon: convertStrapiImage(strapiGlobal.favicon),
+        favicon: convertStrapiImage(strapiGlobal.favicon, PUBLIC_STRAPI_URL),
         seo: {
             title: strapiGlobal.defaultSeo?.metaTitle,
             description: strapiGlobal.defaultSeo?.metaDescription,
-            ogImage: convertStrapiImage(strapiGlobal.defaultSeo?.shareImage),
+            ogImage: convertStrapiImage(strapiGlobal.defaultSeo?.shareImage, PUBLIC_STRAPI_URL),
         }
     }
 }

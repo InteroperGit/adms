@@ -1,12 +1,11 @@
-FROM node:20-alpine
+FROM node:20-alpine3.19 AS build
 
-RUN apk add --no-cache curl && \
-    npm install -g localtunnel && \
-    corepack enable && corepack prepare pnpm@latest --activate
+RUN apk add --no-cache curl && npm i -g pnpm localtunnel
 
 WORKDIR /app
 
 COPY scripts/entrypoint-localtunnel.sh /entrypoint-localtunnel.sh
+
 RUN chmod +x /entrypoint-localtunnel.sh
 
 EXPOSE 3000

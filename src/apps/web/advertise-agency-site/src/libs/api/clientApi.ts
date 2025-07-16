@@ -3,7 +3,8 @@ import {StrapiClient} from "@/types/strapi/strapiClient";
 import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const INNER_STRAPI_URL = getStrapiUrl(true);
+const PUBLIC_STRAPI_URL = getStrapiUrl(false);
 
 /**
  * Получает список клиентов с сервера Strapi.
@@ -21,12 +22,12 @@ const STRAPI_URL = getStrapiUrl();
  * ```
  */
 export const getClients = async (): Promise<Client[]> => {
-    if (!STRAPI_URL) {
+    if (!INNER_STRAPI_URL) {
         throw new Error("URL API Strapi не задан.");
     }
 
     const res = await fetch(
-        `${STRAPI_URL}/api/clients?customPopulate=nested`,
+        `${INNER_STRAPI_URL}/api/clients?customPopulate=nested`,
         { next: { revalidate: 60 } }
     );
 
@@ -41,7 +42,7 @@ export const getClients = async (): Promise<Client[]> => {
                 name: item.name,
                 title: item.title,
                 description: item.description,
-                logo: convertStrapiImage(item.logo, STRAPI_URL),
+                logo: convertStrapiImage(item.logo, PUBLIC_STRAPI_URL),
             } as Client
     ));
 }

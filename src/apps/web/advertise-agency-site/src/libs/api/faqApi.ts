@@ -2,7 +2,8 @@ import {Faq, FaqItem} from "@/types/faq";
 import {StrapiFaq, StrapiFaqItem} from "@/types/strapi/strapiFaq";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
 
 /**
  * Получить список FAQ.

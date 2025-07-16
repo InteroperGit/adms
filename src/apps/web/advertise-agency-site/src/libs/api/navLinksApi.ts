@@ -1,7 +1,8 @@
 import {NavigationLink} from "@/types/navigation";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
 
 const sortFunction = ((a: NavigationLink, b: NavigationLink) => {
     const orderA = a.order ?? 0;
@@ -28,6 +29,12 @@ export async function fetchNavigationLinks(): Promise<NavigationLink[]> {
         next: { revalidate: 60 }, // ISR
     });
     const json = await res.json();
+
+    if (!json || !Array.isArray(json.data)) {
+        console.error("Не удалось загрузить навигационные ссылки");
+        throw new Error("Failed to fetch navigation links");
+    }
+
     const navigationLinks: NavigationLink[] = await Promise.all(json.data.map(sanitizeLink));
     const sortedNavigationLinks: NavigationLink[] | undefined = navigationLinks.sort(sortFunction);
     return sortedNavigationLinks || [];

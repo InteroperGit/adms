@@ -9,7 +9,9 @@ import {ALL_SERVICE_CATEGORY_NAME} from "@/config/constants";
 import {getNodeEnv, getStrapiUrl} from "@/libs/envUtils";
 
 const NODE_ENV = getNodeEnv();
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const INNER_STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
+const PUBLIC_STRAPI_URL = getStrapiUrl(!RUNNING_ON_SERVER);
 const DEV_PROJECT_ARTICLES_COUNT = 100;
 const DEV_MODE = "development";
 const IS_DEV_MODE = NODE_ENV === DEV_MODE;
@@ -42,8 +44,8 @@ export interface Result {
  */
 export async function getProjectsArticlesCount(category: string = ALL_SERVICE_CATEGORY_NAME): Promise<number> {
     const FETCH_URL = category === ALL_SERVICE_CATEGORY_NAME
-        ? `${STRAPI_URL}/api/project-articles?pagination[pageSize]=1`
-        : `${STRAPI_URL}/api/project-articles?filters[category][name][$eq]=${category}&pagination[pageSize]=1`
+        ? `${INNER_STRAPI_URL}/api/project-articles?pagination[pageSize]=1`
+        : `${INNER_STRAPI_URL}/api/project-articles?filters[category][name][$eq]=${category}&pagination[pageSize]=1`
 
     const res = await fetch(FETCH_URL, {
         headers: {
@@ -90,7 +92,7 @@ export async function getProjectSlugs(): Promise<string[]> {
 
     do {
         const res = await fetch(
-            `${STRAPI_URL}/api/project-articles?pagination[page]=${page}&pagination[pageSize]=100&fields[0]=slug`,
+            `${INNER_STRAPI_URL}/api/project-articles?pagination[page]=${page}&pagination[pageSize]=100&fields[0]=slug`,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -121,8 +123,8 @@ export async function getProjectSlugs(): Promise<string[]> {
 
 async function getProjectArticlesFromStrapi({ category, page, pageSize }: ProjectArticlesProps): Promise<Result> {
     const FETCH_URL = category === ALL_SERVICE_CATEGORY_NAME
-        ? `${STRAPI_URL}/api/project-articles?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
-        : `${STRAPI_URL}/api/project-articles?populate=*&filters[category][name][$eq]=${category}&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
+        ? `${INNER_STRAPI_URL}/api/project-articles?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+        : `${INNER_STRAPI_URL}/api/project-articles?populate=*&filters[category][name][$eq]=${category}&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
 
     const res = await fetch(
         FETCH_URL,
@@ -142,7 +144,7 @@ async function getProjectArticlesFromStrapi({ category, page, pageSize }: Projec
 
     const json = await res.json();
     const articles: Article[] = await Promise.all(
-        json.data.map((item: StrapiArticle) => (convertStrapiArticleToArticle(item, STRAPI_URL)))
+        json.data.map((item: StrapiArticle) => (convertStrapiArticleToArticle(item, PUBLIC_STRAPI_URL)))
     );
     const pagination: PaginationMeta = json.meta.pagination;
 
@@ -256,7 +258,7 @@ export async function getProjectArticles({ category, page, pageSize }: ProjectAr
  */
 export async function getProjectArticleBySlug(requestSlug: string): Promise<Article | undefined> {
     const res = await fetch(
-        `${STRAPI_URL}/api/project-articles?filters[slug][$eq]=${requestSlug}&customPopulate=nested`,
+        `${INNER_STRAPI_URL}/api/project-articles?filters[slug][$eq]=${requestSlug}&customPopulate=nested`,
         {
             headers: {
                 'Content-Type': 'application/json'
@@ -279,5 +281,5 @@ export async function getProjectArticleBySlug(requestSlug: string): Promise<Arti
     }
 
     const strapiArticle = strapiArticles[0];
-    return convertStrapiArticleToArticle(strapiArticle, STRAPI_URL);
+    return convertStrapiArticleToArticle(strapiArticle, PUBLIC_STRAPI_URL);
 }

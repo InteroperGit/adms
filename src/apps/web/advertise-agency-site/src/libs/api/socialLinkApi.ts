@@ -2,7 +2,8 @@ import {SocialLink} from "@/types/socialLink";
 import {StrapiSocialLink} from "@/types/strapi/strapiSocialLink";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const INNER_STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
 
 /**
  * Функция для получения списка социальных ссылок с API Strapi.
@@ -20,12 +21,12 @@ const STRAPI_URL = getStrapiUrl();
  * const socialLinks = await getSocialLinks();
  */
 export const getSocialLinks = async (): Promise<SocialLink[]> => {
-    if (!STRAPI_URL) {
+    if (!INNER_STRAPI_URL) {
         throw new Error("URL API Strapi не задан.");
     }
 
     const res = await fetch(
-        `${STRAPI_URL}/api/social-links?customPopulate=nested`,
+        `${INNER_STRAPI_URL}/api/social-links?customPopulate=nested`,
         { next: { revalidate: 60 } }
     );
 

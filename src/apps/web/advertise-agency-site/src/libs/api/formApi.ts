@@ -2,7 +2,8 @@ import {FormSendResult} from "@/types/forms/formSendResult";
 import {getFormDataApiUrl} from "@/libs/envUtils";
 import {BaseFormContent} from "@/types/forms/formBase";
 
-const FORM_DATA_URL = getFormDataApiUrl();
+const RUNNING_ON_SERVER = false;
+const FORM_DATA_URL = getFormDataApiUrl(RUNNING_ON_SERVER);
 
 /**
  * Отправляет данные формы связи на внешний сервис.

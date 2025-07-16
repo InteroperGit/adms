@@ -3,7 +3,9 @@ import {StrapiPromotion} from "@/types/strapi/strapiPromotion";
 import {convertStrapiImage} from "@/libs/converters/strapiImageConverter";
 import {getStrapiUrl} from "@/libs/envUtils";
 
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const INNER_STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
+const PUBLIC_STRAPI_URL = getStrapiUrl(!RUNNING_ON_SERVER);
 
 /**
  * Получить список специальных предложений
@@ -17,7 +19,7 @@ const STRAPI_URL = getStrapiUrl();
  */
 export async function getPromotions(): Promise<PromotionItem[]> {
     const res = await fetch(
-        `${STRAPI_URL}/api/promotions?customPopulate=nested`,
+        `${INNER_STRAPI_URL}/api/promotions?customPopulate=nested`,
         { next: { revalidate: 60 } }
     );
 
@@ -33,7 +35,7 @@ export async function getPromotions(): Promise<PromotionItem[]> {
                 title: item.title,
                 description: item.description,
                 articleUrl: item.articleUrl,
-                cover: item.cover ? convertStrapiImage(item.cover, STRAPI_URL) : undefined,
+                cover: item.cover ? convertStrapiImage(item.cover, PUBLIC_STRAPI_URL) : undefined,
             } as PromotionItem
     )));
 }

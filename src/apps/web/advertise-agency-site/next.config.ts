@@ -21,6 +21,11 @@ const nextConfig: NextConfig = {
                 pathname: '/strapi/uploads/**',
             }, {
                 protocol: 'http',
+                hostname: 'api-gateway-service',
+                port: '3002',
+                pathname: '/strapi/uploads/**',
+            }, {
+                protocol: 'http',
                 hostname: 'strapi',
                 port: '1337',
                 pathname: '/uploads/**',

@@ -6,7 +6,9 @@ import {newsArticles} from "@/data/newsData";
 import {getNodeEnv, getStrapiUrl} from "@/libs/envUtils";
 
 const NODE_ENV = getNodeEnv();
-const STRAPI_URL = getStrapiUrl();
+const RUNNING_ON_SERVER = true;
+const INNER_STRAPI_URL = getStrapiUrl(RUNNING_ON_SERVER);
+const PUBLIC_STRAPI_URL = getStrapiUrl(!RUNNING_ON_SERVER);
 const DEV_NEWS_ARTICLES_COUNT = 100;
 const DEV_MODE = "development";
 const IS_DEV_MODE = NODE_ENV === DEV_MODE;
@@ -36,7 +38,7 @@ export interface Result {
  *
  */
 export async function getNewsArticlesCount(): Promise<number> {
-    const FETCH_URL = `${STRAPI_URL}/api/news-articles?pagination[pageSize]=1`;
+    const FETCH_URL = `${INNER_STRAPI_URL}/api/news-articles?pagination[pageSize]=1`;
 
     const res = await fetch(FETCH_URL, {
         headers: {
@@ -59,7 +61,7 @@ export async function getNewsArticlesCount(): Promise<number> {
 }
 
 async function getNewsArticlesFromStrapi({ page, pageSize }: NewsArticlesProps): Promise<Result> {
-    const FETCH_URL = `${STRAPI_URL}/api/news-articles?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
+    const FETCH_URL = `${INNER_STRAPI_URL}/api/news-articles?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
 
     const res = await fetch(
         FETCH_URL,
@@ -79,7 +81,7 @@ async function getNewsArticlesFromStrapi({ page, pageSize }: NewsArticlesProps):
 
     const json = await res.json();
     const news: Article[] = await Promise.all(
-        json.data.map((item: StrapiArticle) => (convertStrapiArticleToArticle(item, STRAPI_URL)))
+        json.data.map((item: StrapiArticle) => (convertStrapiArticleToArticle(item, PUBLIC_STRAPI_URL)))
     );
     const pagination: PaginationMeta = json.meta.pagination;
 
@@ -180,7 +182,7 @@ export async function getNewsSlugs(): Promise<string[]> {
 
     do {
         const res = await fetch(
-            `${STRAPI_URL}/api/news-articles?pagination[page]=${page}&pagination[pageSize]=100&fields[0]=slug`,
+            `${INNER_STRAPI_URL}/api/news-articles?pagination[page]=${page}&pagination[pageSize]=100&fields[0]=slug`,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -229,7 +231,7 @@ export async function getNewsSlugs(): Promise<string[]> {
 
 export async function getNewsArticleBySlug(requestSlug: string): Promise<Article | undefined> {
     const res = await fetch(
-        `${STRAPI_URL}/api/mews-articles?filters[slug][$eq]=${requestSlug}&customPopulate=nested`,
+        `${INNER_STRAPI_URL}/api/mews-articles?filters[slug][$eq]=${requestSlug}&customPopulate=nested`,
         {
             headers: {
                 'Content-Type': 'application/json'
@@ -252,5 +254,5 @@ export async function getNewsArticleBySlug(requestSlug: string): Promise<Article
     }
 
     const strapiArticle = strapiArticles[0];
-    return convertStrapiArticleToArticle(strapiArticle, STRAPI_URL);
+    return convertStrapiArticleToArticle(strapiArticle, PUBLIC_STRAPI_URL);
 }
