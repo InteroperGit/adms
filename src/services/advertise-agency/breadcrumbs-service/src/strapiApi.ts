@@ -1,5 +1,5 @@
-import { HttpClient } from './libs/httpClient';
-import {getStrapiApi} from "./libs/envUtils";
+import { HttpClient } from './libs/httpClient.js';
+import {getStrapiApi} from "./libs/envUtils.js";
 
 let http: HttpClient | null = null;
 

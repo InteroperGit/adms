@@ -1,5 +1,5 @@
-import {BreadcrumbItem} from "./types/breadcrumbs";
-import {getArticleTitle, getNewsTitle, getPortfolioTitle, getServiceTitle} from "./strapiApi";
+import {BreadcrumbItem} from "./types/breadcrumbs.js";
+import {getArticleTitle, getNewsTitle, getPortfolioTitle, getServiceTitle} from "./strapiApi.js";
 
 const getBaseBreadcrumbs = (): BreadcrumbItem => {
     return { title: "Главная", href: "/" }

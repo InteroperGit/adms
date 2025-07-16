@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import {getArticleTitle, getNewsTitle, getPortfolioTitle, getServiceTitle} from './strapiApi';
+import {getArticleTitle, getNewsTitle, getPortfolioTitle, getServiceTitle} from './strapiApi.js';
 
 const mockFetch = vi.fn();
 global.fetch = mockFetch;
