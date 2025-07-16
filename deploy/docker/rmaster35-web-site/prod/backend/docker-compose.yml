@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  breadcrumbs-service:
+    build:
+      context: ../../../../../src/services/advertise-agency/breadcrumbs-service
+      dockerfile: Dockerfile
+    container_name: rmaster35-web-site-breadcrumbs-service
+    environment:
+      - NODE_ENV=production
+      - STRAPI_URL=${STRAPI_URL}
+      - SERVICE_PORT=${BREADCRUMBS_SERVICE_PORT}
+    ports:
+      - "${BREADCRUMBS_SERVICE_PORT}:${BREADCRUMBS_SERVICE_PORT}"
+    networks:
+      - rmaster35
+    restart: unless-stopped
+
+  form-data-service:
+    build:
+      context: ../../../../../src/services/advertise-agency/form-data-service
+      dockerfile: Dockerfile
+    container_name: rmaster35-web-site-form-data-service
+    environment:
+      - NODE_ENV=production
+      - SERVICE_PORT=${FORM_DATA_SERVICE_PORT}
+    ports:
+      - "${FORM_DATA_SERVICE_PORT}:${FORM_DATA_SERVICE_PORT}"
+    networks:
+      - rmaster35
+    restart: unless-stopped
+
+  api-gateway-service:
+    build:
+      context: ../../../../../src/services/advertise-agency/api-gateway-service
+      dockerfile: Dockerfile
+    container_name: rmaster35-web-site-api-gateway-service
+    environment:
+      - NODE_ENV=production
+      - STRAPI_URL=${STRAPI_URL}
+      - SERVICE_PORT=${API_GATEWAY_SERVICE_PORT}
+      - BREADCRUMBS_SERVICE_API=${BREADCRUMBS_SERVICE_API}
+      - FORM_DATA_SERVICE_API=${FORM_DATA_SERVICE_API}
+      - ALLOW_SITE_CORS=${ALLOW_SITE_CORS}
+    ports:
+      - "${API_GATEWAY_SERVICE_PORT}:${API_GATEWAY_SERVICE_PORT}"
+    networks:
+      - rmaster35
+    depends_on:
+      - breadcrumbs-service
+      - form-data-service
+    restart: unless-stopped
+
+networks:
+  rmaster35:
+    external: true
+    driver: bridge
