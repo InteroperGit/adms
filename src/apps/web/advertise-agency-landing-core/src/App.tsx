@@ -6,6 +6,8 @@ import { Services } from '@/components/sections/Services'
 import { Portfolio } from '@/components/sections/Portfolio'
 import { Advantages } from '@/components/sections/Advantages'
 import { Testimonials } from '@/components/sections/Testimonials'
+import { CallToAction } from '@/components/sections/CallToAction'
+import { Contact } from '@/components/sections/Contact'
 
 function App() {
   return (
@@ -17,8 +19,9 @@ function App() {
         <Services />
         <Portfolio />
         <Advantages />
+        <CallToAction />
         <Testimonials />
-        {/* Sections will be composed here */}
+        <Contact />
       </main>
     </>
   )
