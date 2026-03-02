@@ -18,7 +18,7 @@ export function HeaderDesktopNav() {
 
       <div className="hidden md:block">
         <Button asChild size="sm" className="rounded-full px-6">
-          <a href="#contact">Get a Quote</a>
+          <a href="#contact">Связаться</a>
         </Button>
       </div>
     </>

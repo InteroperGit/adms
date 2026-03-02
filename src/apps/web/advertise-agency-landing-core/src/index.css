@@ -3,24 +3,58 @@
 
 @import "tailwindcss";
 
-/* ─── Tailwind v4 Theme Tokens ─────────────────────────────────────────────── */
-@theme {
+/* ─── shadcn/ui CSS Variables ───────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --background:             0 0% 100%;
+    --foreground:             230 20% 7%;
+    --card:                   0 0% 100%;
+    --card-foreground:        230 20% 7%;
+    --popover:                0 0% 100%;
+    --popover-foreground:     230 20% 7%;
+    --primary:                17 93% 52%;
+    --primary-foreground:     0 0% 100%;
+    --secondary:              17 100% 97%;
+    --secondary-foreground:   17 93% 35%;
+    --muted:                  220 20% 97%;
+    --muted-foreground:       220 9% 46%;
+    --accent:                 262 83% 58%;
+    --accent-foreground:      0 0% 100%;
+    --destructive:            0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border:                 220 13% 91%;
+    --input:                  220 13% 91%;
+    --ring:                   17 93% 52%;
+    --radius:                 0.5rem;
+  }
+}
+
+/* ─── Tailwind v4 Theme — maps utilities to CSS vars ───────────────────────── */
+@theme inline {
   /* Fonts */
   --font-heading: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-body:    "Inter", system-ui, sans-serif;
 
-  /* Brand palette */
-  --color-background:       #FFFFFF;
-  --color-foreground:       #0D0E14;
-  --color-primary:          #4F6EF7;
-  --color-primary-hover:    #3D5CE8;
-  --color-accent:           #7C3AED;
-  --color-secondary:        #F4F5FF;
-  --color-muted:            #F8F9FC;
-  --color-muted-foreground: #6B7280;
-  --color-border:           #E5E7EB;
-  --color-card:             #FFFFFF;
-  --color-card-foreground:  #0D0E14;
+  /* Colors — all Tailwind utilities resolve through the CSS vars above */
+  --color-background:             hsl(var(--background));
+  --color-foreground:             hsl(var(--foreground));
+  --color-card:                   hsl(var(--card));
+  --color-card-foreground:        hsl(var(--card-foreground));
+  --color-popover:                hsl(var(--popover));
+  --color-popover-foreground:     hsl(var(--popover-foreground));
+  --color-primary:                hsl(var(--primary));
+  --color-primary-foreground:     hsl(var(--primary-foreground));
+  --color-secondary:              hsl(var(--secondary));
+  --color-secondary-foreground:   hsl(var(--secondary-foreground));
+  --color-muted:                  hsl(var(--muted));
+  --color-muted-foreground:       hsl(var(--muted-foreground));
+  --color-accent:                 hsl(var(--accent));
+  --color-accent-foreground:      hsl(var(--accent-foreground));
+  --color-destructive:            hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border:                 hsl(var(--border));
+  --color-input:                  hsl(var(--input));
+  --color-ring:                   hsl(var(--ring));
 
   /* Border radius scale */
   --radius-sm:   0.25rem;
@@ -29,32 +63,6 @@
   --radius-xl:   1rem;
   --radius-2xl:  1.5rem;
   --radius-full: 9999px;
-}
-
-/* ─── shadcn/ui CSS Variable Mapping (HSL format) ──────────────────────────── */
-@layer base {
-  :root {
-    --background:            0 0% 100%;          /* #FFFFFF */
-    --foreground:            230 20% 7%;          /* #0D0E14 */
-    --card:                  0 0% 100%;
-    --card-foreground:       230 20% 7%;
-    --popover:               0 0% 100%;
-    --popover-foreground:    230 20% 7%;
-    --primary:               231 90% 64%;         /* #4F6EF7 */
-    --primary-foreground:    0 0% 100%;
-    --secondary:             233 100% 97%;        /* #F4F5FF */
-    --secondary-foreground:  231 90% 45%;
-    --muted:                 220 20% 97%;         /* #F8F9FC */
-    --muted-foreground:      220 9% 46%;          /* #6B7280 */
-    --accent:                262 83% 58%;         /* #7C3AED */
-    --accent-foreground:     0 0% 100%;
-    --destructive:           0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border:                220 13% 91%;         /* #E5E7EB */
-    --input:                 220 13% 91%;
-    --ring:                  231 90% 64%;
-    --radius:                0.5rem;
-  }
 }
 
 /* ─── Base Styles ───────────────────────────────────────────────────────────── */
