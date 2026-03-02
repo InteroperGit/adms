@@ -98,7 +98,7 @@ export function Portfolio() {
 
                 {/* Link */}
                 <a
-                  href="#contact"
+                  href={item.href ?? '#contact'}
                   className="inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-gap duration-200 hover:gap-2.5"
                 >
                   Подробнее

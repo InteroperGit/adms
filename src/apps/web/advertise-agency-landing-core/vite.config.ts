@@ -11,4 +11,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        bodrost: path.resolve(__dirname, 'pages/portfolio/bodrost/index.html'),
+      },
+    },
+  },
 })
