@@ -135,7 +135,7 @@ export function Contact() {
               </h3>
               <ul className="space-y-5">
                 <li className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Phone size={18} />
                   </div>
                   <div>
@@ -152,7 +152,7 @@ export function Contact() {
                 </li>
 
                 <li className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Mail size={18} />
                   </div>
                   <div>
@@ -169,7 +169,7 @@ export function Contact() {
                 </li>
 
                 <li className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <MapPin size={18} />
                   </div>
                   <div>
@@ -195,7 +195,7 @@ export function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Telegram"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-white text-muted-foreground shadow-sm transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-white text-muted-foreground shadow-sm transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
                 >
                   <Send size={16} />
                 </a>
@@ -204,7 +204,7 @@ export function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="ВКонтакте"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-white text-muted-foreground shadow-sm transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-white text-muted-foreground shadow-sm transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -220,7 +220,7 @@ export function Contact() {
             </div>
 
             {/* Working hours */}
-            <div className="rounded-2xl border border-border bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-border bg-white p-4 shadow-sm sm:p-6">
               <p className="mb-3 text-sm font-semibold text-foreground">
                 Часы работы
               </p>

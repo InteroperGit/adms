@@ -100,7 +100,7 @@ export function About() {
             </div>
 
             {/* Floating accent badge */}
-            <div className="absolute -bottom-4 -right-4 rounded-xl border border-border bg-white px-4 py-3 shadow-lg">
+            <div className="absolute bottom-0 right-0 rounded-xl border border-border bg-white px-4 py-3 shadow-lg sm:-bottom-4 sm:-right-4">
               <p className="text-xs text-muted-foreground">Средний NPS</p>
               <p
                 style={{ fontFamily: 'var(--font-heading)' }}

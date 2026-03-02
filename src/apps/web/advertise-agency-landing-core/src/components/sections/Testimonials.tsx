@@ -31,8 +31,9 @@ export function Testimonials() {
         <div className="mx-auto max-w-3xl">
           <div className="relative rounded-2xl border border-border bg-white p-8 shadow-sm md:p-12">
             {/* Quote icon */}
-            <div className="absolute right-8 top-8 text-primary/10 md:right-12 md:top-10">
-              <Quote size={64} strokeWidth={1} />
+            <div className="absolute right-6 top-6 text-primary/10 md:right-12 md:top-10">
+              <Quote size={40} className="md:hidden" strokeWidth={1} />
+              <Quote size={64} className="hidden md:block" strokeWidth={1} />
             </div>
 
             {/* Stars */}
@@ -90,14 +91,14 @@ export function Testimonials() {
               <button
                 onClick={prev}
                 aria-label="Предыдущий отзыв"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition-colors hover:border-primary hover:text-primary"
               >
                 <ChevronLeft size={18} />
               </button>
               <button
                 onClick={next}
                 aria-label="Следующий отзыв"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition-colors hover:border-primary hover:text-primary"
               >
                 <ChevronRight size={18} />
               </button>

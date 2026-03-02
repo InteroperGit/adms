@@ -35,10 +35,10 @@ export function Page() {
             <Badge className="mb-6 border-0 bg-white/20 text-white backdrop-blur-sm">
               Брендинг
             </Badge>
-            <h1 className="mb-4 text-4xl font-bold leading-tight md:text-5xl">
+            <h1 className="mb-4 text-3xl font-bold leading-tight md:text-5xl">
               Ребрендинг сети кофеен «Бодрость»
             </h1>
-            <p className="text-lg text-white/80">
+            <p className="text-base text-white/80 md:text-lg">
               Новый фирменный стиль, айдентика и коммуникационная платформа для сети из 40 кофеен
               по всей России
             </p>
@@ -49,7 +49,7 @@ export function Page() {
       {/* Overview grid */}
       <section className="border-b border-border py-16">
         <Container>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {[
               { label: 'Клиент', value: 'Сеть кофеен «Бодрость»' },
               { label: 'Категория', value: 'Брендинг' },
@@ -88,7 +88,7 @@ export function Page() {
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="mb-10 text-2xl font-bold md:text-3xl">Решение</h2>
-            <div className="grid gap-8 sm:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-3 sm:gap-8">
               {[
                 {
                   title: 'Логотип',
@@ -125,7 +125,7 @@ export function Page() {
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="mb-10 text-2xl font-bold md:text-3xl">Результаты</h2>
-            <div className="grid gap-6 sm:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-3 sm:gap-6">
               {[
                 {
                   metric: '+28%',
@@ -165,7 +165,7 @@ export function Page() {
       <section className="bg-muted/40 py-16">
         <Container>
           <div className="mx-auto max-w-2xl">
-            <blockquote className="rounded-2xl border border-border bg-white p-8 shadow-sm">
+            <blockquote className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
               <div className="mb-4 flex gap-0.5">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
                   <Star key={i} size={16} className="fill-amber-400 text-amber-400" />

@@ -1,5 +1,6 @@
 import { Container } from '@/components/layout/Container'
 import { useScrolled } from '@/hooks/useScrolled'
+import { useActiveSection } from '@/hooks/useActiveSection'
 import { SITE_NAME } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { HeaderDesktopNav } from './HeaderDesktopNav'
@@ -7,6 +8,7 @@ import { HeaderMobileNav } from './HeaderMobileNav'
 
 export function Header() {
   const scrolled = useScrolled()
+  const activeSection = useActiveSection()
 
   return (
     <header
@@ -30,8 +32,8 @@ export function Header() {
             </span>
           </a>
 
-          <HeaderDesktopNav />
-          <HeaderMobileNav />
+          <HeaderDesktopNav activeSection={activeSection} />
+          <HeaderMobileNav activeSection={activeSection} />
         </div>
       </Container>
     </header>
