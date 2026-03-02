@@ -35,7 +35,7 @@ export function HeaderMobileNav() {
               <div className="pt-3">
                 <Button asChild className="w-full rounded-full" size="sm">
                   <a href="#contact" onClick={() => setMenuOpen(false)}>
-                    Get a Quote
+                    Связаться
                   </a>
                 </Button>
               </div>
