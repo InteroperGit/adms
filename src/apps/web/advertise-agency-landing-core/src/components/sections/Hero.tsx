@@ -32,7 +32,7 @@ export function Hero() {
       <Container className="py-24 md:py-32">
         <div className="mx-auto max-w-4xl text-center">
           {/* Badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary sm:px-4 sm:py-1.5 sm:text-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             Рекламное агентство полного цикла
           </div>
@@ -52,7 +52,7 @@ export function Hero() {
           </h1>
 
           {/* Subheadline */}
-          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+          <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-xl">
             Разрабатываем комплексные рекламные стратегии, создаём креативные
             концепции и запускаем кампании, которые приносят реальный результат
             вашему бизнесу.
@@ -66,7 +66,7 @@ export function Hero() {
                 <ArrowRight size={16} />
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+            <Button asChild variant="outline" size="lg" className="rounded-full px-8 hover:bg-muted hover:text-primary">
               <a href="#portfolio">Наши работы</a>
             </Button>
           </div>

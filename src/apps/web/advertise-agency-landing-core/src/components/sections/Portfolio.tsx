@@ -36,7 +36,7 @@ export function Portfolio() {
               key={category}
               onClick={() => setActiveCategory(category)}
               className={cn(
-                'rounded-full px-5 py-2 text-sm font-medium transition-all duration-200',
+                'rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200 sm:px-5 sm:py-2 sm:text-sm',
                 activeCategory === category
                   ? 'bg-primary text-white shadow-sm'
                   : 'bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary'
@@ -48,7 +48,7 @@ export function Portfolio() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {filtered.map((item) => (
             <article
               key={item.id}
@@ -57,7 +57,7 @@ export function Portfolio() {
               {/* Thumbnail placeholder */}
               <div
                 className={cn(
-                  'relative h-52 bg-gradient-to-br',
+                  'relative h-40 bg-gradient-to-br sm:h-52',
                   item.gradient
                 )}
               >
@@ -111,7 +111,7 @@ export function Portfolio() {
 
         {/* Bottom CTA */}
         <div className="mt-14 text-center">
-          <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+          <Button asChild variant="outline" size="lg" className="rounded-full px-8 hover:bg-muted hover:text-primary">
             <a href="#contact">Обсудить ваш проект</a>
           </Button>
         </div>

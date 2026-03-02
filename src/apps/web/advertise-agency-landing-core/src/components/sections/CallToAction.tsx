@@ -26,11 +26,11 @@ export function CallToAction() {
             Оставьте заявку сегодня — и уже через неделю у вас будет готовая
             стратегия продвижения.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button
               asChild
               size="lg"
-              className="rounded-full bg-white px-8 text-primary hover:bg-white/90 hover:text-primary"
+              className="w-full rounded-full bg-white px-8 text-primary hover:bg-white/90 hover:text-primary sm:w-auto"
             >
               <a href="#contact">
                 Получить стратегию
@@ -41,7 +41,7 @@ export function CallToAction() {
               asChild
               size="lg"
               variant="outline"
-              className="rounded-full border-white/40 bg-transparent px-8 text-white hover:border-white hover:bg-white/10 hover:text-white"
+              className="w-full rounded-full border-white/40 bg-transparent px-8 text-white hover:border-white hover:bg-white/10 hover:text-white sm:w-auto"
             >
               <a href="#portfolio">Смотреть кейсы</a>
             </Button>
