@@ -8,7 +8,8 @@
       "Bash(printf a\\\\ny\\\\n:*)",
       "Bash(pnpm add:*)",
       "Bash(pnpm build:*)",
-      "Bash(clip:*)"
+      "Bash(clip:*)",
+      "Bash(echo:*)"
     ]
   }
 }
