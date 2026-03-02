@@ -1,0 +1,48 @@
+import { useState } from 'react'
+import { Menu, X } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Container } from '@/components/layout/Container'
+import { NAV_LINKS } from '@/lib/constants'
+
+export function HeaderMobileNav() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  return (
+    <>
+      <button
+        className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted md:hidden"
+        onClick={() => setMenuOpen((prev) => !prev)}
+        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={menuOpen}
+      >
+        {menuOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {menuOpen && (
+        <div className="fixed inset-x-0 top-16 z-40 border-b border-border bg-white md:hidden">
+          <Container>
+            <nav className="flex flex-col py-4">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3 text-base font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <div className="pt-3">
+                <Button asChild className="w-full rounded-full" size="sm">
+                  <a href="#contact" onClick={() => setMenuOpen(false)}>
+                    Get a Quote
+                  </a>
+                </Button>
+              </div>
+            </nav>
+          </Container>
+        </div>
+      )}
+    </>
+  )
+}
