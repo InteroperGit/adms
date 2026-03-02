@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm approve-builds:*)",
+      "Bash(printf  \\\\n:*)",
+      "Bash(printf a\\\\ny\\\\n:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm build:*)"
+    ]
+  }
+}
