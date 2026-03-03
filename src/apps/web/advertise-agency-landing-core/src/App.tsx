@@ -1,5 +1,6 @@
 import './index.css'
 import { Header } from '@/components/sections/Header'
+import { Carousel } from '@/components/sections/Carousel'
 import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
 import { Services } from '@/components/sections/Services'
@@ -15,6 +16,7 @@ function App() {
     <>
       <Header />
       <main>
+        <Carousel />
         <Hero />
         <About />
         <Services />

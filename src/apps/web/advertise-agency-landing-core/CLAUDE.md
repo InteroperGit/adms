@@ -36,6 +36,7 @@ advertise-agency-landing-core/
 │   ├── _schema/             # Schema examples — git-tracked
 │   │   ├── about-values.example.json
 │   │   ├── advantages.example.json
+│   │   ├── carousel.example.json
 │   │   ├── portfolio.example.json
 │   │   ├── services.example.json
 │   │   ├── site.example.json
@@ -43,6 +44,7 @@ advertise-agency-landing-core/
 │   ├── portfolio/           # One JSON file per case study (slug.json)
 │   │   └── bodrost.json
 │   ├── about-values.json    # About section values list: [{ title, description }]
+│   ├── carousel.json        # Hero carousel slides: [{ id, image, alt, gradient, title, subtitle }]
 │   ├── advantages.json      # Advantages list: [{ icon, title, description }]
 │   ├── services.json        # Services list: [{ icon, title, description }]
 │   ├── testimonials.json    # Testimonials: [{ id, name, role, company, avatar, avatarColor, rating, text }]
@@ -54,7 +56,8 @@ advertise-agency-landing-core/
 │   │   ├── layout/
 │   │   │   └── Container.tsx          # Centered max-w-7xl wrapper, polymorphic `as` prop
 │   │   ├── sections/
-│   │   │   ├── Header.tsx             # Sticky header, scroll-aware bg, logo
+│   │   │   ├── Carousel.tsx           # Light-gradient slider, 70vh, auto-advance 5s, dark text on light bg (carouselSlides)
+│   │   │   ├── Header.tsx             # In-flow header, solid white bg, border-b, logo
 │   │   │   ├── HeaderDesktopNav.tsx   # Nav links + CTA (hidden on mobile)
 │   │   │   ├── HeaderMobileNav.tsx    # Hamburger + dropdown (hidden on desktop)
 │   │   │   ├── Hero.tsx               # Full-viewport hero, gradient bg, stats
@@ -74,12 +77,13 @@ advertise-agency-landing-core/
 │   │       ├── separator.tsx
 │   │       └── textarea.tsx
 │   ├── hooks/
-│   │   ├── useScrolled.ts       # Passive scroll listener, returns bool after threshold
+│   │   ├── useScrolled.ts       # Passive scroll listener, returns bool after threshold (unused since Header moved in-flow)
 │   │   └── useActiveSection.ts  # Tracks active section for nav highlight
 │   ├── lib/
 │   │   ├── constants.ts        # NAV_LINKS (only remaining constant)
 │   │   ├── aboutValues.ts      # aboutValues: AboutValue[] — loaded from data/about-values.json
 │   │   ├── advantages.ts       # advantages: Advantage[] — loaded from data/advantages.json; exports Advantage type
+│   │   ├── carousel.ts         # carouselSlides: CarouselSlide[] — loaded from data/carousel.json; exports CarouselSlide type
 │   │   ├── portfolioCases.ts   # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
 │   │   ├── services.ts         # services: Service[] — loaded from data/services.json; exports Service type
 │   │   ├── siteData.ts         # siteData: SiteData — loaded from data/site.json; exports SiteData type
@@ -104,7 +108,8 @@ advertise-agency-landing-core/
 ## Page Composition (App.tsx order)
 
 ```
-<Header />          sticky nav
+<Header />          in-flow nav, solid white bg, border-b
+<Carousel />        full-bleed slider, 70vh
 <Hero />            #— (full-viewport)
 <About />           #about
 <Services />        #services
@@ -138,6 +143,7 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 
 - **`data/site.json`** — global site config (phone, email, address, social links, hours). Exposed via `src/lib/siteData.ts`; used by `About.tsx`, `Header.tsx`, `Contact.tsx`, `Footer.tsx`.
 - **`data/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/lib/aboutValues.ts`; used by `About.tsx`.
+- **`data/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Gradients use Tailwind `50/100` shades (near-white). Exposed via `src/lib/carousel.ts`; used by `Carousel.tsx`. No dark overlay — text uses `text-foreground`/`text-muted-foreground`.
 - **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/lib/advantages.ts`; used by `Advantages.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` in `Advantages.tsx`.
 - **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `Footer.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` in `Services.tsx`.
 - **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/lib/testimonials.ts`; used by `Testimonials.tsx` and `PortfolioCasePage.tsx` (looked up by `id` via `testimonialId` on a portfolio case).
