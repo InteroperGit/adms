@@ -1,6 +1,7 @@
 import { CheckCircle2 } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
-import { ABOUT_VALUES, SITE_NAME } from '@/lib/constants'
+import { ABOUT_VALUES } from '@/lib/constants'
+import siteData from '@data/site.json'
 
 export function About() {
   return (
@@ -21,7 +22,7 @@ export function About() {
             </h2>
 
             <p className="mb-6 text-base leading-relaxed text-muted-foreground">
-              {SITE_NAME} — рекламное агентство полного цикла из Москвы. Мы
+              {siteData.name} — рекламное агентство полного цикла из Москвы. Мы
               работаем с бизнесом любого масштаба: от локальных брендов до
               федеральных сетей. Наша команда объединяет стратегов, дизайнеров,
               копирайтеров и медиапланеров.
@@ -67,7 +68,7 @@ export function About() {
                 <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-2xl font-bold text-white">
                   Р
                 </div>
-                <p className="text-lg font-semibold text-white">{SITE_NAME}</p>
+                <p className="text-lg font-semibold text-white">{siteData.name}</p>
                 <p className="mt-1 text-sm text-white/70">
                   Рекламное агентство полного цикла
                 </p>

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Container } from '@/components/layout/Container'
-import { CONTACT_INFO } from '@/lib/constants'
+import siteData from '@data/site.json'
 
 type FormState = { name: string; contact: string; message: string }
 const EMPTY: FormState = { name: '', contact: '', message: '' }
@@ -143,10 +143,10 @@ export function Contact() {
                       Телефон
                     </p>
                     <a
-                      href={`tel:${CONTACT_INFO.phone.replace(/\D/g, '')}`}
+                      href={`tel:${siteData.contact.phone.replace(/\D/g, '')}`}
                       className="mt-0.5 block font-semibold text-foreground hover:text-primary"
                     >
-                      {CONTACT_INFO.phone}
+                      {siteData.contact.phone}
                     </a>
                   </div>
                 </li>
@@ -160,10 +160,10 @@ export function Contact() {
                       Email
                     </p>
                     <a
-                      href={`mailto:${CONTACT_INFO.email}`}
+                      href={`mailto:${siteData.contact.email}`}
                       className="mt-0.5 block font-semibold text-foreground hover:text-primary"
                     >
-                      {CONTACT_INFO.email}
+                      {siteData.contact.email}
                     </a>
                   </div>
                 </li>
@@ -177,7 +177,7 @@ export function Contact() {
                       Адрес
                     </p>
                     <p className="mt-0.5 font-semibold text-foreground">
-                      {CONTACT_INFO.address}
+                      {siteData.contact.address}
                     </p>
                   </div>
                 </li>
@@ -191,7 +191,7 @@ export function Contact() {
               </p>
               <div className="flex gap-3">
                 <a
-                  href={CONTACT_INFO.telegram}
+                  href={siteData.contact.telegram}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Telegram"
@@ -200,7 +200,7 @@ export function Contact() {
                   <Send size={16} />
                 </a>
                 <a
-                  href={CONTACT_INFO.vk}
+                  href={siteData.contact.vk}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="ВКонтакте"
@@ -227,15 +227,15 @@ export function Contact() {
               <div className="space-y-1.5 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Пн — Пт</span>
-                  <span className="font-medium text-foreground">9:00 — 19:00</span>
+                  <span className="font-medium text-foreground">{siteData.contact.workingHours.weekdays}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Суббота</span>
-                  <span className="font-medium text-foreground">10:00 — 16:00</span>
+                  <span className="font-medium text-foreground">{siteData.contact.workingHours.saturday}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Воскресенье</span>
-                  <span className="font-medium text-foreground">Выходной</span>
+                  <span className="font-medium text-foreground">{siteData.contact.workingHours.sunday}</span>
                 </div>
               </div>
             </div>

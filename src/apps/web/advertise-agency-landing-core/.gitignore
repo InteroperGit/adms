@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Content — local only, not tracked in git
+data/portfolio/
+data/site.json
+data/testimonials.json
+public/images/
+!data/_schema/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

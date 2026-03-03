@@ -3,8 +3,20 @@ import { ArrowRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Container } from '@/components/layout/Container'
-import { PORTFOLIO_CATEGORIES, PORTFOLIO_ITEMS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
+import type { PortfolioCase } from '@/types/portfolio'
+
+const modules = import.meta.glob<PortfolioCase>('@data/portfolio/*.json', {
+  eager: true,
+  import: 'default',
+})
+
+const PORTFOLIO_ITEMS = Object.entries(modules).map(([, data]) => ({
+  ...data,
+  href: `/portfolio/${data.slug}`,
+}))
+
+const PORTFOLIO_CATEGORIES = ['Все', ...new Set(PORTFOLIO_ITEMS.map((i) => i.category))]
 
 export function Portfolio() {
   const [activeCategory, setActiveCategory] = useState('Все')
@@ -51,25 +63,33 @@ export function Portfolio() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {filtered.map((item) => (
             <article
-              key={item.id}
+              key={item.slug}
               className="group overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-md"
             >
-              {/* Thumbnail placeholder */}
+              {/* Thumbnail */}
               <div
                 className={cn(
                   'relative h-40 bg-gradient-to-br sm:h-52',
                   item.gradient
                 )}
               >
-                {/* Overlay pattern */}
-                <div
-                  className="absolute inset-0 opacity-10"
-                  style={{
-                    backgroundImage:
-                      'radial-gradient(circle, white 1px, transparent 1px)',
-                    backgroundSize: '20px 20px',
-                  }}
-                />
+                {item.images?.preview ? (
+                  <img
+                    src={item.images.preview}
+                    alt={item.title}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : (
+                  /* Dot overlay fallback for gradient-only cards */
+                  <div
+                    className="absolute inset-0 opacity-10"
+                    style={{
+                      backgroundImage:
+                        'radial-gradient(circle, white 1px, transparent 1px)',
+                      backgroundSize: '20px 20px',
+                    }}
+                  />
+                )}
                 {/* Category badge on image */}
                 <div className="absolute left-4 top-4">
                   <Badge className="border-0 bg-white/20 text-white backdrop-blur-sm">
@@ -98,7 +118,7 @@ export function Portfolio() {
 
                 {/* Link */}
                 <a
-                  href={item.href ?? '#contact'}
+                  href={item.href}
                   className="inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-gap duration-200 hover:gap-2.5"
                 >
                   Подробнее

@@ -1,7 +1,8 @@
 import { Mail, MapPin, Phone, Send } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { Separator } from '@/components/ui/separator'
-import { CONTACT_INFO, NAV_LINKS, SERVICES, SITE_DESCRIPTION, SITE_NAME } from '@/lib/constants'
+import { NAV_LINKS, SERVICES } from '@/lib/constants'
+import siteData from '@data/site.json'
 
 const SERVICES_FOOTER = SERVICES.slice(0, 4)
 
@@ -24,17 +25,17 @@ export function Footer() {
                 style={{ fontFamily: 'var(--font-heading)' }}
                 className="text-lg font-bold tracking-tight text-white"
               >
-                {SITE_NAME}
+                {siteData.name}
               </span>
             </a>
             <p className="mb-6 text-sm leading-relaxed text-white/50">
-              {SITE_DESCRIPTION}. Рекламное агентство полного цикла — стратегия,
+              {siteData.description}. Рекламное агентство полного цикла — стратегия,
               дизайн, digital и наружная реклама.
             </p>
             {/* Social */}
             <div className="flex gap-3">
               <a
-                href={CONTACT_INFO.telegram}
+                href={siteData.contact.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Telegram"
@@ -43,7 +44,7 @@ export function Footer() {
                 <Send size={15} />
               </a>
               <a
-                href={CONTACT_INFO.vk}
+                href={siteData.contact.vk}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="ВКонтакте"
@@ -103,25 +104,25 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <Phone size={15} className="mt-0.5 shrink-0 text-primary" />
                 <a
-                  href={`tel:${CONTACT_INFO.phone.replace(/\D/g, '')}`}
+                  href={`tel:${siteData.contact.phone.replace(/\D/g, '')}`}
                   className="text-sm text-white/60 transition-colors hover:text-primary"
                 >
-                  {CONTACT_INFO.phone}
+                  {siteData.contact.phone}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Mail size={15} className="mt-0.5 shrink-0 text-primary" />
                 <a
-                  href={`mailto:${CONTACT_INFO.email}`}
+                  href={`mailto:${siteData.contact.email}`}
                   className="text-sm text-white/60 transition-colors hover:text-primary"
                 >
-                  {CONTACT_INFO.email}
+                  {siteData.contact.email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={15} className="mt-0.5 shrink-0 text-primary" />
                 <span className="text-sm text-white/60">
-                  {CONTACT_INFO.address}
+                  {siteData.contact.address}
                 </span>
               </li>
             </ul>
@@ -133,7 +134,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/35 sm:flex-row">
-          <p>© {year} {SITE_NAME}. Все права защищены.</p>
+          <p>© {year} {siteData.name}. Все права защищены.</p>
           <p>Реклама, которая работает.</p>
         </div>
       </Container>

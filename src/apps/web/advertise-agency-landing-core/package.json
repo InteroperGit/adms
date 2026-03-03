@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite-react-ssg build",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
@@ -23,7 +23,9 @@
     "lucide-react": "^0.576.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "tailwind-merge": "^3.5.0"
+    "react-router-dom": "^6.30.3",
+    "tailwind-merge": "^3.5.0",
+    "vite-react-ssg": "0.9.1-beta.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

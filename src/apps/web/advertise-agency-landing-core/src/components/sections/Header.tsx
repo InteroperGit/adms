@@ -1,7 +1,7 @@
 import { Container } from '@/components/layout/Container'
 import { useScrolled } from '@/hooks/useScrolled'
 import { useActiveSection } from '@/hooks/useActiveSection'
-import { SITE_NAME } from '@/lib/constants'
+import siteData from '@data/site.json'
 import { cn } from '@/lib/utils'
 import { HeaderDesktopNav } from './HeaderDesktopNav'
 import { HeaderMobileNav } from './HeaderMobileNav'
@@ -28,7 +28,7 @@ export function Header() {
               style={{ fontFamily: 'var(--font-heading)' }}
               className="text-lg font-bold tracking-tight"
             >
-              {SITE_NAME}
+              {siteData.name}
             </span>
           </a>
 
