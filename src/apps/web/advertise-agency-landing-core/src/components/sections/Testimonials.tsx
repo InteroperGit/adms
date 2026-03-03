@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
-import { TESTIMONIALS } from '@/lib/constants'
+import { testimonials } from '@/lib/testimonials'
 import { cn } from '@/lib/utils'
 
 export function Testimonials() {
   const [active, setActive] = useState(0)
 
-  const prev = () => setActive((i) => (i === 0 ? TESTIMONIALS.length - 1 : i - 1))
-  const next = () => setActive((i) => (i === TESTIMONIALS.length - 1 ? 0 : i + 1))
+  const prev = () => setActive((i) => (i === 0 ? testimonials.length - 1 : i - 1))
+  const next = () => setActive((i) => (i === testimonials.length - 1 ? 0 : i + 1))
 
-  const item = TESTIMONIALS[active]
+  const item = testimonials[active]
 
   return (
     <section id="testimonials" className="bg-muted py-24 md:py-32">
@@ -71,7 +71,7 @@ export function Testimonials() {
           <div className="mt-8 flex items-center justify-between">
             {/* Dots */}
             <div className="flex gap-2">
-              {TESTIMONIALS.map((_, i) => (
+              {testimonials.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setActive(i)}
@@ -108,7 +108,7 @@ export function Testimonials() {
 
         {/* All reviews — desktop strip */}
         <div className="mt-12 hidden gap-4 lg:grid lg:grid-cols-5">
-          {TESTIMONIALS.map((t, i) => (
+          {testimonials.map((t, i) => (
             <button
               key={t.id}
               onClick={() => setActive(i)}

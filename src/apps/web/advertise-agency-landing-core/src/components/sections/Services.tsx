@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Container } from '@/components/layout/Container'
-import { SERVICES } from '@/lib/constants'
+import { services } from '@/lib/services'
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Lightbulb,
@@ -38,7 +38,7 @@ export function Services() {
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {SERVICES.map((service) => {
+          {services.map((service) => {
             const Icon = ICON_MAP[service.icon]
             return (
               <Card

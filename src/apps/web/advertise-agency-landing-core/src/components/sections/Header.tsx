@@ -1,7 +1,7 @@
 import { Container } from '@/components/layout/Container'
 import { useScrolled } from '@/hooks/useScrolled'
 import { useActiveSection } from '@/hooks/useActiveSection'
-import siteData from '@data/site.json'
+import { siteData } from '@/lib/siteData'
 import { cn } from '@/lib/utils'
 import { HeaderDesktopNav } from './HeaderDesktopNav'
 import { HeaderMobileNav } from './HeaderMobileNav'

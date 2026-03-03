@@ -1,7 +1,7 @@
 import { CheckCircle2 } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
-import { ABOUT_VALUES } from '@/lib/constants'
-import siteData from '@data/site.json'
+import { aboutValues } from '@/lib/aboutValues'
+import { siteData } from '@/lib/siteData'
 
 export function About() {
   return (
@@ -37,7 +37,7 @@ export function About() {
 
             {/* Values */}
             <ul className="space-y-5">
-              {ABOUT_VALUES.map((value) => (
+              {aboutValues.map((value) => (
                 <li key={value.title} className="flex gap-4">
                   <CheckCircle2
                     size={20}
