@@ -8,7 +8,7 @@ export function Header() {
   const activeSection = useActiveSection()
 
   return (
-    <header className="border-b border-border bg-white shadow-sm">
+    <header id="main-nav" className="border-b border-border bg-white shadow-sm">
       <Container>
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
