@@ -1,22 +1,14 @@
 import { Container } from '@/components/layout/Container'
-import { useScrolled } from '@/hooks/useScrolled'
 import { useActiveSection } from '@/hooks/useActiveSection'
 import { siteData } from '@/lib/siteData'
-import { cn } from '@/lib/utils'
 import { HeaderDesktopNav } from './HeaderDesktopNav'
 import { HeaderMobileNav } from './HeaderMobileNav'
 
 export function Header() {
-  const scrolled = useScrolled()
   const activeSection = useActiveSection()
 
   return (
-    <header
-      className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        scrolled ? 'bg-white/90 shadow-sm backdrop-blur-md' : 'bg-transparent'
-      )}
-    >
+    <header className="border-b border-border bg-white shadow-sm">
       <Container>
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
