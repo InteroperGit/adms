@@ -8,7 +8,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
-import { ADVANTAGES } from '@/lib/constants'
+import { advantages } from '@/lib/advantages'
 
 const ICON_MAP: Record<string, LucideIcon> = {
   CircleDollarSign,
@@ -48,7 +48,7 @@ export function Advantages() {
 
         {/* Grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {ADVANTAGES.map((item, index) => {
+          {advantages.map((item, index) => {
             const Icon = ICON_MAP[item.icon]
             return (
               <div

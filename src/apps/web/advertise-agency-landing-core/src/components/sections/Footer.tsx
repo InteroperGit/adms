@@ -1,10 +1,11 @@
 import { Mail, MapPin, Phone, Send } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { Separator } from '@/components/ui/separator'
-import { NAV_LINKS, SERVICES } from '@/lib/constants'
-import siteData from '@data/site.json'
+import { NAV_LINKS } from '@/lib/constants'
+import { services } from '@/lib/services'
+import { siteData } from '@/lib/siteData'
 
-const SERVICES_FOOTER = SERVICES.slice(0, 4)
+const SERVICES_FOOTER = services.slice(0, 4)
 
 export function Footer() {
   const year = new Date().getFullYear()

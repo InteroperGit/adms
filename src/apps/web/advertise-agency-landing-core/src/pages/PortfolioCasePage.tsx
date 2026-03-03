@@ -4,7 +4,7 @@ import { ArrowLeft, Star } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Container } from '@/components/layout/Container'
-import { TESTIMONIALS } from '@/lib/constants'
+import { testimonials } from '@/lib/testimonials'
 import { cn } from '@/lib/utils'
 import { portfolioCaseMap } from '@/lib/portfolioCases'
 
@@ -34,7 +34,7 @@ export function PortfolioCasePage() {
   }
 
   const testimonial = data.testimonialId
-    ? TESTIMONIALS.find((t) => t.id === data.testimonialId)
+    ? testimonials.find((t) => t.id === data.testimonialId)
     : undefined
 
   return (

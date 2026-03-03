@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Container } from '@/components/layout/Container'
-import siteData from '@data/site.json'
+import { siteData } from '@/lib/siteData'
 
 type FormState = { name: string; contact: string; message: string }
 const EMPTY: FormState = { name: '', contact: '', message: '' }
