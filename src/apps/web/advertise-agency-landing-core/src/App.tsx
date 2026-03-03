@@ -10,6 +10,7 @@ import { Testimonials } from '@/components/sections/Testimonials'
 import { CallToAction } from '@/components/sections/CallToAction'
 import { Contact } from '@/components/sections/Contact'
 import { Footer } from '@/components/sections/Footer'
+import {ScrollToTop} from "@/components/ScrollToTop.tsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <ScrollToTop navSelector="#main-nav" />
     </>
   )
 }
