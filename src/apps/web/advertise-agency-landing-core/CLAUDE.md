@@ -53,12 +53,13 @@ advertise-agency-landing-core/
 ├── src/
 │   ├── assets/              # Images, SVGs imported in components
 │   ├── components/
+│   │   ├── ScrollToTop.tsx            # Fixed bottom-right button, appears after threshold scroll, scrolls to nav
 │   │   ├── layout/
 │   │   │   └── Container.tsx          # Centered max-w-7xl wrapper, polymorphic `as` prop
 │   │   ├── sections/
 │   │   │   ├── Carousel.tsx           # Light-gradient slider, 70vh, auto-advance 5s, dark text on light bg (carouselSlides)
 │   │   │   ├── Header.tsx             # In-flow header, solid white bg, border-b, logo
-│   │   │   ├── HeaderDesktopNav.tsx   # Nav links + CTA (hidden on mobile)
+│   │   │   ├── HeaderDesktopNav.tsx   # Nav links + CTA (hidden on mobile); links show underline on hover
 │   │   │   ├── HeaderMobileNav.tsx    # Hamburger + dropdown (hidden on desktop)
 │   │   │   ├── Hero.tsx               # Full-viewport hero, gradient bg, stats
 │   │   │   ├── About.tsx              # Two-column: story + info card (siteData, aboutValues)
@@ -96,7 +97,7 @@ advertise-agency-landing-core/
 │   │   └── portfolio.ts       # PortfolioCase interface
 │   ├── router.tsx             # RouteObject[] — "/" and "/portfolio/:slug"
 │   ├── main.tsx               # Entry: exports createRoot = ViteReactSSG({ routes })
-│   └── index.css              # Google Fonts import, Tailwind, CSS vars, base styles
+│   └── index.css              # Google Fonts import, Tailwind, CSS vars, base styles; defines animate-fade-in keyframe
 ├── .env.example
 ├── .prettierrc
 ├── components.json           # shadcn/ui config (aliases use src/ paths)
@@ -119,6 +120,7 @@ advertise-agency-landing-core/
 <Testimonials />    #testimonials
 <Contact />         #contact
 <Footer />
+<ScrollToTop />     fixed bottom-right, z-50, visible after 300px scroll
 ```
 
 ## Routes
