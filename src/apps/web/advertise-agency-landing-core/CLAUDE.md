@@ -69,8 +69,9 @@ advertise-agency-landing-core/
 │   │   ├── useScrolled.ts       # Passive scroll listener, returns bool after threshold
 │   │   └── useActiveSection.ts  # Tracks active section for nav highlight
 │   ├── lib/
-│   │   ├── constants.ts      # SERVICES, ADVANTAGES, ABOUT_VALUES, TESTIMONIALS, NAV_LINKS
-│   │   └── utils.ts          # cn() helper (clsx + tailwind-merge)
+│   │   ├── constants.ts        # SERVICES, ADVANTAGES, ABOUT_VALUES, TESTIMONIALS, NAV_LINKS
+│   │   ├── portfolioCases.ts   # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
+│   │   └── utils.ts            # cn() helper (clsx + tailwind-merge)
 │   ├── pages/
 │   │   └── PortfolioCasePage.tsx  # Generic SSG page for portfolio case studies
 │   ├── types/
