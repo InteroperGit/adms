@@ -144,7 +144,7 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.
 - Components **never** import from `@data/` directly — always go through a `src/lib/` module.
-- Single JSON files wrapped in a typed lib module: `siteData.ts`, `aboutValues.ts` (uses `resolveJsonModule`).
+- Single JSON files wrapped in a typed lib module: `siteData.ts`, `aboutValues.ts`, `advantages.ts`, `services.ts`, `testimonials.ts` (uses `resolveJsonModule`).
 - Portfolio collection loaded via `import.meta.glob('@data/portfolio/*.json', { eager: true, import: 'default' })` — see `src/lib/portfolioCases.ts`.
 - Schema examples tracked in `data/_schema/` — the actual data files are gitignored.
 
@@ -166,7 +166,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 - **Components**: PascalCase files, one component per file
 - **Static content**: code-only data (icons, IDs, nav links) in `src/lib/constants.ts`; editable content in `data/*.json` exposed through `src/lib/` modules — components always import from `@/lib/`, never from `@data/` directly
-- **Icon maps**: icons referenced by string key in constants, resolved to `LucideIcon` in the component via a local `ICON_MAP` record
+- **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `LucideIcon` in the component via a local `ICON_MAP` record (see `Services.tsx`, `Advantages.tsx`)
 - **Tailwind**: use `cn()` from `@/lib/utils` for conditional class merging
 - **Sections**: self-contained in `src/components/sections/`, import Container for layout
 - **Path aliases**: `@/` → `src/`, `@data` → `data/` (root-level)
@@ -179,3 +179,4 @@ Files are placed in `src/components/ui/` — never edit them manually.
 - Do not install heavy animation libraries unless explicitly requested
 - `@theme inline` in `index.css` is required for Tailwind v4 + shadcn compatibility — do not revert to `@theme`
 - Use **react-router-dom v6** (not v7) — required by vite-react-ssg peer dependency
+- Use **native DOM event types** in handlers — React 19 deprecated synthetic event aliases (`React.FormEvent`, `React.MouseEvent`, etc.); use `SubmitEvent`, `MouseEvent`, `InputEvent` etc. instead

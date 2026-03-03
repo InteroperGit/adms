@@ -13,7 +13,7 @@ export function Contact() {
   const [form, setForm] = useState<FormState>(EMPTY)
   const [submitted, setSubmitted] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: SubmitEvent) {
     e.preventDefault()
     setSubmitted(true)
     setForm(EMPTY)
