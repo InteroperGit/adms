@@ -6,10 +6,10 @@ import {
   BarChart3,
   Share2,
   type LucideIcon,
-} from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Container } from '@/components/layout/Container'
-import { services } from '@/lib/services'
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Container } from '@/components/layout/Container';
+import { services } from '@/lib/services';
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Lightbulb,
@@ -18,7 +18,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   LayoutTemplate,
   BarChart3,
   Share2,
-}
+};
 
 export function Services() {
   return (
@@ -31,15 +31,15 @@ export function Services() {
           </div>
           <h2 className="mb-4">Что мы делаем</h2>
           <p className="text-muted-foreground">
-            Полный цикл рекламных услуг под одной крышей — от стратегии до
-            финального размещения и аналитики.
+            Полный цикл рекламных услуг под одной крышей — от стратегии до финального размещения и
+            аналитики.
           </p>
         </div>
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {services.map((service) => {
-            const Icon = ICON_MAP[service.icon]
+            const Icon = ICON_MAP[service.icon];
             return (
               <Card
                 key={service.title}
@@ -59,10 +59,10 @@ export function Services() {
                   </CardDescription>
                 </CardContent>
               </Card>
-            )
+            );
           })}
         </div>
       </Container>
     </section>
-  )
+  );
 }

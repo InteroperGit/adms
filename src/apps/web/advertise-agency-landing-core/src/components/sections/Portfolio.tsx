@@ -1,30 +1,30 @@
-import { useState } from 'react'
-import { ArrowRight } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/layout/Container'
-import { cn } from '@/lib/utils'
-import type { PortfolioCase } from '@/types/portfolio'
+import { useState } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/layout/Container';
+import { cn } from '@/lib/utils';
+import type { PortfolioCase } from '@/types/portfolio';
 
 const modules = import.meta.glob<PortfolioCase>('@data/portfolio/*.json', {
   eager: true,
   import: 'default',
-})
+});
 
 const PORTFOLIO_ITEMS = Object.entries(modules).map(([, data]) => ({
   ...data,
   href: `/portfolio/${data.slug}`,
-}))
+}));
 
-const PORTFOLIO_CATEGORIES = ['Все', ...new Set(PORTFOLIO_ITEMS.map((i) => i.category))]
+const PORTFOLIO_CATEGORIES = ['Все', ...new Set(PORTFOLIO_ITEMS.map((i) => i.category))];
 
 export function Portfolio() {
-  const [activeCategory, setActiveCategory] = useState('Все')
+  const [activeCategory, setActiveCategory] = useState('Все');
 
   const filtered =
     activeCategory === 'Все'
       ? PORTFOLIO_ITEMS
-      : PORTFOLIO_ITEMS.filter((item) => item.category === activeCategory)
+      : PORTFOLIO_ITEMS.filter((item) => item.category === activeCategory);
 
   return (
     <section id="portfolio" className="bg-white py-24 md:py-32">
@@ -36,8 +36,7 @@ export function Portfolio() {
           </div>
           <h2 className="mb-4">Наши работы</h2>
           <p className="text-muted-foreground">
-            Избранные проекты из разных отраслей — от локального бизнеса до
-            федеральных брендов.
+            Избранные проекты из разных отраслей — от локального бизнеса до федеральных брендов.
           </p>
         </div>
 
@@ -67,12 +66,7 @@ export function Portfolio() {
               className="group overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-md"
             >
               {/* Thumbnail */}
-              <div
-                className={cn(
-                  'relative h-40 bg-gradient-to-br sm:h-52',
-                  item.gradient
-                )}
-              >
+              <div className={cn('relative h-40 bg-gradient-to-br sm:h-52', item.gradient)}>
                 {item.images?.preview ? (
                   <img
                     src={item.images.preview}
@@ -84,8 +78,7 @@ export function Portfolio() {
                   <div
                     className="absolute inset-0 opacity-10"
                     style={{
-                      backgroundImage:
-                        'radial-gradient(circle, white 1px, transparent 1px)',
+                      backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
                       backgroundSize: '20px 20px',
                     }}
                   />
@@ -131,11 +124,16 @@ export function Portfolio() {
 
         {/* Bottom CTA */}
         <div className="mt-14 text-center">
-          <Button asChild variant="outline" size="lg" className="rounded-full px-8 hover:bg-muted hover:text-primary">
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="rounded-full px-8 hover:bg-muted hover:text-primary"
+          >
             <a href="#contact">Обсудить ваш проект</a>
           </Button>
         </div>
       </Container>
     </section>
-  )
+  );
 }

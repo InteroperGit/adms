@@ -1,14 +1,13 @@
-import { CheckCircle2 } from 'lucide-react'
-import { Container } from '@/components/layout/Container'
-import { aboutValues } from '@/lib/aboutValues'
-import { siteData } from '@/lib/siteData'
+import { CheckCircle2 } from 'lucide-react';
+import { Container } from '@/components/layout/Container';
+import { aboutValues } from '@/lib/aboutValues';
+import { siteData } from '@/lib/siteData';
 
 export function About() {
   return (
     <section id="about" className="bg-white py-24 md:py-32">
       <Container>
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-
           {/* Left — text content */}
           <div>
             {/* Section label */}
@@ -17,39 +16,29 @@ export function About() {
             </div>
 
             <h2 className="mb-6">
-              Больше 10 лет создаём рекламу,{' '}
-              <span className="text-primary">которой доверяют</span>
+              Больше 10 лет создаём рекламу, <span className="text-primary">которой доверяют</span>
             </h2>
 
             <p className="mb-6 text-base leading-relaxed text-muted-foreground">
-              {siteData.name} — рекламное агентство полного цикла из Москвы. Мы
-              работаем с бизнесом любого масштаба: от локальных брендов до
-              федеральных сетей. Наша команда объединяет стратегов, дизайнеров,
-              копирайтеров и медиапланеров.
+              {siteData.name} — рекламное агентство полного цикла из Москвы. Мы работаем с бизнесом
+              любого масштаба: от локальных брендов до федеральных сетей. Наша команда объединяет
+              стратегов, дизайнеров, копирайтеров и медиапланеров.
             </p>
 
             <p className="mb-10 text-base leading-relaxed text-muted-foreground">
-              За 10 лет работы мы реализовали более 500 проектов в сфере
-              ритейла, недвижимости, HoReCa, медицины и IT. Мы не продаём
-              «рекламу ради рекламы» — мы строим системы привлечения клиентов,
-              которые работают долгосрочно.
+              За 10 лет работы мы реализовали более 500 проектов в сфере ритейла, недвижимости,
+              HoReCa, медицины и IT. Мы не продаём «рекламу ради рекламы» — мы строим системы
+              привлечения клиентов, которые работают долгосрочно.
             </p>
 
             {/* Values */}
             <ul className="space-y-5">
               {aboutValues.map((value) => (
                 <li key={value.title} className="flex gap-4">
-                  <CheckCircle2
-                    size={20}
-                    className="mt-0.5 shrink-0 text-primary"
-                  />
+                  <CheckCircle2 size={20} className="mt-0.5 shrink-0 text-primary" />
                   <div>
-                    <p className="mb-0.5 font-semibold text-foreground">
-                      {value.title}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {value.description}
-                    </p>
+                    <p className="mb-0.5 font-semibold text-foreground">{value.title}</p>
+                    <p className="text-sm text-muted-foreground">{value.description}</p>
                   </div>
                 </li>
               ))}
@@ -69,9 +58,7 @@ export function About() {
                   Р
                 </div>
                 <p className="text-lg font-semibold text-white">{siteData.name}</p>
-                <p className="mt-1 text-sm text-white/70">
-                  Рекламное агентство полного цикла
-                </p>
+                <p className="mt-1 text-sm text-white/70">Рекламное агентство полного цикла</p>
               </div>
 
               {/* Card body — mini stats */}
@@ -82,13 +69,8 @@ export function About() {
                   { label: 'Постоянных клиентов', value: '120+' },
                   { label: 'Специалистов в команде', value: '35' },
                 ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="flex items-center justify-between px-6 py-4"
-                  >
-                    <span className="text-sm text-muted-foreground">
-                      {item.label}
-                    </span>
+                  <div key={item.label} className="flex items-center justify-between px-6 py-4">
+                    <span className="text-sm text-muted-foreground">{item.label}</span>
                     <span
                       style={{ fontFamily: 'var(--font-heading)' }}
                       className="font-bold text-foreground"
@@ -111,9 +93,8 @@ export function About() {
               </p>
             </div>
           </div>
-
         </div>
       </Container>
     </section>
-  )
+  );
 }

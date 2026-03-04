@@ -1,26 +1,22 @@
-import { useState, useEffect, useCallback } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { carouselSlides } from '@/lib/carousel'
-import { cn } from '@/lib/utils'
+import { useState, useEffect, useCallback } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { carouselSlides } from '@/lib/carousel';
+import { cn } from '@/lib/utils';
 
-const INTERVAL_MS = 5000
+const INTERVAL_MS = 5000;
 
 export function Carousel() {
-  const [active, setActive] = useState(0)
-  const [paused, setPaused] = useState(false)
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
 
-  const next = useCallback(
-    () => setActive((i) => (i + 1) % carouselSlides.length),
-    [],
-  )
-  const prev = () =>
-    setActive((i) => (i - 1 + carouselSlides.length) % carouselSlides.length)
+  const next = useCallback(() => setActive((i) => (i + 1) % carouselSlides.length), []);
+  const prev = () => setActive((i) => (i - 1 + carouselSlides.length) % carouselSlides.length);
 
   useEffect(() => {
-    if (paused) return
-    const id = setInterval(next, INTERVAL_MS)
-    return () => clearInterval(id)
-  }, [paused, next])
+    if (paused) return;
+    const id = setInterval(next, INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [paused, next]);
 
   return (
     <div
@@ -36,16 +32,12 @@ export function Carousel() {
           aria-hidden={i !== active}
           className={cn(
             'absolute inset-0 transition-opacity duration-700',
-            i === active ? 'opacity-100' : 'opacity-0 pointer-events-none',
+            i === active ? 'opacity-100' : 'opacity-0 pointer-events-none'
           )}
         >
           {/* Background: image or gradient fallback */}
           {slide.image ? (
-            <img
-              src={slide.image}
-              alt={slide.alt}
-              className="h-full w-full object-cover"
-            />
+            <img src={slide.image} alt={slide.alt} className="h-full w-full object-cover" />
           ) : (
             <div className={cn('h-full w-full bg-gradient-to-br', slide.gradient)} />
           )}
@@ -93,9 +85,7 @@ export function Carousel() {
             aria-label={`Слайд ${i + 1}`}
             className={cn(
               'h-2 rounded-full transition-all duration-300',
-              i === active
-                ? 'w-6 bg-foreground'
-                : 'w-2 bg-foreground/25 hover:bg-foreground/50',
+              i === active ? 'w-6 bg-foreground' : 'w-2 bg-foreground/25 hover:bg-foreground/50'
             )}
           />
         ))}
@@ -106,5 +96,5 @@ export function Carousel() {
         {active + 1} / {carouselSlides.length}
       </div>
     </div>
-  )
+  );
 }

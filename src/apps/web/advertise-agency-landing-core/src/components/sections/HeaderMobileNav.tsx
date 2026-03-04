@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/layout/Container'
-import { NAV_LINKS } from '@/lib/constants'
-import { cn } from '@/lib/utils'
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/layout/Container';
+import { NAV_LINKS } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 
 interface Props {
-  activeSection: string
+  activeSection: string;
 }
 
 export function HeaderMobileNav({ activeSection }: Props) {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
@@ -28,7 +28,7 @@ export function HeaderMobileNav({ activeSection }: Props) {
           <Container>
             <nav className="flex flex-col py-4">
               {NAV_LINKS.map((link) => {
-                const isActive = link.href === `#${activeSection}`
+                const isActive = link.href === `#${activeSection}`;
                 return (
                   <a
                     key={link.href}
@@ -41,7 +41,7 @@ export function HeaderMobileNav({ activeSection }: Props) {
                   >
                     {link.label}
                   </a>
-                )
+                );
               })}
               <div className="pt-3">
                 <Button asChild className="w-full rounded-full" size="sm">
@@ -55,5 +55,5 @@ export function HeaderMobileNav({ activeSection }: Props) {
         </div>
       )}
     </>
-  )
+  );
 }

@@ -1,18 +1,18 @@
-import { useState } from 'react'
-import { Mail, MapPin, Phone, Send } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Container } from '@/components/layout/Container'
-import { siteData } from '@/lib/siteData'
-import {Link} from "react-router-dom";
+import { useState } from 'react';
+import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Container } from '@/components/layout/Container';
+import { siteData } from '@/lib/siteData';
+import { Link } from 'react-router-dom';
 
-type FormState = { name: string; contact: string; message: string }
-const EMPTY: FormState = { name: '', contact: '', message: '' }
+type FormState = { name: string; contact: string; message: string };
+const EMPTY: FormState = { name: '', contact: '', message: '' };
 
 export function Contact() {
   const [form, setForm] = useState<FormState>(EMPTY);
-  const [submitted, setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false);
   const [consent, setConsent] = useState(false);
 
   function handleSubmit(e: SubmitEvent) {
@@ -36,8 +36,8 @@ export function Contact() {
           </div>
           <h2 className="mb-4">Обсудим ваш проект?</h2>
           <p className="text-muted-foreground">
-            Оставьте заявку — перезвоним в течение рабочего дня, выслушаем задачу
-            и предложим решение.
+            Оставьте заявку — перезвоним в течение рабочего дня, выслушаем задачу и предложим
+            решение.
           </p>
         </div>
 
@@ -49,12 +49,9 @@ export function Contact() {
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
                   <Send size={28} className="text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">
-                  Заявка отправлена!
-                </h3>
+                <h3 className="text-xl font-semibold text-foreground">Заявка отправлена!</h3>
                 <p className="max-w-xs text-sm text-muted-foreground">
-                  Мы получили вашу заявку и свяжемся с вами в ближайшее рабочее
-                  время.
+                  Мы получили вашу заявку и свяжемся с вами в ближайшее рабочее время.
                 </p>
                 <Button
                   variant="outline"
@@ -94,9 +91,7 @@ export function Contact() {
                     placeholder="+7 (999) 000-00-00 или mail@example.com"
                     required
                     value={form.contact}
-                    onChange={(e) =>
-                      setForm({ ...form, contact: e.target.value })
-                    }
+                    onChange={(e) => setForm({ ...form, contact: e.target.value })}
                   />
                 </div>
 
@@ -112,51 +107,47 @@ export function Contact() {
                     placeholder="Кратко опишите ваш бизнес и что хотите получить..."
                     rows={5}
                     value={form.message}
-                    onChange={(e) =>
-                      setForm({ ...form, message: e.target.value })
-                    }
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
                   />
                 </div>
 
                 {/* Чекбокс согласия */}
                 <div className="flex items-start gap-3">
                   <input
-                      id="consent"
-                      type="checkbox"
-                      checked={consent}
-                      onChange={(e) => setConsent(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary"
-                      required
+                    id="consent"
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary"
+                    required
                   />
-                  <label htmlFor="consent" className="text-xs leading-relaxed text-muted-foreground">
+                  <label
+                    htmlFor="consent"
+                    className="text-xs leading-relaxed text-muted-foreground"
+                  >
                     Я даю согласие на обработку персональных данных в соответствии с{' '}
                     <Link
-                        to="/privacy-policy"
-                        className="underline underline-offset-2 transition-colors hover:text-foreground"
+                      to="/privacy-policy"
+                      className="underline underline-offset-2 transition-colors hover:text-foreground"
                     >
                       Политикой конфиденциальности
                     </Link>{' '}
                     и{' '}
                     <Link
-                        to="/consent"
-                        className="underline underline-offset-2 transition-colors hover:text-foreground"
+                      to="/consent"
+                      className="underline underline-offset-2 transition-colors hover:text-foreground"
                     >
                       Согласием на обработку данных
                     </Link>
                   </label>
                 </div>
 
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full rounded-full"
-                >
+                <Button type="submit" size="lg" className="w-full rounded-full">
                   Отправить заявку
                 </Button>
 
                 <p className="text-center text-xs text-muted-foreground">
-                  Нажимая кнопку, вы соглашаетесь с обработкой персональных
-                  данных
+                  Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
                 </p>
               </form>
             )}
@@ -221,9 +212,7 @@ export function Contact() {
 
             {/* Social links */}
             <div>
-              <p className="mb-4 text-sm font-medium text-muted-foreground">
-                Мы в соцсетях
-              </p>
+              <p className="mb-4 text-sm font-medium text-muted-foreground">Мы в соцсетях</p>
               <div className="flex gap-3">
                 <a
                   href={siteData.contact.telegram}
@@ -256,21 +245,25 @@ export function Contact() {
 
             {/* Working hours */}
             <div className="rounded-2xl border border-border bg-white p-4 shadow-sm sm:p-6">
-              <p className="mb-3 text-sm font-semibold text-foreground">
-                Часы работы
-              </p>
+              <p className="mb-3 text-sm font-semibold text-foreground">Часы работы</p>
               <div className="space-y-1.5 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Пн — Пт</span>
-                  <span className="font-medium text-foreground">{siteData.contact.workingHours.weekdays}</span>
+                  <span className="font-medium text-foreground">
+                    {siteData.contact.workingHours.weekdays}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Суббота</span>
-                  <span className="font-medium text-foreground">{siteData.contact.workingHours.saturday}</span>
+                  <span className="font-medium text-foreground">
+                    {siteData.contact.workingHours.saturday}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Воскресенье</span>
-                  <span className="font-medium text-foreground">{siteData.contact.workingHours.sunday}</span>
+                  <span className="font-medium text-foreground">
+                    {siteData.contact.workingHours.sunday}
+                  </span>
                 </div>
               </div>
             </div>
@@ -278,5 +271,5 @@ export function Contact() {
         </div>
       </Container>
     </section>
-  )
+  );
 }
