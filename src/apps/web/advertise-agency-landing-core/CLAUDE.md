@@ -190,6 +190,12 @@ Files are placed in `src/components/ui/` — never edit them manually.
 - **Sections**: self-contained in `src/components/sections/`, import Container for layout
 - **Path aliases**: `@/` → `src/`, `@data` → `data/` (root-level)
 
+## Workflow Rules
+
+- After completing every task, always run in sequence:
+  1. `pnpm format` — reformat all changed files
+  2. `tsc -b --noEmit` — typecheck, fix any errors before finishing
+
 ## Key Rules
 
 - Package manager is **pnpm only** — never use npm or yarn
