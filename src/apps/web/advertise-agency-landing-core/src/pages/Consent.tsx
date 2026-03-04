@@ -1,7 +1,7 @@
 // src/pages/Consent.tsx
 import { Link } from 'react-router-dom'
 import {BackButton} from "@/components/ui/BackButton.tsx";
-import {ScrollToTop} from "@/components/ScrollToTop.tsx";
+import {ScrollToTop} from "@/components/ui/ScrollToTop.tsx";
 
 export default function Consent() {
     return (

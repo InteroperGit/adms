@@ -53,7 +53,8 @@ advertise-agency-landing-core/
 ├── src/
 │   ├── assets/              # Images, SVGs imported in components
 │   ├── components/
-│   │   ├── ScrollToTop.tsx            # Fixed bottom-right button, appears after threshold scroll, scrolls to nav
+│   │   ├── banners/
+│   │   │   └── CookieBanner.tsx       # Fixed bottom/bottom-left cookie consent dialog; saves 'all'|'necessary' to localStorage
 │   │   ├── layout/
 │   │   │   └── Container.tsx          # Centered max-w-7xl wrapper, polymorphic `as` prop
 │   │   ├── sections/
@@ -68,9 +69,11 @@ advertise-agency-landing-core/
 │   │   │   ├── Advantages.tsx         # Dark bg, 6 glassmorphism cards (advantages)
 │   │   │   ├── CallToAction.tsx       # Mid-page CTA banner
 │   │   │   ├── Testimonials.tsx       # Carousel + desktop thumbnail strip (testimonials)
-│   │   │   ├── Contact.tsx            # Contact form + info (siteData)
-│   │   │   └── Footer.tsx             # Site footer (siteData)
+│   │   │   ├── Contact.tsx            # Contact form + info (siteData); consent checkbox required before submit
+│   │   │   └── Footer.tsx             # Site footer (siteData); includes legal nav links (privacy-policy, consent, user-agreement)
 │   │   └── ui/                        # shadcn/ui primitives — DO NOT edit manually
+│   │       ├── BackButton.tsx         # Back navigation button used on legal pages
+│   │       ├── ScrollToTop.tsx        # Fixed bottom-right button, appears after threshold scroll, scrolls to nav
 │   │       ├── badge.tsx
 │   │       ├── button.tsx
 │   │       ├── card.tsx
@@ -79,7 +82,8 @@ advertise-agency-landing-core/
 │   │       └── textarea.tsx
 │   ├── hooks/
 │   │   ├── useScrolled.ts       # Passive scroll listener, returns bool after threshold (unused since Header moved in-flow)
-│   │   └── useActiveSection.ts  # Tracks active section for nav highlight
+│   │   ├── useActiveSection.ts  # Tracks active section for nav highlight
+│   │   └── useCookieConsent.ts  # Returns 'all'|'necessary'|null; reactive via CustomEvent 'cookie_consent_change'
 │   ├── lib/
 │   │   ├── constants.ts        # NAV_LINKS (only remaining constant)
 │   │   ├── aboutValues.ts      # aboutValues: AboutValue[] — loaded from data/about-values.json
@@ -91,11 +95,14 @@ advertise-agency-landing-core/
 │   │   ├── testimonials.ts     # testimonials: Testimonial[] — loaded from data/testimonials.json; exports Testimonial type
 │   │   └── utils.ts            # cn() helper (clsx + tailwind-merge)
 │   ├── pages/
-│   │   └── PortfolioCasePage.tsx  # Generic SSG page for portfolio case studies
+│   │   ├── PortfolioCasePage.tsx  # Generic SSG page for portfolio case studies
+│   │   ├── PrivacyPolicy.tsx      # /privacy-policy — static legal page
+│   │   ├── Consent.tsx            # /consent — cookie consent policy page
+│   │   └── UserAgrrement.tsx      # /user-agreement — user agreement page (note: typo in filename)
 │   ├── types/
 │   │   ├── index.ts           # Shared TypeScript types
 │   │   └── portfolio.ts       # PortfolioCase interface
-│   ├── router.tsx             # RouteObject[] — "/" and "/portfolio/:slug"
+│   ├── router.tsx             # RouteObject[] — "/", "/portfolio/:slug", "/privacy-policy", "/user-agreement", "/consent"
 │   ├── main.tsx               # Entry: exports createRoot = ViteReactSSG({ routes })
 │   └── index.css              # Google Fonts import, Tailwind, CSS vars, base styles; defines animate-fade-in keyframe
 ├── .env.example
@@ -120,7 +127,8 @@ advertise-agency-landing-core/
 <Testimonials />    #testimonials
 <Contact />         #contact
 <Footer />
-<ScrollToTop />     fixed bottom-right, z-50, visible after 300px scroll
+<ScrollToTop />     fixed bottom-right, z-50, visible after 300px scroll, navSelector="#main-nav"
+<CookieBanner />    fixed bottom/bottom-left dialog, persists consent to localStorage
 ```
 
 ## Routes
@@ -128,6 +136,9 @@ advertise-agency-landing-core/
 ```
 /                    → App.tsx (full landing page)
 /portfolio/:slug     → PortfolioCasePage.tsx (SSG per JSON file in data/portfolio/)
+/privacy-policy      → PrivacyPolicy.tsx (static legal page)
+/user-agreement      → UserAgrrement.tsx (static legal page; note: typo in filename)
+/consent             → Consent.tsx (cookie consent policy page)
 ```
 
 ## Development Commands
