@@ -5,18 +5,25 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Container } from '@/components/layout/Container'
 import { siteData } from '@/lib/siteData'
+import {Link} from "react-router-dom";
 
 type FormState = { name: string; contact: string; message: string }
 const EMPTY: FormState = { name: '', contact: '', message: '' }
 
 export function Contact() {
-  const [form, setForm] = useState<FormState>(EMPTY)
+  const [form, setForm] = useState<FormState>(EMPTY);
   const [submitted, setSubmitted] = useState(false)
+  const [consent, setConsent] = useState(false);
 
   function handleSubmit(e: SubmitEvent) {
-    e.preventDefault()
-    setSubmitted(true)
-    setForm(EMPTY)
+    e.preventDefault();
+    if (!consent) {
+      return;
+    } // + защита на случай обхода
+
+    setSubmitted(true);
+    setForm(EMPTY);
+    setConsent(false); // + сброс чекбокса
   }
 
   return (
@@ -34,7 +41,7 @@ export function Contact() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 lg:items-end">
           {/* Left — form */}
           <div className="rounded-2xl border border-border bg-white p-8 shadow-sm">
             {submitted ? (
@@ -109,6 +116,34 @@ export function Contact() {
                       setForm({ ...form, message: e.target.value })
                     }
                   />
+                </div>
+
+                {/* Чекбокс согласия */}
+                <div className="flex items-start gap-3">
+                  <input
+                      id="consent"
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary"
+                      required
+                  />
+                  <label htmlFor="consent" className="text-xs leading-relaxed text-muted-foreground">
+                    Я даю согласие на обработку персональных данных в соответствии с{' '}
+                    <Link
+                        to="/privacy-policy"
+                        className="underline underline-offset-2 transition-colors hover:text-foreground"
+                    >
+                      Политикой конфиденциальности
+                    </Link>{' '}
+                    и{' '}
+                    <Link
+                        to="/consent"
+                        className="underline underline-offset-2 transition-colors hover:text-foreground"
+                    >
+                      Согласием на обработку данных
+                    </Link>
+                  </label>
                 </div>
 
                 <Button
