@@ -1,7 +1,7 @@
 // src/pages/PrivacyPolicy.tsx
 
 import {BackButton} from "@/components/ui/BackButton.tsx";
-import {ScrollToTop} from "@/components/ScrollToTop.tsx";
+import {ScrollToTop} from "@/components/ui/ScrollToTop.tsx";
 
 export default function PrivacyPolicy() {
     return (
