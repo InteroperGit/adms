@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react'
-import { Container } from '@/components/layout/Container'
-import { testimonials } from '@/lib/testimonials'
-import { cn } from '@/lib/utils'
+import { useState } from 'react';
+import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Container } from '@/components/layout/Container';
+import { testimonials } from '@/lib/testimonials';
+import { cn } from '@/lib/utils';
 
 export function Testimonials() {
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState(0);
 
-  const prev = () => setActive((i) => (i === 0 ? testimonials.length - 1 : i - 1))
-  const next = () => setActive((i) => (i === testimonials.length - 1 ? 0 : i + 1))
+  const prev = () => setActive((i) => (i === 0 ? testimonials.length - 1 : i - 1));
+  const next = () => setActive((i) => (i === testimonials.length - 1 ? 0 : i + 1));
 
-  const item = testimonials[active]
+  const item = testimonials[active];
 
   return (
     <section id="testimonials" className="bg-muted py-24 md:py-32">
@@ -22,8 +22,7 @@ export function Testimonials() {
           </div>
           <h2 className="mb-4">Что говорят клиенты</h2>
           <p className="text-muted-foreground">
-            Нам доверяют компании из разных отраслей. Вот что они говорят о
-            сотрудничестве с нами.
+            Нам доверяют компании из разных отраслей. Вот что они говорят о сотрудничестве с нами.
           </p>
         </div>
 
@@ -78,9 +77,7 @@ export function Testimonials() {
                   aria-label={`Отзыв ${i + 1}`}
                   className={cn(
                     'h-2 rounded-full transition-all duration-300',
-                    i === active
-                      ? 'w-6 bg-primary'
-                      : 'w-2 bg-border hover:bg-muted-foreground'
+                    i === active ? 'w-6 bg-primary' : 'w-2 bg-border hover:bg-muted-foreground'
                   )}
                 />
               ))}
@@ -124,9 +121,7 @@ export function Testimonials() {
                   <Star key={j} size={10} className="fill-primary text-primary" />
                 ))}
               </div>
-              <p className="mb-3 line-clamp-2 text-xs text-muted-foreground">
-                «{t.text}»
-              </p>
+              <p className="mb-3 line-clamp-2 text-xs text-muted-foreground">«{t.text}»</p>
               <div className="flex items-center gap-2">
                 <div
                   className={cn(
@@ -136,14 +131,12 @@ export function Testimonials() {
                 >
                   {t.avatar}
                 </div>
-                <span className="truncate text-xs font-medium text-foreground">
-                  {t.name}
-                </span>
+                <span className="truncate text-xs font-medium text-foreground">{t.name}</span>
               </div>
             </button>
           ))}
         </div>
       </Container>
     </section>
-  )
+  );
 }

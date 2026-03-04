@@ -10,7 +10,8 @@
       "Bash(pnpm build:*)",
       "Bash(clip:*)",
       "Bash(echo:*)",
-      "WebFetch(domain:www.npmjs.com)"
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(pnpm format:*)"
     ]
   }
 }

@@ -1,6 +1,6 @@
-import { ArrowRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/layout/Container'
+import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/layout/Container';
 
 export function CallToAction() {
   return (
@@ -19,12 +19,9 @@ export function CallToAction() {
 
       <Container className="relative">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-4 text-white">
-            Готовы запустить рекламу, которая работает?
-          </h2>
+          <h2 className="mb-4 text-white">Готовы запустить рекламу, которая работает?</h2>
           <p className="mb-8 text-white/75">
-            Оставьте заявку сегодня — и уже через неделю у вас будет готовая
-            стратегия продвижения.
+            Оставьте заявку сегодня — и уже через неделю у вас будет готовая стратегия продвижения.
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button
@@ -49,5 +46,5 @@ export function CallToAction() {
         </div>
       </Container>
     </section>
-  )
+  );
 }

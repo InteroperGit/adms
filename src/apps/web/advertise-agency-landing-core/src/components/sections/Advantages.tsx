@@ -6,9 +6,9 @@ import {
   Building2,
   Handshake,
   type LucideIcon,
-} from 'lucide-react'
-import { Container } from '@/components/layout/Container'
-import { advantages } from '@/lib/advantages'
+} from 'lucide-react';
+import { Container } from '@/components/layout/Container';
+import { advantages } from '@/lib/advantages';
 
 const ICON_MAP: Record<string, LucideIcon> = {
   CircleDollarSign,
@@ -17,7 +17,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   LineChart,
   Building2,
   Handshake,
-}
+};
 
 export function Advantages() {
   return (
@@ -37,19 +37,18 @@ export function Advantages() {
             Почему мы
           </div>
           <h2 className="mb-4 text-white">
-            Почему клиенты выбирают{' '}
-            <span className="text-primary">Рекламастер</span>
+            Почему клиенты выбирают <span className="text-primary">Рекламастер</span>
           </h2>
           <p className="text-white/60">
-            Мы не просто подрядчик — мы берём на себя ответственность за
-            результат и выстраиваем долгосрочные отношения.
+            Мы не просто подрядчик — мы берём на себя ответственность за результат и выстраиваем
+            долгосрочные отношения.
           </p>
         </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {advantages.map((item, index) => {
-            const Icon = ICON_MAP[item.icon]
+            const Icon = ICON_MAP[item.icon];
             return (
               <div
                 key={item.title}
@@ -66,17 +65,13 @@ export function Advantages() {
                     {String(index + 1).padStart(2, '0')}
                   </span>
                 </div>
-                <h3 className="mb-2 text-base font-semibold text-white">
-                  {item.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-white/55">
-                  {item.description}
-                </p>
+                <h3 className="mb-2 text-base font-semibold text-white">{item.title}</h3>
+                <p className="text-sm leading-relaxed text-white/55">{item.description}</p>
               </div>
-            )
+            );
           })}
         </div>
       </Container>
     </section>
-  )
+  );
 }

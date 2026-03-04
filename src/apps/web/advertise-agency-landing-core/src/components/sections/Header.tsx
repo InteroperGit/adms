@@ -1,11 +1,11 @@
-import { Container } from '@/components/layout/Container'
-import { useActiveSection } from '@/hooks/useActiveSection'
-import { siteData } from '@/lib/siteData'
-import { HeaderDesktopNav } from './HeaderDesktopNav'
-import { HeaderMobileNav } from './HeaderMobileNav'
+import { Container } from '@/components/layout/Container';
+import { useActiveSection } from '@/hooks/useActiveSection';
+import { siteData } from '@/lib/siteData';
+import { HeaderDesktopNav } from './HeaderDesktopNav';
+import { HeaderMobileNav } from './HeaderMobileNav';
 
 export function Header() {
-  const activeSection = useActiveSection()
+  const activeSection = useActiveSection();
 
   return (
     <header id="main-nav" className="border-b border-border bg-white shadow-sm">
@@ -29,5 +29,5 @@ export function Header() {
         </div>
       </Container>
     </header>
-  )
+  );
 }

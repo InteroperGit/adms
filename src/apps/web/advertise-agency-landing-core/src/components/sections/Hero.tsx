@@ -1,12 +1,12 @@
-import { ArrowRight, TrendingUp, Users, Award } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/layout/Container'
+import { ArrowRight, TrendingUp, Users, Award } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/layout/Container';
 
 const STATS = [
   { icon: Award, value: '10+', label: 'лет на рынке' },
   { icon: TrendingUp, value: '500+', label: 'реализованных проектов' },
   { icon: Users, value: '300+', label: 'довольных клиентов' },
-]
+];
 
 export function Hero() {
   return (
@@ -53,9 +53,8 @@ export function Hero() {
 
           {/* Subheadline */}
           <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-xl">
-            Разрабатываем комплексные рекламные стратегии, создаём креативные
-            концепции и запускаем кампании, которые приносят реальный результат
-            вашему бизнесу.
+            Разрабатываем комплексные рекламные стратегии, создаём креативные концепции и запускаем
+            кампании, которые приносят реальный результат вашему бизнесу.
           </p>
 
           {/* CTA buttons */}
@@ -66,7 +65,12 @@ export function Hero() {
                 <ArrowRight size={16} />
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-full px-8 hover:bg-muted hover:text-primary">
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full px-8 hover:bg-muted hover:text-primary"
+            >
               <a href="#portfolio">Наши работы</a>
             </Button>
           </div>
@@ -91,5 +95,5 @@ export function Hero() {
         </div>
       </Container>
     </section>
-  )
+  );
 }

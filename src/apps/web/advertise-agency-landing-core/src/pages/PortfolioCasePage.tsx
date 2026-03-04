@@ -1,24 +1,24 @@
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { ArrowLeft, Star } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/layout/Container'
-import { testimonials } from '@/lib/testimonials'
-import { cn } from '@/lib/utils'
-import { portfolioCaseMap } from '@/lib/portfolioCases'
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { ArrowLeft, Star } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/layout/Container';
+import { testimonials } from '@/lib/testimonials';
+import { cn } from '@/lib/utils';
+import { portfolioCaseMap } from '@/lib/portfolioCases';
 
 export function PortfolioCasePage() {
-  const { slug } = useParams<{ slug: string }>()
-  const data = slug ? portfolioCaseMap[slug] : undefined
+  const { slug } = useParams<{ slug: string }>();
+  const data = slug ? portfolioCaseMap[slug] : undefined;
 
   useEffect(() => {
     if (data) {
-      document.title = data.meta.title
-      const descEl = document.querySelector('meta[name="description"]')
-      if (descEl) descEl.setAttribute('content', data.meta.description)
+      document.title = data.meta.title;
+      const descEl = document.querySelector('meta[name="description"]');
+      if (descEl) descEl.setAttribute('content', data.meta.description);
     }
-  }, [data])
+  }, [data]);
 
   if (!data) {
     return (
@@ -30,12 +30,12 @@ export function PortfolioCasePage() {
           </a>
         </div>
       </div>
-    )
+    );
   }
 
   const testimonial = data.testimonialId
     ? testimonials.find((t) => t.id === data.testimonialId)
-    : undefined
+    : undefined;
 
   return (
     <div className="min-h-screen bg-white font-sans text-foreground">
@@ -113,10 +113,7 @@ export function PortfolioCasePage() {
                   className="rounded-2xl border border-border bg-white p-6 shadow-sm"
                 >
                   <div
-                    className={cn(
-                      'mb-3 h-1 w-10 rounded-full bg-gradient-to-r',
-                      data.gradient,
-                    )}
+                    className={cn('mb-3 h-1 w-10 rounded-full bg-gradient-to-r', data.gradient)}
                   />
                   <h3 className="mb-2 font-semibold">{title}</h3>
                   <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
@@ -162,7 +159,7 @@ export function PortfolioCasePage() {
                     key={src}
                     className={cn(
                       'overflow-hidden rounded-2xl bg-muted',
-                      data.images!.gallery!.length >= 3 && i === 0 ? 'sm:col-span-2' : '',
+                      data.images!.gallery!.length >= 3 && i === 0 ? 'sm:col-span-2' : ''
                     )}
                   >
                     <img
@@ -172,7 +169,7 @@ export function PortfolioCasePage() {
                         'w-full object-cover',
                         data.images!.gallery!.length >= 3 && i === 0
                           ? 'h-64 sm:h-[480px]'
-                          : 'h-52 sm:h-72',
+                          : 'h-52 sm:h-72'
                       )}
                     />
                   </div>
@@ -194,14 +191,12 @@ export function PortfolioCasePage() {
                     <Star key={i} size={16} className="fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="mb-6 text-lg leading-relaxed text-foreground">
-                  «{testimonial.text}»
-                </p>
+                <p className="mb-6 text-lg leading-relaxed text-foreground">«{testimonial.text}»</p>
                 <div className="flex items-center gap-4">
                   <div
                     className={cn(
                       'flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br text-sm font-bold text-white',
-                      testimonial.avatarColor,
+                      testimonial.avatarColor
                     )}
                   >
                     {testimonial.avatar}
@@ -234,5 +229,5 @@ export function PortfolioCasePage() {
         </Container>
       </section>
     </div>
-  )
+  );
 }
