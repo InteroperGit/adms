@@ -3,6 +3,7 @@ import data from '@data/site.json';
 export interface SiteData {
   name: string;
   description: string;
+  yandexMapsOrgId?: string;
   contact: {
     phone: string;
     email: string;

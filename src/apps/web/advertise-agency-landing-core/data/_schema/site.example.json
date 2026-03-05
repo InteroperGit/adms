@@ -1,6 +1,8 @@
 {
   "name": "РА «Рекламастер»",
   "description": "Мы создаём рекламу, которая работает",
+  "yandexMapsOrgId": "12345678901",
+  "_comment_yandexMapsOrgId": "Optional. Numeric org ID from your Yandex Maps URL: yandex.ru/maps/org/<name>/<ID>/reviews — enables the Yandex reviews widget in the Testimonials section",
   "contact": {
     "phone": "+7 (495) 123-45-67",
     "email": "hello@reklamaster.ru",
