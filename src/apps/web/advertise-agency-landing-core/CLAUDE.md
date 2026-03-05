@@ -67,9 +67,9 @@ advertise-agency-landing-core/
 │   │   │   ├── HeaderMobileNav.tsx    # Hamburger + dropdown (hidden on desktop)
 │   │   │   ├── Hero.tsx               # Full-viewport hero, gradient bg, stats
 │   │   │   ├── About.tsx              # Two-column: story + info card (siteData, aboutValues)
-│   │   │   ├── Services.tsx           # 6-card grid, ICON_MAP resolves icon strings (services)
+│   │   │   ├── Services.tsx           # 6-card grid, ICON_MAP from iconMap.ts resolves icon strings (services)
 │   │   │   ├── Portfolio.tsx          # Category filter + project cards (portfolioCaseMap)
-│   │   │   ├── Advantages.tsx         # Dark bg, 6 glassmorphism cards (advantages)
+│   │   │   ├── Advantages.tsx         # Dark bg, 6 glassmorphism cards, ICON_MAP from iconMap.ts (advantages)
 │   │   │   ├── CallToAction.tsx       # Mid-page CTA banner
 │   │   │   ├── Testimonials.tsx       # Carousel + desktop thumbnail strip (testimonials)
 │   │   │   ├── Contact.tsx            # Contact form + info (siteData); consent checkbox required before submit
@@ -93,6 +93,7 @@ advertise-agency-landing-core/
 │   │   ├── aboutValues.ts      # aboutValues: AboutValue[] — loaded from data/about-values.json
 │   │   ├── advantages.ts       # advantages: Advantage[] — loaded from data/advantages.json; exports Advantage type
 │   │   ├── carousel.ts         # carouselSlides: CarouselSlide[] — loaded from data/carousel.json; exports CarouselSlide type
+│   │   ├── iconMap.ts          # ICON_MAP: Record<string, LucideIcon> — shared icon registry; resolveIcon() helper
 │   │   ├── portfolioCases.ts   # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
 │   │   ├── services.ts         # services: Service[] — loaded from data/services.json; exports Service type
 │   │   ├── siteData.ts         # siteData: SiteData — loaded from data/site.json; exports SiteData type
@@ -165,8 +166,8 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 - **`data/site.json`** — global site config (phone, email, address, social links, hours). Exposed via `src/lib/siteData.ts`; used by `About.tsx`, `Header.tsx`, `Contact.tsx`, `Footer.tsx`.
 - **`data/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/lib/aboutValues.ts`; used by `About.tsx`.
 - **`data/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Gradients use Tailwind `50/100` shades (near-white). Exposed via `src/lib/carousel.ts`; used by `Carousel.tsx`. No dark overlay — text uses `text-foreground`/`text-muted-foreground`.
-- **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/lib/advantages.ts`; used by `Advantages.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` in `Advantages.tsx`.
-- **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `Footer.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` in `Services.tsx`.
+- **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/lib/advantages.ts`; used by `Advantages.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
+- **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `Footer.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
 - **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/lib/testimonials.ts`; used by `Testimonials.tsx` and `PortfolioCasePage.tsx` (looked up by `id` via `testimonialId` on a portfolio case).
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.
@@ -193,7 +194,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 - **Components**: PascalCase files, one component per file
 - **Static content**: code-only data (icons, IDs, nav links) in `src/lib/constants.ts`; editable content in `data/*.json` exposed through `src/lib/` modules — components always import from `@/lib/`, never from `@data/` directly
-- **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `LucideIcon` in the component via a local `ICON_MAP` record (see `Services.tsx`, `Advantages.tsx`)
+- **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `LucideIcon` via the shared `ICON_MAP` in `src/lib/iconMap.ts`; import `ICON_MAP` or `resolveIcon()` from there — do not create local icon maps in components
 - **Tailwind**: use `cn()` from `@/lib/utils` for conditional class merging
 - **Sections**: self-contained in `src/components/sections/`, import Container for layout
 - **Path aliases**: `@/` → `src/`, `@data` → `data/` (root-level)

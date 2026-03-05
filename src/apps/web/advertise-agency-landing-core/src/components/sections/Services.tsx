@@ -1,25 +1,8 @@
-import {
-  Lightbulb,
-  MonitorSmartphone,
-  Megaphone,
-  LayoutTemplate,
-  BarChart3,
-  Share2,
-  type LucideIcon,
-} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Container } from '@/components/layout/Container';
 import { content } from '@/lib/content';
+import { ICON_MAP } from '@/lib/iconMap';
 import { services } from '@/lib/services';
-
-const ICON_MAP: Record<string, LucideIcon> = {
-  Lightbulb,
-  MonitorSmartphone,
-  Megaphone,
-  LayoutTemplate,
-  BarChart3,
-  Share2,
-};
 
 export function Services() {
   const { services: s } = content;

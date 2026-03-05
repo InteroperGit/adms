@@ -16,7 +16,7 @@ export function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [consent, setConsent] = useState(false);
 
-  function handleSubmit(e: SubmitEvent) {
+  function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
     if (!consent) {
       return;
