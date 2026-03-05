@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Container } from '@/components/layout/Container';
+import { SectionHeader } from '@/components/ui/SectionHeader';
 import { content } from '@/lib/content';
 import { ICON_MAP } from '@/lib/iconMap';
 import { services } from '@/lib/services';
@@ -10,14 +11,12 @@ export function Services() {
   return (
     <section id="services" className="bg-muted py-24 md:py-32">
       <Container>
-        {/* Header */}
-        <div className="mx-auto mb-16 max-w-2xl text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            {s.label}
-          </div>
-          <h2 className="mb-4">{s.title}</h2>
-          <p className="text-muted-foreground">{s.description}</p>
-        </div>
+        <SectionHeader
+          label={s.label}
+          title={s.title}
+          description={s.description}
+          className="mb-16"
+        />
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">

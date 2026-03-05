@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
+import { SectionHeader } from '@/components/ui/SectionHeader';
+import { PortfolioCard } from '@/components/ui/PortfolioCard';
 import { content } from '@/lib/content';
 import { cn } from '@/lib/utils';
 import type { PortfolioCase } from '@/types/portfolio';
@@ -34,14 +34,12 @@ export function Portfolio() {
   return (
     <section id="portfolio" className="bg-white py-24 md:py-32">
       <Container>
-        {/* Header */}
-        <div className="mx-auto mb-12 max-w-2xl text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            {p.label}
-          </div>
-          <h2 className="mb-4">{p.title}</h2>
-          <p className="text-muted-foreground">{p.description}</p>
-        </div>
+        <SectionHeader
+          label={p.label}
+          title={p.title}
+          description={p.description}
+          className="mb-12"
+        />
 
         {/* Category filter */}
         <div className="mb-10 flex flex-wrap justify-center gap-2">
@@ -64,64 +62,7 @@ export function Portfolio() {
         {/* Grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {filtered.map((item) => (
-            <article
-              key={item.slug}
-              className="group overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-md"
-            >
-              {/* Thumbnail */}
-              <div className={cn('relative h-40 bg-gradient-to-br sm:h-52', item.gradient)}>
-                {item.images?.preview ? (
-                  <img
-                    src={item.images.preview}
-                    alt={item.title}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                ) : (
-                  /* Dot overlay fallback for gradient-only cards */
-                  <div
-                    className="absolute inset-0 opacity-10"
-                    style={{
-                      backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
-                      backgroundSize: '20px 20px',
-                    }}
-                  />
-                )}
-                {/* Category badge on image */}
-                <div className="absolute left-4 top-4">
-                  <Badge className="border-0 bg-white/20 text-white backdrop-blur-sm">
-                    {item.category}
-                  </Badge>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="mb-2 text-lg font-semibold leading-snug text-foreground">
-                  {item.title}
-                </h3>
-                <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-                  {item.description}
-                </p>
-
-                {/* Tags */}
-                <div className="mb-5 flex flex-wrap gap-2">
-                  {item.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-
-                {/* Link */}
-                <a
-                  href={item.href}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-gap duration-200 hover:gap-2.5"
-                >
-                  {p.detailsLabel}
-                  <ArrowRight size={14} />
-                </a>
-              </div>
-            </article>
+            <PortfolioCard key={item.slug} item={item} />
           ))}
         </div>
 

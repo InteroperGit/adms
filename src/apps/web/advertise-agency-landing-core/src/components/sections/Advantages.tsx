@@ -1,4 +1,5 @@
 import { Container } from '@/components/layout/Container';
+import { SectionHeader } from '@/components/ui/SectionHeader';
 import { advantages } from '@/lib/advantages';
 import { content } from '@/lib/content';
 import { ICON_MAP } from '@/lib/iconMap';
@@ -15,17 +16,14 @@ export function Advantages() {
       <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-accent/15 blur-3xl" />
 
       <Container className="relative">
-        {/* Header */}
-        <div className="mx-auto mb-16 max-w-2xl text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/80">
-            {content.advantages.label}
-          </div>
-          <h2 className="mb-4 text-white">
-            {content.advantages.title}
-            <span className="text-primary">{content.advantages.titleHighlight}</span>
-          </h2>
-          <p className="text-white/60">{content.advantages.description}</p>
-        </div>
+        <SectionHeader
+          label={content.advantages.label}
+          title={content.advantages.title}
+          titleHighlight={content.advantages.titleHighlight}
+          description={content.advantages.description}
+          variant="dark"
+          className="mb-16"
+        />
 
         {/* Grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">

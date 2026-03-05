@@ -8,8 +8,8 @@ import { Portfolio } from '@/components/sections/Portfolio';
 import { Advantages } from '@/components/sections/Advantages';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { CallToAction } from '@/components/sections/CallToAction';
-import { Contact } from '@/components/sections/Contact';
-import { Footer } from '@/components/sections/Footer';
+import { Contact } from '@/components/sections/contact';
+import { Footer } from '@/components/sections/footer';
 import { CookieBanner } from './components/banners/CookieBanner';
 import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
 
