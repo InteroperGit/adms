@@ -1,6 +1,7 @@
 // src/components/sections/contact/ContactInfo.tsx
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { ContactItem } from '@/components/sections/contact/ContactItem';
+import { ContactMap } from '@/components/sections/contact/ContactMap';
 import { SocialLinks } from '@/components/ui/SocialLinks';
 import { content } from '@/types/content';
 import { siteData } from '@/types/siteData';
@@ -28,6 +29,7 @@ export function ContactInfo() {
           />
           <ContactItem icon={MapPin} label={contactLabels.address} value={address} />
         </ul>
+        {siteData.yandexMapUrl && <ContactMap url={siteData.yandexMapUrl} className="mt-6" />}
       </div>
 
       <div>
