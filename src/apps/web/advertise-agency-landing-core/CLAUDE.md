@@ -90,11 +90,13 @@ advertise-agency-landing-core/
 │   │   │   ├── CallToAction.tsx       # Mid-page CTA banner
 │   │   │   ├── Testimonials.tsx       # Carousel + desktop thumbnail strip (testimonials)
 │   │   │   ├── contact/
-│   │   │   │   ├── index.tsx          # Thin orchestrator: SectionHeader + ContactForm + ContactInfo + ContactHours; imported as '@/components/sections/contact'
-│   │   │   │   ├── ContactForm.tsx    # Form state, consent checkbox, submit; renders ContactSuccess on success
-│   │   │   │   ├── ContactSuccess.tsx # Success panel (icon + title + text + reset button); prop: onReset
-│   │   │   │   ├── ContactInfo.tsx    # Phone/email/address list + SocialLinks
-│   │   │   │   └── ContactHours.tsx  # Working hours card (weekdays/saturday/sunday from siteData)
+│   │   │   │   ├── index.tsx              # Thin orchestrator: SectionHeader + ContactForm + ContactInfo + ContactHours; imported as '@/components/sections/contact'
+│   │   │   │   ├── ContactForm.tsx        # Form state + submit; renders ContactFormFields + ContactConsent + button; shows ContactSuccess on success
+│   │   │   │   ├── ContactFormFields.tsx  # Three input fields (name, contact, message); props: form, onChange; reads labels from content
+│   │   │   │   ├── ContactConsent.tsx     # Consent checkbox + legal links; props: checked, onChange; reads text from content
+│   │   │   │   ├── ContactSuccess.tsx     # Success panel (icon + title + text + reset button); prop: onReset
+│   │   │   │   ├── ContactInfo.tsx        # Phone/email/address list + SocialLinks
+│   │   │   │   └── ContactHours.tsx       # Working hours card (weekdays/saturday/sunday from siteData)
 │   │   │   └── footer/
 │   │   │       ├── index.tsx          # Thin orchestrator: 4-col grid + Separator + FooterBottom; imported as '@/components/sections/footer'
 │   │   │       ├── FooterBrand.tsx    # Logo, description, SocialLinks (dark variant)
