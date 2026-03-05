@@ -31,13 +31,16 @@ Landing page for **РА "Рекламастер"** — a full-cycle advertising 
 advertise-agency-landing-core/
 ├── ai/
 │   └── tasks/
-│       └── 001_create_landing_structure.md   # Full build plan
+│       ├── 001_create_landing_structure.md   # Full build plan
+│       └── 002_improve_site.md               # White-label reusability plan
 ├── data/                    # JSON data — gitignored (except _schema/)
 │   ├── _schema/             # Schema examples — git-tracked
 │   │   ├── about-values.example.json
 │   │   ├── advantages.example.json
+│   │   ├── carousel.example.json
 │   │   ├── content.example.json
 │   │   ├── theme.example.json
+│   │   ├── legal.example.json
 │   │   ├── portfolio.example.json
 │   │   ├── services.example.json
 │   │   ├── site.example.json
@@ -46,6 +49,7 @@ advertise-agency-landing-core/
 │   │   └── bodrost.json
 │   ├── content.json             # All UI copy: nav, hero, about, services, portfolio, CTA, contact, footer, cookies, etc.
 │   ├── theme.json               # Brand identity: HSL colors, border radius, font families, Google Fonts URLs
+│   ├── legal.json               # Legal company data: company.{name,inn,ogrn,legalAddress,siteUrl,email,phone,responsible}, documents.{privacyPolicy,consent,userAgreement} each {version,effectiveDate}
 │   ├── about-values.json    # About section values list: [{ title, description }]
 │   ├── carousel.json        # Hero carousel slides: [{ id, image, alt, gradient, title, subtitle }]
 │   ├── advantages.json      # Advantages list: [{ icon, title, description }]
@@ -75,7 +79,7 @@ advertise-agency-landing-core/
 │   │   │   ├── Contact.tsx            # Contact form + info (siteData); consent checkbox required before submit
 │   │   │   └── Footer.tsx             # Site footer (siteData); includes legal nav links (privacy-policy, consent, user-agreement)
 │   │   └── ui/                        # shadcn/ui primitives — DO NOT edit manually
-│   │       ├── BackButton.tsx         # Back navigation button used on legal pages
+│   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
 │   │       ├── ScrollToTop.tsx        # Fixed bottom-right button, appears after threshold scroll, scrolls to nav
 │   │       ├── badge.tsx
 │   │       ├── button.tsx
@@ -88,12 +92,12 @@ advertise-agency-landing-core/
 │   │   ├── useActiveSection.ts  # Tracks active section for nav highlight
 │   │   └── useCookieConsent.ts  # Returns 'all'|'necessary'|null; reactive via CustomEvent 'cookie_consent_change'
 │   ├── lib/
-│   │   ├── constants.ts        # (DELETED — NAV_LINKS moved to content.json)
 │   │   ├── content.ts         # content: Content — loaded from data/content.json; all UI copy
 │   │   ├── aboutValues.ts      # aboutValues: AboutValue[] — loaded from data/about-values.json
 │   │   ├── advantages.ts       # advantages: Advantage[] — loaded from data/advantages.json; exports Advantage type
 │   │   ├── carousel.ts         # carouselSlides: CarouselSlide[] — loaded from data/carousel.json; exports CarouselSlide type
 │   │   ├── iconMap.ts          # ICON_MAP: Record<string, LucideIcon> — shared icon registry; resolveIcon() helper
+│   │   ├── legalData.ts        # legalData: LegalData — loaded from data/legal.json; used by legal pages
 │   │   ├── portfolioCases.ts   # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
 │   │   ├── services.ts         # services: Service[] — loaded from data/services.json; exports Service type
 │   │   ├── siteData.ts         # siteData: SiteData — loaded from data/site.json; exports SiteData type
@@ -103,9 +107,9 @@ advertise-agency-landing-core/
 │   │   └── themePlugin.ts     # Vite plugin: reads data/theme.json, injects CSS vars + Google Fonts into index.html
 │   ├── pages/
 │   │   ├── PortfolioCasePage.tsx  # Generic SSG page for portfolio case studies
-│   │   ├── PrivacyPolicy.tsx      # /privacy-policy — static legal page
-│   │   ├── Consent.tsx            # /consent — cookie consent policy page
-│   │   └── UserAgrrement.tsx      # /user-agreement — user agreement page (note: typo in filename)
+│   │   ├── PrivacyPolicy.tsx      # /privacy-policy — reads legalData (company, documents.privacyPolicy.{version,effectiveDate})
+│   │   ├── Consent.tsx            # /consent — reads legalData (company, documents.consent.{version,effectiveDate})
+│   │   └── UserAgrrement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate}); note: typo in filename
 │   ├── types/
 │   │   ├── index.ts           # Shared TypeScript types
 │   │   └── portfolio.ts       # PortfolioCase interface
@@ -169,6 +173,7 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 - **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/lib/advantages.ts`; used by `Advantages.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
 - **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `Footer.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
 - **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/lib/testimonials.ts`; used by `Testimonials.tsx` and `PortfolioCasePage.tsx` (looked up by `id` via `testimonialId` on a portfolio case).
+- **`data/legal.json`** — company legal details: `company.{ name, inn, ogrn, legalAddress, siteUrl, email, phone, responsible }` and `documents.{ privacyPolicy, consent, userAgreement }` each with `{ version, effectiveDate }`. Exposed via `src/lib/legalData.ts`; used by `PrivacyPolicy.tsx`, `Consent.tsx`, `UserAgrrement.tsx`. Gitignored — schema in `data/_schema/legal.example.json`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.
 - Components **never** import from `@data/` directly — always go through a `src/lib/` module.
@@ -193,7 +198,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 ## Conventions
 
 - **Components**: PascalCase files, one component per file
-- **Static content**: code-only data (icons, IDs, nav links) in `src/lib/constants.ts`; editable content in `data/*.json` exposed through `src/lib/` modules — components always import from `@/lib/`, never from `@data/` directly
+- **Static content**: editable content in `data/*.json` exposed through `src/lib/` modules — components always import from `@/lib/`, never from `@data/` directly
 - **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `LucideIcon` via the shared `ICON_MAP` in `src/lib/iconMap.ts`; import `ICON_MAP` or `resolveIcon()` from there — do not create local icon maps in components
 - **Tailwind**: use `cn()` from `@/lib/utils` for conditional class merging
 - **Sections**: self-contained in `src/components/sections/`, import Container for layout

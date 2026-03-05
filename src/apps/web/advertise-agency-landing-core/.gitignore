@@ -16,6 +16,7 @@ dist-ssr
 data/portfolio/
 data/site.json
 data/testimonials.json
+data/legal.json
 public/images/
 !data/_schema/
 
