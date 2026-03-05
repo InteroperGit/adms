@@ -1,6 +1,6 @@
 import './index.css';
 import { Header } from '@/components/sections/Header';
-import { Carousel } from '@/components/sections/Carousel';
+import { Carousel } from '@/components/sections/carousel';
 import { Hero } from '@/components/sections/hero';
 import { About } from '@/components/sections/About';
 import { Services } from '@/components/sections/Services';
