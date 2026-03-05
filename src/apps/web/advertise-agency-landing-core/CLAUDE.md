@@ -36,13 +36,16 @@ advertise-agency-landing-core/
 │   ├── _schema/             # Schema examples — git-tracked
 │   │   ├── about-values.example.json
 │   │   ├── advantages.example.json
-│   │   ├── carousel.example.json
+│   │   ├── content.example.json
+│   │   ├── theme.example.json
 │   │   ├── portfolio.example.json
 │   │   ├── services.example.json
 │   │   ├── site.example.json
 │   │   └── testimonials.example.json
 │   ├── portfolio/           # One JSON file per case study (slug.json)
 │   │   └── bodrost.json
+│   ├── content.json             # All UI copy: nav, hero, about, services, portfolio, CTA, contact, footer, cookies, etc.
+│   ├── theme.json               # Brand identity: HSL colors, border radius, font families, Google Fonts URLs
 │   ├── about-values.json    # About section values list: [{ title, description }]
 │   ├── carousel.json        # Hero carousel slides: [{ id, image, alt, gradient, title, subtitle }]
 │   ├── advantages.json      # Advantages list: [{ icon, title, description }]
@@ -85,7 +88,8 @@ advertise-agency-landing-core/
 │   │   ├── useActiveSection.ts  # Tracks active section for nav highlight
 │   │   └── useCookieConsent.ts  # Returns 'all'|'necessary'|null; reactive via CustomEvent 'cookie_consent_change'
 │   ├── lib/
-│   │   ├── constants.ts        # NAV_LINKS (only remaining constant)
+│   │   ├── constants.ts        # (DELETED — NAV_LINKS moved to content.json)
+│   │   ├── content.ts         # content: Content — loaded from data/content.json; all UI copy
 │   │   ├── aboutValues.ts      # aboutValues: AboutValue[] — loaded from data/about-values.json
 │   │   ├── advantages.ts       # advantages: Advantage[] — loaded from data/advantages.json; exports Advantage type
 │   │   ├── carousel.ts         # carouselSlides: CarouselSlide[] — loaded from data/carousel.json; exports CarouselSlide type
@@ -94,6 +98,8 @@ advertise-agency-landing-core/
 │   │   ├── siteData.ts         # siteData: SiteData — loaded from data/site.json; exports SiteData type
 │   │   ├── testimonials.ts     # testimonials: Testimonial[] — loaded from data/testimonials.json; exports Testimonial type
 │   │   └── utils.ts            # cn() helper (clsx + tailwind-merge)
+│   ├── plugins/
+│   │   └── themePlugin.ts     # Vite plugin: reads data/theme.json, injects CSS vars + Google Fonts into index.html
 │   ├── pages/
 │   │   ├── PortfolioCasePage.tsx  # Generic SSG page for portfolio case studies
 │   │   ├── PrivacyPolicy.tsx      # /privacy-policy — static legal page
@@ -104,13 +110,13 @@ advertise-agency-landing-core/
 │   │   └── portfolio.ts       # PortfolioCase interface
 │   ├── router.tsx             # RouteObject[] — "/", "/portfolio/:slug", "/privacy-policy", "/user-agreement", "/consent"
 │   ├── main.tsx               # Entry: exports createRoot = ViteReactSSG({ routes })
-│   └── index.css              # Google Fonts import, Tailwind, CSS vars, base styles; defines animate-fade-in keyframe
+│   └── index.css              # Tailwind import, @theme inline (references CSS vars), base styles, animate-fade-in keyframe; no hardcoded colors/fonts (injected by themePlugin)
 ├── .env.example
 ├── .prettierrc
 ├── components.json           # shadcn/ui config (aliases use src/ paths)
-├── index.html                # title: РА «Рекламастер», preconnect for fonts
+├── index.html                # title: РА «Рекламастер»; font preconnects injected by themePlugin
 ├── tsconfig.app.json         # paths: @/* → ./src/*, resolveJsonModule: true
-└── vite.config.ts            # @tailwindcss/vite plugin, @/ and @data aliases, ssgOptions
+└── vite.config.ts            # themePlugin + @tailwindcss/vite + @vitejs/plugin-react, @/ and @data aliases, ssgOptions
 ```
 
 ## Page Composition (App.tsx order)
@@ -154,6 +160,8 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 
 ## Data Architecture
 
+- **`data/content.json`** — all UI copy (nav labels, hero text, section headings, form labels, footer, cookies, portfolio case labels). Exposed via `src/lib/content.ts`; used by all section components, `PortfolioCasePage`, `CookieBanner`, and `useActiveSection`. Supports template tokens (`{name}`, `{year}`, `{description}`) replaced at render time.
+- **`data/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`.
 - **`data/site.json`** — global site config (phone, email, address, social links, hours). Exposed via `src/lib/siteData.ts`; used by `About.tsx`, `Header.tsx`, `Contact.tsx`, `Footer.tsx`.
 - **`data/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/lib/aboutValues.ts`; used by `About.tsx`.
 - **`data/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Gradients use Tailwind `50/100` shades (near-white). Exposed via `src/lib/carousel.ts`; used by `Carousel.tsx`. No dark overlay — text uses `text-foreground`/`text-muted-foreground`.
@@ -195,6 +203,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 - After completing every task, always run in sequence:
   1. `pnpm format` — reformat all changed files
   2. `pnpm tsc -b --noEmit` — typecheck, fix any errors before finishing
+  3. Update `CLAUDE.md` — reflect any new/changed files, data modules, components, routes, or conventions
 
 ## Key Rules
 

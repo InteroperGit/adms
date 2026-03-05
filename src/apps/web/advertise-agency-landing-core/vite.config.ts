@@ -5,10 +5,11 @@ import path from 'path'
 import { readdirSync, existsSync } from 'fs'
 // Activates vite-react-ssg's 'ssgOptions' type augmentation for UserConfig
 import 'vite-react-ssg'
+import { themePlugin } from './src/plugins/themePlugin'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [themePlugin(), react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
