@@ -9,6 +9,7 @@ import { CaseSolution } from '@/components/portfolio/CaseSolution';
 import { CaseResults } from '@/components/portfolio/CaseResults';
 import { CaseGallery } from '@/components/portfolio/CaseGallery';
 import { CaseCTA } from '@/components/portfolio/CaseCTA';
+import { ScrollToTop } from '@/components/ui/ScrollToTop';
 import { content } from '@/types/content';
 import { testimonials } from '@/types/testimonials';
 import { portfolioCaseMap } from '@/types/portfolioCases';
@@ -111,6 +112,7 @@ export function PortfolioCasePage() {
       )}
 
       <CaseCTA />
+      <ScrollToTop navSelector="" />
     </div>
   );
 }

@@ -34,11 +34,9 @@ export function ImageGalleryLightbox({
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
-      }
-      else if (e.key === 'ArrowLeft') {
+      } else if (e.key === 'ArrowLeft') {
         onPrev();
-      }
-      else if (e.key === 'ArrowRight') {
+      } else if (e.key === 'ArrowRight') {
         onNext();
       }
     };
@@ -75,7 +73,10 @@ export function ImageGalleryLightbox({
           }}
           onTouchEnd={(e) => {
             const delta = touchStartX.current - e.changedTouches[0].clientX;
-            if (Math.abs(delta) > 50) { if (delta > 0) onNext(); else onPrev(); }
+            if (Math.abs(delta) > 50) {
+              if (delta > 0) onNext();
+              else onPrev();
+            }
           }}
         >
           <img

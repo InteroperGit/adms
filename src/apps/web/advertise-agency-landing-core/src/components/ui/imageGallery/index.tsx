@@ -57,7 +57,8 @@ export function ImageGallery({
           const delta = touchStartX.current - e.changedTouches[0].clientX;
           if (Math.abs(delta) > 50) {
             didSwipe.current = true;
-            if (delta > 0) next(); else prev();
+            if (delta > 0) next();
+            else prev();
           }
         }}
         onClick={() => {
