@@ -65,8 +65,14 @@
     "_comment_preview": "Optional card thumbnail image",
     "og": "/images/portfolio/example-project/og.jpg",
     "gallery": [
-      "/images/portfolio/example-project/01.jpg",
-      "/images/portfolio/example-project/02.jpg"
+      {
+        "src": "/images/portfolio/example-project/01.jpg",
+        "description": "Описание первого изображения"
+      },
+      {
+        "src": "/images/portfolio/example-project/02.jpg",
+        "_comment": "description is optional"
+      }
     ]
   }
 }

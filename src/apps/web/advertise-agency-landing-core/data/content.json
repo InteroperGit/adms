@@ -158,6 +158,11 @@
       "back": "← Вернуться к портфолио"
     }
   },
+  "imageGallery": {
+    "prevLabel": "Предыдущее фото",
+    "nextLabel": "Следующее фото",
+    "counter": "{current} из {total}"
+  },
   "cookies": {
     "ariaLabel": "Уведомление об использовании cookie",
     "closeLabel": "Закрыть",
