@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
+import { SectionHeader } from '@/components/ui/SectionHeader';
+import { TestimonialCard } from '@/components/ui/TestimonialCard';
+import { TestimonialStrip } from '@/components/ui/TestimonialStrip';
 import { content } from '@/lib/content';
 import { testimonials } from '@/lib/testimonials';
 import { cn } from '@/lib/utils';
@@ -16,54 +19,16 @@ export function Testimonials() {
   return (
     <section id="testimonials" className="bg-muted py-24 md:py-32">
       <Container>
-        {/* Header */}
-        <div className="mx-auto mb-16 max-w-2xl text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            {content.testimonials.label}
-          </div>
-          <h2 className="mb-4">{content.testimonials.title}</h2>
-          <p className="text-muted-foreground">{content.testimonials.description}</p>
-        </div>
+        <SectionHeader
+          label={content.testimonials.label}
+          title={content.testimonials.title}
+          description={content.testimonials.description}
+          className="mb-16"
+        />
 
         {/* Carousel */}
         <div className="mx-auto max-w-3xl">
-          <div className="relative rounded-2xl border border-border bg-white p-8 shadow-sm md:p-12">
-            {/* Quote icon */}
-            <div className="absolute right-6 top-6 text-primary/10 md:right-12 md:top-10">
-              <Quote size={40} className="md:hidden" strokeWidth={1} />
-              <Quote size={64} className="hidden md:block" strokeWidth={1} />
-            </div>
-
-            {/* Stars */}
-            <div className="mb-6 flex gap-1">
-              {Array.from({ length: item.rating }).map((_, i) => (
-                <Star key={i} size={18} className="fill-primary text-primary" />
-              ))}
-            </div>
-
-            {/* Quote text */}
-            <blockquote className="mb-8 text-lg leading-relaxed text-foreground md:text-xl">
-              «{item.text}»
-            </blockquote>
-
-            {/* Author */}
-            <div className="flex items-center gap-4">
-              <div
-                className={cn(
-                  'flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-sm font-bold text-white',
-                  item.avatarColor
-                )}
-              >
-                {item.avatar}
-              </div>
-              <div>
-                <p className="font-semibold text-foreground">{item.name}</p>
-                <p className="text-sm text-muted-foreground">
-                  {item.role} · {item.company}
-                </p>
-              </div>
-            </div>
-          </div>
+          <TestimonialCard testimonial={item} showQuoteIcon starSize={18} className="p-8 md:p-12" />
 
           {/* Controls */}
           <div className="mt-8 flex items-center justify-between">
@@ -102,39 +67,7 @@ export function Testimonials() {
           </div>
         </div>
 
-        {/* All reviews — desktop strip */}
-        <div className="mt-12 hidden gap-4 lg:grid lg:grid-cols-5">
-          {testimonials.map((t, i) => (
-            <button
-              key={t.id}
-              onClick={() => setActive(i)}
-              className={cn(
-                'rounded-xl border p-4 text-left transition-all duration-200',
-                i === active
-                  ? 'border-primary/30 bg-white shadow-sm'
-                  : 'border-border bg-white/50 hover:border-primary/20 hover:bg-white'
-              )}
-            >
-              <div className="mb-2 flex gap-0.5">
-                {Array.from({ length: t.rating }).map((_, j) => (
-                  <Star key={j} size={10} className="fill-primary text-primary" />
-                ))}
-              </div>
-              <p className="mb-3 line-clamp-2 text-xs text-muted-foreground">«{t.text}»</p>
-              <div className="flex items-center gap-2">
-                <div
-                  className={cn(
-                    'flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-[10px] font-bold text-white',
-                    t.avatarColor
-                  )}
-                >
-                  {t.avatar}
-                </div>
-                <span className="truncate text-xs font-medium text-foreground">{t.name}</span>
-              </div>
-            </button>
-          ))}
-        </div>
+        <TestimonialStrip active={active} onSelect={setActive} />
       </Container>
     </section>
   );

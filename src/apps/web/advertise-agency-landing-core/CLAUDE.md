@@ -76,10 +76,27 @@ advertise-agency-landing-core/
 │   │   │   ├── Advantages.tsx         # Dark bg, 6 glassmorphism cards, ICON_MAP from iconMap.ts (advantages)
 │   │   │   ├── CallToAction.tsx       # Mid-page CTA banner
 │   │   │   ├── Testimonials.tsx       # Carousel + desktop thumbnail strip (testimonials)
-│   │   │   ├── Contact.tsx            # Contact form + info (siteData); consent checkbox required before submit
-│   │   │   └── Footer.tsx             # Site footer (siteData); includes legal nav links (privacy-policy, consent, user-agreement)
+│   │   │   ├── contact/
+│   │   │   │   ├── index.tsx          # Thin orchestrator: SectionHeader + ContactForm + ContactInfo + ContactHours; imported as '@/components/sections/contact'
+│   │   │   │   ├── ContactForm.tsx    # Form state, consent checkbox, submit; renders ContactSuccess on success
+│   │   │   │   ├── ContactSuccess.tsx # Success panel (icon + title + text + reset button); prop: onReset
+│   │   │   │   ├── ContactInfo.tsx    # Phone/email/address list + SocialLinks
+│   │   │   │   └── ContactHours.tsx  # Working hours card (weekdays/saturday/sunday from siteData)
+│   │   │   └── footer/
+│   │   │       ├── index.tsx          # Thin orchestrator: 4-col grid + Separator + FooterBottom; imported as '@/components/sections/footer'
+│   │   │       ├── FooterBrand.tsx    # Logo, description, SocialLinks (dark variant)
+│   │   │       ├── FooterNav.tsx      # Nav links column (from content.nav)
+│   │   │       ├── FooterServices.tsx # First 4 service titles linking to #services
+│   │   │       ├── FooterContact.tsx  # Phone, email, address with lucide icons
+│   │   │       └── FooterBottom.tsx   # Copyright + legal links nav + tagline
 │   │   └── ui/                        # shadcn/ui primitives — DO NOT edit manually
 │   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
+│   │       ├── SectionHeader.tsx      # Shared label badge + h2 + description block; props: label, title, description?, titleHighlight?, variant ('light'|'dark'), className
+│   │       ├── StarRating.tsx         # Shared star row; props: rating, size? (default 16), className? (wrapper), starClassName? (per-star, default fill-primary)
+│   │       ├── TestimonialCard.tsx    # Shared blockquote card (stars + quote + avatar/name); props: testimonial, showQuoteIcon?, starSize?, starClassName?, className?
+│   │       ├── SocialLinks.tsx        # Telegram + VK icon buttons; props: telegram, vk, variant ('light'|'dark'), className?; co-locates VkIcon SVG component
+│   │       ├── PortfolioCard.tsx      # Full portfolio card (thumbnail + dark hover overlay + tags + details link); prop: item (PortfolioCase & { href }); reads detailsLabel from content
+│   │       ├── TestimonialStrip.tsx   # Desktop-only 5-col thumbnail grid; props: active (index), onSelect (callback); reads testimonials directly
 │   │       ├── ScrollToTop.tsx        # Fixed bottom-right button, appears after threshold scroll, scrolls to nav
 │   │       ├── badge.tsx
 │   │       ├── button.tsx
@@ -106,10 +123,18 @@ advertise-agency-landing-core/
 │   ├── plugins/
 │   │   └── themePlugin.ts     # Vite plugin: reads data/theme.json, injects CSS vars + Google Fonts into index.html
 │   ├── pages/
-│   │   ├── PortfolioCasePage.tsx  # Generic SSG page for portfolio case studies
+│   │   ├── PortfolioCasePage.tsx  # Orchestrator: page header + Case* components + inline challenge section + TestimonialCard
 │   │   ├── PrivacyPolicy.tsx      # /privacy-policy — reads legalData (company, documents.privacyPolicy.{version,effectiveDate})
 │   │   ├── Consent.tsx            # /consent — reads legalData (company, documents.consent.{version,effectiveDate})
 │   │   └── UserAgrrement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate}); note: typo in filename
+│   ├── components/
+│   │   ├── portfolio/
+│   │   │   ├── CaseHero.tsx       # Gradient hero: badge, h1, description; props: gradient, category, title, description
+│   │   │   ├── CaseOverview.tsx   # 4-col grid (client/category/year/services); reads labels from content
+│   │   │   ├── CaseSolution.tsx   # 3-col solution cards with gradient accent bar; props: solution[], gradient
+│   │   │   ├── CaseResults.tsx    # 3 gradient metric cards; props: results[], gradient
+│   │   │   ├── CaseGallery.tsx    # Responsive image grid (first spans 2 cols if ≥3 images); props: gallery[], caseTitle
+│   │   │   └── CaseCTA.tsx        # Bottom CTA block; reads content.portfolioCase.cta
 │   ├── types/
 │   │   ├── index.ts           # Shared TypeScript types
 │   │   └── portfolio.ts       # PortfolioCase interface
@@ -167,11 +192,11 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 
 - **`data/content.json`** — all UI copy (nav labels, hero text, section headings, form labels, footer, cookies, portfolio case labels). Exposed via `src/lib/content.ts`; used by all section components, `PortfolioCasePage`, `CookieBanner`, and `useActiveSection`. Supports template tokens (`{name}`, `{year}`, `{description}`) replaced at render time.
 - **`data/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`.
-- **`data/site.json`** — global site config (phone, email, address, social links, hours). Exposed via `src/lib/siteData.ts`; used by `About.tsx`, `Header.tsx`, `Contact.tsx`, `Footer.tsx`.
+- **`data/site.json`** — global site config (phone, email, address, social links, hours). Exposed via `src/lib/siteData.ts`; used by `About.tsx`, `Header.tsx`, `contact/ContactInfo.tsx`, `contact/ContactHours.tsx`, `footer/FooterBrand.tsx`, `footer/FooterContact.tsx`, `footer/FooterBottom.tsx`.
 - **`data/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/lib/aboutValues.ts`; used by `About.tsx`.
 - **`data/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Gradients use Tailwind `50/100` shades (near-white). Exposed via `src/lib/carousel.ts`; used by `Carousel.tsx`. No dark overlay — text uses `text-foreground`/`text-muted-foreground`.
 - **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/lib/advantages.ts`; used by `Advantages.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
-- **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `Footer.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
+- **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
 - **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/lib/testimonials.ts`; used by `Testimonials.tsx` and `PortfolioCasePage.tsx` (looked up by `id` via `testimonialId` on a portfolio case).
 - **`data/legal.json`** — company legal details: `company.{ name, inn, ogrn, legalAddress, siteUrl, email, phone, responsible }` and `documents.{ privacyPolicy, consent, userAgreement }` each with `{ version, effectiveDate }`. Exposed via `src/lib/legalData.ts`; used by `PrivacyPolicy.tsx`, `Consent.tsx`, `UserAgrrement.tsx`. Gitignored — schema in `data/_schema/legal.example.json`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
