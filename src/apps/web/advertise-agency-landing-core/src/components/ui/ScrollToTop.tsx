@@ -10,7 +10,9 @@ interface ScrollToTopProps {
 }
 
 export function ScrollToTop({ threshold = 300, navSelector = 'nav' }: ScrollToTopProps) {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(
+    () => typeof window !== 'undefined' && window.scrollY > threshold
+  );
 
   useEffect(() => {
     const onScroll = () => {

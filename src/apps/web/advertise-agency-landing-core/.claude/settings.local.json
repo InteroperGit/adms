@@ -12,7 +12,8 @@
       "Bash(echo:*)",
       "WebFetch(domain:www.npmjs.com)",
       "Bash(pnpm format:*)",
-      "Bash(pnpm tsc:*)"
+      "Bash(pnpm tsc:*)",
+      "Bash(pnpm:*)"
     ]
   }
 }
