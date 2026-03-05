@@ -9,9 +9,9 @@ import { CaseSolution } from '@/components/portfolio/CaseSolution';
 import { CaseResults } from '@/components/portfolio/CaseResults';
 import { CaseGallery } from '@/components/portfolio/CaseGallery';
 import { CaseCTA } from '@/components/portfolio/CaseCTA';
-import { content } from '@/lib/content';
-import { testimonials } from '@/lib/testimonials';
-import { portfolioCaseMap } from '@/lib/portfolioCases';
+import { content } from '@/types/content';
+import { testimonials } from '@/types/testimonials';
+import { portfolioCaseMap } from '@/types/portfolioCases';
 
 export function PortfolioCasePage() {
   const { slug } = useParams<{ slug: string }>();

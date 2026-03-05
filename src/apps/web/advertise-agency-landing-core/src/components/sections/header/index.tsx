@@ -1,7 +1,7 @@
 import { Container } from '@/components/layout/Container';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 import { useActiveSection } from '@/hooks/useActiveSection';
-import { siteData } from '@/lib/siteData';
+import { siteData } from '@/types/siteData';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
 import { HeaderMobileNav } from './HeaderMobileNav';
 

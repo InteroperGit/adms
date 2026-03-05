@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 import { cn } from '@/lib/utils';
 
 interface Props {

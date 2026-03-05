@@ -1,5 +1,5 @@
-import { ICON_MAP } from '@/lib/iconMap';
-import type { Advantage } from '@/lib/advantages';
+import { ICON_MAP } from '@/types/iconMap';
+import type { Advantage } from '@/types/advantages';
 
 interface Props {
   item: Advantage;

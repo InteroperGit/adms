@@ -1,7 +1,7 @@
 // src/components/sections/footer/FooterBrand.tsx
 import { SocialLinks } from '@/components/ui/SocialLinks';
-import { content } from '@/lib/content';
-import { siteData } from '@/lib/siteData';
+import { content } from '@/types/content';
+import { siteData } from '@/types/siteData';
 
 export function FooterBrand() {
   return (

@@ -5,7 +5,7 @@ import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { PortfolioCard } from '@/components/ui/PortfolioCard';
 import { PortfolioFilter } from '@/components/sections/portfolio/PortfolioFilter';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 import type { PortfolioCase } from '@/types/portfolio';
 
 const modules = import.meta.glob<PortfolioCase>('@data/portfolio/*.json', {

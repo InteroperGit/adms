@@ -2,8 +2,8 @@
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { ContactItem } from '@/components/sections/contact/ContactItem';
 import { SocialLinks } from '@/components/ui/SocialLinks';
-import { content } from '@/lib/content';
-import { siteData } from '@/lib/siteData';
+import { content } from '@/types/content';
+import { siteData } from '@/types/siteData';
 
 export function ContactInfo() {
   const { directTitle, contactLabels, socialTitle } = content.contact;

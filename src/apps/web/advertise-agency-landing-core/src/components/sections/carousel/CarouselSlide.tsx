@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
-import { content } from '@/lib/content';
-import type { CarouselSlide as CarouselSlideType } from '@/lib/carousel';
+import { content } from '@/types/content';
+import type { CarouselSlide as CarouselSlideType } from '@/types/carousel';
 
 interface Props {
   slide: CarouselSlideType;

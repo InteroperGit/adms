@@ -1,6 +1,6 @@
 // src/components/sections/contact/ContactHours.tsx
-import { content } from '@/lib/content';
-import { siteData } from '@/lib/siteData';
+import { content } from '@/types/content';
+import { siteData } from '@/types/siteData';
 
 export function ContactHours() {
   const { hoursTitle, dayLabels } = content.contact;

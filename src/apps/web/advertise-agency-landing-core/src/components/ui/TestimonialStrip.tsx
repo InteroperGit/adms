@@ -1,6 +1,6 @@
 // src/components/ui/TestimonialStrip.tsx
 import { StarRating } from '@/components/ui/StarRating';
-import { testimonials } from '@/lib/testimonials';
+import { testimonials } from '@/types/testimonials';
 import { cn } from '@/lib/utils';
 
 interface TestimonialStripProps {
