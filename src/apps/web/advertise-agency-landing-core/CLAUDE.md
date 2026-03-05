@@ -273,7 +273,8 @@ Files are placed in `src/components/ui/` — never edit them manually.
 - After completing every task, always run in sequence:
   1. `pnpm format` — reformat all changed files
   2. `pnpm tsc -b --noEmit` — typecheck, fix any errors before finishing
-  3. Update `CLAUDE.md` — reflect any new/changed files, data modules, components, routes, or conventions
+  3. `pnpm lint` — fix any new lint errors (ignore pre-existing errors in `src/components/ui/badge.tsx` and `src/components/ui/button.tsx` — shadcn-generated, do not edit)
+  4. Update `CLAUDE.md` — reflect any new/changed files, data modules, components, routes, or conventions
 
 ## Key Rules
 
