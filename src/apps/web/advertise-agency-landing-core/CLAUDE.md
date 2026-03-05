@@ -4,6 +4,8 @@
 
 Landing page for **РА "Рекламастер"** — a full-cycle advertising agency. This is a **rewrite/replacement** of `advertise-agency-site` with a cleaner architecture using Vite instead of Next.js. Fully static — no backend or CMS integration.
 
+Built as a **white-label kit**: swap the `data/` folder and `theme.json` to produce a fully branded site for a new client with zero component code changes. See `data/README.md` for the new-client setup guide.
+
 ## Tech Stack
 
 | Layer       | Technology                              |
@@ -22,8 +24,9 @@ Landing page for **РА "Рекламастер"** — a full-cycle advertising 
 - **Accent color:** `#7C3AED` (violet) — gradients, highlights
 - **Heading font:** Plus Jakarta Sans (300–800)
 - **Body font:** Inter (300–600)
-- **CSS variables** defined in `src/index.css` under `@layer base :root`
-- **Tailwind utilities** mapped via `@theme inline` — all `bg-primary`, `text-primary-foreground` etc. resolve through CSS vars
+- **CSS variables** injected at build time by `src/plugins/themePlugin.ts` from `data/theme.json` — not hardcoded in `index.css`
+- **Tailwind utilities** mapped via `@theme inline` in `index.css` — all `bg-primary`, `text-primary-foreground` etc. resolve through CSS vars
+- **Google Fonts** `<link>` tags also injected by `themePlugin` from `theme.fontUrls`
 
 ## Project Structure
 
@@ -33,7 +36,8 @@ advertise-agency-landing-core/
 │   └── tasks/
 │       ├── 001_create_landing_structure.md   # Full build plan
 │       └── 002_improve_site.md               # White-label reusability plan
-├── data/                    # JSON data — gitignored (except _schema/)
+├── data/                    # JSON data — gitignored (except _schema/ and README.md)
+│   ├── README.md            # New-client setup guide: what each JSON file does, how to configure
 │   ├── _schema/             # Schema examples — git-tracked
 │   │   ├── about-values.example.json
 │   │   ├── advantages.example.json
@@ -126,7 +130,7 @@ advertise-agency-landing-core/
 │   │   ├── PortfolioCasePage.tsx  # Orchestrator: page header + Case* components + inline challenge section + TestimonialCard
 │   │   ├── PrivacyPolicy.tsx      # /privacy-policy — reads legalData (company, documents.privacyPolicy.{version,effectiveDate})
 │   │   ├── Consent.tsx            # /consent — reads legalData (company, documents.consent.{version,effectiveDate})
-│   │   └── UserAgrrement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate}); note: typo in filename
+│   │   └── UserAgreement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate})
 │   ├── components/
 │   │   ├── portfolio/
 │   │   │   ├── CaseHero.tsx       # Gradient hero: badge, h1, description; props: gradient, category, title, description
@@ -173,7 +177,7 @@ advertise-agency-landing-core/
 /                    → App.tsx (full landing page)
 /portfolio/:slug     → PortfolioCasePage.tsx (SSG per JSON file in data/portfolio/)
 /privacy-policy      → PrivacyPolicy.tsx (static legal page)
-/user-agreement      → UserAgrrement.tsx (static legal page; note: typo in filename)
+/user-agreement      → UserAgreement.tsx (static legal page)
 /consent             → Consent.tsx (cookie consent policy page)
 ```
 
@@ -198,7 +202,7 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 - **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/lib/advantages.ts`; used by `Advantages.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
 - **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
 - **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/lib/testimonials.ts`; used by `Testimonials.tsx` and `PortfolioCasePage.tsx` (looked up by `id` via `testimonialId` on a portfolio case).
-- **`data/legal.json`** — company legal details: `company.{ name, inn, ogrn, legalAddress, siteUrl, email, phone, responsible }` and `documents.{ privacyPolicy, consent, userAgreement }` each with `{ version, effectiveDate }`. Exposed via `src/lib/legalData.ts`; used by `PrivacyPolicy.tsx`, `Consent.tsx`, `UserAgrrement.tsx`. Gitignored — schema in `data/_schema/legal.example.json`.
+- **`data/legal.json`** — company legal details: `company.{ name, inn, ogrn, legalAddress, siteUrl, email, phone, responsible }` and `documents.{ privacyPolicy, consent, userAgreement }` each with `{ version, effectiveDate }`. Exposed via `src/lib/legalData.ts`; used by `PrivacyPolicy.tsx`, `Consent.tsx`, `UserAgreement.tsx`. Gitignored — schema in `data/_schema/legal.example.json`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.
 - Components **never** import from `@data/` directly — always go through a `src/lib/` module.
