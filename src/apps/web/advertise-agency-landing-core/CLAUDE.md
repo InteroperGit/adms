@@ -110,7 +110,8 @@ advertise-agency-landing-core/
 │   │       ├── StarRating.tsx         # Shared star row; props: rating, size? (default 16), className? (wrapper), starClassName? (per-star, default fill-primary)
 │   │       ├── TestimonialCard.tsx    # Shared blockquote card (stars + quote + avatar/name); props: testimonial, showQuoteIcon?, starSize?, starClassName?, className?
 │   │       ├── SocialLinks.tsx        # Telegram + VK icon buttons; props: telegram, vk, variant ('light'|'dark'), className?; co-locates VkIcon SVG component
-│   │       ├── PortfolioCard.tsx      # Full portfolio card (thumbnail + dark hover overlay + tags + details link); prop: item (PortfolioCase & { href }); reads detailsLabel from content
+│   │       ├── PortfolioCard.tsx      # Full portfolio card (PortfolioThumbnail + tags + details link); prop: item (PortfolioCase & { href }); reads detailsLabel from content
+│   │       ├── PortfolioThumbnail.tsx # Card thumbnail area: gradient/image bg + dot pattern fallback + dark hover overlay + category badge; props: href, image?, title, category, gradient
 │   │       ├── TestimonialStrip.tsx   # Desktop-only 5-col thumbnail grid; props: active (index), onSelect (callback); reads testimonials directly
 │   │       ├── ScrollToTop.tsx        # Fixed bottom-right button, appears after threshold scroll, scrolls to nav
 │   │       ├── badge.tsx
