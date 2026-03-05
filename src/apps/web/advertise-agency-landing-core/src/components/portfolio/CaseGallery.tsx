@@ -2,9 +2,10 @@
 import { Container } from '@/components/layout/Container';
 import { content } from '@/types/content';
 import { cn } from '@/lib/utils';
+import type { GalleryImage } from '@/types/portfolio';
 
 interface CaseGalleryProps {
-  gallery: string[];
+  gallery: GalleryImage[];
   caseTitle: string;
 }
 
@@ -17,7 +18,7 @@ export function CaseGallery({ gallery, caseTitle }: CaseGalleryProps) {
         <div className="mx-auto max-w-4xl">
           <h2 className="mb-10 text-2xl font-bold md:text-3xl">{galleryTitle}</h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
-            {gallery.map((src, i) => (
+            {gallery.map(({ src }, i) => (
               <div
                 key={src}
                 className={cn(

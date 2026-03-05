@@ -1,3 +1,8 @@
+export interface GalleryImage {
+  src: string;
+  description?: string;
+}
+
 export interface PortfolioCase {
   slug: string;
   title: string;
@@ -11,5 +16,5 @@ export interface PortfolioCase {
   solution: Array<{ title: string; description: string }>;
   results: Array<{ metric: string; label: string; description: string }>;
   testimonialId?: number;
-  images?: { preview?: string; og?: string; gallery?: string[] };
+  images?: { preview?: string; og?: string; gallery?: GalleryImage[] };
 }
