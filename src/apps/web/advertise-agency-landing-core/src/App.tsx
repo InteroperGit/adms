@@ -4,7 +4,7 @@ import { Carousel } from '@/components/sections/carousel';
 import { Hero } from '@/components/sections/hero';
 import { About } from '@/components/sections/about';
 import { Services } from '@/components/sections/Services';
-import { Portfolio } from '@/components/sections/Portfolio';
+import { Portfolio } from '@/components/sections/portfolio';
 import { Advantages } from '@/components/sections/Advantages';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { CallToAction } from '@/components/sections/CallToAction';

@@ -85,7 +85,9 @@ advertise-agency-landing-core/
 │   │   │   │   ├── index.tsx          # Thin orchestrator: label + h2 + text + values list + AboutCard; imported as '@/components/sections/about'
 │   │   │   │   └── AboutCard.tsx      # Right-side info card: logo letter + company name + tagline + stats grid + NPS badge; props: card: Content['about']['card']
 │   │   │   ├── Services.tsx           # 6-card grid, ICON_MAP from iconMap.ts resolves icon strings (services)
-│   │   │   ├── Portfolio.tsx          # Category filter + project cards (portfolioCaseMap)
+│   │   │   ├── portfolio/
+│   │   │   │   ├── index.tsx          # Thin orchestrator: SectionHeader + PortfolioFilter + card grid + CTA; imported as '@/components/sections/portfolio'
+│   │   │   │   └── PortfolioFilter.tsx # Category filter buttons with active state; props: categories, active, onChange
 │   │   │   ├── Advantages.tsx         # Dark bg, 6 glassmorphism cards, ICON_MAP from iconMap.ts (advantages)
 │   │   │   ├── CallToAction.tsx       # Mid-page CTA banner
 │   │   │   ├── Testimonials.tsx       # Carousel + desktop thumbnail strip (testimonials)
@@ -103,7 +105,7 @@ advertise-agency-landing-core/
 │   │   │       ├── FooterBrand.tsx    # Logo, description, SocialLinks (dark variant)
 │   │   │       ├── FooterNav.tsx      # Nav links column (from content.nav)
 │   │   │       ├── FooterServices.tsx # First 4 service titles linking to #services
-│   │   │       ├── FooterContact.tsx  # Phone, email, address with lucide icons
+│   │   │       ├── FooterContact.tsx  # Phone, email, address via ICON_MAP + items.map()
 │   │   │       └── FooterBottom.tsx   # Copyright + legal links nav + tagline
 │   │   └── ui/                        # shadcn/ui primitives — DO NOT edit manually
 │   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
@@ -130,7 +132,7 @@ advertise-agency-landing-core/
 │   │   ├── aboutValues.ts      # aboutValues: AboutValue[] — loaded from data/about-values.json
 │   │   ├── advantages.ts       # advantages: Advantage[] — loaded from data/advantages.json; exports Advantage type
 │   │   ├── carousel.ts         # carouselSlides: CarouselSlide[] — loaded from data/carousel.json; exports CarouselSlide type
-│   │   ├── iconMap.ts          # ICON_MAP: Record<string, LucideIcon> — shared icon registry; resolveIcon() helper
+│   │   ├── iconMap.ts          # ICON_MAP: Record<string, IconComponent> — shared icon registry; resolveIcon() helper; exports IconComponent abstract type (ComponentType<{size?,className?}>)
 │   │   ├── legalData.ts        # legalData: LegalData — loaded from data/legal.json; used by legal pages
 │   │   ├── portfolioCases.ts   # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
 │   │   ├── services.ts         # services: Service[] — loaded from data/services.json; exports Service type
@@ -212,8 +214,8 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 - **`data/site.json`** — global site config (phone, email, address, social links, hours). Exposed via `src/lib/siteData.ts`; used by `About.tsx`, `Header.tsx`, `contact/ContactInfo.tsx`, `contact/ContactHours.tsx`, `footer/FooterBrand.tsx`, `footer/FooterContact.tsx`, `footer/FooterBottom.tsx`.
 - **`data/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/lib/aboutValues.ts`; used by `About.tsx`.
 - **`data/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Gradients use Tailwind `50/100` shades (near-white). Exposed via `src/lib/carousel.ts`; used by `Carousel.tsx`. No dark overlay — text uses `text-foreground`/`text-muted-foreground`.
-- **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/lib/advantages.ts`; used by `Advantages.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
-- **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved to a `LucideIcon` via `ICON_MAP` from `src/lib/iconMap.ts`.
+- **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/lib/advantages.ts`; used by `Advantages.tsx`. The `icon` field is a string key resolved to an `IconComponent` via `ICON_MAP` from `src/lib/iconMap.ts`.
+- **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved to an `IconComponent` via `ICON_MAP` from `src/lib/iconMap.ts`.
 - **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/lib/testimonials.ts`; used by `Testimonials.tsx` and `PortfolioCasePage.tsx` (looked up by `id` via `testimonialId` on a portfolio case).
 - **`data/legal.json`** — company legal details: `company.{ name, inn, ogrn, legalAddress, siteUrl, email, phone, responsible }` and `documents.{ privacyPolicy, consent, userAgreement }` each with `{ version, effectiveDate }`. Exposed via `src/lib/legalData.ts`; used by `PrivacyPolicy.tsx`, `Consent.tsx`, `UserAgreement.tsx`. Gitignored — schema in `data/_schema/legal.example.json`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
@@ -241,7 +243,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 - **Components**: PascalCase files, one component per file
 - **Static content**: editable content in `data/*.json` exposed through `src/lib/` modules — components always import from `@/lib/`, never from `@data/` directly
-- **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `LucideIcon` via the shared `ICON_MAP` in `src/lib/iconMap.ts`; import `ICON_MAP` or `resolveIcon()` from there — do not create local icon maps in components
+- **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `IconComponent` via the shared `ICON_MAP` in `src/lib/iconMap.ts`; import `ICON_MAP`, `resolveIcon()`, or `IconComponent` type from there — do not import from `lucide-react` directly in components, do not create local icon maps
 - **Tailwind**: use `cn()` from `@/lib/utils` for conditional class merging
 - **Sections**: self-contained in `src/components/sections/`, import Container for layout
 - **Path aliases**: `@/` → `src/`, `@data` → `data/` (root-level)
