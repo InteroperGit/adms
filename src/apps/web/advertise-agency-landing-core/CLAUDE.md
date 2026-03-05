@@ -99,8 +99,10 @@ advertise-agency-landing-core/
 │   │   │   │   ├── index.tsx          # bg-primary banner: dot pattern + blurs + heading + CtaButtons; imported as '@/components/sections/call-to-action'
 │   │   │   │   └── CtaButtons.tsx     # Primary + outline button pair; props: cta: [CtaLink, CtaLink]
 │   │   │   ├── testimonials/
-│   │   │   │   ├── index.tsx          # Thin orchestrator: SectionHeader + TestimonialCard + TestimonialNav + TestimonialStrip; imported as '@/components/sections/testimonials'
-│   │   │   │   └── TestimonialNav.tsx # Dot indicators + prev/next arrows; props: active, onPrev, onNext, onDot
+│   │   │   │   ├── index.tsx              # Orchestrator: SectionHeader + YandexReviews (if yandexMapsOrgId set) or TestimonialsEmpty; imported as '@/components/sections/testimonials'
+│   │   │   │   ├── YandexReviews.tsx      # Yandex Maps reviews iframe widget; props: orgId; wrapped in mx-auto max-w-3xl overflow-hidden rounded-2xl sm:shadow-xl
+│   │   │   │   ├── TestimonialsEmpty.tsx  # Fallback banner (MessageSquareOff icon + hint) shown when yandexMapsOrgId is absent/empty
+│   │   │   │   └── TestimonialNav.tsx     # Dot indicators + prev/next arrows; props: active, onPrev, onNext, onDot
 │   │   │   ├── contact/
 │   │   │   │   ├── index.tsx              # Thin orchestrator: SectionHeader + ContactForm + ContactInfo + ContactHours; imported as '@/components/sections/contact'
 │   │   │   │   ├── ContactForm.tsx        # Form state + submit; renders ContactFormFields + ContactConsent + button; shows ContactSuccess on success
@@ -118,15 +120,21 @@ advertise-agency-landing-core/
 │   │   │       ├── FooterContact.tsx  # Phone, email, address via ICON_MAP + items.map()
 │   │   │       └── FooterBottom.tsx   # Copyright + legal links nav + tagline
 │   │   └── ui/                        # shadcn/ui primitives — DO NOT edit manually
+│   │       ├── imageGallery/          # Reusable gallery component — no portfolio-specific logic; labels passed as props
+│   │       │   ├── index.tsx          # ImageGallery orchestrator: activeIndex state, keyboard + swipe nav, lightboxOpen state; exports ImageGalleryItem, ImageGalleryProps
+│   │       │   ├── ImageGalleryPreview.tsx    # Main image: desktop hover overlay (line-clamp-3), mobile description below; click opens lightbox
+│   │       │   ├── ImageGalleryThumbnails.tsx # Horizontal snap-scroll strip; ring-2 ring-primary on active; scrollIntoView on change
+│   │       │   ├── ImageGalleryNav.tsx        # Prev/next buttons + {current}/{total} counter; desktop only (hidden sm:flex)
+│   │       │   └── ImageGalleryLightbox.tsx   # Fixed bg-black/90 modal: overlay nav buttons (hidden sm:flex), swipe on mobile, thumbnail strip, ESC/click-outside to close, body scroll lock
 │   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
 │   │       ├── SectionHeader.tsx      # Shared label badge + h2 + description block; props: label, title, description?, titleHighlight?, variant ('light'|'dark'), className
 │   │       ├── StarRating.tsx         # Shared star row; props: rating, size? (default 16), className? (wrapper), starClassName? (per-star, default fill-primary)
 │   │       ├── TestimonialCard.tsx    # Shared blockquote card (stars + quote + avatar/name); props: testimonial, showQuoteIcon?, starSize?, starClassName?, className?
-│   │       ├── SocialLinks.tsx        # Telegram + VK icon buttons; props: telegram, vk, variant ('light'|'dark'), className?; co-locates VkIcon SVG component
+│   │       ├── SocialLinks.tsx        # Telegram + VK icon buttons; props: telegram, vk, variant ('light'|'dark'), className?; brand hover colors: Telegram #2AABEE, VK #0077FF
 │   │       ├── PortfolioCard.tsx      # Full portfolio card (PortfolioThumbnail + tags + details link); prop: item (PortfolioCase & { href }); reads detailsLabel from content
 │   │       ├── PortfolioThumbnail.tsx # Card thumbnail area: gradient/image bg + dot pattern fallback + dark hover overlay + category badge; props: href, image?, title, category, gradient
 │   │       ├── TestimonialStrip.tsx   # Desktop-only 5-col thumbnail grid; props: active (index), onSelect (callback); reads testimonials directly
-│   │       ├── ScrollToTop.tsx        # Fixed bottom-right button, appears after threshold scroll, scrolls to nav
+│   │       ├── ScrollToTop.tsx        # Fixed bottom-right button; visible after threshold scroll OR immediately if page already scrolled past threshold on mount; scrolls to top via window.scrollTo
 │   │       ├── badge.tsx
 │   │       ├── button.tsx
 │   │       ├── card.tsx
@@ -152,7 +160,7 @@ advertise-agency-landing-core/
 │   ├── plugins/
 │   │   └── themePlugin.ts     # Vite plugin: reads data/theme.json, injects CSS vars + Google Fonts into index.html
 │   ├── pages/
-│   │   ├── PortfolioCasePage.tsx  # Orchestrator: page header + Case* components + inline challenge section + TestimonialCard
+│   │   ├── PortfolioCasePage.tsx  # Orchestrator: page header + Case* components + inline challenge section + TestimonialCard + ScrollToTop
 │   │   ├── PrivacyPolicy.tsx      # /privacy-policy — reads legalData (company, documents.privacyPolicy.{version,effectiveDate})
 │   │   ├── Consent.tsx            # /consent — reads legalData (company, documents.consent.{version,effectiveDate})
 │   │   └── UserAgreement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate})
@@ -162,11 +170,11 @@ advertise-agency-landing-core/
 │   │   │   ├── CaseOverview.tsx   # 4-col grid (client/category/year/services); reads labels from content
 │   │   │   ├── CaseSolution.tsx   # 3-col solution cards with gradient accent bar; props: solution[], gradient
 │   │   │   ├── CaseResults.tsx    # 3 gradient metric cards; props: results[], gradient
-│   │   │   ├── CaseGallery.tsx    # Responsive image grid (first spans 2 cols if ≥3 images); props: gallery[], caseTitle
+│   │   │   ├── CaseGallery.tsx    # Thin wrapper around ImageGallery; reads labels from content.portfolioCase + content.imageGallery; props: gallery: GalleryImage[], caseTitle
 │   │   │   └── CaseCTA.tsx        # Bottom CTA block; reads content.portfolioCase.cta
 │   ├── types/
 │   │   ├── index.ts           # NavLink interface
-│   │   ├── portfolio.ts       # PortfolioCase interface
+│   │   ├── portfolio.ts       # PortfolioCase interface + GalleryImage interface { src, description? }; gallery field is GalleryImage[] (was string[])
 │   │   ├── iconMap.ts         # ICON_MAP, resolveIcon(), IconComponent — shared icon registry (lucide-react)
 │   │   ├── portfolioCases.ts  # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
 │   │   ├── aboutValues.ts     # AboutValue interface + aboutValues const (from data/about-values.json)
@@ -229,14 +237,14 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 
 ## Data Architecture
 
-- **`data/content.json`** — all UI copy (nav labels, hero text, section headings, form labels, footer, cookies, portfolio case labels). Exposed via `src/types/content.ts`; used by all section components, `PortfolioCasePage`, `CookieBanner`, and `useActiveSection`. Supports template tokens (`{name}`, `{year}`, `{description}`) replaced at render time.
+- **`data/content.json`** — all UI copy (nav labels, hero text, section headings, form labels, footer, cookies, portfolio case labels, `imageGallery` UI labels). Exposed via `src/types/content.ts`; used by all section components, `PortfolioCasePage`, `CookieBanner`, and `useActiveSection`. Supports template tokens (`{name}`, `{year}`, `{description}`) replaced at render time.
 - **`data/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`.
-- **`data/site.json`** — global site config (phone, email, address, social links, hours). Exposed via `src/types/siteData.ts`; used by `header/`, `contact/ContactInfo.tsx`, `contact/ContactHours.tsx`, `footer/`.
+- **`data/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo). Exposed via `src/types/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
 - **`data/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/aboutValues.ts`; used by `about/`.
 - **`data/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Exposed via `src/types/carousel.ts`; used by `carousel/`.
 - **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/types/advantages.ts`; used by `advantages/`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/iconMap.ts`.
 - **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/iconMap.ts`.
-- **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/types/testimonials.ts`; used by `testimonials/` and `PortfolioCasePage.tsx`.
+- **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/types/testimonials.ts`; used by `PortfolioCasePage.tsx` (TestimonialCard). The Testimonials section now uses the Yandex widget instead of this data directly.
 - **`data/legal.json`** — company legal details. Exposed via `src/types/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.json`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.

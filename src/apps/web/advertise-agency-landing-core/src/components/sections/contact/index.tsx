@@ -17,7 +17,7 @@ export function Contact() {
           className="mb-14"
         />
 
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-end lg:gap-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
           <ContactForm />
 
           <div className="flex flex-col justify-center gap-8">

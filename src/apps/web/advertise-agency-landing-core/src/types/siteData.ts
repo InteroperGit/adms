@@ -4,6 +4,7 @@ export interface SiteData {
   name: string;
   description: string;
   yandexMapsOrgId?: string;
+  yandexMapUrl?: string;
   contact: {
     phone: string;
     email: string;
