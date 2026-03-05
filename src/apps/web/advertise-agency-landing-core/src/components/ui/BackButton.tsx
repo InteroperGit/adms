@@ -13,7 +13,7 @@ export function BackButton({ label = 'Вернуться назад', className 
   return (
     <button
       onClick={() => navigate(-1)}
-      className={`inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-900 ${className ?? ''}`}
+      className={`fixed top-4 right-4 z-50 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm text-gray-500 shadow-md backdrop-blur-sm transition-colors hover:text-gray-900 ${className ?? ''}`}
     >
       <ArrowLeft size={16} />
       {label}

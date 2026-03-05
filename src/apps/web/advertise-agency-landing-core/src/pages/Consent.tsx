@@ -1,30 +1,33 @@
 // src/pages/Consent.tsx
 import { Link } from 'react-router-dom';
+import { legalData } from '@/lib/legalData';
 import { BackButton } from '@/components/ui/BackButton.tsx';
 import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
 
 export default function Consent() {
+  const { company, documents } = legalData;
+  const { version, effectiveDate } = documents.consent;
+
   return (
     <main className="max-w-3xl mx-auto px-4 py-12 text-gray-800">
-      <BackButton className="mb-8" />
+      <BackButton />
 
       <h1 className="text-3xl font-bold mb-2">Согласие на обработку персональных данных</h1>
-      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: 04 марта 2026 г.</p>
+      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: {effectiveDate}</p>
 
       <Section title="1. Кто даёт согласие">
         <p>
           Настоящее согласие предоставляется физическим лицом (далее — Субъект персональных данных)
           путём проставления отметки в соответствующем поле формы на сайте{' '}
-          <strong>[УКАЖИТЕ АДРЕС САЙТА]</strong>.
+          <strong>{company.siteUrl}</strong>.
         </p>
       </Section>
 
       <Section title="2. Кому даётся согласие">
         <p>
-          Согласие предоставляется оператору персональных данных —{' '}
-          <strong>[УКАЖИТЕ НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ / ИП]</strong>, зарегистрированному по адресу:{' '}
-          <strong>[УКАЖИТЕ ЮРИДИЧЕСКИЙ АДРЕС]</strong>, ИНН <strong>[УКАЖИТЕ ИНН]</strong>, ОГРН{' '}
-          <strong>[УКАЖИТЕ ОГРН]</strong> (далее — Оператор).
+          Согласие предоставляется оператору персональных данных — <strong>{company.name}</strong>,
+          зарегистрированному по адресу: <strong>{company.legalAddress}</strong>, ИНН{' '}
+          <strong>{company.inn}</strong>, ОГРН <strong>{company.ogrn}</strong> (далее — Оператор).
         </p>
       </Section>
 
@@ -78,7 +81,7 @@ export default function Consent() {
       <Section title="7. Порядок отзыва согласия">
         <p>
           7.1. Субъект вправе отозвать настоящее согласие в любое время, направив письменный запрос
-          на электронную почту Оператора: <strong>[УКАЖИТЕ EMAIL]</strong>.
+          на электронную почту Оператора: <strong>{company.email}</strong>.
         </p>
         <p>7.2. Запрос должен содержать:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
@@ -139,15 +142,17 @@ export default function Consent() {
 
       <Section title="10. Контактная информация оператора">
         <dl className="space-y-1">
-          {[
-            ['Наименование', '[УКАЖИТЕ НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ / ИП]'],
-            ['Юридический адрес', '[УКАЖИТЕ ЮРИДИЧЕСКИЙ АДРЕС]'],
-            ['ИНН', '[УКАЖИТЕ ИНН]'],
-            ['ОГРН', '[УКАЖИТЕ ОГРН]'],
-            ['Email', '[УКАЖИТЕ EMAIL]'],
-            ['Телефон', '[УКАЖИТЕ ТЕЛЕФОН]'],
-            ['Ответственный', '[УКАЖИТЕ ФИО И ДОЛЖНОСТЬ]'],
-          ].map(([label, value]) => (
+          {(
+            [
+              ['Наименование', company.name],
+              ['Юридический адрес', company.legalAddress],
+              ['ИНН', company.inn],
+              ['ОГРН', company.ogrn],
+              ['Email', company.email],
+              ['Телефон', company.phone],
+              ['Ответственный', company.responsible],
+            ] as [string, string][]
+          ).map(([label, value]) => (
             <div key={label} className="flex gap-2">
               <dt className="font-semibold min-w-[160px]">{label}:</dt>
               <dd>{value}</dd>
@@ -157,7 +162,7 @@ export default function Consent() {
       </Section>
 
       <p className="text-sm text-gray-500 mt-10 pt-6 border-t border-gray-200">
-        Дата последнего обновления: 04 марта 2026 г.
+        Версия {version} · Дата последнего обновления: {effectiveDate}
       </p>
 
       <ScrollToTop />

@@ -1,22 +1,25 @@
 // src/pages/UserAgreement.tsx
 import { Link } from 'react-router-dom';
+import { legalData } from '@/lib/legalData';
 import { BackButton } from '@/components/ui/BackButton.tsx';
 import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
 
 export default function UserAgreement() {
+  const { company, documents } = legalData;
+  const { version, effectiveDate } = documents.userAgreement;
+
   return (
     <main className="max-w-3xl mx-auto px-4 py-12 text-gray-800">
-      <BackButton className="mb-8" />
+      <BackButton />
 
       <h1 className="text-3xl font-bold mb-2">Пользовательское соглашение</h1>
-      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: 04 марта 2026 г.</p>
+      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: {effectiveDate}</p>
 
       <Section title="1. Общие положения">
         <p>
           1.1. Настоящее Пользовательское соглашение (далее — Соглашение) регулирует отношения между{' '}
-          <strong>[УКАЖИТЕ НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ / ИП]</strong> (далее — Агентство) и физическим
-          лицом (далее — Пользователь), использующим сайт <strong>[УКАЖИТЕ АДРЕС САЙТА]</strong>{' '}
-          (далее — Сайт).
+          <strong>{company.name}</strong> (далее — Агентство) и физическим лицом (далее —
+          Пользователь), использующим сайт <strong>{company.siteUrl}</strong> (далее — Сайт).
         </p>
         <p>
           1.2. Использование Сайта означает безоговорочное принятие всех условий настоящего
@@ -139,12 +142,14 @@ export default function UserAgreement() {
 
       <Section title="9. Контактная информация">
         <dl className="space-y-1">
-          {[
-            ['Наименование', '[УКАЖИТЕ НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ / ИП]'],
-            ['Юридический адрес', '[УКАЖИТЕ ЮРИДИЧЕСКИЙ АДРЕС]'],
-            ['Email', '[УКАЖИТЕ EMAIL]'],
-            ['Телефон', '[УКАЖИТЕ ТЕЛЕФОН]'],
-          ].map(([label, value]) => (
+          {(
+            [
+              ['Наименование', company.name],
+              ['Юридический адрес', company.legalAddress],
+              ['Email', company.email],
+              ['Телефон', company.phone],
+            ] as [string, string][]
+          ).map(([label, value]) => (
             <div key={label} className="flex gap-2">
               <dt className="font-semibold min-w-[160px]">{label}:</dt>
               <dd>{value}</dd>
@@ -154,7 +159,7 @@ export default function UserAgreement() {
       </Section>
 
       <p className="text-sm text-gray-500 mt-10 pt-6 border-t border-gray-200">
-        Дата последнего обновления: 04 марта 2026 г.
+        Версия {version} · Дата последнего обновления: {effectiveDate}
       </p>
 
       <ScrollToTop />

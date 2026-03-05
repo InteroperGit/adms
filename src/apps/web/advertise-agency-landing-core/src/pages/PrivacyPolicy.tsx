@@ -1,27 +1,30 @@
 // src/pages/PrivacyPolicy.tsx
 
+import { legalData } from '@/lib/legalData';
 import { BackButton } from '@/components/ui/BackButton.tsx';
 import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
 
 export default function PrivacyPolicy() {
+  const { company, documents } = legalData;
+  const { version, effectiveDate } = documents.privacyPolicy;
+
   return (
     <main className="max-w-3xl mx-auto px-4 py-12 text-gray-800">
-      <BackButton className="mb-8" />
+      <BackButton />
 
       <h1 className="text-3xl font-bold mb-2">Политика конфиденциальности</h1>
-      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: 04 марта 2026 г.</p>
+      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: {effectiveDate}</p>
 
       <Section title="1. Общие положения">
         <p>
           1.1. Настоящая Политика конфиденциальности (далее — Политика) разработана в соответствии с
           Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» и определяет порядок
-          обработки персональных данных пользователей сайта <strong>[УКАЖИТЕ АДРЕС САЙТА]</strong>.
+          обработки персональных данных пользователей сайта <strong>{company.siteUrl}</strong>.
         </p>
         <p>
-          1.2. Оператором персональных данных является:{' '}
-          <strong>[УКАЖИТЕ НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ / ИП]</strong>, зарегистрированный по адресу:{' '}
-          <strong>[УКАЖИТЕ ЮРИДИЧЕСКИЙ АДРЕС]</strong>, ИНН <strong>[УКАЖИТЕ ИНН]</strong>, ОГРН{' '}
-          <strong>[УКАЖИТЕ ОГРН]</strong>.
+          1.2. Оператором персональных данных является: <strong>{company.name}</strong>,
+          зарегистрированный по адресу: <strong>{company.legalAddress}</strong>, ИНН{' '}
+          <strong>{company.inn}</strong>, ОГРН <strong>{company.ogrn}</strong>.
         </p>
         <p>
           1.3. Используя формы обратной связи на сайте, Пользователь подтверждает своё согласие на
@@ -114,7 +117,7 @@ export default function PrivacyPolicy() {
         </p>
         <p>
           6.2. Пользователь вправе в любой момент отозвать согласие, направив запрос на:{' '}
-          <strong>[УКАЖИТЕ EMAIL]</strong>.
+          <strong>{company.email}</strong>.
         </p>
       </Section>
 
@@ -167,7 +170,7 @@ export default function PrivacyPolicy() {
           <li>Получить возмещение ущерба в судебном порядке</li>
         </ul>
         <p className="mt-3">
-          10.2. Запросы направляются на <strong>[УКАЖИТЕ EMAIL]</strong>. Ответ — в течение{' '}
+          10.2. Запросы направляются на <strong>{company.email}</strong>. Ответ — в течение{' '}
           <strong>30 дней</strong>.
         </p>
       </Section>
@@ -182,22 +185,24 @@ export default function PrivacyPolicy() {
       <Section title="12. Изменение Политики">
         <p>
           Оператор вправе вносить изменения без предварительного уведомления. Новая редакция
-          вступает в силу с момента публикации на странице: <strong>[УКАЖИТЕ URL]</strong>.
+          вступает в силу с момента публикации на странице: <strong>{company.siteUrl}</strong>.
           Продолжение использования сайта означает принятие изменений.
         </p>
       </Section>
 
       <Section title="13. Контактная информация">
         <dl className="space-y-1">
-          {[
-            ['Наименование', '[УКАЖИТЕ НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ / ИП]'],
-            ['Юридический адрес', '[УКАЖИТЕ ЮРИДИЧЕСКИЙ АДРЕС]'],
-            ['ИНН', '[УКАЖИТЕ ИНН]'],
-            ['ОГРН', '[УКАЖИТЕ ОГРН]'],
-            ['Email', '[УКАЖИТЕ EMAIL]'],
-            ['Телефон', '[УКАЖИТЕ ТЕЛЕФОН]'],
-            ['Ответственный', '[УКАЖИТЕ ФИО И ДОЛЖНОСТЬ]'],
-          ].map(([label, value]) => (
+          {(
+            [
+              ['Наименование', company.name],
+              ['Юридический адрес', company.legalAddress],
+              ['ИНН', company.inn],
+              ['ОГРН', company.ogrn],
+              ['Email', company.email],
+              ['Телефон', company.phone],
+              ['Ответственный', company.responsible],
+            ] as [string, string][]
+          ).map(([label, value]) => (
             <div key={label} className="flex gap-2">
               <dt className="font-semibold min-w-[160px]">{label}:</dt>
               <dd>{value}</dd>
@@ -207,7 +212,7 @@ export default function PrivacyPolicy() {
       </Section>
 
       <p className="text-sm text-gray-500 mt-10 pt-6 border-t border-gray-200">
-        Дата последнего обновления: 04 марта 2026 г.
+        Версия {version} · Дата последнего обновления: {effectiveDate}
       </p>
 
       <ScrollToTop />
