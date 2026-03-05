@@ -1,13 +1,13 @@
 import './index.css';
-import { Header } from '@/components/sections/Header';
+import { Header } from '@/components/sections/header';
 import { Carousel } from '@/components/sections/carousel';
 import { Hero } from '@/components/sections/hero';
 import { About } from '@/components/sections/about';
-import { Services } from '@/components/sections/Services';
+import { Services } from '@/components/sections/services';
 import { Portfolio } from '@/components/sections/portfolio';
-import { Advantages } from '@/components/sections/Advantages';
-import { Testimonials } from '@/components/sections/Testimonials';
-import { CallToAction } from '@/components/sections/CallToAction';
+import { Advantages } from '@/components/sections/advantages';
+import { Testimonials } from '@/components/sections/testimonials';
+import { CallToAction } from '@/components/sections/call-to-action';
 import { Contact } from '@/components/sections/contact';
 import { Footer } from '@/components/sections/footer';
 import { CookieBanner } from './components/banners/CookieBanner';

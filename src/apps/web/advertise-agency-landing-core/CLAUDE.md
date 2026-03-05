@@ -66,7 +66,8 @@ advertise-agency-landing-core/
 │   ├── assets/              # Images, SVGs imported in components
 │   ├── components/
 │   │   ├── banners/
-│   │   │   └── CookieBanner.tsx       # Fixed bottom/bottom-left cookie consent dialog; saves 'all'|'necessary' to localStorage
+│   │   │   ├── CookieBanner.tsx       # Fixed bottom/bottom-left cookie consent dialog; saves 'all'|'necessary' to localStorage
+│   │   │   └── CookieActions.tsx      # Two consent buttons (accept all / necessary only); props: onAcceptAll, onNecessaryOnly
 │   │   ├── layout/
 │   │   │   └── Container.tsx          # Centered max-w-7xl wrapper, polymorphic `as` prop
 │   │   ├── sections/
@@ -74,9 +75,10 @@ advertise-agency-landing-core/
 │   │   │   │   ├── index.tsx          # Thin orchestrator: state + timer + CarouselSlide + CarouselControls; imported as '@/components/sections/carousel'
 │   │   │   │   ├── CarouselSlide.tsx  # Single slide renderer (gradient or image bg + label/title/subtitle); props: slide, isActive
 │   │   │   │   └── CarouselControls.tsx # Prev/next arrows + dot indicators + slide counter; props: total, current, onPrev, onNext, onDot
-│   │   │   ├── Header.tsx             # In-flow header, solid white bg, border-b, logo
-│   │   │   ├── HeaderDesktopNav.tsx   # Nav links + CTA (hidden on mobile); links show underline on hover
-│   │   │   ├── HeaderMobileNav.tsx    # Hamburger + dropdown (hidden on desktop)
+│   │   │   ├── header/
+│   │   │   │   ├── index.tsx          # In-flow header, solid white bg, border-b, logo; imported as '@/components/sections/header'
+│   │   │   │   ├── HeaderDesktopNav.tsx # Nav links + CTA (hidden on mobile); links show underline on hover; props: activeSection
+│   │   │   │   └── HeaderMobileNav.tsx  # Hamburger + dropdown (hidden on desktop); props: activeSection
 │   │   │   ├── hero/
 │   │   │   │   ├── index.tsx          # Thin orchestrator: badge + title + subtitle + HeroCTA + HeroStats; imported as '@/components/sections/hero'
 │   │   │   │   ├── HeroCTA.tsx        # Two CTA buttons (primary + outline); props: cta: { label, href }[]
@@ -84,13 +86,21 @@ advertise-agency-landing-core/
 │   │   │   ├── about/
 │   │   │   │   ├── index.tsx          # Thin orchestrator: label + h2 + text + values list + AboutCard; imported as '@/components/sections/about'
 │   │   │   │   └── AboutCard.tsx      # Right-side info card: logo letter + company name + tagline + stats grid + NPS badge; props: card: Content['about']['card']
-│   │   │   ├── Services.tsx           # 6-card grid, ICON_MAP from iconMap.ts resolves icon strings (services)
+│   │   │   ├── services/
+│   │   │   │   ├── index.tsx          # bg-muted section: SectionHeader + card grid; imported as '@/components/sections/services'
+│   │   │   │   └── ServiceCard.tsx    # shadcn Card with icon + title + description; props: service: Service
 │   │   │   ├── portfolio/
 │   │   │   │   ├── index.tsx          # Thin orchestrator: SectionHeader + PortfolioFilter + card grid + CTA; imported as '@/components/sections/portfolio'
 │   │   │   │   └── PortfolioFilter.tsx # Category filter buttons with active state; props: categories, active, onChange
-│   │   │   ├── Advantages.tsx         # Dark bg, 6 glassmorphism cards, ICON_MAP from iconMap.ts (advantages)
-│   │   │   ├── CallToAction.tsx       # Mid-page CTA banner
-│   │   │   ├── Testimonials.tsx       # Carousel + desktop thumbnail strip (testimonials)
+│   │   │   ├── advantages/
+│   │   │   │   ├── index.tsx          # Dark bg section: decorative circles + SectionHeader + card grid; imported as '@/components/sections/advantages'
+│   │   │   │   └── AdvantageCard.tsx  # Glassmorphism card: icon + number + title + description; props: item, index
+│   │   │   ├── call-to-action/
+│   │   │   │   ├── index.tsx          # bg-primary banner: dot pattern + blurs + heading + CtaButtons; imported as '@/components/sections/call-to-action'
+│   │   │   │   └── CtaButtons.tsx     # Primary + outline button pair; props: cta: [CtaLink, CtaLink]
+│   │   │   ├── testimonials/
+│   │   │   │   ├── index.tsx          # Thin orchestrator: SectionHeader + TestimonialCard + TestimonialNav + TestimonialStrip; imported as '@/components/sections/testimonials'
+│   │   │   │   └── TestimonialNav.tsx # Dot indicators + prev/next arrows; props: active, onPrev, onNext, onDot
 │   │   │   ├── contact/
 │   │   │   │   ├── index.tsx              # Thin orchestrator: SectionHeader + ContactForm + ContactInfo + ContactHours; imported as '@/components/sections/contact'
 │   │   │   │   ├── ContactForm.tsx        # Form state + submit; renders ContactFormFields + ContactConsent + button; shows ContactSuccess on success
