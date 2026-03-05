@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ImageGalleryPreview } from './ImageGalleryPreview';
 import { ImageGalleryThumbnails } from './ImageGalleryThumbnails';
 import { ImageGalleryNav } from './ImageGalleryNav';
+import { ImageGalleryLightbox } from './ImageGalleryLightbox';
 
 export interface ImageGalleryItem {
   src: string;
@@ -27,6 +28,9 @@ export function ImageGallery({
   className,
 }: ImageGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const touchStartX = useRef(0);
+  const didSwipe = useRef(false);
 
   const prev = () => setActiveIndex((i) => (i - 1 + images.length) % images.length);
   const next = () => setActiveIndex((i) => (i + 1) % images.length);
@@ -43,13 +47,44 @@ export function ImageGallery({
       }}
       className={cn('outline-none', className)}
     >
-      <ImageGalleryPreview
-        src={active.src}
-        alt={`${altPrefix} ${activeIndex + 1}`}
-        description={active.description}
-      />
+      <div
+        className="relative"
+        onTouchStart={(e) => {
+          touchStartX.current = e.touches[0].clientX;
+          didSwipe.current = false;
+        }}
+        onTouchEnd={(e) => {
+          const delta = touchStartX.current - e.changedTouches[0].clientX;
+          if (Math.abs(delta) > 50) {
+            didSwipe.current = true;
+            if (delta > 0) next(); else prev();
+          }
+        }}
+        onClick={() => {
+          if (!didSwipe.current) setLightboxOpen(true);
+        }}
+      >
+        <ImageGalleryPreview
+          src={active.src}
+          alt={`${altPrefix} ${activeIndex + 1}`}
+          description={active.description}
+        />
+      </div>
+      {lightboxOpen && (
+        <ImageGalleryLightbox
+          images={images}
+          activeIndex={activeIndex}
+          altPrefix={altPrefix}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={prev}
+          onNext={next}
+          onSelect={setActiveIndex}
+          prevLabel={prevLabel}
+          nextLabel={nextLabel}
+        />
+      )}
       {multi && (
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-4 hidden items-center justify-between sm:flex">
           <ImageGalleryNav
             current={activeIndex + 1}
             total={images.length}
