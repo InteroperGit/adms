@@ -95,7 +95,8 @@ advertise-agency-landing-core/
 │   │   │   │   ├── ContactFormFields.tsx  # Three input fields (name, contact, message); props: form, onChange; reads labels from content
 │   │   │   │   ├── ContactConsent.tsx     # Consent checkbox + legal links; props: checked, onChange; reads text from content
 │   │   │   │   ├── ContactSuccess.tsx     # Success panel (icon + title + text + reset button); prop: onReset
-│   │   │   │   ├── ContactInfo.tsx        # Phone/email/address list + SocialLinks
+│   │   │   │   ├── ContactInfo.tsx        # Three ContactItem instances + SocialLinks
+│   │   │   │   ├── ContactItem.tsx        # Single contact row: icon box + label + value (with optional link); props: icon, label, value, href?
 │   │   │   │   └── ContactHours.tsx       # Working hours card (weekdays/saturday/sunday from siteData)
 │   │   │   └── footer/
 │   │   │       ├── index.tsx          # Thin orchestrator: 4-col grid + Separator + FooterBottom; imported as '@/components/sections/footer'
