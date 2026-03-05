@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { content } from '@/lib/content';
+import { CookieActions } from './CookieActions';
 
 const STORAGE_KEY = 'cookie_consent';
 
@@ -46,20 +46,7 @@ export function CookieBanner() {
         .
       </p>
 
-      {/* Кнопки */}
-      <div className="flex flex-col gap-2 sm:flex-row">
-        <Button size="sm" className="w-full rounded-full" onClick={() => save('all')}>
-          {content.cookies.acceptAll}
-        </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          className="w-full rounded-full"
-          onClick={() => save('necessary')}
-        >
-          {content.cookies.necessaryOnly}
-        </Button>
-      </div>
+      <CookieActions onAcceptAll={() => save('all')} onNecessaryOnly={() => save('necessary')} />
     </div>
   );
 }
