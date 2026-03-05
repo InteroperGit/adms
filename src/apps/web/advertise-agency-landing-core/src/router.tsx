@@ -2,7 +2,7 @@ import type { RouteObject } from 'react-router-dom';
 import App from './App';
 import { PortfolioCasePage } from './pages/PortfolioCasePage';
 import PrivacyPolicy from '@/pages/PrivacyPolicy.tsx';
-import UserAgreement from '@/pages/UserAgrrement.tsx';
+import UserAgreement from '@/pages/UserAgreement.tsx';
 import Consent from '@/pages/Consent.tsx';
 
 const routes: RouteObject[] = [
