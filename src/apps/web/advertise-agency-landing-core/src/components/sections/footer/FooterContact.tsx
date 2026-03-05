@@ -1,10 +1,22 @@
 // src/components/sections/footer/FooterContact.tsx
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { ICON_MAP, type IconComponent } from '@/lib/iconMap';
 import { content } from '@/lib/content';
 import { siteData } from '@/lib/siteData';
 
+interface FooterContactItem {
+  icon: IconComponent;
+  value: string;
+  href?: string;
+}
+
 export function FooterContact() {
   const { phone, email, address } = siteData.contact;
+
+  const items: FooterContactItem[] = [
+    { icon: ICON_MAP.Phone, value: phone, href: `tel:${phone.replace(/\D/g, '')}` },
+    { icon: ICON_MAP.Mail, value: email, href: `mailto:${email}` },
+    { icon: ICON_MAP.MapPin, value: address },
+  ];
 
   return (
     <div>
@@ -12,28 +24,18 @@ export function FooterContact() {
         {content.footer.contactsTitle}
       </p>
       <ul className="space-y-4">
-        <li className="flex items-start gap-3">
-          <Phone size={15} className="mt-0.5 shrink-0 text-primary" />
-          <a
-            href={`tel:${phone.replace(/\D/g, '')}`}
-            className="text-sm text-white/60 transition-colors hover:text-primary"
-          >
-            {phone}
-          </a>
-        </li>
-        <li className="flex items-start gap-3">
-          <Mail size={15} className="mt-0.5 shrink-0 text-primary" />
-          <a
-            href={`mailto:${email}`}
-            className="text-sm text-white/60 transition-colors hover:text-primary"
-          >
-            {email}
-          </a>
-        </li>
-        <li className="flex items-start gap-3">
-          <MapPin size={15} className="mt-0.5 shrink-0 text-primary" />
-          <span className="text-sm text-white/60">{address}</span>
-        </li>
+        {items.map(({ icon: Icon, value, href }) => (
+          <li key={value} className="flex items-start gap-3">
+            <Icon size={15} className="mt-0.5 shrink-0 text-primary" />
+            {href ? (
+              <a href={href} className="text-sm text-white/60 transition-colors hover:text-primary">
+                {value}
+              </a>
+            ) : (
+              <span className="text-sm text-white/60">{value}</span>
+            )}
+          </li>
+        ))}
       </ul>
     </div>
   );
