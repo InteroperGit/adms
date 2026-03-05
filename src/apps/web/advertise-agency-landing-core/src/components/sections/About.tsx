@@ -1,9 +1,12 @@
 import { CheckCircle2 } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { aboutValues } from '@/lib/aboutValues';
+import { content } from '@/lib/content';
 import { siteData } from '@/lib/siteData';
 
 export function About() {
+  const { about } = content;
+
   return (
     <section id="about" className="bg-white py-24 md:py-32">
       <Container>
@@ -12,24 +15,22 @@ export function About() {
           <div>
             {/* Section label */}
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-              О нас
+              {about.label}
             </div>
 
             <h2 className="mb-6">
-              Больше 10 лет создаём рекламу, <span className="text-primary">которой доверяют</span>
+              {about.title}
+              <span className="text-primary">{about.titleHighlight}</span>
             </h2>
 
-            <p className="mb-6 text-base leading-relaxed text-muted-foreground">
-              {siteData.name} — рекламное агентство полного цикла из Москвы. Мы работаем с бизнесом
-              любого масштаба: от локальных брендов до федеральных сетей. Наша команда объединяет
-              стратегов, дизайнеров, копирайтеров и медиапланеров.
-            </p>
-
-            <p className="mb-10 text-base leading-relaxed text-muted-foreground">
-              За 10 лет работы мы реализовали более 500 проектов в сфере ритейла, недвижимости,
-              HoReCa, медицины и IT. Мы не продаём «рекламу ради рекламы» — мы строим системы
-              привлечения клиентов, которые работают долгосрочно.
-            </p>
+            {about.text.map((paragraph, i) => (
+              <p
+                key={i}
+                className={`${i === about.text.length - 1 ? 'mb-10' : 'mb-6'} text-base leading-relaxed text-muted-foreground`}
+              >
+                {paragraph.replace('{name}', siteData.name)}
+              </p>
+            ))}
 
             {/* Values */}
             <ul className="space-y-5">
@@ -55,20 +56,15 @@ export function About() {
               {/* Card header */}
               <div className="bg-primary px-6 py-8">
                 <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-2xl font-bold text-white">
-                  Р
+                  {content.logo.letter}
                 </div>
                 <p className="text-lg font-semibold text-white">{siteData.name}</p>
-                <p className="mt-1 text-sm text-white/70">Рекламное агентство полного цикла</p>
+                <p className="mt-1 text-sm text-white/70">{about.card.tagline}</p>
               </div>
 
               {/* Card body — mini stats */}
               <div className="divide-y divide-border">
-                {[
-                  { label: 'Год основания', value: '2014' },
-                  { label: 'Реализованных проектов', value: '500+' },
-                  { label: 'Постоянных клиентов', value: '120+' },
-                  { label: 'Специалистов в команде', value: '35' },
-                ].map((item) => (
+                {about.card.stats.map((item) => (
                   <div key={item.label} className="flex items-center justify-between px-6 py-4">
                     <span className="text-sm text-muted-foreground">{item.label}</span>
                     <span
@@ -84,12 +80,12 @@ export function About() {
 
             {/* Floating accent badge */}
             <div className="absolute bottom-0 right-0 rounded-xl border border-border bg-white px-4 py-3 shadow-lg sm:-bottom-4 sm:-right-4">
-              <p className="text-xs text-muted-foreground">Средний NPS</p>
+              <p className="text-xs text-muted-foreground">{about.card.nps.label}</p>
               <p
                 style={{ fontFamily: 'var(--font-heading)' }}
                 className="text-2xl font-bold text-primary"
               >
-                9.4
+                {about.card.nps.value}
               </p>
             </div>
           </div>

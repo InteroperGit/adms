@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { NAV_LINKS } from '@/lib/constants';
+import { content } from '@/lib/content';
 
-const SECTION_IDS = NAV_LINKS.map((l) => l.href.slice(1));
+const SECTION_IDS = content.nav.map((l) => l.href.slice(1));
 
 export function useActiveSection(): string {
   const [active, setActive] = useState('');

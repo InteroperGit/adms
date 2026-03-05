@@ -2,7 +2,7 @@ import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { Separator } from '@/components/ui/separator';
-import { NAV_LINKS } from '@/lib/constants';
+import { content } from '@/lib/content';
 import { services } from '@/lib/services';
 import { siteData } from '@/lib/siteData';
 
@@ -20,7 +20,7 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <a href="#" className="mb-4 inline-flex items-center gap-2">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-                Р
+                {content.logo.letter}
               </span>
               <span
                 style={{ fontFamily: 'var(--font-heading)' }}
@@ -30,8 +30,7 @@ export function Footer() {
               </span>
             </a>
             <p className="mb-6 text-sm leading-relaxed text-white/50">
-              {siteData.description}. Рекламное агентство полного цикла — стратегия, дизайн, digital
-              и наружная реклама.
+              {content.footer.description.replace('{description}', siteData.description)}
             </p>
             {/* Social */}
             <div className="flex gap-3">
@@ -67,10 +66,10 @@ export function Footer() {
           {/* Col 2 — navigation */}
           <div>
             <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-white/40">
-              Навигация
+              {content.footer.navTitle}
             </p>
             <ul className="space-y-3">
-              {NAV_LINKS.map((link) => (
+              {content.nav.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -86,7 +85,7 @@ export function Footer() {
           {/* Col 3 — services */}
           <div>
             <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-white/40">
-              Услуги
+              {content.footer.servicesTitle}
             </p>
             <ul className="space-y-3">
               {SERVICES_FOOTER.map((service) => (
@@ -105,7 +104,7 @@ export function Footer() {
           {/* Col 4 — contacts */}
           <div>
             <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-white/40">
-              Контакты
+              {content.footer.contactsTitle}
             </p>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
@@ -139,35 +138,27 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/35 sm:flex-row">
           <p>
-            © {year} {siteData.name}. Все права защищены.
+            {content.footer.copyright
+              .replace('{year}', String(year))
+              .replace('{name}', siteData.name)}
           </p>
 
           {/* Юридические ссылки */}
           <nav className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 sm:justify-start">
-            <Link
-              to="/privacy-policy"
-              className="transition-colors hover:text-white/70 whitespace-nowrap"
-            >
-              Политика конфиденциальности
-            </Link>
-
-            <span className="text-white/15 hidden sm:inline">|</span>
-
-            <Link to="/consent" className="transition-colors hover:text-white/70 whitespace-nowrap">
-              Согласие на обработку данных
-            </Link>
-
-            <span className="text-white/15 hidden sm:inline">|</span>
-
-            <Link
-              to="/user-agreement"
-              className="transition-colors hover:text-white/70 whitespace-nowrap"
-            >
-              Пользовательское соглашение
-            </Link>
+            {content.footer.legalLinks.map((link, i) => (
+              <span key={link.href}>
+                {i > 0 && <span className="text-white/15 hidden sm:inline">|</span>}
+                <Link
+                  to={link.href}
+                  className="transition-colors hover:text-white/70 whitespace-nowrap"
+                >
+                  {link.label}
+                </Link>
+              </span>
+            ))}
           </nav>
 
-          <p>Реклама, которая работает.</p>
+          <p>{content.footer.tagline}</p>
         </div>
       </Container>
     </footer>

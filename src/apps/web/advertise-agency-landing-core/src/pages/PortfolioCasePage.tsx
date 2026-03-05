@@ -4,6 +4,7 @@ import { ArrowLeft, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
+import { content } from '@/lib/content';
 import { testimonials } from '@/lib/testimonials';
 import { cn } from '@/lib/utils';
 import { portfolioCaseMap } from '@/lib/portfolioCases';
@@ -20,13 +21,15 @@ export function PortfolioCasePage() {
     }
   }, [data]);
 
+  const pc = content.portfolioCase;
+
   if (!data) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <h1 className="mb-4 text-2xl font-bold">Страница не найдена</h1>
+          <h1 className="mb-4 text-2xl font-bold">{pc.notFound.title}</h1>
           <a href="/#portfolio" className="text-primary hover:underline">
-            ← Вернуться к портфолио
+            {pc.notFound.back}
           </a>
         </div>
       </div>
@@ -44,14 +47,14 @@ export function PortfolioCasePage() {
         <Container>
           <div className="flex h-16 items-center justify-between">
             <a href="/" className="text-xl font-bold tracking-tight text-primary">
-              Рекламастер
+              {content.logo.text}
             </a>
             <a
               href="/#portfolio"
               className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               <ArrowLeft size={16} />
-              Назад к портфолио
+              {pc.backLabel}
             </a>
           </div>
         </Container>
@@ -75,10 +78,10 @@ export function PortfolioCasePage() {
         <Container>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {[
-              { label: 'Клиент', value: data.overview.client },
-              { label: 'Категория', value: data.category },
-              { label: 'Год', value: data.overview.year },
-              { label: 'Услуги', value: data.overview.services },
+              { label: pc.overviewLabels.client, value: data.overview.client },
+              { label: pc.overviewLabels.category, value: data.category },
+              { label: pc.overviewLabels.year, value: data.overview.year },
+              { label: pc.overviewLabels.services, value: data.overview.services },
             ].map(({ label, value }) => (
               <div key={label}>
                 <p className="mb-1 text-xs font-medium uppercase tracking-widest text-muted-foreground">
@@ -95,7 +98,7 @@ export function PortfolioCasePage() {
       <section className="py-16">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="mb-6 text-2xl font-bold md:text-3xl">Задача</h2>
+            <h2 className="mb-6 text-2xl font-bold md:text-3xl">{pc.challengeTitle}</h2>
             <p className="leading-relaxed text-muted-foreground">{data.challenge}</p>
           </div>
         </Container>
@@ -105,7 +108,7 @@ export function PortfolioCasePage() {
       <section className="bg-muted/40 py-16">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="mb-10 text-2xl font-bold md:text-3xl">Решение</h2>
+            <h2 className="mb-10 text-2xl font-bold md:text-3xl">{pc.solutionTitle}</h2>
             <div className="grid gap-4 sm:grid-cols-3 sm:gap-8">
               {data.solution.map(({ title, description }) => (
                 <div
@@ -128,7 +131,7 @@ export function PortfolioCasePage() {
       <section className="py-16">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="mb-10 text-2xl font-bold md:text-3xl">Результаты</h2>
+            <h2 className="mb-10 text-2xl font-bold md:text-3xl">{pc.resultsTitle}</h2>
             <div className="grid gap-4 sm:grid-cols-3 sm:gap-6">
               {data.results.map(({ metric, label, description }) => (
                 <div
@@ -152,7 +155,7 @@ export function PortfolioCasePage() {
         <section className="bg-muted/40 py-16">
           <Container>
             <div className="mx-auto max-w-4xl">
-              <h2 className="mb-10 text-2xl font-bold md:text-3xl">Галерея</h2>
+              <h2 className="mb-10 text-2xl font-bold md:text-3xl">{pc.galleryTitle}</h2>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 {data.images.gallery.map((src, i) => (
                   <div
@@ -164,7 +167,9 @@ export function PortfolioCasePage() {
                   >
                     <img
                       src={src}
-                      alt={`${data.title} — фото ${i + 1}`}
+                      alt={pc.photoAlt
+                        .replace('{title}', data.title)
+                        .replace('{index}', String(i + 1))}
                       className={cn(
                         'w-full object-cover',
                         data.images!.gallery!.length >= 3 && i === 0
@@ -218,12 +223,10 @@ export function PortfolioCasePage() {
       <section className="py-20">
         <Container>
           <div className="mx-auto max-w-xl text-center">
-            <h2 className="mb-4 text-2xl font-bold md:text-3xl">Готовы к похожему результату?</h2>
-            <p className="mb-8 text-muted-foreground">
-              Расскажите о вашем проекте — мы предложим стратегию и назовём стоимость.
-            </p>
+            <h2 className="mb-4 text-2xl font-bold md:text-3xl">{pc.cta.title}</h2>
+            <p className="mb-8 text-muted-foreground">{pc.cta.subtitle}</p>
             <Button asChild size="lg" className="rounded-full px-8">
-              <a href="/#contact">Обсудить ваш проект</a>
+              <a href="/#contact">{pc.cta.label}</a>
             </Button>
           </div>
         </Container>

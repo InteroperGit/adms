@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
+import { content } from '@/lib/content';
 import { testimonials } from '@/lib/testimonials';
 import { cn } from '@/lib/utils';
 
@@ -18,12 +19,10 @@ export function Testimonials() {
         {/* Header */}
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            Отзывы
+            {content.testimonials.label}
           </div>
-          <h2 className="mb-4">Что говорят клиенты</h2>
-          <p className="text-muted-foreground">
-            Нам доверяют компании из разных отраслей. Вот что они говорят о сотрудничестве с нами.
-          </p>
+          <h2 className="mb-4">{content.testimonials.title}</h2>
+          <p className="text-muted-foreground">{content.testimonials.description}</p>
         </div>
 
         {/* Carousel */}

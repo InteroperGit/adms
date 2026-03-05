@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
-import { NAV_LINKS } from '@/lib/constants';
+import { content } from '@/lib/content';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -27,7 +27,7 @@ export function HeaderMobileNav({ activeSection }: Props) {
         <div className="fixed inset-x-0 top-16 z-40 border-b border-border bg-white md:hidden">
           <Container>
             <nav className="flex flex-col py-4">
-              {NAV_LINKS.map((link) => {
+              {content.nav.map((link) => {
                 const isActive = link.href === `#${activeSection}`;
                 return (
                   <a
@@ -46,7 +46,7 @@ export function HeaderMobileNav({ activeSection }: Props) {
               <div className="pt-3">
                 <Button asChild className="w-full rounded-full" size="sm">
                   <a href="#contact" onClick={() => setMenuOpen(false)}>
-                    Связаться
+                    {content.navCta}
                   </a>
                 </Button>
               </div>

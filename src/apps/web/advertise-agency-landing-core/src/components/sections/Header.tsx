@@ -1,4 +1,5 @@
 import { Container } from '@/components/layout/Container';
+import { content } from '@/lib/content';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { siteData } from '@/lib/siteData';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
@@ -14,7 +15,7 @@ export function Header() {
           {/* Logo */}
           <a href="#" className="flex items-center gap-2 text-foreground hover:text-primary">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-              Р
+              {content.logo.letter}
             </span>
             <span
               style={{ fontFamily: 'var(--font-heading)' }}

@@ -1,14 +1,13 @@
 import { ArrowRight, TrendingUp, Users, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
+import { content } from '@/lib/content';
 
-const STATS = [
-  { icon: Award, value: '10+', label: 'лет на рынке' },
-  { icon: TrendingUp, value: '500+', label: 'реализованных проектов' },
-  { icon: Users, value: '300+', label: 'довольных клиентов' },
-];
+const STAT_ICONS = [Award, TrendingUp, Users];
 
 export function Hero() {
+  const { hero } = content;
+
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden pt-16 md:pt-20">
       {/* Gradient background */}
@@ -34,15 +33,15 @@ export function Hero() {
           {/* Badge */}
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary sm:px-4 sm:py-1.5 sm:text-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Рекламное агентство полного цикла
+            {hero.badge}
           </div>
 
           {/* Headline */}
           <h1 className="mb-6 text-foreground">
-            Реклама, которая{' '}
+            {hero.title}
             <span className="relative inline-block">
               <span className="relative z-10 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                продаёт
+                {hero.titleHighlight}
               </span>
               <span
                 className="absolute -bottom-1 left-0 -z-0 h-3 w-full rounded-sm bg-primary/10"
@@ -53,15 +52,14 @@ export function Hero() {
 
           {/* Subheadline */}
           <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-xl">
-            Разрабатываем комплексные рекламные стратегии, создаём креативные концепции и запускаем
-            кампании, которые приносят реальный результат вашему бизнесу.
+            {hero.subtitle}
           </p>
 
           {/* CTA buttons */}
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button asChild size="lg" className="rounded-full px-8">
-              <a href="#contact">
-                Обсудить проект
+              <a href={hero.cta[0].href}>
+                {hero.cta[0].label}
                 <ArrowRight size={16} />
               </a>
             </Button>
@@ -71,26 +69,29 @@ export function Hero() {
               size="lg"
               className="rounded-full px-8 hover:bg-muted hover:text-primary"
             >
-              <a href="#portfolio">Наши работы</a>
+              <a href={hero.cta[1].href}>{hero.cta[1].label}</a>
             </Button>
           </div>
 
           {/* Stats */}
           <div className="mt-16 grid grid-cols-1 gap-6 border-t border-border pt-12 sm:grid-cols-3">
-            {STATS.map(({ icon: Icon, value, label }) => (
-              <div key={label} className="flex flex-col items-center gap-2">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <Icon size={20} />
+            {hero.stats.map((stat, i) => {
+              const Icon = STAT_ICONS[i] ?? Award;
+              return (
+                <div key={stat.label} className="flex flex-col items-center gap-2">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Icon size={20} />
+                  </div>
+                  <span
+                    style={{ fontFamily: 'var(--font-heading)' }}
+                    className="text-3xl font-bold text-foreground"
+                  >
+                    {stat.value}
+                  </span>
+                  <span className="text-sm text-muted-foreground">{stat.label}</span>
                 </div>
-                <span
-                  style={{ fontFamily: 'var(--font-heading)' }}
-                  className="text-3xl font-bold text-foreground"
-                >
-                  {value}
-                </span>
-                <span className="text-sm text-muted-foreground">{label}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </Container>
