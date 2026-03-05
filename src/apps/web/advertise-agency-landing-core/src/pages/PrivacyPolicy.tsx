@@ -1,21 +1,20 @@
 // src/pages/PrivacyPolicy.tsx
 
 import { legalData } from '@/lib/legalData';
-import { BackButton } from '@/components/ui/BackButton.tsx';
-import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
+import { LegalPageLayout } from '@/components/ui/LegalPageLayout.tsx';
+import { LegalSection } from '@/components/ui/LegalSection.tsx';
 
 export default function PrivacyPolicy() {
   const { company, documents } = legalData;
   const { version, effectiveDate } = documents.privacyPolicy;
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12 text-gray-800">
-      <BackButton />
-
-      <h1 className="text-3xl font-bold mb-2">Политика конфиденциальности</h1>
-      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: {effectiveDate}</p>
-
-      <Section title="1. Общие положения">
+    <LegalPageLayout
+      title="Политика конфиденциальности"
+      version={version}
+      effectiveDate={effectiveDate}
+    >
+      <LegalSection title="1. Общие положения">
         <p>
           1.1. Настоящая Политика конфиденциальности (далее — Политика) разработана в соответствии с
           Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» и определяет порядок
@@ -34,9 +33,9 @@ export default function PrivacyPolicy() {
           1.4. Если Пользователь не согласен с условиями Политики, он обязан прекратить
           использование сайта.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="2. Термины и определения">
+      <LegalSection title="2. Термины и определения">
         <dl className="space-y-2">
           {[
             [
@@ -66,9 +65,9 @@ export default function PrivacyPolicy() {
             </div>
           ))}
         </dl>
-      </Section>
+      </LegalSection>
 
-      <Section title="3. Какие персональные данные мы собираем">
+      <LegalSection title="3. Какие персональные данные мы собираем">
         <p>3.1. Оператор собирает и обрабатывает следующие данные:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>Имя</li>
@@ -85,9 +84,9 @@ export default function PrivacyPolicy() {
           3.3. Оператор не собирает специальные категории данных (расовая принадлежность,
           политические взгляды, состояние здоровья и т.п.).
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="4. Цели обработки персональных данных">
+      <LegalSection title="4. Цели обработки персональных данных">
         <ul className="list-disc pl-6 space-y-1">
           <li>Обработка запросов на расчёт стоимости рекламных услуг</li>
           <li>Связь с Пользователем для уточнения деталей заказа</li>
@@ -98,9 +97,9 @@ export default function PrivacyPolicy() {
         <p className="mt-3">
           4.2. Оператор не использует данные для рекламных рассылок без дополнительного согласия.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="5. Правовые основания обработки">
+      <LegalSection title="5. Правовые основания обработки">
         <ul className="list-disc pl-6 space-y-1">
           <li>Согласие субъекта персональных данных (п. 1 ч. 1 ст. 6 ФЗ № 152-ФЗ)</li>
           <li>Необходимость исполнения договора с субъектом (п. 5 ч. 1 ст. 6 ФЗ № 152-ФЗ)</li>
@@ -108,9 +107,9 @@ export default function PrivacyPolicy() {
         <p className="mt-3">
           5.2. Согласие предоставляется путём установки отметки в чекбоксе перед отправкой формы.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="6. Срок хранения данных">
+      <LegalSection title="6. Срок хранения данных">
         <p>
           6.1. Данные хранятся не более <strong>3 (трёх) лет</strong> с момента последнего обращения
           Пользователя, после чего уничтожаются или обезличиваются.
@@ -119,9 +118,9 @@ export default function PrivacyPolicy() {
           6.2. Пользователь вправе в любой момент отозвать согласие, направив запрос на:{' '}
           <strong>{company.email}</strong>.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="7. Меры защиты данных">
+      <LegalSection title="7. Меры защиты данных">
         <ul className="list-disc pl-6 space-y-1">
           <li>Протокол HTTPS для шифрования передачи данных</li>
           <li>Ограничение доступа — только уполномоченные сотрудники</li>
@@ -129,9 +128,9 @@ export default function PrivacyPolicy() {
           <li>Использование антивирусного программного обеспечения</li>
           <li>Назначение ответственного за обработку персональных данных</li>
         </ul>
-      </Section>
+      </LegalSection>
 
-      <Section title="8. Передача данных третьим лицам">
+      <LegalSection title="8. Передача данных третьим лицам">
         <p>8.1. Оператор не передаёт данные третьим лицам, кроме случаев:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>Явного согласия Пользователя</li>
@@ -142,9 +141,9 @@ export default function PrivacyPolicy() {
           8.2. При привлечении третьих лиц (хостинг, email-сервисы) Оператор обеспечивает соблюдение
           ими требований законодательства.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="9. Использование Cookie-файлов">
+      <LegalSection title="9. Использование Cookie-файлов">
         <ul className="list-disc pl-6 space-y-1">
           <li>
             <strong>Технически необходимые</strong> — базовая функциональность сайта, согласие не
@@ -159,9 +158,9 @@ export default function PrivacyPolicy() {
           9.2. При первом посещении отображается cookie-баннер с возможностью принять или отклонить
           аналитические файлы.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="10. Права пользователя">
+      <LegalSection title="10. Права пользователя">
         <ul className="list-disc pl-6 space-y-1">
           <li>Получать информацию об обработке своих данных</li>
           <li>Требовать уточнения, блокирования или уничтожения данных</li>
@@ -173,24 +172,24 @@ export default function PrivacyPolicy() {
           10.2. Запросы направляются на <strong>{company.email}</strong>. Ответ — в течение{' '}
           <strong>30 дней</strong>.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="11. Несовершеннолетние">
+      <LegalSection title="11. Несовершеннолетние">
         <p>
           Сайт не предназначен для лиц младше 18 лет. При обнаружении таких данных они будут
           незамедлительно удалены.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="12. Изменение Политики">
+      <LegalSection title="12. Изменение Политики">
         <p>
           Оператор вправе вносить изменения без предварительного уведомления. Новая редакция
           вступает в силу с момента публикации на странице: <strong>{company.siteUrl}</strong>.
           Продолжение использования сайта означает принятие изменений.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="13. Контактная информация">
+      <LegalSection title="13. Контактная информация">
         <dl className="space-y-1">
           {(
             [
@@ -209,23 +208,7 @@ export default function PrivacyPolicy() {
             </div>
           ))}
         </dl>
-      </Section>
-
-      <p className="text-sm text-gray-500 mt-10 pt-6 border-t border-gray-200">
-        Версия {version} · Дата последнего обновления: {effectiveDate}
-      </p>
-
-      <ScrollToTop />
-    </main>
-  );
-}
-
-// Вспомогательный компонент секции
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="mb-8">
-      <h2 className="text-xl font-semibold mb-3 text-gray-900">{title}</h2>
-      <div className="space-y-2 text-gray-700 leading-relaxed">{children}</div>
-    </section>
+      </LegalSection>
+    </LegalPageLayout>
   );
 }
