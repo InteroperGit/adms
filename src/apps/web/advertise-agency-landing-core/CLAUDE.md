@@ -70,7 +70,10 @@ advertise-agency-landing-core/
 │   │   ├── layout/
 │   │   │   └── Container.tsx          # Centered max-w-7xl wrapper, polymorphic `as` prop
 │   │   ├── sections/
-│   │   │   ├── Carousel.tsx           # Light-gradient slider, 70vh, auto-advance 5s, dark text on light bg (carouselSlides)
+│   │   │   ├── carousel/
+│   │   │   │   ├── index.tsx          # Thin orchestrator: state + timer + CarouselSlide + CarouselControls; imported as '@/components/sections/carousel'
+│   │   │   │   ├── CarouselSlide.tsx  # Single slide renderer (gradient or image bg + label/title/subtitle); props: slide, isActive
+│   │   │   │   └── CarouselControls.tsx # Prev/next arrows + dot indicators + slide counter; props: total, current, onPrev, onNext, onDot
 │   │   │   ├── Header.tsx             # In-flow header, solid white bg, border-b, logo
 │   │   │   ├── HeaderDesktopNav.tsx   # Nav links + CTA (hidden on mobile); links show underline on hover
 │   │   │   ├── HeaderMobileNav.tsx    # Hamburger + dropdown (hidden on desktop)
