@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
+import { content } from '@/lib/content';
 import { cn } from '@/lib/utils';
 import type { PortfolioCase } from '@/types/portfolio';
 
@@ -16,13 +17,17 @@ const PORTFOLIO_ITEMS = Object.entries(modules).map(([, data]) => ({
   href: `/portfolio/${data.slug}`,
 }));
 
-const PORTFOLIO_CATEGORIES = ['Все', ...new Set(PORTFOLIO_ITEMS.map((i) => i.category))];
+const PORTFOLIO_CATEGORIES = [
+  content.portfolio.allCategory,
+  ...new Set(PORTFOLIO_ITEMS.map((i) => i.category)),
+];
 
 export function Portfolio() {
-  const [activeCategory, setActiveCategory] = useState('Все');
+  const { portfolio: p } = content;
+  const [activeCategory, setActiveCategory] = useState(p.allCategory);
 
   const filtered =
-    activeCategory === 'Все'
+    activeCategory === p.allCategory
       ? PORTFOLIO_ITEMS
       : PORTFOLIO_ITEMS.filter((item) => item.category === activeCategory);
 
@@ -32,12 +37,10 @@ export function Portfolio() {
         {/* Header */}
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            Портфолио
+            {p.label}
           </div>
-          <h2 className="mb-4">Наши работы</h2>
-          <p className="text-muted-foreground">
-            Избранные проекты из разных отраслей — от локального бизнеса до федеральных брендов.
-          </p>
+          <h2 className="mb-4">{p.title}</h2>
+          <p className="text-muted-foreground">{p.description}</p>
         </div>
 
         {/* Category filter */}
@@ -114,7 +117,7 @@ export function Portfolio() {
                   href={item.href}
                   className="inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-gap duration-200 hover:gap-2.5"
                 >
-                  Подробнее
+                  {p.detailsLabel}
                   <ArrowRight size={14} />
                 </a>
               </div>
@@ -130,7 +133,7 @@ export function Portfolio() {
             size="lg"
             className="rounded-full px-8 hover:bg-muted hover:text-primary"
           >
-            <a href="#contact">Обсудить ваш проект</a>
+            <a href={p.cta.href}>{p.cta.label}</a>
           </Button>
         </div>
       </Container>

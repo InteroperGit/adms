@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Container } from '@/components/layout/Container';
+import { content } from '@/lib/content';
 import { siteData } from '@/lib/siteData';
-import { Link } from 'react-router-dom';
 
 type FormState = { name: string; contact: string; message: string };
 const EMPTY: FormState = { name: '', contact: '', message: '' };
@@ -32,13 +33,10 @@ export function Contact() {
         {/* Header */}
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            Контакты
+            {content.contact.label}
           </div>
-          <h2 className="mb-4">Обсудим ваш проект?</h2>
-          <p className="text-muted-foreground">
-            Оставьте заявку — перезвоним в течение рабочего дня, выслушаем задачу и предложим
-            решение.
-          </p>
+          <h2 className="mb-4">{content.contact.title}</h2>
+          <p className="text-muted-foreground">{content.contact.description}</p>
         </div>
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 lg:items-end">
@@ -49,16 +47,18 @@ export function Contact() {
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
                   <Send size={28} className="text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">Заявка отправлена!</h3>
+                <h3 className="text-xl font-semibold text-foreground">
+                  {content.contact.form.success.title}
+                </h3>
                 <p className="max-w-xs text-sm text-muted-foreground">
-                  Мы получили вашу заявку и свяжемся с вами в ближайшее рабочее время.
+                  {content.contact.form.success.text}
                 </p>
                 <Button
                   variant="outline"
                   className="mt-2 rounded-full"
                   onClick={() => setSubmitted(false)}
                 >
-                  Отправить ещё
+                  {content.contact.form.success.reset}
                 </Button>
               </div>
             ) : (
@@ -68,11 +68,11 @@ export function Contact() {
                     htmlFor="name"
                     className="mb-1.5 block text-sm font-medium text-foreground"
                   >
-                    Ваше имя
+                    {content.contact.form.name.label}
                   </label>
                   <Input
                     id="name"
-                    placeholder="Иван Иванов"
+                    placeholder={content.contact.form.name.placeholder}
                     required
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -84,11 +84,11 @@ export function Contact() {
                     htmlFor="contact"
                     className="mb-1.5 block text-sm font-medium text-foreground"
                   >
-                    Телефон или email
+                    {content.contact.form.contact.label}
                   </label>
                   <Input
                     id="contact"
-                    placeholder="+7 (999) 000-00-00 или mail@example.com"
+                    placeholder={content.contact.form.contact.placeholder}
                     required
                     value={form.contact}
                     onChange={(e) => setForm({ ...form, contact: e.target.value })}
@@ -100,11 +100,11 @@ export function Contact() {
                     htmlFor="message"
                     className="mb-1.5 block text-sm font-medium text-foreground"
                   >
-                    Расскажите о задаче
+                    {content.contact.form.message.label}
                   </label>
                   <Textarea
                     id="message"
-                    placeholder="Кратко опишите ваш бизнес и что хотите получить..."
+                    placeholder={content.contact.form.message.placeholder}
                     rows={5}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
@@ -125,29 +125,27 @@ export function Contact() {
                     htmlFor="consent"
                     className="text-xs leading-relaxed text-muted-foreground"
                   >
-                    Я даю согласие на обработку персональных данных в соответствии с{' '}
-                    <Link
-                      to="/privacy-policy"
-                      className="underline underline-offset-2 transition-colors hover:text-foreground"
-                    >
-                      Политикой конфиденциальности
-                    </Link>{' '}
-                    и{' '}
-                    <Link
-                      to="/consent"
-                      className="underline underline-offset-2 transition-colors hover:text-foreground"
-                    >
-                      Согласием на обработку данных
-                    </Link>
+                    {content.contact.form.consent}{' '}
+                    {content.contact.form.consentLinks.map((link, i) => (
+                      <span key={link.href}>
+                        {i > 0 && ` ${content.contact.form.consentJoiner} `}
+                        <Link
+                          to={link.href}
+                          className="underline underline-offset-2 transition-colors hover:text-foreground"
+                        >
+                          {link.label}
+                        </Link>
+                      </span>
+                    ))}
                   </label>
                 </div>
 
                 <Button type="submit" size="lg" className="w-full rounded-full">
-                  Отправить заявку
+                  {content.contact.form.submit}
                 </Button>
 
                 <p className="text-center text-xs text-muted-foreground">
-                  Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
+                  {content.contact.form.disclaimer}
                 </p>
               </form>
             )}
@@ -157,7 +155,7 @@ export function Contact() {
           <div className="flex flex-col justify-center gap-8">
             <div>
               <h3 className="mb-6 text-xl font-semibold text-foreground">
-                Свяжитесь с нами напрямую
+                {content.contact.directTitle}
               </h3>
               <ul className="space-y-5">
                 <li className="flex items-start gap-4">
@@ -166,7 +164,7 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                      Телефон
+                      {content.contact.contactLabels.phone}
                     </p>
                     <a
                       href={`tel:${siteData.contact.phone.replace(/\D/g, '')}`}
@@ -183,7 +181,7 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                      Email
+                      {content.contact.contactLabels.email}
                     </p>
                     <a
                       href={`mailto:${siteData.contact.email}`}
@@ -200,7 +198,7 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                      Адрес
+                      {content.contact.contactLabels.address}
                     </p>
                     <p className="mt-0.5 font-semibold text-foreground">
                       {siteData.contact.address}
@@ -212,7 +210,9 @@ export function Contact() {
 
             {/* Social links */}
             <div>
-              <p className="mb-4 text-sm font-medium text-muted-foreground">Мы в соцсетях</p>
+              <p className="mb-4 text-sm font-medium text-muted-foreground">
+                {content.contact.socialTitle}
+              </p>
               <div className="flex gap-3">
                 <a
                   href={siteData.contact.telegram}
@@ -245,22 +245,28 @@ export function Contact() {
 
             {/* Working hours */}
             <div className="rounded-2xl border border-border bg-white p-4 shadow-sm sm:p-6">
-              <p className="mb-3 text-sm font-semibold text-foreground">Часы работы</p>
+              <p className="mb-3 text-sm font-semibold text-foreground">
+                {content.contact.hoursTitle}
+              </p>
               <div className="space-y-1.5 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Пн — Пт</span>
+                  <span className="text-muted-foreground">
+                    {content.contact.dayLabels.weekdays}
+                  </span>
                   <span className="font-medium text-foreground">
                     {siteData.contact.workingHours.weekdays}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Суббота</span>
+                  <span className="text-muted-foreground">
+                    {content.contact.dayLabels.saturday}
+                  </span>
                   <span className="font-medium text-foreground">
                     {siteData.contact.workingHours.saturday}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Воскресенье</span>
+                  <span className="text-muted-foreground">{content.contact.dayLabels.sunday}</span>
                   <span className="font-medium text-foreground">
                     {siteData.contact.workingHours.sunday}
                   </span>

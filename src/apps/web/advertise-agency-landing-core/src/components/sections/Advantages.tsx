@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { advantages } from '@/lib/advantages';
+import { content } from '@/lib/content';
 
 const ICON_MAP: Record<string, LucideIcon> = {
   CircleDollarSign,
@@ -34,15 +35,13 @@ export function Advantages() {
         {/* Header */}
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/80">
-            Почему мы
+            {content.advantages.label}
           </div>
           <h2 className="mb-4 text-white">
-            Почему клиенты выбирают <span className="text-primary">Рекламастер</span>
+            {content.advantages.title}
+            <span className="text-primary">{content.advantages.titleHighlight}</span>
           </h2>
-          <p className="text-white/60">
-            Мы не просто подрядчик — мы берём на себя ответственность за результат и выстраиваем
-            долгосрочные отношения.
-          </p>
+          <p className="text-white/60">{content.advantages.description}</p>
         </div>
 
         {/* Grid */}

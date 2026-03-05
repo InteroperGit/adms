@@ -1,18 +1,17 @@
-# Папки
+# Папки зависимостей и сборки
 node_modules/
 dist/
 build/
 .temp/
 .cache/
-.sass-cache/
-.parcel-cache/
 
-# Файлы
+# Логи и временные файлы
 *.log
 *.tmp
 *.swp
-*.DS_Store
-*.env
+
+# Переменные окружения
+.env
 .env.local
 *.env.*.local
 
@@ -20,74 +19,10 @@ build/
 .idea/
 .vscode/
 *.suo
-*.ntvs*
-*.njsproj
-*.sln
 *.sw?
 
 # Системные файлы
+.DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
-
-# Python
-
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-develop-eggs/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json

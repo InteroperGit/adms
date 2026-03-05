@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { carouselSlides } from '@/lib/carousel';
+import { content } from '@/lib/content';
 import { cn } from '@/lib/utils';
 
 const INTERVAL_MS = 5000;
@@ -46,7 +47,7 @@ export function Carousel() {
           <div className="absolute inset-0 flex items-center justify-center px-6">
             <div className="max-w-3xl text-center text-foreground">
               <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                РА «Рекламастер»
+                {content.carousel.label}
               </p>
               <h2
                 style={{ fontFamily: 'var(--font-heading)' }}

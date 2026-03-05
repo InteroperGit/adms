@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Container } from '@/components/layout/Container';
+import { content } from '@/lib/content';
 import { services } from '@/lib/services';
 
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -21,19 +22,18 @@ const ICON_MAP: Record<string, LucideIcon> = {
 };
 
 export function Services() {
+  const { services: s } = content;
+
   return (
     <section id="services" className="bg-muted py-24 md:py-32">
       <Container>
         {/* Header */}
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            Услуги
+            {s.label}
           </div>
-          <h2 className="mb-4">Что мы делаем</h2>
-          <p className="text-muted-foreground">
-            Полный цикл рекламных услуг под одной крышей — от стратегии до финального размещения и
-            аналитики.
-          </p>
+          <h2 className="mb-4">{s.title}</h2>
+          <p className="text-muted-foreground">{s.description}</p>
         </div>
 
         {/* Cards grid */}

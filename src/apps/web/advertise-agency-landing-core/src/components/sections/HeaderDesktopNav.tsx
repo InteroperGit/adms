@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { NAV_LINKS } from '@/lib/constants';
+import { content } from '@/lib/content';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -10,7 +10,7 @@ export function HeaderDesktopNav({ activeSection }: Props) {
   return (
     <>
       <nav className="hidden items-center gap-8 md:flex">
-        {NAV_LINKS.map((link) => {
+        {content.nav.map((link) => {
           const isActive = link.href === `#${activeSection}`;
           return (
             <a
@@ -40,7 +40,7 @@ export function HeaderDesktopNav({ activeSection }: Props) {
 
       <div className="hidden md:block">
         <Button asChild size="sm" className="rounded-full px-6">
-          <a href="#contact">Связаться</a>
+          <a href="#contact">{content.navCta}</a>
         </Button>
       </div>
     </>

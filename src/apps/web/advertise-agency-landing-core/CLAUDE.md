@@ -194,7 +194,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 - After completing every task, always run in sequence:
   1. `pnpm format` — reformat all changed files
-  2. `tsc -b --noEmit` — typecheck, fix any errors before finishing
+  2. `pnpm tsc -b --noEmit` — typecheck, fix any errors before finishing
 
 ## Key Rules
 
