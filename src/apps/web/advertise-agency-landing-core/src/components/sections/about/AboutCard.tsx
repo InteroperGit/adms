@@ -1,5 +1,5 @@
-import { content, type Content } from '@/lib/content';
-import { siteData } from '@/lib/siteData';
+import { content, type Content } from '@/types/content';
+import { siteData } from '@/types/siteData';
 
 interface AboutCardProps {
   card: Content['about']['card'];

@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 import { cn } from '@/lib/utils';
 
 interface Props {

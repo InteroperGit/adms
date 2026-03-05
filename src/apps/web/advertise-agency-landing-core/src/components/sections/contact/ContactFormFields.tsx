@@ -1,7 +1,7 @@
 // src/components/sections/contact/ContactFormFields.tsx
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 
 type FormState = { name: string; contact: string; message: string };
 

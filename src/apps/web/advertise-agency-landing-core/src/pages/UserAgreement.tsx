@@ -1,6 +1,6 @@
 // src/pages/UserAgreement.tsx
 import { Link } from 'react-router-dom';
-import { legalData } from '@/lib/legalData';
+import { legalData } from '@/types/legalData';
 import { LegalPageLayout } from '@/components/ui/LegalPageLayout.tsx';
 import { LegalSection } from '@/components/ui/LegalSection.tsx';
 

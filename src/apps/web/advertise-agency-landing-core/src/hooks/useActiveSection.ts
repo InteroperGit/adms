@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 
 const SECTION_IDS = content.nav.map((l) => l.href.slice(1));
 

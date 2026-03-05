@@ -1,5 +1,5 @@
 // src/components/sections/footer/FooterNav.tsx
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 
 export function FooterNav() {
   return (

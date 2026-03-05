@@ -2,7 +2,7 @@
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { PortfolioThumbnail } from '@/components/ui/PortfolioThumbnail';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 import type { PortfolioCase } from '@/types/portfolio';
 
 interface PortfolioCardProps {

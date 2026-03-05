@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { carouselSlides } from '@/lib/carousel';
+import { carouselSlides } from '@/types/carousel';
 import { CarouselSlide } from './CarouselSlide';
 import { CarouselControls } from './CarouselControls';
 

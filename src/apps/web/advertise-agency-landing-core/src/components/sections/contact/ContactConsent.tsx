@@ -1,6 +1,6 @@
 // src/components/sections/contact/ContactConsent.tsx
 import { Link } from 'react-router-dom';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 
 interface ContactConsentProps {
   checked: boolean;

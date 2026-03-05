@@ -1,5 +1,5 @@
 import { Container } from '@/components/layout/Container';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 import { HeroCTA } from './HeroCTA';
 import { HeroStats } from './HeroStats';
 

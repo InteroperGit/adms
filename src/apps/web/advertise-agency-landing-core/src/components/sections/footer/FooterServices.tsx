@@ -1,6 +1,6 @@
 // src/components/sections/footer/FooterServices.tsx
-import { content } from '@/lib/content';
-import { services } from '@/lib/services';
+import { content } from '@/types/content';
+import { services } from '@/types/services';
 
 const SERVICES_FOOTER = services.slice(0, 4);
 

@@ -1,6 +1,6 @@
 // src/components/portfolio/CaseGallery.tsx
 import { Container } from '@/components/layout/Container';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 import { cn } from '@/lib/utils';
 
 interface CaseGalleryProps {

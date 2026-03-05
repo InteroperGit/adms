@@ -3,8 +3,8 @@ import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { TestimonialCard } from '@/components/ui/TestimonialCard';
 import { TestimonialStrip } from '@/components/ui/TestimonialStrip';
-import { content } from '@/lib/content';
-import { testimonials } from '@/lib/testimonials';
+import { content } from '@/types/content';
+import { testimonials } from '@/types/testimonials';
 import { TestimonialNav } from './TestimonialNav';
 
 export function Testimonials() {

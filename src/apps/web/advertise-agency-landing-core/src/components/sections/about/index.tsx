@@ -1,9 +1,9 @@
 import { CheckCircle2 } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { AboutCard } from '@/components/sections/about/AboutCard';
-import { aboutValues } from '@/lib/aboutValues';
-import { content } from '@/lib/content';
-import { siteData } from '@/lib/siteData';
+import { aboutValues } from '@/types/aboutValues';
+import { content } from '@/types/content';
+import { siteData } from '@/types/siteData';
 
 export function About() {
   const { about } = content;

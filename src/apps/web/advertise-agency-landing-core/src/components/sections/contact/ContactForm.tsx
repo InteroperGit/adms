@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ContactSuccess } from './ContactSuccess';
 import { ContactFormFields } from './ContactFormFields';
 import { ContactConsent } from './ContactConsent';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 
 type FormState = { name: string; contact: string; message: string };
 const EMPTY: FormState = { name: '', contact: '', message: '' };

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { content } from '@/lib/content';
+import { content } from '@/types/content';
 import { CookieActions } from './CookieActions';
 
 const STORAGE_KEY = 'cookie_consent';

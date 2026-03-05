@@ -165,8 +165,18 @@ advertise-agency-landing-core/
 │   │   │   ├── CaseGallery.tsx    # Responsive image grid (first spans 2 cols if ≥3 images); props: gallery[], caseTitle
 │   │   │   └── CaseCTA.tsx        # Bottom CTA block; reads content.portfolioCase.cta
 │   ├── types/
-│   │   ├── index.ts           # Shared TypeScript types
-│   │   └── portfolio.ts       # PortfolioCase interface
+│   │   ├── index.ts           # NavLink interface
+│   │   ├── portfolio.ts       # PortfolioCase interface
+│   │   ├── iconMap.ts         # ICON_MAP, resolveIcon(), IconComponent — shared icon registry (lucide-react)
+│   │   ├── portfolioCases.ts  # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
+│   │   ├── aboutValues.ts     # AboutValue interface + aboutValues const (from data/about-values.json)
+│   │   ├── advantages.ts      # Advantage interface + advantages const (from data/advantages.json)
+│   │   ├── carousel.ts        # CarouselSlide interface + carouselSlides const (from data/carousel.json)
+│   │   ├── content.ts         # Content type + content const (from data/content.json)
+│   │   ├── legalData.ts       # LegalData type + legalData const (from data/legal.json)
+│   │   ├── services.ts        # Service interface + services const (from data/services.json)
+│   │   ├── siteData.ts        # SiteData interface + siteData const (from data/site.json)
+│   │   └── testimonials.ts    # Testimonial interface + testimonials const (from data/testimonials.json)
 │   ├── router.tsx             # RouteObject[] — "/", "/portfolio/:slug", "/privacy-policy", "/user-agreement", "/consent"
 │   ├── main.tsx               # Entry: exports createRoot = ViteReactSSG({ routes })
 │   └── index.css              # Tailwind import, @theme inline (references CSS vars), base styles, animate-fade-in keyframe; no hardcoded colors/fonts (injected by themePlugin)
@@ -219,20 +229,20 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 
 ## Data Architecture
 
-- **`data/content.json`** — all UI copy (nav labels, hero text, section headings, form labels, footer, cookies, portfolio case labels). Exposed via `src/lib/content.ts`; used by all section components, `PortfolioCasePage`, `CookieBanner`, and `useActiveSection`. Supports template tokens (`{name}`, `{year}`, `{description}`) replaced at render time.
+- **`data/content.json`** — all UI copy (nav labels, hero text, section headings, form labels, footer, cookies, portfolio case labels). Exposed via `src/types/content.ts`; used by all section components, `PortfolioCasePage`, `CookieBanner`, and `useActiveSection`. Supports template tokens (`{name}`, `{year}`, `{description}`) replaced at render time.
 - **`data/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`.
-- **`data/site.json`** — global site config (phone, email, address, social links, hours). Exposed via `src/lib/siteData.ts`; used by `About.tsx`, `Header.tsx`, `contact/ContactInfo.tsx`, `contact/ContactHours.tsx`, `footer/FooterBrand.tsx`, `footer/FooterContact.tsx`, `footer/FooterBottom.tsx`.
-- **`data/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/lib/aboutValues.ts`; used by `About.tsx`.
-- **`data/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Gradients use Tailwind `50/100` shades (near-white). Exposed via `src/lib/carousel.ts`; used by `Carousel.tsx`. No dark overlay — text uses `text-foreground`/`text-muted-foreground`.
-- **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/lib/advantages.ts`; used by `Advantages.tsx`. The `icon` field is a string key resolved to an `IconComponent` via `ICON_MAP` from `src/lib/iconMap.ts`.
-- **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/lib/services.ts`; used by `Services.tsx` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved to an `IconComponent` via `ICON_MAP` from `src/lib/iconMap.ts`.
-- **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/lib/testimonials.ts`; used by `Testimonials.tsx` and `PortfolioCasePage.tsx` (looked up by `id` via `testimonialId` on a portfolio case).
-- **`data/legal.json`** — company legal details: `company.{ name, inn, ogrn, legalAddress, siteUrl, email, phone, responsible }` and `documents.{ privacyPolicy, consent, userAgreement }` each with `{ version, effectiveDate }`. Exposed via `src/lib/legalData.ts`; used by `PrivacyPolicy.tsx`, `Consent.tsx`, `UserAgreement.tsx`. Gitignored — schema in `data/_schema/legal.example.json`.
+- **`data/site.json`** — global site config (phone, email, address, social links, hours). Exposed via `src/types/siteData.ts`; used by `header/`, `contact/ContactInfo.tsx`, `contact/ContactHours.tsx`, `footer/`.
+- **`data/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/aboutValues.ts`; used by `about/`.
+- **`data/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Exposed via `src/types/carousel.ts`; used by `carousel/`.
+- **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/types/advantages.ts`; used by `advantages/`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/iconMap.ts`.
+- **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/iconMap.ts`.
+- **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/types/testimonials.ts`; used by `testimonials/` and `PortfolioCasePage.tsx`.
+- **`data/legal.json`** — company legal details. Exposed via `src/types/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.json`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.
-- Components **never** import from `@data/` directly — always go through a `src/lib/` module.
-- Single JSON files wrapped in a typed lib module: `siteData.ts`, `aboutValues.ts`, `advantages.ts`, `services.ts`, `testimonials.ts` (uses `resolveJsonModule`).
-- Portfolio collection loaded via `import.meta.glob('@data/portfolio/*.json', { eager: true, import: 'default' })` — see `src/lib/portfolioCases.ts`.
+- Components **never** import from `@data/` directly — always go through `src/types/`.
+- All shared types, interfaces, consts, and data modules live in `src/types/`; only `utils.ts` stays in `src/lib/`.
+- Portfolio collection loaded via `import.meta.glob('@data/portfolio/*.json', { eager: true, import: 'default' })` — see `src/types/portfolioCases.ts`.
 - Schema examples tracked in `data/_schema/` — the actual data files are gitignored.
 
 ## SSG Build
@@ -252,8 +262,8 @@ Files are placed in `src/components/ui/` — never edit them manually.
 ## Conventions
 
 - **Components**: PascalCase files, one component per file
-- **Static content**: editable content in `data/*.json` exposed through `src/lib/` modules — components always import from `@/lib/`, never from `@data/` directly
-- **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `IconComponent` via the shared `ICON_MAP` in `src/lib/iconMap.ts`; import `ICON_MAP`, `resolveIcon()`, or `IconComponent` type from there — do not import from `lucide-react` directly in components, do not create local icon maps
+- **Static content**: all data, types, and shared modules live in `src/types/` — components import from `@/types/`, never from `@data/` directly; only `cn()` utility stays in `@/lib/utils`
+- **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `IconComponent` via the shared `ICON_MAP` in `src/types/iconMap.ts`; import `ICON_MAP`, `resolveIcon()`, or `IconComponent` type from there — do not import from `lucide-react` directly in components, do not create local icon maps
 - **Tailwind**: use `cn()` from `@/lib/utils` for conditional class merging
 - **Sections**: self-contained in `src/components/sections/`, import Container for layout
 - **Path aliases**: `@/` → `src/`, `@data` → `data/` (root-level)

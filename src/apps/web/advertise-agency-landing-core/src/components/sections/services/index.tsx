@@ -1,7 +1,7 @@
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { content } from '@/lib/content';
-import { services } from '@/lib/services';
+import { content } from '@/types/content';
+import { services } from '@/types/services';
 import { ServiceCard } from './ServiceCard';
 
 export function Services() {
