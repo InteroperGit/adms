@@ -1,24 +1,7 @@
-import {
-  CircleDollarSign,
-  Clock,
-  UserRound,
-  LineChart,
-  Building2,
-  Handshake,
-  type LucideIcon,
-} from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { advantages } from '@/lib/advantages';
 import { content } from '@/lib/content';
-
-const ICON_MAP: Record<string, LucideIcon> = {
-  CircleDollarSign,
-  Clock,
-  UserRound,
-  LineChart,
-  Building2,
-  Handshake,
-};
+import { ICON_MAP } from '@/lib/iconMap';
 
 export function Advantages() {
   return (
