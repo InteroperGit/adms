@@ -35,7 +35,8 @@ advertise-agency-landing-core/
 ├── ai/
 │   └── tasks/
 │       ├── 001_create_landing_structure.md   # Full build plan
-│       └── 002_improve_site.md               # White-label reusability plan
+│       ├── 002_improve_site.md               # White-label reusability plan
+│       └── 003_improve_site.md               # Component decomposition plan (max 60 lines per component)
 ├── data/                    # JSON data — gitignored (except _schema/ and README.md)
 │   ├── README.md            # New-client setup guide: what each JSON file does, how to configure
 │   ├── _schema/             # Schema examples — git-tracked
@@ -73,7 +74,10 @@ advertise-agency-landing-core/
 │   │   │   ├── Header.tsx             # In-flow header, solid white bg, border-b, logo
 │   │   │   ├── HeaderDesktopNav.tsx   # Nav links + CTA (hidden on mobile); links show underline on hover
 │   │   │   ├── HeaderMobileNav.tsx    # Hamburger + dropdown (hidden on desktop)
-│   │   │   ├── Hero.tsx               # Full-viewport hero, gradient bg, stats
+│   │   │   ├── hero/
+│   │   │   │   ├── index.tsx          # Thin orchestrator: badge + title + subtitle + HeroCTA + HeroStats; imported as '@/components/sections/hero'
+│   │   │   │   ├── HeroCTA.tsx        # Two CTA buttons (primary + outline); props: cta: { label, href }[]
+│   │   │   │   └── HeroStats.tsx      # 3-stat grid with icon + value + label; props: stats: { value, label }[]
 │   │   │   ├── About.tsx              # Two-column: story + info card (siteData, aboutValues)
 │   │   │   ├── Services.tsx           # 6-card grid, ICON_MAP from iconMap.ts resolves icon strings (services)
 │   │   │   ├── Portfolio.tsx          # Category filter + project cards (portfolioCaseMap)
