@@ -34,7 +34,7 @@ export function ImageGalleryThumbnails({
           }}
           onClick={() => onSelect(i)}
           className={cn(
-            'h-14 w-20 shrink-0 cursor-pointer overflow-hidden rounded-lg transition-opacity sm:h-16 sm:w-24 [scroll-snap-align:center]',
+            'relative h-14 w-20 shrink-0 cursor-pointer overflow-hidden rounded-lg transition-opacity sm:h-16 sm:w-24 [scroll-snap-align:center]',
             i === activeIndex ? 'ring-2 ring-primary opacity-100' : 'opacity-60 hover:opacity-100'
           )}
         >
@@ -43,6 +43,9 @@ export function ImageGalleryThumbnails({
             alt={`${altPrefix} ${i + 1}`}
             className="h-full w-full object-cover"
           />
+          {i === activeIndex && (
+            <span className="pointer-events-none absolute inset-0 bg-primary/20" />
+          )}
         </button>
       ))}
     </div>

@@ -121,10 +121,9 @@ advertise-agency-landing-core/
 │   │   │       └── FooterBottom.tsx   # Copyright + legal links nav + tagline
 │   │   └── ui/                        # shadcn/ui primitives — DO NOT edit manually
 │   │       ├── imageGallery/          # Reusable gallery component — no portfolio-specific logic; labels passed as props
-│   │       │   ├── index.tsx          # ImageGallery orchestrator: activeIndex state, keyboard + swipe nav, lightboxOpen state; exports ImageGalleryItem, ImageGalleryProps
-│   │       │   ├── ImageGalleryPreview.tsx    # Main image: desktop hover overlay (line-clamp-3), mobile description below; click opens lightbox
-│   │       │   ├── ImageGalleryThumbnails.tsx # Horizontal snap-scroll strip; ring-2 ring-primary on active; scrollIntoView on change
-│   │       │   ├── ImageGalleryNav.tsx        # Prev/next buttons + {current}/{total} counter; desktop only (hidden sm:flex)
+│   │       │   ├── index.tsx          # ImageGallery orchestrator: activeIndex state, keyboard + swipe nav, lightboxOpen state; prev/next arrows + counter overlaid on image (group-hover fade); exports ImageGalleryItem, ImageGalleryProps
+│   │       │   ├── ImageGalleryPreview.tsx    # Main image: bottom-gradient description overlay on desktop hover (group-hover, slides up), mobile description below; click opens lightbox
+│   │       │   ├── ImageGalleryThumbnails.tsx # Horizontal snap-scroll strip; active thumb: ring-2 ring-primary + bg-primary/20 overlay; cursor-pointer on hover; scrollIntoView on change
 │   │       │   └── ImageGalleryLightbox.tsx   # Fixed bg-black/90 modal: overlay nav buttons (hidden sm:flex), swipe on mobile, thumbnail strip, ESC/click-outside to close, body scroll lock
 │   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
 │   │       ├── SectionHeader.tsx      # Shared label badge + h2 + description block; props: label, title, description?, titleHighlight?, variant ('light'|'dark'), className

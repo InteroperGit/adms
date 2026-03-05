@@ -9,14 +9,13 @@ export function ImageGalleryPreview({ src, alt, description, onClick }: ImageGal
   return (
     <div>
       <div
-        className="group relative cursor-pointer overflow-hidden rounded-2xl bg-muted"
+        className="relative cursor-pointer overflow-hidden rounded-2xl bg-muted"
         onClick={onClick}
       >
         <img src={src} alt={alt} className="max-h-[260px] w-full object-cover sm:max-h-[560px]" />
-        {/* Desktop-only hover overlay */}
         {description && (
-          <div className="absolute inset-0 hidden items-end bg-black/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100 sm:flex">
-            <p className="line-clamp-3 p-4 text-sm text-white">{description}</p>
+          <div className="absolute inset-x-0 bottom-0 hidden translate-y-1 bg-gradient-to-t from-black/70 to-transparent p-4 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 sm:block">
+            <p className="line-clamp-3 text-sm text-white">{description}</p>
           </div>
         )}
       </div>

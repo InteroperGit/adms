@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ImageGalleryPreview } from './ImageGalleryPreview';
 import { ImageGalleryThumbnails } from './ImageGalleryThumbnails';
-import { ImageGalleryNav } from './ImageGalleryNav';
 import { ImageGalleryLightbox } from './ImageGalleryLightbox';
 
 export interface ImageGalleryItem {
@@ -48,7 +48,7 @@ export function ImageGallery({
       className={cn('outline-none', className)}
     >
       <div
-        className="relative"
+        className="group relative"
         onTouchStart={(e) => {
           touchStartX.current = e.touches[0].clientX;
           didSwipe.current = false;
@@ -70,6 +70,35 @@ export function ImageGallery({
           alt={`${altPrefix} ${activeIndex + 1}`}
           description={active.description}
         />
+        {multi && (
+          <>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                prev();
+              }}
+              aria-label={prevLabel}
+              className="absolute left-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/40 p-2.5 text-white opacity-0 backdrop-blur-sm transition-all hover:bg-primary group-hover:opacity-100 sm:flex"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                next();
+              }}
+              aria-label={nextLabel}
+              className="absolute right-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/40 p-2.5 text-white opacity-0 backdrop-blur-sm transition-all hover:bg-primary group-hover:opacity-100 sm:flex"
+            >
+              <ChevronRight size={20} />
+            </button>
+            <span className="absolute bottom-3 right-3 z-10 hidden rounded-full bg-black/50 px-3 py-1 text-xs text-white tabular-nums opacity-0 backdrop-blur-sm transition-all group-hover:opacity-100 sm:block">
+              {counterTemplate
+                .replace('{current}', String(activeIndex + 1))
+                .replace('{total}', String(images.length))}
+            </span>
+          </>
+        )}
       </div>
       {lightboxOpen && (
         <ImageGalleryLightbox
@@ -83,19 +112,6 @@ export function ImageGallery({
           prevLabel={prevLabel}
           nextLabel={nextLabel}
         />
-      )}
-      {multi && (
-        <div className="mt-4 hidden items-center justify-between sm:flex">
-          <ImageGalleryNav
-            current={activeIndex + 1}
-            total={images.length}
-            onPrev={prev}
-            onNext={next}
-            prevLabel={prevLabel}
-            nextLabel={nextLabel}
-            counterTemplate={counterTemplate}
-          />
-        </div>
       )}
       {multi && (
         <div className="mt-3">
