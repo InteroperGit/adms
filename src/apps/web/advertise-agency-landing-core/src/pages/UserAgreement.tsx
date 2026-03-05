@@ -1,21 +1,20 @@
 // src/pages/UserAgreement.tsx
 import { Link } from 'react-router-dom';
 import { legalData } from '@/lib/legalData';
-import { BackButton } from '@/components/ui/BackButton.tsx';
-import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
+import { LegalPageLayout } from '@/components/ui/LegalPageLayout.tsx';
+import { LegalSection } from '@/components/ui/LegalSection.tsx';
 
 export default function UserAgreement() {
   const { company, documents } = legalData;
   const { version, effectiveDate } = documents.userAgreement;
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12 text-gray-800">
-      <BackButton />
-
-      <h1 className="text-3xl font-bold mb-2">Пользовательское соглашение</h1>
-      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: {effectiveDate}</p>
-
-      <Section title="1. Общие положения">
+    <LegalPageLayout
+      title="Пользовательское соглашение"
+      version={version}
+      effectiveDate={effectiveDate}
+    >
+      <LegalSection title="1. Общие положения">
         <p>
           1.1. Настоящее Пользовательское соглашение (далее — Соглашение) регулирует отношения между{' '}
           <strong>{company.name}</strong> (далее — Агентство) и физическим лицом (далее —
@@ -30,9 +29,9 @@ export default function UserAgreement() {
           1.3. Агентство вправе в одностороннем порядке изменять условия Соглашения без
           предварительного уведомления. Изменения вступают в силу с момента публикации на Сайте.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="2. Предмет соглашения">
+      <LegalSection title="2. Предмет соглашения">
         <p>
           2.1. Агентство предоставляет Пользователю доступ к информационным материалам Сайта:
           описанию услуг, портфолио, форм для отправки запросов на расчёт стоимости рекламных услуг.
@@ -45,9 +44,9 @@ export default function UserAgreement() {
           2.3. Заполнение и отправка формы запроса на расчёт услуг не является заключением договора
           и не обязывает Агентство выполнить услугу по указанной предварительной оценке.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="3. Права и обязанности пользователя">
+      <LegalSection title="3. Права и обязанности пользователя">
         <p>3.1. Пользователь вправе:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>Свободно использовать материалы Сайта в личных некоммерческих целях</li>
@@ -66,9 +65,9 @@ export default function UserAgreement() {
           </li>
           <li>Не предпринимать действий, нарушающих работу Сайта</li>
         </ul>
-      </Section>
+      </LegalSection>
 
-      <Section title="4. Права и обязанности агентства">
+      <LegalSection title="4. Права и обязанности агентства">
         <p>4.1. Агентство вправе:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>Отказать в обработке запроса без объяснения причин</li>
@@ -89,9 +88,9 @@ export default function UserAgreement() {
           </li>
           <li>Не передавать данные Пользователя третьим лицам без его согласия</li>
         </ul>
-      </Section>
+      </LegalSection>
 
-      <Section title="5. Запросы на расчёт услуг">
+      <LegalSection title="5. Запросы на расчёт услуг">
         <p>
           5.1. Стоимость, указанная в ответе на запрос расчёта, является предварительной оценкой и
           может быть изменена по результатам детального обсуждения проекта.
@@ -104,9 +103,9 @@ export default function UserAgreement() {
           5.3. Агентство не несёт ответственности за убытки Пользователя, возникшие вследствие
           принятия решений на основании предварительного расчёта без заключения договора.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="6. Интеллектуальная собственность">
+      <LegalSection title="6. Интеллектуальная собственность">
         <p>
           6.1. Все материалы Сайта — тексты, изображения, логотипы, работы портфолио — являются
           собственностью Агентства или используются на основании лицензионных соглашений.
@@ -115,9 +114,9 @@ export default function UserAgreement() {
           6.2. Любое использование материалов Сайта без письменного разрешения Агентства запрещено и
           влечёт ответственность в соответствии с законодательством РФ.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="7. Ограничение ответственности">
+      <LegalSection title="7. Ограничение ответственности">
         <p>
           7.1. Сайт предоставляется «как есть». Агентство не гарантирует бесперебойную работу Сайта
           и не несёт ответственности за технические сбои, возникшие по независящим от него причинам.
@@ -130,17 +129,17 @@ export default function UserAgreement() {
           7.3. Совокупная ответственность Агентства перед Пользователем ограничена рамками
           действующего законодательства РФ.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="8. Применимое право">
+      <LegalSection title="8. Применимое право">
         <p>8.1. Настоящее Соглашение регулируется законодательством Российской Федерации.</p>
         <p>
           8.2. Все споры, возникающие из настоящего Соглашения, подлежат рассмотрению в суде по
           месту нахождения Агентства, если иное не предусмотрено законодательством.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="9. Контактная информация">
+      <LegalSection title="9. Контактная информация">
         <dl className="space-y-1">
           {(
             [
@@ -156,22 +155,7 @@ export default function UserAgreement() {
             </div>
           ))}
         </dl>
-      </Section>
-
-      <p className="text-sm text-gray-500 mt-10 pt-6 border-t border-gray-200">
-        Версия {version} · Дата последнего обновления: {effectiveDate}
-      </p>
-
-      <ScrollToTop />
-    </main>
-  );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="mb-8">
-      <h2 className="text-xl font-semibold mb-3 text-gray-900">{title}</h2>
-      <div className="space-y-2 text-gray-700 leading-relaxed">{children}</div>
-    </section>
+      </LegalSection>
+    </LegalPageLayout>
   );
 }

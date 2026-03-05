@@ -1,37 +1,36 @@
 // src/pages/Consent.tsx
 import { Link } from 'react-router-dom';
 import { legalData } from '@/lib/legalData';
-import { BackButton } from '@/components/ui/BackButton.tsx';
-import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
+import { LegalPageLayout } from '@/components/ui/LegalPageLayout.tsx';
+import { LegalSection } from '@/components/ui/LegalSection.tsx';
 
 export default function Consent() {
   const { company, documents } = legalData;
   const { version, effectiveDate } = documents.consent;
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12 text-gray-800">
-      <BackButton />
-
-      <h1 className="text-3xl font-bold mb-2">Согласие на обработку персональных данных</h1>
-      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: {effectiveDate}</p>
-
-      <Section title="1. Кто даёт согласие">
+    <LegalPageLayout
+      title="Согласие на обработку персональных данных"
+      version={version}
+      effectiveDate={effectiveDate}
+    >
+      <LegalSection title="1. Кто даёт согласие">
         <p>
           Настоящее согласие предоставляется физическим лицом (далее — Субъект персональных данных)
           путём проставления отметки в соответствующем поле формы на сайте{' '}
           <strong>{company.siteUrl}</strong>.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="2. Кому даётся согласие">
+      <LegalSection title="2. Кому даётся согласие">
         <p>
           Согласие предоставляется оператору персональных данных — <strong>{company.name}</strong>,
           зарегистрированному по адресу: <strong>{company.legalAddress}</strong>, ИНН{' '}
           <strong>{company.inn}</strong>, ОГРН <strong>{company.ogrn}</strong> (далее — Оператор).
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="3. Перечень персональных данных">
+      <LegalSection title="3. Перечень персональных данных">
         <p>Субъект даёт согласие на обработку следующих персональных данных:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>Фамилия, имя (при указании в форме)</li>
@@ -40,9 +39,9 @@ export default function Consent() {
           <li>Содержание обращения (описание задачи, запроса на расчёт)</li>
           <li>IP-адрес и технические данные браузера (собираются автоматически)</li>
         </ul>
-      </Section>
+      </LegalSection>
 
-      <Section title="4. Цели обработки">
+      <LegalSection title="4. Цели обработки">
         <p>Персональные данные обрабатываются исключительно в следующих целях:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>Рассмотрение и обработка запроса на расчёт стоимости рекламных услуг</li>
@@ -50,9 +49,9 @@ export default function Consent() {
           <li>Предоставление информации об услугах Агентства</li>
           <li>Ведение внутренней отчётности Оператора</li>
         </ul>
-      </Section>
+      </LegalSection>
 
-      <Section title="5. Действия с персональными данными">
+      <LegalSection title="5. Действия с персональными данными">
         <p>Оператору разрешается выполнять следующие действия с персональными данными:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>Сбор, запись и систематизация</li>
@@ -65,9 +64,9 @@ export default function Consent() {
           Передача данных третьим лицам, не связанным с исполнением указанных целей,{' '}
           <strong>не допускается</strong> без отдельного согласия Субъекта.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="6. Срок действия согласия">
+      <LegalSection title="6. Срок действия согласия">
         <p>
           6.1. Настоящее согласие действует с момента отправки формы и сохраняет силу в течение{' '}
           <strong>3 (трёх) лет</strong> с момента последнего обращения Субъекта.
@@ -76,9 +75,9 @@ export default function Consent() {
           6.2. По истечении срока персональные данные подлежат уничтожению или обезличиванию, если
           иное не предусмотрено законодательством РФ.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="7. Порядок отзыва согласия">
+      <LegalSection title="7. Порядок отзыва согласия">
         <p>
           7.1. Субъект вправе отозвать настоящее согласие в любое время, направив письменный запрос
           на электронную почту Оператора: <strong>{company.email}</strong>.
@@ -93,9 +92,9 @@ export default function Consent() {
           7.3. После получения отзыва Оператор прекращает обработку данных и уничтожает их в течение{' '}
           <strong>30 (тридцати) дней</strong>, если иное не предусмотрено законодательством.
         </p>
-      </Section>
+      </LegalSection>
 
-      <Section title="8. Права субъекта">
+      <LegalSection title="8. Права субъекта">
         <p>В соответствии с ФЗ-152 Субъект имеет право:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>Получить информацию об обработке своих данных</li>
@@ -114,9 +113,9 @@ export default function Consent() {
           </li>
           <li>Получить возмещение убытков и компенсацию морального вреда в судебном порядке</li>
         </ul>
-      </Section>
+      </LegalSection>
 
-      <Section title="9. Связанные документы">
+      <LegalSection title="9. Связанные документы">
         <p>Настоящее согласие действует совместно со следующими документами:</p>
         <ul className="list-disc pl-6 space-y-1 mt-2">
           <li>
@@ -138,9 +137,9 @@ export default function Consent() {
             — регулирует условия использования Сайта
           </li>
         </ul>
-      </Section>
+      </LegalSection>
 
-      <Section title="10. Контактная информация оператора">
+      <LegalSection title="10. Контактная информация оператора">
         <dl className="space-y-1">
           {(
             [
@@ -159,22 +158,7 @@ export default function Consent() {
             </div>
           ))}
         </dl>
-      </Section>
-
-      <p className="text-sm text-gray-500 mt-10 pt-6 border-t border-gray-200">
-        Версия {version} · Дата последнего обновления: {effectiveDate}
-      </p>
-
-      <ScrollToTop />
-    </main>
-  );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="mb-8">
-      <h2 className="text-xl font-semibold mb-3 text-gray-900">{title}</h2>
-      <div className="space-y-2 text-gray-700 leading-relaxed">{children}</div>
-    </section>
+      </LegalSection>
+    </LegalPageLayout>
   );
 }
