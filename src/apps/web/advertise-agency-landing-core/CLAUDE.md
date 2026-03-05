@@ -81,7 +81,9 @@ advertise-agency-landing-core/
 │   │   │   │   ├── index.tsx          # Thin orchestrator: badge + title + subtitle + HeroCTA + HeroStats; imported as '@/components/sections/hero'
 │   │   │   │   ├── HeroCTA.tsx        # Two CTA buttons (primary + outline); props: cta: { label, href }[]
 │   │   │   │   └── HeroStats.tsx      # 3-stat grid with icon + value + label; props: stats: { value, label }[]
-│   │   │   ├── About.tsx              # Two-column: story + info card (siteData, aboutValues)
+│   │   │   ├── about/
+│   │   │   │   ├── index.tsx          # Thin orchestrator: label + h2 + text + values list + AboutCard; imported as '@/components/sections/about'
+│   │   │   │   └── AboutCard.tsx      # Right-side info card: logo letter + company name + tagline + stats grid + NPS badge; props: card: Content['about']['card']
 │   │   │   ├── Services.tsx           # 6-card grid, ICON_MAP from iconMap.ts resolves icon strings (services)
 │   │   │   ├── Portfolio.tsx          # Category filter + project cards (portfolioCaseMap)
 │   │   │   ├── Advantages.tsx         # Dark bg, 6 glassmorphism cards, ICON_MAP from iconMap.ts (advantages)
