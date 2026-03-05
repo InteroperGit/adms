@@ -50,11 +50,11 @@ export function ImageGalleryLightbox({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-2 sm:p-4"
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-2 sm:p-4"
       onClick={onClose}
     >
       <button
-        className="absolute right-3 top-3 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25"
+        className="absolute right-3 top-3 cursor-pointer rounded-full bg-white/20 p-2 text-white transition-colors hover:bg-primary"
         onClick={onClose}
         aria-label="Закрыть"
       >
@@ -89,14 +89,14 @@ export function ImageGalleryLightbox({
               <button
                 onClick={onPrev}
                 aria-label={prevLabel}
-                className="absolute left-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/40 p-3 text-white transition-colors hover:bg-black/60 sm:flex"
+                className="absolute left-3 top-1/2 hidden -translate-y-1/2 cursor-pointer rounded-full bg-white/20 p-3 text-white transition-colors hover:bg-primary sm:flex"
               >
                 <ChevronLeft size={22} />
               </button>
               <button
                 onClick={onNext}
                 aria-label={nextLabel}
-                className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/40 p-3 text-white transition-colors hover:bg-black/60 sm:flex"
+                className="absolute right-3 top-1/2 hidden -translate-y-1/2 cursor-pointer rounded-full bg-white/20 p-3 text-white transition-colors hover:bg-primary sm:flex"
               >
                 <ChevronRight size={22} />
               </button>
