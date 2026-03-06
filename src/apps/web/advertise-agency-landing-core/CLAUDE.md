@@ -177,7 +177,8 @@ advertise-agency-landing-core/
 │   ├── plugins/
 │   │   └── themePlugin.ts     # Vite plugin: reads data/config/theme.json, injects CSS vars + Google Fonts into index.html
 │   ├── pages/
-│   │   ├── PortfolioCasePage.tsx  # Orchestrator: page header + Case* components + inline challenge section + TestimonialCard + ScrollToTop
+│   │   ├── Home.tsx               # Landing page content: Carousel → Hero → About → Services → Portfolio → Advantages → CallToAction → Testimonials → Contact; wrapped in <main>
+│   │   ├── PortfolioCasePage.tsx  # Orchestrator: breadcrumb back link + Case* components + inline challenge section + TestimonialCard; no own ScrollToTop (Layout provides it)
 │   │   ├── PrivacyPolicy.tsx      # /privacy-policy — reads legalData (company, documents.privacyPolicy.{version,effectiveDate})
 │   │   ├── Consent.tsx            # /consent — reads legalData (company, documents.consent.{version,effectiveDate})
 │   │   └── UserAgreement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate})
@@ -215,7 +216,7 @@ advertise-agency-landing-core/
 │   │   ├── siteData.ts               # SiteData interface + siteData const (from data/config/site.json)
 │   │   ├── testimonials.ts           # Testimonial interface + testimonials const (from data/sections/testimonials.json)
 │   │   └── theme.ts                  # Theme interface + ThemeColors interface + theme const (from data/config/theme.json); app-side only — themePlugin uses its own local Theme type due to tsconfig.node.json constraints
-│   ├── router.tsx             # RouteObject[] — "/", "/portfolio/:slug", "/privacy-policy", "/user-agreement", "/consent"
+│   ├── router.tsx             # Nested RouteObject[]: App as root layout (no path), children: Home ("/"), PortfolioCasePage ("/portfolio/:slug"), legal pages
 │   ├── main.tsx               # Entry: exports createRoot = ViteReactSSG({ routes })
 │   └── index.css              # Tailwind import, @theme inline (references CSS vars), base styles, animate-fade-in keyframe; no hardcoded colors/fonts (injected by themePlugin)
 ├── .env.example
@@ -226,32 +227,40 @@ advertise-agency-landing-core/
 └── vite.config.ts            # themePlugin + @tailwindcss/vite + @vitejs/plugin-react, @/ and @data aliases, ssgOptions
 ```
 
-## Page Composition (App.tsx order)
+## Layout (App.tsx — wraps all routes via `<Outlet />`)
 
 ```
 <Header />          in-flow nav, solid white bg, border-b
-<Carousel />        full-bleed slider, 70vh
-<Hero />            #— (full-viewport)
-<About />           #about
-<Services />        #services
-<Portfolio />       #portfolio
-<Advantages />      #advantages  (dark section)
-<CallToAction />    mid-page CTA
-<Testimonials />    #testimonials
-<Contact />         #contact
+<Outlet />          page content rendered here
 <Footer />
 <ScrollToTop />     fixed bottom-right, z-50, visible after 300px scroll, navSelector="#main-nav"
 <CookieBanner />    fixed bottom/bottom-left dialog, persists consent to localStorage
 ```
 
+## Home page composition (Home.tsx — rendered at "/")
+
+```
+<main>
+  <Carousel />      full-bleed slider, 70vh
+  <Hero />          #— (full-viewport)
+  <About />         #about
+  <Services />      #services
+  <Portfolio />     #portfolio
+  <Advantages />    #advantages  (dark section)
+  <CallToAction />  mid-page CTA
+  <Testimonials />  #testimonials
+  <Contact />       #contact
+</main>
+```
+
 ## Routes
 
 ```
-/                    → App.tsx (full landing page)
-/portfolio/:slug     → PortfolioCasePage.tsx (SSG per JSON file in data/portfolio/)
-/privacy-policy      → PrivacyPolicy.tsx (static legal page)
-/user-agreement      → UserAgreement.tsx (static legal page)
-/consent             → Consent.tsx (cookie consent policy page)
+/                    → Home.tsx (landing page content, inside App layout)
+/portfolio/:slug     → PortfolioCasePage.tsx (SSG per JSON file in data/portfolio/, inside App layout)
+/privacy-policy      → PrivacyPolicy.tsx (static legal page, inside App layout)
+/user-agreement      → UserAgreement.tsx (static legal page, inside App layout)
+/consent             → Consent.tsx (cookie consent policy page, inside App layout)
 ```
 
 ## Development Commands
@@ -271,7 +280,7 @@ UI copy is split into one JSON file per section — each section component impor
 
 | Data file | Type module | Used by |
 |---|---|---|
-| `data/sections/header.json` | `src/types/header.ts` → `headerContent` | `header/`, `footer/FooterNav.tsx`, `about/AboutCard.tsx`, `PortfolioCasePage.tsx`, `useActiveSection.ts` |
+| `data/sections/header.json` | `src/types/header.ts` → `headerContent` | `header/`, `footer/FooterNav.tsx`, `about/AboutCard.tsx`, `useActiveSection.ts` |
 | `data/sections/hero.json` | `src/types/hero.ts` → `heroContent` | `hero/` |
 | `data/sections/carousel-content.json` | `src/types/carouselContent.ts` → `carouselContent` | `carousel/CarouselSlide.tsx` |
 | `data/sections/about-content.json` | `src/types/aboutContent.ts` → `aboutContent` | `about/` |

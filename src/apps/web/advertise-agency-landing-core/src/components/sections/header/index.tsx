@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { headerContent } from '@/types/header';
 import { useActiveSection } from '@/hooks/useActiveSection';
@@ -7,13 +8,16 @@ import { HeaderMobileNav } from './HeaderMobileNav';
 
 export function Header() {
   const activeSection = useActiveSection();
+  const { pathname } = useLocation();
+  const isHome = pathname === '/';
+  const forcedActiveHref = pathname.startsWith('/portfolio/') ? '#portfolio' : '';
 
   return (
     <header id="main-nav" className="border-b border-border bg-white shadow-sm">
       <Container>
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 text-foreground hover:text-primary">
+          <a href="/" className="flex items-center gap-2 text-foreground hover:text-primary">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
               {headerContent.logo.letter}
             </span>
@@ -25,8 +29,16 @@ export function Header() {
             </span>
           </a>
 
-          <HeaderDesktopNav activeSection={activeSection} />
-          <HeaderMobileNav activeSection={activeSection} />
+          <HeaderDesktopNav
+            activeSection={activeSection}
+            isHome={isHome}
+            forcedActiveHref={forcedActiveHref}
+          />
+          <HeaderMobileNav
+            activeSection={activeSection}
+            isHome={isHome}
+            forcedActiveHref={forcedActiveHref}
+          />
         </div>
       </Container>
     </header>
