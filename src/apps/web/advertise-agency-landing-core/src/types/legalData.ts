@@ -1,4 +1,4 @@
-import raw from '@data/legal.json';
+import raw from '@data/config/legal.json';
 
 export interface DocumentVersion {
   version: string;

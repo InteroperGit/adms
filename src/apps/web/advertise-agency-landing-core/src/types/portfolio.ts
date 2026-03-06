@@ -1,4 +1,4 @@
-import raw from '@data/portfolio-section.json';
+import raw from '@data/sections/portfolio-section.json';
 
 export interface CtaLink {
   label: string;

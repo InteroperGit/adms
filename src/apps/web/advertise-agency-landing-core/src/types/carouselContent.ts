@@ -1,4 +1,4 @@
-import raw from '@data/carousel-content.json';
+import raw from '@data/sections/carousel-content.json';
 
 export interface CarouselSectionContent {
   label: string;

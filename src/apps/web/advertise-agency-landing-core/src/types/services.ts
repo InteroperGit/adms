@@ -1,4 +1,4 @@
-import data from '@data/services.json';
+import data from '@data/sections/services.json';
 
 export interface Service {
   icon: string;

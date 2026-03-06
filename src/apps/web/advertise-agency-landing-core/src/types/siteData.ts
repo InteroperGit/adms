@@ -1,4 +1,4 @@
-import data from '@data/site.json';
+import data from '@data/config/site.json';
 
 export interface SiteData {
   name: string;

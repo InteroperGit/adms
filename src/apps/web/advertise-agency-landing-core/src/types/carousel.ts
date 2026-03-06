@@ -1,4 +1,4 @@
-import data from '@data/carousel.json';
+import data from '@data/sections/carousel.json';
 
 export interface CarouselSlide {
   id: number;
