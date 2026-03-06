@@ -1,0 +1,18 @@
+{
+  "name": "РА «Рекламастер»",
+  "description": "Мы создаём рекламу, которая работает",
+  "yandexMapsOrgId": "12345678901",
+  "yandexMapUrl": "https://yandex.ru/map-widget/v1/?um=constructor%3AHASH&source=constructorLink",
+  "contact": {
+    "phone": "+7 (495) 123-45-67",
+    "email": "hello@reklamaster.ru",
+    "address": "г. Москва, ул. Тверская, 1, офис 301",
+    "telegram": "https://t.me/reklamaster",
+    "vk": "https://vk.com/reklamaster",
+    "workingHours": {
+      "weekdays": "9:00 — 19:00",
+      "saturday": "10:00 — 16:00",
+      "sunday": "Выходной"
+    }
+  }
+}
