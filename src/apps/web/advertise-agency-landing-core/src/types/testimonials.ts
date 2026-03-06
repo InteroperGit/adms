@@ -11,4 +11,4 @@ export interface Testimonial {
   text: string;
 }
 
-export const testimonials: Testimonial[] = data;
+export const testimonials = data satisfies Testimonial[];

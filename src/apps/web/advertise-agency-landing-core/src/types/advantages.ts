@@ -6,4 +6,4 @@ export interface Advantage {
   description: string;
 }
 
-export const advantages: Advantage[] = data;
+export const advantages = data satisfies Advantage[];

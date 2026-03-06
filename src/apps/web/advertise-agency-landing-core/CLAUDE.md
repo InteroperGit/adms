@@ -39,17 +39,17 @@ advertise-agency-landing-core/
 │       └── 003_improve_site.md               # Component decomposition plan (max 60 lines per component)
 ├── data/                    # JSON data — gitignored (except _schema/ and README.md)
 │   ├── README.md            # New-client setup guide: what each JSON file does, how to configure
-│   ├── _schema/             # Schema examples — git-tracked
-│   │   ├── about-values.example.json
-│   │   ├── advantages.example.json
-│   │   ├── carousel.example.json
-│   │   ├── content.example.json
-│   │   ├── theme.example.json
-│   │   ├── legal.example.json
-│   │   ├── portfolio.example.json
-│   │   ├── services.example.json
-│   │   ├── site.example.json
-│   │   └── testimonials.example.json
+│   ├── _schema/             # Schema examples — git-tracked; TypeScript files using `satisfies` for compile-time validation
+│   │   ├── about-values.example.ts
+│   │   ├── advantages.example.ts
+│   │   ├── carousel.example.ts
+│   │   ├── content.example.ts
+│   │   ├── theme.example.ts
+│   │   ├── legal.example.ts
+│   │   ├── portfolio.example.ts
+│   │   ├── services.example.ts
+│   │   ├── site.example.ts
+│   │   └── testimonials.example.ts
 │   ├── portfolio/           # One JSON file per case study (slug.json)
 │   │   └── bodrost.json
 │   ├── content.json             # All UI copy: nav, hero, about, services, portfolio, CTA, contact, footer, cookies, etc.
@@ -179,11 +179,12 @@ advertise-agency-landing-core/
 │   │   ├── aboutValues.ts     # AboutValue interface + aboutValues const (from data/about-values.json)
 │   │   ├── advantages.ts      # Advantage interface + advantages const (from data/advantages.json)
 │   │   ├── carousel.ts        # CarouselSlide interface + carouselSlides const (from data/carousel.json)
-│   │   ├── content.ts         # Content type + content const (from data/content.json)
-│   │   ├── legalData.ts       # LegalData type + legalData const (from data/legal.json)
+│   │   ├── content.ts         # Content interface (explicit) + CtaLink interface + content const (from data/content.json)
+│   │   ├── legalData.ts       # LegalData interface + DocumentVersion interface + legalData const (from data/legal.json)
 │   │   ├── services.ts        # Service interface + services const (from data/services.json)
 │   │   ├── siteData.ts        # SiteData interface + siteData const (from data/site.json)
-│   │   └── testimonials.ts    # Testimonial interface + testimonials const (from data/testimonials.json)
+│   │   ├── testimonials.ts    # Testimonial interface + testimonials const (from data/testimonials.json)
+│   │   └── theme.ts           # Theme interface + ThemeColors interface + theme const (from data/theme.json); app-side only — themePlugin uses its own local Theme type due to tsconfig.node.json constraints
 │   ├── router.tsx             # RouteObject[] — "/", "/portfolio/:slug", "/privacy-policy", "/user-agreement", "/consent"
 │   ├── main.tsx               # Entry: exports createRoot = ViteReactSSG({ routes })
 │   └── index.css              # Tailwind import, @theme inline (references CSS vars), base styles, animate-fade-in keyframe; no hardcoded colors/fonts (injected by themePlugin)
@@ -191,7 +192,7 @@ advertise-agency-landing-core/
 ├── .prettierrc
 ├── components.json           # shadcn/ui config (aliases use src/ paths)
 ├── index.html                # title: РА «Рекламастер»; font preconnects injected by themePlugin
-├── tsconfig.app.json         # paths: @/* → ./src/*, resolveJsonModule: true
+├── tsconfig.app.json         # paths: @/* → ./src/*, @data/* → ./data/*; resolveJsonModule: true; include: ["src", "data/_schema"]
 └── vite.config.ts            # themePlugin + @tailwindcss/vite + @vitejs/plugin-react, @/ and @data aliases, ssgOptions
 ```
 
@@ -237,20 +238,21 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 ## Data Architecture
 
 - **`data/content.json`** — all UI copy (nav labels, hero text, section headings, form labels, footer, cookies, portfolio case labels, `imageGallery` UI labels). Exposed via `src/types/content.ts`; used by all section components, `PortfolioCasePage`, `CookieBanner`, and `useActiveSection`. Supports template tokens (`{name}`, `{year}`, `{description}`) replaced at render time.
-- **`data/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`.
+- **`data/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/theme.ts`.
 - **`data/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo). Exposed via `src/types/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
 - **`data/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/aboutValues.ts`; used by `about/`.
 - **`data/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Exposed via `src/types/carousel.ts`; used by `carousel/`.
 - **`data/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/types/advantages.ts`; used by `advantages/`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/iconMap.ts`.
 - **`data/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/iconMap.ts`.
 - **`data/testimonials.json`** — array of testimonial objects. Exposed via `src/types/testimonials.ts`; used by `PortfolioCasePage.tsx` (TestimonialCard). The Testimonials section now uses the Yandex widget instead of this data directly.
-- **`data/legal.json`** — company legal details. Exposed via `src/types/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.json`.
+- **`data/legal.json`** — company legal details. Exposed via `src/types/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.ts`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.
 - Components **never** import from `@data/` directly — always go through `src/types/`.
 - All shared types, interfaces, consts, and data modules live in `src/types/`; only `utils.ts` stays in `src/lib/`.
 - Portfolio collection loaded via `import.meta.glob('@data/portfolio/*.json', { eager: true, import: 'default' })` — see `src/types/portfolioCases.ts`.
-- Schema examples tracked in `data/_schema/` — the actual data files are gitignored.
+- Schema examples tracked in `data/_schema/` as TypeScript files using `satisfies` — compiled by `tsconfig.app.json` (include: `data/_schema`), validated against their interfaces at compile time. The actual data files are gitignored.
+- All data const exports use the `satisfies` operator (`export const x = data satisfies Type`) — validates JSON shape against the interface while preserving the narrow inferred type.
 
 ## SSG Build
 

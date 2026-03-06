@@ -9,4 +9,4 @@ export interface CarouselSlide {
   subtitle: string;
 }
 
-export const carouselSlides: CarouselSlide[] = data;
+export const carouselSlides = data satisfies CarouselSlide[];

@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import type { Plugin } from 'vite';
 
-interface ThemeConfig {
+interface Theme {
   colors: Record<string, string>;
   radius: string;
   fonts: { heading: string; body: string };
@@ -32,7 +32,7 @@ const COLOR_KEY_MAP: Record<string, string> = {
   ring: 'ring',
 };
 
-function buildCss(theme: ThemeConfig): string {
+function buildCss(theme: Theme): string {
   const colorVars = Object.entries(theme.colors)
     .map(([key, value]) => {
       const cssName = COLOR_KEY_MAP[key] ?? key;
@@ -64,7 +64,7 @@ function buildFontLinks(urls: string[]): string {
 export function themePlugin(): Plugin {
   const themeFile = path.resolve(__dirname, '../../data/theme.json');
 
-  let theme: ThemeConfig;
+  let theme: Theme;
 
   return {
     name: 'vite-plugin-theme',
@@ -72,7 +72,7 @@ export function themePlugin(): Plugin {
 
     configResolved() {
       const raw = readFileSync(themeFile, 'utf-8');
-      theme = JSON.parse(raw) as ThemeConfig;
+      theme = JSON.parse(raw) as Theme;
     },
 
     transformIndexHtml(html) {
