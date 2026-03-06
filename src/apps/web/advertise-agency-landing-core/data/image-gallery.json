@@ -1,0 +1,5 @@
+{
+  "prevLabel": "Предыдущее фото",
+  "nextLabel": "Следующее фото",
+  "counter": "{current} из {total}"
+}

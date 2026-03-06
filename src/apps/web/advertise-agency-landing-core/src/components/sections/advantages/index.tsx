@@ -1,7 +1,7 @@
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { advantages } from '@/types/advantages';
-import { content } from '@/types/content';
+import { advantagesContent } from '@/types/advantagesContent';
 import { AdvantageCard } from './AdvantageCard';
 
 export function Advantages() {
@@ -17,10 +17,10 @@ export function Advantages() {
 
       <Container className="relative">
         <SectionHeader
-          label={content.advantages.label}
-          title={content.advantages.title}
-          titleHighlight={content.advantages.titleHighlight}
-          description={content.advantages.description}
+          label={advantagesContent.label}
+          title={advantagesContent.title}
+          titleHighlight={advantagesContent.titleHighlight}
+          description={advantagesContent.description}
           variant="dark"
           className="mb-16"
         />

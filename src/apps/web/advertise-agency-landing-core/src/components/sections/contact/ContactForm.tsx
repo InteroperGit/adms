@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ContactSuccess } from './ContactSuccess';
 import { ContactFormFields } from './ContactFormFields';
 import { ContactConsent } from './ContactConsent';
-import { content } from '@/types/content';
+import { contactContent } from '@/types/contact';
 
 type FormState = { name: string; contact: string; message: string };
 const EMPTY: FormState = { name: '', contact: '', message: '' };
@@ -13,7 +13,7 @@ export function ContactForm() {
   const [form, setForm] = useState<FormState>(EMPTY);
   const [submitted, setSubmitted] = useState(false);
   const [consent, setConsent] = useState(false);
-  const { form: f } = content.contact;
+  const { form: f } = contactContent;
 
   function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();

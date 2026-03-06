@@ -10,7 +10,8 @@ import { CaseResults } from '@/components/portfolio/CaseResults';
 import { CaseGallery } from '@/components/portfolio/CaseGallery';
 import { CaseCTA } from '@/components/portfolio/CaseCTA';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
-import { content } from '@/types/content';
+import { portfolioCaseContent } from '@/types/portfolioCaseContent';
+import { headerContent } from '@/types/header';
 import { testimonials } from '@/types/testimonials';
 import { portfolioCaseMap } from '@/types/portfolioCases';
 
@@ -26,7 +27,7 @@ export function PortfolioCasePage() {
     }
   }, [data]);
 
-  const pc = content.portfolioCase;
+  const pc = portfolioCaseContent;
 
   if (!data) {
     return (
@@ -52,7 +53,7 @@ export function PortfolioCasePage() {
         <Container>
           <div className="flex h-16 items-center justify-between">
             <a href="/" className="text-xl font-bold tracking-tight text-primary">
-              {content.logo.text}
+              {headerContent.logo.text}
             </a>
             <a
               href="/#portfolio"

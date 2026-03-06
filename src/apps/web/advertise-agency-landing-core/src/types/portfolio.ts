@@ -1,3 +1,21 @@
+import raw from '@data/portfolio-section.json';
+
+export interface CtaLink {
+  label: string;
+  href: string;
+}
+
+export interface PortfolioSectionContent {
+  label: string;
+  title: string;
+  description: string;
+  allCategory: string;
+  detailsLabel: string;
+  cta: CtaLink;
+}
+
+export const portfolioSectionContent = raw satisfies PortfolioSectionContent;
+
 export interface GalleryImage {
   src: string;
   description?: string;

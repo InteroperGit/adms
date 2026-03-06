@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Vite
+.vite-react-ssg-temp
+
 # Content — local only, not tracked in git
 data/portfolio/
 data/site.json

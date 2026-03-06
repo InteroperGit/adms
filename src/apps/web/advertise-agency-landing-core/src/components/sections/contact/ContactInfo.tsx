@@ -3,11 +3,11 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import { ContactItem } from '@/components/sections/contact/ContactItem';
 import { ContactMap } from '@/components/sections/contact/ContactMap';
 import { SocialLinks } from '@/components/ui/SocialLinks';
-import { content } from '@/types/content';
+import { contactContent } from '@/types/contact';
 import { siteData } from '@/types/siteData';
 
 export function ContactInfo() {
-  const { directTitle, contactLabels, socialTitle } = content.contact;
+  const { directTitle, contactLabels, socialTitle } = contactContent;
   const { phone, email, address, telegram, vk } = siteData.contact;
 
   return (

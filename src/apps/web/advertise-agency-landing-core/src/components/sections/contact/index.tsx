@@ -4,16 +4,16 @@ import { SectionHeader } from '@/components/ui/SectionHeader';
 import { ContactForm } from './ContactForm';
 import { ContactInfo } from './ContactInfo';
 import { ContactHours } from './ContactHours';
-import { content } from '@/types/content';
+import { contactContent } from '@/types/contact';
 
 export function Contact() {
   return (
     <section id="contact" className="bg-muted/40 py-24 md:py-32">
       <Container>
         <SectionHeader
-          label={content.contact.label}
-          title={content.contact.title}
-          description={content.contact.description}
+          label={contactContent.label}
+          title={contactContent.title}
+          description={contactContent.description}
           className="mb-14"
         />
 

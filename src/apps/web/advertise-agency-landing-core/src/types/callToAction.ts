@@ -1,0 +1,14 @@
+import raw from '@data/call-to-action.json';
+
+export interface CtaLink {
+  label: string;
+  href: string;
+}
+
+export interface CallToActionContent {
+  title: string;
+  subtitle: string;
+  cta: CtaLink[];
+}
+
+export const callToActionContent = raw satisfies CallToActionContent;

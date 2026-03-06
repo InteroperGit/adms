@@ -1,10 +1,10 @@
 // src/components/portfolio/CaseCTA.tsx
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
-import { content } from '@/types/content';
+import { portfolioCaseContent } from '@/types/portfolioCaseContent';
 
 export function CaseCTA() {
-  const { cta } = content.portfolioCase;
+  const { cta } = portfolioCaseContent;
 
   return (
     <section className="py-20">

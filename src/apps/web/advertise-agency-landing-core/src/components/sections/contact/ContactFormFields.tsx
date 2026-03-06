@@ -1,7 +1,7 @@
 // src/components/sections/contact/ContactFormFields.tsx
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { content } from '@/types/content';
+import { contactContent } from '@/types/contact';
 
 type FormState = { name: string; contact: string; message: string };
 
@@ -11,7 +11,7 @@ interface ContactFormFieldsProps {
 }
 
 export function ContactFormFields({ form, onChange }: ContactFormFieldsProps) {
-  const { form: f } = content.contact;
+  const { form: f } = contactContent;
 
   return (
     <>

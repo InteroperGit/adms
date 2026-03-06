@@ -1,6 +1,7 @@
 // src/components/sections/footer/FooterBrand.tsx
 import { SocialLinks } from '@/components/ui/SocialLinks';
-import { content } from '@/types/content';
+import { footerContent } from '@/types/footer';
+import { headerContent } from '@/types/header';
 import { siteData } from '@/types/siteData';
 
 export function FooterBrand() {
@@ -8,7 +9,7 @@ export function FooterBrand() {
     <div className="sm:col-span-2 lg:col-span-1">
       <a href="#" className="mb-4 inline-flex items-center gap-2">
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-          {content.logo.letter}
+          {headerContent.logo.letter}
         </span>
         <span
           style={{ fontFamily: 'var(--font-heading)' }}
@@ -18,7 +19,7 @@ export function FooterBrand() {
         </span>
       </a>
       <p className="mb-6 text-sm leading-relaxed text-white/50">
-        {content.footer.description.replace('{description}', siteData.description)}
+        {footerContent.description.replace('{description}', siteData.description)}
       </p>
       <SocialLinks telegram={siteData.contact.telegram} vk={siteData.contact.vk} variant="dark" />
     </div>

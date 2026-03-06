@@ -1,0 +1,8 @@
+{
+  "label": "Портфолио",
+  "title": "Наши работы",
+  "description": "Описание секции портфолио.",
+  "allCategory": "Все",
+  "detailsLabel": "Подробнее",
+  "cta": { "label": "Обсудить ваш проект", "href": "#contact" }
+}

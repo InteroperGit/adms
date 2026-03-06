@@ -2,7 +2,7 @@
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { PortfolioThumbnail } from '@/components/ui/PortfolioThumbnail';
-import { content } from '@/types/content';
+import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';
 
 interface PortfolioCardProps {
@@ -10,7 +10,7 @@ interface PortfolioCardProps {
 }
 
 export function PortfolioCard({ item }: PortfolioCardProps) {
-  const { detailsLabel } = content.portfolio;
+  const { detailsLabel } = portfolioSectionContent;
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-md">

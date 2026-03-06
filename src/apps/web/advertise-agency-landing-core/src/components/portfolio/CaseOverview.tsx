@@ -1,6 +1,6 @@
 // src/components/portfolio/CaseOverview.tsx
 import { Container } from '@/components/layout/Container';
-import { content } from '@/types/content';
+import { portfolioCaseContent } from '@/types/portfolioCaseContent';
 
 interface CaseOverviewProps {
   client: string;
@@ -10,7 +10,7 @@ interface CaseOverviewProps {
 }
 
 export function CaseOverview({ client, category, year, services }: CaseOverviewProps) {
-  const { overviewLabels } = content.portfolioCase;
+  const { overviewLabels } = portfolioCaseContent;
 
   const items = [
     { label: overviewLabels.client, value: client },

@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { content } from '@/types/content';
+import { carouselContent } from '@/types/carouselContent';
 import type { CarouselSlide as CarouselSlideType } from '@/types/carousel';
 
 interface Props {
@@ -25,7 +25,7 @@ export function CarouselSlide({ slide, isActive }: Props) {
       <div className="absolute inset-0 flex items-center justify-center px-6">
         <div className="max-w-3xl text-center text-foreground">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            {content.carousel.label}
+            {carouselContent.label}
           </p>
           <h2
             style={{ fontFamily: 'var(--font-heading)' }}
