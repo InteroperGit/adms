@@ -1,0 +1,17 @@
+{
+  "company": {
+    "name": "ИП Иванов И.И.",
+    "inn": "1234567890",
+    "ogrn": "1234567890123",
+    "legalAddress": "г. Москва, ул. Примерная, д. 1",
+    "siteUrl": "https://example.com",
+    "email": "info@example.com",
+    "phone": "+7 (000) 000-00-00",
+    "responsible": "Иванов И.И., директор"
+  },
+  "documents": {
+    "privacyPolicy": { "version": "1.0", "effectiveDate": "04 марта 2026 г." },
+    "consent": { "version": "1.0", "effectiveDate": "04 марта 2026 г." },
+    "userAgreement": { "version": "1.0", "effectiveDate": "04 марта 2026 г." }
+  }
+}

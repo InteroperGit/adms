@@ -1,4 +1,4 @@
-import data from '@data/theme.json';
+import data from '@data/config/theme.json';
 
 export interface ThemeColors {
   background: string;

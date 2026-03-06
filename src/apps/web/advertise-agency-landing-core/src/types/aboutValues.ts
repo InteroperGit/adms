@@ -1,4 +1,4 @@
-import data from '@data/about-values.json';
+import data from '@data/sections/about-values.json';
 
 export interface AboutValue {
   title: string;

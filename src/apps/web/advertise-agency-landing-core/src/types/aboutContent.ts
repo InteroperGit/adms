@@ -1,4 +1,4 @@
-import raw from '@data/about-content.json';
+import raw from '@data/sections/about-content.json';
 
 export interface AboutSectionContent {
   label: string;

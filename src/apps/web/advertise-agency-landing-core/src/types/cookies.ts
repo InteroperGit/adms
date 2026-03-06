@@ -1,4 +1,4 @@
-import raw from '@data/cookies.json';
+import raw from '@data/config/cookies.json';
 
 export interface CtaLink {
   label: string;

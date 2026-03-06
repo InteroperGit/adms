@@ -1,4 +1,4 @@
-import data from '@data/testimonials.json';
+import data from '@data/sections/testimonials.json';
 
 export interface Testimonial {
   id: number;

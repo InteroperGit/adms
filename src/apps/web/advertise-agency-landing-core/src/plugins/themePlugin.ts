@@ -62,7 +62,7 @@ function buildFontLinks(urls: string[]): string {
 }
 
 export function themePlugin(): Plugin {
-  const themeFile = path.resolve(__dirname, '../../data/theme.json');
+  const themeFile = path.resolve(__dirname, '../../data/config/theme.json');
 
   let theme: Theme;
 

@@ -1,4 +1,4 @@
-import data from '@data/advantages.json';
+import data from '@data/sections/advantages.json';
 
 export interface Advantage {
   icon: string;

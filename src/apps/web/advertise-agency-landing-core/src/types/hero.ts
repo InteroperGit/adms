@@ -1,4 +1,4 @@
-import raw from '@data/hero.json';
+import raw from '@data/sections/hero.json';
 
 export interface CtaLink {
   label: string;
