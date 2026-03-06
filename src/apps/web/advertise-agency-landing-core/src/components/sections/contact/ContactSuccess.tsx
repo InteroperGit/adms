@@ -1,14 +1,14 @@
 // src/components/sections/contact/ContactSuccess.tsx
 import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { content } from '@/types/content';
+import { contactContent } from '@/types/contact';
 
 interface ContactSuccessProps {
   onReset: () => void;
 }
 
 export function ContactSuccess({ onReset }: ContactSuccessProps) {
-  const { success } = content.contact.form;
+  const { success } = contactContent.form;
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-4 py-12 text-center">

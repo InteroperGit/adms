@@ -1,14 +1,15 @@
 // src/components/sections/footer/FooterNav.tsx
-import { content } from '@/types/content';
+import { footerContent } from '@/types/footer';
+import { headerContent } from '@/types/header';
 
 export function FooterNav() {
   return (
     <div>
       <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-white/40">
-        {content.footer.navTitle}
+        {footerContent.navTitle}
       </p>
       <ul className="space-y-3">
-        {content.nav.map((link) => (
+        {headerContent.nav.map((link) => (
           <li key={link.href}>
             <a
               href={link.href}

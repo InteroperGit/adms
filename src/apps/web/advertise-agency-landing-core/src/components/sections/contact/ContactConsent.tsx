@@ -1,6 +1,6 @@
 // src/components/sections/contact/ContactConsent.tsx
 import { Link } from 'react-router-dom';
-import { content } from '@/types/content';
+import { contactContent } from '@/types/contact';
 
 interface ContactConsentProps {
   checked: boolean;
@@ -8,7 +8,7 @@ interface ContactConsentProps {
 }
 
 export function ContactConsent({ checked, onChange }: ContactConsentProps) {
-  const { form: f } = content.contact;
+  const { form: f } = contactContent;
 
   return (
     <div className="flex items-start gap-3">

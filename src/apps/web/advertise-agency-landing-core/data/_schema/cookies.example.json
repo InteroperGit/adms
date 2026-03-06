@@ -1,0 +1,9 @@
+{
+  "ariaLabel": "Уведомление об использовании cookie",
+  "closeLabel": "Закрыть",
+  "title": "Мы используем cookie",
+  "text": "Описание использования cookie на сайте. Подробнее —",
+  "privacyLink": { "label": "Политика конфиденциальности", "href": "/privacy-policy" },
+  "acceptAll": "Принять все",
+  "necessaryOnly": "Только необходимые"
+}

@@ -1,11 +1,11 @@
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { content } from '@/types/content';
+import { servicesSectionContent } from '@/types/servicesContent';
 import { services } from '@/types/services';
 import { ServiceCard } from './ServiceCard';
 
 export function Services() {
-  const { services: s } = content;
+  const s = servicesSectionContent;
 
   return (
     <section id="services" className="bg-muted py-24 md:py-32">

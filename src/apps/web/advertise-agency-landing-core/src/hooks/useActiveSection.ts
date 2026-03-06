@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { content } from '@/types/content';
+import { headerContent } from '@/types/header';
 
-const SECTION_IDS = content.nav.map((l) => l.href.slice(1));
+const SECTION_IDS = headerContent.nav.map((l) => l.href.slice(1));
 
 export function useActiveSection(): string {
   const [active, setActive] = useState('');

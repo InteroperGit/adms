@@ -1,0 +1,13 @@
+{
+  "description": "{description}. Рекламное агентство полного цикла — стратегия, дизайн, digital и наружная реклама.",
+  "navTitle": "Навигация",
+  "servicesTitle": "Услуги",
+  "contactsTitle": "Контакты",
+  "copyright": "© {year} {name}. Все права защищены.",
+  "tagline": "Реклама, которая работает.",
+  "legalLinks": [
+    { "label": "Политика конфиденциальности", "href": "/privacy-policy" },
+    { "label": "Согласие на обработку данных", "href": "/consent" },
+    { "label": "Пользовательское соглашение", "href": "/user-agreement" }
+  ]
+}

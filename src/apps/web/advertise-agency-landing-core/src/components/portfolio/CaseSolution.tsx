@@ -1,6 +1,6 @@
 // src/components/portfolio/CaseSolution.tsx
 import { Container } from '@/components/layout/Container';
-import { content } from '@/types/content';
+import { portfolioCaseContent } from '@/types/portfolioCaseContent';
 import { cn } from '@/lib/utils';
 import type { PortfolioCase } from '@/types/portfolio';
 
@@ -15,7 +15,7 @@ export function CaseSolution({ solution, gradient }: CaseSolutionProps) {
       <Container>
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-10 text-2xl font-bold md:text-3xl">
-            {content.portfolioCase.solutionTitle}
+            {portfolioCaseContent.solutionTitle}
           </h2>
           <div className="grid gap-4 sm:grid-cols-3 sm:gap-8">
             {solution.map(({ title, description }) => (

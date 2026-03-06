@@ -1,6 +1,6 @@
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { content } from '@/types/content';
+import { testimonialsSectionContent } from '@/types/testimonialsContent';
 import { siteData } from '@/types/siteData';
 import { YandexReviews } from './YandexReviews';
 import { TestimonialsEmpty } from './TestimonialsEmpty';
@@ -12,9 +12,9 @@ export function Testimonials() {
     <section id="testimonials" className="bg-muted py-24 md:py-32">
       <Container>
         <SectionHeader
-          label={content.testimonials.label}
-          title={content.testimonials.title}
-          description={content.testimonials.description}
+          label={testimonialsSectionContent.label}
+          title={testimonialsSectionContent.title}
+          description={testimonialsSectionContent.description}
           className="mb-16"
         />
         {orgId ? <YandexReviews orgId={orgId} /> : <TestimonialsEmpty />}

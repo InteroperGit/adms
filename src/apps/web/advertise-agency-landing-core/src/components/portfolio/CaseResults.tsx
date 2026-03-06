@@ -1,6 +1,6 @@
 // src/components/portfolio/CaseResults.tsx
 import { Container } from '@/components/layout/Container';
-import { content } from '@/types/content';
+import { portfolioCaseContent } from '@/types/portfolioCaseContent';
 import { cn } from '@/lib/utils';
 import type { PortfolioCase } from '@/types/portfolio';
 
@@ -15,7 +15,7 @@ export function CaseResults({ results, gradient }: CaseResultsProps) {
       <Container>
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-10 text-2xl font-bold md:text-3xl">
-            {content.portfolioCase.resultsTitle}
+            {portfolioCaseContent.resultsTitle}
           </h2>
           <div className="grid gap-4 sm:grid-cols-3 sm:gap-6">
             {results.map(({ metric, label, description }) => (

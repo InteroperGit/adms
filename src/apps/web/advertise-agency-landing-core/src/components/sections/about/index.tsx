@@ -2,11 +2,11 @@ import { CheckCircle2 } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { AboutCard } from '@/components/sections/about/AboutCard';
 import { aboutValues } from '@/types/aboutValues';
-import { content } from '@/types/content';
+import { aboutContent } from '@/types/aboutContent';
 import { siteData } from '@/types/siteData';
 
 export function About() {
-  const { about } = content;
+  const about = aboutContent;
 
   return (
     <section id="about" className="bg-white py-24 md:py-32">

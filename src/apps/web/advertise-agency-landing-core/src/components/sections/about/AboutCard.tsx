@@ -1,8 +1,9 @@
-import { content, type Content } from '@/types/content';
+import { type AboutSectionContent } from '@/types/aboutContent';
+import { headerContent } from '@/types/header';
 import { siteData } from '@/types/siteData';
 
 interface AboutCardProps {
-  card: Content['about']['card'];
+  card: AboutSectionContent['card'];
 }
 
 export function AboutCard({ card }: AboutCardProps) {
@@ -16,7 +17,7 @@ export function AboutCard({ card }: AboutCardProps) {
         {/* Card header */}
         <div className="bg-primary px-6 py-8">
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-2xl font-bold text-white">
-            {content.logo.letter}
+            {headerContent.logo.letter}
           </div>
           <p className="text-lg font-semibold text-white">{siteData.name}</p>
           <p className="mt-1 text-sm text-white/70">{card.tagline}</p>

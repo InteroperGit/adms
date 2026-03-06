@@ -5,7 +5,7 @@ import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { PortfolioCard } from '@/components/ui/PortfolioCard';
 import { PortfolioFilter } from '@/components/sections/portfolio/PortfolioFilter';
-import { content } from '@/types/content';
+import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';
 
 const modules = import.meta.glob<PortfolioCase>('@data/portfolio/*.json', {
@@ -19,12 +19,12 @@ const PORTFOLIO_ITEMS = Object.entries(modules).map(([, data]) => ({
 }));
 
 const PORTFOLIO_CATEGORIES = [
-  content.portfolio.allCategory,
+  portfolioSectionContent.allCategory,
   ...new Set(PORTFOLIO_ITEMS.map((i) => i.category)),
 ];
 
 export function Portfolio() {
-  const { portfolio: p } = content;
+  const p = portfolioSectionContent;
   const [activeCategory, setActiveCategory] = useState(p.allCategory);
 
   const filtered =

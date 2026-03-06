@@ -1,5 +1,5 @@
 // src/components/sections/footer/FooterServices.tsx
-import { content } from '@/types/content';
+import { footerContent } from '@/types/footer';
 import { services } from '@/types/services';
 
 const SERVICES_FOOTER = services.slice(0, 4);
@@ -8,7 +8,7 @@ export function FooterServices() {
   return (
     <div>
       <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-white/40">
-        {content.footer.servicesTitle}
+        {footerContent.servicesTitle}
       </p>
       <ul className="space-y-3">
         {SERVICES_FOOTER.map((service) => (

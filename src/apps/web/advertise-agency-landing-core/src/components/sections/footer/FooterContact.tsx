@@ -1,6 +1,6 @@
 // src/components/sections/footer/FooterContact.tsx
 import { ICON_MAP, type IconComponent } from '@/types/iconMap';
-import { content } from '@/types/content';
+import { footerContent } from '@/types/footer';
 import { siteData } from '@/types/siteData';
 
 interface FooterContactItem {
@@ -21,7 +21,7 @@ export function FooterContact() {
   return (
     <div>
       <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-white/40">
-        {content.footer.contactsTitle}
+        {footerContent.contactsTitle}
       </p>
       <ul className="space-y-4">
         {items.map(({ icon: Icon, value, href }) => (

@@ -1,9 +1,9 @@
 import { Container } from '@/components/layout/Container';
-import { content } from '@/types/content';
+import { callToActionContent } from '@/types/callToAction';
 import { CtaButtons } from './CtaButtons';
 
 export function CallToAction() {
-  const { callToAction } = content;
+  const callToAction = callToActionContent;
 
   return (
     <section className="relative overflow-hidden bg-primary py-20">

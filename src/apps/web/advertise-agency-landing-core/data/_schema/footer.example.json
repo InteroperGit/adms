@@ -1,0 +1,13 @@
+{
+  "description": "{description}. Краткое описание компании для подвала.",
+  "navTitle": "Навигация",
+  "servicesTitle": "Услуги",
+  "contactsTitle": "Контакты",
+  "copyright": "© {year} {name}. Все права защищены.",
+  "tagline": "Слоган компании.",
+  "legalLinks": [
+    { "label": "Политика конфиденциальности", "href": "/privacy-policy" },
+    { "label": "Согласие на обработку данных", "href": "/consent" },
+    { "label": "Пользовательское соглашение", "href": "/user-agreement" }
+  ]
+}

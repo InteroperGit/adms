@@ -1,10 +1,10 @@
 import { Container } from '@/components/layout/Container';
-import { content } from '@/types/content';
+import { heroContent } from '@/types/hero';
 import { HeroCTA } from './HeroCTA';
 import { HeroStats } from './HeroStats';
 
 export function Hero() {
-  const { hero } = content;
+  const hero = heroContent;
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden pt-16 md:pt-20">

@@ -1,6 +1,7 @@
 import { ImageGallery } from '@/components/ui/imageGallery';
 import { Container } from '@/components/layout/Container';
-import { content } from '@/types/content';
+import { portfolioCaseContent } from '@/types/portfolioCaseContent';
+import { imageGalleryContent } from '@/types/imageGallery';
 import type { GalleryImage } from '@/types/portfolio';
 
 interface CaseGalleryProps {
@@ -9,8 +10,8 @@ interface CaseGalleryProps {
 }
 
 export function CaseGallery({ gallery, caseTitle }: CaseGalleryProps) {
-  const { galleryTitle, photoAlt } = content.portfolioCase;
-  const { prevLabel, nextLabel, counter } = content.imageGallery;
+  const { galleryTitle, photoAlt } = portfolioCaseContent;
+  const { prevLabel, nextLabel, counter } = imageGalleryContent;
 
   return (
     <section className="bg-muted/40 py-16">
