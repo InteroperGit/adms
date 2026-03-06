@@ -39,17 +39,17 @@ advertise-agency-landing-core/
 │       └── 003_improve_site.md               # Component decomposition plan (max 60 lines per component)
 ├── data/                    # JSON data — gitignored (except _schema/ and README.md)
 │   ├── README.md            # New-client setup guide: what each JSON file does, how to configure
-│   ├── _schema/             # Schema examples — git-tracked; TypeScript files using `satisfies` for compile-time validation
-│   │   ├── about-values.example.ts
-│   │   ├── advantages.example.ts
-│   │   ├── carousel.example.ts
-│   │   ├── content.example.ts
-│   │   ├── theme.example.ts
-│   │   ├── legal.example.ts
-│   │   ├── portfolio.example.ts
-│   │   ├── services.example.ts
-│   │   ├── site.example.ts
-│   │   └── testimonials.example.ts
+│   ├── _schema/             # Schema examples — git-tracked; JSON files showing the expected shape of each data file
+│   │   ├── about-values.example.json
+│   │   ├── advantages.example.json
+│   │   ├── carousel.example.json
+│   │   ├── content.example.json
+│   │   ├── theme.example.json
+│   │   ├── legal.example.json
+│   │   ├── portfolio.example.json
+│   │   ├── services.example.json
+│   │   ├── site.example.json
+│   │   └── testimonials.example.json
 │   ├── portfolio/           # One JSON file per case study (slug.json)
 │   │   └── bodrost.json
 │   ├── content.json             # All UI copy: nav, hero, about, services, portfolio, CTA, contact, footer, cookies, etc.
@@ -251,7 +251,7 @@ pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
 - Components **never** import from `@data/` directly — always go through `src/types/`.
 - All shared types, interfaces, consts, and data modules live in `src/types/`; only `utils.ts` stays in `src/lib/`.
 - Portfolio collection loaded via `import.meta.glob('@data/portfolio/*.json', { eager: true, import: 'default' })` — see `src/types/portfolioCases.ts`.
-- Schema examples tracked in `data/_schema/` as TypeScript files using `satisfies` — compiled by `tsconfig.app.json` (include: `data/_schema`), validated against their interfaces at compile time. The actual data files are gitignored.
+- Schema examples tracked in `data/_schema/` as JSON files showing the expected shape of each data file. The actual data files are gitignored.
 - All data const exports use the `satisfies` operator (`export const x = data satisfies Type`) — validates JSON shape against the interface while preserving the narrow inferred type.
 
 ## SSG Build
