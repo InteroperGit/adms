@@ -4,18 +4,21 @@ import { cn } from '@/lib/utils';
 
 interface Props {
   activeSection: string;
+  isHome: boolean;
+  forcedActiveHref: string;
 }
 
-export function HeaderDesktopNav({ activeSection }: Props) {
+export function HeaderDesktopNav({ activeSection, isHome, forcedActiveHref }: Props) {
   return (
     <>
       <nav className="hidden items-center gap-8 md:flex">
         {headerContent.nav.map((link) => {
-          const isActive = link.href === `#${activeSection}`;
+          const isActive = link.href === `#${activeSection}` || link.href === forcedActiveHref;
+          const href = isHome ? link.href : `/${link.href}`;
           return (
             <a
               key={link.href}
-              href={link.href}
+              href={href}
               className={cn(
                 'group relative text-sm font-medium transition-colors hover:text-foreground',
                 isActive ? 'text-primary' : 'text-muted-foreground'
@@ -40,7 +43,7 @@ export function HeaderDesktopNav({ activeSection }: Props) {
 
       <div className="hidden md:block">
         <Button asChild size="sm" className="rounded-full px-6">
-          <a href="#contact">{headerContent.navCta}</a>
+          <a href={isHome ? '#contact' : '/#contact'}>{headerContent.navCta}</a>
         </Button>
       </div>
     </>

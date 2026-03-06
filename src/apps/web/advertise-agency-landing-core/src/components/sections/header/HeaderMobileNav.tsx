@@ -7,9 +7,11 @@ import { cn } from '@/lib/utils';
 
 interface Props {
   activeSection: string;
+  isHome: boolean;
+  forcedActiveHref: string;
 }
 
-export function HeaderMobileNav({ activeSection }: Props) {
+export function HeaderMobileNav({ activeSection, isHome, forcedActiveHref }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -28,11 +30,13 @@ export function HeaderMobileNav({ activeSection }: Props) {
           <Container>
             <nav className="flex flex-col py-4">
               {headerContent.nav.map((link) => {
-                const isActive = link.href === `#${activeSection}`;
+                const isActive =
+                  link.href === `#${activeSection}` || link.href === forcedActiveHref;
+                const href = isHome ? link.href : `/${link.href}`;
                 return (
                   <a
                     key={link.href}
-                    href={link.href}
+                    href={href}
                     onClick={() => setMenuOpen(false)}
                     className={cn(
                       'py-3 text-base font-medium transition-colors hover:text-foreground',
@@ -45,7 +49,7 @@ export function HeaderMobileNav({ activeSection }: Props) {
               })}
               <div className="pt-3">
                 <Button asChild className="w-full rounded-full" size="sm">
-                  <a href="#contact" onClick={() => setMenuOpen(false)}>
+                  <a href={isHome ? '#contact' : '/#contact'} onClick={() => setMenuOpen(false)}>
                     {headerContent.navCta}
                   </a>
                 </Button>

@@ -9,9 +9,7 @@ import { CaseSolution } from '@/components/portfolio/CaseSolution';
 import { CaseResults } from '@/components/portfolio/CaseResults';
 import { CaseGallery } from '@/components/portfolio/CaseGallery';
 import { CaseCTA } from '@/components/portfolio/CaseCTA';
-import { ScrollToTop } from '@/components/ui/ScrollToTop';
 import { portfolioCaseContent } from '@/types/portfolioCaseContent';
-import { headerContent } from '@/types/header';
 import { testimonials } from '@/types/testimonials';
 import { portfolioCaseMap } from '@/types/portfolioCases';
 
@@ -48,23 +46,17 @@ export function PortfolioCasePage() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-foreground">
-      {/* Page header */}
-      <header className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-sm">
+      <div className="border-b border-border bg-muted/40">
         <Container>
-          <div className="flex h-16 items-center justify-between">
-            <a href="/" className="text-xl font-bold tracking-tight text-primary">
-              {headerContent.logo.text}
-            </a>
-            <a
-              href="/#portfolio"
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ArrowLeft size={16} />
-              {pc.backLabel}
-            </a>
-          </div>
+          <a
+            href="/#portfolio"
+            className="inline-flex items-center gap-2 py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft size={16} />
+            {pc.backLabel}
+          </a>
         </Container>
-      </header>
+      </div>
 
       <CaseHero
         gradient={data.gradient}
@@ -113,7 +105,6 @@ export function PortfolioCasePage() {
       )}
 
       <CaseCTA />
-      <ScrollToTop navSelector="" />
     </div>
   );
 }

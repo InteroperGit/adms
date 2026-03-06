@@ -1,5 +1,4 @@
 import { BackButton } from '@/components/ui/BackButton.tsx';
-import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
 
 interface LegalPageLayoutProps {
   title: string;
@@ -21,8 +20,6 @@ export function LegalPageLayout({ title, version, effectiveDate, children }: Leg
       <p className="text-sm text-gray-500 mt-10 pt-6 border-t border-gray-200">
         Версия {version} · Дата последнего обновления: {effectiveDate}
       </p>
-
-      <ScrollToTop />
     </main>
   );
 }
