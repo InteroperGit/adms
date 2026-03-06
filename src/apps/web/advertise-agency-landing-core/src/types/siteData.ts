@@ -19,4 +19,4 @@ export interface SiteData {
   };
 }
 
-export const siteData: SiteData = data;
+export const siteData = data satisfies SiteData;

@@ -6,4 +6,4 @@ export interface Service {
   description: string;
 }
 
-export const services: Service[] = data;
+export const services = data satisfies Service[];

@@ -5,4 +5,4 @@ export interface AboutValue {
   description: string;
 }
 
-export const aboutValues: AboutValue[] = data;
+export const aboutValues = data satisfies AboutValue[];
