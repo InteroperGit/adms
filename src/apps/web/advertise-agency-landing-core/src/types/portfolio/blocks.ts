@@ -1,5 +1,12 @@
 import type { GalleryImage } from './index';
 
+export interface BlockColor {
+  type: 'solid' | 'gradient' | 'primary' | 'accent';
+  /** Tailwind gradient stops for type 'gradient' (e.g. "from-amber-400 to-orange-500").
+   *  Falls back to the case's hero.gradient when omitted. */
+  value?: string;
+}
+
 export interface HeadingBlock {
   __component: 'heading';
   level: 2 | 3 | 4;
@@ -44,7 +51,7 @@ export interface MetricsBlock {
   __component: 'metrics';
   title?: string;
   items: { metric: string; label: string; description: string }[];
-  gradient?: boolean;
+  color?: BlockColor;
 }
 
 export interface CardsBlock {
@@ -52,7 +59,7 @@ export interface CardsBlock {
   title?: string;
   columns?: 2 | 3 | 4;
   items: { title: string; description: string }[];
-  gradient?: boolean;
+  color?: BlockColor;
 }
 
 export interface TableBlock {
@@ -69,7 +76,7 @@ export interface ChartBlock {
   type: 'bar' | 'horizontal-bar' | 'progress' | 'line' | 'pie';
   title?: string;
   items: { label: string; value: number; suffix?: string }[];
-  color?: 'gradient' | 'primary' | 'accent';
+  color?: BlockColor;
 }
 
 export interface DividerBlock {

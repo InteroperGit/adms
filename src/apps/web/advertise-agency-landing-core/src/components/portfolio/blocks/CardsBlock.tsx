@@ -13,6 +13,12 @@ const COLS_CLASS = {
 } as const;
 
 export function CardsBlock({ block, caseGradient }: CardsBlockProps) {
+  const color = block.color;
+  const isGradient = color?.type === 'gradient';
+  const isSolid = color?.type === 'solid';
+  const isPrimary = color?.type === 'primary';
+  const isAccent = color?.type === 'accent';
+  const gradientStops = color?.value ?? caseGradient;
   const cols = block.columns ?? 3;
 
   return (
@@ -21,9 +27,11 @@ export function CardsBlock({ block, caseGradient }: CardsBlockProps) {
       <div className={cn('grid gap-4 sm:gap-6', COLS_CLASS[cols])}>
         {block.items.map(({ title, description }) => (
           <div key={title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-            {block.gradient && (
-              <div className={cn('mb-3 h-1 w-10 rounded-full bg-gradient-to-r', caseGradient)} />
+            {isGradient && (
+              <div className={cn('mb-3 h-1 w-10 rounded-full bg-gradient-to-r', gradientStops)} />
             )}
+            {(isSolid || isPrimary) && <div className="mb-3 h-1 w-10 rounded-full bg-primary" />}
+            {isAccent && <div className="mb-3 h-1 w-10 rounded-full bg-accent" />}
             <h3 className="mb-2 font-semibold">{title}</h3>
             <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
           </div>

@@ -153,10 +153,10 @@ The `content` array is a **dynamic zone** — an ordered list of typed blocks re
 | `image` | Single image with caption | `src`, `alt`, `caption?`, `size?: "small"\|"medium"\|"full"` |
 | `gallery` | Multi-image lightbox gallery | `images: { src, description? }[]` |
 | `video` | Embedded video | `url` (YouTube, Rutube, or local path), `caption?`, `aspectRatio?` |
-| `metrics` | KPI cards grid | `items: { metric, label, description }[]`, `title?`, `gradient?` |
-| `cards` | Generic card grid | `items: { title, description }[]`, `title?`, `columns?: 2\|3\|4`, `gradient?` |
+| `metrics` | KPI cards grid | `items: { metric, label, description }[]`, `title?`, `color?: { type, value? }` |
+| `cards` | Generic card grid | `items: { title, description }[]`, `title?`, `columns?: 2\|3\|4`, `color?: { type, value? }` |
 | `table` | Data table | `head: string[]`, `rows: string[][]`, `title?`, `caption?`, `highlight?: number[]` |
-| `chart` | CSS/SVG chart | `type: "bar"\|"horizontal-bar"\|"progress"\|"line"\|"pie"`, `items: { label, value, suffix? }[]`, `title?`, `color?: "gradient"\|"primary"\|"accent"` |
+| `chart` | CSS/SVG chart | `type: "bar"\|"horizontal-bar"\|"progress"\|"line"\|"pie"`, `items: { label, value, suffix? }[]`, `title?`, `color?: { type, value? }` |
 | `blockquote` | Pull quote | Variant A: `testimonialId: number` — looks up `testimonials.json`; Variant B: `text`, `author`, `role?`, `company?` |
 | `callout` | Info/warning/note box | `type: "info"\|"success"\|"warning"\|"note"`, `text`, `title?` |
 | `divider` | Visual separator | `style?: "line"\|"dots"\|"space"` |
@@ -165,6 +165,34 @@ The `content` array is a **dynamic zone** — an ordered list of typed blocks re
 `gradient: true` on `metrics`, `cards`, and `color: "gradient"` on `chart` use the case's `hero.gradient` value for coloring.
 
 See `_schema/portfolio.example.json` for a full example with every block type.
+
+---
+
+### `color` object (metrics, cards, chart)
+
+The `color` field on `metrics`, `cards`, and `chart` blocks is an object with a required `type` and an optional `value`:
+
+```jsonc
+// Use the case's hero.gradient (no value needed)
+"color": { "type": "gradient" }
+
+// Custom gradient stops
+"color": { "type": "gradient", "value": "from-sky-400 to-blue-500" }
+
+// Solid theme colors (no value needed)
+"color": { "type": "solid" }
+"color": { "type": "primary" }
+"color": { "type": "accent" }
+```
+
+| `type` | Effect on `metrics` | Effect on `cards` | Effect on `chart` bars |
+|---|---|---|---|
+| `gradient` | Gradient background on each card | Gradient accent bar | Gradient fill |
+| `solid` / `primary` | `bg-primary` background | `bg-primary` accent bar | `bg-primary` fill |
+| `accent` | `bg-accent` background | `bg-accent` accent bar | `bg-accent` fill |
+| _(omitted)_ | Neutral white card | No accent bar | `bg-primary` fill |
+
+`value` is only used when `type` is `"gradient"`. When omitted, falls back to the case's `hero.gradient`.
 
 ---
 

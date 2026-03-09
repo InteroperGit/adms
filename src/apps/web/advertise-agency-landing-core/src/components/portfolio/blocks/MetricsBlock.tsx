@@ -7,6 +7,14 @@ interface MetricsBlockProps {
 }
 
 export function MetricsBlock({ block, caseGradient }: MetricsBlockProps) {
+  const color = block.color;
+  const isGradient = color?.type === 'gradient';
+  const isSolid = color?.type === 'solid';
+  const isPrimary = color?.type === 'primary';
+  const isAccent = color?.type === 'accent';
+  const colored = isGradient || isSolid || isPrimary || isAccent;
+  const gradientStops = color?.value ?? caseGradient;
+
   return (
     <div className="mx-auto max-w-4xl">
       {block.title && <h2 className="mb-8 text-2xl font-bold md:text-3xl">{block.title}</h2>}
@@ -16,28 +24,25 @@ export function MetricsBlock({ block, caseGradient }: MetricsBlockProps) {
             key={metric}
             className={cn(
               'rounded-2xl p-6',
-              block.gradient
-                ? cn('bg-gradient-to-br text-white', caseGradient)
-                : 'border border-border bg-white shadow-sm'
+              isGradient && cn('bg-gradient-to-br text-white', gradientStops),
+              isSolid && 'bg-primary text-white',
+              isPrimary && 'bg-primary text-white',
+              isAccent && 'bg-accent text-white',
+              !colored && 'border border-border bg-white shadow-sm'
             )}
           >
-            <p className={cn('text-4xl font-bold leading-none', !block.gradient && 'text-primary')}>
+            <p className={cn('text-4xl font-bold leading-none', !colored && 'text-primary')}>
               {metric}
             </p>
             <p
               className={cn(
                 'mt-1 text-sm font-medium uppercase tracking-widest',
-                block.gradient ? 'text-white/70' : 'text-muted-foreground'
+                colored ? 'text-white/70' : 'text-muted-foreground'
               )}
             >
               {label}
             </p>
-            <p
-              className={cn(
-                'mt-3 text-sm',
-                block.gradient ? 'text-white/80' : 'text-muted-foreground'
-              )}
-            >
+            <p className={cn('mt-3 text-sm', colored ? 'text-white/80' : 'text-muted-foreground')}>
               {description}
             </p>
           </div>
