@@ -1,4 +1,5 @@
 import raw from '@data/sections/portfolio-section.json';
+import type { ContentBlock } from './blocks';
 
 export interface CtaLink {
   label: string;
@@ -26,13 +27,10 @@ export interface PortfolioCase {
   title: string;
   category: string;
   description: string;
-  gradient: string;
+  hero: { image?: string; gradient: string };
   tags: string[];
   meta: { title: string; description: string; ogUrl?: string; ogImage?: string };
   overview: { client: string; year: string; services: string };
-  challenge: string;
-  solution: Array<{ title: string; description: string }>;
-  results: Array<{ metric: string; label: string; description: string }>;
-  testimonialId?: number;
-  images?: { preview?: string; og?: string; gallery?: GalleryImage[] };
+  content: ContentBlock[];
+  images?: { preview?: string; og?: string };
 }

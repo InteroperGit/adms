@@ -3,7 +3,10 @@
   "title": "Название проекта",
   "category": "Брендинг",
   "description": "Краткое описание проекта для карточки портфолио (1-2 предложения).",
-  "gradient": "from-orange-400 to-rose-500",
+  "hero": {
+    "image": "/images/portfolio/example-project/hero.jpg",
+    "gradient": "from-orange-400 to-rose-500"
+  },
   "tags": ["Тег1", "Тег2", "Тег3"],
   "meta": {
     "title": "Название проекта — кейс РА «Рекламастер»",
@@ -16,24 +19,122 @@
     "year": "2024",
     "services": "Услуга 1, Услуга 2, Услуга 3"
   },
-  "challenge": "Описание задачи клиента — что было нужно и почему это было сложно. Один абзац.",
-  "solution": [
-    { "title": "Блок решения 1", "description": "Что конкретно было сделано в рамках этого блока." },
-    { "title": "Блок решения 2", "description": "Описание второго аспекта решения." },
-    { "title": "Блок решения 3", "description": "Описание третьего аспекта решения." }
+  "content": [
+    {
+      "__component": "heading",
+      "level": 2,
+      "text": "Задача"
+    },
+    {
+      "__component": "paragraph",
+      "text": "Описание задачи клиента — <b>что было нужно</b> и почему это было сложно. Поддерживает базовый HTML: &lt;b&gt;, &lt;i&gt;, &lt;a href=\"...\"&gt;."
+    },
+    {
+      "__component": "callout",
+      "type": "info",
+      "title": "Важный контекст",
+      "text": "Дополнительная информация, которую важно знать до прочтения кейса."
+    },
+    {
+      "__component": "cards",
+      "title": "Решение",
+      "columns": 3,
+      "items": [
+        { "title": "Блок решения 1", "description": "Что конкретно было сделано в рамках этого блока." },
+        { "title": "Блок решения 2", "description": "Описание второго аспекта решения." },
+        { "title": "Блок решения 3", "description": "Описание третьего аспекта решения." }
+      ],
+      "gradient": true
+    },
+    {
+      "__component": "image",
+      "src": "/images/portfolio/example-project/result.jpg",
+      "alt": "Описание изображения",
+      "caption": "Подпись под изображением (необязательно)",
+      "size": "full"
+    },
+    {
+      "__component": "gallery",
+      "images": [
+        { "src": "/images/portfolio/example-project/01.jpg", "description": "Описание первого изображения" },
+        { "src": "/images/portfolio/example-project/02.jpg", "description": "Описание второго изображения" }
+      ]
+    },
+    {
+      "__component": "metrics",
+      "title": "Результаты",
+      "items": [
+        { "metric": "+00%", "label": "ключевая метрика", "description": "Контекст: за какой период, в чём измеряется" },
+        { "metric": "00", "label": "единиц", "description": "Дополнительный результат" },
+        { "metric": "0 мес.", "label": "реализации", "description": "Срок от брифа до запуска" }
+      ],
+      "gradient": true
+    },
+    {
+      "__component": "blockquote",
+      "testimonialId": 1
+    },
+    {
+      "__component": "heading",
+      "level": 3,
+      "text": "Пример других блоков"
+    },
+    {
+      "__component": "list",
+      "style": "checklist",
+      "items": [
+        "Пункт чеклиста 1",
+        "Пункт чеклиста 2",
+        "Пункт чеклиста 3"
+      ]
+    },
+    {
+      "__component": "table",
+      "title": "Этапы работ",
+      "head": ["Этап", "Срок", "Результат"],
+      "rows": [
+        ["Аудит", "2 недели", "Отчёт с рекомендациями"],
+        ["Дизайн", "4 недели", "3 концепции на выбор"],
+        ["Реализация", "6 недель", "Готовые макеты и гайдлайны"]
+      ],
+      "highlight": [2]
+    },
+    {
+      "__component": "chart",
+      "type": "progress",
+      "title": "Рост ключевых показателей",
+      "items": [
+        { "label": "Узнаваемость", "value": 78, "suffix": "%" },
+        { "label": "Лояльность", "value": 65, "suffix": "%" },
+        { "label": "Конверсия", "value": 42, "suffix": "%" }
+      ],
+      "color": "gradient"
+    },
+    {
+      "__component": "divider",
+      "style": "dots"
+    },
+    {
+      "__component": "blockquote",
+      "text": "Цитата клиента или партнёра без привязки к testimonials.",
+      "author": "Иван Иванов",
+      "role": "Директор по маркетингу",
+      "company": "ООО «Пример»"
+    },
+    {
+      "__component": "video",
+      "url": "https://www.youtube.com/watch?v=XXXXXXXXXXX",
+      "caption": "Видео о проекте"
+    },
+    {
+      "__component": "code",
+      "language": "json",
+      "code": "{\n  \"key\": \"value\"\n}",
+      "caption": "Пример конфигурации"
+    }
   ],
-  "results": [
-    { "metric": "+00%", "label": "ключевая метрика", "description": "Контекст: за какой период, в чём измеряется" },
-    { "metric": "00", "label": "единиц", "description": "Дополнительный результат" },
-    { "metric": "0 мес.", "label": "реализации", "description": "Срок от брифа до запуска" }
-  ],
-  "testimonialId": 1,
   "images": {
     "preview": "/images/portfolio/example-project/preview.jpg",
-    "og": "/images/portfolio/example-project/og.jpg",
-    "gallery": [
-      { "src": "/images/portfolio/example-project/01.jpg", "description": "Описание первого изображения" },
-      { "src": "/images/portfolio/example-project/02.jpg" }
-    ]
+    "og": "/images/portfolio/example-project/og.jpg"
   }
 }

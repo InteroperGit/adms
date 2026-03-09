@@ -19,7 +19,7 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
         image={item.images?.preview}
         title={item.title}
         category={item.category}
-        gradient={item.gradient}
+        gradient={item.hero.gradient}
       />
 
       <div className="p-6">

@@ -178,17 +178,30 @@ advertise-agency-landing-core/
 │   │   └── themePlugin.ts     # Vite plugin: reads data/config/theme.json, injects CSS vars + Google Fonts into index.html
 │   ├── pages/
 │   │   ├── Home.tsx               # Landing page content: Carousel → Hero → About → Services → Portfolio → Advantages → CallToAction → Testimonials → Contact; wrapped in <main>
-│   │   ├── PortfolioCasePage.tsx  # Orchestrator: breadcrumb back link + Case* components + inline challenge section + TestimonialCard; no own ScrollToTop (Layout provides it)
+│   │   ├── PortfolioCasePage.tsx  # Orchestrator: breadcrumb back link + CaseHero + CaseOverview + BlockRenderer loop + CaseCTA; no own ScrollToTop (Layout provides it)
 │   │   ├── PrivacyPolicy.tsx      # /privacy-policy — reads legalData (company, documents.privacyPolicy.{version,effectiveDate})
 │   │   ├── Consent.tsx            # /consent — reads legalData (company, documents.consent.{version,effectiveDate})
 │   │   └── UserAgreement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate})
 │   ├── components/
 │   │   ├── portfolio/
-│   │   │   ├── CaseHero.tsx       # Gradient hero: badge, h1, description; props: gradient, category, title, description
+│   │   │   ├── blocks/
+│   │   │   │   ├── BlockRenderer.tsx  # Central dispatcher: switch on block.__component → renders matching *Block component; props: block, caseGradient, caseTitle; wraps in py-4 (sparse) or py-8
+│   │   │   │   ├── HeadingBlock.tsx   # h2/h3/h4 with STYLES const; mx-auto max-w-3xl font-heading
+│   │   │   │   ├── ParagraphBlock.tsx # <p> with dangerouslySetInnerHTML; align prop (left/center); mx-auto max-w-3xl
+│   │   │   │   ├── ListBlock.tsx      # ordered/unordered/checklist; checklist uses inline SVG check icons (primary color)
+│   │   │   │   ├── ImageBlock.tsx     # <figure>+<img>+<figcaption>; size: small→max-w-md, medium→max-w-2xl, full→max-w-5xl
+│   │   │   │   ├── GalleryBlock.tsx   # Wraps <ImageGallery>; reads labels from portfolioCaseContent + imageGalleryContent; props: block, caseTitle
+│   │   │   │   ├── VideoBlock.tsx     # YouTube/Rutube → <iframe> embed; local .mp4/.webm/.ogg → <video>; aspect-ratio padding-top trick
+│   │   │   │   ├── MetricsBlock.tsx   # 3-col KPI grid; gradient:true → bg-gradient-to-br caseGradient + white text; otherwise white card + text-primary metric
+│   │   │   │   ├── CardsBlock.tsx     # Grid of white cards; columns 2/3/4 (default 3); gradient:true → accent bar bg-gradient-to-r caseGradient
+│   │   │   │   ├── TableBlock.tsx     # overflow-x-auto table; bg-muted/60 thead; striped rows; highlight rows get bg-primary/5
+│   │   │   │   ├── ChartBlock.tsx     # Pure CSS/SVG charts: bar, horizontal-bar, progress (div-based); line, pie (SVG); no chart library
+│   │   │   │   ├── BlockquoteBlock.tsx # Variant A (testimonialId): renders <TestimonialCard>; Variant B (text+author): styled <blockquote> with border-l-4 border-primary
+│   │   │   │   ├── CalloutBlock.tsx   # Colored left-border box; type→color map (info=blue, success=green, warning=amber, note=gray); icons from ICON_MAP
+│   │   │   │   ├── DividerBlock.tsx   # line→<hr>; dots→three centered spans; space→<div className="py-8">
+│   │   │   │   └── CodeBlock.tsx      # <pre><code> bg-muted font-mono; optional language tab header; optional figcaption
+│   │   │   ├── CaseHero.tsx       # Hero: hero.image present → bg-image + bg-black/50 overlay; no image → bg-gradient-to-br hero.gradient; props: hero, category, title, description
 │   │   │   ├── CaseOverview.tsx   # 4-col grid (client/category/year/services); reads labels from content
-│   │   │   ├── CaseSolution.tsx   # 3-col solution cards with gradient accent bar; props: solution[], gradient
-│   │   │   ├── CaseResults.tsx    # 3 gradient metric cards; props: results[], gradient
-│   │   │   ├── CaseGallery.tsx    # Thin wrapper around ImageGallery; reads labels from portfolioCaseContent + imageGalleryContent; props: gallery: GalleryImage[], caseTitle
 │   │   │   └── CaseCTA.tsx        # Bottom CTA block; reads portfolioCaseContent.cta
 │   ├── types/
 │   │   ├── config/
@@ -213,7 +226,8 @@ advertise-agency-landing-core/
 │   │   │   ├── contact.ts            # ContactContent interface + contactContent const (from data/sections/contact.json); CtaLink inline
 │   │   │   └── footer.ts             # FooterContent interface + footerContent const (from data/sections/footer.json); CtaLink inline
 │   │   ├── portfolio/
-│   │   │   ├── index.ts              # PortfolioCase interface + GalleryImage interface { src, description? }; PortfolioSectionContent interface + portfolioSectionContent const (from data/sections/portfolio-section.json); CtaLink inline — imported as '@/types/portfolio'
+│   │   │   ├── index.ts              # PortfolioCase interface (hero:{image?,gradient}, content:ContentBlock[], images:{preview?,og?}) + GalleryImage interface + PortfolioSectionContent interface + portfolioSectionContent const — imported as '@/types/portfolio'
+│   │   │   ├── blocks.ts             # ContentBlock discriminated union + all 14 block interfaces (HeadingBlock, ParagraphBlock, ImageBlock, GalleryBlock, BlockquoteBlock, MetricsBlock, CardsBlock, TableBlock, ChartBlock, DividerBlock, CalloutBlock, ListBlock, VideoBlock, CodeBlock)
 │   │   │   ├── portfolioCaseContent.ts # PortfolioCaseContent interface + portfolioCaseContent const (from data/sections/portfolio-case.json)
 │   │   │   ├── portfolioCases.ts     # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
 │   │   │   └── imageGallery.ts       # ImageGalleryContent interface + imageGalleryContent const (from data/sections/image-gallery.json)
@@ -296,7 +310,7 @@ UI copy is split into one JSON file per section — each section component impor
 | `data/sections/contact.json` | `src/types/sections/contact.ts` → `contactContent` | `contact/` (all sub-components) |
 | `data/sections/footer.json` | `src/types/sections/footer.ts` → `footerContent` | `footer/` (all sub-components) |
 | `data/sections/portfolio-case.json` | `src/types/portfolio/portfolioCaseContent.ts` → `portfolioCaseContent` | `PortfolioCasePage.tsx`, `portfolio/Case*.tsx` |
-| `data/sections/image-gallery.json` | `src/types/portfolio/imageGallery.ts` → `imageGalleryContent` | `portfolio/CaseGallery.tsx` |
+| `data/sections/image-gallery.json` | `src/types/portfolio/imageGallery.ts` → `imageGalleryContent` | `portfolio/blocks/GalleryBlock.tsx` |
 | `data/config/cookies.json` | `src/types/config/cookies.ts` → `cookiesContent` | `banners/` |
 
 - **`data/config/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/config/theme.ts`.
@@ -307,7 +321,7 @@ UI copy is split into one JSON file per section — each section component impor
 - **`data/sections/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/sections/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.
 - **`data/sections/testimonials.json`** — array of testimonial objects. Exposed via `src/types/sections/testimonials.ts`; used by `PortfolioCasePage.tsx` (TestimonialCard). The Testimonials section now uses the Yandex widget instead of this data directly.
 - **`data/config/legal.json`** — company legal details. Exposed via `src/types/config/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.json`.
-- **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio/index.ts`, imported as `@/types/portfolio`).
+- **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio/index.ts`, imported as `@/types/portfolio`). Shape: `slug`, `title`, `category`, `description`, `hero: { image?, gradient }`, `tags[]`, `meta`, `overview`, `content: ContentBlock[]`, `images: { preview?, og? }`. The `content` array is a dynamic zone of ordered blocks rendered by `BlockRenderer`. Block types defined in `src/types/portfolio/blocks.ts`.
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.
 - Components **never** import from `@data/` directly — always go through `src/types/`.
 - All shared types, interfaces, consts, and data modules live in `src/types/` (organised into `config/`, `sections/`, `portfolio/`, `shared/` subfolders); only `utils.ts` stays in `src/lib/`.
