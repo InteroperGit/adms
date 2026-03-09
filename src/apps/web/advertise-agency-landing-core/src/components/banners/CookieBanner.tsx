@@ -9,7 +9,9 @@ const STORAGE_KEY = 'cookie_consent';
 type ConsentValue = 'all' | 'necessary';
 
 export function CookieBanner() {
-  const [visible, setVisible] = useState(() => !localStorage.getItem(STORAGE_KEY));
+  const [visible, setVisible] = useState(
+    () => typeof window === 'undefined' || !localStorage.getItem(STORAGE_KEY)
+  );
 
   function save(value: ConsentValue) {
     localStorage.setItem(STORAGE_KEY, value);

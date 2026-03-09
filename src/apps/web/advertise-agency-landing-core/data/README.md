@@ -32,7 +32,7 @@ UI copy is split into one file per section. Each component imports only the file
 | `testimonials-content.json` | Testimonials section headings: label, title, description. |
 | `contact.json` | Contact section headings, all form labels/placeholders/messages, direct contact labels, social/hours labels. |
 | `footer.json` | Footer description (supports `{description}` token), column titles, copyright (supports `{year}`, `{name}` tokens), tagline, legal links. |
-| `portfolio-case.json` | Portfolio case page labels: back link, overview column headers, section titles (challenge/solution/results/gallery), photo alt template, CTA block, not-found message. |
+| `portfolio-case.json` | Portfolio case page labels: back link, overview column headers, photo alt template, CTA block, not-found message. |
 | `image-gallery.json` | Image gallery UI labels: prev/next button aria-labels, counter template (`{current} из {total}`). |
 | `cookies.json` | Cookie banner copy: aria-label, close label, title, body text, privacy link, accept/necessary-only button labels. |
 
@@ -45,7 +45,7 @@ UI copy is split into one file per section. Each component imports only the file
 | `services.json` | Services grid — `[{ icon, title, description }]`. `icon` is a key from `src/types/iconMap.ts`. |
 | `advantages.json` | Advantages cards — `[{ icon, title, description }]`. Same `icon` convention as services. |
 | `testimonials.json` | Client testimonials — `[{ id, name, role, company, avatar?, avatarColor, rating, text }]`. Used on portfolio case pages; the Testimonials section uses the Yandex widget instead. |
-| `portfolio/<slug>.json` | One file per case study. Filename becomes the URL slug (`/portfolio/<slug>`). See schema below. |
+| `portfolio/<slug>.json` | One file per case study. Filename becomes the URL slug (`/portfolio/<slug>`). See **Portfolio case structure** below. |
 
 ### Legal
 
@@ -108,10 +108,68 @@ _schema/
 
 1. Create `data/portfolio/<slug>.json` following `_schema/portfolio.example.json`.
 2. The SSG build auto-discovers all files matching `data/portfolio/*.json` and generates a static page at `/portfolio/<slug>`.
-3. To link the case to a testimonial, set `"testimonialId"` to a matching `id` in `testimonials.json`.
+3. The case page renders each block in `content[]` top-to-bottom via `BlockRenderer`.
+
+---
+
+## Portfolio case structure
+
+Each `data/portfolio/<slug>.json` file has this shape:
+
+```jsonc
+{
+  "slug": "my-project",
+  "title": "...",
+  "category": "...",
+  "description": "...",        // card preview text
+  "hero": {
+    "image": "/images/...",    // optional — shown when present
+    "gradient": "from-orange-400 to-rose-500"  // required — fallback + used by blocks
+  },
+  "tags": ["Tag1", "Tag2"],
+  "meta": { "title": "...", "description": "...", "ogUrl": "...", "ogImage": "..." },
+  "overview": { "client": "...", "year": "2024", "services": "..." },
+  "content": [ /* ordered array of content blocks — see below */ ],
+  "images": {
+    "preview": "/images/.../preview.jpg",   // card thumbnail
+    "og": "/images/.../og.jpg"              // optional OG image
+  }
+}
+```
+
+The `hero.gradient` value is a pair of Tailwind gradient color stops (e.g. `"from-violet-500 to-purple-700"`). It is used as the hero background fallback when no `hero.image` is provided, and also passed to gradient-aware content blocks (`metrics`, `cards`, `chart`).
+
+---
+
+## Content blocks (`content[]`)
+
+The `content` array is a **dynamic zone** — an ordered list of typed blocks rendered top-to-bottom on the case page. Each block has a `__component` discriminator field.
+
+| `__component` | Purpose | Key fields |
+|---|---|---|
+| `heading` | Section heading | `level: 2\|3\|4`, `text` |
+| `paragraph` | Rich text paragraph | `text` (basic HTML: `<b>`, `<i>`, `<a>`), `align?: "left"\|"center"` |
+| `list` | Ordered / unordered / checklist | `style: "ordered"\|"unordered"\|"checklist"`, `items: string[]` |
+| `image` | Single image with caption | `src`, `alt`, `caption?`, `size?: "small"\|"medium"\|"full"` |
+| `gallery` | Multi-image lightbox gallery | `images: { src, description? }[]` |
+| `video` | Embedded video | `url` (YouTube, Rutube, or local path), `caption?`, `aspectRatio?` |
+| `metrics` | KPI cards grid | `items: { metric, label, description }[]`, `title?`, `gradient?` |
+| `cards` | Generic card grid | `items: { title, description }[]`, `title?`, `columns?: 2\|3\|4`, `gradient?` |
+| `table` | Data table | `head: string[]`, `rows: string[][]`, `title?`, `caption?`, `highlight?: number[]` |
+| `chart` | CSS/SVG chart | `type: "bar"\|"horizontal-bar"\|"progress"\|"line"\|"pie"`, `items: { label, value, suffix? }[]`, `title?`, `color?: "gradient"\|"primary"\|"accent"` |
+| `blockquote` | Pull quote | Variant A: `testimonialId: number` — looks up `testimonials.json`; Variant B: `text`, `author`, `role?`, `company?` |
+| `callout` | Info/warning/note box | `type: "info"\|"success"\|"warning"\|"note"`, `text`, `title?` |
+| `divider` | Visual separator | `style?: "line"\|"dots"\|"space"` |
+| `code` | Code snippet | `code`, `language?`, `caption?` |
+
+`gradient: true` on `metrics`, `cards`, and `color: "gradient"` on `chart` use the case's `hero.gradient` value for coloring.
+
+See `_schema/portfolio.example.json` for a full example with every block type.
 
 ---
 
 ## Icon keys
 
-`services.json` and `advantages.json` reference icons by string key (e.g. `"Lightbulb"`, `"BarChart3"`). Valid keys are defined in `src/types/iconMap.ts`. To add a new icon, import it from `lucide-react` and add it to `ICON_MAP` in that file.
+`services.json` and `advantages.json` reference icons by string key (e.g. `"Lightbulb"`, `"BarChart3"`). Valid keys are defined in `src/types/shared/iconMap.ts`. To add a new icon, import it from `lucide-react` and add it to `ICON_MAP` in that file.
+
+The `callout` block also uses icons from `ICON_MAP` (mapped internally by callout type — `Info`, `CheckCircle`, `AlertTriangle`, `StickyNote`). No icon field needed in the JSON.

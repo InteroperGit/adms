@@ -14,6 +14,10 @@ import {
   Phone,
   Mail,
   MapPin,
+  Info,
+  CheckCircle,
+  AlertTriangle,
+  StickyNote,
 } from 'lucide-react';
 import type { ComponentType } from 'react';
 
@@ -35,6 +39,10 @@ export const ICON_MAP: Record<string, IconComponent> = {
   Phone,
   Mail,
   MapPin,
+  Info,
+  CheckCircle,
+  AlertTriangle,
+  StickyNote,
 };
 
 export function resolveIcon(key: string): IconComponent | undefined {
