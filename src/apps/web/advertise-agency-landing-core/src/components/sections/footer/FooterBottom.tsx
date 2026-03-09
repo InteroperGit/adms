@@ -1,7 +1,7 @@
 // src/components/sections/footer/FooterBottom.tsx
 import { Link } from 'react-router-dom';
-import { footerContent } from '@/types/footer';
-import { siteData } from '@/types/siteData';
+import { footerContent } from '@/types/sections/footer';
+import { siteData } from '@/types/config/siteData';
 
 export function FooterBottom() {
   const year = new Date().getFullYear();

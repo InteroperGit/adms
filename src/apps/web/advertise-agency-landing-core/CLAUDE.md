@@ -191,31 +191,35 @@ advertise-agency-landing-core/
 │   │   │   ├── CaseGallery.tsx    # Thin wrapper around ImageGallery; reads labels from portfolioCaseContent + imageGalleryContent; props: gallery: GalleryImage[], caseTitle
 │   │   │   └── CaseCTA.tsx        # Bottom CTA block; reads portfolioCaseContent.cta
 │   ├── types/
-│   │   ├── index.ts                  # NavLink interface
-│   │   ├── header.ts                 # HeaderContent interface + headerContent const (from data/sections/header.json); CtaLink inline
-│   │   ├── hero.ts                   # HeroContent interface + heroContent const (from data/sections/hero.json); CtaLink inline
-│   │   ├── carouselContent.ts        # CarouselSectionContent interface + carouselContent const (from data/sections/carousel-content.json)
-│   │   ├── aboutContent.ts           # AboutSectionContent interface + aboutContent const (from data/sections/about-content.json)
-│   │   ├── servicesContent.ts        # ServicesSectionContent interface + servicesSectionContent const (from data/sections/services-content.json)
-│   │   ├── advantagesContent.ts      # AdvantagesSectionContent interface + advantagesContent const (from data/sections/advantages-content.json)
-│   │   ├── callToAction.ts           # CallToActionContent interface + callToActionContent const (from data/sections/call-to-action.json); CtaLink inline
-│   │   ├── testimonialsContent.ts    # TestimonialsSectionContent interface + testimonialsSectionContent const (from data/sections/testimonials-content.json)
-│   │   ├── contact.ts                # ContactContent interface + contactContent const (from data/sections/contact.json); CtaLink inline
-│   │   ├── footer.ts                 # FooterContent interface + footerContent const (from data/sections/footer.json); CtaLink inline
-│   │   ├── portfolioCaseContent.ts   # PortfolioCaseContent interface + portfolioCaseContent const (from data/sections/portfolio-case.json)
-│   │   ├── imageGallery.ts           # ImageGalleryContent interface + imageGalleryContent const (from data/sections/image-gallery.json)
-│   │   ├── cookies.ts                # CookiesContent interface + cookiesContent const (from data/config/cookies.json); CtaLink inline
-│   │   ├── portfolio.ts              # PortfolioCase interface + GalleryImage interface { src, description? }; PortfolioSectionContent interface + portfolioSectionContent const (from data/sections/portfolio-section.json); CtaLink inline
-│   │   ├── iconMap.ts                # ICON_MAP, resolveIcon(), IconComponent — shared icon registry (lucide-react)
-│   │   ├── portfolioCases.ts         # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
-│   │   ├── aboutValues.ts            # AboutValue interface + aboutValues const (from data/sections/about-values.json)
-│   │   ├── advantages.ts             # Advantage interface + advantages const (from data/sections/advantages.json)
-│   │   ├── carousel.ts               # CarouselSlide interface + carouselSlides const (from data/sections/carousel.json)
-│   │   ├── legalData.ts              # LegalData interface + DocumentVersion interface + legalData const (from data/config/legal.json)
-│   │   ├── services.ts               # Service interface + services const (from data/sections/services.json)
-│   │   ├── siteData.ts               # SiteData interface + siteData const (from data/config/site.json)
-│   │   ├── testimonials.ts           # Testimonial interface + testimonials const (from data/sections/testimonials.json)
-│   │   └── theme.ts                  # Theme interface + ThemeColors interface + theme const (from data/config/theme.json); app-side only — themePlugin uses its own local Theme type due to tsconfig.node.json constraints
+│   │   ├── config/
+│   │   │   ├── siteData.ts           # SiteData interface + siteData const (from data/config/site.json)
+│   │   │   ├── theme.ts              # Theme interface + ThemeColors interface + theme const (from data/config/theme.json); app-side only — themePlugin uses its own local Theme type due to tsconfig.node.json constraints
+│   │   │   ├── cookies.ts            # CookiesContent interface + cookiesContent const (from data/config/cookies.json); CtaLink inline
+│   │   │   └── legalData.ts          # LegalData interface + DocumentVersion interface + legalData const (from data/config/legal.json)
+│   │   ├── sections/
+│   │   │   ├── header.ts             # HeaderContent interface + headerContent const (from data/sections/header.json); CtaLink inline
+│   │   │   ├── hero.ts               # HeroContent interface + heroContent const (from data/sections/hero.json); CtaLink inline
+│   │   │   ├── carousel.ts           # CarouselSlide interface + carouselSlides const (from data/sections/carousel.json)
+│   │   │   ├── carouselContent.ts    # CarouselSectionContent interface + carouselContent const (from data/sections/carousel-content.json)
+│   │   │   ├── aboutContent.ts       # AboutSectionContent interface + aboutContent const (from data/sections/about-content.json)
+│   │   │   ├── aboutValues.ts        # AboutValue interface + aboutValues const (from data/sections/about-values.json)
+│   │   │   ├── servicesContent.ts    # ServicesSectionContent interface + servicesSectionContent const (from data/sections/services-content.json)
+│   │   │   ├── services.ts           # Service interface + services const (from data/sections/services.json)
+│   │   │   ├── advantagesContent.ts  # AdvantagesSectionContent interface + advantagesContent const (from data/sections/advantages-content.json)
+│   │   │   ├── advantages.ts         # Advantage interface + advantages const (from data/sections/advantages.json)
+│   │   │   ├── callToAction.ts       # CallToActionContent interface + callToActionContent const (from data/sections/call-to-action.json); CtaLink inline
+│   │   │   ├── testimonialsContent.ts # TestimonialsSectionContent interface + testimonialsSectionContent const (from data/sections/testimonials-content.json)
+│   │   │   ├── testimonials.ts       # Testimonial interface + testimonials const (from data/sections/testimonials.json)
+│   │   │   ├── contact.ts            # ContactContent interface + contactContent const (from data/sections/contact.json); CtaLink inline
+│   │   │   └── footer.ts             # FooterContent interface + footerContent const (from data/sections/footer.json); CtaLink inline
+│   │   ├── portfolio/
+│   │   │   ├── index.ts              # PortfolioCase interface + GalleryImage interface { src, description? }; PortfolioSectionContent interface + portfolioSectionContent const (from data/sections/portfolio-section.json); CtaLink inline — imported as '@/types/portfolio'
+│   │   │   ├── portfolioCaseContent.ts # PortfolioCaseContent interface + portfolioCaseContent const (from data/sections/portfolio-case.json)
+│   │   │   ├── portfolioCases.ts     # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
+│   │   │   └── imageGallery.ts       # ImageGalleryContent interface + imageGalleryContent const (from data/sections/image-gallery.json)
+│   │   └── shared/
+│   │       ├── index.ts              # NavLink interface
+│   │       └── iconMap.ts            # ICON_MAP, resolveIcon(), IconComponent — shared icon registry (lucide-react)
 │   ├── router.tsx             # Nested RouteObject[]: App as root layout (no path), children: Home ("/"), PortfolioCasePage ("/portfolio/:slug"), legal pages
 │   ├── main.tsx               # Entry: exports createRoot = ViteReactSSG({ routes })
 │   └── index.css              # Tailwind import, @theme inline (references CSS vars), base styles, animate-fade-in keyframe; no hardcoded colors/fonts (injected by themePlugin)
@@ -280,34 +284,34 @@ UI copy is split into one JSON file per section — each section component impor
 
 | Data file | Type module | Used by |
 |---|---|---|
-| `data/sections/header.json` | `src/types/header.ts` → `headerContent` | `header/`, `footer/FooterNav.tsx`, `about/AboutCard.tsx`, `useActiveSection.ts` |
-| `data/sections/hero.json` | `src/types/hero.ts` → `heroContent` | `hero/` |
-| `data/sections/carousel-content.json` | `src/types/carouselContent.ts` → `carouselContent` | `carousel/CarouselSlide.tsx` |
-| `data/sections/about-content.json` | `src/types/aboutContent.ts` → `aboutContent` | `about/` |
-| `data/sections/services-content.json` | `src/types/servicesContent.ts` → `servicesSectionContent` | `services/` |
-| `data/sections/portfolio-section.json` | `src/types/portfolio.ts` → `portfolioSectionContent` | `portfolio/`, `PortfolioCard.tsx` |
-| `data/sections/advantages-content.json` | `src/types/advantagesContent.ts` → `advantagesContent` | `advantages/` |
-| `data/sections/call-to-action.json` | `src/types/callToAction.ts` → `callToActionContent` | `call-to-action/` |
-| `data/sections/testimonials-content.json` | `src/types/testimonialsContent.ts` → `testimonialsSectionContent` | `testimonials/` |
-| `data/sections/contact.json` | `src/types/contact.ts` → `contactContent` | `contact/` (all sub-components) |
-| `data/sections/footer.json` | `src/types/footer.ts` → `footerContent` | `footer/` (all sub-components) |
-| `data/sections/portfolio-case.json` | `src/types/portfolioCaseContent.ts` → `portfolioCaseContent` | `PortfolioCasePage.tsx`, `portfolio/Case*.tsx` |
-| `data/sections/image-gallery.json` | `src/types/imageGallery.ts` → `imageGalleryContent` | `portfolio/CaseGallery.tsx` |
-| `data/config/cookies.json` | `src/types/cookies.ts` → `cookiesContent` | `banners/` |
+| `data/sections/header.json` | `src/types/sections/header.ts` → `headerContent` | `header/`, `footer/FooterNav.tsx`, `about/AboutCard.tsx`, `useActiveSection.ts` |
+| `data/sections/hero.json` | `src/types/sections/hero.ts` → `heroContent` | `hero/` |
+| `data/sections/carousel-content.json` | `src/types/sections/carouselContent.ts` → `carouselContent` | `carousel/CarouselSlide.tsx` |
+| `data/sections/about-content.json` | `src/types/sections/aboutContent.ts` → `aboutContent` | `about/` |
+| `data/sections/services-content.json` | `src/types/sections/servicesContent.ts` → `servicesSectionContent` | `services/` |
+| `data/sections/portfolio-section.json` | `src/types/portfolio/index.ts` → `portfolioSectionContent` | `portfolio/`, `PortfolioCard.tsx` |
+| `data/sections/advantages-content.json` | `src/types/sections/advantagesContent.ts` → `advantagesContent` | `advantages/` |
+| `data/sections/call-to-action.json` | `src/types/sections/callToAction.ts` → `callToActionContent` | `call-to-action/` |
+| `data/sections/testimonials-content.json` | `src/types/sections/testimonialsContent.ts` → `testimonialsSectionContent` | `testimonials/` |
+| `data/sections/contact.json` | `src/types/sections/contact.ts` → `contactContent` | `contact/` (all sub-components) |
+| `data/sections/footer.json` | `src/types/sections/footer.ts` → `footerContent` | `footer/` (all sub-components) |
+| `data/sections/portfolio-case.json` | `src/types/portfolio/portfolioCaseContent.ts` → `portfolioCaseContent` | `PortfolioCasePage.tsx`, `portfolio/Case*.tsx` |
+| `data/sections/image-gallery.json` | `src/types/portfolio/imageGallery.ts` → `imageGalleryContent` | `portfolio/CaseGallery.tsx` |
+| `data/config/cookies.json` | `src/types/config/cookies.ts` → `cookiesContent` | `banners/` |
 
-- **`data/config/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/theme.ts`.
-- **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo). Exposed via `src/types/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
-- **`data/sections/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/aboutValues.ts`; used by `about/`.
-- **`data/sections/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Exposed via `src/types/carousel.ts`; used by `carousel/`.
-- **`data/sections/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/types/advantages.ts`; used by `advantages/`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/iconMap.ts`.
-- **`data/sections/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/iconMap.ts`.
-- **`data/sections/testimonials.json`** — array of testimonial objects. Exposed via `src/types/testimonials.ts`; used by `PortfolioCasePage.tsx` (TestimonialCard). The Testimonials section now uses the Yandex widget instead of this data directly.
-- **`data/config/legal.json`** — company legal details. Exposed via `src/types/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.json`.
-- **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio.ts`).
+- **`data/config/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/config/theme.ts`.
+- **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo). Exposed via `src/types/config/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
+- **`data/sections/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/sections/aboutValues.ts`; used by `about/`.
+- **`data/sections/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Exposed via `src/types/sections/carousel.ts`; used by `carousel/`.
+- **`data/sections/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/types/sections/advantages.ts`; used by `advantages/`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.
+- **`data/sections/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/sections/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.
+- **`data/sections/testimonials.json`** — array of testimonial objects. Exposed via `src/types/sections/testimonials.ts`; used by `PortfolioCasePage.tsx` (TestimonialCard). The Testimonials section now uses the Yandex widget instead of this data directly.
+- **`data/config/legal.json`** — company legal details. Exposed via `src/types/config/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.json`.
+- **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio/index.ts`, imported as `@/types/portfolio`).
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.
 - Components **never** import from `@data/` directly — always go through `src/types/`.
-- All shared types, interfaces, consts, and data modules live in `src/types/`; only `utils.ts` stays in `src/lib/`.
-- Portfolio collection loaded via `import.meta.glob('@data/portfolio/*.json', { eager: true, import: 'default' })` — see `src/types/portfolioCases.ts`.
+- All shared types, interfaces, consts, and data modules live in `src/types/` (organised into `config/`, `sections/`, `portfolio/`, `shared/` subfolders); only `utils.ts` stays in `src/lib/`.
+- Portfolio collection loaded via `import.meta.glob('@data/portfolio/*.json', { eager: true, import: 'default' })` — see `src/types/portfolio/portfolioCases.ts`.
 - Schema examples tracked in `data/_schema/` as JSON files showing the expected shape of each data file. The actual data files are gitignored.
 - All data const exports use the `satisfies` operator (`export const x = data satisfies Type`) — validates JSON shape against the interface while preserving the narrow inferred type.
 
@@ -329,7 +333,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 - **Components**: PascalCase files, one component per file
 - **Static content**: all data, types, and shared modules live in `src/types/` — components import from `@/types/`, never from `@data/` directly; only `cn()` utility stays in `@/lib/utils`
-- **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `IconComponent` via the shared `ICON_MAP` in `src/types/iconMap.ts`; import `ICON_MAP`, `resolveIcon()`, or `IconComponent` type from there — do not import from `lucide-react` directly in components, do not create local icon maps
+- **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `IconComponent` via the shared `ICON_MAP` in `src/types/shared/iconMap.ts`; import `ICON_MAP`, `resolveIcon()`, or `IconComponent` type from there — do not import from `lucide-react` directly in components, do not create local icon maps
 - **Tailwind**: use `cn()` from `@/lib/utils` for conditional class merging
 - **Sections**: self-contained in `src/components/sections/`, import Container for layout
 - **Path aliases**: `@/` → `src/`, `@data` → `data/` (root-level)

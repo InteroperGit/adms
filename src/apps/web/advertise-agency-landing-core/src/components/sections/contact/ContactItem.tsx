@@ -1,5 +1,5 @@
 // src/components/sections/contact/ContactItem.tsx
-import type { IconComponent } from '@/types/iconMap';
+import type { IconComponent } from '@/types/shared/iconMap';
 
 interface ContactItemProps {
   icon: IconComponent;

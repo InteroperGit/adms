@@ -1,7 +1,7 @@
 import { ImageGallery } from '@/components/ui/imageGallery';
 import { Container } from '@/components/layout/Container';
-import { portfolioCaseContent } from '@/types/portfolioCaseContent';
-import { imageGalleryContent } from '@/types/imageGallery';
+import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
+import { imageGalleryContent } from '@/types/portfolio/imageGallery';
 import type { GalleryImage } from '@/types/portfolio';
 
 interface CaseGalleryProps {

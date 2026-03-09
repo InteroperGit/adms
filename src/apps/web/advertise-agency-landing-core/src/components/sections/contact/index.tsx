@@ -4,7 +4,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader';
 import { ContactForm } from './ContactForm';
 import { ContactInfo } from './ContactInfo';
 import { ContactHours } from './ContactHours';
-import { contactContent } from '@/types/contact';
+import { contactContent } from '@/types/sections/contact';
 
 export function Contact() {
   return (

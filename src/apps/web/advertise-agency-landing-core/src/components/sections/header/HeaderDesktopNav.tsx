@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { headerContent } from '@/types/header';
+import { headerContent } from '@/types/sections/header';
 import { cn } from '@/lib/utils';
 
 interface Props {

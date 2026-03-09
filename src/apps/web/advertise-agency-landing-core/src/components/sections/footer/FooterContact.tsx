@@ -1,7 +1,7 @@
 // src/components/sections/footer/FooterContact.tsx
-import { ICON_MAP, type IconComponent } from '@/types/iconMap';
-import { footerContent } from '@/types/footer';
-import { siteData } from '@/types/siteData';
+import { ICON_MAP, type IconComponent } from '@/types/shared/iconMap';
+import { footerContent } from '@/types/sections/footer';
+import { siteData } from '@/types/config/siteData';
 
 interface FooterContactItem {
   icon: IconComponent;
