@@ -1,23 +1,23 @@
 import { cn } from '@/lib/utils';
-import type { ChartBlock as ChartBlockData } from '@/types/portfolio/blocks';
+import type { BlockColor, ChartBlock as ChartBlockData } from '@/types/portfolio/blocks';
 
 interface ChartBlockProps {
   block: ChartBlockData;
   caseGradient: string;
 }
 
-type ColorMode = ChartBlockData['color'];
-
 // Returns Tailwind bg classes for div-based bars
-function barBgClass(color: ColorMode, caseGradient: string): string {
-  if (color === 'accent') return 'bg-accent';
-  if (color === 'gradient') return cn('bg-gradient-to-r', caseGradient);
-  return 'bg-primary'; // default: primary
+function barBgClass(color: BlockColor | undefined, caseGradient: string): string {
+  if (!color) return 'bg-primary';
+  if (color.type === 'accent') return 'bg-accent';
+  if (color.type === 'gradient') return cn('bg-gradient-to-r', color.value ?? caseGradient);
+  if (color.type === 'solid') return 'bg-primary';
+  return 'bg-primary';
 }
 
 // Returns CSS color string for SVG elements
-function svgColor(color: ColorMode): string {
-  if (color === 'accent') return 'hsl(var(--accent))';
+function svgColor(color: BlockColor | undefined): string {
+  if (color?.type === 'accent') return 'hsl(var(--accent))';
   return 'hsl(var(--primary))';
 }
 
@@ -202,7 +202,6 @@ function PieChart({ block }: { block: ChartBlockData }) {
   const CY = 80;
   const CIRCUMFERENCE = 2 * Math.PI * R;
 
-  // Generate hues spread around the primary color for variety
   const baseColor = svgColor(block.color);
   const palette = block.items.map((_, idx) => {
     const opacity = 1 - idx * (0.6 / Math.max(block.items.length - 1, 1));
@@ -245,7 +244,7 @@ function PieChart({ block }: { block: ChartBlockData }) {
               style={{ background: baseColor, opacity: palette[i] }}
             />
             <span className="text-muted-foreground">{item.label}</span>
-            <span className="ml-auto font-semibold text-foreground pl-4">
+            <span className="ml-auto pl-4 font-semibold text-foreground">
               {item.value}
               {item.suffix}
             </span>

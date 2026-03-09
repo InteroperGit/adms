@@ -192,10 +192,10 @@ advertise-agency-landing-core/
 │   │   │   │   ├── ImageBlock.tsx     # <figure>+<img>+<figcaption>; size: small→max-w-md, medium→max-w-2xl, full→max-w-5xl
 │   │   │   │   ├── GalleryBlock.tsx   # Wraps <ImageGallery>; reads labels from portfolioCaseContent + imageGalleryContent; props: block, caseTitle
 │   │   │   │   ├── VideoBlock.tsx     # YouTube/Rutube → <iframe> embed; local .mp4/.webm/.ogg → <video>; aspect-ratio padding-top trick
-│   │   │   │   ├── MetricsBlock.tsx   # 3-col KPI grid; gradient:true → bg-gradient-to-br caseGradient + white text; otherwise white card + text-primary metric
-│   │   │   │   ├── CardsBlock.tsx     # Grid of white cards; columns 2/3/4 (default 3); gradient:true → accent bar bg-gradient-to-r caseGradient
+│   │   │   │   ├── MetricsBlock.tsx   # 3-col KPI grid; color.type gradient/solid/primary/accent → colored bg + white text; otherwise white card + text-primary metric
+│   │   │   │   ├── CardsBlock.tsx     # Grid of white cards; columns 2/3/4 (default 3); color.type → accent bar (gradient/solid/primary/accent)
 │   │   │   │   ├── TableBlock.tsx     # overflow-x-auto table; bg-muted/60 thead; striped rows; highlight rows get bg-primary/5
-│   │   │   │   ├── ChartBlock.tsx     # Pure CSS/SVG charts: bar, horizontal-bar, progress (div-based); line, pie (SVG); no chart library
+│   │   │   │   ├── ChartBlock.tsx     # Pure CSS/SVG charts: bar, horizontal-bar, progress (div-based); line, pie (SVG); no chart library; color?: BlockColor
 │   │   │   │   ├── BlockquoteBlock.tsx # Variant A (testimonialId): renders <TestimonialCard>; Variant B (text+author): styled <blockquote> with border-l-4 border-primary
 │   │   │   │   ├── CalloutBlock.tsx   # Colored left-border box; type→color map (info=blue, success=green, warning=amber, note=gray); icons from ICON_MAP
 │   │   │   │   ├── DividerBlock.tsx   # line→<hr>; dots→three centered spans; space→<div className="py-8">
@@ -227,7 +227,7 @@ advertise-agency-landing-core/
 │   │   │   └── footer.ts             # FooterContent interface + footerContent const (from data/sections/footer.json); CtaLink inline
 │   │   ├── portfolio/
 │   │   │   ├── index.ts              # PortfolioCase interface (hero:{image?,gradient}, content:ContentBlock[], images:{preview?,og?}) + GalleryImage interface + PortfolioSectionContent interface + portfolioSectionContent const — imported as '@/types/portfolio'
-│   │   │   ├── blocks.ts             # ContentBlock discriminated union + all 14 block interfaces (HeadingBlock, ParagraphBlock, ImageBlock, GalleryBlock, BlockquoteBlock, MetricsBlock, CardsBlock, TableBlock, ChartBlock, DividerBlock, CalloutBlock, ListBlock, VideoBlock, CodeBlock)
+│   │   │   ├── blocks.ts             # ContentBlock discriminated union + all 14 block interfaces + BlockColor interface ({type:'solid'|'gradient'|'primary'|'accent'; value?:string})
 │   │   │   ├── portfolioCaseContent.ts # PortfolioCaseContent interface + portfolioCaseContent const (from data/sections/portfolio-case.json)
 │   │   │   ├── portfolioCases.ts     # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
 │   │   │   └── imageGallery.ts       # ImageGalleryContent interface + imageGalleryContent const (from data/sections/image-gallery.json)

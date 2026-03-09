@@ -44,7 +44,7 @@
         { "title": "Блок решения 2", "description": "Описание второго аспекта решения." },
         { "title": "Блок решения 3", "description": "Описание третьего аспекта решения." }
       ],
-      "gradient": true
+      "color": { "type": "gradient", "value": "from-amber-400 to-orange-500" }
     },
     {
       "__component": "image",
@@ -68,7 +68,7 @@
         { "metric": "00", "label": "единиц", "description": "Дополнительный результат" },
         { "metric": "0 мес.", "label": "реализации", "description": "Срок от брифа до запуска" }
       ],
-      "gradient": true
+      "color": { "type": "gradient" }
     },
     {
       "__component": "blockquote",
@@ -108,7 +108,7 @@
         { "label": "Лояльность", "value": 65, "suffix": "%" },
         { "label": "Конверсия", "value": 42, "suffix": "%" }
       ],
-      "color": "gradient"
+      "color": { "type": "primary" }
     },
     {
       "__component": "divider",
