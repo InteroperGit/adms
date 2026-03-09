@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { testimonials } from '@/types/testimonials';
+import { testimonials } from '@/types/sections/testimonials';
 import { cn } from '@/lib/utils';
 
 interface TestimonialNavProps {

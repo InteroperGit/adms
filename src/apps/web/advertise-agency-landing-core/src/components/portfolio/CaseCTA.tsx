@@ -1,7 +1,7 @@
 // src/components/portfolio/CaseCTA.tsx
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
-import { portfolioCaseContent } from '@/types/portfolioCaseContent';
+import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 
 export function CaseCTA() {
   const { cta } = portfolioCaseContent;

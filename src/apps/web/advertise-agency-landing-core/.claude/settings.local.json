@@ -13,7 +13,10 @@
       "WebFetch(domain:www.npmjs.com)",
       "Bash(pnpm format:*)",
       "Bash(pnpm tsc:*)",
-      "Bash(pnpm:*)"
+      "Bash(pnpm:*)",
+      "Bash(mkdir:*)",
+      "Bash(python:*)",
+      "Bash(grep:*)"
     ]
   }
 }

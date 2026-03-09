@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { ICON_MAP } from '@/types/iconMap';
-import type { Service } from '@/types/services';
+import { ICON_MAP } from '@/types/shared/iconMap';
+import type { Service } from '@/types/sections/services';
 
 interface Props {
   service: Service;

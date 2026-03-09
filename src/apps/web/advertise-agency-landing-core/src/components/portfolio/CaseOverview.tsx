@@ -1,6 +1,6 @@
 // src/components/portfolio/CaseOverview.tsx
 import { Container } from '@/components/layout/Container';
-import { portfolioCaseContent } from '@/types/portfolioCaseContent';
+import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 
 interface CaseOverviewProps {
   client: string;

@@ -1,6 +1,6 @@
-import { type AboutSectionContent } from '@/types/aboutContent';
-import { headerContent } from '@/types/header';
-import { siteData } from '@/types/siteData';
+import { type AboutSectionContent } from '@/types/sections/aboutContent';
+import { headerContent } from '@/types/sections/header';
+import { siteData } from '@/types/config/siteData';
 
 interface AboutCardProps {
   card: AboutSectionContent['card'];

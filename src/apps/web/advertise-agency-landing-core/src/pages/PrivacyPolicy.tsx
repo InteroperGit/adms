@@ -1,6 +1,6 @@
 // src/pages/PrivacyPolicy.tsx
 
-import { legalData } from '@/types/legalData';
+import { legalData } from '@/types/config/legalData';
 import { LegalPageLayout } from '@/components/ui/LegalPageLayout.tsx';
 import { LegalSection } from '@/components/ui/LegalSection.tsx';
 

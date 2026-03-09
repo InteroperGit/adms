@@ -1,7 +1,7 @@
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { testimonialsSectionContent } from '@/types/testimonialsContent';
-import { siteData } from '@/types/siteData';
+import { testimonialsSectionContent } from '@/types/sections/testimonialsContent';
+import { siteData } from '@/types/config/siteData';
 import { YandexReviews } from './YandexReviews';
 import { TestimonialsEmpty } from './TestimonialsEmpty';
 

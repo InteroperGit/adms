@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
-import { headerContent } from '@/types/header';
+import { headerContent } from '@/types/sections/header';
 import { useActiveSection } from '@/hooks/useActiveSection';
-import { siteData } from '@/types/siteData';
+import { siteData } from '@/types/config/siteData';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
 import { HeaderMobileNav } from './HeaderMobileNav';
 

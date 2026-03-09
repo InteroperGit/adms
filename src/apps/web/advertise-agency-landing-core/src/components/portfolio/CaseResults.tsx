@@ -1,6 +1,6 @@
 // src/components/portfolio/CaseResults.tsx
 import { Container } from '@/components/layout/Container';
-import { portfolioCaseContent } from '@/types/portfolioCaseContent';
+import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 import { cn } from '@/lib/utils';
 import type { PortfolioCase } from '@/types/portfolio';
 

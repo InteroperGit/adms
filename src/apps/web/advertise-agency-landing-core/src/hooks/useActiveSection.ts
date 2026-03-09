@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { headerContent } from '@/types/header';
+import { headerContent } from '@/types/sections/header';
 
 const SECTION_IDS = headerContent.nav.map((l) => l.href.slice(1));
 

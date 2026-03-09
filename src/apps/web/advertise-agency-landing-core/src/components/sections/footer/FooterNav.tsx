@@ -1,6 +1,6 @@
 // src/components/sections/footer/FooterNav.tsx
-import { footerContent } from '@/types/footer';
-import { headerContent } from '@/types/header';
+import { footerContent } from '@/types/sections/footer';
+import { headerContent } from '@/types/sections/header';
 
 export function FooterNav() {
   return (

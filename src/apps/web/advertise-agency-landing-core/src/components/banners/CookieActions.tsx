@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { cookiesContent } from '@/types/cookies';
+import { cookiesContent } from '@/types/config/cookies';
 
 interface CookieActionsProps {
   onAcceptAll: () => void;
