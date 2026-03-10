@@ -13,18 +13,19 @@ function VkIcon({ size = 16 }: { size?: number }) {
 interface SocialLinksProps {
   telegram: string;
   vk: string;
-  variant?: 'light' | 'dark';
+  variant?: 'light' | 'dark' | 'colored';
   className?: string;
 }
 
 export function SocialLinks({ telegram, vk, variant = 'light', className }: SocialLinksProps) {
   const isDark = variant === 'dark';
+  const isColored = variant === 'colored';
 
   const base = cn(
     'flex h-11 w-11 items-center justify-center transition-colors',
     isDark
       ? 'rounded-lg border border-white/10 text-white/50'
-      : 'rounded-xl border border-border bg-white text-muted-foreground shadow-sm'
+      : 'rounded-xl border bg-white shadow-sm'
   );
 
   return (
@@ -36,9 +37,11 @@ export function SocialLinks({ telegram, vk, variant = 'light', className }: Soci
         aria-label="Telegram"
         className={cn(
           base,
-          isDark
-            ? 'hover:border-[#2AABEE]/40 hover:bg-[#2AABEE]/10 hover:text-[#2AABEE]'
-            : 'hover:border-[#2AABEE]/30 hover:bg-[#2AABEE]/5 hover:text-[#2AABEE]'
+          isColored
+            ? 'border-[#2AABEE]/30 bg-[#2AABEE]/5 text-[#2AABEE] hover:bg-[#2AABEE]/15'
+            : isDark
+              ? 'text-white/50 hover:border-[#2AABEE]/40 hover:bg-[#2AABEE]/10 hover:text-[#2AABEE]'
+              : 'border-border text-muted-foreground hover:border-[#2AABEE]/30 hover:bg-[#2AABEE]/5 hover:text-[#2AABEE]'
         )}
       >
         <Send size={16} />
@@ -50,9 +53,11 @@ export function SocialLinks({ telegram, vk, variant = 'light', className }: Soci
         aria-label="ВКонтакте"
         className={cn(
           base,
-          isDark
-            ? 'hover:border-[#0077FF]/40 hover:bg-[#0077FF]/10 hover:text-[#0077FF]'
-            : 'hover:border-[#0077FF]/30 hover:bg-[#0077FF]/5 hover:text-[#0077FF]'
+          isColored
+            ? 'border-[#0077FF]/30 bg-[#0077FF]/5 text-[#0077FF] hover:bg-[#0077FF]/15'
+            : isDark
+              ? 'text-white/50 hover:border-[#0077FF]/40 hover:bg-[#0077FF]/10 hover:text-[#0077FF]'
+              : 'border-border text-muted-foreground hover:border-[#0077FF]/30 hover:bg-[#0077FF]/5 hover:text-[#0077FF]'
         )}
       >
         <VkIcon />
