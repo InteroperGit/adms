@@ -9,8 +9,13 @@ interface Props {
   onDot: (index: number) => void;
 }
 
-const arrowClass =
-  'absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white/70 text-foreground backdrop-blur-sm transition-colors hover:bg-white';
+const arrowClass = cn(
+  'absolute top-1/2 z-10 -translate-y-1/2',
+  'flex h-11 w-11 items-center justify-center',
+  'rounded-full border border-border',
+  'bg-white/70 text-foreground backdrop-blur-sm',
+  'transition-colors hover:bg-white'
+);
 
 export function CarouselControls({ total, current, onPrev, onNext, onDot }: Props) {
   return (

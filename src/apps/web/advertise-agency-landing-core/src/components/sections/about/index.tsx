@@ -1,5 +1,6 @@
 import { CheckCircle2 } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
+import { cn } from '@/lib/utils';
 import { AboutCard } from '@/components/sections/about/AboutCard';
 import { aboutValues } from '@/types/sections/aboutValues';
 import { aboutContent } from '@/types/sections/aboutContent';
@@ -15,7 +16,13 @@ export function About() {
           {/* Left — text content */}
           <div>
             {/* Section label */}
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
+            <div
+              className={cn(
+                'mb-4 inline-flex items-center gap-2 rounded-full border',
+                'border-primary/20 bg-primary/5 px-4 py-1.5',
+                'text-sm font-medium text-primary'
+              )}
+            >
               {about.label}
             </div>
 
@@ -27,7 +34,10 @@ export function About() {
             {about.text.map((paragraph, i) => (
               <p
                 key={i}
-                className={`${i === about.text.length - 1 ? 'mb-10' : 'mb-6'} text-base leading-relaxed text-muted-foreground`}
+                className={cn(
+                  i === about.text.length - 1 ? 'mb-10' : 'mb-6',
+                  'text-base leading-relaxed text-muted-foreground'
+                )}
               >
                 {paragraph.replace('{name}', siteData.name)}
               </p>
