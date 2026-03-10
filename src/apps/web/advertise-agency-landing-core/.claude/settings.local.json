@@ -16,7 +16,14 @@
       "Bash(pnpm:*)",
       "Bash(mkdir:*)",
       "Bash(python:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "WebSearch",
+      "Bash(claude plugin:*)",
+      "Bash(while read:*)",
+      "Bash(do echo:*)",
+      "Read(//d/Projects/adms/src/apps/web/advertise-agency-landing-core/**)",
+      "Bash(done)",
+      "mcp__context7__resolve-library-id"
     ]
   }
 }
