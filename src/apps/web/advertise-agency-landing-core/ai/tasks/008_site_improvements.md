@@ -1,6 +1,6 @@
 # 008 — Site Improvements PRD
 
-## Status: 🔲 not started
+## Status: 🔲 T1 ✅ done (2026-03-11) | rest not started
 
 ## Goal
 
@@ -10,7 +10,7 @@ Bring the landing page from "functional" to "polished & production-hardened". Ta
 
 ## Tasks
 
-### T1 · SEO: meta tags + canonical links + JSON-LD
+### T1 · SEO: meta tags + canonical links + JSON-LD ✅ done
 
 **Priority:** high · **Scope:** config + pages
 

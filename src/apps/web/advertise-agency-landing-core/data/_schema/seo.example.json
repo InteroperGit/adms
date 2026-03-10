@@ -1,0 +1,7 @@
+{
+  "siteUrl": "https://example.ru",
+  "siteName": "Название компании",
+  "locale": "ru_RU",
+  "twitterCard": "summary",
+  "defaultOgImage": "/og-default.jpg"
+}

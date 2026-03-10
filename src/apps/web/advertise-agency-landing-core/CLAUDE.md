@@ -67,6 +67,7 @@ advertise-agency-landing-core/
 │   │   ├── testimonials.example.json
 │   │   └── theme.example.json
 │   │   └── orderForms.example.json
+│   │   └── seo.example.json
 │   ├── portfolio/           # One JSON file per case study (slug.json)
 │   │   ├── bodrost.json
 │   │   ├── fitstudio.json
@@ -98,7 +99,8 @@ advertise-agency-landing-core/
 │       ├── portfolio.json       # Shared portfolio listing config: perPage, allLabel, pagination labels, emptyLabel, cta
 │       ├── categories.json      # Category registry: [{ name, slug }]; drives SSG route generation + CategoryNav
 │       ├── legal.json           # Legal company data: company.{name,inn,ogrn,legalAddress,siteUrl,email,phone,responsible}, documents.{privacyPolicy,consent,userAgreement} each {version,effectiveDate}
-│       └── orderForms.json      # Order form definitions: forms (keyed by ID, each with productTypes, customerFields, consent, success), page (label, title, description, defaultFormId)
+│       ├── orderForms.json      # Order form definitions: forms (keyed by ID, each with productTypes, customerFields, consent, success), page (label, title, description, defaultFormId)
+│       └── seo.json             # Global SEO defaults: siteUrl, siteName, locale, twitterCard, defaultOgImage
 ├── public/                  # Static assets (favicon, images)
 ├── src/
 │   ├── assets/              # Images, SVGs imported in components
@@ -241,7 +243,8 @@ advertise-agency-landing-core/
 │   │   │   ├── portfolioConfig.ts    # PortfolioConfig interface + portfolioConfig const (from data/config/portfolio.json); shared listing config for all portfolio pages
 │   │   │   ├── categories.ts         # Category interface + categories const (from data/config/categories.json); { name, slug }[]
 │   │   │   └── legalData.ts          # LegalData interface + DocumentVersion interface + legalData const (from data/config/legal.json)
-│   │   │   └── orderForms.ts         # OrderFormsData interface + FormFieldDefinition + ProductType + OrderFormDefinition + orderFormsData const (from data/config/orderForms.json)
+│   │   │   ├── orderForms.ts         # OrderFormsData interface + FormFieldDefinition + ProductType + OrderFormDefinition + orderFormsData const (from data/config/orderForms.json)
+│   │   │   └── seo.ts                # SeoConfig interface + seoConfig const (from data/config/seo.json): siteUrl, siteName, locale, twitterCard, defaultOgImage
 │   │   ├── sections/
 │   │   │   ├── header.ts             # HeaderContent interface + headerContent const (from data/sections/header.json); CtaLink inline
 │   │   │   ├── hero.ts               # HeroContent interface + heroContent const (from data/sections/hero.json); CtaLink inline
@@ -351,6 +354,7 @@ UI copy is split into one JSON file per section — each section component impor
 | `data/sections/imageGallery.json` | `src/types/portfolio/imageGallery.ts` → `imageGalleryContent` | `portfolio/blocks/GalleryBlock.tsx` |
 | `data/config/cookies.json` | `src/types/config/cookies.ts` → `cookiesContent` | `banners/` |
 | `data/config/orderForms.json` | `src/types/config/orderForms.ts` → `orderFormsData` | `ui/orderForm/`, `portfolio/blocks/OrderFormBlock.tsx`, `OrderPage.tsx` |
+| `data/config/seo.json` | `src/types/config/seo.ts` → `seoConfig` | `src/plugins/ssgMetaPlugin.ts` (`onPageRendered`) |
 
 - **`data/config/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/config/theme.ts`.
 - **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo). Exposed via `src/types/config/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
@@ -360,6 +364,7 @@ UI copy is split into one JSON file per section — each section component impor
 - **`data/sections/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/sections/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.
 - **`data/sections/testimonials.json`** — array of testimonial objects. Exposed via `src/types/sections/testimonials.ts`; used by `PortfolioCasePage.tsx` (TestimonialCard). The Testimonials section now uses the Yandex widget instead of this data directly.
 - **`data/config/legal.json`** — company legal details. Exposed via `src/types/config/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.json`.
+- **`data/config/seo.json`** — global SEO defaults: `siteUrl`, `siteName`, `locale`, `twitterCard`, `defaultOgImage`. Read at build time by `src/plugins/ssgMetaPlugin.ts` (`onPageRendered`) to inject OG tags, canonical links, and JSON-LD into every static HTML page. Schema in `data/_schema/seo.example.json`.
 - **`data/config/orderForms.json`** — order form definitions: `forms` (keyed by ID, each with `productTypes`, `customerFields`, `consent`, `success`), `page` (listing page copy). Exposed via `src/types/config/orderForms.ts`; used by `ui/orderForm/`, `portfolio/blocks/OrderFormBlock.tsx`, `OrderPage.tsx`. Schema in `data/_schema/orderForms.example.json`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio/index.ts`, imported as `@/types/portfolio`). Shape: `slug`, `title`, `category`, `description`, `hero: { image?, gradient }`, `tags[]`, `meta`, `overview`, `content: ContentBlock[]`, `images: { preview?, og? }`. The `content` array is a dynamic zone of ordered blocks rendered by `BlockRenderer`. Block types defined in `src/types/portfolio/blocks.ts`.
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { CaseHero } from '@/components/portfolio/CaseHero';
@@ -15,16 +14,6 @@ import { portfolioConfig } from '@/types/config/portfolioConfig';
 export function PortfolioCasePage() {
   const { categorySlug, caseSlug } = useParams<{ categorySlug: string; caseSlug: string }>();
   const data = caseSlug ? portfolioCaseMap[caseSlug] : undefined;
-
-  useEffect(() => {
-    if (data) {
-      document.title = data.meta.title;
-      const descEl = document.querySelector('meta[name="description"]');
-      if (descEl) {
-        descEl.setAttribute('content', data.meta.description);
-      }
-    }
-  }, [data]);
 
   const pc = portfolioCaseContent;
   const portfolioTitle = portfolioPageContent.title;
