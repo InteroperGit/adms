@@ -35,6 +35,21 @@ export function TableBlock({ block }: TableBlockProps) {
             ))}
           </div>
         ))}
+        {block.total && (
+          <div className="rounded-xl border-2 border-border bg-muted/60 p-4 shadow-sm">
+            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              {block.total[0]}
+            </div>
+            <div className="flex flex-col gap-1">
+              {block.total.slice(1).map((cell, j) => (
+                <div key={j} className="flex items-baseline justify-between gap-2">
+                  <span className="text-xs text-muted-foreground">{block.head[j + 1]}</span>
+                  <span className="text-sm font-semibold text-foreground">{cell}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Desktop: table */}
@@ -69,6 +84,17 @@ export function TableBlock({ block }: TableBlockProps) {
               </tr>
             ))}
           </tbody>
+          {block.total && (
+            <tfoot>
+              <tr className="border-t-2 border-border bg-muted/60 font-semibold">
+                {block.total.map((cell, j) => (
+                  <td key={j} className="px-4 py-3 text-foreground">
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            </tfoot>
+          )}
         </table>
       </div>
     </div>

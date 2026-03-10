@@ -194,7 +194,7 @@ advertise-agency-landing-core/
 │   │   │   │   ├── VideoBlock.tsx     # YouTube/Rutube → <iframe> embed; local .mp4/.webm/.ogg → <video>; aspect-ratio padding-top trick
 │   │   │   │   ├── MetricsBlock.tsx   # 3-col KPI grid; color.type gradient/solid/primary/accent → colored bg + white text; otherwise white card + text-primary metric
 │   │   │   │   ├── CardsBlock.tsx     # Grid of white cards; columns 2/3/4 (default 3); color.type → accent bar (gradient/solid/primary/accent)
-│   │   │   │   ├── TableBlock.tsx     # overflow-x-auto table; bg-muted/60 thead; striped rows; highlight rows get bg-primary/5
+│   │   │   │   ├── TableBlock.tsx     # overflow-x-auto table; bg-muted/60 thead; striped rows; highlight rows get bg-primary/5; optional total?: string[] — tfoot on desktop, summary card on mobile (total[0] as header label, remaining cells as label↔value pairs)
 │   │   │   │   ├── ChartBlock.tsx     # Pure CSS/SVG charts: bar, horizontal-bar, progress (div-based); line, pie (SVG); no chart library; color?: BlockColor
 │   │   │   │   ├── BlockquoteBlock.tsx # Variant A (testimonialId): renders <TestimonialCard>; Variant B (text+author): styled <blockquote> with border-l-4 border-primary
 │   │   │   │   ├── CalloutBlock.tsx   # Colored left-border box; type→color map (info=blue, success=green, warning=amber, note=gray); icons from ICON_MAP
