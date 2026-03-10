@@ -25,7 +25,7 @@ export function Pagination({
   return (
     <div className="mt-12 flex items-center justify-center gap-4">
       <Button
-        variant="outline"
+        variant="default"
         size="sm"
         onClick={onPrev}
         disabled={current <= 1}
@@ -35,7 +35,7 @@ export function Pagination({
       </Button>
       <span className="text-sm text-muted-foreground">{label}</span>
       <Button
-        variant="outline"
+        variant="default"
         size="sm"
         onClick={onNext}
         disabled={current >= total}
