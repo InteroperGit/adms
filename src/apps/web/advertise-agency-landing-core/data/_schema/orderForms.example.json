@@ -1,0 +1,65 @@
+{
+  "forms": {
+    "outdoor-signs": {
+      "title": "Заказать вывеску",
+      "description": "Выберите тип продукции и заполните параметры",
+      "icon": "LayoutTemplate",
+      "productTypes": [
+        {
+          "key": "light-letters",
+          "label": "Световые буквы",
+          "icon": "Lightbulb",
+          "fields": [
+            { "key": "text", "type": "text", "label": "Текст надписи", "placeholder": "КОФЕ", "required": true },
+            { "key": "height", "type": "number", "label": "Высота букв (см)", "min": 10, "max": 300, "required": true },
+            {
+              "key": "material",
+              "type": "select",
+              "label": "Материал",
+              "required": true,
+              "options": [
+                { "value": "acrylic", "label": "Акрил" },
+                { "value": "metal", "label": "Металл" }
+              ]
+            },
+            {
+              "key": "illumination",
+              "type": "radio",
+              "label": "Подсветка",
+              "required": true,
+              "options": [
+                { "value": "front", "label": "Лицевая" },
+                { "value": "back", "label": "Контражур" }
+              ]
+            },
+            { "key": "mounting", "type": "checkbox", "label": "Нужен монтаж" },
+            { "key": "notes", "type": "textarea", "label": "Дополнительные пожелания" }
+          ]
+        }
+      ],
+      "customerFields": [
+        { "key": "name", "type": "text", "label": "Ваше имя", "placeholder": "Иван Иванов", "required": true },
+        { "key": "phone", "type": "text", "label": "Телефон", "placeholder": "+7 (999) 000-00-00", "required": true },
+        { "key": "email", "type": "text", "label": "Email", "placeholder": "mail@example.com" }
+      ],
+      "consent": {
+        "text": "Я даю согласие на обработку персональных данных",
+        "links": [{ "label": "Политикой конфиденциальности", "href": "/privacy-policy" }],
+        "joiner": "и"
+      },
+      "submit": "Отправить заявку",
+      "disclaimer": "Нажимая кнопку, вы соглашаетесь с обработкой персональных данных",
+      "success": {
+        "title": "Заявка отправлена!",
+        "text": "Мы свяжемся с вами в ближайшее время.",
+        "reset": "Оформить ещё"
+      }
+    }
+  },
+  "page": {
+    "label": "Заказ",
+    "title": "Оформить заказ",
+    "description": "Выберите форму заказа",
+    "defaultFormId": "outdoor-signs"
+  }
+}

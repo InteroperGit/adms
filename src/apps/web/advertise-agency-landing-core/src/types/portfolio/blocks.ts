@@ -112,6 +112,13 @@ export interface CodeBlock {
   caption?: string;
 }
 
+export interface OrderFormBlock {
+  __component: 'order-form';
+  formId: string;
+  title?: string;
+  color?: BlockColor;
+}
+
 export type ContentBlock =
   | HeadingBlock
   | ParagraphBlock
@@ -126,4 +133,5 @@ export type ContentBlock =
   | CalloutBlock
   | ListBlock
   | VideoBlock
-  | CodeBlock;
+  | CodeBlock
+  | OrderFormBlock;

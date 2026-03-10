@@ -66,6 +66,7 @@ advertise-agency-landing-core/
 │   │   ├── testimonialsContent.example.json
 │   │   ├── testimonials.example.json
 │   │   └── theme.example.json
+│   │   └── orderForms.example.json
 │   ├── portfolio/           # One JSON file per case study (slug.json)
 │   │   ├── bodrost.json
 │   │   ├── fitstudio.json
@@ -96,7 +97,8 @@ advertise-agency-landing-core/
 │       ├── cookies.json         # Cookie banner copy: ariaLabel, closeLabel, title, text, privacyLink, button labels
 │       ├── portfolio.json       # Shared portfolio listing config: perPage, allLabel, pagination labels, emptyLabel, cta
 │       ├── categories.json      # Category registry: [{ name, slug }]; drives SSG route generation + CategoryNav
-│       └── legal.json           # Legal company data: company.{name,inn,ogrn,legalAddress,siteUrl,email,phone,responsible}, documents.{privacyPolicy,consent,userAgreement} each {version,effectiveDate}
+│       ├── legal.json           # Legal company data: company.{name,inn,ogrn,legalAddress,siteUrl,email,phone,responsible}, documents.{privacyPolicy,consent,userAgreement} each {version,effectiveDate}
+│       └── orderForms.json      # Order form definitions: forms (keyed by ID, each with productTypes, customerFields, consent, success), page (label, title, description, defaultFormId)
 ├── public/                  # Static assets (favicon, images)
 ├── src/
 │   ├── assets/              # Images, SVGs imported in components
@@ -161,6 +163,14 @@ advertise-agency-landing-core/
 │   │       │   ├── ImageGalleryPreview.tsx    # Main image: bottom-gradient description overlay on desktop hover (group-hover, slides up), mobile description below; click opens lightbox
 │   │       │   ├── ImageGalleryThumbnails.tsx # Horizontal snap-scroll strip; active thumb: ring-2 ring-primary + bg-primary/20 overlay; cursor-pointer on hover; scrollIntoView on change
 │   │       │   └── ImageGalleryLightbox.tsx   # Fixed bg-black/90 modal: overlay nav buttons (hidden sm:flex), swipe on mobile, thumbnail strip, ESC/click-outside to close, body scroll lock
+│   │       ├── orderForm/             # Configurable order form components — no backend; submission shows success state
+│   │       │   ├── index.tsx          # OrderForm orchestrator: state, product tab switch, validation, submit; props: definition: OrderFormDefinition
+│   │       │   ├── OrderFormField.tsx         # Single field renderer: switch on field.type → Input/Textarea/select/checkbox/radio
+│   │       │   ├── OrderFormDynamicFields.tsx # Maps fields[] → OrderFormField
+│   │       │   ├── OrderFormCustomerFields.tsx # Separator heading + OrderFormDynamicFields for customer data
+│   │       │   ├── OrderFormConsent.tsx       # Consent checkbox + legal links (mirrors ContactConsent pattern)
+│   │       │   ├── OrderFormSuccess.tsx       # Icon + title + text + reset button (mirrors ContactSuccess)
+│   │       │   └── OrderFormProductTabs.tsx   # Horizontal scrollable tab bar for product type selection
 │   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
 │   │       ├── BreadCrumbs.tsx        # Pill-style breadcrumb nav bar (border-b, bg-white); props: items[]{label, href?}; last/no-href item shown as primary-tinted pill; used on PortfolioCasePage
 │   │       ├── LegalPageLayout.tsx    # Shared layout for legal pages: BackButton + h1 + version footer + children; props: title, version, effectiveDate, children
@@ -197,6 +207,7 @@ advertise-agency-landing-core/
 │   │   ├── PrivacyPolicy.tsx      # /privacy-policy — reads legalData (company, documents.privacyPolicy.{version,effectiveDate})
 │   │   ├── Consent.tsx            # /consent — reads legalData (company, documents.consent.{version,effectiveDate})
 │   │   └── UserAgreement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate})
+│   │   └── OrderPage.tsx          # /order — standalone order form page; reads ?form=<id> via useSearchParams; SectionHeader + form selector + OrderForm
 │   ├── components/
 │   │   ├── portfolio/
 │   │   │   ├── blocks/
@@ -215,6 +226,7 @@ advertise-agency-landing-core/
 │   │   │   │   ├── CalloutBlock.tsx   # Colored left-border box; type→color map (info=blue, success=green, warning=amber, note=gray); icons from ICON_MAP
 │   │   │   │   ├── DividerBlock.tsx   # line→<hr>; dots→three centered spans; space→<div className="py-8">
 │   │   │   │   └── CodeBlock.tsx      # <pre><code> bg-muted font-mono; optional language tab header; optional figcaption
+│   │   │   │   └── OrderFormBlock.tsx # Looks up orderFormsData.forms[formId], renders <OrderForm>; optional block.title
 │   │   │   ├── CategoryNav.tsx    # Link-based category filter tabs; prop: activeSlug (null=all); "Все"→/portfolio; each cat→/portfolio/{slug}; reads categories + portfolioConfig.allLabel
 │   │   │   ├── Pagination.tsx     # Prev/next buttons + page label; props: current, total, prevLabel, nextLabel, pageLabel, onPrev, onNext
 │   │   │   ├── PortfolioGrid.tsx  # Shared grid + pagination + CTA; props: items, activeSlug; builds hrefs as /portfolio/{activeSlug??'all'}/{slug}; reads ?page via useSearchParams internally
@@ -229,6 +241,7 @@ advertise-agency-landing-core/
 │   │   │   ├── portfolioConfig.ts    # PortfolioConfig interface + portfolioConfig const (from data/config/portfolio.json); shared listing config for all portfolio pages
 │   │   │   ├── categories.ts         # Category interface + categories const (from data/config/categories.json); { name, slug }[]
 │   │   │   └── legalData.ts          # LegalData interface + DocumentVersion interface + legalData const (from data/config/legal.json)
+│   │   │   └── orderForms.ts         # OrderFormsData interface + FormFieldDefinition + ProductType + OrderFormDefinition + orderFormsData const (from data/config/orderForms.json)
 │   │   ├── sections/
 │   │   │   ├── header.ts             # HeaderContent interface + headerContent const (from data/sections/header.json); CtaLink inline
 │   │   │   ├── hero.ts               # HeroContent interface + heroContent const (from data/sections/hero.json); CtaLink inline
@@ -301,6 +314,7 @@ advertise-agency-landing-core/
 /privacy-policy                → PrivacyPolicy.tsx (static legal page, inside App layout)
 /user-agreement                → UserAgreement.tsx (static legal page, inside App layout)
 /consent                       → Consent.tsx (cookie consent policy page, inside App layout)
+/order                         → OrderPage.tsx (standalone order form page, inside App layout)
 ```
 
 ## Development Commands
@@ -336,6 +350,7 @@ UI copy is split into one JSON file per section — each section component impor
 | `data/sections/portfolioCase.json` | `src/types/portfolio/portfolioCaseContent.ts` → `portfolioCaseContent` | `PortfolioCasePage.tsx`, `portfolio/Case*.tsx` |
 | `data/sections/imageGallery.json` | `src/types/portfolio/imageGallery.ts` → `imageGalleryContent` | `portfolio/blocks/GalleryBlock.tsx` |
 | `data/config/cookies.json` | `src/types/config/cookies.ts` → `cookiesContent` | `banners/` |
+| `data/config/orderForms.json` | `src/types/config/orderForms.ts` → `orderFormsData` | `ui/orderForm/`, `portfolio/blocks/OrderFormBlock.tsx`, `OrderPage.tsx` |
 
 - **`data/config/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/config/theme.ts`.
 - **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo). Exposed via `src/types/config/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
@@ -345,6 +360,7 @@ UI copy is split into one JSON file per section — each section component impor
 - **`data/sections/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/sections/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.
 - **`data/sections/testimonials.json`** — array of testimonial objects. Exposed via `src/types/sections/testimonials.ts`; used by `PortfolioCasePage.tsx` (TestimonialCard). The Testimonials section now uses the Yandex widget instead of this data directly.
 - **`data/config/legal.json`** — company legal details. Exposed via `src/types/config/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.json`.
+- **`data/config/orderForms.json`** — order form definitions: `forms` (keyed by ID, each with `productTypes`, `customerFields`, `consent`, `success`), `page` (listing page copy). Exposed via `src/types/config/orderForms.ts`; used by `ui/orderForm/`, `portfolio/blocks/OrderFormBlock.tsx`, `OrderPage.tsx`. Schema in `data/_schema/orderForms.example.json`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio/index.ts`, imported as `@/types/portfolio`). Shape: `slug`, `title`, `category`, `description`, `hero: { image?, gradient }`, `tags[]`, `meta`, `overview`, `content: ContentBlock[]`, `images: { preview?, og? }`. The `content` array is a dynamic zone of ordered blocks rendered by `BlockRenderer`. Block types defined in `src/types/portfolio/blocks.ts`.
 - `data/` is at project root (not inside `src/`); path alias `@data` → `./data`.
 - Components **never** import from `@data/` directly — always go through `src/types/`.
