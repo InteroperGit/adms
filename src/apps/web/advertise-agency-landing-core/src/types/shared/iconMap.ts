@@ -18,6 +18,8 @@ import {
   CheckCircle,
   AlertTriangle,
   StickyNote,
+  RectangleHorizontal,
+  Box,
 } from 'lucide-react';
 import type { ComponentType } from 'react';
 
@@ -43,6 +45,8 @@ export const ICON_MAP: Record<string, IconComponent> = {
   CheckCircle,
   AlertTriangle,
   StickyNote,
+  RectangleHorizontal,
+  Box,
 };
 
 export function resolveIcon(key: string): IconComponent | undefined {

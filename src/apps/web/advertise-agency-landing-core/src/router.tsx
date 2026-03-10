@@ -7,6 +7,7 @@ import { PortfolioCasePage } from './pages/PortfolioCasePage';
 import PrivacyPolicy from '@/pages/PrivacyPolicy.tsx';
 import UserAgreement from '@/pages/UserAgreement.tsx';
 import Consent from '@/pages/Consent.tsx';
+import { OrderPage } from '@/pages/OrderPage';
 
 const routes: RouteObject[] = [
   {
@@ -19,6 +20,7 @@ const routes: RouteObject[] = [
       { path: '/privacy-policy', element: <PrivacyPolicy /> },
       { path: '/user-agreement', element: <UserAgreement /> },
       { path: '/consent', element: <Consent /> },
+      { path: '/order', element: <OrderPage /> },
     ],
   },
 ];

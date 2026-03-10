@@ -13,6 +13,7 @@ import { CalloutBlock } from './CalloutBlock';
 import { ListBlock } from './ListBlock';
 import { VideoBlock } from './VideoBlock';
 import { CodeBlock } from './CodeBlock';
+import { OrderFormBlock } from './OrderFormBlock';
 
 interface BlockRendererProps {
   block: ContentBlock;
@@ -55,6 +56,8 @@ export function BlockRenderer({ block, caseGradient, caseTitle }: BlockRendererP
         return <VideoBlock block={block} />;
       case 'code':
         return <CodeBlock block={block} />;
+      case 'order-form':
+        return <OrderFormBlock block={block} />;
       default: {
         if (import.meta.env.DEV) {
           console.warn('[BlockRenderer] Unknown block type:', (block as ContentBlock).__component);
