@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronUp } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ScrollToTopProps {
   threshold?: number; // px от верха, после которых кнопка появляется
@@ -42,7 +43,11 @@ export function ScrollToTop({ threshold = 300, navSelector = 'nav' }: ScrollToTo
       size="icon"
       onClick={handleClick}
       aria-label="Прокрутить к навигации"
-      className="fixed bottom-6 right-6 z-50 cursor-pointer rounded-full shadow-lg animate-fade-in"
+      className={cn(
+        'fixed bottom-6 right-6 z-50',
+        'cursor-pointer rounded-full shadow-lg',
+        'animate-fade-in'
+      )}
     >
       <ChevronUp className="h-5 w-5" />
     </Button>

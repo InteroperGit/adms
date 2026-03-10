@@ -2,6 +2,20 @@
 import { Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const TG = {
+  colored: 'border-[#2AABEE]/30 bg-[#2AABEE]/5 text-[#2AABEE] hover:bg-[#2AABEE]/15',
+  dark: 'text-white/50 hover:border-[#2AABEE]/40 hover:bg-[#2AABEE]/10 hover:text-[#2AABEE]',
+  light:
+    'border-border text-muted-foreground hover:border-[#2AABEE]/30 hover:bg-[#2AABEE]/5 hover:text-[#2AABEE]',
+};
+
+const VK = {
+  colored: 'border-[#0077FF]/30 bg-[#0077FF]/5 text-[#0077FF] hover:bg-[#0077FF]/15',
+  dark: 'text-white/50 hover:border-[#0077FF]/40 hover:bg-[#0077FF]/10 hover:text-[#0077FF]',
+  light:
+    'border-border text-muted-foreground hover:border-[#0077FF]/30 hover:bg-[#0077FF]/5 hover:text-[#0077FF]',
+};
+
 function VkIcon({ size = 16 }: { size?: number }) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
@@ -35,14 +49,7 @@ export function SocialLinks({ telegram, vk, variant = 'light', className }: Soci
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Telegram"
-        className={cn(
-          base,
-          isColored
-            ? 'border-[#2AABEE]/30 bg-[#2AABEE]/5 text-[#2AABEE] hover:bg-[#2AABEE]/15'
-            : isDark
-              ? 'text-white/50 hover:border-[#2AABEE]/40 hover:bg-[#2AABEE]/10 hover:text-[#2AABEE]'
-              : 'border-border text-muted-foreground hover:border-[#2AABEE]/30 hover:bg-[#2AABEE]/5 hover:text-[#2AABEE]'
-        )}
+        className={cn(base, isColored ? TG.colored : isDark ? TG.dark : TG.light)}
       >
         <Send size={16} />
       </a>
@@ -51,14 +58,7 @@ export function SocialLinks({ telegram, vk, variant = 'light', className }: Soci
         target="_blank"
         rel="noopener noreferrer"
         aria-label="ВКонтакте"
-        className={cn(
-          base,
-          isColored
-            ? 'border-[#0077FF]/30 bg-[#0077FF]/5 text-[#0077FF] hover:bg-[#0077FF]/15'
-            : isDark
-              ? 'text-white/50 hover:border-[#0077FF]/40 hover:bg-[#0077FF]/10 hover:text-[#0077FF]'
-              : 'border-border text-muted-foreground hover:border-[#0077FF]/30 hover:bg-[#0077FF]/5 hover:text-[#0077FF]'
-        )}
+        className={cn(base, isColored ? VK.colored : isDark ? VK.dark : VK.light)}
       >
         <VkIcon />
       </a>

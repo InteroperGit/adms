@@ -1,4 +1,3 @@
-import { cn } from '@/lib/utils';
 import type { VideoBlock as VideoBlockData } from '@/types/portfolio/blocks';
 
 interface VideoBlockProps {
@@ -38,7 +37,7 @@ export function VideoBlock({ block }: VideoBlockProps) {
 
   return (
     <figure className="mx-auto max-w-4xl">
-      <div className={cn('relative w-full overflow-hidden rounded-xl shadow-md bg-muted')}>
+      <div className="relative w-full overflow-hidden rounded-xl bg-muted shadow-md">
         <div style={{ paddingTop }} />
         {isLocalVideo(url) ? (
           <video src={url} controls className="absolute inset-0 h-full w-full object-cover" />

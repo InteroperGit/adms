@@ -1,6 +1,10 @@
 // src/components/ui/BreadCrumbs.tsx
 import { ChevronRight } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
+import { cn } from '@/lib/utils';
+
+const pillBase =
+  'inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium sm:px-4 sm:py-1.5 sm:text-sm';
 
 interface BreadCrumbItem {
   label: string;
@@ -24,14 +28,19 @@ export function BreadCrumbs({ items }: BreadCrumbsProps) {
                 {isLast || !item.href ? (
                   <span
                     aria-current={isLast ? 'page' : undefined}
-                    className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary sm:px-4 sm:py-1.5 sm:text-sm"
+                    className={cn(pillBase, 'border-primary/20 bg-primary/5 text-primary')}
                   >
                     {item.label}
                   </span>
                 ) : (
                   <a
                     href={item.href}
-                    className="inline-flex items-center rounded-full border border-border bg-transparent px-3 py-1 text-xs font-medium text-muted-foreground transition-all duration-200 hover:border-primary/20 hover:bg-primary/5 hover:text-primary sm:px-4 sm:py-1.5 sm:text-sm"
+                    className={cn(
+                      pillBase,
+                      'border-border bg-transparent text-muted-foreground',
+                      'transition-all duration-200',
+                      'hover:border-primary/20 hover:bg-primary/5 hover:text-primary'
+                    )}
                   >
                     {item.label}
                   </a>

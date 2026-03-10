@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cookiesContent } from '@/types/config/cookies';
 import { CookieActions } from './CookieActions';
+import { cn } from '@/lib/utils';
 
 const STORAGE_KEY = 'cookie_consent';
 
@@ -26,7 +27,11 @@ export function CookieBanner() {
     <div
       role="dialog"
       aria-label={cookiesContent.ariaLabel}
-      className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-white px-4 py-5 shadow-lg sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-sm sm:rounded-2xl sm:border"
+      className={cn(
+        'fixed bottom-0 left-0 right-0 z-50 bg-white px-4 py-5 shadow-lg',
+        'border-t border-border',
+        'sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-sm sm:rounded-2xl sm:border'
+      )}
     >
       {/* Закрыть — только necessary */}
       <button

@@ -30,6 +30,12 @@ export function ImageGalleryLightbox({
   const multi = images.length > 1;
   const touchStartX = useRef(0);
 
+  const navBtn = cn(
+    'absolute top-1/2 hidden -translate-y-1/2',
+    'cursor-pointer rounded-full bg-white/20 p-3',
+    'text-white transition-colors hover:bg-primary sm:flex'
+  );
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -89,18 +95,10 @@ export function ImageGalleryLightbox({
           />
           {multi && (
             <>
-              <button
-                onClick={onPrev}
-                aria-label={prevLabel}
-                className="absolute left-3 top-1/2 hidden -translate-y-1/2 cursor-pointer rounded-full bg-white/20 p-3 text-white transition-colors hover:bg-primary sm:flex"
-              >
+              <button onClick={onPrev} aria-label={prevLabel} className={cn(navBtn, 'left-3')}>
                 <ChevronLeft size={22} />
               </button>
-              <button
-                onClick={onNext}
-                aria-label={nextLabel}
-                className="absolute right-3 top-1/2 hidden -translate-y-1/2 cursor-pointer rounded-full bg-white/20 p-3 text-white transition-colors hover:bg-primary sm:flex"
-              >
+              <button onClick={onNext} aria-label={nextLabel} className={cn(navBtn, 'right-3')}>
                 <ChevronRight size={22} />
               </button>
             </>

@@ -1,6 +1,7 @@
 // src/components/ui/PortfolioCard.tsx
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import { PortfolioThumbnail } from '@/components/ui/PortfolioThumbnail';
 import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';
@@ -36,7 +37,11 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
 
         <a
           href={item.href}
-          className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-primary transition-all duration-200 hover:gap-2.5 hover:bg-primary/10"
+          className={cn(
+            'inline-flex items-center gap-1.5 rounded-full',
+            'px-3 py-1.5 text-sm font-medium text-primary',
+            'transition-all duration-200 hover:gap-2.5 hover:bg-primary/10'
+          )}
         >
           {detailsLabel}
           <ArrowRight size={14} />
