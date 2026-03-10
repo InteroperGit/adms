@@ -20,9 +20,7 @@ export function BreadCrumbs({ items }: BreadCrumbsProps) {
             const isLast = i === items.length - 1;
             return (
               <span key={i} className="flex items-center gap-2">
-                {i > 0 && (
-                  <ChevronRight size={12} className="shrink-0 text-muted-foreground/40" />
-                )}
+                {i > 0 && <ChevronRight size={12} className="shrink-0 text-muted-foreground/40" />}
                 {isLast || !item.href ? (
                   <span
                     aria-current={isLast ? 'page' : undefined}
