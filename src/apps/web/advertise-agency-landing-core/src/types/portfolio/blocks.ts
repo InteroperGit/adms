@@ -69,6 +69,7 @@ export interface TableBlock {
   head: string[];
   rows: string[][];
   highlight?: number[];
+  total?: string[];
 }
 
 export interface ChartBlock {
