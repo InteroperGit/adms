@@ -23,17 +23,17 @@ UI copy is split into one file per section. Each component imports only the file
 |------|---------|
 | `header.json` | Lang, logo letter/text, nav links array, nav CTA button label. |
 | `hero.json` | Badge, title, titleHighlight, subtitle, CTA buttons, stats (value + label). |
-| `carousel-content.json` | Agency label shown on carousel slides: `{ label }`. |
-| `about-content.json` | About section headings, body text (supports `{name}` token), info card (tagline, stats, NPS). |
-| `services-content.json` | Services section heading: label, title, description. |
-| `portfolio-section.json` | Portfolio section headings, "all categories" label, details link label, CTA button. |
-| `advantages-content.json` | Advantages section headings: label, title, titleHighlight, description. |
-| `call-to-action.json` | Mid-page CTA banner: title, subtitle, two CTA buttons. |
-| `testimonials-content.json` | Testimonials section headings: label, title, description. |
+| `carouselContent.json` | Agency label shown on carousel slides: `{ label }`. |
+| `aboutContent.json` | About section headings, body text (supports `{name}` token), info card (tagline, stats, NPS). |
+| `servicesContent.json` | Services section heading: label, title, description. |
+| `portfolioSection.json` | Portfolio section headings, "all categories" label, details link label, CTA button. |
+| `advantagesContent.json` | Advantages section headings: label, title, titleHighlight, description. |
+| `callToAction.json` | Mid-page CTA banner: title, subtitle, two CTA buttons. |
+| `testimonialsContent.json` | Testimonials section headings: label, title, description. |
 | `contact.json` | Contact section headings, all form labels/placeholders/messages, direct contact labels, social/hours labels. |
 | `footer.json` | Footer description (supports `{description}` token), column titles, copyright (supports `{year}`, `{name}` tokens), tagline, legal links. |
-| `portfolio-case.json` | Portfolio case page labels: back link, overview column headers, photo alt template, CTA block, not-found message. |
-| `image-gallery.json` | Image gallery UI labels: prev/next button aria-labels, counter template (`{current} из {total}`). |
+| `portfolioCase.json` | Portfolio case page labels: back link, overview column headers, photo alt template, CTA block, not-found message. |
+| `imageGallery.json` | Image gallery UI labels: prev/next button aria-labels, counter template (`{current} из {total}`). |
 | `cookies.json` | Cookie banner copy: aria-label, close label, title, body text, privacy link, accept/necessary-only button labels. |
 
 ### Section data
@@ -41,7 +41,7 @@ UI copy is split into one file per section. Each component imports only the file
 | File | Purpose |
 |------|---------|
 | `carousel.json` | Hero carousel slides — `[{ id, image?, alt, gradient, title, subtitle }]`. `image` is optional; `gradient` is used as fallback. |
-| `about-values.json` | Values list shown in the About section — `[{ title, description }]`. |
+| `aboutValues.json` | Values list shown in the About section — `[{ title, description }]`. |
 | `services.json` | Services grid — `[{ icon, title, description }]`. `icon` is a key from `src/types/iconMap.ts`. |
 | `advantages.json` | Advantages cards — `[{ icon, title, description }]`. Same `icon` convention as services. |
 | `testimonials.json` | Client testimonials — `[{ id, name, role, company, avatar?, avatarColor, rating, text }]`. Used on portfolio case pages; the Testimonials section uses the Yandex widget instead. |
@@ -63,22 +63,22 @@ UI copy is split into one file per section. Each component imports only the file
 _schema/
   header.example.json
   hero.example.json
-  carousel-content.example.json
-  about-content.example.json
-  services-content.example.json
-  portfolio-section.example.json
-  advantages-content.example.json
-  call-to-action.example.json
-  testimonials-content.example.json
+  carouselContent.example.json
+  aboutContent.example.json
+  servicesContent.example.json
+  portfolioSection.example.json
+  advantagesContent.example.json
+  callToAction.example.json
+  testimonialsContent.example.json
   contact.example.json
   footer.example.json
-  portfolio-case.example.json
-  image-gallery.example.json
+  portfolioCase.example.json
+  imageGallery.example.json
   cookies.example.json
   theme.example.json
   site.example.json
   legal.example.json
-  about-values.example.json
+  aboutValues.example.json
   carousel.example.json
   services.example.json
   advantages.example.json
@@ -95,10 +95,10 @@ _schema/
    - `theme.json` — brand colors and fonts
    - `site.json` — contact details and social links
    - `legal.json` — company registration data
-3. Edit the UI copy files for each section (see **UI copy — per section** table above). At minimum update `header.json`, `hero.json`, `about-content.json`, `footer.json`, and `cookies.json`.
+3. Edit the UI copy files for each section (see **UI copy — per section** table above). At minimum update `header.json`, `hero.json`, `aboutContent.json`, `footer.json`, and `cookies.json`.
 4. Replace the data collections to match the client's content:
    - `services.json`, `advantages.json`, `testimonials.json`
-   - `carousel.json`, `about-values.json`
+   - `carousel.json`, `aboutValues.json`
    - `portfolio/<slug>.json` — one file per case study (delete the example file)
 5. Run `pnpm build`.
 

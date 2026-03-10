@@ -1,4 +1,4 @@
-import raw from '@data/sections/image-gallery.json';
+import raw from '@data/sections/imageGallery.json';
 
 export interface ImageGalleryContent {
   prevLabel: string;

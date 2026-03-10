@@ -1,4 +1,4 @@
-import raw from '@data/sections/portfolio-section.json';
+import raw from '@data/sections/portfolioSection.json';
 import type { ContentBlock } from './blocks';
 
 export interface CtaLink {

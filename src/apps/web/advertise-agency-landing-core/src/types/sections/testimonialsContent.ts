@@ -1,4 +1,4 @@
-import raw from '@data/sections/testimonials-content.json';
+import raw from '@data/sections/testimonialsContent.json';
 
 export interface TestimonialsSectionContent {
   label: string;
