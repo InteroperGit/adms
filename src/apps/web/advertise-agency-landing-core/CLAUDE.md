@@ -115,8 +115,8 @@ advertise-agency-landing-core/
 │   │   │   │   └── CarouselControls.tsx # Prev/next arrows + dot indicators + slide counter; props: total, current, onPrev, onNext, onDot
 │   │   │   ├── header/
 │   │   │   │   ├── index.tsx          # In-flow header, solid white bg, border-b, logo; imported as '@/components/sections/header'
-│   │   │   │   ├── HeaderDesktopNav.tsx # Nav links + CTA (hidden on mobile); links show underline on hover; props: activeSection
-│   │   │   │   └── HeaderMobileNav.tsx  # Hamburger + dropdown (hidden on desktop); props: activeSection
+│   │   │   │   ├── HeaderDesktopNav.tsx # Nav links + phone icon button (tel: link, green) + SocialLinks (colored) + CTA button (hidden on mobile); props: activeSection, isHome, forcedActiveHref
+│   │   │   │   └── HeaderMobileNav.tsx  # Hamburger + dropdown (hidden on desktop); mobile menu footer: phone icon button + SocialLinks (colored) + CTA; props: activeSection, isHome, forcedActiveHref
 │   │   │   ├── hero/
 │   │   │   │   ├── index.tsx          # Thin orchestrator: badge + title + subtitle + HeroCTA + HeroStats; imported as '@/components/sections/hero'
 │   │   │   │   ├── HeroCTA.tsx        # Two CTA buttons (primary + outline); props: cta: { label, href }[]
@@ -178,7 +178,7 @@ advertise-agency-landing-core/
 │   │       ├── SectionHeader.tsx      # Shared label badge + h2 + description block; props: label, title, description?, titleHighlight?, variant ('light'|'dark'), className
 │   │       ├── StarRating.tsx         # Shared star row; props: rating, size? (default 16), className? (wrapper), starClassName? (per-star, default fill-primary)
 │   │       ├── TestimonialCard.tsx    # Shared blockquote card (stars + quote + avatar/name); props: testimonial, showQuoteIcon?, starSize?, starClassName?, className?
-│   │       ├── SocialLinks.tsx        # Telegram + VK icon buttons; props: telegram, vk, variant ('light'|'dark'), className?; brand hover colors: Telegram #2AABEE, VK #0077FF
+│   │       ├── SocialLinks.tsx        # Telegram + VK icon buttons; props: telegram, vk, variant ('light'|'dark'|'colored'), className?; colored = brand bg tint always visible; dark = white/subtle; light = white bg + brand on hover; brand colors: Telegram #2AABEE, VK #0077FF
 │   │       ├── PortfolioCard.tsx      # Full portfolio card (PortfolioThumbnail + tags + details link); prop: item (PortfolioCase & { href }); reads detailsLabel from portfolioSectionContent
 │   │       ├── PortfolioThumbnail.tsx # Card thumbnail area: gradient/image bg + dot pattern fallback + dark hover overlay + category badge; props: href, image?, title, category, gradient
 │   │       ├── TestimonialStrip.tsx   # Desktop-only 5-col thumbnail grid; props: active (index), onSelect (callback); reads testimonials directly
@@ -274,7 +274,7 @@ advertise-agency-landing-core/
 ├── .prettierrc
 ├── components.json           # shadcn/ui config (aliases use src/ paths)
 ├── index.html                # title: РА «Рекламастер»; font preconnects injected by themePlugin
-├── tsconfig.app.json         # paths: @/* → ./src/*, @data/* → ./data/*; resolveJsonModule: true; include: ["src", "data/_schema"]
+├── tsconfig.app.json         # paths: @/* → ./src/*, @data/* → ./data/*; resolveJsonModule: true; include: ["src"]
 └── vite.config.ts            # themePlugin + @tailwindcss/vite + @vitejs/plugin-react, @/ and @data aliases, ssgOptions
 ```
 
