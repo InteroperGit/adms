@@ -172,6 +172,7 @@ advertise-agency-landing-core/
 │   │       ├── PortfolioCard.tsx      # Full portfolio card (PortfolioThumbnail + tags + details link); prop: item (PortfolioCase & { href }); reads detailsLabel from portfolioSectionContent
 │   │       ├── PortfolioThumbnail.tsx # Card thumbnail area: gradient/image bg + dot pattern fallback + dark hover overlay + category badge; props: href, image?, title, category, gradient
 │   │       ├── TestimonialStrip.tsx   # Desktop-only 5-col thumbnail grid; props: active (index), onSelect (callback); reads testimonials directly
+│   │       ├── HomeHashScroll.tsx     # Renderless component; watches location, smoothly scrolls to `#<id>` element when navigating to `/#<anchor>` from any non-home page; placed in App.tsx
 │   │       ├── ScrollToTop.tsx        # Fixed bottom-right button; visible after threshold scroll OR immediately if page already scrolled past threshold on mount; scrolls to top via window.scrollTo
 │   │       ├── badge.tsx
 │   │       ├── button.tsx
@@ -397,3 +398,4 @@ Files are placed in `src/components/ui/` — never edit them manually.
 - `@theme inline` in `index.css` is required for Tailwind v4 + shadcn compatibility — do not revert to `@theme`
 - Use **react-router-dom v6** (not v7) — required by vite-react-ssg peer dependency
 - Use **native DOM event types** in handlers — React 19 deprecated synthetic event aliases (`React.FormEvent`, `React.MouseEvent`, etc.); use `SubmitEvent`, `MouseEvent`, `InputEvent` etc. instead
+- **Always use curly braces** in `if`/`else`/`for`/`while` bodies — enforced by ESLint `curly: ['error', 'all']`; body always on a new line (Prettier formats it automatically)
