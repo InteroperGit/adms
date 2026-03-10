@@ -7,6 +7,7 @@ import { PortfolioCard } from '@/components/ui/PortfolioCard';
 import { PortfolioFilter } from '@/components/sections/portfolio/PortfolioFilter';
 import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';
+import { categorySlug } from '@/lib/categorySlug';
 
 const modules = import.meta.glob<PortfolioCase>('@data/portfolio/*.json', {
   eager: true,
@@ -15,13 +16,15 @@ const modules = import.meta.glob<PortfolioCase>('@data/portfolio/*.json', {
 
 const PORTFOLIO_ITEMS = Object.entries(modules).map(([, data]) => ({
   ...data,
-  href: `/portfolio/${data.slug}`,
+  href: `/portfolio/${categorySlug(data.category)}/${data.slug}`,
 }));
 
 const PORTFOLIO_CATEGORIES = [
   portfolioSectionContent.allCategory,
   ...new Set(PORTFOLIO_ITEMS.map((i) => i.category)),
 ];
+
+const PREVIEW_LIMIT = 6;
 
 export function Portfolio() {
   const p = portfolioSectionContent;
@@ -31,6 +34,8 @@ export function Portfolio() {
     activeCategory === p.allCategory
       ? PORTFOLIO_ITEMS
       : PORTFOLIO_ITEMS.filter((item) => item.category === activeCategory);
+
+  const displayed = filtered.slice(0, PREVIEW_LIMIT);
 
   return (
     <section id="portfolio" className="bg-white py-24 md:py-32">
@@ -49,7 +54,7 @@ export function Portfolio() {
         />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {filtered.map((item) => (
+          {displayed.map((item) => (
             <PortfolioCard key={item.slug} item={item} />
           ))}
         </div>

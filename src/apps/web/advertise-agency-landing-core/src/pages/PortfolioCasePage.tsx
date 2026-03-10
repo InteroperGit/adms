@@ -1,17 +1,20 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { CaseHero } from '@/components/portfolio/CaseHero';
 import { CaseOverview } from '@/components/portfolio/CaseOverview';
 import { CaseCTA } from '@/components/portfolio/CaseCTA';
+import { BreadCrumbs } from '@/components/ui/BreadCrumbs';
 import { BlockRenderer } from '@/components/portfolio/blocks/BlockRenderer';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
+import { portfolioPageContent } from '@/types/sections/portfolioPage';
+import { categories } from '@/types/config/categories';
+import { portfolioConfig } from '@/types/config/portfolioConfig';
 
 export function PortfolioCasePage() {
-  const { slug } = useParams<{ slug: string }>();
-  const data = slug ? portfolioCaseMap[slug] : undefined;
+  const { categorySlug, caseSlug } = useParams<{ categorySlug: string; caseSlug: string }>();
+  const data = caseSlug ? portfolioCaseMap[caseSlug] : undefined;
 
   useEffect(() => {
     if (data) {
@@ -22,13 +25,17 @@ export function PortfolioCasePage() {
   }, [data]);
 
   const pc = portfolioCaseContent;
+  const portfolioTitle = portfolioPageContent.title;
+  const isAll = categorySlug === 'all';
+  const category = isAll ? null : categories.find((c) => c.slug === categorySlug);
+  const categoryLabel = isAll ? portfolioConfig.allLabel : (category?.name ?? categorySlug ?? '');
 
   if (!data) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <h1 className="mb-4 text-2xl font-bold">{pc.notFound.title}</h1>
-          <a href="/#portfolio" className="text-primary hover:underline">
+          <a href={`/portfolio/${categorySlug ?? ''}`} className="text-primary hover:underline">
             {pc.notFound.back}
           </a>
         </div>
@@ -38,17 +45,14 @@ export function PortfolioCasePage() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-foreground">
-      <div className="border-b border-border bg-muted/40">
-        <Container>
-          <a
-            href="/#portfolio"
-            className="inline-flex items-center gap-2 py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeft size={16} />
-            {pc.backLabel}
-          </a>
-        </Container>
-      </div>
+      <BreadCrumbs
+        items={[
+          { label: 'Главная', href: '/' },
+          { label: portfolioTitle, href: '/portfolio' },
+          { label: categoryLabel, href: `/portfolio/${categorySlug}` },
+          { label: data.title },
+        ]}
+      />
 
       <CaseHero
         hero={data.hero}

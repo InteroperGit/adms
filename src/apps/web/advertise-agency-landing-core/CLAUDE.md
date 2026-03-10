@@ -54,7 +54,10 @@ advertise-agency-landing-core/
 │   │   ├── hero.example.json
 │   │   ├── image-gallery.example.json
 │   │   ├── legal.example.json
+│   │   ├── categories.example.json
 │   │   ├── portfolio-case.example.json
+│   │   ├── portfolio-config.example.json
+│   │   ├── portfolio-page.example.json
 │   │   ├── portfolio-section.example.json
 │   │   ├── portfolio.example.json
 │   │   ├── services-content.example.json
@@ -64,7 +67,9 @@ advertise-agency-landing-core/
 │   │   ├── testimonials.example.json
 │   │   └── theme.example.json
 │   ├── portfolio/           # One JSON file per case study (slug.json)
-│   │   └── bodrost.json
+│   │   ├── bodrost.json
+│   │   ├── fitstudio.json
+│   │   └── techpulse.json
 │   ├── sections/            # Per-section UI copy JSON files
 │   │   ├── header.json          # Header/nav copy: lang, logo, nav[], navCta
 │   │   ├── hero.json            # Hero section copy: badge, title, titleHighlight, subtitle, cta[], stats[]
@@ -75,6 +80,7 @@ advertise-agency-landing-core/
 │   │   ├── services-content.json # Services section headings: label, title, description
 │   │   ├── services.json        # Services list: [{ icon, title, description }]
 │   │   ├── portfolio-section.json # Portfolio section copy: label, title, description, allCategory, detailsLabel, cta
+│   │   ├── portfolio-page.json  # Portfolio listing page copy: label, title, description (page-specific only)
 │   │   ├── portfolio-case.json  # Portfolio case page labels: backLabel, overviewLabels, section titles, cta, notFound
 │   │   ├── advantages-content.json # Advantages section headings: label, title, titleHighlight, description
 │   │   ├── advantages.json      # Advantages list: [{ icon, title, description }]
@@ -88,6 +94,8 @@ advertise-agency-landing-core/
 │       ├── site.json            # Global site config: phone, email, address, social, hours
 │       ├── theme.json           # Brand identity: HSL colors, border radius, font families, Google Fonts URLs
 │       ├── cookies.json         # Cookie banner copy: ariaLabel, closeLabel, title, text, privacyLink, button labels
+│       ├── portfolio.json       # Shared portfolio listing config: perPage, allLabel, pagination labels, emptyLabel, cta
+│       ├── categories.json      # Category registry: [{ name, slug }]; drives SSG route generation + CategoryNav
 │       └── legal.json           # Legal company data: company.{name,inn,ogrn,legalAddress,siteUrl,email,phone,responsible}, documents.{privacyPolicy,consent,userAgreement} each {version,effectiveDate}
 ├── public/                  # Static assets (favicon, images)
 ├── src/
@@ -118,7 +126,7 @@ advertise-agency-landing-core/
 │   │   │   │   ├── index.tsx          # bg-muted section: SectionHeader + card grid; imported as '@/components/sections/services'
 │   │   │   │   └── ServiceCard.tsx    # shadcn Card with icon + title + description; props: service: Service
 │   │   │   ├── portfolio/
-│   │   │   │   ├── index.tsx          # Thin orchestrator: SectionHeader + PortfolioFilter + card grid + CTA; imported as '@/components/sections/portfolio'
+│   │   │   │   ├── index.tsx          # bg-white section: SectionHeader + PortfolioFilter + card grid (max 6 preview items) + CTA → /portfolio; imported as '@/components/sections/portfolio'
 │   │   │   │   └── PortfolioFilter.tsx # Category filter buttons with active state; props: categories, active, onChange
 │   │   │   ├── advantages/
 │   │   │   │   ├── index.tsx          # Dark bg section: decorative circles + SectionHeader + card grid; imported as '@/components/sections/advantages'
@@ -154,6 +162,9 @@ advertise-agency-landing-core/
 │   │       │   ├── ImageGalleryThumbnails.tsx # Horizontal snap-scroll strip; active thumb: ring-2 ring-primary + bg-primary/20 overlay; cursor-pointer on hover; scrollIntoView on change
 │   │       │   └── ImageGalleryLightbox.tsx   # Fixed bg-black/90 modal: overlay nav buttons (hidden sm:flex), swipe on mobile, thumbnail strip, ESC/click-outside to close, body scroll lock
 │   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
+│   │       ├── BreadCrumbs.tsx        # Pill-style breadcrumb nav bar (border-b, bg-white); props: items[]{label, href?}; last/no-href item shown as primary-tinted pill; used on PortfolioCasePage
+│   │       ├── LegalPageLayout.tsx    # Shared layout for legal pages: BackButton + h1 + version footer + children; props: title, version, effectiveDate, children
+│   │       ├── LegalSection.tsx       # Legal content section block: h2 + children div; props: id?, title, children
 │   │       ├── SectionHeader.tsx      # Shared label badge + h2 + description block; props: label, title, description?, titleHighlight?, variant ('light'|'dark'), className
 │   │       ├── StarRating.tsx         # Shared star row; props: rating, size? (default 16), className? (wrapper), starClassName? (per-star, default fill-primary)
 │   │       ├── TestimonialCard.tsx    # Shared blockquote card (stars + quote + avatar/name); props: testimonial, showQuoteIcon?, starSize?, starClassName?, className?
@@ -173,12 +184,15 @@ advertise-agency-landing-core/
 │   │   ├── useActiveSection.ts  # Tracks active section for nav highlight
 │   │   └── useCookieConsent.ts  # Returns 'all'|'necessary'|null; reactive via CustomEvent 'cookie_consent_change'
 │   ├── lib/
-│   │   └── utils.ts            # cn() helper (clsx + tailwind-merge)
+│   │   ├── utils.ts            # cn() helper (clsx + tailwind-merge)
+│   │   └── categorySlug.ts     # categorySlug(name) — looks up category name in categories const, returns slug; falls back to 'all'
 │   ├── plugins/
 │   │   └── themePlugin.ts     # Vite plugin: reads data/config/theme.json, injects CSS vars + Google Fonts into index.html
 │   ├── pages/
 │   │   ├── Home.tsx               # Landing page content: Carousel → Hero → About → Services → Portfolio → Advantages → CallToAction → Testimonials → Contact; wrapped in <main>
-│   │   ├── PortfolioCasePage.tsx  # Orchestrator: breadcrumb back link + CaseHero + CaseOverview + BlockRenderer loop + CaseCTA; no own ScrollToTop (Layout provides it)
+│   │   ├── PortfolioPage.tsx      # Standalone /portfolio page: SectionHeader + PortfolioGrid (activeSlug=null); sets document.title
+│   │   ├── PortfolioCategoryPage.tsx # /portfolio/:categorySlug: filters by category, renders SectionHeader + PortfolioGrid; "all" shows everything; unknown slug → not-found; sets document.title
+│   │   ├── PortfolioCasePage.tsx  # /portfolio/:categorySlug/:caseSlug: BreadCrumbs (Home→Portfolio→Category→Case) + CaseHero + CaseOverview + BlockRenderer loop + CaseCTA
 │   │   ├── PrivacyPolicy.tsx      # /privacy-policy — reads legalData (company, documents.privacyPolicy.{version,effectiveDate})
 │   │   ├── Consent.tsx            # /consent — reads legalData (company, documents.consent.{version,effectiveDate})
 │   │   └── UserAgreement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate})
@@ -200,6 +214,9 @@ advertise-agency-landing-core/
 │   │   │   │   ├── CalloutBlock.tsx   # Colored left-border box; type→color map (info=blue, success=green, warning=amber, note=gray); icons from ICON_MAP
 │   │   │   │   ├── DividerBlock.tsx   # line→<hr>; dots→three centered spans; space→<div className="py-8">
 │   │   │   │   └── CodeBlock.tsx      # <pre><code> bg-muted font-mono; optional language tab header; optional figcaption
+│   │   │   ├── CategoryNav.tsx    # Link-based category filter tabs; prop: activeSlug (null=all); "Все"→/portfolio; each cat→/portfolio/{slug}; reads categories + portfolioConfig.allLabel
+│   │   │   ├── Pagination.tsx     # Prev/next buttons + page label; props: current, total, prevLabel, nextLabel, pageLabel, onPrev, onNext
+│   │   │   ├── PortfolioGrid.tsx  # Shared grid + pagination + CTA; props: items, activeSlug; builds hrefs as /portfolio/{activeSlug??'all'}/{slug}; reads ?page via useSearchParams internally
 │   │   │   ├── CaseHero.tsx       # Hero: hero.image present → bg-image + bg-black/50 overlay; no image → bg-gradient-to-br hero.gradient; props: hero, category, title, description
 │   │   │   ├── CaseOverview.tsx   # 4-col grid (client/category/year/services); reads labels from content
 │   │   │   └── CaseCTA.tsx        # Bottom CTA block; reads portfolioCaseContent.cta
@@ -208,6 +225,8 @@ advertise-agency-landing-core/
 │   │   │   ├── siteData.ts           # SiteData interface + siteData const (from data/config/site.json)
 │   │   │   ├── theme.ts              # Theme interface + ThemeColors interface + theme const (from data/config/theme.json); app-side only — themePlugin uses its own local Theme type due to tsconfig.node.json constraints
 │   │   │   ├── cookies.ts            # CookiesContent interface + cookiesContent const (from data/config/cookies.json); CtaLink inline
+│   │   │   ├── portfolioConfig.ts    # PortfolioConfig interface + portfolioConfig const (from data/config/portfolio.json); shared listing config for all portfolio pages
+│   │   │   ├── categories.ts         # Category interface + categories const (from data/config/categories.json); { name, slug }[]
 │   │   │   └── legalData.ts          # LegalData interface + DocumentVersion interface + legalData const (from data/config/legal.json)
 │   │   ├── sections/
 │   │   │   ├── header.ts             # HeaderContent interface + headerContent const (from data/sections/header.json); CtaLink inline
@@ -234,7 +253,7 @@ advertise-agency-landing-core/
 │   │   └── shared/
 │   │       ├── index.ts              # NavLink interface
 │   │       └── iconMap.ts            # ICON_MAP, resolveIcon(), IconComponent — shared icon registry (lucide-react)
-│   ├── router.tsx             # Nested RouteObject[]: App as root layout (no path), children: Home ("/"), PortfolioCasePage ("/portfolio/:slug"), legal pages
+│   ├── router.tsx             # Nested RouteObject[]: App as root layout (no path), children: Home ("/"), PortfolioPage ("/portfolio"), PortfolioCategoryPage ("/portfolio/:categorySlug"), PortfolioCasePage ("/portfolio/:categorySlug/:caseSlug"), legal pages
 │   ├── main.tsx               # Entry: exports createRoot = ViteReactSSG({ routes })
 │   └── index.css              # Tailwind import, @theme inline (references CSS vars), base styles, animate-fade-in keyframe; no hardcoded colors/fonts (injected by themePlugin)
 ├── .env.example
@@ -274,11 +293,13 @@ advertise-agency-landing-core/
 ## Routes
 
 ```
-/                    → Home.tsx (landing page content, inside App layout)
-/portfolio/:slug     → PortfolioCasePage.tsx (SSG per JSON file in data/portfolio/, inside App layout)
-/privacy-policy      → PrivacyPolicy.tsx (static legal page, inside App layout)
-/user-agreement      → UserAgreement.tsx (static legal page, inside App layout)
-/consent             → Consent.tsx (cookie consent policy page, inside App layout)
+/                              → Home.tsx (landing page content, inside App layout)
+/portfolio                     → PortfolioPage.tsx (all cases, paginated)
+/portfolio/:categorySlug       → PortfolioCategoryPage.tsx (filtered listing; "all" shows everything)
+/portfolio/:categorySlug/:caseSlug → PortfolioCasePage.tsx (SSG per JSON file; back→ /:categorySlug)
+/privacy-policy                → PrivacyPolicy.tsx (static legal page, inside App layout)
+/user-agreement                → UserAgreement.tsx (static legal page, inside App layout)
+/consent                       → Consent.tsx (cookie consent policy page, inside App layout)
 ```
 
 ## Development Commands
@@ -303,7 +324,9 @@ UI copy is split into one JSON file per section — each section component impor
 | `data/sections/carousel-content.json` | `src/types/sections/carouselContent.ts` → `carouselContent` | `carousel/CarouselSlide.tsx` |
 | `data/sections/about-content.json` | `src/types/sections/aboutContent.ts` → `aboutContent` | `about/` |
 | `data/sections/services-content.json` | `src/types/sections/servicesContent.ts` → `servicesSectionContent` | `services/` |
-| `data/sections/portfolio-section.json` | `src/types/portfolio/index.ts` → `portfolioSectionContent` | `portfolio/`, `PortfolioCard.tsx` |
+| `data/sections/portfolio-page.json` | `src/types/sections/portfolioPage.ts` → `portfolioPageContent` | `PortfolioPage.tsx`; page-specific copy only (`label`, `title`, `description`) |
+| `data/config/portfolio.json` | `src/types/config/portfolioConfig.ts` → `portfolioConfig` | `PortfolioGrid.tsx`; shared listing config (`perPage`, pagination labels, `emptyLabel`, `allLabel`, `cta`) |
+| `data/config/categories.json` | `src/types/config/categories.ts` → `categories` | `CategoryNav.tsx`, `PortfolioCategoryPage.tsx`, `src/lib/categorySlug.ts`; `[{ name, slug }]` |
 | `data/sections/advantages-content.json` | `src/types/sections/advantagesContent.ts` → `advantagesContent` | `advantages/` |
 | `data/sections/call-to-action.json` | `src/types/sections/callToAction.ts` → `callToActionContent` | `call-to-action/` |
 | `data/sections/testimonials-content.json` | `src/types/sections/testimonialsContent.ts` → `testimonialsSectionContent` | `testimonials/` |
@@ -332,8 +355,10 @@ UI copy is split into one JSON file per section — each section component impor
 ## SSG Build
 
 - `vite-react-ssg` with `dirStyle: 'nested'` → `dist/portfolio/<slug>/index.html`.
-- `includedRoutes` in `vite.config.ts` auto-discovers slugs by reading `data/portfolio/*.json`.
+- `includedRoutes` in `vite.config.ts` generates: `/portfolio`, `/portfolio/all`, `/portfolio/{catSlug}` per category, `/portfolio/all/{caseSlug}` for every case, `/portfolio/{catSlug}/{caseSlug}` for cases in their own category.
 - `vite.config.ts` imports `'vite-react-ssg'` to activate `ssgOptions` type augmentation.
+- Adding a new category = add one entry to `data/config/categories.json`; SSG picks it up automatically.
+- Adding a new case = add `data/portfolio/{slug}.json`; no config change needed.
 
 ## Adding shadcn/ui Components
 
@@ -345,8 +370,10 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 ## Conventions
 
-- **Components**: PascalCase files, one component per file
-- **Static content**: all data, types, and shared modules live in `src/types/` — components import from `@/types/`, never from `@data/` directly; only `cn()` utility stays in `@/lib/utils`
+- **Components**: `PascalCase` files, one component per file — e.g. `PortfolioCard.tsx`
+- **Other source files** (hooks, utils, type modules, helpers): `camelCase` — e.g. `portfolioConfig.ts`, `categorySlug.ts`, `useScrolled.ts`
+- **Plan files** in `ai/tasks/`: `NNN_planName.md` — zero-padded number prefix, camel_case name — e.g. `006_portfolioPage.md`
+- **Static content**: all data, types, and shared modules live in `src/types/` — components import from `@/types/`, never from `@data/` directly; `cn()` utility stays in `@/lib/utils`; `categorySlug()` helper in `@/lib/categorySlug`
 - **Icon maps**: icons referenced by string key in JSON data (`icon` field), resolved to `IconComponent` via the shared `ICON_MAP` in `src/types/shared/iconMap.ts`; import `ICON_MAP`, `resolveIcon()`, or `IconComponent` type from there — do not import from `lucide-react` directly in components, do not create local icon maps
 - **Tailwind**: use `cn()` from `@/lib/utils` for conditional class merging
 - **Sections**: self-contained in `src/components/sections/`, import Container for layout
@@ -359,6 +386,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
   2. `pnpm tsc -b --noEmit` — typecheck, fix any errors before finishing
   3. `pnpm lint` — fix any new lint errors (ignore pre-existing errors in `src/components/ui/badge.tsx` and `src/components/ui/button.tsx` — shadcn-generated, do not edit)
   4. Update `CLAUDE.md` — reflect any new/changed files, data modules, components, routes, or conventions
+  5. Mark the completed task as **✅ done** in its plan file (`ai/tasks/NNN_*.md`) — update the task header or status table so the next session can see what is already implemented
 
 ## Key Rules
 
