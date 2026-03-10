@@ -40,30 +40,30 @@ advertise-agency-landing-core/
 ├── data/                    # JSON data — gitignored (except _schema/ and README.md)
 │   ├── README.md            # New-client setup guide: what each JSON file does, how to configure
 │   ├── _schema/             # Schema examples — git-tracked; JSON files showing the expected shape of each data file
-│   │   ├── about-content.example.json
-│   │   ├── about-values.example.json
-│   │   ├── advantages-content.example.json
+│   │   ├── aboutContent.example.json
+│   │   ├── aboutValues.example.json
+│   │   ├── advantagesContent.example.json
 │   │   ├── advantages.example.json
-│   │   ├── call-to-action.example.json
-│   │   ├── carousel-content.example.json
+│   │   ├── callToAction.example.json
+│   │   ├── carouselContent.example.json
 │   │   ├── carousel.example.json
 │   │   ├── contact.example.json
 │   │   ├── cookies.example.json
 │   │   ├── footer.example.json
 │   │   ├── header.example.json
 │   │   ├── hero.example.json
-│   │   ├── image-gallery.example.json
+│   │   ├── imageGallery.example.json
 │   │   ├── legal.example.json
 │   │   ├── categories.example.json
-│   │   ├── portfolio-case.example.json
-│   │   ├── portfolio-config.example.json
-│   │   ├── portfolio-page.example.json
-│   │   ├── portfolio-section.example.json
+│   │   ├── portfolioCase.example.json
+│   │   ├── portfolioConfig.example.json
+│   │   ├── portfolioPage.example.json
+│   │   ├── portfolioSection.example.json
 │   │   ├── portfolio.example.json
-│   │   ├── services-content.example.json
+│   │   ├── servicesContent.example.json
 │   │   ├── services.example.json
 │   │   ├── site.example.json
-│   │   ├── testimonials-content.example.json
+│   │   ├── testimonialsContent.example.json
 │   │   ├── testimonials.example.json
 │   │   └── theme.example.json
 │   ├── portfolio/           # One JSON file per case study (slug.json)
@@ -73,21 +73,21 @@ advertise-agency-landing-core/
 │   ├── sections/            # Per-section UI copy JSON files
 │   │   ├── header.json          # Header/nav copy: lang, logo, nav[], navCta
 │   │   ├── hero.json            # Hero section copy: badge, title, titleHighlight, subtitle, cta[], stats[]
-│   │   ├── carousel-content.json # Carousel label: { label }
+│   │   ├── carouselContent.json # Carousel label: { label }
 │   │   ├── carousel.json        # Hero carousel slides: [{ id, image, alt, gradient, title, subtitle }]
-│   │   ├── about-content.json   # About section copy: label, title, titleHighlight, text[], card
-│   │   ├── about-values.json    # About section values list: [{ title, description }]
-│   │   ├── services-content.json # Services section headings: label, title, description
+│   │   ├── aboutContent.json   # About section copy: label, title, titleHighlight, text[], card
+│   │   ├── aboutValues.json    # About section values list: [{ title, description }]
+│   │   ├── servicesContent.json # Services section headings: label, title, description
 │   │   ├── services.json        # Services list: [{ icon, title, description }]
-│   │   ├── portfolio-section.json # Portfolio section copy: label, title, description, allCategory, detailsLabel, cta
-│   │   ├── portfolio-page.json  # Portfolio listing page copy: label, title, description (page-specific only)
-│   │   ├── portfolio-case.json  # Portfolio case page labels: backLabel, overviewLabels, section titles, cta, notFound
-│   │   ├── advantages-content.json # Advantages section headings: label, title, titleHighlight, description
+│   │   ├── portfolioSection.json # Portfolio section copy: label, title, description, allCategory, detailsLabel, cta
+│   │   ├── portfolioPage.json  # Portfolio listing page copy: label, title, description (page-specific only)
+│   │   ├── portfolioCase.json  # Portfolio case page labels: backLabel, overviewLabels, section titles, cta, notFound
+│   │   ├── advantagesContent.json # Advantages section headings: label, title, titleHighlight, description
 │   │   ├── advantages.json      # Advantages list: [{ icon, title, description }]
-│   │   ├── call-to-action.json  # CTA banner copy: title, subtitle, cta[]
-│   │   ├── testimonials-content.json # Testimonials section headings: label, title, description
+│   │   ├── callToAction.json  # CTA banner copy: title, subtitle, cta[]
+│   │   ├── testimonialsContent.json # Testimonials section headings: label, title, description
 │   │   ├── testimonials.json    # Testimonials: [{ id, name, role, company, avatar, avatarColor, rating, text }]
-│   │   ├── image-gallery.json   # Gallery UI labels: prevLabel, nextLabel, counter template
+│   │   ├── imageGallery.json   # Gallery UI labels: prevLabel, nextLabel, counter template
 │   │   ├── contact.json         # Contact section copy: label, title, description, form, labels
 │   │   └── footer.json          # Footer copy: description, navTitle, servicesTitle, contactsTitle, copyright, tagline, legalLinks[]
 │   └── config/              # Global site configuration
@@ -233,24 +233,24 @@ advertise-agency-landing-core/
 │   │   │   ├── header.ts             # HeaderContent interface + headerContent const (from data/sections/header.json); CtaLink inline
 │   │   │   ├── hero.ts               # HeroContent interface + heroContent const (from data/sections/hero.json); CtaLink inline
 │   │   │   ├── carousel.ts           # CarouselSlide interface + carouselSlides const (from data/sections/carousel.json)
-│   │   │   ├── carouselContent.ts    # CarouselSectionContent interface + carouselContent const (from data/sections/carousel-content.json)
-│   │   │   ├── aboutContent.ts       # AboutSectionContent interface + aboutContent const (from data/sections/about-content.json)
-│   │   │   ├── aboutValues.ts        # AboutValue interface + aboutValues const (from data/sections/about-values.json)
-│   │   │   ├── servicesContent.ts    # ServicesSectionContent interface + servicesSectionContent const (from data/sections/services-content.json)
+│   │   │   ├── carouselContent.ts    # CarouselSectionContent interface + carouselContent const (from data/sections/carouselContent.json)
+│   │   │   ├── aboutContent.ts       # AboutSectionContent interface + aboutContent const (from data/sections/aboutContent.json)
+│   │   │   ├── aboutValues.ts        # AboutValue interface + aboutValues const (from data/sections/aboutValues.json)
+│   │   │   ├── servicesContent.ts    # ServicesSectionContent interface + servicesSectionContent const (from data/sections/servicesContent.json)
 │   │   │   ├── services.ts           # Service interface + services const (from data/sections/services.json)
-│   │   │   ├── advantagesContent.ts  # AdvantagesSectionContent interface + advantagesContent const (from data/sections/advantages-content.json)
+│   │   │   ├── advantagesContent.ts  # AdvantagesSectionContent interface + advantagesContent const (from data/sections/advantagesContent.json)
 │   │   │   ├── advantages.ts         # Advantage interface + advantages const (from data/sections/advantages.json)
-│   │   │   ├── callToAction.ts       # CallToActionContent interface + callToActionContent const (from data/sections/call-to-action.json); CtaLink inline
-│   │   │   ├── testimonialsContent.ts # TestimonialsSectionContent interface + testimonialsSectionContent const (from data/sections/testimonials-content.json)
+│   │   │   ├── callToAction.ts       # CallToActionContent interface + callToActionContent const (from data/sections/callToAction.json); CtaLink inline
+│   │   │   ├── testimonialsContent.ts # TestimonialsSectionContent interface + testimonialsSectionContent const (from data/sections/testimonialsContent.json)
 │   │   │   ├── testimonials.ts       # Testimonial interface + testimonials const (from data/sections/testimonials.json)
 │   │   │   ├── contact.ts            # ContactContent interface + contactContent const (from data/sections/contact.json); CtaLink inline
 │   │   │   └── footer.ts             # FooterContent interface + footerContent const (from data/sections/footer.json); CtaLink inline
 │   │   ├── portfolio/
 │   │   │   ├── index.ts              # PortfolioCase interface (hero:{image?,gradient}, content:ContentBlock[], images:{preview?,og?}) + GalleryImage interface + PortfolioSectionContent interface + portfolioSectionContent const — imported as '@/types/portfolio'
 │   │   │   ├── blocks.ts             # ContentBlock discriminated union + all 14 block interfaces + BlockColor interface ({type:'solid'|'gradient'|'primary'|'accent'; value?:string})
-│   │   │   ├── portfolioCaseContent.ts # PortfolioCaseContent interface + portfolioCaseContent const (from data/sections/portfolio-case.json)
+│   │   │   ├── portfolioCaseContent.ts # PortfolioCaseContent interface + portfolioCaseContent const (from data/sections/portfolioCase.json)
 │   │   │   ├── portfolioCases.ts     # portfolioCaseMap: Record<slug, PortfolioCase> — glob-loaded from data/portfolio/
-│   │   │   └── imageGallery.ts       # ImageGalleryContent interface + imageGalleryContent const (from data/sections/image-gallery.json)
+│   │   │   └── imageGallery.ts       # ImageGalleryContent interface + imageGalleryContent const (from data/sections/imageGallery.json)
 │   │   └── shared/
 │   │       ├── index.ts              # NavLink interface
 │   │       └── iconMap.ts            # ICON_MAP, resolveIcon(), IconComponent — shared icon registry (lucide-react)
@@ -322,24 +322,24 @@ UI copy is split into one JSON file per section — each section component impor
 |---|---|---|
 | `data/sections/header.json` | `src/types/sections/header.ts` → `headerContent` | `header/`, `footer/FooterNav.tsx`, `about/AboutCard.tsx`, `useActiveSection.ts` |
 | `data/sections/hero.json` | `src/types/sections/hero.ts` → `heroContent` | `hero/` |
-| `data/sections/carousel-content.json` | `src/types/sections/carouselContent.ts` → `carouselContent` | `carousel/CarouselSlide.tsx` |
-| `data/sections/about-content.json` | `src/types/sections/aboutContent.ts` → `aboutContent` | `about/` |
-| `data/sections/services-content.json` | `src/types/sections/servicesContent.ts` → `servicesSectionContent` | `services/` |
-| `data/sections/portfolio-page.json` | `src/types/sections/portfolioPage.ts` → `portfolioPageContent` | `PortfolioPage.tsx`; page-specific copy only (`label`, `title`, `description`) |
+| `data/sections/carouselContent.json` | `src/types/sections/carouselContent.ts` → `carouselContent` | `carousel/CarouselSlide.tsx` |
+| `data/sections/aboutContent.json` | `src/types/sections/aboutContent.ts` → `aboutContent` | `about/` |
+| `data/sections/servicesContent.json` | `src/types/sections/servicesContent.ts` → `servicesSectionContent` | `services/` |
+| `data/sections/portfolioPage.json` | `src/types/sections/portfolioPage.ts` → `portfolioPageContent` | `PortfolioPage.tsx`; page-specific copy only (`label`, `title`, `description`) |
 | `data/config/portfolio.json` | `src/types/config/portfolioConfig.ts` → `portfolioConfig` | `PortfolioGrid.tsx`; shared listing config (`perPage`, pagination labels, `emptyLabel`, `allLabel`, `cta`) |
 | `data/config/categories.json` | `src/types/config/categories.ts` → `categories` | `CategoryNav.tsx`, `PortfolioCategoryPage.tsx`, `src/lib/categorySlug.ts`; `[{ name, slug }]` |
-| `data/sections/advantages-content.json` | `src/types/sections/advantagesContent.ts` → `advantagesContent` | `advantages/` |
-| `data/sections/call-to-action.json` | `src/types/sections/callToAction.ts` → `callToActionContent` | `call-to-action/` |
-| `data/sections/testimonials-content.json` | `src/types/sections/testimonialsContent.ts` → `testimonialsSectionContent` | `testimonials/` |
+| `data/sections/advantagesContent.json` | `src/types/sections/advantagesContent.ts` → `advantagesContent` | `advantages/` |
+| `data/sections/callToAction.json` | `src/types/sections/callToAction.ts` → `callToActionContent` | `call-to-action/` |
+| `data/sections/testimonialsContent.json` | `src/types/sections/testimonialsContent.ts` → `testimonialsSectionContent` | `testimonials/` |
 | `data/sections/contact.json` | `src/types/sections/contact.ts` → `contactContent` | `contact/` (all sub-components) |
 | `data/sections/footer.json` | `src/types/sections/footer.ts` → `footerContent` | `footer/` (all sub-components) |
-| `data/sections/portfolio-case.json` | `src/types/portfolio/portfolioCaseContent.ts` → `portfolioCaseContent` | `PortfolioCasePage.tsx`, `portfolio/Case*.tsx` |
-| `data/sections/image-gallery.json` | `src/types/portfolio/imageGallery.ts` → `imageGalleryContent` | `portfolio/blocks/GalleryBlock.tsx` |
+| `data/sections/portfolioCase.json` | `src/types/portfolio/portfolioCaseContent.ts` → `portfolioCaseContent` | `PortfolioCasePage.tsx`, `portfolio/Case*.tsx` |
+| `data/sections/imageGallery.json` | `src/types/portfolio/imageGallery.ts` → `imageGalleryContent` | `portfolio/blocks/GalleryBlock.tsx` |
 | `data/config/cookies.json` | `src/types/config/cookies.ts` → `cookiesContent` | `banners/` |
 
 - **`data/config/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/config/theme.ts`.
 - **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo). Exposed via `src/types/config/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
-- **`data/sections/about-values.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/sections/aboutValues.ts`; used by `about/`.
+- **`data/sections/aboutValues.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/sections/aboutValues.ts`; used by `about/`.
 - **`data/sections/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Exposed via `src/types/sections/carousel.ts`; used by `carousel/`.
 - **`data/sections/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/types/sections/advantages.ts`; used by `advantages/`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.
 - **`data/sections/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/sections/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.

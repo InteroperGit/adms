@@ -1,4 +1,4 @@
-import raw from '@data/sections/call-to-action.json';
+import raw from '@data/sections/callToAction.json';
 
 export interface CtaLink {
   label: string;

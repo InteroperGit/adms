@@ -1,4 +1,4 @@
-import raw from '@data/sections/portfolio-page.json';
+import raw from '@data/sections/portfolioPage.json';
 
 export interface PortfolioPageContent {
   label: string;

@@ -1,4 +1,4 @@
-import raw from '@data/sections/portfolio-case.json';
+import raw from '@data/sections/portfolioCase.json';
 
 export interface PortfolioCaseContent {
   backLabel: string;
