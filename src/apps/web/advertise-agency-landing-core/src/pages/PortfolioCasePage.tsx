@@ -20,7 +20,9 @@ export function PortfolioCasePage() {
     if (data) {
       document.title = data.meta.title;
       const descEl = document.querySelector('meta[name="description"]');
-      if (descEl) descEl.setAttribute('content', data.meta.description);
+      if (descEl) {
+        descEl.setAttribute('content', data.meta.description);
+      }
     }
   }, [data]);
 

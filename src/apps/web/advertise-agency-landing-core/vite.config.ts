@@ -45,7 +45,9 @@ export default defineConfig({
         const catSlug = (categoriesRaw as { name: string; slug: string }[]).find(
           (cat) => cat.name === c.category,
         )?.slug
-        if (catSlug) caseRoutes.push(`/portfolio/${catSlug}/${c.slug}`)
+        if (catSlug) {
+caseRoutes.push(`/portfolio/${catSlug}/${c.slug}`)
+}
       }
 
       return [

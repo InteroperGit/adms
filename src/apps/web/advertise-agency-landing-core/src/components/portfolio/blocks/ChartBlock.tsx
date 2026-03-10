@@ -8,16 +8,26 @@ interface ChartBlockProps {
 
 // Returns Tailwind bg classes for div-based bars
 function barBgClass(color: BlockColor | undefined, caseGradient: string): string {
-  if (!color) return 'bg-primary';
-  if (color.type === 'accent') return 'bg-accent';
-  if (color.type === 'gradient') return cn('bg-gradient-to-r', color.value ?? caseGradient);
-  if (color.type === 'solid') return 'bg-primary';
+  if (!color) {
+    return 'bg-primary';
+  }
+  if (color.type === 'accent') {
+    return 'bg-accent';
+  }
+  if (color.type === 'gradient') {
+    return cn('bg-gradient-to-r', color.value ?? caseGradient);
+  }
+  if (color.type === 'solid') {
+    return 'bg-primary';
+  }
   return 'bg-primary';
 }
 
 // Returns CSS color string for SVG elements
 function svgColor(color: BlockColor | undefined): string {
-  if (color?.type === 'accent') return 'hsl(var(--accent))';
+  if (color?.type === 'accent') {
+    return 'hsl(var(--accent))';
+  }
   return 'hsl(var(--primary))';
 }
 

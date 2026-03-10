@@ -10,11 +10,15 @@ function extractEmbedUrl(url: string): string | null {
   const ytMatch = url.match(
     /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/
   );
-  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+  if (ytMatch) {
+    return `https://www.youtube.com/embed/${ytMatch[1]}`;
+  }
 
   // Rutube: rutube.ru/video/ID
   const rtMatch = url.match(/rutube\.ru\/video\/([A-Za-z0-9]+)/);
-  if (rtMatch) return `https://rutube.ru/play/embed/${rtMatch[1]}`;
+  if (rtMatch) {
+    return `https://rutube.ru/play/embed/${rtMatch[1]}`;
+  }
 
   return null;
 }

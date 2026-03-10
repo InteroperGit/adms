@@ -17,7 +17,9 @@ export function ContactForm() {
 
   function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
-    if (!consent) return;
+    if (!consent) {
+      return;
+    }
     setSubmitted(true);
     setForm(EMPTY);
     setConsent(false);

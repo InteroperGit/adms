@@ -30,7 +30,9 @@ export function PortfolioGrid({ items, activeSlug }: PortfolioGridProps) {
 
   function setPage(next: number) {
     const params: Record<string, string> = {};
-    if (next > 1) params.page = String(next);
+    if (next > 1) {
+      params.page = String(next);
+    }
     setSearchParams(params);
     gridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }

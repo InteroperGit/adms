@@ -13,7 +13,9 @@ export function Carousel() {
   const prev = () => setActive((i) => (i - 1 + carouselSlides.length) % carouselSlides.length);
 
   useEffect(() => {
-    if (paused) return;
+    if (paused) {
+      return;
+    }
     const id = setInterval(next, INTERVAL_MS);
     return () => clearInterval(id);
   }, [paused, next]);
