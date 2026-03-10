@@ -385,7 +385,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 - After completing every task, always run in sequence:
   1. `pnpm format` — reformat all changed files
   2. `pnpm tsc -b --noEmit` — typecheck, fix any errors before finishing
-  3. `pnpm lint` — fix any new lint errors (ignore pre-existing errors in `src/components/ui/badge.tsx` and `src/components/ui/button.tsx` — shadcn-generated, do not edit)
+  3. `pnpm lint` — fix any new lint errors (`badge.tsx` / `button.tsx` are shadcn-generated — do not edit; their `react-refresh` rule is suppressed via ESLint override)
   4. Update `CLAUDE.md` — reflect any new/changed files, data modules, components, routes, or conventions
   5. Mark the completed task as **✅ done** in its plan file (`ai/tasks/NNN_*.md`) — update the task header or status table so the next session can see what is already implemented
 
@@ -398,4 +398,4 @@ Files are placed in `src/components/ui/` — never edit them manually.
 - `@theme inline` in `index.css` is required for Tailwind v4 + shadcn compatibility — do not revert to `@theme`
 - Use **react-router-dom v6** (not v7) — required by vite-react-ssg peer dependency
 - Use **native DOM event types** in handlers — React 19 deprecated synthetic event aliases (`React.FormEvent`, `React.MouseEvent`, etc.); use `SubmitEvent`, `MouseEvent`, `InputEvent` etc. instead
-- **Always use curly braces** in `if`/`else`/`for`/`while` bodies — enforced by ESLint `curly: ['error', 'all']`; body always on a new line (Prettier formats it automatically)
+- **Always use curly braces** in `if`/`else`/`for`/`while` bodies — enforced by ESLint `curly: ['error', 'all']` + `brace-style: ['error', '1tbs', { allowSingleLine: false }]`; body is always on a new line; `lint --fix` enforces this after `format`

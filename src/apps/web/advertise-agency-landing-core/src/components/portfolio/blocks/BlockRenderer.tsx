@@ -64,7 +64,9 @@ export function BlockRenderer({ block, caseGradient, caseTitle }: BlockRendererP
     }
   })();
 
-  if (rendered === null) return null;
+  if (rendered === null) {
+    return null;
+  }
 
   return <div className={spacing}>{rendered}</div>;
 }

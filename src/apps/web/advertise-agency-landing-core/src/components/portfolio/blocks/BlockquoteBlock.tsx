@@ -10,7 +10,9 @@ export function BlockquoteBlock({ block }: BlockquoteBlockProps) {
   // Variant A — reference existing testimonial by ID
   if ('testimonialId' in block) {
     const testimonial = testimonials.find((t) => t.id === block.testimonialId);
-    if (!testimonial) return null;
+    if (!testimonial) {
+      return null;
+    }
     return (
       <div className="mx-auto max-w-2xl">
         <TestimonialCard testimonial={testimonial} showQuoteIcon className="p-8" />

@@ -22,7 +22,9 @@ export function useActiveSection(): string {
 
     SECTION_IDS.forEach((id) => {
       const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      if (el) {
+        observer.observe(el);
+      }
     });
 
     return () => observer.disconnect();

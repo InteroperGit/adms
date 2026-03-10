@@ -42,8 +42,12 @@ export function ImageGallery({
     <div
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === 'ArrowLeft') prev();
-        if (e.key === 'ArrowRight') next();
+        if (e.key === 'ArrowLeft') {
+          prev();
+        }
+        if (e.key === 'ArrowRight') {
+          next();
+        }
       }}
       className={cn('outline-none', className)}
     >
@@ -57,12 +61,17 @@ export function ImageGallery({
           const delta = touchStartX.current - e.changedTouches[0].clientX;
           if (Math.abs(delta) > 50) {
             didSwipe.current = true;
-            if (delta > 0) next();
-            else prev();
+            if (delta > 0) {
+              next();
+            } else {
+              prev();
+            }
           }
         }}
         onClick={() => {
-          if (!didSwipe.current) setLightboxOpen(true);
+          if (!didSwipe.current) {
+            setLightboxOpen(true);
+          }
         }}
       >
         <ImageGalleryPreview

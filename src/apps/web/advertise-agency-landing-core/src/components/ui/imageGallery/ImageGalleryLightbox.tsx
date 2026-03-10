@@ -74,8 +74,11 @@ export function ImageGalleryLightbox({
           onTouchEnd={(e) => {
             const delta = touchStartX.current - e.changedTouches[0].clientX;
             if (Math.abs(delta) > 50) {
-              if (delta > 0) onNext();
-              else onPrev();
+              if (delta > 0) {
+                onNext();
+              } else {
+                onPrev();
+              }
             }
           }}
         >
