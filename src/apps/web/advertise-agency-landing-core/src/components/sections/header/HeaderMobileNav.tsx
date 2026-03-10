@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { SocialLinks } from '@/components/ui/SocialLinks';
 import { Container } from '@/components/layout/Container';
 import { headerContent } from '@/types/sections/header';
+import { siteData } from '@/types/config/siteData';
+import { resolveIcon } from '@/types/shared/iconMap';
 import { cn } from '@/lib/utils';
+
+const PhoneIcon = resolveIcon('Phone');
 
 interface Props {
   activeSection: string;
@@ -47,8 +52,20 @@ export function HeaderMobileNav({ activeSection, isHome, forcedActiveHref }: Pro
                   </a>
                 );
               })}
-              <div className="pt-3">
-                <Button asChild className="w-full rounded-full" size="sm">
+              <div className="flex items-center gap-2 pt-3">
+                <a
+                  href={`tel:${siteData.contact.phone}`}
+                  aria-label="Позвонить"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-green-700/30 bg-green-700/5 text-green-700 shadow-sm transition-colors hover:bg-green-700/15"
+                >
+                  {PhoneIcon && <PhoneIcon size={16} />}
+                </a>
+                <SocialLinks
+                  telegram={siteData.contact.telegram}
+                  vk={siteData.contact.vk}
+                  variant="colored"
+                />
+                <Button asChild className="h-11 flex-1 rounded-full" size="sm">
                   <a href={isHome ? '#contact' : '/#contact'} onClick={() => setMenuOpen(false)}>
                     {headerContent.navCta}
                   </a>
