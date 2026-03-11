@@ -205,7 +205,8 @@ advertise-agency-landing-core/
 │   │   └── imageSrcSet.ts      # resolveImageSrcSet(src, widths?) — pure helper: returns srcset string for /images/ paths; importable by components and plugins
 │   ├── plugins/
 │   │   ├── themePlugin.ts     # Vite plugin: reads data/config/theme.json, injects CSS vars + Google Fonts into index.html
-│   │   └── imageResizePlugin.ts # Vite plugin (build-only): sharp-based WebP resizer; reads public/images/**; outputs _optimized/<name>-<w>w.webp per breakpoint; skips unchanged files via SHA-256 manifest; re-exports resolveImageSrcSet
+│   │   ├── imageResizePlugin.ts # Vite plugin (build-only): sharp-based WebP resizer; reads public/images/**; outputs _optimized/<name>-<w>w.webp per breakpoint; skips unchanged files via SHA-256 manifest; re-exports resolveImageSrcSet
+│   │   └── ssgMetaPlugin.ts   # Vite plugin hook: buildIncludedRoutes() generates all portfolio pages; createSsgMetaHook() injects OG tags, canonical links, JSON-LD via seoConfig
 │   ├── pages/
 │   │   ├── Home.tsx               # Landing page content: Carousel → Hero → About → Services → Portfolio → Advantages → CallToAction → Testimonials → Contact; wrapped in <main>
 │   │   ├── PortfolioPage.tsx      # Standalone /portfolio page: SectionHeader + PortfolioGrid (activeSlug=null); sets document.title
