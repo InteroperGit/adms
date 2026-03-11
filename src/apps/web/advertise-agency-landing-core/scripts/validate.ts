@@ -7,7 +7,7 @@
  */
 
 import { readdirSync, readFileSync } from 'fs';
-import path from 'path';
+import * as path from 'path';
 import { fileURLToPath } from 'url';
 
 // ── Config schemas ─────────────────────────────────────────────────────────────
@@ -42,7 +42,7 @@ import { PortfolioPageContentSchema } from '../src/types/sections/portfolioPage'
 import {
   PortfolioCaseSchema,
   PortfolioSectionContentSchema,
-} from '../src/types/portfolio/index';
+} from '../src/types/portfolio';
 import { PortfolioCaseContentSchema } from '../src/types/portfolio/portfolioCaseContent';
 import { ImageGalleryContentSchema } from '../src/types/portfolio/imageGallery';
 
