@@ -35,7 +35,11 @@ export function PortfolioCasePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white font-sans text-foreground">
+    <div
+      id="main-content"
+      tabIndex={-1}
+      className="min-h-screen bg-white font-sans text-foreground"
+    >
       <BreadCrumbs
         items={[
           { label: 'Главная', href: '/' },

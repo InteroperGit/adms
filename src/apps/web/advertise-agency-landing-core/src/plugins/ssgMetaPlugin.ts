@@ -207,7 +207,7 @@ export function buildIncludedRoutes(rootDir: string): (paths: string[]) => strin
       JSON.parse(readFileSync(path.join(portfolioDir, f), 'utf-8')) as {
         slug: string;
         category: string;
-      },
+      }
   );
 
   // One listing page per category (including the "all" pseudo-category)

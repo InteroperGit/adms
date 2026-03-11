@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cookiesContent } from '@/types/config/cookies';
@@ -10,13 +10,19 @@ const STORAGE_KEY = 'cookie_consent';
 type ConsentValue = 'all' | 'necessary';
 
 export function CookieBanner() {
-  const [visible, setVisible] = useState(
-    () => typeof window === 'undefined' || !localStorage.getItem(STORAGE_KEY)
+  // getServerSnapshot returns true (consent assumed) so SSG renders no banner in HTML.
+  // On the client, getSnapshot reads actual localStorage — no hydration mismatch.
+  const hasConsent = useSyncExternalStore(
+    () => () => {},
+    () => !!localStorage.getItem(STORAGE_KEY),
+    () => true
   );
+  const [dismissed, setDismissed] = useState(false);
+  const visible = !hasConsent && !dismissed;
 
   function save(value: ConsentValue) {
     localStorage.setItem(STORAGE_KEY, value);
-    setVisible(false);
+    setDismissed(true);
   }
 
   if (!visible) {

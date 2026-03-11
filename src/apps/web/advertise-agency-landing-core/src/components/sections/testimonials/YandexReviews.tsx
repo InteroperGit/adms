@@ -11,6 +11,7 @@ export function YandexReviews({ orgId }: YandexReviewsProps) {
         width="100%"
         height="650"
         style={{ border: 'none', display: 'block' }}
+        loading="lazy"
         allowFullScreen
       />
     </div>

@@ -25,12 +25,14 @@ export function ScrollToTop({ threshold = 300, navSelector = 'nav' }: ScrollToTo
   }, [threshold]);
 
   const handleClick = () => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const behavior: ScrollBehavior = reducedMotion ? 'instant' : 'smooth';
     const nav = navSelector ? document.querySelector(navSelector) : null;
 
     if (nav) {
-      nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      nav.scrollIntoView({ behavior, block: 'start' });
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior });
     }
   };
 

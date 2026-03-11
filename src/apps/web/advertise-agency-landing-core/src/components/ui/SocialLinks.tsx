@@ -37,6 +37,7 @@ export function SocialLinks({ telegram, vk, variant = 'light', className }: Soci
 
   const base = cn(
     'flex h-11 w-11 items-center justify-center transition-colors',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1',
     isDark
       ? 'rounded-lg border border-white/10 text-white/50'
       : 'rounded-xl border bg-white shadow-sm'

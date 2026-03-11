@@ -59,7 +59,7 @@ export function HeaderDesktopNav({ activeSection, isHome, forcedActiveHref }: Pr
           vk={siteData.contact.vk}
           variant="colored"
         />
-        <Button asChild size="sm" className="rounded-full px-6">
+        <Button asChild size="sm" className="h-11 rounded-full px-6">
           <a href={isHome ? '#contact' : '/#contact'}>{headerContent.navCta}</a>
         </Button>
       </div>

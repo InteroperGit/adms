@@ -27,6 +27,7 @@ export function AdvantageCard({ item, index }: Props) {
           <Icon size={20} />
         </div>
         <span
+          aria-hidden="true"
           style={{ fontFamily: 'var(--font-heading)' }}
           className="text-3xl font-bold text-white/10"
         >

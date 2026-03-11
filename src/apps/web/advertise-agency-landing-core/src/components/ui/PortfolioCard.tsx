@@ -40,7 +40,8 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
           className={cn(
             'inline-flex items-center gap-1.5 rounded-full',
             'px-3 py-1.5 text-sm font-medium text-primary',
-            'transition-all duration-200 hover:gap-2.5 hover:bg-primary/10'
+            'transition-all duration-200 hover:gap-2.5 hover:bg-primary/10',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1'
           )}
         >
           {detailsLabel}

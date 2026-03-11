@@ -8,17 +8,19 @@ const INTERVAL_MS = 5000;
 export function Carousel() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const reducedMotion =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const next = useCallback(() => setActive((i) => (i + 1) % carouselSlides.length), []);
   const prev = () => setActive((i) => (i - 1 + carouselSlides.length) % carouselSlides.length);
 
   useEffect(() => {
-    if (paused) {
+    if (paused || reducedMotion) {
       return;
     }
     const id = setInterval(next, INTERVAL_MS);
     return () => clearInterval(id);
-  }, [paused, next]);
+  }, [paused, reducedMotion, next]);
 
   return (
     <div

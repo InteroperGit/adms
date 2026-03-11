@@ -1,6 +1,6 @@
 # 008 — Site Improvements PRD
 
-## Status: 🔲 T1 ✅ done (2026-03-11) | rest not started
+## Status: T1 ✅ done · T2 ✅ done (2026-03-11) | rest not started
 
 ## Goal
 
@@ -33,7 +33,7 @@ Currently pages only set `document.title`. Add per-page `<meta>` tags and struct
 
 ---
 
-### T2 · Accessibility: contrast, reduced-motion, keyboard nav
+### T2 · Accessibility: contrast, reduced-motion, keyboard nav ✅ done
 
 **Priority:** high · **Scope:** components + CSS
 

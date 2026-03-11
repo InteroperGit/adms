@@ -10,7 +10,7 @@ import { Contact } from '@/components/sections/contact';
 
 export default function Home() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <Carousel />
       <Hero />
       <About />

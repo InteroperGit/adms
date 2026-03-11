@@ -17,6 +17,7 @@ export function CategoryNav({ activeSlug }: CategoryNavProps) {
         to="/portfolio"
         className={cn(
           'rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200 sm:px-5 sm:py-2 sm:text-sm',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1',
           allActive
             ? 'bg-primary text-white shadow-sm'
             : 'bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary'
@@ -31,6 +32,7 @@ export function CategoryNav({ activeSlug }: CategoryNavProps) {
           to={`/portfolio/${category.slug}`}
           className={cn(
             'rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200 sm:px-5 sm:py-2 sm:text-sm',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1',
             activeSlug === category.slug
               ? 'bg-primary text-white shadow-sm'
               : 'bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary'
