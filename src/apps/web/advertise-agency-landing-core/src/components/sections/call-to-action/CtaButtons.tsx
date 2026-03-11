@@ -16,7 +16,7 @@ export function CtaButtons({ cta }: Props) {
       <Button
         asChild
         size="lg"
-        className="w-full rounded-full bg-white px-8 text-primary hover:bg-white/90 hover:text-primary sm:w-auto"
+        className="w-full animate-cta-pulse-white rounded-full bg-white px-8 text-primary hover:bg-white/90 hover:text-primary sm:w-auto"
       >
         <a href={cta[0].href}>
           {cta[0].label}

@@ -7,6 +7,7 @@ import { Advantages } from '@/components/sections/advantages';
 import { CallToAction } from '@/components/sections/call-to-action';
 import { Testimonials } from '@/components/sections/testimonials';
 import { Contact } from '@/components/sections/contact';
+import { SectionDivider } from '@/components/ui/SectionDivider';
 
 export default function Home() {
   return (
@@ -14,12 +15,19 @@ export default function Home() {
       <Carousel />
       <Hero />
       <About />
+      <SectionDivider variant="white-to-muted" />
       <Services />
+      <SectionDivider variant="muted-to-white" />
       <Portfolio />
+      <SectionDivider variant="white-to-dark" />
       <Advantages />
+      <SectionDivider variant="dark-to-primary" />
       <CallToAction />
+      <SectionDivider variant="primary-to-muted" />
       <Testimonials />
+      <SectionDivider variant="muted-to-white" flipX />
       <Contact />
+      <SectionDivider variant="white-to-dark" />
     </main>
   );
 }

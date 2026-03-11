@@ -14,7 +14,7 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
   const { detailsLabel } = portfolioSectionContent;
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-md">
+    <article className="group overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
       <PortfolioThumbnail
         href={item.href}
         image={item.images?.preview}
@@ -29,7 +29,7 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
 
         <div className="mb-5 flex flex-wrap gap-2">
           {item.tags.map((tag) => (
-            <Badge key={tag} variant="secondary" className="text-xs">
+            <Badge key={tag} variant="secondary" className="cursor-pointer text-xs">
               {tag}
             </Badge>
           ))}

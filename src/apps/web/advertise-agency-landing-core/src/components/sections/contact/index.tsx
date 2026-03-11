@@ -5,27 +5,33 @@ import { ContactForm } from './ContactForm';
 import { ContactInfo } from './ContactInfo';
 import { ContactHours } from './ContactHours';
 import { contactContent } from '@/types/sections/contact';
+import { cn } from '@/lib/utils';
+import { useFadeIn } from '@/hooks/useFadeIn';
 
 export function Contact() {
+  const { ref, isVisible } = useFadeIn();
+
   return (
-    <section id="contact" className="bg-muted/40 py-24 md:py-32">
-      <Container>
-        <SectionHeader
-          label={contactContent.label}
-          title={contactContent.title}
-          description={contactContent.description}
-          className="mb-14"
-        />
+    <section ref={ref} id="contact" className="bg-white py-24 md:py-32">
+      <div className={cn('fade-in-section', isVisible && 'is-visible')}>
+        <Container>
+          <SectionHeader
+            label={contactContent.label}
+            title={contactContent.title}
+            description={contactContent.description}
+            className="mb-14"
+          />
 
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
-          <ContactForm />
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
+            <ContactForm />
 
-          <div className="flex flex-col justify-center gap-8">
-            <ContactInfo />
-            <ContactHours />
+            <div className="flex flex-col justify-center gap-8">
+              <ContactInfo />
+              <ContactHours />
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }

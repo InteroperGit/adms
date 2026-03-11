@@ -8,7 +8,7 @@ interface HeroCTAProps {
 export function HeroCTA({ cta }: HeroCTAProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-      <Button asChild size="lg" className="rounded-full px-8">
+      <Button asChild size="lg" className="animate-cta-pulse rounded-full px-8">
         <a href={cta[0].href}>
           {cta[0].label}
           <ArrowRight size={16} />

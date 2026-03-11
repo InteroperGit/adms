@@ -187,6 +187,7 @@ advertise-agency-landing-core/
 │   │       ├── TestimonialStrip.tsx   # Desktop-only 5-col thumbnail grid; props: active (index), onSelect (callback); reads testimonials directly
 │   │       ├── HomeHashScroll.tsx     # Renderless component; watches location, smoothly scrolls to `#<id>` element when navigating to `/#<anchor>` from any non-home page; placed in App.tsx
 │   │       ├── ScrollToTop.tsx        # Fixed bottom-right button; visible after threshold scroll OR immediately if page already scrolled past threshold on mount; scrolls to top via window.scrollTo
+│   │       ├── SectionDivider.tsx    # SVG wave divider; props: variant ('to-white'|'to-muted'|'to-muted-light'|'to-dark'|'to-primary'), flipX?; renders absolute bottom-0 inside section — bg is transparent so section's own background (gradient or solid) shows through; placed as last child inside each section
 │   │       ├── badge.tsx
 │   │       ├── button.tsx
 │   │       ├── card.tsx
@@ -194,6 +195,7 @@ advertise-agency-landing-core/
 │   │       ├── separator.tsx
 │   │       └── textarea.tsx
 │   ├── hooks/
+│   │   ├── useFadeIn.ts         # IntersectionObserver-based scroll-triggered fade-in; returns { ref: RefObject<HTMLElement>, isVisible: boolean }; respects prefers-reduced-motion; apply fade-in-section + is-visible CSS classes
 │   │   ├── useScrolled.ts       # Passive scroll listener, returns bool after threshold (unused since Header moved in-flow)
 │   │   ├── useActiveSection.ts  # Tracks active section for nav highlight
 │   │   └── useCookieConsent.ts  # Returns 'all'|'necessary'|null; reactive via CustomEvent 'cookie_consent_change'

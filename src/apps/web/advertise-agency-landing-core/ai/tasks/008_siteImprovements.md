@@ -1,6 +1,6 @@
 # 008 — Site Improvements PRD
 
-## Status: T1 ✅ done · T2 ✅ done · T3 ✅ done · T4 ✅ done (all satisfies → Zod, validate.ts covers all 26 files, 2026-03-11) | rest not started
+## Status: T1 ✅ done · T2 ✅ done · T3 ✅ done · T4 ✅ done (all satisfies → Zod, validate.ts covers all 26 files, 2026-03-11) · T5 ✅ done (SectionDivider, useFadeIn, count-up, CTA pulse, card hover lift, 2026-03-11) | rest not started
 
 ## Goal
 

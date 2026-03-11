@@ -8,6 +8,8 @@ import { PortfolioFilter } from '@/components/sections/portfolio/PortfolioFilter
 import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';
 import { categorySlug } from '@/lib/categorySlug';
+import { cn } from '@/lib/utils';
+import { useFadeIn } from '@/hooks/useFadeIn';
 
 const modules = import.meta.glob<PortfolioCase>('@data/portfolio/*.json', {
   eager: true,
@@ -29,6 +31,7 @@ const PREVIEW_LIMIT = 6;
 export function Portfolio() {
   const p = portfolioSectionContent;
   const [activeCategory, setActiveCategory] = useState(p.allCategory);
+  const { ref, isVisible } = useFadeIn();
 
   const filtered =
     activeCategory === p.allCategory
@@ -38,38 +41,40 @@ export function Portfolio() {
   const displayed = filtered.slice(0, PREVIEW_LIMIT);
 
   return (
-    <section id="portfolio" className="bg-white py-24 md:py-32">
-      <Container>
-        <SectionHeader
-          label={p.label}
-          title={p.title}
-          description={p.description}
-          className="mb-12"
-        />
+    <section ref={ref} id="portfolio" className="bg-white py-24 md:py-32">
+      <div className={cn('fade-in-section', isVisible && 'is-visible')}>
+        <Container>
+          <SectionHeader
+            label={p.label}
+            title={p.title}
+            description={p.description}
+            className="mb-12"
+          />
 
-        <PortfolioFilter
-          categories={PORTFOLIO_CATEGORIES}
-          active={activeCategory}
-          onChange={setActiveCategory}
-        />
+          <PortfolioFilter
+            categories={PORTFOLIO_CATEGORIES}
+            active={activeCategory}
+            onChange={setActiveCategory}
+          />
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {displayed.map((item) => (
-            <PortfolioCard key={item.slug} item={item} />
-          ))}
-        </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+            {displayed.map((item) => (
+              <PortfolioCard key={item.slug} item={item} />
+            ))}
+          </div>
 
-        <div className="mt-14 text-center">
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="rounded-full px-8 hover:bg-muted hover:text-primary"
-          >
-            <a href={p.cta.href}>{p.cta.label}</a>
-          </Button>
-        </div>
-      </Container>
+          <div className="mt-14 text-center">
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full px-8 hover:bg-muted hover:text-primary"
+            >
+              <a href={p.cta.href}>{p.cta.label}</a>
+            </Button>
+          </div>
+        </Container>
+      </div>
     </section>
   );
 }
