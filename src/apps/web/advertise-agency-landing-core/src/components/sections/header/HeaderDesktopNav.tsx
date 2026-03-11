@@ -52,7 +52,9 @@ export function HeaderDesktopNav({ activeHref, isHome, highlightedActionIndex }:
           href={`tel:${siteData.contact.phone}`}
           aria-label="Позвонить"
           className={cn(
-            'flex h-11 w-11 items-center justify-center rounded-xl border border-green-700/30 bg-green-700/5 text-green-700 shadow-sm transition-colors hover:bg-green-700/15',
+            'flex h-11 w-11 items-center justify-center rounded-xl border',
+            'border-green-700/30 bg-green-700/5 text-green-700 shadow-sm',
+            'transition-colors hover:bg-green-700/15',
             highlightedActionIndex === 0 && 'animate-pulse-green'
           )}
         >

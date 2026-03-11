@@ -81,7 +81,7 @@ export default function UserAgreement() {
             Обеспечивать конфиденциальность данных в соответствии с{' '}
             <Link
               to="/privacy-policy"
-              className="underline underline-offset-2 hover:text-gray-900 transition-colors"
+              className="underline underline-offset-2 hover:text-foreground transition-colors"
             >
               Политикой конфиденциальности
             </Link>

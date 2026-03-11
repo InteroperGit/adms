@@ -87,7 +87,11 @@ export function ImageGallery({
                 prev();
               }}
               aria-label={prevLabel}
-              className="absolute left-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/40 p-2.5 text-white opacity-0 backdrop-blur-sm transition-all hover:bg-primary group-hover:opacity-100 sm:flex"
+              className={cn(
+                'absolute left-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer',
+                'items-center justify-center rounded-full bg-black/40 p-2.5 text-white',
+                'opacity-0 backdrop-blur-sm transition-all hover:bg-primary group-hover:opacity-100 sm:flex'
+              )}
             >
               <ChevronLeft size={20} />
             </button>
@@ -97,11 +101,21 @@ export function ImageGallery({
                 next();
               }}
               aria-label={nextLabel}
-              className="absolute right-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/40 p-2.5 text-white opacity-0 backdrop-blur-sm transition-all hover:bg-primary group-hover:opacity-100 sm:flex"
+              className={cn(
+                'absolute right-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer',
+                'items-center justify-center rounded-full bg-black/40 p-2.5 text-white',
+                'opacity-0 backdrop-blur-sm transition-all hover:bg-primary group-hover:opacity-100 sm:flex'
+              )}
             >
               <ChevronRight size={20} />
             </button>
-            <span className="absolute bottom-3 right-3 z-10 hidden rounded-full bg-black/50 px-3 py-1 text-xs text-white tabular-nums opacity-0 backdrop-blur-sm transition-all group-hover:opacity-100 sm:block">
+            <span
+              className={cn(
+                'absolute bottom-3 right-3 z-10 hidden rounded-full bg-black/50',
+                'px-3 py-1 text-xs text-white tabular-nums',
+                'opacity-0 backdrop-blur-sm transition-all group-hover:opacity-100 sm:block'
+              )}
+            >
               {counterTemplate
                 .replace('{current}', String(activeIndex + 1))
                 .replace('{total}', String(images.length))}

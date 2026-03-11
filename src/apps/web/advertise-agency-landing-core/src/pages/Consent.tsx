@@ -105,7 +105,7 @@ export default function Consent() {
               href="https://rkn.gov.ru"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline underline-offset-2 hover:text-gray-900 transition-colors"
+              className="underline underline-offset-2 hover:text-foreground transition-colors"
             >
               rkn.gov.ru
             </a>
@@ -121,7 +121,7 @@ export default function Consent() {
           <li>
             <Link
               to="/privacy-policy"
-              className="underline underline-offset-2 hover:text-gray-900 transition-colors"
+              className="underline underline-offset-2 hover:text-foreground transition-colors"
             >
               Политика конфиденциальности
             </Link>{' '}
@@ -130,7 +130,7 @@ export default function Consent() {
           <li>
             <Link
               to="/user-agreement"
-              className="underline underline-offset-2 hover:text-gray-900 transition-colors"
+              className="underline underline-offset-2 hover:text-foreground transition-colors"
             >
               Пользовательское соглашение
             </Link>{' '}

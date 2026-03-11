@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+
 interface ContactMapProps {
   url: string;
   className?: string;
@@ -5,7 +7,7 @@ interface ContactMapProps {
 
 export function ContactMap({ url, className }: ContactMapProps) {
   return (
-    <div className={`overflow-hidden rounded-2xl sm:shadow-lg ${className ?? ''}`}>
+    <div className={cn('overflow-hidden rounded-2xl sm:shadow-lg', className)}>
       <iframe
         src={url}
         title="Мы на карте"

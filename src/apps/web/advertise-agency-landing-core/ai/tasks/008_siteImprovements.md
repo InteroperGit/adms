@@ -157,7 +157,7 @@ Currently JSON data is validated only by `satisfies` at compile time — this ca
 
 ---
 
-### T5 · Design: section transition polish + micro-interactions
+### T5 · Design: section transition polish + micro-interactions ✅ done
 
 **Priority:** medium · **Scope:** components + CSS
 
@@ -290,11 +290,11 @@ The theme system already uses CSS variables. Extend it to support dark mode.
 
 | # | Task | Priority | Effort | Dependencies |
 |---|------|----------|--------|--------------|
-| T1 | SEO: meta tags + canonical + JSON-LD | high | medium | — |
-| T2 | Accessibility: contrast, motion, keyboard | high | medium | — |
+| T1 | SEO: meta tags + canonical + JSON-LD | high | medium | — |✅ done |
+| T2 | Accessibility: contrast, motion, keyboard | high | medium | — |✅ done |
 | T3 | Image optimization: lazy + srcset | high | small | — | ✅ done |
 | T4 | Data validation: Zod schemas | medium | medium | — | ✅ done |
-| T5 | Design: section transitions + micro-interactions | medium | medium | T2 (reduced-motion) |
+| T5 | Design: section transitions + micro-interactions | medium | medium | T2 (reduced-motion) |✅ done |
 | T6 | Legal pages: migrate to JSON | medium | medium | — |
 | T7 | Analytics: Yandex Metrika + consent | medium | small | — |
 | T8 | DX: JSON Schema + new-client CLI | low | medium | T4 (Zod schemas) |

@@ -418,6 +418,8 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 ## Key Rules
 
+- **After modifying or creating any component**, review its Tailwind classes and improve them — consolidate redundant utilities, apply responsive variants, use semantic color tokens (`bg-primary`, `text-muted-foreground`, etc.) instead of raw values, and ensure consistent spacing scale
+- **`cn()` from `@/lib/utils`** — do NOT reach for it by default; only add it when you identify a concrete need: conditional classes, merging a `className` prop from outside, combining multiple expressions, or a static string long enough to hurt readability (then split across lines inside `cn()`); a short static string stays as a plain string literal
 - Package manager is **pnpm only** — never use npm or yarn
 - Do not add server-side logic, API routes, or dynamic data fetching (fully static SSG)
 - Keep bundle lean — prefer Tailwind utilities over custom CSS

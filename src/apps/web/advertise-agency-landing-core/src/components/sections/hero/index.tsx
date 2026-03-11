@@ -9,7 +9,7 @@ export function Hero() {
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden pt-16 md:pt-20">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white via-orange-50 to-violet-50" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white via-primary/5 to-accent/5" />
       <div className="absolute -left-32 -top-32 -z-10 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
       <div className="absolute -right-32 bottom-0 -z-10 h-[32rem] w-[32rem] rounded-full bg-accent/10 blur-3xl" />
       <div className="absolute left-1/2 top-1/3 -z-10 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/5 blur-2xl" />

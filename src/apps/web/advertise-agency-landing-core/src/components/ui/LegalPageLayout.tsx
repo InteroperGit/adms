@@ -9,15 +9,15 @@ interface LegalPageLayoutProps {
 
 export function LegalPageLayout({ title, version, effectiveDate, children }: LegalPageLayoutProps) {
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12 text-gray-800">
+    <main className="mx-auto max-w-3xl px-4 py-12 text-foreground">
       <BackButton />
 
-      <h1 className="text-3xl font-bold mb-2">{title}</h1>
-      <p className="text-sm text-gray-500 mb-10">Дата вступления в силу: {effectiveDate}</p>
+      <h1 className="mb-2 text-3xl font-bold">{title}</h1>
+      <p className="mb-10 text-sm text-muted-foreground">Дата вступления в силу: {effectiveDate}</p>
 
       {children}
 
-      <p className="text-sm text-gray-500 mt-10 pt-6 border-t border-gray-200">
+      <p className="mt-10 border-t border-border pt-6 text-sm text-muted-foreground">
         Версия {version} · Дата последнего обновления: {effectiveDate}
       </p>
     </main>
