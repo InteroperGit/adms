@@ -207,20 +207,30 @@ Legal page content (Privacy Policy, User Agreement, Consent) is currently hardco
 
 Add analytics support that respects the existing cookie consent system.
 
+**Current state:**
+- `SiteDataSchema` (Zod) in `src/types/config/siteData.ts` — does **not** have analytics fields yet; existing optional fields: `yandexMapsOrgId`, `yandexMapUrl`, `imageOptimization`
+- `useCookieConsent()` hook (`src/hooks/useCookieConsent.ts`) returns `'all' | 'necessary' | null`; listens to `cookie_consent_change` CustomEvent
+- `App.tsx` already renders `<CookieBanner />` — analytics component goes alongside it
+- `data/_schema/site.example.json` exists but lacks both `imageOptimization` and analytics fields
+- No `src/components/analytics/` directory exists yet
+- `scripts/validate.ts` validates `site.json` via `SiteDataSchema` — new optional fields are picked up automatically
+
 **Requirements:**
-- Add `data/config/site.json` fields: `yandexMetrikaId?: string`, `googleAnalyticsId?: string`
-- Create `src/components/analytics/MetrikaScript.tsx` — renderless component that injects Yandex Metrika script tag **only when** `useCookieConsent() === 'all'`
-- On consent change (via `cookie_consent_change` event), dynamically load or unload the analytics script
-- Add `noscript` fallback image tag for Metrika
-- Track virtual page views on route change (via `useLocation()` + `ym('hit', path)`)
-- Integrate in `App.tsx` alongside `CookieBanner`
-- Update `data/_schema/site.example.json` with analytics fields
+- Extend `SiteDataSchema` in `src/types/config/siteData.ts` with optional fields: `yandexMetrikaId?: string`, `googleAnalyticsId?: string` (use `z.string().optional()`)
+- Create `src/components/analytics/MetrikaScript.tsx` — renderless component that:
+  - Reads `siteData.yandexMetrikaId`; renders nothing if absent/empty
+  - Injects Yandex Metrika `<script>` tag **only when** `useCookieConsent() === 'all'`
+  - On consent change (hook re-renders on `cookie_consent_change` event), dynamically loads or removes the script
+  - Adds `<noscript><img>` fallback for Metrika
+  - Tracks virtual page views on route change via `useLocation()` + `ym('hit', path)`
+- Integrate `<MetrikaScript />` in `App.tsx` alongside `<CookieBanner />`
+- Update `data/_schema/site.example.json` with `yandexMetrikaId` and `googleAnalyticsId` fields (also add missing `imageOptimization` example)
 
 **Files:**
 - `src/components/analytics/MetrikaScript.tsx` — new
 - `src/App.tsx` — add `<MetrikaScript />`
-- `src/types/config/siteData.ts` — extend `SiteData` interface
-- `data/_schema/site.example.json` — update
+- `src/types/config/siteData.ts` — extend `SiteDataSchema` (Zod, not interface)
+- `data/_schema/site.example.json` — update with analytics + imageOptimization fields
 
 ---
 
@@ -230,16 +240,31 @@ Add analytics support that respects the existing cookie consent system.
 
 Improve developer experience when configuring data for new clients.
 
+**Current state:**
+- T4 is done ✅ — all type modules export Zod schemas (naming convention: `XxxSchema`, e.g. `SiteDataSchema`, `ThemeSchema`, `HeaderContentSchema`, `PortfolioCaseSchema`, `LegalContentSchema`)
+- `scripts/validate.ts` validates 26+ JSON files using those Zod schemas (run via `pnpm validate` / `vite-node`)
+- `data/_schema/*.example.json` files exist as human-readable shape references but provide no IDE autocomplete
+- No `*.schema.json` files exist yet
+- `vite-node` is already in devDependencies — use for running new scripts
+- `package.json` scripts: `validate`, `typecheck`, `format`, `lint`, `dev`, `build`, `preview`
+
 **Requirements:**
-- Generate JSON Schema files (`.schema.json`) from Zod schemas (T4 prerequisite) and place in `data/_schema/`
-- Add `"$schema": "../_schema/<name>.schema.json"` hints to all data JSON files so VS Code provides autocomplete and inline validation
-- Create `scripts/new-client.ts` — interactive CLI that prompts for company name, colors (hex → HSL conversion), phone, email, social links; generates all `data/config/` and `data/sections/` files from templates
-- Add `pnpm new-client` script to `package.json`
+- Install `zod-to-json-schema` (dev dependency) for converting Zod schemas to JSON Schema
+- Create `scripts/generate-json-schemas.ts` — imports all `XxxSchema` exports from `src/types/config/`, `src/types/sections/`, `src/types/portfolio/`, `src/types/legal/`; converts each to JSON Schema via `zodToJsonSchema()`; writes to `data/_schema/<name>.schema.json`
+- Add `"$schema": "../_schema/<name>.schema.json"` hints to all `data/config/`, `data/sections/`, `data/legal/`, `data/portfolio/` JSON files so VS Code provides autocomplete and inline validation
+- Add `pnpm gen-schemas` script to `package.json` (runs `vite-node scripts/generate-json-schemas.ts`)
+- Create `scripts/new-client.ts` — interactive CLI (use `readline` or `@inquirer/prompts`) that prompts for:
+  - Company name, phone, email, address, social links
+  - Brand colors (hex → HSL conversion)
+  - Font choices (heading, body) + Google Fonts URLs
+  Generates all `data/config/` and `data/sections/` files from templates based on existing `data/_schema/*.example.json` shape
+- Add `pnpm new-client` script to `package.json` (runs `vite-node scripts/new-client.ts`)
 
 **Files:**
+- `scripts/generate-json-schemas.ts` — new (uses `zod-to-json-schema`)
 - `data/_schema/*.schema.json` — generated JSON Schema files
 - `scripts/new-client.ts` — new CLI script
-- `package.json` — new script
+- `package.json` — add `gen-schemas` and `new-client` scripts
 
 ---
 
@@ -249,17 +274,27 @@ Improve developer experience when configuring data for new clients.
 
 The `ICON_MAP` in `src/types/shared/iconMap.ts` imports all icons used anywhere in JSON data. If the map grows, it bloats the bundle. Audit and optimize.
 
+**Current state:**
+- `ICON_MAP` currently has **20 icons** from `lucide-react`: Lightbulb, MonitorSmartphone, Megaphone, LayoutTemplate, BarChart3, Share2, CircleDollarSign, Clock, UserRound, LineChart, Building2, Handshake, Phone, Mail, MapPin, Info, CheckCircle, AlertTriangle, StickyNote, RectangleHorizontal, Box
+- No bundle analysis tooling installed; no `pnpm analyze` script
+- `vite.config.ts` has no `build.rollupOptions` — default chunk splitting
+- `vite-node` available for running scripts (already in devDeps)
+- `scripts/validate.ts` pattern is the template for new build scripts
+
 **Requirements:**
-- Add `rollup-plugin-visualizer` (or `vite-bundle-analyzer`) as dev dependency; add `pnpm analyze` script
-- Run Lighthouse CI on the built `dist/` and document baseline scores
-- Audit `ICON_MAP` — remove any icons not referenced in any JSON data file. Create a build-time script `scripts/check-icons.ts` that cross-references `ICON_MAP` keys with all icon references in `data/**/*.json`
-- Verify Tailwind CSS v4 tree-shaking is working (no unused utilities in output CSS)
-- Check `vite.config.ts` `build.rollupOptions` for optimal chunk splitting (vendor, sections, portfolio)
+- Add `rollup-plugin-visualizer` (or `vite-bundle-analyzer`) as dev dependency; add `pnpm analyze` script (opens HTML report from `dist/stats.html`)
+- Run Lighthouse CI on the built `dist/` and document baseline scores in a `docs/performance.md` or similar
+- Create `scripts/check-icons.ts` — reads all `data/**/*.json` files, extracts all `"icon": "..."` string values, compares against `ICON_MAP` keys; reports unused icons (to remove) and missing icons (referenced in data but not in map). Run via `pnpm check-icons` (`vite-node scripts/check-icons.ts`)
+- Verify Tailwind CSS v4 tree-shaking is working (no unused utilities in output CSS) — check final CSS size in analyze report
+- Review `vite.config.ts` `build.rollupOptions` for optimal chunk splitting:
+  - `vendor` chunk: react, react-dom, react-router-dom, zod
+  - `icons` chunk: lucide-react
+  - Let Vite handle the rest with default splitting
 
 **Files:**
-- `vite.config.ts` — add visualizer plugin (dev only)
+- `vite.config.ts` — add visualizer plugin (dev/build only) + rollupOptions chunk splitting
 - `scripts/check-icons.ts` — new
-- `package.json` — `analyze` and `check-icons` scripts
+- `package.json` — add `analyze` and `check-icons` scripts
 
 ---
 
@@ -269,20 +304,38 @@ The `ICON_MAP` in `src/types/shared/iconMap.ts` imports all icons used anywhere 
 
 The theme system already uses CSS variables. Extend it to support dark mode.
 
+**Current state:**
+- `ThemeSchema` and `ThemeColorsSchema` are **Zod schemas** in `src/types/config/theme.ts` — 19 color keys (background, foreground, card, cardForeground, popover, popoverForeground, primary, primaryForeground, secondary, secondaryForeground, muted, mutedForeground, accent, accentForeground, destructive, destructiveForeground, border, input, ring)
+- `themePlugin.ts` (`src/plugins/themePlugin.ts`) reads `data/config/theme.json` and injects `:root { --xxx: ... }` CSS vars + Google Fonts `<link>` tags into `index.html` via `transformIndexHtml()` hook
+- **Important:** `themePlugin.ts` uses its own **local** `Theme` interface (not the app-side Zod schema) because it runs under `tsconfig.node.json` — both must be updated in sync
+- `buildCss(theme)` function generates CSS string; `COLOR_KEY_MAP` maps camelCase keys → kebab-case CSS var names
+- `index.css` uses `@theme inline` for Tailwind v4 — references CSS vars like `--primary`, `--muted`, etc.
+- `theme.example.json` has `colors`, `radius`, `fonts`, `fontUrls` — no `darkColors`
+- Header components: `HeaderDesktopNav.tsx` and `HeaderMobileNav.tsx` — toggle button goes in desktop nav (visible slot), mirrored in mobile menu
+- No `useDarkMode` hook exists; no `.dark` class logic anywhere
+
 **Requirements:**
-- Add `data/config/theme.json` field: `darkColors: { ... }` — same shape as `colors` but with dark mode HSL values
-- Update `themePlugin.ts` to inject dark mode CSS vars under `@media (prefers-color-scheme: dark)` and `.dark` class selector
-- Add dark mode toggle button in Header (sun/moon icon, stores preference in localStorage)
-- Create `useDarkMode()` hook — reads preference from localStorage + system preference, toggles `.dark` class on `<html>`
-- Audit all sections for dark mode compatibility — at minimum: Header, Footer, Hero, Services (bg-muted), Contact form, Cookie banner, Legal pages
-- Update `data/_schema/theme.example.json` with `darkColors` field
+- Extend `ThemeColorsSchema` in `src/types/config/theme.ts` with optional `darkColors` field: `darkColors: ThemeColorsSchema.optional()` (same shape as `colors`)
+- Update local `Theme` interface in `themePlugin.ts` to add `darkColors?: Record<string, string>`
+- Update `buildCss()` in `themePlugin.ts` to generate an additional block:
+  ```css
+  @media (prefers-color-scheme: dark) { :root { ... } }
+  .dark { ... }
+  ```
+  using `theme.darkColors` (skip if absent)
+- Create `src/hooks/useDarkMode.ts` — reads preference from `localStorage('theme-mode')` + `matchMedia('(prefers-color-scheme: dark)')`; toggles `.dark` class on `<html>`; returns `{ isDark: boolean, toggle: () => void }`
+- Add dark mode toggle button (Sun/Moon icon from `lucide-react`) in `HeaderDesktopNav.tsx` (next to phone icon + social links) and `HeaderMobileNav.tsx` (in mobile menu footer)
+- Audit all sections for dark mode compatibility — at minimum: Header, Footer, Hero, Services (`bg-muted`), Contact form, Cookie banner, Legal pages, Portfolio cards
+- Update `data/_schema/theme.example.json` with `darkColors` field showing example dark HSL values
 
 **Files:**
-- `src/plugins/themePlugin.ts` — dark mode CSS var injection
+- `src/types/config/theme.ts` — extend `ThemeSchema` with optional `darkColors`
+- `src/plugins/themePlugin.ts` — dark mode CSS var injection (update both local `Theme` type and `buildCss()`)
 - `src/hooks/useDarkMode.ts` — new hook
-- `src/components/sections/header/HeaderDesktopNav.tsx` — toggle button
-- `data/_schema/theme.example.json` — update
-- Multiple components — dark mode class adjustments
+- `src/components/sections/header/HeaderDesktopNav.tsx` — add toggle button
+- `src/components/sections/header/HeaderMobileNav.tsx` — add toggle button
+- `data/_schema/theme.example.json` — add `darkColors` example
+- Multiple section components — dark mode class adjustments where needed
 
 ---
 
@@ -290,13 +343,13 @@ The theme system already uses CSS variables. Extend it to support dark mode.
 
 | # | Task | Priority | Effort | Dependencies |
 |---|------|----------|--------|--------------|
-| T1 | SEO: meta tags + canonical + JSON-LD | high | medium | — |✅ done |
-| T2 | Accessibility: contrast, motion, keyboard | high | medium | — |✅ done |
+| T1 | SEO: meta tags + canonical + JSON-LD | high | medium | — | ✅ done |
+| T2 | Accessibility: contrast, motion, keyboard | high | medium | — | ✅ done |
 | T3 | Image optimization: lazy + srcset | high | small | — | ✅ done |
 | T4 | Data validation: Zod schemas | medium | medium | — | ✅ done |
-| T5 | Design: section transitions + micro-interactions | medium | medium | T2 (reduced-motion) |✅ done |
+| T5 | Design: section transitions + micro-interactions | medium | medium | T2 (reduced-motion) | ✅ done |
 | T6 | Legal pages: migrate to JSON | medium | medium | — | ✅ done |
-| T7 | Analytics: Yandex Metrika + consent | medium | small | — |
-| T8 | DX: JSON Schema + new-client CLI | low | medium | T4 (Zod schemas) |
+| T7 | Analytics: Yandex Metrika + consent | medium | small | — (useCookieConsent + SiteDataSchema ready) |
+| T8 | DX: JSON Schema + new-client CLI | low | medium | T4 ✅ (Zod schemas exported) |
 | T9 | Performance: bundle analysis + icons | low | small | — |
-| T10 | Dark mode toggle | low | large | — |
+| T10 | Dark mode toggle | low | large | — (themePlugin + ThemeSchema ready) |
