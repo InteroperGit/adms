@@ -23,14 +23,14 @@ export function CarouselControls({ total, current, onPrev, onNext, onDot }: Prop
       <button
         onClick={onPrev}
         aria-label="Предыдущий слайд"
-        className={cn(arrowClass, 'left-4 md:left-6')}
+        className={cn(arrowClass, 'left-4 md:left-6', 'hidden sm:flex')}
       >
         <ChevronLeft size={20} />
       </button>
       <button
         onClick={onNext}
         aria-label="Следующий слайд"
-        className={cn(arrowClass, 'right-4 md:right-6')}
+        className={cn(arrowClass, 'right-4 md:right-6', 'hidden sm:flex')}
       >
         <ChevronRight size={20} />
       </button>
