@@ -29,14 +29,28 @@ export function HeaderMobileNav({ activeHref, isHome, highlightedActionIndex }: 
 
   return (
     <>
-      <button
-        className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted md:hidden"
-        onClick={() => setMenuOpen((prev) => !prev)}
-        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        aria-expanded={menuOpen}
-      >
-        {menuOpen ? <X size={20} /> : <Menu size={20} />}
-      </button>
+      <div className="flex items-center gap-1 md:hidden">
+        <a
+          href={`tel:${siteData.contact.phone}`}
+          aria-label="Позвонить"
+          className={cn(
+            'flex h-10 w-10 items-center justify-center rounded-lg',
+            'border border-green-700/30 bg-green-700/5 text-green-700',
+            'transition-colors hover:bg-green-700/15',
+            highlightedActionIndex === 0 && 'animate-pulse-green'
+          )}
+        >
+          {PhoneIcon && <PhoneIcon size={18} />}
+        </a>
+        <button
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
 
       {menuOpen && (
         <div className="fixed inset-x-0 top-16 z-40 border-b border-border bg-white md:hidden">
