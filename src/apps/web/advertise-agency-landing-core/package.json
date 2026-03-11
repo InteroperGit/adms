@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite-react-ssg build",
+    "build": "tsc -b tsconfig.app.json && vite-react-ssg build",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-    "validate": "vite-node scripts/validate.ts"
+    "validate": "vite-node scripts/validate.ts",
+    "typecheck": "tsc -b tsconfig.app.json --noEmit"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

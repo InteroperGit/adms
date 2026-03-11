@@ -426,7 +426,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 - After completing every task, always run in sequence:
   1. `pnpm format` — reformat all changed files
-  2. `pnpm tsc -b --noEmit` — typecheck, fix any errors before finishing (expected: "Cannot find module" errors for gitignored data JSON files — these are pre-existing and harmless; only check for errors in edited source files)
+  2. `pnpm typecheck` — typecheck, fix any errors before finishing (expected: "Cannot find module" errors for gitignored data JSON files — these are pre-existing and harmless; only check for errors in edited source files)
   3. `pnpm lint` — fix any new lint errors (`badge.tsx` / `button.tsx` are shadcn-generated — do not edit; their `react-refresh` rule is suppressed via ESLint override)
   4. Update `CLAUDE.md` — reflect any new/changed files, data modules, components, routes, or conventions
   5. Mark the completed task as **✅ done** in its plan file (`ai/tasks/NNN_*.md`) — update the task header or status table so the next session can see what is already implemented
