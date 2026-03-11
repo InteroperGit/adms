@@ -1,9 +1,14 @@
 import data from '@data/sections/services.json';
+import { z } from 'zod';
 
-export interface Service {
-  icon: string;
-  title: string;
-  description: string;
-}
+export const ServiceSchema = z.object({
+  icon: z.string(),
+  title: z.string(),
+  description: z.string(),
+});
 
-export const services = data satisfies Service[];
+export type Service = z.infer<typeof ServiceSchema>;
+
+export const ServicesSchema = z.array(ServiceSchema);
+
+export const services = ServicesSchema.parse(data);

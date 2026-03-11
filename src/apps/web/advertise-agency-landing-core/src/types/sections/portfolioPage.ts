@@ -1,9 +1,12 @@
 import raw from '@data/sections/portfolioPage.json';
+import { z } from 'zod';
 
-export interface PortfolioPageContent {
-  label: string;
-  title: string;
-  description: string;
-}
+export const PortfolioPageContentSchema = z.object({
+  label: z.string(),
+  title: z.string(),
+  description: z.string(),
+});
 
-export const portfolioPageContent = raw satisfies PortfolioPageContent;
+export type PortfolioPageContent = z.infer<typeof PortfolioPageContentSchema>;
+
+export const portfolioPageContent = PortfolioPageContentSchema.parse(raw);

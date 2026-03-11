@@ -1,26 +1,34 @@
 import data from '@data/config/site.json';
-import type { ImageOptimizationConfig } from './imageOptimization';
+import { z } from 'zod';
 
-export type { ImageOptimizationConfig };
+const ImageOptimizationSchema = z.object({
+  widths: z.array(z.number()),
+  quality: z.number(),
+  format: z.string(),
+});
 
-export interface SiteData {
-  name: string;
-  description: string;
-  yandexMapsOrgId?: string;
-  yandexMapUrl?: string;
-  imageOptimization?: ImageOptimizationConfig;
-  contact: {
-    phone: string;
-    email: string;
-    address: string;
-    telegram: string;
-    vk: string;
-    workingHours: {
-      weekdays: string;
-      saturday: string;
-      sunday: string;
-    };
-  };
-}
+export type ImageOptimizationConfig = z.infer<typeof ImageOptimizationSchema>;
 
-export const siteData = data satisfies SiteData;
+export const SiteDataSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  yandexMapsOrgId: z.string().optional(),
+  yandexMapUrl: z.string().optional(),
+  imageOptimization: ImageOptimizationSchema.optional(),
+  contact: z.object({
+    phone: z.string(),
+    email: z.string(),
+    address: z.string(),
+    telegram: z.string(),
+    vk: z.string(),
+    workingHours: z.object({
+      weekdays: z.string(),
+      saturday: z.string(),
+      sunday: z.string(),
+    }),
+  }),
+});
+
+export type SiteData = z.infer<typeof SiteDataSchema>;
+
+export const siteData = SiteDataSchema.parse(data);

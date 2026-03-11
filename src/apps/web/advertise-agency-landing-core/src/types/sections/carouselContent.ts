@@ -1,7 +1,10 @@
 import raw from '@data/sections/carouselContent.json';
+import { z } from 'zod';
 
-export interface CarouselSectionContent {
-  label: string;
-}
+export const CarouselSectionContentSchema = z.object({
+  label: z.string(),
+});
 
-export const carouselContent = raw satisfies CarouselSectionContent;
+export type CarouselSectionContent = z.infer<typeof CarouselSectionContentSchema>;
+
+export const carouselContent = CarouselSectionContentSchema.parse(raw);

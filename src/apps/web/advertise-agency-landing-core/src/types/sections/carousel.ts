@@ -1,12 +1,17 @@
 import data from '@data/sections/carousel.json';
+import { z } from 'zod';
 
-export interface CarouselSlide {
-  id: number;
-  image: string;
-  alt: string;
-  gradient: string;
-  title: string;
-  subtitle: string;
-}
+export const CarouselSlideSchema = z.object({
+  id: z.number(),
+  image: z.string(),
+  alt: z.string(),
+  gradient: z.string(),
+  title: z.string(),
+  subtitle: z.string(),
+});
 
-export const carouselSlides = data satisfies CarouselSlide[];
+export type CarouselSlide = z.infer<typeof CarouselSlideSchema>;
+
+export const CarouselSlidesSchema = z.array(CarouselSlideSchema);
+
+export const carouselSlides = CarouselSlidesSchema.parse(data);

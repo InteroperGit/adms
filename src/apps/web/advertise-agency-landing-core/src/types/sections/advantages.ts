@@ -1,9 +1,14 @@
 import data from '@data/sections/advantages.json';
+import { z } from 'zod';
 
-export interface Advantage {
-  icon: string;
-  title: string;
-  description: string;
-}
+export const AdvantageSchema = z.object({
+  icon: z.string(),
+  title: z.string(),
+  description: z.string(),
+});
 
-export const advantages = data satisfies Advantage[];
+export type Advantage = z.infer<typeof AdvantageSchema>;
+
+export const AdvantagesSchema = z.array(AdvantageSchema);
+
+export const advantages = AdvantagesSchema.parse(data);

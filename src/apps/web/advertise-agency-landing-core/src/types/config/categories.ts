@@ -1,8 +1,13 @@
 import raw from '@data/config/categories.json';
+import { z } from 'zod';
 
-export interface Category {
-  name: string; // display name, matches PortfolioCase.category
-  slug: string; // URL segment, e.g. "branding"
-}
+export const CategorySchema = z.object({
+  name: z.string(), // display name, matches PortfolioCase.category
+  slug: z.string(), // URL segment, e.g. "branding"
+});
 
-export const categories = raw satisfies Category[];
+export type Category = z.infer<typeof CategorySchema>;
+
+export const CategoriesSchema = z.array(CategorySchema);
+
+export const categories = CategoriesSchema.parse(raw);

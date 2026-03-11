@@ -1,10 +1,13 @@
 import raw from '@data/sections/advantagesContent.json';
+import { z } from 'zod';
 
-export interface AdvantagesSectionContent {
-  label: string;
-  title: string;
-  titleHighlight: string;
-  description: string;
-}
+export const AdvantagesSectionContentSchema = z.object({
+  label: z.string(),
+  title: z.string(),
+  titleHighlight: z.string(),
+  description: z.string(),
+});
 
-export const advantagesContent = raw satisfies AdvantagesSectionContent;
+export type AdvantagesSectionContent = z.infer<typeof AdvantagesSectionContentSchema>;
+
+export const advantagesContent = AdvantagesSectionContentSchema.parse(raw);

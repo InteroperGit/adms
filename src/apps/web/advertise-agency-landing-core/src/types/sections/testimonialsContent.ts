@@ -1,9 +1,12 @@
 import raw from '@data/sections/testimonialsContent.json';
+import { z } from 'zod';
 
-export interface TestimonialsSectionContent {
-  label: string;
-  title: string;
-  description: string;
-}
+export const TestimonialsSectionContentSchema = z.object({
+  label: z.string(),
+  title: z.string(),
+  description: z.string(),
+});
 
-export const testimonialsSectionContent = raw satisfies TestimonialsSectionContent;
+export type TestimonialsSectionContent = z.infer<typeof TestimonialsSectionContentSchema>;
+
+export const testimonialsSectionContent = TestimonialsSectionContentSchema.parse(raw);

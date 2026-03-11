@@ -1,18 +1,21 @@
 import raw from '@data/config/portfolio.json';
+import { z } from 'zod';
 
-interface CtaLink {
-  label: string;
-  href: string;
-}
+const CtaLinkSchema = z.object({
+  label: z.string(),
+  href: z.string(),
+});
 
-export interface PortfolioConfig {
-  perPage: number;
-  allLabel: string;
-  prevLabel: string;
-  nextLabel: string;
-  pageLabel: string; // template: "{current}" and "{total}" replaced at runtime
-  emptyLabel: string;
-  cta: CtaLink;
-}
+export const PortfolioConfigSchema = z.object({
+  perPage: z.number(),
+  allLabel: z.string(),
+  prevLabel: z.string(),
+  nextLabel: z.string(),
+  pageLabel: z.string(), // template: "{current}" and "{total}" replaced at runtime
+  emptyLabel: z.string(),
+  cta: CtaLinkSchema,
+});
 
-export const portfolioConfig = raw satisfies PortfolioConfig;
+export type PortfolioConfig = z.infer<typeof PortfolioConfigSchema>;
+
+export const portfolioConfig = PortfolioConfigSchema.parse(raw);

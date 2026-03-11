@@ -1,6 +1,6 @@
 # 008 — Site Improvements PRD
 
-## Status: T1 ✅ done · T2 ✅ done · T3a ✅ done · T3b ✅ done · T3c ✅ done (2026-03-11) | rest not started
+## Status: T1 ✅ done · T2 ✅ done · T3 ✅ done · T4 ✅ done (all satisfies → Zod, validate.ts covers all 26 files, 2026-03-11) | rest not started
 
 ## Goal
 
@@ -138,7 +138,7 @@ Also add `width` and `height` attributes to all `<img>` / `<OptimizedImage>` whe
 
 ---
 
-### T4 · Data validation: Zod schemas at build time
+### T4 · Data validation: Zod schemas at build time ✅ done
 
 **Priority:** medium · **Scope:** types + build
 
@@ -146,7 +146,6 @@ Currently JSON data is validated only by `satisfies` at compile time — this ca
 
 **Requirements:**
 - Add `zod` as a dev dependency
-- Create `src/lib/schema/` folder with Zod schemas for the 7 most critical data files: `site.json`, `theme.json`, `categories.json`, `portfolio.json`, `orderForms.json`, `header.json`, `hero.json`
 - Each type module (`src/types/config/*.ts`, `src/types/sections/*.ts`) calls `schema.parse(raw)` at import time — throws a clear error message if JSON is invalid (shows which field is wrong)
 - Add a `pnpm validate` script that imports all type modules and catches any parse errors (useful as pre-build check)
 - Portfolio case files: validate each case in `portfolioCases.ts` glob loop with a `PortfolioCaseSchema`
@@ -294,7 +293,7 @@ The theme system already uses CSS variables. Extend it to support dark mode.
 | T1 | SEO: meta tags + canonical + JSON-LD | high | medium | — |
 | T2 | Accessibility: contrast, motion, keyboard | high | medium | — |
 | T3 | Image optimization: lazy + srcset | high | small | — | ✅ done |
-| T4 | Data validation: Zod schemas | medium | medium | — |
+| T4 | Data validation: Zod schemas | medium | medium | — | ✅ done |
 | T5 | Design: section transitions + micro-interactions | medium | medium | T2 (reduced-motion) |
 | T6 | Legal pages: migrate to JSON | medium | medium | — |
 | T7 | Analytics: Yandex Metrika + consent | medium | small | — |

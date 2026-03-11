@@ -1,15 +1,20 @@
 import raw from '@data/sections/header.json';
+import { z } from 'zod';
 
-export interface CtaLink {
-  label: string;
-  href: string;
-}
+const CtaLinkSchema = z.object({
+  label: z.string(),
+  href: z.string(),
+});
 
-export interface HeaderContent {
-  lang: string;
-  logo: { letter: string; text: string };
-  nav: CtaLink[];
-  navCta: string;
-}
+export type CtaLink = z.infer<typeof CtaLinkSchema>;
 
-export const headerContent = raw satisfies HeaderContent;
+export const HeaderContentSchema = z.object({
+  lang: z.string(),
+  logo: z.object({ letter: z.string(), text: z.string() }),
+  nav: z.array(CtaLinkSchema),
+  navCta: z.string(),
+});
+
+export type HeaderContent = z.infer<typeof HeaderContentSchema>;
+
+export const headerContent = HeaderContentSchema.parse(raw);

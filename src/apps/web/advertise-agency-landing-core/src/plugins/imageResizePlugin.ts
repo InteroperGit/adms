@@ -2,10 +2,14 @@ import { createHash } from 'crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import type { Plugin, ResolvedConfig } from 'vite';
-import type { ImageOptimizationConfig } from '../types/config/imageOptimization';
-
 // Re-export pure helper so vite.config consumers can use it without importing lib/
 export { resolveImageSrcSet } from '../lib/imageSrcSet';
+
+interface ImageOptimizationConfig {
+  widths: number[];
+  quality: number;
+  format: string;
+}
 
 // Maps relative input path → SHA-256 hash of source file content
 type CacheManifest = Record<string, string>;

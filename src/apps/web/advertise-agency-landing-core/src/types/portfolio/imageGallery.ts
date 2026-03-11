@@ -1,9 +1,12 @@
 import raw from '@data/sections/imageGallery.json';
+import { z } from 'zod';
 
-export interface ImageGalleryContent {
-  prevLabel: string;
-  nextLabel: string;
-  counter: string;
-}
+export const ImageGalleryContentSchema = z.object({
+  prevLabel: z.string(),
+  nextLabel: z.string(),
+  counter: z.string(),
+});
 
-export const imageGalleryContent = raw satisfies ImageGalleryContent;
+export type ImageGalleryContent = z.infer<typeof ImageGalleryContentSchema>;
+
+export const imageGalleryContent = ImageGalleryContentSchema.parse(raw);

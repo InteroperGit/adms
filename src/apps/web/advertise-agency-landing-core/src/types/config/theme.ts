@@ -1,35 +1,40 @@
 import data from '@data/config/theme.json';
+import { z } from 'zod';
 
-export interface ThemeColors {
-  background: string;
-  foreground: string;
-  card: string;
-  cardForeground: string;
-  popover: string;
-  popoverForeground: string;
-  primary: string;
-  primaryForeground: string;
-  secondary: string;
-  secondaryForeground: string;
-  muted: string;
-  mutedForeground: string;
-  accent: string;
-  accentForeground: string;
-  destructive: string;
-  destructiveForeground: string;
-  border: string;
-  input: string;
-  ring: string;
-}
+const ThemeColorsSchema = z.object({
+  background: z.string(),
+  foreground: z.string(),
+  card: z.string(),
+  cardForeground: z.string(),
+  popover: z.string(),
+  popoverForeground: z.string(),
+  primary: z.string(),
+  primaryForeground: z.string(),
+  secondary: z.string(),
+  secondaryForeground: z.string(),
+  muted: z.string(),
+  mutedForeground: z.string(),
+  accent: z.string(),
+  accentForeground: z.string(),
+  destructive: z.string(),
+  destructiveForeground: z.string(),
+  border: z.string(),
+  input: z.string(),
+  ring: z.string(),
+});
 
-export interface Theme {
-  colors: ThemeColors;
-  radius: string;
-  fonts: {
-    heading: string;
-    body: string;
-  };
-  fontUrls: string[];
-}
+export type ThemeColors = z.infer<typeof ThemeColorsSchema>;
 
-export const theme = data satisfies Theme;
+export const ThemeSchema = z.object({
+  colors: ThemeColorsSchema,
+  radius: z.string(),
+  fonts: z.object({
+    heading: z.string(),
+    body: z.string(),
+  }),
+  fontUrls: z.array(z.string()),
+});
+
+export type Theme = z.infer<typeof ThemeSchema>;
+
+export const theme = ThemeSchema.parse(data);

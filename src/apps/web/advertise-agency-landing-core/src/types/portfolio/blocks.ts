@@ -1,123 +1,191 @@
-import type { GalleryImage } from './index';
+import { z } from 'zod';
 
-export interface BlockColor {
-  type: 'solid' | 'gradient' | 'primary' | 'accent';
-  /** Tailwind gradient stops for type 'gradient' (e.g. "from-amber-400 to-orange-500").
-   *  Falls back to the case's hero.gradient when omitted. */
-  value?: string;
-}
+// ── GalleryImage (moved here from index.ts to avoid circular dependency) ──────
 
-export interface HeadingBlock {
-  __component: 'heading';
-  level: 2 | 3 | 4;
-  text: string;
-}
+export const GalleryImageSchema = z.object({
+  src: z.string(),
+  description: z.string().optional(),
+});
 
-export interface ParagraphBlock {
-  __component: 'paragraph';
-  text: string;
-  align?: 'left' | 'center';
-}
+export type GalleryImage = z.infer<typeof GalleryImageSchema>;
 
-export interface ImageBlock {
-  __component: 'image';
-  src: string;
-  alt: string;
-  caption?: string;
-  size?: 'small' | 'medium' | 'full';
-}
+// ── BlockColor ─────────────────────────────────────────────────────────────────
 
-export interface GalleryBlock {
-  __component: 'gallery';
-  images: GalleryImage[];
-}
+const BlockColorSchema = z.object({
+  type: z.enum(['solid', 'gradient', 'primary', 'accent']),
+  /** Tailwind gradient stops for type 'gradient'; falls back to hero.gradient when omitted. */
+  value: z.string().optional(),
+});
 
-export interface BlockquoteRefBlock {
-  __component: 'blockquote';
-  testimonialId: number;
-}
+export type BlockColor = z.infer<typeof BlockColorSchema>;
 
-export interface BlockquoteInlineBlock {
-  __component: 'blockquote';
-  text: string;
-  author: string;
-  role?: string;
-  company?: string;
-}
+// ── Individual block schemas ───────────────────────────────────────────────────
 
-export type BlockquoteBlock = BlockquoteRefBlock | BlockquoteInlineBlock;
+const HeadingBlockSchema = z.object({
+  __component: z.literal('heading'),
+  level: z.union([z.literal(2), z.literal(3), z.literal(4)]),
+  text: z.string(),
+});
 
-export interface MetricsBlock {
-  __component: 'metrics';
-  title?: string;
-  items: { metric: string; label: string; description: string }[];
-  color?: BlockColor;
-}
+export type HeadingBlock = z.infer<typeof HeadingBlockSchema>;
 
-export interface CardsBlock {
-  __component: 'cards';
-  title?: string;
-  columns?: 2 | 3 | 4;
-  items: { title: string; description: string }[];
-  color?: BlockColor;
-}
+const ParagraphBlockSchema = z.object({
+  __component: z.literal('paragraph'),
+  text: z.string(),
+  align: z.enum(['left', 'center']).optional(),
+});
 
-export interface TableBlock {
-  __component: 'table';
-  title?: string;
-  caption?: string;
-  head: string[];
-  rows: string[][];
-  highlight?: number[];
-  total?: string[];
-}
+export type ParagraphBlock = z.infer<typeof ParagraphBlockSchema>;
 
-export interface ChartBlock {
-  __component: 'chart';
-  type: 'bar' | 'horizontal-bar' | 'progress' | 'line' | 'pie';
-  title?: string;
-  items: { label: string; value: number; suffix?: string }[];
-  color?: BlockColor;
-}
+const ImageBlockSchema = z.object({
+  __component: z.literal('image'),
+  src: z.string(),
+  alt: z.string(),
+  caption: z.string().optional(),
+  size: z.enum(['small', 'medium', 'full']).optional(),
+});
 
-export interface DividerBlock {
-  __component: 'divider';
-  style?: 'line' | 'dots' | 'space';
-}
+export type ImageBlock = z.infer<typeof ImageBlockSchema>;
 
-export interface CalloutBlock {
-  __component: 'callout';
-  type: 'info' | 'success' | 'warning' | 'note';
-  title?: string;
-  text: string;
-}
+const GalleryBlockSchema = z.object({
+  __component: z.literal('gallery'),
+  images: z.array(GalleryImageSchema),
+});
 
-export interface ListBlock {
-  __component: 'list';
-  style: 'ordered' | 'unordered' | 'checklist';
-  items: string[];
-}
+export type GalleryBlock = z.infer<typeof GalleryBlockSchema>;
 
-export interface VideoBlock {
-  __component: 'video';
-  url: string;
-  caption?: string;
-  aspectRatio?: string;
-}
+const BlockquoteRefSchema = z.object({
+  __component: z.literal('blockquote'),
+  testimonialId: z.number(),
+});
 
-export interface CodeBlock {
-  __component: 'code';
-  language?: string;
-  code: string;
-  caption?: string;
-}
+export type BlockquoteRefBlock = z.infer<typeof BlockquoteRefSchema>;
 
-export interface OrderFormBlock {
-  __component: 'order-form';
-  formId: string;
-  title?: string;
-  color?: BlockColor;
-}
+const BlockquoteInlineSchema = z.object({
+  __component: z.literal('blockquote'),
+  text: z.string(),
+  author: z.string(),
+  role: z.string().optional(),
+  company: z.string().optional(),
+});
+
+export type BlockquoteInlineBlock = z.infer<typeof BlockquoteInlineSchema>;
+
+const BlockquoteBlockSchema = z.union([BlockquoteRefSchema, BlockquoteInlineSchema]);
+
+export type BlockquoteBlock = z.infer<typeof BlockquoteBlockSchema>;
+
+const MetricsBlockSchema = z.object({
+  __component: z.literal('metrics'),
+  title: z.string().optional(),
+  items: z.array(z.object({ metric: z.string(), label: z.string(), description: z.string() })),
+  color: BlockColorSchema.optional(),
+});
+
+export type MetricsBlock = z.infer<typeof MetricsBlockSchema>;
+
+const CardsBlockSchema = z.object({
+  __component: z.literal('cards'),
+  title: z.string().optional(),
+  columns: z.union([z.literal(2), z.literal(3), z.literal(4)]).optional(),
+  items: z.array(z.object({ title: z.string(), description: z.string() })),
+  color: BlockColorSchema.optional(),
+});
+
+export type CardsBlock = z.infer<typeof CardsBlockSchema>;
+
+const TableBlockSchema = z.object({
+  __component: z.literal('table'),
+  title: z.string().optional(),
+  caption: z.string().optional(),
+  head: z.array(z.string()),
+  rows: z.array(z.array(z.string())),
+  highlight: z.array(z.number()).optional(),
+  total: z.array(z.string()).optional(),
+});
+
+export type TableBlock = z.infer<typeof TableBlockSchema>;
+
+const ChartBlockSchema = z.object({
+  __component: z.literal('chart'),
+  type: z.enum(['bar', 'horizontal-bar', 'progress', 'line', 'pie']),
+  title: z.string().optional(),
+  items: z.array(z.object({ label: z.string(), value: z.number(), suffix: z.string().optional() })),
+  color: BlockColorSchema.optional(),
+});
+
+export type ChartBlock = z.infer<typeof ChartBlockSchema>;
+
+const DividerBlockSchema = z.object({
+  __component: z.literal('divider'),
+  style: z.enum(['line', 'dots', 'space']).optional(),
+});
+
+export type DividerBlock = z.infer<typeof DividerBlockSchema>;
+
+const CalloutBlockSchema = z.object({
+  __component: z.literal('callout'),
+  type: z.enum(['info', 'success', 'warning', 'note']),
+  title: z.string().optional(),
+  text: z.string(),
+});
+
+export type CalloutBlock = z.infer<typeof CalloutBlockSchema>;
+
+const ListBlockSchema = z.object({
+  __component: z.literal('list'),
+  style: z.enum(['ordered', 'unordered', 'checklist']),
+  items: z.array(z.string()),
+});
+
+export type ListBlock = z.infer<typeof ListBlockSchema>;
+
+const VideoBlockSchema = z.object({
+  __component: z.literal('video'),
+  url: z.string(),
+  caption: z.string().optional(),
+  aspectRatio: z.string().optional(),
+});
+
+export type VideoBlock = z.infer<typeof VideoBlockSchema>;
+
+const CodeBlockSchema = z.object({
+  __component: z.literal('code'),
+  language: z.string().optional(),
+  code: z.string(),
+  caption: z.string().optional(),
+});
+
+export type CodeBlock = z.infer<typeof CodeBlockSchema>;
+
+const OrderFormBlockSchema = z.object({
+  __component: z.literal('order-form'),
+  formId: z.string(),
+  title: z.string().optional(),
+  color: BlockColorSchema.optional(),
+});
+
+export type OrderFormBlock = z.infer<typeof OrderFormBlockSchema>;
+
+// ── ContentBlock discriminated union ──────────────────────────────────────────
+
+export const ContentBlockSchema = z.union([
+  HeadingBlockSchema,
+  ParagraphBlockSchema,
+  ImageBlockSchema,
+  GalleryBlockSchema,
+  BlockquoteBlockSchema,
+  MetricsBlockSchema,
+  CardsBlockSchema,
+  TableBlockSchema,
+  ChartBlockSchema,
+  DividerBlockSchema,
+  CalloutBlockSchema,
+  ListBlockSchema,
+  VideoBlockSchema,
+  CodeBlockSchema,
+  OrderFormBlockSchema,
+]);
 
 export type ContentBlock =
   | HeadingBlock

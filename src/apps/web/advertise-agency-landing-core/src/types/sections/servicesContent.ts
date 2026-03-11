@@ -1,9 +1,12 @@
 import raw from '@data/sections/servicesContent.json';
+import { z } from 'zod';
 
-export interface ServicesSectionContent {
-  label: string;
-  title: string;
-  description: string;
-}
+export const ServicesSectionContentSchema = z.object({
+  label: z.string(),
+  title: z.string(),
+  description: z.string(),
+});
 
-export const servicesSectionContent = raw satisfies ServicesSectionContent;
+export type ServicesSectionContent = z.infer<typeof ServicesSectionContentSchema>;
+
+export const servicesSectionContent = ServicesSectionContentSchema.parse(raw);

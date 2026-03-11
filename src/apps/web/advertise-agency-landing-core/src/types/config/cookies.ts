@@ -1,18 +1,21 @@
 import raw from '@data/config/cookies.json';
+import { z } from 'zod';
 
-export interface CtaLink {
-  label: string;
-  href: string;
-}
+const CtaLinkSchema = z.object({
+  label: z.string(),
+  href: z.string(),
+});
 
-export interface CookiesContent {
-  ariaLabel: string;
-  closeLabel: string;
-  title: string;
-  text: string;
-  privacyLink: CtaLink;
-  acceptAll: string;
-  necessaryOnly: string;
-}
+export const CookiesContentSchema = z.object({
+  ariaLabel: z.string(),
+  closeLabel: z.string(),
+  title: z.string(),
+  text: z.string(),
+  privacyLink: CtaLinkSchema,
+  acceptAll: z.string(),
+  necessaryOnly: z.string(),
+});
 
-export const cookiesContent = raw satisfies CookiesContent;
+export type CookiesContent = z.infer<typeof CookiesContentSchema>;
+
+export const cookiesContent = CookiesContentSchema.parse(raw);

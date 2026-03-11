@@ -1,15 +1,23 @@
 import raw from '@data/sections/portfolioCase.json';
+import { z } from 'zod';
 
-export interface PortfolioCaseContent {
-  backLabel: string;
-  overviewLabels: { client: string; category: string; year: string; services: string };
-  challengeTitle: string;
-  solutionTitle: string;
-  resultsTitle: string;
-  galleryTitle: string;
-  photoAlt: string;
-  cta: { title: string; subtitle: string; label: string };
-  notFound: { title: string; back: string };
-}
+export const PortfolioCaseContentSchema = z.object({
+  backLabel: z.string(),
+  overviewLabels: z.object({
+    client: z.string(),
+    category: z.string(),
+    year: z.string(),
+    services: z.string(),
+  }),
+  challengeTitle: z.string(),
+  solutionTitle: z.string(),
+  resultsTitle: z.string(),
+  galleryTitle: z.string(),
+  photoAlt: z.string(),
+  cta: z.object({ title: z.string(), subtitle: z.string(), label: z.string() }),
+  notFound: z.object({ title: z.string(), back: z.string() }),
+});
 
-export const portfolioCaseContent = raw satisfies PortfolioCaseContent;
+export type PortfolioCaseContent = z.infer<typeof PortfolioCaseContentSchema>;
+
+export const portfolioCaseContent = PortfolioCaseContentSchema.parse(raw);

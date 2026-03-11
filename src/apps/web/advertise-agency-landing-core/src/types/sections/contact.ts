@@ -1,30 +1,35 @@
 import raw from '@data/sections/contact.json';
+import { z } from 'zod';
 
-export interface CtaLink {
-  label: string;
-  href: string;
-}
+const CtaLinkSchema = z.object({
+  label: z.string(),
+  href: z.string(),
+});
 
-export interface ContactContent {
-  label: string;
-  title: string;
-  description: string;
-  form: {
-    name: { label: string; placeholder: string };
-    contact: { label: string; placeholder: string };
-    message: { label: string; placeholder: string };
-    consent: string;
-    consentLinks: CtaLink[];
-    consentJoiner: string;
-    submit: string;
-    disclaimer: string;
-    success: { title: string; text: string; reset: string };
-  };
-  directTitle: string;
-  contactLabels: { phone: string; email: string; address: string };
-  socialTitle: string;
-  hoursTitle: string;
-  dayLabels: { weekdays: string; saturday: string; sunday: string };
-}
+export type CtaLink = z.infer<typeof CtaLinkSchema>;
 
-export const contactContent = raw satisfies ContactContent;
+export const ContactContentSchema = z.object({
+  label: z.string(),
+  title: z.string(),
+  description: z.string(),
+  form: z.object({
+    name: z.object({ label: z.string(), placeholder: z.string() }),
+    contact: z.object({ label: z.string(), placeholder: z.string() }),
+    message: z.object({ label: z.string(), placeholder: z.string() }),
+    consent: z.string(),
+    consentLinks: z.array(CtaLinkSchema),
+    consentJoiner: z.string(),
+    submit: z.string(),
+    disclaimer: z.string(),
+    success: z.object({ title: z.string(), text: z.string(), reset: z.string() }),
+  }),
+  directTitle: z.string(),
+  contactLabels: z.object({ phone: z.string(), email: z.string(), address: z.string() }),
+  socialTitle: z.string(),
+  hoursTitle: z.string(),
+  dayLabels: z.object({ weekdays: z.string(), saturday: z.string(), sunday: z.string() }),
+});
+
+export type ContactContent = z.infer<typeof ContactContentSchema>;
+
+export const contactContent = ContactContentSchema.parse(raw);

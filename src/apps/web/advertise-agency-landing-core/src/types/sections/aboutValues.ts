@@ -1,8 +1,13 @@
 import data from '@data/sections/aboutValues.json';
+import { z } from 'zod';
 
-export interface AboutValue {
-  title: string;
-  description: string;
-}
+export const AboutValueSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+});
 
-export const aboutValues = data satisfies AboutValue[];
+export type AboutValue = z.infer<typeof AboutValueSchema>;
+
+export const AboutValuesSchema = z.array(AboutValueSchema);
+
+export const aboutValues = AboutValuesSchema.parse(data);
