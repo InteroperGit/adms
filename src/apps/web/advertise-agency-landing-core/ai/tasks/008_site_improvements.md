@@ -1,6 +1,6 @@
 # 008 — Site Improvements PRD
 
-## Status: T1 ✅ done · T2 ✅ done (2026-03-11) | rest not started
+## Status: T1 ✅ done · T2 ✅ done · T3a ✅ done · T3b ✅ done · T3c ✅ done (2026-03-11) | rest not started
 
 ## Goal
 
@@ -57,27 +57,84 @@ Several WCAG violations exist today. Fix them.
 
 ---
 
-### T3 · Image optimization: lazy loading + srcset hints
+### T3 · Image optimization: responsive resizing + lazy loading + srcset ✅ done
 
-**Priority:** high · **Scope:** components
+**Priority:** high · **Scope:** build pipeline + components
 
-Portfolio images and carousel slides load eagerly. Add native lazy loading and responsive hints.
+Portfolio images and carousel slides load full-size regardless of viewport. Add a Vite build-time image processing step that generates multiple sized variants and uses them via `srcset`/`sizes` — mirroring Next.js `<Image>` behaviour but fully static.
 
-**Requirements:**
-- All `<img>` tags below the fold → add `loading="lazy"` and `decoding="async"`
-- Carousel first slide: `loading="eager"`, `fetchpriority="high"`; remaining slides: `loading="lazy"`
-- `PortfolioThumbnail.tsx` images → `loading="lazy"`
-- `ImageGalleryPreview.tsx` main image → `loading="lazy"` (lightbox images already off-screen)
-- `ImageBlock.tsx` → `loading="lazy"` for all case study images
-- Add `width` and `height` attributes where image dimensions are known (from data) to prevent CLS
-- Optional: add `data/config/site.json` field `imageBaseUrl` for CDN prefix; update image paths to prepend it
+#### 3a · Build-time image resizing (Vite plugin) ✅ done
+
+Create `src/plugins/imageResizePlugin.ts` — a Vite plugin that runs during SSG build:
+
+- Uses **`sharp`** (dev dependency) to process every image under `public/images/`
+- Generates WebP variants at breakpoints: **320 w, 640 w, 960 w, 1280 w, 1920 w**
+- Outputs to `public/images/_optimized/<original-name>-<w>w.webp` (preserves originals as fallback)
+- Skips already-generated files (content hash check) to keep rebuilds fast
+- Exports a helper `resolveImageSrcSet(src: string): string` that returns the `srcset` string for a given original path
+
+**Configuration** — add to `data/config/site.json`:
+```json
+"imageOptimization": {
+  "widths": [320, 640, 960, 1280, 1920],
+  "quality": 82,
+  "format": "webp"
+}
+```
+
+#### 3b · Shared `<OptimizedImage>` component ✅ done
+
+Create `src/components/ui/OptimizedImage.tsx` — drop-in `<img>` replacement:
+
+```ts
+interface OptimizedImageProps {
+  src: string;           // original path (e.g. /images/hero.jpg)
+  alt: string;
+  sizes?: string;        // responsive sizes string, default '100vw'
+  priority?: boolean;    // true → eager + fetchpriority="high", false → lazy (default)
+  width?: number;
+  height?: number;
+  className?: string;
+}
+```
+
+- Renders `<picture>` with `<source type="image/webp" srcset="..." sizes="...">` + `<img>` fallback (original src)
+- `priority={true}` → `loading="eager" fetchpriority="high"`; default → `loading="lazy" decoding="async"`
+- Falls back gracefully: if `_optimized` variants don't exist (dev mode), renders plain `<img src>`
+- Provides sensible default `sizes`:
+  - `PortfolioThumbnail` → `"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"`
+  - `CaseHero` / `CarouselSlide` → `"100vw"`
+  - `ImageGalleryPreview` → `"(max-width: 768px) 100vw, 800px"`
+  - `ImageBlock` size prop maps: small → `"(max-width: 768px) 100vw, 448px"`, medium → `"(max-width: 768px) 100vw, 672px"`, full → `"100vw"`
+
+#### 3c · Component updates ✅ done
+
+Replace bare `<img>` tags with `<OptimizedImage>` in:
+
+| Component | `priority` | `sizes` |
+|---|---|---|
+| `CarouselSlide.tsx` | `true` for index 0, `false` for rest | `"100vw"` |
+| `CaseHero.tsx` | `true` | `"100vw"` |
+| `PortfolioThumbnail.tsx` | `false` | `"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"` |
+| `ImageGalleryPreview.tsx` | `false` | `"(max-width: 768px) 100vw, 800px"` |
+| `ImageGalleryLightbox.tsx` | `false` | `"100vw"` |
+| `ImageGalleryThumbnails.tsx` | `false` | `"80px"` |
+| `ImageBlock.tsx` | `false` | derived from `block.size` prop |
+
+Also add `width` and `height` attributes to all `<img>` / `<OptimizedImage>` where dimensions are known from data, to prevent CLS.
 
 **Files:**
+- `src/plugins/imageResizePlugin.ts` — new Vite plugin (uses `sharp`)
+- `src/components/ui/OptimizedImage.tsx` — new shared component
 - `src/components/sections/carousel/CarouselSlide.tsx`
 - `src/components/ui/PortfolioThumbnail.tsx`
 - `src/components/ui/imageGallery/ImageGalleryPreview.tsx`
+- `src/components/ui/imageGallery/ImageGalleryLightbox.tsx`
+- `src/components/ui/imageGallery/ImageGalleryThumbnails.tsx`
 - `src/components/portfolio/blocks/ImageBlock.tsx`
 - `src/components/portfolio/CaseHero.tsx`
+- `vite.config.ts` — register `imageResizePlugin`
+- `data/config/site.json` — add `imageOptimization` config block
 
 ---
 
@@ -236,7 +293,7 @@ The theme system already uses CSS variables. Extend it to support dark mode.
 |---|------|----------|--------|--------------|
 | T1 | SEO: meta tags + canonical + JSON-LD | high | medium | — |
 | T2 | Accessibility: contrast, motion, keyboard | high | medium | — |
-| T3 | Image optimization: lazy + srcset | high | small | — |
+| T3 | Image optimization: lazy + srcset | high | small | — | ✅ done |
 | T4 | Data validation: Zod schemas | medium | medium | — |
 | T5 | Design: section transitions + micro-interactions | medium | medium | T2 (reduced-motion) |
 | T6 | Legal pages: migrate to JSON | medium | medium | — |

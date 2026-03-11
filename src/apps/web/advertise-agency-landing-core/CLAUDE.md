@@ -113,7 +113,7 @@ advertise-agency-landing-core/
 │   │   ├── sections/
 │   │   │   ├── carousel/
 │   │   │   │   ├── index.tsx          # Thin orchestrator: state + timer + CarouselSlide + CarouselControls; imported as '@/components/sections/carousel'
-│   │   │   │   ├── CarouselSlide.tsx  # Single slide renderer (gradient or image bg + label/title/subtitle); props: slide, isActive
+│   │   │   │   ├── CarouselSlide.tsx  # Single slide renderer (gradient or image bg + label/title/subtitle); props: slide, isActive, index; uses OptimizedImage (priority=true for index 0)
 │   │   │   │   └── CarouselControls.tsx # Prev/next arrows + dot indicators + slide counter; props: total, current, onPrev, onNext, onDot
 │   │   │   ├── header/
 │   │   │   │   ├── index.tsx          # In-flow header, solid white bg, border-b, logo; imported as '@/components/sections/header'
@@ -174,6 +174,7 @@ advertise-agency-landing-core/
 │   │       │   ├── OrderFormSuccess.tsx       # Icon + title + text + reset button (mirrors ContactSuccess)
 │   │       │   └── OrderFormProductTabs.tsx   # Horizontal scrollable tab bar for product type selection
 │   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
+│   │       ├── OptimizedImage.tsx     # Drop-in <img> replacement: <picture>+<source type="image/webp" srcset> in production; plain <img> fallback in dev (import.meta.env.DEV); props: src, alt, sizes?, priority?, width?, height?, className?; priority=true → loading="eager" fetchPriority="high"
 │   │       ├── BreadCrumbs.tsx        # Pill-style breadcrumb nav bar (border-b, bg-white); props: items[]{label, href?}; last/no-href item shown as primary-tinted pill; used on PortfolioCasePage
 │   │       ├── LegalPageLayout.tsx    # Shared layout for legal pages: BackButton + h1 + version footer + children; props: title, version, effectiveDate, children
 │   │       ├── LegalSection.tsx       # Legal content section block: h2 + children div; props: id?, title, children
@@ -199,8 +200,10 @@ advertise-agency-landing-core/
 │   ├── lib/
 │   │   ├── utils.ts            # cn() helper (clsx + tailwind-merge)
 │   │   └── categorySlug.ts     # categorySlug(name) — looks up category name in categories const, returns slug; falls back to 'all'
+│   │   └── imageSrcSet.ts      # resolveImageSrcSet(src, widths?) — pure helper: returns srcset string for /images/ paths; importable by components and plugins
 │   ├── plugins/
-│   │   └── themePlugin.ts     # Vite plugin: reads data/config/theme.json, injects CSS vars + Google Fonts into index.html
+│   │   ├── themePlugin.ts     # Vite plugin: reads data/config/theme.json, injects CSS vars + Google Fonts into index.html
+│   │   └── imageResizePlugin.ts # Vite plugin (build-only): sharp-based WebP resizer; reads public/images/**; outputs _optimized/<name>-<w>w.webp per breakpoint; skips unchanged files via SHA-256 manifest; re-exports resolveImageSrcSet
 │   ├── pages/
 │   │   ├── Home.tsx               # Landing page content: Carousel → Hero → About → Services → Portfolio → Advantages → CallToAction → Testimonials → Contact; wrapped in <main>
 │   │   ├── PortfolioPage.tsx      # Standalone /portfolio page: SectionHeader + PortfolioGrid (activeSlug=null); sets document.title
@@ -232,7 +235,7 @@ advertise-agency-landing-core/
 │   │   │   ├── CategoryNav.tsx    # Link-based category filter tabs; prop: activeSlug (null=all); "Все"→/portfolio; each cat→/portfolio/{slug}; reads categories + portfolioConfig.allLabel
 │   │   │   ├── Pagination.tsx     # Prev/next buttons + page label; props: current, total, prevLabel, nextLabel, pageLabel, onPrev, onNext
 │   │   │   ├── PortfolioGrid.tsx  # Shared grid + pagination + CTA; props: items, activeSlug; builds hrefs as /portfolio/{activeSlug??'all'}/{slug}; reads ?page via useSearchParams internally
-│   │   │   ├── CaseHero.tsx       # Hero: hero.image present → bg-image + bg-black/50 overlay; no image → bg-gradient-to-br hero.gradient; props: hero, category, title, description
+│   │   │   ├── CaseHero.tsx       # Hero: hero.image present → OptimizedImage (absolute inset-0 object-cover, priority) + bg-black/50 overlay; no image → bg-gradient-to-br hero.gradient; props: hero, category, title, description
 │   │   │   ├── CaseOverview.tsx   # 4-col grid (client/category/year/services); reads labels from content
 │   │   │   └── CaseCTA.tsx        # Bottom CTA block; reads portfolioCaseContent.cta
 │   ├── types/
@@ -244,6 +247,7 @@ advertise-agency-landing-core/
 │   │   │   ├── categories.ts         # Category interface + categories const (from data/config/categories.json); { name, slug }[]
 │   │   │   └── legalData.ts          # LegalData interface + DocumentVersion interface + legalData const (from data/config/legal.json)
 │   │   │   ├── orderForms.ts         # OrderFormsData interface + FormFieldDefinition + ProductType + OrderFormDefinition + orderFormsData const (from data/config/orderForms.json)
+│   │   │   └── imageOptimization.ts  # ImageOptimizationConfig interface — shared by siteData.ts, imageResizePlugin.ts, and any component using optimized images
 │   │   │   └── seo.ts                # SeoConfig interface + seoConfig const (from data/config/seo.json): siteUrl, siteName, locale, twitterCard, defaultOgImage
 │   │   ├── sections/
 │   │   │   ├── header.ts             # HeaderContent interface + headerContent const (from data/sections/header.json); CtaLink inline
@@ -357,7 +361,7 @@ UI copy is split into one JSON file per section — each section component impor
 | `data/config/seo.json` | `src/types/config/seo.ts` → `seoConfig` | `src/plugins/ssgMetaPlugin.ts` (`onPageRendered`) |
 
 - **`data/config/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/config/theme.ts`.
-- **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo). Exposed via `src/types/config/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
+- **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo), `imageOptimization` (widths/quality/format for imageResizePlugin). Exposed via `src/types/config/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
 - **`data/sections/aboutValues.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/sections/aboutValues.ts`; used by `about/`.
 - **`data/sections/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Exposed via `src/types/sections/carousel.ts`; used by `carousel/`.
 - **`data/sections/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/types/sections/advantages.ts`; used by `advantages/`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.

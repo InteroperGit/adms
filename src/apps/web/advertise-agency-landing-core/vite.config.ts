@@ -6,10 +6,11 @@ import path from 'path'
 import 'vite-react-ssg'
 import { themePlugin } from './src/plugins/themePlugin'
 import { buildIncludedRoutes, createSsgMetaHook } from './src/plugins/ssgMetaPlugin'
+import { imageResizePlugin } from './src/plugins/imageResizePlugin'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [themePlugin(), react(), tailwindcss()],
+  plugins: [themePlugin(), imageResizePlugin(), react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

@@ -30,7 +30,7 @@ export function Carousel() {
       onMouseLeave={() => setPaused(false)}
     >
       {carouselSlides.map((slide, i) => (
-        <CarouselSlide key={slide.id} slide={slide} isActive={i === active} />
+        <CarouselSlide key={slide.id} slide={slide} isActive={i === active} index={i} />
       ))}
 
       <CarouselControls

@@ -1,6 +1,7 @@
 // src/components/ui/PortfolioThumbnail.tsx
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface PortfolioThumbnailProps {
   href: string;
@@ -26,7 +27,13 @@ export function PortfolioThumbnail({
       )}
     >
       {image ? (
-        <img src={image} alt={title} className="absolute inset-0 h-full w-full object-cover" />
+        <OptimizedImage
+          src={image}
+          alt={title}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="absolute inset-0 h-full w-full object-cover"
+          dev={import.meta.env.DEV}
+        />
       ) : (
         <div
           className="absolute inset-0 opacity-10"

@@ -2,6 +2,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Container } from '@/components/layout/Container';
 import { cn } from '@/lib/utils';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface CaseHeroProps {
   hero: { image?: string; gradient: string };
@@ -13,14 +14,15 @@ interface CaseHeroProps {
 export function CaseHero({ hero, category, title, description }: CaseHeroProps) {
   if (hero.image) {
     return (
-      <section
-        className="relative bg-neutral-900 py-24"
-        style={{
-          backgroundImage: `url(${hero.image})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      <section className="relative bg-neutral-900 py-24">
+        <OptimizedImage
+          src={hero.image}
+          alt={title}
+          sizes="100vw"
+          priority
+          className="absolute inset-0 h-full w-full object-cover"
+          dev={import.meta.env.DEV}
+        />
         <div className="absolute inset-0 bg-neutral-900/60" />
         <Container className="relative z-10">
           <div className="mx-auto max-w-3xl text-center">

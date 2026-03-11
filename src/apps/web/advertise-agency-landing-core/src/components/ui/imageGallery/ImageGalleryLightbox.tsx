@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { ImageGalleryItem } from './index';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface ImageGalleryLightboxProps {
   images: ImageGalleryItem[];
@@ -88,10 +89,12 @@ export function ImageGalleryLightbox({
             }
           }}
         >
-          <img
+          <OptimizedImage
             src={active.src}
             alt={`${altPrefix} ${activeIndex + 1}`}
+            sizes="100vw"
             className="max-h-[55vh] w-full rounded-xl object-contain sm:max-h-[75vh]"
+            dev={import.meta.env.DEV}
           />
           {multi && (
             <>
@@ -126,10 +129,12 @@ export function ImageGalleryLightbox({
                     : 'opacity-50 hover:opacity-80'
                 )}
               >
-                <img
+                <OptimizedImage
                   src={img.src}
                   alt={`${altPrefix} ${i + 1}`}
+                  sizes="80px"
                   className="h-full w-full object-cover"
+                  dev={import.meta.env.DEV}
                 />
               </button>
             ))}

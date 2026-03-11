@@ -2,6 +2,11 @@
   "name": "РА «Рекламастер»",
   "description": "Мы создаём рекламу, которая работает",
   "yandexMapsOrgId": "1124129683",
+  "imageOptimization": {
+    "widths": [320, 640, 960, 1280, 1920],
+    "quality": 82,
+    "format": "webp"
+  },
   "yandexMapUrl": "https://yandex.ru/map-widget/v1/?um=constructor%3A8e9d4dd92e269a69df84774136ae2871466aa55b34f941cb126cfc03efab1fb8&source=constructorLink",
   "contact": {
     "phone": "+7 (911) 505-06-35",

@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface ImageGalleryPreviewProps {
   src: string;
@@ -14,7 +15,13 @@ export function ImageGalleryPreview({ src, alt, description, onClick }: ImageGal
         className="relative cursor-pointer overflow-hidden rounded-2xl bg-muted"
         onClick={onClick}
       >
-        <img src={src} alt={alt} className="max-h-[260px] w-full object-cover sm:max-h-[560px]" />
+        <OptimizedImage
+          src={src}
+          alt={alt}
+          sizes="(max-width: 768px) 100vw, 800px"
+          className="max-h-[260px] w-full object-cover sm:max-h-[560px]"
+          dev={import.meta.env.DEV}
+        />
         {description && (
           <div
             className={cn(

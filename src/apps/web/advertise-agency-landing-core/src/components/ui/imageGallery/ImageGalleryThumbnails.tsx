@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface ImageGalleryThumbnailsProps {
   images: { src: string }[];
@@ -38,10 +39,12 @@ export function ImageGalleryThumbnails({
             i === activeIndex ? 'ring-2 ring-primary opacity-100' : 'opacity-60 hover:opacity-100'
           )}
         >
-          <img
+          <OptimizedImage
             src={image.src}
             alt={`${altPrefix} ${i + 1}`}
+            sizes="80px"
             className="h-full w-full object-cover"
+            dev={import.meta.env.DEV}
           />
           {i === activeIndex && (
             <span className="pointer-events-none absolute inset-0 bg-primary/20" />

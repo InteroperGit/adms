@@ -1,13 +1,15 @@
 import { cn } from '@/lib/utils';
 import { carouselContent } from '@/types/sections/carouselContent';
 import type { CarouselSlide as CarouselSlideType } from '@/types/sections/carousel';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface Props {
   slide: CarouselSlideType;
   isActive: boolean;
+  index: number;
 }
 
-export function CarouselSlide({ slide, isActive }: Props) {
+export function CarouselSlide({ slide, isActive, index }: Props) {
   return (
     <div
       aria-hidden={!isActive}
@@ -17,7 +19,14 @@ export function CarouselSlide({ slide, isActive }: Props) {
       )}
     >
       {slide.image ? (
-        <img src={slide.image} alt={slide.alt} className="h-full w-full object-cover" />
+        <OptimizedImage
+          src={slide.image}
+          alt={slide.alt}
+          sizes="100vw"
+          priority={index === 0}
+          className="h-full w-full object-cover"
+          dev={import.meta.env.DEV}
+        />
       ) : (
         <div className={cn('h-full w-full bg-gradient-to-br', slide.gradient)} />
       )}
