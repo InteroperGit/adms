@@ -32,6 +32,8 @@ Built as a **white-label kit**: swap the `data/` folder and `theme.json` to prod
 
 ```
 advertise-agency-landing-core/
+├── scripts/
+│   └── validate.ts    # Validates all data/*.json against Zod schemas; run via `pnpm validate` (vite-node); use `import * as path from 'path'` — not default import (esModuleInterop off in tsconfig.node.json)
 ├── ai/
 │   └── tasks/
 │       ├── 001_create_landing_structure.md   # Full build plan
@@ -144,13 +146,14 @@ advertise-agency-landing-core/
 │   │   │   │   ├── TestimonialsEmpty.tsx  # Fallback banner (MessageSquareOff icon + hint) shown when yandexMapsOrgId is absent/empty
 │   │   │   │   └── TestimonialNav.tsx     # Dot indicators + prev/next arrows; props: active, onPrev, onNext, onDot
 │   │   │   ├── contact/
-│   │   │   │   ├── index.tsx              # Thin orchestrator: SectionHeader + ContactForm + ContactInfo + ContactHours; imported as '@/components/sections/contact'
+│   │   │   │   ├── index.tsx              # Thin orchestrator: SectionHeader + ContactForm + ContactInfo + ContactHours (+ ContactMap when yandexMapUrl set); imported as '@/components/sections/contact'
 │   │   │   │   ├── ContactForm.tsx        # Form state + submit; renders ContactFormFields + ContactConsent + button; shows ContactSuccess on success
 │   │   │   │   ├── ContactFormFields.tsx  # Three input fields (name, contact, message); props: form, onChange; reads labels from content
 │   │   │   │   ├── ContactConsent.tsx     # Consent checkbox + legal links; props: checked, onChange; reads text from content
 │   │   │   │   ├── ContactSuccess.tsx     # Success panel (icon + title + text + reset button); prop: onReset
-│   │   │   │   ├── ContactInfo.tsx        # Three ContactItem instances + SocialLinks
+│   │   │   │   ├── ContactInfo.tsx        # Three ContactItem instances + SocialLinks + optional ContactMap
 │   │   │   │   ├── ContactItem.tsx        # Single contact row: icon box + label + value (with optional link); props: icon, label, value, href?
+│   │   │   │   ├── ContactMap.tsx         # Yandex map iframe (360px); rendered when siteData.yandexMapUrl is set; props: url, className
 │   │   │   │   └── ContactHours.tsx       # Working hours card (weekdays/saturday/sunday from siteData)
 │   │   │   └── footer/
 │   │   │       ├── index.tsx          # Thin orchestrator: 4-col grid + Separator + FooterBottom; imported as '@/components/sections/footer'
@@ -195,10 +198,12 @@ advertise-agency-landing-core/
 │   │       ├── separator.tsx
 │   │       └── textarea.tsx
 │   ├── hooks/
-│   │   ├── useFadeIn.ts         # IntersectionObserver-based scroll-triggered fade-in; returns { ref: RefObject<HTMLElement>, isVisible: boolean }; respects prefers-reduced-motion; apply fade-in-section + is-visible CSS classes
-│   │   ├── useScrolled.ts       # Passive scroll listener, returns bool after threshold (unused since Header moved in-flow)
-│   │   ├── useActiveSection.ts  # Tracks active section for nav highlight
-│   │   └── useCookieConsent.ts  # Returns 'all'|'necessary'|null; reactive via CustomEvent 'cookie_consent_change'
+│   │   ├── useFadeIn.ts              # IntersectionObserver-based scroll-triggered fade-in; returns { ref: RefObject<HTMLElement>, isVisible: boolean }; respects prefers-reduced-motion; apply fade-in-section + is-visible CSS classes
+│   │   ├── useScrolled.ts            # Passive scroll listener, returns bool after threshold (unused since Header moved in-flow)
+│   │   ├── useActiveSection.ts       # IntersectionObserver that tracks which home-page section is in view; returns section id string
+│   │   ├── useActiveSectionHref.ts   # Combines useActiveSection (scroll) + route-based matching via ROUTE_MAP; returns active nav href (e.g. '#portfolio'); used by HeaderDesktopNav and HeaderMobileNav
+│   │   ├── useRandomButtonHighlight.ts # Randomly cycles a pulse highlight through header CTA buttons at a random interval
+│   │   └── useCookieConsent.ts       # Returns 'all'|'necessary'|null; reactive via CustomEvent 'cookie_consent_change'
 │   ├── lib/
 │   │   ├── utils.ts            # cn() helper (clsx + tailwind-merge)
 │   │   └── categorySlug.ts     # categorySlug(name) — looks up category name in categories const, returns slug; falls back to 'all'
@@ -243,15 +248,14 @@ advertise-agency-landing-core/
 │   │   │   └── CaseCTA.tsx        # Bottom CTA block; reads portfolioCaseContent.cta
 │   ├── types/
 │   │   ├── config/
-│   │   │   ├── siteData.ts           # SiteData interface + siteData const (from data/config/site.json)
-│   │   │   ├── theme.ts              # Theme interface + ThemeColors interface + theme const (from data/config/theme.json); app-side only — themePlugin uses its own local Theme type due to tsconfig.node.json constraints
-│   │   │   ├── cookies.ts            # CookiesContent interface + cookiesContent const (from data/config/cookies.json); CtaLink inline
-│   │   │   ├── portfolioConfig.ts    # PortfolioConfig interface + portfolioConfig const (from data/config/portfolio.json); shared listing config for all portfolio pages
-│   │   │   ├── categories.ts         # Category interface + categories const (from data/config/categories.json); { name, slug }[]
-│   │   │   └── legalData.ts          # LegalData interface + DocumentVersion interface + legalData const (from data/config/legal.json)
-│   │   │   ├── orderForms.ts         # OrderFormsData interface + FormFieldDefinition + ProductType + OrderFormDefinition + orderFormsData const (from data/config/orderForms.json)
-│   │   │   └── imageOptimization.ts  # ImageOptimizationConfig interface — shared by siteData.ts, imageResizePlugin.ts, and any component using optimized images
-│   │   │   └── seo.ts                # SeoConfig interface + seoConfig const (from data/config/seo.json): siteUrl, siteName, locale, twitterCard, defaultOgImage
+│   │   │   ├── siteData.ts           # SiteData Zod schema + type + parsed const (from data/config/site.json)
+│   │   │   ├── theme.ts              # Theme Zod schema + type + parsed const (from data/config/theme.json); app-side only — themePlugin uses its own local Theme type due to tsconfig.node.json constraints
+│   │   │   ├── cookies.ts            # CookiesContent Zod schema + type + parsed const (from data/config/cookies.json)
+│   │   │   ├── portfolioConfig.ts    # PortfolioConfig Zod schema + type + parsed const (from data/config/portfolio.json)
+│   │   │   ├── categories.ts         # Category Zod schema + type + categories parsed const (from data/config/categories.json); { name, slug }[]
+│   │   │   ├── legalData.ts          # LegalData Zod schema + type + parsed const (from data/config/legal.json)
+│   │   │   ├── orderForms.ts         # OrderFormsData Zod schema + type + parsed const (from data/config/orderForms.json)
+│   │   │   └── seo.ts                # SeoConfig Zod schema + type + parsed const (from data/config/seo.json): siteUrl, siteName, locale, twitterCard, defaultOgImage
 │   │   ├── sections/
 │   │   │   ├── header.ts             # HeaderContent interface + headerContent const (from data/sections/header.json); CtaLink inline
 │   │   │   ├── hero.ts               # HeroContent interface + heroContent const (from data/sections/hero.json); CtaLink inline
@@ -336,6 +340,7 @@ pnpm build            # Production SSG build → dist/  (tsc -b && vite-react-ss
 pnpm preview          # Preview production build locally
 pnpm lint             # Run ESLint
 pnpm format           # Run Prettier over src/**/*.{ts,tsx,css}
+pnpm validate         # Validate all data JSON files against Zod schemas (scripts/validate.ts via vite-node)
 ```
 
 ## Data Architecture
@@ -379,7 +384,7 @@ UI copy is split into one JSON file per section — each section component impor
 - All shared types, interfaces, consts, and data modules live in `src/types/` (organised into `config/`, `sections/`, `portfolio/`, `shared/` subfolders); only `utils.ts` stays in `src/lib/`.
 - Portfolio collection loaded via `import.meta.glob('@data/portfolio/*.json', { eager: true, import: 'default' })` — see `src/types/portfolio/portfolioCases.ts`.
 - Schema examples tracked in `data/_schema/` as JSON files showing the expected shape of each data file. The actual data files are gitignored.
-- All data const exports use the `satisfies` operator (`export const x = data satisfies Type`) — validates JSON shape against the interface while preserving the narrow inferred type.
+- All data type modules export a **Zod schema** (`export const XxxSchema = z.object({…})`) and derive TypeScript types via `z.infer<typeof XxxSchema>`. Data is validated at startup via `Schema.parse(rawData)` — **do not use the `satisfies` operator** for data consts; Zod replaces it. To add a new type module: define schema → derive type → export both schema and parsed const.
 
 ## SSG Build
 
@@ -428,4 +433,5 @@ Files are placed in `src/components/ui/` — never edit them manually.
 - `@theme inline` in `index.css` is required for Tailwind v4 + shadcn compatibility — do not revert to `@theme`
 - Use **react-router-dom v6** (not v7) — required by vite-react-ssg peer dependency
 - Use **native DOM event types** in handlers — React 19 deprecated synthetic event aliases (`React.FormEvent`, `React.MouseEvent`, etc.); use `SubmitEvent`, `MouseEvent`, `InputEvent` etc. instead
+- **`scripts/` type-checking**: `tsconfig.node.json` includes `scripts/**/*.ts` — new utility scripts must go under `scripts/` to be type-checked. Use `import * as path from 'path'` (namespace import) — `esModuleInterop` is off in `tsconfig.node.json`, so default imports of Node built-ins break.
 - **Always use curly braces** in `if`/`else`/`for`/`while` bodies — enforced by ESLint `curly: ['error', 'all']` + `brace-style: ['error', '1tbs', { allowSingleLine: false }]`; body is always on a new line; `lint --fix` enforces this after `format`
