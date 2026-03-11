@@ -29,9 +29,17 @@ interface SocialLinksProps {
   vk: string;
   variant?: 'light' | 'dark' | 'colored';
   className?: string;
+  /** 0 = Telegram highlighted, 1 = VK highlighted, null = none */
+  highlightedIndex?: number | null;
 }
 
-export function SocialLinks({ telegram, vk, variant = 'light', className }: SocialLinksProps) {
+export function SocialLinks({
+  telegram,
+  vk,
+  variant = 'light',
+  className,
+  highlightedIndex,
+}: SocialLinksProps) {
   const isDark = variant === 'dark';
   const isColored = variant === 'colored';
 
@@ -50,7 +58,11 @@ export function SocialLinks({ telegram, vk, variant = 'light', className }: Soci
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Telegram"
-        className={cn(base, isColored ? TG.colored : isDark ? TG.dark : TG.light)}
+        className={cn(
+          base,
+          isColored ? TG.colored : isDark ? TG.dark : TG.light,
+          highlightedIndex === 0 && 'animate-pulse-tg'
+        )}
       >
         <Send size={16} />
       </a>
@@ -59,7 +71,11 @@ export function SocialLinks({ telegram, vk, variant = 'light', className }: Soci
         target="_blank"
         rel="noopener noreferrer"
         aria-label="ВКонтакте"
-        className={cn(base, isColored ? VK.colored : isDark ? VK.dark : VK.light)}
+        className={cn(
+          base,
+          isColored ? VK.colored : isDark ? VK.dark : VK.light,
+          highlightedIndex === 1 && 'animate-pulse-vk'
+        )}
       >
         <VkIcon />
       </a>

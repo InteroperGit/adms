@@ -34,6 +34,36 @@
   }
 }
 
+@keyframes pulse-green {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(21 128 61 / 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgb(21 128 61 / 0);
+  }
+}
+
+@keyframes pulse-tg {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(42 171 238 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgb(42 171 238 / 0);
+  }
+}
+
+@keyframes pulse-vk {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(0 119 255 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgb(0 119 255 / 0);
+  }
+}
+
 /* ─── Tailwind v4 Theme — maps utilities to CSS vars ───────────────────────── */
 @theme inline {
   /* Fonts — reference vars injected by themePlugin */
@@ -73,6 +103,9 @@
   --animate-fade-in: fade-in 0.5s ease-out;
   --animate-cta-pulse: cta-pulse 2.5s ease-in-out infinite;
   --animate-cta-pulse-white: cta-pulse-white 2.5s ease-in-out infinite;
+  --animate-pulse-green: pulse-green 2s ease-in-out infinite;
+  --animate-pulse-tg: pulse-tg 2s ease-in-out infinite;
+  --animate-pulse-vk: pulse-vk 2s ease-in-out infinite;
 }
 
 /* ─── Reduced Motion ────────────────────────────────────────────────────────── */

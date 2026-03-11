@@ -11,12 +11,13 @@ import { cn } from '@/lib/utils';
 const PhoneIcon = resolveIcon('Phone');
 
 interface Props {
-  activeSection: string;
+  activeHref: string;
   isHome: boolean;
-  forcedActiveHref: string;
+  /** 0=Phone, 1=Telegram, 2=VK, 3=CTA — null when no button is highlighted */
+  highlightedActionIndex: number | null;
 }
 
-export function HeaderMobileNav({ activeSection, isHome, forcedActiveHref }: Props) {
+export function HeaderMobileNav({ activeHref, isHome, highlightedActionIndex }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -42,8 +43,7 @@ export function HeaderMobileNav({ activeSection, isHome, forcedActiveHref }: Pro
           <Container>
             <nav className="flex flex-col py-4">
               {headerContent.nav.map((link) => {
-                const isActive =
-                  link.href === `#${activeSection}` || link.href === forcedActiveHref;
+                const isActive = link.href === activeHref;
                 const href = isHome ? link.href : `/${link.href}`;
                 return (
                   <a
@@ -63,7 +63,10 @@ export function HeaderMobileNav({ activeSection, isHome, forcedActiveHref }: Pro
                 <a
                   href={`tel:${siteData.contact.phone}`}
                   aria-label="Позвонить"
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-green-700/30 bg-green-700/5 text-green-700 shadow-sm transition-colors hover:bg-green-700/15"
+                  className={cn(
+                    'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-green-700/30 bg-green-700/5 text-green-700 shadow-sm transition-colors hover:bg-green-700/15',
+                    highlightedActionIndex === 0 && 'animate-pulse-green'
+                  )}
                 >
                   {PhoneIcon && <PhoneIcon size={16} />}
                 </a>
@@ -71,8 +74,18 @@ export function HeaderMobileNav({ activeSection, isHome, forcedActiveHref }: Pro
                   telegram={siteData.contact.telegram}
                   vk={siteData.contact.vk}
                   variant="colored"
+                  highlightedIndex={
+                    highlightedActionIndex === 1 ? 0 : highlightedActionIndex === 2 ? 1 : null
+                  }
                 />
-                <Button asChild className="h-11 flex-1 rounded-full" size="sm">
+                <Button
+                  asChild
+                  className={cn(
+                    'h-11 flex-1 rounded-full',
+                    highlightedActionIndex === 3 && 'animate-cta-pulse'
+                  )}
+                  size="sm"
+                >
                   <a href={isHome ? '#contact' : '/#contact'} onClick={() => setMenuOpen(false)}>
                     {headerContent.navCta}
                   </a>

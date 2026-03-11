@@ -1,16 +1,20 @@
 import { useLocation } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { headerContent } from '@/types/sections/header';
-import { useActiveSection } from '@/hooks/useActiveSection';
+import { useActiveSectionHref } from '@/hooks/useActiveSectionHref';
+import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
 import { siteData } from '@/types/config/siteData';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
 import { HeaderMobileNav } from './HeaderMobileNav';
 
+// 4 buttons: 0=Phone, 1=Telegram, 2=VK, 3=CTA
+const HEADER_BUTTON_COUNT = 4;
+
 export function Header() {
-  const activeSection = useActiveSection();
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-  const forcedActiveHref = pathname.startsWith('/portfolio/') ? '#portfolio' : '';
+  const activeHref = useActiveSectionHref();
+  const highlightedActionIndex = useRandomButtonHighlight(HEADER_BUTTON_COUNT);
 
   return (
     <header id="main-nav" className="border-b border-border bg-white shadow-sm">
@@ -30,14 +34,14 @@ export function Header() {
           </a>
 
           <HeaderDesktopNav
-            activeSection={activeSection}
+            activeHref={activeHref}
             isHome={isHome}
-            forcedActiveHref={forcedActiveHref}
+            highlightedActionIndex={highlightedActionIndex}
           />
           <HeaderMobileNav
-            activeSection={activeSection}
+            activeHref={activeHref}
             isHome={isHome}
-            forcedActiveHref={forcedActiveHref}
+            highlightedActionIndex={highlightedActionIndex}
           />
         </div>
       </Container>
