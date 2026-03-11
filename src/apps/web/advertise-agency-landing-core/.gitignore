@@ -20,6 +20,7 @@ data/portfolio/
 data/site.json
 data/testimonials.json
 data/legal.json
+data/legal/
 public/images/
 !data/_schema/
 

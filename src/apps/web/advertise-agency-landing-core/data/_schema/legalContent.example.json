@@ -1,0 +1,46 @@
+{
+  "title": "Политика конфиденциальности",
+  "sections": [
+    {
+      "id": "general",
+      "title": "1. Общие положения",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Paragraph text. Supports {company.name}, {company.siteUrl}, {company.email}, {company.inn}, {company.ogrn}, {company.legalAddress}, {company.phone}, {company.responsible} tokens. Also supports inline HTML: <strong>bold</strong>."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Unordered list item",
+            "Item with <strong>bold</strong> text",
+            "Item with a <a href=\"/route\">link</a>"
+          ]
+        },
+        {
+          "type": "ol",
+          "items": ["Ordered list item 1", "Ordered list item 2"]
+        },
+        {
+          "type": "dl",
+          "items": [
+            { "term": "Term one", "def": "Definition of term one." },
+            { "term": "Term two", "def": "Definition of term two." }
+          ]
+        },
+        {
+          "type": "contact",
+          "items": [
+            { "label": "Наименование", "field": "name" },
+            { "label": "Юридический адрес", "field": "legalAddress" },
+            { "label": "ИНН", "field": "inn" },
+            { "label": "ОГРН", "field": "ogrn" },
+            { "label": "Email", "field": "email" },
+            { "label": "Телефон", "field": "phone" },
+            { "label": "Ответственный", "field": "responsible" }
+          ]
+        }
+      ]
+    }
+  ]
+}

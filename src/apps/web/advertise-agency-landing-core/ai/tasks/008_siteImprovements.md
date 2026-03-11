@@ -1,6 +1,6 @@
 # 008 — Site Improvements PRD
 
-## Status: T1 ✅ done · T2 ✅ done · T3 ✅ done · T4 ✅ done (all satisfies → Zod, validate.ts covers all 26 files, 2026-03-11) · T5 ✅ done (SectionDivider, useFadeIn, count-up, CTA pulse, card hover lift, 2026-03-11) | rest not started
+## Status: T1 ✅ done · T2 ✅ done · T3 ✅ done · T4 ✅ done (all satisfies → Zod, validate.ts covers all 26 files, 2026-03-11) · T5 ✅ done (SectionDivider, useFadeIn, count-up, CTA pulse, card hover lift, 2026-03-11) · T6 ✅ done (data/legal/*.json, src/types/legal/index.ts, LegalBlockRenderer, 2026-03-12) | rest not started
 
 ## Goal
 
@@ -179,7 +179,7 @@ Sections currently stack with flat boundaries. Add subtle visual transitions bet
 
 ---
 
-### T6 · Legal pages: migrate hardcoded content to JSON
+### T6 · Legal pages: migrate hardcoded content to JSON ✅ done
 
 **Priority:** medium · **Scope:** data + pages
 
@@ -295,7 +295,7 @@ The theme system already uses CSS variables. Extend it to support dark mode.
 | T3 | Image optimization: lazy + srcset | high | small | — | ✅ done |
 | T4 | Data validation: Zod schemas | medium | medium | — | ✅ done |
 | T5 | Design: section transitions + micro-interactions | medium | medium | T2 (reduced-motion) |✅ done |
-| T6 | Legal pages: migrate to JSON | medium | medium | — |
+| T6 | Legal pages: migrate to JSON | medium | medium | — | ✅ done |
 | T7 | Analytics: Yandex Metrika + consent | medium | small | — |
 | T8 | DX: JSON Schema + new-client CLI | low | medium | T4 (Zod schemas) |
 | T9 | Performance: bundle analysis + icons | low | small | — |

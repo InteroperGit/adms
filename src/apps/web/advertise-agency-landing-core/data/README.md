@@ -4,6 +4,19 @@ All client-facing configuration lives here. To create a site for a new client, c
 
 > **Important:** actual data files (`*.json` outside `_schema/`) are gitignored. Only `_schema/` examples and `portfolio/*.json` case studies are tracked.
 
+> **Required before first run:** all data JSON files must exist locally before `pnpm dev` or `pnpm build` — a missing file causes a hard startup error ("Cannot find module"). Bootstrap from the schema examples:
+> ```bash
+> # copy every _schema/*.example.json → the corresponding data file, then fill in real values
+> cp data/_schema/site.example.json       data/config/site.json
+> cp data/_schema/theme.example.json      data/config/theme.json
+> cp data/_schema/legal.example.json      data/config/legal.json
+> mkdir -p data/legal
+> cp data/_schema/legalContent.example.json data/legal/privacyPolicy.json
+> cp data/_schema/legalContent.example.json data/legal/userAgreement.json
+> cp data/_schema/legalContent.example.json data/legal/consent.json
+> # … repeat for remaining files listed in the Files section below
+> ```
+
 ---
 
 ## Files
@@ -51,7 +64,12 @@ UI copy is split into one file per section. Each component imports only the file
 
 | File | Purpose |
 |------|---------|
-| `legal.json` | Company legal details and document metadata used by `/privacy-policy`, `/consent`, `/user-agreement` pages. |
+| `legal.json` | Company legal details and document metadata: registration info, document versions and effective dates. |
+| `legal/privacyPolicy.json` | Full content of the Privacy Policy page — sections with blocks of text, lists, and contact info. |
+| `legal/userAgreement.json` | Full content of the User Agreement page — same structure. |
+| `legal/consent.json` | Full content of the Data Processing Consent page — same structure. |
+
+All three `legal/*.json` files are required. If any is missing the app fails to start. Bootstrap from `_schema/legalContent.example.json` (see **Required before first run** above). Tokens like `{company.name}` in text fields are resolved at render time from `legal.json`.
 
 ---
 
@@ -78,6 +96,7 @@ _schema/
   theme.example.json
   site.example.json
   legal.example.json
+  legalContent.example.json
   aboutValues.example.json
   carousel.example.json
   services.example.json
@@ -95,6 +114,7 @@ _schema/
    - `theme.json` — brand colors and fonts
    - `site.json` — contact details and social links
    - `legal.json` — company registration data
+   - `legal/privacyPolicy.json`, `legal/userAgreement.json`, `legal/consent.json` — legal page content; tokens like `{company.name}` are auto-substituted from `legal.json`
 3. Edit the UI copy files for each section (see **UI copy — per section** table above). At minimum update `header.json`, `hero.json`, `aboutContent.json`, `footer.json`, and `cookies.json`.
 4. Replace the data collections to match the client's content:
    - `services.json`, `advantages.json`, `testimonials.json`

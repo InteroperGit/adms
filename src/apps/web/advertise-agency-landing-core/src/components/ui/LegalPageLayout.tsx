@@ -1,5 +1,3 @@
-import { BackButton } from '@/components/ui/BackButton.tsx';
-
 interface LegalPageLayoutProps {
   title: string;
   version: string;
@@ -10,8 +8,6 @@ interface LegalPageLayoutProps {
 export function LegalPageLayout({ title, version, effectiveDate, children }: LegalPageLayoutProps) {
   return (
     <main className="mx-auto max-w-3xl px-4 py-12 text-foreground">
-      <BackButton />
-
       <h1 className="mb-2 text-3xl font-bold">{title}</h1>
       <p className="mb-10 text-sm text-muted-foreground">Дата вступления в силу: {effectiveDate}</p>
 

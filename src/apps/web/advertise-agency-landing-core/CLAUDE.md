@@ -70,6 +70,11 @@ advertise-agency-landing-core/
 │   │   └── theme.example.json
 │   │   └── orderForms.example.json
 │   │   └── seo.example.json
+│   │   └── legalContent.example.json
+│   ├── legal/               # Legal page content JSON files (gitignored)
+│   │   ├── privacyPolicy.json   # Privacy Policy sections/blocks
+│   │   ├── userAgreement.json   # User Agreement sections/blocks
+│   │   └── consent.json         # Consent sections/blocks
 │   ├── portfolio/           # One JSON file per case study (slug.json)
 │   │   ├── bodrost.json
 │   │   ├── fitstudio.json
@@ -179,6 +184,7 @@ advertise-agency-landing-core/
 │   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
 │   │       ├── OptimizedImage.tsx     # Drop-in <img> replacement: <picture>+<source type="image/webp" srcset> in production; plain <img> fallback in dev (import.meta.env.DEV); props: src, alt, sizes?, priority?, width?, height?, className?; priority=true → loading="eager" fetchPriority="high"
 │   │       ├── BreadCrumbs.tsx        # Pill-style breadcrumb nav bar (border-b, bg-white); props: items[]{label, href?}; last/no-href item shown as primary-tinted pill; used on PortfolioCasePage
+│   │       ├── LegalBlockRenderer.tsx # Renders LegalContent sections/blocks; token substitution ({company.X} → legalData.company) + dangerouslySetInnerHTML for inline HTML; block types: p, ul, ol, dl, contact
 │   │       ├── LegalPageLayout.tsx    # Shared layout for legal pages: BackButton + h1 + version footer + children; props: title, version, effectiveDate, children
 │   │       ├── LegalSection.tsx       # Legal content section block: h2 + children div; props: id?, title, children
 │   │       ├── SectionHeader.tsx      # Shared label badge + h2 + description block; props: label, title, description?, titleHighlight?, variant ('light'|'dark'), className
@@ -217,9 +223,9 @@ advertise-agency-landing-core/
 │   │   ├── PortfolioPage.tsx      # Standalone /portfolio page: SectionHeader + PortfolioGrid (activeSlug=null); sets document.title
 │   │   ├── PortfolioCategoryPage.tsx # /portfolio/:categorySlug: filters by category, renders SectionHeader + PortfolioGrid; "all" shows everything; unknown slug → not-found; sets document.title
 │   │   ├── PortfolioCasePage.tsx  # /portfolio/:categorySlug/:caseSlug: BreadCrumbs (Home→Portfolio→Category→Case) + CaseHero + CaseOverview + BlockRenderer loop + CaseCTA
-│   │   ├── PrivacyPolicy.tsx      # /privacy-policy — reads legalData (company, documents.privacyPolicy.{version,effectiveDate})
-│   │   ├── Consent.tsx            # /consent — reads legalData (company, documents.consent.{version,effectiveDate})
-│   │   └── UserAgreement.tsx      # /user-agreement — reads legalData (company, documents.userAgreement.{version,effectiveDate})
+│   │   ├── PrivacyPolicy.tsx      # /privacy-policy — renders privacyPolicyContent via LegalBlockRenderer; version/effectiveDate from legalData
+│   │   ├── Consent.tsx            # /consent — renders consentContent via LegalBlockRenderer
+│   │   └── UserAgreement.tsx      # /user-agreement — renders userAgreementContent via LegalBlockRenderer
 │   │   └── OrderPage.tsx          # /order — standalone order form page; reads ?form=<id> via useSearchParams; SectionHeader + form selector + OrderForm
 │   ├── components/
 │   │   ├── portfolio/
@@ -272,6 +278,8 @@ advertise-agency-landing-core/
 │   │   │   ├── testimonials.ts       # Testimonial interface + testimonials const (from data/sections/testimonials.json)
 │   │   │   ├── contact.ts            # ContactContent interface + contactContent const (from data/sections/contact.json); CtaLink inline
 │   │   │   └── footer.ts             # FooterContent interface + footerContent const (from data/sections/footer.json); CtaLink inline
+│   │   ├── legal/
+│   │   │   └── index.ts              # LegalContentSchema + LegalContent/LegalBlock/LegalSection types + privacyPolicyContent, userAgreementContent, consentContent consts (from data/legal/*.json)
 │   │   ├── portfolio/
 │   │   │   ├── index.ts              # PortfolioCase interface (hero:{image?,gradient}, content:ContentBlock[], images:{preview?,og?}) + GalleryImage interface + PortfolioSectionContent interface + portfolioSectionContent const — imported as '@/types/portfolio'
 │   │   │   ├── blocks.ts             # ContentBlock discriminated union + all 14 block interfaces + BlockColor interface ({type:'solid'|'gradient'|'primary'|'accent'; value?:string})
@@ -376,6 +384,7 @@ UI copy is split into one JSON file per section — each section component impor
 - **`data/sections/services.json`** — array of `{ icon, title, description }` for the Services section. Exposed via `src/types/sections/services.ts`; used by `services/` and `footer/FooterServices.tsx`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.
 - **`data/sections/testimonials.json`** — array of testimonial objects. Exposed via `src/types/sections/testimonials.ts`; used by `PortfolioCasePage.tsx` (TestimonialCard). The Testimonials section now uses the Yandex widget instead of this data directly.
 - **`data/config/legal.json`** — company legal details. Exposed via `src/types/config/legalData.ts`; used by legal pages. Gitignored — schema in `data/_schema/legal.example.json`.
+- **`data/legal/*.json`** — per-page legal content: `{ title, sections[{ id?, title, blocks[] }] }`. Block types: `p` (text), `ul`, `ol`, `dl` (`{term,def}[]`), `contact` (`{label, field}[]` — `field` is a key of `legalData.company`). Text fields support `{company.X}` token substitution and inline HTML. Gitignored — schema in `data/_schema/legalContent.example.json`. Rendered by `LegalBlockRenderer.tsx`.
 - **`data/config/seo.json`** — global SEO defaults: `siteUrl`, `siteName`, `locale`, `twitterCard`, `defaultOgImage`. Read at build time by `src/plugins/ssgMetaPlugin.ts` (`onPageRendered`) to inject OG tags, canonical links, and JSON-LD into every static HTML page. Schema in `data/_schema/seo.example.json`.
 - **`data/config/orderForms.json`** — order form definitions: `forms` (keyed by ID, each with `productTypes`, `customerFields`, `consent`, `success`), `page` (listing page copy). Exposed via `src/types/config/orderForms.ts`; used by `ui/orderForm/`, `portfolio/blocks/OrderFormBlock.tsx`, `OrderPage.tsx`. Schema in `data/_schema/orderForms.example.json`.
 - **`data/portfolio/<slug>.json`** — one file per portfolio case study, typed as `PortfolioCase` (`src/types/portfolio/index.ts`, imported as `@/types/portfolio`). Shape: `slug`, `title`, `category`, `description`, `hero: { image?, gradient }`, `tags[]`, `meta`, `overview`, `content: ContentBlock[]`, `images: { preview?, og? }`. The `content` array is a dynamic zone of ordered blocks rendered by `BlockRenderer`. Block types defined in `src/types/portfolio/blocks.ts`.
@@ -417,7 +426,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 - After completing every task, always run in sequence:
   1. `pnpm format` — reformat all changed files
-  2. `pnpm tsc -b --noEmit` — typecheck, fix any errors before finishing
+  2. `pnpm tsc -b --noEmit` — typecheck, fix any errors before finishing (expected: "Cannot find module" errors for gitignored data JSON files — these are pre-existing and harmless; only check for errors in edited source files)
   3. `pnpm lint` — fix any new lint errors (`badge.tsx` / `button.tsx` are shadcn-generated — do not edit; their `react-refresh` rule is suppressed via ESLint override)
   4. Update `CLAUDE.md` — reflect any new/changed files, data modules, components, routes, or conventions
   5. Mark the completed task as **✅ done** in its plan file (`ai/tasks/NNN_*.md`) — update the task header or status table so the next session can see what is already implemented
