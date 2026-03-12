@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/hero.schema.json",
   "badge": "Рекламное агентство полного цикла",
   "title": "Реклама, которая ",
   "titleHighlight": "продаёт",

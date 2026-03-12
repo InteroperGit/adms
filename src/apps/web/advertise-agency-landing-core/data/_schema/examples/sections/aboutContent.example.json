@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/aboutContent.schema.json",
   "label": "О нас",
   "title": "Заголовок секции «О нас» ",
   "titleHighlight": "с выделением",

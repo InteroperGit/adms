@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/advantagesContent.schema.json",
   "label": "Почему мы",
   "title": "Почему клиенты выбирают ",
   "titleHighlight": "Агентство",

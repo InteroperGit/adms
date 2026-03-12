@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/portfolioCase.schema.json",
   "backLabel": "Назад к портфолио",
   "overviewLabels": { "client": "Клиент", "category": "Категория", "year": "Год", "services": "Услуги" },
   "challengeTitle": "Задача",

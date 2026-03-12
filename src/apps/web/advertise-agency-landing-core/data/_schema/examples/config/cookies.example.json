@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/config/cookies.schema.json",
   "ariaLabel": "Уведомление об использовании cookie",
   "closeLabel": "Закрыть",
   "title": "Мы используем cookie",

@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/callToAction.schema.json",
   "title": "Призыв к действию — заголовок",
   "subtitle": "Призыв к действию — подзаголовок.",
   "cta": [

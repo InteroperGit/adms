@@ -1,6 +1,6 @@
 # 008 — Site Improvements PRD
 
-## Status: T1 ✅ done · T2 ✅ done · T3 ✅ done · T4 ✅ done (all satisfies → Zod, validate.ts covers all 26 files, 2026-03-11) · T5 ✅ done (SectionDivider, useFadeIn, count-up, CTA pulse, card hover lift, 2026-03-11) · T6 ✅ done (data/legal/*.json, src/types/legal/index.ts, LegalBlockRenderer, 2026-03-12) · T7 ✅ done (MetrikaScript, SiteDataSchema extended, 2026-03-12) · T10 ✅ done (useDarkMode, Sun/Moon toggle, virtual CSS module, semantic token replacements, carousel dark mode, 2026-03-12) | rest not started
+## Status: T1 ✅ done · T2 ✅ done · T3 ✅ done · T4 ✅ done (all satisfies → Zod, validate.ts covers all 26 files, 2026-03-11) · T5 ✅ done (SectionDivider, useFadeIn, count-up, CTA pulse, card hover lift, 2026-03-11) · T6 ✅ done (data/legal/*.json, src/types/legal/index.ts, LegalBlockRenderer, 2026-03-12) · T7 ✅ done (MetrikaScript, SiteDataSchema extended, 2026-03-12) · T8 ✅ done (generate-json-schemas.ts + new-client.ts + $schema in examples + .vscode/settings.json, 2026-03-12) · T10 ✅ done (useDarkMode, Sun/Moon toggle, virtual CSS module, semantic token replacements, carousel dark mode, 2026-03-12) | rest not started
 
 ## Goal
 
@@ -234,7 +234,7 @@ Add analytics support that respects the existing cookie consent system.
 
 ---
 
-### T8 · DX: JSON schema validation in IDE + new-client CLI
+### T8 · DX: JSON schema validation in IDE + new-client CLI ✅ done
 
 **Priority:** low · **Scope:** config + tooling
 
@@ -262,13 +262,13 @@ Improve developer experience when configuring data for new clients.
 
 **Files:**
 - `scripts/generate-json-schemas.ts` — new (uses `zod-to-json-schema`)
-- `data/_schema/examples/*.schema.json` — generated JSON Schema files
+- `data/_schema/schema/*.schema.json` — generated JSON Schema files
 - `scripts/new-client.ts` — new CLI script
 - `package.json` — add `gen-schemas` and `new-client` scripts
 
 ---
 
-### T9 · Performance: bundle analysis + icon tree-shaking
+### T9 · Performance: bundle analysis + icon tree-shaking ✅ done
 
 **Priority:** low · **Scope:** build config
 
@@ -350,6 +350,6 @@ The theme system already uses CSS variables. Extend it to support dark mode.
 | T5 | Design: section transitions + micro-interactions | medium | medium | T2 (reduced-motion) | ✅ done |
 | T6 | Legal pages: migrate to JSON | medium | medium | — | ✅ done |
 | T7 | Analytics: Yandex Metrika + consent | medium | small | — (useCookieConsent + SiteDataSchema ready) | ✅ done |
-| T8 | DX: JSON Schema + new-client CLI | low | medium | T4 ✅ (Zod schemas exported) |
+| T8 | DX: JSON Schema + new-client CLI | low | medium | T4 ✅ (Zod schemas exported) | ✅ done |
 | T9 | Performance: bundle analysis + icons | low | small | — |
 | T10 | Dark mode toggle | low | large | — (themePlugin + ThemeSchema ready) | ✅ done |

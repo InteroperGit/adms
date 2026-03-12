@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/portfolioPage.schema.json",
   "label": "Наши работы",
   "title": "Портфолио",
   "description": "Все наши проекты — от брендинга до рекламных кампаний."

@@ -272,7 +272,9 @@ export function createSsgMetaHook(rootDir: string): (route: string, html: string
     const caseMatch = /^\/portfolio\/([^/]+)\/([^/]+)$/.exec(route);
     if (caseMatch) {
       const caseSlug = caseMatch[2];
-      const caseData = readJson<CaseData>(path.resolve(rootDir, `data/content/portfolio/${caseSlug}.json`));
+      const caseData = readJson<CaseData>(
+        path.resolve(rootDir, `data/content/portfolio/${caseSlug}.json`)
+      );
       if (caseData) {
         return handleCasePage(out, caseSlug, caseData, seo, categories);
       }

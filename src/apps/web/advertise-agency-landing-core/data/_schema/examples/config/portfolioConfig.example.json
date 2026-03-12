@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/config/portfolioConfig.schema.json",
   "perPage": 9,
   "allLabel": "Все",
   "prevLabel": "Назад",

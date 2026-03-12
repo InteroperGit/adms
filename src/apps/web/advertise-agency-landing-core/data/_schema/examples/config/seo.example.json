@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/config/seo.schema.json",
   "siteUrl": "https://example.ru",
   "siteName": "Название компании",
   "locale": "ru_RU",

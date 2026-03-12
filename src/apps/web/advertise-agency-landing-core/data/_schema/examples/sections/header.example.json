@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/header.schema.json",
   "lang": "ru",
   "logo": {
     "letter": "A",

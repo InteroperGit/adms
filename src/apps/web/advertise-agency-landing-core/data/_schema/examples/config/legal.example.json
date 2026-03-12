@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/config/legal.schema.json",
   "company": {
     "name": "ИП Иванов И.И.",
     "inn": "1234567890",

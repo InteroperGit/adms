@@ -24,6 +24,9 @@ data/legal/
 public/images/
 !data/_schema/
 
+# Generated — run pnpm gen-schemas to rebuild
+data/_schema/schema/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

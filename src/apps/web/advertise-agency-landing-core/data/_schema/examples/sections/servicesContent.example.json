@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/servicesContent.schema.json",
   "label": "Услуги",
   "title": "Что мы делаем",
   "description": "Описание секции услуг."

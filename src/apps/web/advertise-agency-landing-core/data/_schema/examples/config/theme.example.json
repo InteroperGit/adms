@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/config/theme.schema.json",
   "colors": {
     "background": "0 0% 100%",
     "foreground": "230 20% 7%",

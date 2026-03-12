@@ -39,10 +39,7 @@ import { FooterContentSchema } from '../src/types/sections/footer';
 import { PortfolioPageContentSchema } from '../src/types/sections/portfolioPage';
 
 // ── Portfolio schemas ──────────────────────────────────────────────────────────
-import {
-  PortfolioCaseSchema,
-  PortfolioSectionContentSchema,
-} from '../src/types/portfolio';
+import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../src/types/portfolio';
 import { PortfolioCaseContentSchema } from '../src/types/portfolio/portfolioCaseContent';
 import { ImageGalleryContentSchema } from '../src/types/portfolio/imageGallery';
 

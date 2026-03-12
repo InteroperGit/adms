@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/legal/legalContent.schema.json",
   "title": "Политика конфиденциальности",
   "sections": [
     {

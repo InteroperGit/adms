@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/portfolio/portfolio.schema.json",
   "slug": "example-project",
   "title": "Название проекта",
   "category": "Брендинг",

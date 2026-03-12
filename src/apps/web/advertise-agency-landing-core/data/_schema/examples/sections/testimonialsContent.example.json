@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/testimonialsContent.schema.json",
   "label": "Отзывы",
   "title": "Что говорят клиенты",
   "description": "Описание секции отзывов."

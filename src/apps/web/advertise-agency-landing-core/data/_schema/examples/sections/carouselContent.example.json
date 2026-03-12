@@ -1,3 +1,4 @@
 {
+  "$schema": "../../schema/sections/carouselContent.schema.json",
   "label": "Название агентства"
 }

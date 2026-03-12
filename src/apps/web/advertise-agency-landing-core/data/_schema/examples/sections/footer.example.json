@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/footer.schema.json",
   "description": "{description}. Краткое описание компании для подвала.",
   "navTitle": "Навигация",
   "servicesTitle": "Услуги",

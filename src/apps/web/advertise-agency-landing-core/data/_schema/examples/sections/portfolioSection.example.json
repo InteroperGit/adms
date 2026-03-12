@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/sections/portfolioSection.schema.json",
   "label": "Портфолио",
   "title": "Наши работы",
   "description": "Описание секции портфолио.",

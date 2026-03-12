@@ -10,6 +10,8 @@
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "validate": "vite-node scripts/validate.ts",
+    "gen-schemas": "vite-node scripts/generate-json-schemas.ts",
+    "new-client": "vite-node scripts/new-client.ts",
     "typecheck": "tsc -b tsconfig.app.json --noEmit"
   },
   "pnpm": {

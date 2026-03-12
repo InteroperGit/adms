@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/config/site.schema.json",
   "name": "РА «Рекламастер»",
   "description": "Мы создаём рекламу, которая работает",
   "yandexMapsOrgId": "12345678901",

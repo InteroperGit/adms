@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/config/orderForms.schema.json",
   "forms": {
     "outdoor-signs": {
       "title": "Заказать вывеску",
