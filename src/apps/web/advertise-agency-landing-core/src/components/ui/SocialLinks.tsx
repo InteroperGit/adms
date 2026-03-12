@@ -1,21 +1,28 @@
-// src/components/ui/SocialLinks.tsx
-import { Send } from 'lucide-react';
+import { Phone, Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+const PHONE = {
+  colored:
+    'border-green-500/25 bg-green-500/5 text-green-600 hover:bg-green-500/10 dark:border-green-400/50 dark:text-green-400 dark:hover:bg-green-400/15',
+  dark: 'border-white/10 text-white/50 hover:border-green-400/40 hover:bg-green-400/10 hover:text-green-400',
+  light:
+    'border-border bg-white text-muted-foreground shadow-sm hover:border-green-500/30 hover:bg-green-500/5 hover:text-green-600',
+};
 
 const TG = {
   colored:
     'border-[#2AABEE]/20 bg-[#2AABEE]/5 text-[#2AABEE] hover:bg-[#2AABEE]/10 dark:border-[#2AABEE]/50 dark:hover:bg-[#2AABEE]/15',
-  dark: 'text-white/50 hover:border-[#2AABEE]/40 hover:bg-[#2AABEE]/10 hover:text-[#2AABEE]',
+  dark: 'border-white/10 text-white/50 hover:border-[#2AABEE]/40 hover:bg-[#2AABEE]/10 hover:text-[#2AABEE]',
   light:
-    'border-border text-muted-foreground hover:border-[#2AABEE]/30 hover:bg-[#2AABEE]/5 hover:text-[#2AABEE]',
+    'border-border bg-white text-muted-foreground shadow-sm hover:border-[#2AABEE]/30 hover:bg-[#2AABEE]/5 hover:text-[#2AABEE]',
 };
 
 const VK = {
   colored:
     'border-[#0077FF]/20 bg-[#0077FF]/5 text-[#0077FF] hover:bg-[#0077FF]/10 dark:border-[#0077FF]/50 dark:hover:bg-[#0077FF]/15',
-  dark: 'text-white/50 hover:border-[#0077FF]/40 hover:bg-[#0077FF]/10 hover:text-[#0077FF]',
+  dark: 'border-white/10 text-white/50 hover:border-[#0077FF]/40 hover:bg-[#0077FF]/10 hover:text-[#0077FF]',
   light:
-    'border-border text-muted-foreground hover:border-[#0077FF]/30 hover:bg-[#0077FF]/5 hover:text-[#0077FF]',
+    'border-border bg-white text-muted-foreground shadow-sm hover:border-[#0077FF]/30 hover:bg-[#0077FF]/5 hover:text-[#0077FF]',
 };
 
 function VkIcon({ size = 16 }: { size?: number }) {
@@ -27,60 +34,72 @@ function VkIcon({ size = 16 }: { size?: number }) {
 }
 
 interface SocialLinksProps {
-  telegram: string;
-  vk: string;
+  /** When provided (non-empty), renders a phone button */
+  phone?: string;
+  /** When provided (non-empty), renders a Telegram button */
+  telegram?: string;
+  /** When provided (non-empty), renders a VK button */
+  vk?: string;
   variant?: 'light' | 'dark' | 'colored';
+  /** sm = 40×40 rounded-lg (mobile top bar); md = 44×44 rounded-xl (default) */
+  size?: 'sm' | 'md';
   className?: string;
-  /** 0 = Telegram highlighted, 1 = VK highlighted, null = none */
+  /** 0 = phone, 1 = telegram, 2 = vk; null/undefined = none */
   highlightedIndex?: number | null;
 }
 
 export function SocialLinks({
+  phone,
   telegram,
   vk,
   variant = 'light',
+  size = 'md',
   className,
   highlightedIndex,
 }: SocialLinksProps) {
-  const isDark = variant === 'dark';
-  const isColored = variant === 'colored';
+  const v = variant;
+  const isSm = size === 'sm';
+  const iconSize = isSm ? 18 : 16;
 
   const base = cn(
-    'flex h-11 w-11 items-center justify-center transition-colors',
+    'flex items-center justify-center border transition-colors',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1',
-    isDark
-      ? 'rounded-lg border border-white/10 text-white/50'
-      : 'rounded-xl border bg-white shadow-sm'
+    isSm ? 'h-10 w-10 rounded-lg' : 'h-11 w-11 rounded-xl'
   );
 
   return (
-    <div className={cn('flex gap-3', className)}>
-      <a
-        href={telegram}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Telegram"
-        className={cn(
-          base,
-          isColored ? TG.colored : isDark ? TG.dark : TG.light,
-          highlightedIndex === 0 && 'animate-pulse-tg'
-        )}
-      >
-        <Send size={16} />
-      </a>
-      <a
-        href={vk}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="ВКонтакте"
-        className={cn(
-          base,
-          isColored ? VK.colored : isDark ? VK.dark : VK.light,
-          highlightedIndex === 1 && 'animate-pulse-vk'
-        )}
-      >
-        <VkIcon />
-      </a>
+    <div className={cn('flex', isSm ? 'gap-2' : 'gap-3', className)}>
+      {phone && (
+        <a
+          href={`tel:${phone}`}
+          aria-label="Позвонить"
+          className={cn(base, PHONE[v], highlightedIndex === 0 && 'animate-pulse-green')}
+        >
+          <Phone size={iconSize} />
+        </a>
+      )}
+      {telegram && (
+        <a
+          href={telegram}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Telegram"
+          className={cn(base, TG[v], highlightedIndex === 1 && 'animate-pulse-tg')}
+        >
+          <Send size={iconSize} />
+        </a>
+      )}
+      {vk && (
+        <a
+          href={vk}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="ВКонтакте"
+          className={cn(base, VK[v], highlightedIndex === 2 && 'animate-pulse-vk')}
+        >
+          <VkIcon size={iconSize} />
+        </a>
+      )}
     </div>
   );
 }

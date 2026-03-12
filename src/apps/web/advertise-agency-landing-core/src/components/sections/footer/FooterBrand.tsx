@@ -21,7 +21,12 @@ export function FooterBrand() {
       <p className="mb-6 text-sm leading-relaxed text-white/50">
         {footerContent.description.replace('{description}', siteData.description)}
       </p>
-      <SocialLinks telegram={siteData.contact.telegram} vk={siteData.contact.vk} variant="dark" />
+      <SocialLinks
+        phone={siteData.contact.phone}
+        telegram={siteData.contact.telegram}
+        vk={siteData.contact.vk}
+        variant="colored"
+      />
     </div>
   );
 }

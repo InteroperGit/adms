@@ -1,6 +1,5 @@
 import { SocialLinks } from '@/components/ui/SocialLinks';
 import { DarkModeToggle } from './DarkModeToggle';
-import { PhoneButton } from './PhoneButton';
 import { HeaderNav } from './HeaderNav';
 import { siteData } from '@/types/config/siteData';
 
@@ -18,14 +17,12 @@ export function HeaderDesktopNav({ isHome, highlightedActionIndex, isDark, onTog
       <HeaderNav isHome={isHome} />
 
       <div className="hidden items-center gap-3 md:flex">
-        <PhoneButton highlighted={highlightedActionIndex === 0} />
         <SocialLinks
+          phone={siteData.contact.phone}
           telegram={siteData.contact.telegram}
           vk={siteData.contact.vk}
           variant="colored"
-          highlightedIndex={
-            highlightedActionIndex === 1 ? 0 : highlightedActionIndex === 2 ? 1 : null
-          }
+          highlightedIndex={highlightedActionIndex}
         />
         <div className="h-6 w-px bg-border" />
         <DarkModeToggle isDark={isDark} onToggle={onToggleDark} />
