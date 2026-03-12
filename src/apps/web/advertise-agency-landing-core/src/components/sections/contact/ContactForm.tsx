@@ -38,7 +38,12 @@ export function ContactForm() {
 
           <ContactConsent checked={consent} onChange={setConsent} />
 
-          <Button type="submit" size="lg" className="w-full rounded-full">
+          <Button
+            type="submit"
+            size="lg"
+            disabled={!consent}
+            className="w-full rounded-full cursor-pointer disabled:cursor-not-allowed"
+          >
             {f.submit}
           </Button>
 
