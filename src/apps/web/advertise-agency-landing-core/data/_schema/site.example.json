@@ -3,6 +3,12 @@
   "description": "Мы создаём рекламу, которая работает",
   "yandexMapsOrgId": "12345678901",
   "yandexMapUrl": "https://yandex.ru/map-widget/v1/?um=constructor%3AHASH&source=constructorLink",
+  "yandexMetrikaId": "12345678",
+  "imageOptimization": {
+    "widths": [320, 640, 960, 1280, 1920],
+    "quality": 82,
+    "format": "webp"
+  },
   "contact": {
     "phone": "+7 (495) 123-45-67",
     "email": "hello@reklamaster.ru",

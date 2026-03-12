@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Header } from '@/components/sections/header';
 import { Footer } from '@/components/sections/footer';
 import { CookieBanner } from './components/banners/CookieBanner';
+import { MetrikaScript } from '@/components/analytics/MetrikaScript';
 import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
 import { HomeHashScroll } from '@/components/ui/HomeHashScroll';
 
@@ -36,6 +37,7 @@ export default function App() {
       <Footer />
       <ScrollToTop navSelector="#main-nav" />
       <CookieBanner />
+      <MetrikaScript />
     </>
   );
 }

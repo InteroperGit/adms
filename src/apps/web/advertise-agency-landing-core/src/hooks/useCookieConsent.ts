@@ -1,7 +1,13 @@
 // src/hooks/useCookieConsent.ts
 import { useEffect, useState } from 'react';
 
-type ConsentValue = 'all' | 'necessary' | null;
+export const ConsentState = {
+  ALL: 'all',
+  NECESSARY: 'necessary',
+} as const;
+
+export type ConsentValue = (typeof ConsentState)[keyof typeof ConsentState] | null;
+
 const STORAGE_KEY = 'cookie_consent';
 const CONSENT_EVENT = 'cookie_consent_change';
 

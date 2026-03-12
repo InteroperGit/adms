@@ -2,12 +2,11 @@ import { useState, useSyncExternalStore } from 'react';
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cookiesContent } from '@/types/config/cookies';
+import { ConsentState } from '@/hooks/useCookieConsent';
 import { CookieActions } from './CookieActions';
 import { cn } from '@/lib/utils';
 
 const STORAGE_KEY = 'cookie_consent';
-
-type ConsentValue = 'all' | 'necessary';
 
 export function CookieBanner() {
   // getServerSnapshot returns true (consent assumed) so SSG renders no banner in HTML.
@@ -20,7 +19,7 @@ export function CookieBanner() {
   const [dismissed, setDismissed] = useState(false);
   const visible = !hasConsent && !dismissed;
 
-  function save(value: ConsentValue) {
+  function save(value: (typeof ConsentState)[keyof typeof ConsentState]) {
     localStorage.setItem(STORAGE_KEY, value);
     setDismissed(true);
   }
@@ -41,7 +40,7 @@ export function CookieBanner() {
     >
       {/* Закрыть — только necessary */}
       <button
-        onClick={() => save('necessary')}
+        onClick={() => save(ConsentState.NECESSARY)}
         aria-label={cookiesContent.closeLabel}
         className="absolute right-4 top-4 text-muted-foreground transition-colors hover:text-foreground"
       >
@@ -61,7 +60,10 @@ export function CookieBanner() {
         .
       </p>
 
-      <CookieActions onAcceptAll={() => save('all')} onNecessaryOnly={() => save('necessary')} />
+      <CookieActions
+        onAcceptAll={() => save(ConsentState.ALL)}
+        onNecessaryOnly={() => save(ConsentState.NECESSARY)}
+      />
     </div>
   );
 }

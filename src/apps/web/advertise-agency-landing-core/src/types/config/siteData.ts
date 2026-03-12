@@ -15,6 +15,7 @@ export const SiteDataSchema = z.object({
   yandexMapsOrgId: z.string().optional(),
   yandexMapUrl: z.string().optional(),
   imageOptimization: ImageOptimizationSchema.optional(),
+  yandexMetrikaId: z.string().optional(),
   contact: z.object({
     phone: z.string(),
     email: z.string(),

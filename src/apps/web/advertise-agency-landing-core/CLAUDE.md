@@ -112,6 +112,8 @@ advertise-agency-landing-core/
 ├── src/
 │   ├── assets/              # Images, SVGs imported in components
 │   ├── components/
+│   │   ├── analytics/
+│   │   │   └── MetrikaScript.tsx      # Renderless analytics component; injects Yandex Metrika script only when useCookieConsent()==='all'; tracks virtual page views on route change via ym('hit'); noscript fallback rendered as JSX; reads siteData.yandexMetrikaId
 │   │   ├── banners/
 │   │   │   ├── CookieBanner.tsx       # Fixed bottom/bottom-left cookie consent dialog; saves 'all'|'necessary' to localStorage
 │   │   │   └── CookieActions.tsx      # Two consent buttons (accept all / necessary only); props: onAcceptAll, onNecessaryOnly
@@ -308,6 +310,7 @@ advertise-agency-landing-core/
 <Footer />
 <ScrollToTop />     fixed bottom-right, z-50, visible after 300px scroll, navSelector="#main-nav"
 <CookieBanner />    fixed bottom/bottom-left dialog, persists consent to localStorage
+<MetrikaScript />   renderless; injects Yandex Metrika when consent==='all'; tracks virtual page views
 ```
 
 ## Home page composition (Home.tsx — rendered at "/")
@@ -377,7 +380,7 @@ UI copy is split into one JSON file per section — each section component impor
 | `data/config/seo.json` | `src/types/config/seo.ts` → `seoConfig` | `src/plugins/ssgMetaPlugin.ts` (`onPageRendered`) |
 
 - **`data/config/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/config/theme.ts`.
-- **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo), `imageOptimization` (widths/quality/format for imageResizePlugin). Exposed via `src/types/config/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`.
+- **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo), `imageOptimization` (widths/quality/format for imageResizePlugin), `yandexMetrikaId` (enables Metrika analytics). Exposed via `src/types/config/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`, `analytics/MetrikaScript.tsx`.
 - **`data/sections/aboutValues.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/sections/aboutValues.ts`; used by `about/`.
 - **`data/sections/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Exposed via `src/types/sections/carousel.ts`; used by `carousel/`.
 - **`data/sections/advantages.json`** — array of `{ icon, title, description }` for the Advantages section. Exposed via `src/types/sections/advantages.ts`; used by `advantages/`. The `icon` field is a string key resolved via `ICON_MAP` from `src/types/shared/iconMap.ts`.
