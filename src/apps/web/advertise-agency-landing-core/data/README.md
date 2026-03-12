@@ -2,18 +2,18 @@
 
 All client-facing configuration lives here. To create a site for a new client, copy this folder, edit the JSON files listed below, and run `pnpm build`. Zero component code changes required.
 
-> **Important:** actual data files (`*.json` outside `_schema/`) are gitignored. Only `_schema/` examples and `portfolio/*.json` case studies are tracked.
+> **Important:** actual data files (`*.json` outside `_schema/`) are gitignored. Only `_schema/examples/` files and `portfolio/*.json` case studies are tracked.
 
 > **Required before first run:** all data JSON files must exist locally before `pnpm dev` or `pnpm build` — a missing file causes a hard startup error ("Cannot find module"). Bootstrap from the schema examples:
 > ```bash
-> # copy every _schema/*.example.json → the corresponding data file, then fill in real values
-> cp data/_schema/site.example.json       data/config/site.json
-> cp data/_schema/theme.example.json      data/config/theme.json
-> cp data/_schema/legal.example.json      data/config/legal.json
-> mkdir -p data/legal
-> cp data/_schema/legalContent.example.json data/legal/privacyPolicy.json
-> cp data/_schema/legalContent.example.json data/legal/userAgreement.json
-> cp data/_schema/legalContent.example.json data/legal/consent.json
+> # copy every _schema/examples/**/*.example.json → the corresponding data file, then fill in real values
+> cp data/_schema/examples/config/site.example.json       data/content/config/site.json
+> cp data/_schema/examples/config/theme.example.json      data/content/config/theme.json
+> cp data/_schema/examples/config/legal.example.json      data/content/config/legal.json
+> mkdir -p data/content/legal
+> cp data/_schema/examples/legal/legalContent.example.json data/content/legal/privacyPolicy.json
+> cp data/_schema/examples/legal/legalContent.example.json data/content/legal/userAgreement.json
+> cp data/_schema/examples/legal/legalContent.example.json data/content/legal/consent.json
 > # … repeat for remaining files listed in the Files section below
 > ```
 
@@ -69,47 +69,56 @@ UI copy is split into one file per section. Each component imports only the file
 | `legal/userAgreement.json` | Full content of the User Agreement page — same structure. |
 | `legal/consent.json` | Full content of the Data Processing Consent page — same structure. |
 
-All three `legal/*.json` files are required. If any is missing the app fails to start. Bootstrap from `_schema/legalContent.example.json` (see **Required before first run** above). Tokens like `{company.name}` in text fields are resolved at render time from `legal.json`.
+All three `legal/*.json` files are required. If any is missing the app fails to start. Bootstrap from `_schema/examples/legal/legalContent.example.json` (see **Required before first run** above). Tokens like `{company.name}` in text fields are resolved at render time from `legal.json`.
 
 ---
 
 ## Schema examples
 
-`_schema/` contains example files showing the full structure of every JSON file. Use these as templates:
+`_schema/examples/` mirrors the `data/` subfolder structure and contains example files showing the full structure of every JSON file. Use these as templates:
 
 ```
-_schema/
-  header.example.json
-  hero.example.json
-  carouselContent.example.json
-  aboutContent.example.json
-  servicesContent.example.json
-  portfolioSection.example.json
-  advantagesContent.example.json
-  callToAction.example.json
-  testimonialsContent.example.json
-  contact.example.json
-  footer.example.json
-  portfolioCase.example.json
-  imageGallery.example.json
-  cookies.example.json
-  theme.example.json
-  site.example.json
-  legal.example.json
-  legalContent.example.json
-  aboutValues.example.json
-  carousel.example.json
-  services.example.json
-  advantages.example.json
-  testimonials.example.json
-  portfolio.example.json
+_schema/examples/
+  config/
+    site.example.json
+    theme.example.json
+    cookies.example.json
+    portfolioConfig.example.json
+    categories.example.json
+    legal.example.json
+    orderForms.example.json
+    seo.example.json
+  sections/
+    header.example.json
+    hero.example.json
+    carousel.example.json
+    carouselContent.example.json
+    aboutContent.example.json
+    aboutValues.example.json
+    servicesContent.example.json
+    services.example.json
+    portfolioSection.example.json
+    portfolioPage.example.json
+    portfolioCase.example.json
+    advantagesContent.example.json
+    advantages.example.json
+    callToAction.example.json
+    testimonialsContent.example.json
+    testimonials.example.json
+    imageGallery.example.json
+    contact.example.json
+    footer.example.json
+  legal/
+    legalContent.example.json
+  portfolio/
+    portfolio.example.json
 ```
 
 ---
 
 ## Creating a new client config
 
-1. Copy the `data/` folder (or start from `_schema/` examples).
+1. Copy the `data/` folder (or start from `_schema/examples/` files).
 2. Edit the core identity files:
    - `theme.json` — brand colors and fonts
    - `site.json` — contact details and social links
@@ -126,15 +135,15 @@ _schema/
 
 ## Adding a portfolio case
 
-1. Create `data/portfolio/<slug>.json` following `_schema/portfolio.example.json`.
-2. The SSG build auto-discovers all files matching `data/portfolio/*.json` and generates a static page at `/portfolio/<slug>`.
+1. Create `data/content/portfolio/<slug>.json` following `_schema/examples/portfolio/portfolio.example.json`.
+2. The SSG build auto-discovers all files matching `data/content/portfolio/*.json` and generates a static page at `/portfolio/<slug>`.
 3. The case page renders each block in `content[]` top-to-bottom via `BlockRenderer`.
 
 ---
 
 ## Portfolio case structure
 
-Each `data/portfolio/<slug>.json` file has this shape:
+Each `data/content/portfolio/<slug>.json` file has this shape:
 
 ```jsonc
 {
@@ -184,7 +193,7 @@ The `content` array is a **dynamic zone** — an ordered list of typed blocks re
 
 `gradient: true` on `metrics`, `cards`, and `color: "gradient"` on `chart` use the case's `hero.gradient` value for coloring.
 
-See `_schema/portfolio.example.json` for a full example with every block type.
+See `_schema/examples/portfolio/portfolio.example.json` for a full example with every block type.
 
 ---
 

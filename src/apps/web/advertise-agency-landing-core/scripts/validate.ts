@@ -76,11 +76,11 @@ function fileExists(filePath: string): boolean {
 }
 
 function cfg(name: string) {
-  return path.join(root, 'data/config', name);
+  return path.join(root, 'data/content/config', name);
 }
 
 function sec(name: string) {
-  return path.join(root, 'data/sections', name);
+  return path.join(root, 'data/content/sections', name);
 }
 
 // ── Config files ───────────────────────────────────────────────────────────────
@@ -157,7 +157,7 @@ check('imageGallery.json', () =>
 
 // ── Portfolio cases ────────────────────────────────────────────────────────────
 
-const portfolioDir = path.join(root, 'data/portfolio');
+const portfolioDir = path.join(root, 'data/content/portfolio');
 
 console.log('\nPortfolio cases:');
 

@@ -1,9 +1,0 @@
-{
-  "perPage": 9,
-  "allLabel": "Все",
-  "prevLabel": "Назад",
-  "nextLabel": "Вперёд",
-  "pageLabel": "Страница {current} из {total}",
-  "emptyLabel": "Проектов в этой категории пока нет.",
-  "cta": { "label": "Обсудить ваш проект", "href": "/#contact" }
-}

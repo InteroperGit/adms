@@ -79,7 +79,7 @@ function buildFontLinks(urls: string[]): string {
 const ANTI_FOUC_SCRIPT = `<script>(function(){try{var m=localStorage.getItem('theme-mode');if(m==='dark'||(m===null&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})();</script>`;
 
 export function themePlugin(): Plugin {
-  const themeFile = path.resolve(__dirname, '../../data/config/theme.json');
+  const themeFile = path.resolve(__dirname, '../../data/content/config/theme.json');
 
   let theme: Theme;
 

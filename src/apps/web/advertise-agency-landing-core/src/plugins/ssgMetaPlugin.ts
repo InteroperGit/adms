@@ -195,10 +195,10 @@ const DYNAMIC_ROUTE_PATTERNS = new Set([
 
 export function buildIncludedRoutes(rootDir: string): (paths: string[]) => string[] {
   const categories =
-    readJson<CategoryEntry[]>(path.resolve(rootDir, 'data/config/categories.json')) ?? [];
+    readJson<CategoryEntry[]>(path.resolve(rootDir, 'data/content/config/categories.json')) ?? [];
   const catSlugs = ['all', ...categories.map((c) => c.slug)];
 
-  const portfolioDir = path.resolve(rootDir, 'data/portfolio');
+  const portfolioDir = path.resolve(rootDir, 'data/content/portfolio');
   const caseFiles = existsSync(portfolioDir)
     ? readdirSync(portfolioDir).filter((f) => f.endsWith('.json'))
     : [];
@@ -234,15 +234,15 @@ export function buildIncludedRoutes(rootDir: string): (paths: string[]) => strin
 // ---------------------------------------------------------------------------
 
 export function createSsgMetaHook(rootDir: string): (route: string, html: string) => string {
-  const seo = readJson<SeoConfig>(path.resolve(rootDir, 'data/config/seo.json'));
+  const seo = readJson<SeoConfig>(path.resolve(rootDir, 'data/content/config/seo.json'));
   if (!seo) {
     return (_route, html) => html;
   }
 
-  const site = readJson<SiteConfig>(path.resolve(rootDir, 'data/config/site.json'));
-  const legal = readJson<LegalConfig>(path.resolve(rootDir, 'data/config/legal.json'));
+  const site = readJson<SiteConfig>(path.resolve(rootDir, 'data/content/config/site.json'));
+  const legal = readJson<LegalConfig>(path.resolve(rootDir, 'data/content/config/legal.json'));
   const categories =
-    readJson<CategoryEntry[]>(path.resolve(rootDir, 'data/config/categories.json')) ?? [];
+    readJson<CategoryEntry[]>(path.resolve(rootDir, 'data/content/config/categories.json')) ?? [];
 
   return function onPageRendered(route: string, html: string): string {
     // Inject global defaults on every page
@@ -258,7 +258,7 @@ export function createSsgMetaHook(rootDir: string): (route: string, html: string
     const caseMatch = /^\/portfolio\/([^/]+)\/([^/]+)$/.exec(route);
     if (caseMatch) {
       const caseSlug = caseMatch[2];
-      const caseData = readJson<CaseData>(path.resolve(rootDir, `data/portfolio/${caseSlug}.json`));
+      const caseData = readJson<CaseData>(path.resolve(rootDir, `data/content/portfolio/${caseSlug}.json`));
       if (caseData) {
         return handleCasePage(out, caseSlug, caseData, seo, categories);
       }

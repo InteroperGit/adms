@@ -52,7 +52,7 @@ export function imageResizePlugin(): Plugin {
 
     configResolved(config) {
       resolvedConfig = config;
-      const siteJsonPath = path.resolve(config.root, 'data/config/site.json');
+      const siteJsonPath = path.resolve(config.root, 'data/content/config/site.json');
       if (existsSync(siteJsonPath)) {
         const site = JSON.parse(readFileSync(siteJsonPath, 'utf-8')) as {
           imageOptimization?: Partial<ImageOptimizationConfig>;

@@ -250,8 +250,8 @@ Improve developer experience when configuring data for new clients.
 
 **Requirements:**
 - Install `zod-to-json-schema` (dev dependency) for converting Zod schemas to JSON Schema
-- Create `scripts/generate-json-schemas.ts` — imports all `XxxSchema` exports from `src/types/config/`, `src/types/sections/`, `src/types/portfolio/`, `src/types/legal/`; converts each to JSON Schema via `zodToJsonSchema()`; writes to `data/_schema/<name>.schema.json`
-- Add `"$schema": "../_schema/<name>.schema.json"` hints to all `data/config/`, `data/sections/`, `data/legal/`, `data/portfolio/` JSON files so VS Code provides autocomplete and inline validation
+- Create `scripts/generate-json-schemas.ts` — imports all `XxxSchema` exports from `src/types/config/`, `src/types/sections/`, `src/types/portfolio/`, `src/types/legal/`; converts each to JSON Schema via `zodToJsonSchema()`; writes to `data/_schema/schema/<name>.schema.json`
+- Add `"$schema": "../_schema/schema/<name>.schema.json"` hints to all `data/config/`, `data/sections/`, `data/legal/`, `data/portfolio/` JSON files so VS Code provides autocomplete and inline validation
 - Add `pnpm gen-schemas` script to `package.json` (runs `vite-node scripts/generate-json-schemas.ts`)
 - Create `scripts/new-client.ts` — interactive CLI (use `readline` or `@inquirer/prompts`) that prompts for:
   - Company name, phone, email, address, social links
@@ -262,7 +262,7 @@ Improve developer experience when configuring data for new clients.
 
 **Files:**
 - `scripts/generate-json-schemas.ts` — new (uses `zod-to-json-schema`)
-- `data/_schema/*.schema.json` — generated JSON Schema files
+- `data/_schema/examples/*.schema.json` — generated JSON Schema files
 - `scripts/new-client.ts` — new CLI script
 - `package.json` — add `gen-schemas` and `new-client` scripts
 
