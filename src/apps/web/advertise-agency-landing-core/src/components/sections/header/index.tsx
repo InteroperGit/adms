@@ -3,6 +3,7 @@ import { Container } from '@/components/layout/Container';
 import { headerContent } from '@/types/sections/header';
 import { useActiveSectionHref } from '@/hooks/useActiveSectionHref';
 import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
+import { useDarkMode } from '@/hooks/useDarkMode';
 import { siteData } from '@/types/config/siteData';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
 import { HeaderMobileNav } from './HeaderMobileNav';
@@ -15,9 +16,10 @@ export function Header() {
   const isHome = pathname === '/';
   const activeHref = useActiveSectionHref();
   const highlightedActionIndex = useRandomButtonHighlight(HEADER_BUTTON_COUNT);
+  const { isDark, toggle } = useDarkMode();
 
   return (
-    <header id="main-nav" className="border-b border-border bg-white shadow-sm">
+    <header id="main-nav" className="border-b border-border bg-background shadow-sm">
       <Container>
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
@@ -37,11 +39,15 @@ export function Header() {
             activeHref={activeHref}
             isHome={isHome}
             highlightedActionIndex={highlightedActionIndex}
+            isDark={isDark}
+            onToggleDark={toggle}
           />
           <HeaderMobileNav
             activeHref={activeHref}
             isHome={isHome}
             highlightedActionIndex={highlightedActionIndex}
+            isDark={isDark}
+            onToggleDark={toggle}
           />
         </div>
       </Container>

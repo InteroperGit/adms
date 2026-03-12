@@ -139,7 +139,7 @@ advertise-agency-landing-core/
 │   │   │   │   ├── index.tsx          # bg-muted section: SectionHeader + card grid; imported as '@/components/sections/services'
 │   │   │   │   └── ServiceCard.tsx    # shadcn Card with icon + title + description; props: service: Service
 │   │   │   ├── portfolio/
-│   │   │   │   ├── index.tsx          # bg-white section: SectionHeader + PortfolioFilter + card grid (max 6 preview items) + CTA → /portfolio; imported as '@/components/sections/portfolio'
+│   │   │   │   ├── index.tsx          # bg-background section: SectionHeader + PortfolioFilter + card grid (max 6 preview items) + CTA → /portfolio; imported as '@/components/sections/portfolio'
 │   │   │   │   └── PortfolioFilter.tsx # Category filter buttons with active state; props: categories, active, onChange
 │   │   │   ├── advantages/
 │   │   │   │   ├── index.tsx          # Dark bg section: decorative circles + SectionHeader + card grid; imported as '@/components/sections/advantages'
@@ -158,7 +158,7 @@ advertise-agency-landing-core/
 │   │   │   │   ├── ContactFormFields.tsx  # Three input fields (name, contact, message); props: form, onChange; reads labels from content
 │   │   │   │   ├── ContactConsent.tsx     # Consent checkbox + legal links; props: checked, onChange; reads text from content
 │   │   │   │   ├── ContactSuccess.tsx     # Success panel (icon + title + text + reset button); prop: onReset
-│   │   │   │   ├── ContactInfo.tsx        # Three ContactItem instances + SocialLinks + optional ContactMap
+│   │   │   │   ├── ContactInfo.tsx        # Three ContactItem instances + SocialLinks (colored variant) + optional ContactMap
 │   │   │   │   ├── ContactItem.tsx        # Single contact row: icon box + label + value (with optional link); props: icon, label, value, href?
 │   │   │   │   ├── ContactMap.tsx         # Yandex map iframe (360px); rendered when siteData.yandexMapUrl is set; props: url, className
 │   │   │   │   └── ContactHours.tsx       # Working hours card (weekdays/saturday/sunday from siteData)
@@ -185,7 +185,7 @@ advertise-agency-landing-core/
 │   │       │   └── OrderFormProductTabs.tsx   # Horizontal scrollable tab bar for product type selection
 │   │       ├── BackButton.tsx         # Fixed top-right back button (pill style, z-50, always visible) used on legal pages
 │   │       ├── OptimizedImage.tsx     # Drop-in <img> replacement: <picture>+<source type="image/webp" srcset> in production; plain <img> fallback in dev (import.meta.env.DEV); props: src, alt, sizes?, priority?, width?, height?, className?; priority=true → loading="eager" fetchPriority="high"
-│   │       ├── BreadCrumbs.tsx        # Pill-style breadcrumb nav bar (border-b, bg-white); props: items[]{label, href?}; last/no-href item shown as primary-tinted pill; used on PortfolioCasePage
+│   │       ├── BreadCrumbs.tsx        # Pill-style breadcrumb nav bar (border-b, bg-background); props: items[]{label, href?}; last/no-href item shown as primary-tinted pill; used on PortfolioCasePage
 │   │       ├── LegalBlockRenderer.tsx # Renders LegalContent sections/blocks; token substitution ({company.X} → legalData.company) + dangerouslySetInnerHTML for inline HTML; block types: p, ul, ol, dl, contact
 │   │       ├── LegalPageLayout.tsx    # Shared layout for legal pages: BackButton + h1 + version footer + children; props: title, version, effectiveDate, children
 │   │       ├── LegalSection.tsx       # Legal content section block: h2 + children div; props: id?, title, children
@@ -211,13 +211,14 @@ advertise-agency-landing-core/
 │   │   ├── useActiveSection.ts       # IntersectionObserver that tracks which home-page section is in view; returns section id string
 │   │   ├── useActiveSectionHref.ts   # Combines useActiveSection (scroll) + route-based matching via ROUTE_MAP; returns active nav href (e.g. '#portfolio'); used by HeaderDesktopNav and HeaderMobileNav
 │   │   ├── useRandomButtonHighlight.ts # Randomly cycles a pulse highlight through header CTA buttons at a random interval
+│   │   ├── useDarkMode.ts            # Reads/writes 'theme-mode' in localStorage + system pref; toggles .dark class on <html>; returns { isDark: boolean, toggle: () => void }; used by Header
 │   │   └── useCookieConsent.ts       # Returns 'all'|'necessary'|null; reactive via CustomEvent 'cookie_consent_change'
 │   ├── lib/
 │   │   ├── utils.ts            # cn() helper (clsx + tailwind-merge)
 │   │   └── categorySlug.ts     # categorySlug(name) — looks up category name in categories const, returns slug; falls back to 'all'
 │   │   └── imageSrcSet.ts      # resolveImageSrcSet(src, widths?) — pure helper: returns srcset string for /images/ paths; importable by components and plugins
 │   ├── plugins/
-│   │   ├── themePlugin.ts     # Vite plugin: reads data/config/theme.json, injects CSS vars + Google Fonts into index.html
+│   │   ├── themePlugin.ts     # Vite plugin: reads data/config/theme.json, injects :root CSS vars + .dark vars (when darkColors present) + anti-FOUC script + Google Fonts into index.html
 │   │   ├── imageResizePlugin.ts # Vite plugin (build-only): sharp-based WebP resizer; reads public/images/**; outputs _optimized/<name>-<w>w.webp per breakpoint; skips unchanged files via SHA-256 manifest; re-exports resolveImageSrcSet
 │   │   └── ssgMetaPlugin.ts   # Vite plugin hook: buildIncludedRoutes() generates all portfolio pages; createSsgMetaHook() injects OG tags, canonical links, JSON-LD via seoConfig
 │   ├── pages/
@@ -239,8 +240,8 @@ advertise-agency-landing-core/
 │   │   │   │   ├── ImageBlock.tsx     # <figure>+<img>+<figcaption>; size: small→max-w-md, medium→max-w-2xl, full→max-w-5xl
 │   │   │   │   ├── GalleryBlock.tsx   # Wraps <ImageGallery>; reads labels from portfolioCaseContent + imageGalleryContent; props: block, caseTitle
 │   │   │   │   ├── VideoBlock.tsx     # YouTube/Rutube → <iframe> embed; local .mp4/.webm/.ogg → <video>; aspect-ratio padding-top trick
-│   │   │   │   ├── MetricsBlock.tsx   # 3-col KPI grid; color.type gradient/solid/primary/accent → colored bg + white text; otherwise white card + text-primary metric
-│   │   │   │   ├── CardsBlock.tsx     # Grid of white cards; columns 2/3/4 (default 3); color.type → accent bar (gradient/solid/primary/accent)
+│   │   │   │   ├── MetricsBlock.tsx   # 3-col KPI grid; color.type gradient/solid/primary/accent → colored bg + white text; otherwise bg-card surface + text-primary metric
+│   │   │   │   ├── CardsBlock.tsx     # Grid of cards (bg-card surface); columns 2/3/4 (default 3); color.type → accent bar (gradient/solid/primary/accent)
 │   │   │   │   ├── TableBlock.tsx     # overflow-x-auto table; bg-muted/60 thead; striped rows; highlight rows get bg-primary/5; optional total?: string[] — tfoot on desktop, summary card on mobile (total[0] as header label, remaining cells as label↔value pairs)
 │   │   │   │   ├── ChartBlock.tsx     # Pure CSS/SVG charts: bar, horizontal-bar, progress (div-based); line, pie (SVG); no chart library; color?: BlockColor
 │   │   │   │   ├── BlockquoteBlock.tsx # Variant A (testimonialId): renders <TestimonialCard>; Variant B (text+author): styled <blockquote> with border-l-4 border-primary
@@ -379,7 +380,7 @@ UI copy is split into one JSON file per section — each section component impor
 | `data/config/orderForms.json` | `src/types/config/orderForms.ts` → `orderFormsData` | `ui/orderForm/`, `portfolio/blocks/OrderFormBlock.tsx`, `OrderPage.tsx` |
 | `data/config/seo.json` | `src/types/config/seo.ts` → `seoConfig` | `src/plugins/ssgMetaPlugin.ts` (`onPageRendered`) |
 
-- **`data/config/theme.json`** — brand identity: HSL color values, border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects CSS vars and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/config/theme.ts`.
+- **`data/config/theme.json`** — brand identity: HSL color values, optional `darkColors` (same shape, overrides vars under `.dark` class), border radius, font families, and Google Fonts URLs. Consumed at build time by `src/plugins/themePlugin.ts` which injects `:root` + `.dark` CSS vars, anti-FOUC script, and `<link>` tags into `index.html`. App-side type: `Theme` + `ThemeColors` in `src/types/config/theme.ts`.
 - **`data/config/site.json`** — global site config (phone, email, address, social links, hours). Optional fields: `yandexMapsOrgId` (enables Yandex reviews widget in Testimonials), `yandexMapUrl` (enables Yandex map iframe in ContactInfo), `imageOptimization` (widths/quality/format for imageResizePlugin), `yandexMetrikaId` (enables Metrika analytics). Exposed via `src/types/config/siteData.ts`; used by `header/`, `contact/`, `footer/`, `testimonials/`, `analytics/MetrikaScript.tsx`.
 - **`data/sections/aboutValues.json`** — array of `{ title, description }` for the About section values list. Exposed via `src/types/sections/aboutValues.ts`; used by `about/`.
 - **`data/sections/carousel.json`** — array of `{ id, image, alt, gradient, title, subtitle }` for the top carousel. `image` is optional (uses `gradient` fallback when empty). Exposed via `src/types/sections/carousel.ts`; used by `carousel/`.
@@ -436,6 +437,7 @@ Files are placed in `src/components/ui/` — never edit them manually.
 
 ## Key Rules
 
+- **Never use raw `bg-white`** — use `bg-background` for page/section backgrounds and `bg-card` for card/interactive surfaces; `bg-white` breaks dark mode since it's not a CSS variable
 - **After modifying or creating any component**, review its Tailwind classes and improve them — consolidate redundant utilities, apply responsive variants, use semantic color tokens (`bg-primary`, `text-muted-foreground`, etc.) instead of raw values, and ensure consistent spacing scale
 - **`cn()` from `@/lib/utils`** — do NOT reach for it by default; only add it when you identify a concrete need: conditional classes, merging a `className` prop from outside, combining multiple expressions, or a static string long enough to hurt readability (then split across lines inside `cn()`); a short static string stays as a plain string literal
 - Package manager is **pnpm only** — never use npm or yarn

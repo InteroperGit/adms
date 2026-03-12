@@ -20,7 +20,7 @@ export function TableBlock({ block }: TableBlockProps) {
             key={i}
             className={cn(
               'cursor-pointer rounded-xl border border-border p-4 shadow-sm transition-colors hover:bg-primary/10',
-              highlighted.has(i) ? 'bg-primary/5' : 'bg-white'
+              highlighted.has(i) ? 'bg-primary/5' : 'bg-card'
             )}
           >
             {row.map((cell, j) => (
@@ -73,7 +73,7 @@ export function TableBlock({ block }: TableBlockProps) {
                 key={i}
                 className={cn(
                   'cursor-pointer border-t border-border transition-colors hover:bg-primary/10',
-                  highlighted.has(i) ? 'bg-primary/5' : i % 2 === 0 ? 'bg-white' : 'bg-muted/20'
+                  highlighted.has(i) ? 'bg-primary/5' : i % 2 === 0 ? 'bg-card' : 'bg-muted/20'
                 )}
               >
                 {row.map((cell, j) => (

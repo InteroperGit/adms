@@ -3,14 +3,16 @@ import { Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const TG = {
-  colored: 'border-[#2AABEE]/30 bg-[#2AABEE]/5 text-[#2AABEE] hover:bg-[#2AABEE]/15',
+  colored:
+    'border-[#2AABEE]/20 bg-[#2AABEE]/5 text-[#2AABEE] hover:bg-[#2AABEE]/10 dark:border-[#2AABEE]/50 dark:hover:bg-[#2AABEE]/15',
   dark: 'text-white/50 hover:border-[#2AABEE]/40 hover:bg-[#2AABEE]/10 hover:text-[#2AABEE]',
   light:
     'border-border text-muted-foreground hover:border-[#2AABEE]/30 hover:bg-[#2AABEE]/5 hover:text-[#2AABEE]',
 };
 
 const VK = {
-  colored: 'border-[#0077FF]/30 bg-[#0077FF]/5 text-[#0077FF] hover:bg-[#0077FF]/15',
+  colored:
+    'border-[#0077FF]/20 bg-[#0077FF]/5 text-[#0077FF] hover:bg-[#0077FF]/10 dark:border-[#0077FF]/50 dark:hover:bg-[#0077FF]/15',
   dark: 'text-white/50 hover:border-[#0077FF]/40 hover:bg-[#0077FF]/10 hover:text-[#0077FF]',
   light:
     'border-border text-muted-foreground hover:border-[#0077FF]/30 hover:bg-[#0077FF]/5 hover:text-[#0077FF]',

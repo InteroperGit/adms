@@ -5,7 +5,10 @@ type Variant =
   | 'muted-to-white'
   | 'white-to-dark'
   | 'dark-to-primary'
-  | 'primary-to-muted';
+  | 'primary-to-muted'
+  | 'muted-to-primary'
+  | 'primary-to-white'
+  | 'muted-to-surface-dark';
 
 const VARIANTS: Record<Variant, { bg: string; fill: string }> = {
   'white-to-muted': { bg: 'hsl(var(--background))', fill: 'hsl(var(--muted))' },
@@ -13,6 +16,12 @@ const VARIANTS: Record<Variant, { bg: string; fill: string }> = {
   'white-to-dark': { bg: 'hsl(var(--background))', fill: 'hsl(var(--foreground))' },
   'dark-to-primary': { bg: 'hsl(var(--foreground))', fill: 'hsl(var(--primary))' },
   'primary-to-muted': { bg: 'hsl(var(--primary))', fill: 'hsl(var(--muted))' },
+  'muted-to-primary': { bg: 'hsl(var(--muted))', fill: 'hsl(var(--primary))' },
+  'primary-to-white': { bg: 'hsl(var(--primary))', fill: 'hsl(var(--background))' },
+  'muted-to-surface-dark': {
+    bg: 'hsl(var(--muted))',
+    fill: 'hsl(var(--surface-dark, var(--foreground)))',
+  },
 };
 
 interface SectionDividerProps {

@@ -13,7 +13,7 @@ export function AboutCard({ card }: AboutCardProps) {
       <div className="absolute h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
 
       {/* Main card */}
-      <div className="relative w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-white shadow-xl">
+      <div className="relative w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
         {/* Card header */}
         <div className="bg-primary px-6 py-8">
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-2xl font-bold text-white">
@@ -37,17 +37,6 @@ export function AboutCard({ card }: AboutCardProps) {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Floating accent badge */}
-      <div className="absolute bottom-0 right-0 rounded-xl border border-border bg-white px-4 py-3 shadow-lg sm:-bottom-4 sm:-right-4">
-        <p className="text-xs text-muted-foreground">{card.nps.label}</p>
-        <p
-          style={{ fontFamily: 'var(--font-heading)' }}
-          className="text-2xl font-bold text-primary"
-        >
-          {card.nps.value}
-        </p>
       </div>
     </div>
   );

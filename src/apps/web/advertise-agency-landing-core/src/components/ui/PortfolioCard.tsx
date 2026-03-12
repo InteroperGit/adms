@@ -16,7 +16,7 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
   return (
     <article
       className={cn(
-        'group overflow-hidden rounded-2xl border border-border bg-white shadow-sm',
+        'group overflow-hidden rounded-2xl border border-border bg-card shadow-sm',
         'transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg'
       )}
     >

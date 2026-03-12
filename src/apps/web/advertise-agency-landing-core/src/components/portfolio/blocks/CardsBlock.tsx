@@ -26,7 +26,7 @@ export function CardsBlock({ block, caseGradient }: CardsBlockProps) {
       {block.title && <h2 className="mb-8 text-2xl font-bold md:text-3xl">{block.title}</h2>}
       <div className={cn('grid gap-4 sm:gap-6', COLS_CLASS[cols])}>
         {block.items.map(({ title, description }) => (
-          <div key={title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
+          <div key={title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             {isGradient && (
               <div className={cn('mb-3 h-1 w-10 rounded-full bg-gradient-to-r', gradientStops)} />
             )}

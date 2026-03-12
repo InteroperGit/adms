@@ -27,7 +27,7 @@ export function OrderFormProductTabs({
               'flex cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-colors sm:shrink-0 sm:rounded-full sm:py-2',
               isActive
                 ? 'border-primary bg-primary text-primary-foreground hover:bg-primary/90'
-                : 'border-border bg-white text-muted-foreground hover:border-primary/50 hover:text-foreground'
+                : 'border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground'
             )}
           >
             {Icon && <Icon size={16} />}

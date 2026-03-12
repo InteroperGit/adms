@@ -10,7 +10,7 @@ interface Props {
 export function ServiceCard({ service }: Props) {
   const Icon = ICON_MAP[service.icon];
   return (
-    <Card className="group border-border bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+    <Card className="group border-border bg-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
       <CardHeader className="pb-3">
         <div
           className={cn(

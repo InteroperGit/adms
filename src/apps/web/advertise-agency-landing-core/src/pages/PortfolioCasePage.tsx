@@ -38,7 +38,7 @@ export function PortfolioCasePage() {
     <div
       id="main-content"
       tabIndex={-1}
-      className="min-h-screen bg-white font-sans text-foreground"
+      className="min-h-screen bg-background font-sans text-foreground"
     >
       <BreadCrumbs
         items={[

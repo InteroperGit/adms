@@ -9,7 +9,7 @@ import { FooterBottom } from './FooterBottom';
 
 export function Footer() {
   return (
-    <footer style={{ backgroundColor: 'hsl(var(--foreground))' }}>
+    <footer className="bg-surface-dark">
       <Container>
         <div className="grid grid-cols-1 gap-6 py-12 sm:grid-cols-2 sm:gap-10 sm:py-16 lg:grid-cols-4">
           <FooterBrand />

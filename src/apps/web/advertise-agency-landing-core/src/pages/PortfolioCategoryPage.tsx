@@ -30,7 +30,7 @@ export function PortfolioCategoryPage() {
 
   if (!isAll && !category) {
     return (
-      <section className="bg-white py-24 md:py-32">
+      <section className="bg-background py-24 md:py-32">
         <Container>
           <p className="mb-4 text-center text-muted-foreground">Категория не найдена.</p>
           <div className="text-center">
@@ -54,7 +54,7 @@ export function PortfolioCategoryPage() {
           { label: categoryLabel },
         ]}
       />
-      <section className="bg-white py-24 md:py-32">
+      <section className="bg-background py-24 md:py-32">
         <Container>
           <SectionHeader
             label={p.label}

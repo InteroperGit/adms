@@ -12,7 +12,7 @@ export function Contact() {
   const { ref, isVisible } = useFadeIn();
 
   return (
-    <section ref={ref} id="contact" className="bg-white py-24 md:py-32">
+    <section ref={ref} id="contact" className="bg-muted py-24 md:py-32">
       <div className={cn('fade-in-section', isVisible && 'is-visible')}>
         <Container>
           <SectionHeader

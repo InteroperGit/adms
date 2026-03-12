@@ -7,7 +7,7 @@ export function ContactHours() {
   const { weekdays, saturday, sunday } = siteData.contact.workingHours;
 
   return (
-    <div className="rounded-2xl border border-border bg-white p-4 shadow-sm sm:p-6">
+    <div className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
       <p className="mb-3 text-sm font-semibold text-foreground">{hoursTitle}</p>
       <div className="space-y-1.5 text-sm">
         <div className="flex justify-between">

@@ -26,7 +26,7 @@ export function ContactForm() {
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-white p-8 shadow-sm">
+    <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
       {submitted ? (
         <ContactSuccess onReset={() => setSubmitted(false)} />
       ) : (

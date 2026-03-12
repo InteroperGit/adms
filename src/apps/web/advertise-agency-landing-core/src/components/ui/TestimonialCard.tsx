@@ -21,7 +21,7 @@ export function TestimonialCard({
 }: TestimonialCardProps) {
   return (
     <blockquote
-      className={cn('relative rounded-2xl border border-border bg-white shadow-sm', className)}
+      className={cn('relative rounded-2xl border border-border bg-card shadow-sm', className)}
     >
       {showQuoteIcon && (
         <div className="absolute right-6 top-6 text-primary/10 md:right-12 md:top-10">

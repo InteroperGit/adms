@@ -12,7 +12,7 @@ export function Testimonials() {
   const { ref, isVisible } = useFadeIn();
 
   return (
-    <section ref={ref} id="testimonials" className="bg-muted py-24 md:py-32">
+    <section ref={ref} id="testimonials" className="bg-background py-24 md:py-32">
       <div className={cn('fade-in-section', isVisible && 'is-visible')}>
         <Container>
           <SectionHeader

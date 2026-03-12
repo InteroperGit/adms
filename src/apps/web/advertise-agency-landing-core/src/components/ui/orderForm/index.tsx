@@ -86,14 +86,14 @@ export function OrderForm({ definition }: OrderFormProps) {
 
   if (submitted) {
     return (
-      <div className="rounded-2xl border border-border bg-white p-8 shadow-sm">
+      <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
         <OrderFormSuccess success={definition.success} onReset={handleReset} />
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-white p-8 shadow-sm">
+    <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
       <form onSubmit={handleSubmit} className="space-y-6">
         {definition.productTypes.length > 1 && (
           <>

@@ -12,8 +12,8 @@ export function AdvantageCard({ item, index }: Props) {
   return (
     <div
       className={cn(
-        'group rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm',
-        'transition-colors duration-300 hover:border-primary/40 hover:bg-white/10'
+        'group rounded-2xl border border-border bg-card p-6',
+        'transition-colors duration-300 hover:border-primary/40 hover:bg-background'
       )}
     >
       <div className="mb-4 flex items-center gap-4">
@@ -29,13 +29,13 @@ export function AdvantageCard({ item, index }: Props) {
         <span
           aria-hidden="true"
           style={{ fontFamily: 'var(--font-heading)' }}
-          className="text-3xl font-bold text-white/10"
+          className="text-3xl font-bold text-foreground/10"
         >
           {String(index + 1).padStart(2, '0')}
         </span>
       </div>
-      <h3 className="mb-2 text-base font-semibold text-white">{item.title}</h3>
-      <p className="text-sm leading-relaxed text-white/55">{item.description}</p>
+      <h3 className="mb-2 text-base font-semibold text-foreground">{item.title}</h3>
+      <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
     </div>
   );
 }

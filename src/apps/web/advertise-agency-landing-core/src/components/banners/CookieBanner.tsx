@@ -33,7 +33,7 @@ export function CookieBanner() {
       role="dialog"
       aria-label={cookiesContent.ariaLabel}
       className={cn(
-        'fixed bottom-0 left-0 right-0 z-50 bg-white px-4 py-5 shadow-lg',
+        'fixed bottom-0 left-0 right-0 z-50 bg-background px-4 py-5 shadow-lg',
         'border-t border-border',
         'sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-sm sm:rounded-2xl sm:border'
       )}

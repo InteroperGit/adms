@@ -4,6 +4,7 @@ import { z } from 'zod';
 const ThemeColorsSchema = z.object({
   background: z.string(),
   foreground: z.string(),
+  surfaceDark: z.string().optional(),
   card: z.string(),
   cardForeground: z.string(),
   popover: z.string(),
@@ -27,6 +28,7 @@ export type ThemeColors = z.infer<typeof ThemeColorsSchema>;
 
 export const ThemeSchema = z.object({
   colors: ThemeColorsSchema,
+  darkColors: ThemeColorsSchema.optional(),
   radius: z.string(),
   fonts: z.object({
     heading: z.string(),

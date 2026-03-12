@@ -41,7 +41,7 @@ export function Portfolio() {
   const displayed = filtered.slice(0, PREVIEW_LIMIT);
 
   return (
-    <section ref={ref} id="portfolio" className="bg-white py-24 md:py-32">
+    <section ref={ref} id="portfolio" className="bg-background py-24 md:py-32">
       <div className={cn('fade-in-section', isVisible && 'is-visible')}>
         <Container>
           <SectionHeader

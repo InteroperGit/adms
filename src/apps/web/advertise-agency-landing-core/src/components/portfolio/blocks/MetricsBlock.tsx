@@ -28,7 +28,7 @@ export function MetricsBlock({ block, caseGradient }: MetricsBlockProps) {
               isSolid && 'bg-primary text-white',
               isPrimary && 'bg-primary text-white',
               isAccent && 'bg-accent text-white',
-              !colored && 'border border-border bg-white shadow-sm'
+              !colored && 'border border-border bg-card shadow-sm'
             )}
           >
             <p className={cn('text-4xl font-bold leading-none', !colored && 'text-primary')}>

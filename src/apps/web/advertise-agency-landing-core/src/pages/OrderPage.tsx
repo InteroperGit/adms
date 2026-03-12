@@ -23,7 +23,7 @@ export function OrderPage() {
   return (
     <>
       <BreadCrumbs items={[{ label: 'Главная', href: '/' }, { label: p.title }]} />
-      <section className="bg-white py-24 md:py-32">
+      <section className="bg-background py-24 md:py-32">
         <Container>
           <SectionHeader
             label={p.label}

@@ -12,9 +12,9 @@ interface Props {
 const arrowClass = cn(
   'absolute top-1/2 z-10 -translate-y-1/2',
   'flex h-11 w-11 items-center justify-center',
-  'rounded-full border border-border',
-  'bg-white/70 text-foreground backdrop-blur-sm',
-  'transition-colors hover:bg-white'
+  'rounded-full border border-border dark:border-white/30',
+  'bg-white/70 text-foreground backdrop-blur-sm dark:bg-white/20 dark:text-white',
+  'cursor-pointer transition-colors hover:bg-white dark:hover:bg-white/35'
 );
 
 export function CarouselControls({ total, current, onPrev, onNext, onDot }: Props) {
@@ -42,14 +42,16 @@ export function CarouselControls({ total, current, onPrev, onNext, onDot }: Prop
             onClick={() => onDot(i)}
             aria-label={`Слайд ${i + 1}`}
             className={cn(
-              'h-2 rounded-full transition-all duration-300',
-              i === current ? 'w-6 bg-foreground' : 'w-2 bg-foreground/25 hover:bg-foreground/50'
+              'h-2 cursor-pointer rounded-full transition-all duration-300',
+              i === current
+                ? 'w-6 bg-foreground dark:bg-white'
+                : 'w-2 bg-foreground/25 hover:bg-foreground/50 dark:bg-white/40 dark:hover:bg-white/65'
             )}
           />
         ))}
       </div>
 
-      <div className="absolute bottom-6 right-6 z-10 text-sm font-medium text-muted-foreground">
+      <div className="absolute bottom-6 right-6 z-10 text-sm font-medium text-muted-foreground dark:text-white/65">
         {current + 1} / {total}
       </div>
     </>

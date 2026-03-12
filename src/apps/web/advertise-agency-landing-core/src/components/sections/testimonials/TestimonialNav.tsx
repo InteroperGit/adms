@@ -29,14 +29,14 @@ export function TestimonialNav({ active, onPrev, onNext, onDot }: TestimonialNav
         <button
           onClick={onPrev}
           aria-label="Предыдущий отзыв"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary"
         >
           <ChevronLeft size={18} />
         </button>
         <button
           onClick={onNext}
           aria-label="Следующий отзыв"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary"
         >
           <ChevronRight size={18} />
         </button>

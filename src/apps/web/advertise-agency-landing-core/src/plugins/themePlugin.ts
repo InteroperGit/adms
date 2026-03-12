@@ -4,6 +4,7 @@ import type { Plugin } from 'vite';
 
 interface Theme {
   colors: Record<string, string>;
+  darkColors?: Record<string, string>;
   radius: string;
   fonts: { heading: string; body: string };
   fontUrls: string[];
@@ -13,6 +14,7 @@ interface Theme {
 const COLOR_KEY_MAP: Record<string, string> = {
   background: 'background',
   foreground: 'foreground',
+  surfaceDark: 'surface-dark',
   card: 'card',
   cardForeground: 'card-foreground',
   popover: 'popover',
@@ -32,22 +34,35 @@ const COLOR_KEY_MAP: Record<string, string> = {
   ring: 'ring',
 };
 
-function buildCss(theme: Theme): string {
-  const colorVars = Object.entries(theme.colors)
+// Virtual module ID for the CSS vars — imported from main.tsx so that
+// @tailwindcss/vite picks them up in its CSS pipeline in dev mode too.
+const VIRTUAL_ID = 'virtual:theme-vars.css';
+const RESOLVED_ID = '\0virtual:theme-vars.css';
+
+function buildColorVars(colors: Record<string, string>, indent = '  '): string {
+  return Object.entries(colors)
     .map(([key, value]) => {
       const cssName = COLOR_KEY_MAP[key] ?? key;
-      return `    --${cssName}: ${value};`;
+      return `${indent}--${cssName}: ${value};`;
     })
     .join('\n');
+}
 
-  return [
-    ':root {',
-    colorVars,
-    `    --radius: ${theme.radius};`,
-    `    --font-heading: ${theme.fonts.heading};`,
-    `    --font-body: ${theme.fonts.body};`,
-    '  }',
+function buildCss(theme: Theme): string {
+  const rootVars = [
+    buildColorVars(theme.colors),
+    `  --radius: ${theme.radius};`,
+    `  --font-heading: ${theme.fonts.heading};`,
+    `  --font-body: ${theme.fonts.body};`,
   ].join('\n');
+
+  const blocks = [`:root {\n${rootVars}\n}`];
+
+  if (theme.darkColors) {
+    blocks.push(`.dark {\n${buildColorVars(theme.darkColors)}\n}`);
+  }
+
+  return blocks.join('\n\n');
 }
 
 function buildFontLinks(urls: string[]): string {
@@ -60,6 +75,8 @@ function buildFontLinks(urls: string[]): string {
 
   return `${preconnect}\n    ${stylesheets}`;
 }
+
+const ANTI_FOUC_SCRIPT = `<script>(function(){try{var m=localStorage.getItem('theme-mode');if(m==='dark'||(m===null&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})();</script>`;
 
 export function themePlugin(): Plugin {
   const themeFile = path.resolve(__dirname, '../../data/config/theme.json');
@@ -75,13 +92,29 @@ export function themePlugin(): Plugin {
       theme = JSON.parse(raw) as Theme;
     },
 
+    // Serve CSS vars as a virtual CSS module so @tailwindcss/vite includes
+    // them in its pipeline in dev mode (not just via the HTML <style> tag).
+    resolveId(id: string) {
+      if (id === VIRTUAL_ID) {
+        return RESOLVED_ID;
+      }
+    },
+
+    load(id: string) {
+      if (id === RESOLVED_ID) {
+        return buildCss(theme);
+      }
+    },
+
     transformIndexHtml(html) {
+      // Keep inline <style> for FOUC prevention: vars are available before
+      // any JS/CSS bundle loads, so the anti-FOUC script's .dark class is
+      // immediately reflected in computed styles.
       const css = buildCss(theme);
       const style = `<style id="theme-vars">${css}</style>`;
       const fonts = buildFontLinks(theme.fontUrls);
 
-      // Inject before </head>
-      return html.replace('</head>', `${fonts}\n    ${style}\n  </head>`);
+      return html.replace('</head>', `${ANTI_FOUC_SCRIPT}\n    ${fonts}\n    ${style}\n  </head>`);
     },
   };
 }

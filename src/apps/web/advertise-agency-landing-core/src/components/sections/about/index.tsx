@@ -12,7 +12,7 @@ export function About() {
   const { ref, isVisible } = useFadeIn();
 
   return (
-    <section ref={ref} id="about" className="bg-white py-24 md:py-32">
+    <section ref={ref} id="about" className="bg-background py-24 md:py-32">
       <div className={cn('fade-in-section', isVisible && 'is-visible')}>
         <Container>
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">

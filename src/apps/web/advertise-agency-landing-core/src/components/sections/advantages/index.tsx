@@ -10,12 +10,7 @@ export function Advantages() {
   const { ref, isVisible } = useFadeIn();
 
   return (
-    <section
-      ref={ref}
-      id="advantages"
-      className="py-24 md:py-32"
-      style={{ backgroundColor: 'hsl(var(--foreground))' }}
-    >
+    <section ref={ref} id="advantages" className="bg-muted py-24 md:py-32">
       <div className={cn('fade-in-section', isVisible && 'is-visible')}>
         <Container>
           <SectionHeader
@@ -23,7 +18,6 @@ export function Advantages() {
             title={advantagesContent.title}
             titleHighlight={advantagesContent.titleHighlight}
             description={advantagesContent.description}
-            variant="dark"
             className="mb-16"
           />
 

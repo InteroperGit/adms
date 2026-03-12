@@ -19,15 +19,15 @@ export default function Home() {
       <Services />
       <SectionDivider variant="muted-to-white" />
       <Portfolio />
-      <SectionDivider variant="white-to-dark" />
+      <SectionDivider variant="white-to-muted" flipX />
       <Advantages />
-      <SectionDivider variant="dark-to-primary" />
+      <SectionDivider variant="muted-to-primary" />
       <CallToAction />
-      <SectionDivider variant="primary-to-muted" />
+      <SectionDivider variant="primary-to-white" />
       <Testimonials />
-      <SectionDivider variant="muted-to-white" flipX />
+      <SectionDivider variant="white-to-muted" flipX />
       <Contact />
-      <SectionDivider variant="white-to-dark" />
+      <SectionDivider variant="muted-to-surface-dark" />
     </main>
   );
 }

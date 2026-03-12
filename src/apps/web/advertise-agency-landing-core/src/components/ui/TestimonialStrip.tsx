@@ -18,8 +18,8 @@ export function TestimonialStrip({ active, onSelect }: TestimonialStripProps) {
           className={cn(
             'rounded-xl border p-4 text-left transition-all duration-200',
             i === active
-              ? 'border-primary/30 bg-white shadow-sm'
-              : 'border-border bg-white/50 hover:border-primary/20 hover:bg-white'
+              ? 'border-primary/30 bg-card shadow-sm'
+              : 'border-border bg-card/50 hover:border-primary/20 hover:bg-card'
           )}
         >
           <StarRating rating={t.rating} size={10} className="mb-2 gap-0.5" />

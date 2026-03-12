@@ -19,21 +19,27 @@ export function CarouselSlide({ slide, isActive, index }: Props) {
       )}
     >
       {slide.image ? (
-        <OptimizedImage
-          src={slide.image}
-          alt={slide.alt}
-          sizes="100vw"
-          priority={index === 0}
-          className="h-full w-full object-cover"
-          dev={import.meta.env.DEV}
-        />
+        <>
+          <OptimizedImage
+            src={slide.image}
+            alt={slide.alt}
+            sizes="100vw"
+            priority={index === 0}
+            className="h-full w-full object-cover"
+            dev={import.meta.env.DEV}
+          />
+          <div className="absolute inset-0 dark:bg-black/45" />
+        </>
       ) : (
-        <div className={cn('h-full w-full bg-gradient-to-br', slide.gradient)} />
+        <>
+          <div className={cn('h-full w-full bg-gradient-to-br', slide.gradient)} />
+          <div className="absolute inset-0 dark:bg-black/35" />
+        </>
       )}
 
       <div className="absolute inset-0 flex items-center justify-center px-6">
-        <div className="max-w-3xl text-center text-foreground">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+        <div className="max-w-3xl text-center text-foreground dark:text-white">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground dark:text-white/65">
             {carouselContent.label}
           </p>
           <h2
@@ -42,7 +48,9 @@ export function CarouselSlide({ slide, isActive, index }: Props) {
           >
             {slide.title}
           </h2>
-          <p className="text-base text-muted-foreground md:text-lg">{slide.subtitle}</p>
+          <p className="text-base text-muted-foreground dark:text-white/80 md:text-lg">
+            {slide.subtitle}
+          </p>
         </div>
       </div>
     </div>

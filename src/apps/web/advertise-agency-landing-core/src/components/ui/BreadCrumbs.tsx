@@ -17,7 +17,7 @@ interface BreadCrumbsProps {
 
 export function BreadCrumbs({ items }: BreadCrumbsProps) {
   return (
-    <div className="border-b border-border bg-white">
+    <div className="border-b border-border bg-background">
       <Container>
         <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 py-4">
           {items.map((item, i) => {
