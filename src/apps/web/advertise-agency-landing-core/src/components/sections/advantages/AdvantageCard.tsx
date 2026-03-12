@@ -1,3 +1,4 @@
+import { SectionIconBox } from '@/components/ui/SectionIconBox';
 import { ICON_MAP } from '@/types/shared/iconMap';
 import type { Advantage } from '@/types/sections/advantages';
 import { cn } from '@/lib/utils';
@@ -17,19 +18,11 @@ export function AdvantageCard({ item, index }: Props) {
       )}
     >
       <div className="mb-4 flex items-center gap-4">
-        <div
-          className={cn(
-            'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl',
-            'bg-primary/20 text-primary',
-            'transition-colors duration-300 group-hover:bg-primary group-hover:text-white'
-          )}
-        >
-          <Icon size={20} />
-        </div>
+        <SectionIconBox icon={Icon} size={20} className="h-11 w-11 shrink-0" />
         <span
           aria-hidden="true"
           style={{ fontFamily: 'var(--font-heading)' }}
-          className="text-3xl font-bold text-foreground/10"
+          className="text-3xl font-bold text-foreground/25 dark:text-foreground/40"
         >
           {String(index + 1).padStart(2, '0')}
         </span>
