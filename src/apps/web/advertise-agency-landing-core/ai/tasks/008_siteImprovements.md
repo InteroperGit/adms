@@ -298,7 +298,7 @@ The `ICON_MAP` in `src/types/shared/iconMap.ts` imports all icons used anywhere 
 
 ---
 
-### T10 · Design: dark mode toggle support
+### T10 · Design: dark mode toggle support ✅ done
 
 **Priority:** low · **Scope:** theme + components
 

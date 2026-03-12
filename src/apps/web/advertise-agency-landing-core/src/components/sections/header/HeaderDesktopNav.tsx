@@ -5,7 +5,6 @@ import { HeaderNav } from './HeaderNav';
 import { siteData } from '@/types/config/siteData';
 
 interface Props {
-  activeHref: string;
   isHome: boolean;
   /** 0=Phone, 1=Telegram, 2=VK, 3=CTA — null when no button is highlighted */
   highlightedActionIndex: number | null;
@@ -13,16 +12,10 @@ interface Props {
   onToggleDark: () => void;
 }
 
-export function HeaderDesktopNav({
-  activeHref,
-  isHome,
-  highlightedActionIndex,
-  isDark,
-  onToggleDark,
-}: Props) {
+export function HeaderDesktopNav({ isHome, highlightedActionIndex, isDark, onToggleDark }: Props) {
   return (
     <>
-      <HeaderNav activeHref={activeHref} isHome={isHome} />
+      <HeaderNav isHome={isHome} />
 
       <div className="hidden items-center gap-3 md:flex">
         <PhoneButton highlighted={highlightedActionIndex === 0} />

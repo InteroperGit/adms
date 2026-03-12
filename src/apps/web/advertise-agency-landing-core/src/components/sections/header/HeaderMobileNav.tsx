@@ -8,7 +8,6 @@ import { HeaderNav } from './HeaderNav';
 import { siteData } from '@/types/config/siteData';
 
 interface Props {
-  activeHref: string;
   isHome: boolean;
   /** 0=Phone, 1=Telegram, 2=VK, 3=CTA — null when no button is highlighted */
   highlightedActionIndex: number | null;
@@ -16,13 +15,7 @@ interface Props {
   onToggleDark: () => void;
 }
 
-export function HeaderMobileNav({
-  activeHref,
-  isHome,
-  highlightedActionIndex,
-  isDark,
-  onToggleDark,
-}: Props) {
+export function HeaderMobileNav({ isHome, highlightedActionIndex, isDark, onToggleDark }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -50,12 +43,7 @@ export function HeaderMobileNav({
         <div className="fixed inset-x-0 top-16 z-40 border-b border-border bg-background md:hidden">
           <Container>
             <div className="py-4">
-              <HeaderNav
-                activeHref={activeHref}
-                isHome={isHome}
-                variant="mobile"
-                onLinkClick={() => setMenuOpen(false)}
-              />
+              <HeaderNav isHome={isHome} variant="mobile" onLinkClick={() => setMenuOpen(false)} />
               <div className="flex items-center gap-2 pt-3">
                 <PhoneButton highlighted={highlightedActionIndex === 0} className="shrink-0" />
                 <SocialLinks

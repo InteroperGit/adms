@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { headerContent } from '@/types/sections/header';
-import { useActiveSectionHref } from '@/hooks/useActiveSectionHref';
 import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { siteData } from '@/types/config/siteData';
@@ -14,7 +13,6 @@ const HEADER_BUTTON_COUNT = 4;
 export function Header() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-  const activeHref = useActiveSectionHref();
   const highlightedActionIndex = useRandomButtonHighlight(HEADER_BUTTON_COUNT);
   const { isDark, toggle } = useDarkMode();
 
@@ -36,14 +34,12 @@ export function Header() {
           </a>
 
           <HeaderDesktopNav
-            activeHref={activeHref}
             isHome={isHome}
             highlightedActionIndex={highlightedActionIndex}
             isDark={isDark}
             onToggleDark={toggle}
           />
           <HeaderMobileNav
-            activeHref={activeHref}
             isHome={isHome}
             highlightedActionIndex={highlightedActionIndex}
             isDark={isDark}

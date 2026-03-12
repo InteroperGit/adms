@@ -1,42 +1,33 @@
-import { cn } from '@/lib/utils';
 import { headerContent } from '@/types/sections/header';
 
 interface Props {
-  activeHref: string;
   isHome: boolean;
   variant?: 'desktop' | 'mobile';
   onLinkClick?: () => void;
 }
 
-export function HeaderNav({ activeHref, isHome, variant = 'desktop', onLinkClick }: Props) {
+export function HeaderNav({ isHome, variant = 'desktop', onLinkClick }: Props) {
   const isDesktop = variant === 'desktop';
 
   return (
     <nav className={isDesktop ? 'hidden items-center gap-8 md:flex' : 'flex flex-col py-4'}>
       {headerContent.nav.map((link) => {
-        const isActive = link.href === activeHref;
         const href = isHome ? link.href : `/${link.href}`;
         return (
           <a
             key={link.href}
             href={href}
             onClick={onLinkClick}
-            className={cn(
-              'font-medium transition-colors hover:text-foreground',
-              isDesktop ? 'group relative text-sm' : 'py-3 text-base',
-              isActive ? 'text-primary' : 'text-muted-foreground'
-            )}
+            className={
+              isDesktop
+                ? 'group relative text-sm font-medium text-muted-foreground transition-colors hover:text-foreground'
+                : 'py-3 text-base font-medium text-muted-foreground transition-colors hover:text-foreground'
+            }
           >
             {link.label}
 
             {isDesktop && (
-              <span
-                className={cn(
-                  'absolute -bottom-0.5 left-0 h-px transition-all duration-300 ease-out',
-                  'bg-primary',
-                  isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                )}
-              />
+              <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-primary transition-all duration-300 ease-out group-hover:w-full" />
             )}
           </a>
         );
