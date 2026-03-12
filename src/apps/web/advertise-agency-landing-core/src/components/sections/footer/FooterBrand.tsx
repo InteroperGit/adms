@@ -25,7 +25,7 @@ export function FooterBrand() {
         phone={siteData.contact.phone}
         telegram={siteData.contact.telegram}
         vk={siteData.contact.vk}
-        variant="colored"
+        variant="dark"
       />
     </div>
   );

@@ -31,7 +31,7 @@ export function HeaderMobileNav({ isHome, highlightedActionIndex, isDark, onTogg
           size="sm"
           phone={siteData.contact.phone}
           telegram={siteData.contact.telegram}
-          variant="colored"
+          variant="light"
           highlightedIndex={highlightedActionIndex}
         />
         <button
@@ -54,7 +54,7 @@ export function HeaderMobileNav({ isHome, highlightedActionIndex, isDark, onTogg
                   phone={siteData.contact.phone}
                   telegram={siteData.contact.telegram}
                   vk={siteData.contact.vk}
-                  variant="colored"
+                  variant="light"
                   highlightedIndex={highlightedActionIndex}
                   className="shrink-0"
                 />

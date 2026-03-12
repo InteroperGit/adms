@@ -34,7 +34,7 @@ export function ContactInfo() {
 
       <div>
         <p className="mb-4 text-sm font-medium text-muted-foreground">{socialTitle}</p>
-        <SocialLinks telegram={telegram} vk={vk} variant="colored" />
+        <SocialLinks telegram={telegram} vk={vk} variant="light" />
       </div>
     </div>
   );

@@ -2,27 +2,21 @@ import { Phone, Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const PHONE = {
-  colored:
-    'border-green-500/25 bg-green-500/5 text-green-600 hover:bg-green-500/10 dark:border-green-400/50 dark:text-green-400 dark:hover:bg-green-400/15',
-  dark: 'border-white/10 text-white/50 hover:border-green-400/40 hover:bg-green-400/10 hover:text-green-400',
+  dark: 'border-green-400/50 bg-green-400/5 text-green-400 hover:bg-green-400/15',
   light:
-    'border-border bg-white text-muted-foreground shadow-sm hover:border-green-500/30 hover:bg-green-500/5 hover:text-green-600',
+    'border-green-500/25 bg-green-500/5 text-green-600 hover:bg-green-500/10 dark:border-green-400/50 dark:text-green-400 dark:hover:bg-green-400/15',
 };
 
 const TG = {
-  colored:
-    'border-[#2AABEE]/20 bg-[#2AABEE]/5 text-[#2AABEE] hover:bg-[#2AABEE]/10 dark:border-[#2AABEE]/50 dark:hover:bg-[#2AABEE]/15',
-  dark: 'border-white/10 text-white/50 hover:border-[#2AABEE]/40 hover:bg-[#2AABEE]/10 hover:text-[#2AABEE]',
+  dark: 'border-[#2AABEE]/50 bg-[#2AABEE]/5 text-[#2AABEE] hover:bg-[#2AABEE]/15',
   light:
-    'border-border bg-white text-muted-foreground shadow-sm hover:border-[#2AABEE]/30 hover:bg-[#2AABEE]/5 hover:text-[#2AABEE]',
+    'border-[#2AABEE]/20 bg-[#2AABEE]/5 text-[#2AABEE] hover:bg-[#2AABEE]/10 dark:border-[#2AABEE]/50 dark:hover:bg-[#2AABEE]/15',
 };
 
 const VK = {
-  colored:
-    'border-[#0077FF]/20 bg-[#0077FF]/5 text-[#0077FF] hover:bg-[#0077FF]/10 dark:border-[#0077FF]/50 dark:hover:bg-[#0077FF]/15',
-  dark: 'border-white/10 text-white/50 hover:border-[#0077FF]/40 hover:bg-[#0077FF]/10 hover:text-[#0077FF]',
+  dark: 'border-[#0077FF]/50 bg-[#0077FF]/5 text-[#0077FF] hover:bg-[#0077FF]/15',
   light:
-    'border-border bg-white text-muted-foreground shadow-sm hover:border-[#0077FF]/30 hover:bg-[#0077FF]/5 hover:text-[#0077FF]',
+    'border-[#0077FF]/20 bg-[#0077FF]/5 text-[#0077FF] hover:bg-[#0077FF]/10 dark:border-[#0077FF]/50 dark:hover:bg-[#0077FF]/15',
 };
 
 function VkIcon({ size = 16 }: { size?: number }) {
@@ -40,7 +34,7 @@ interface SocialLinksProps {
   telegram?: string;
   /** When provided (non-empty), renders a VK button */
   vk?: string;
-  variant?: 'light' | 'dark' | 'colored';
+  variant?: 'light' | 'dark';
   /** sm = 40×40 rounded-lg (mobile top bar); md = 44×44 rounded-xl (default) */
   size?: 'sm' | 'md';
   className?: string;

@@ -21,7 +21,7 @@ export function HeaderDesktopNav({ isHome, highlightedActionIndex, isDark, onTog
           phone={siteData.contact.phone}
           telegram={siteData.contact.telegram}
           vk={siteData.contact.vk}
-          variant="colored"
+          variant="light"
           highlightedIndex={highlightedActionIndex}
         />
         <div className="h-6 w-px bg-border" />
