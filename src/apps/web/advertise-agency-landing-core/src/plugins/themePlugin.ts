@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 import type { Plugin } from 'vite';
 
@@ -38,6 +38,7 @@ const COLOR_KEY_MAP: Record<string, string> = {
 // @tailwindcss/vite picks them up in its CSS pipeline in dev mode too.
 const VIRTUAL_ID = 'virtual:theme-vars.css';
 const RESOLVED_ID = '\0virtual:theme-vars.css';
+const DEFAULT_LANGUAGE = 'en-US';
 
 function buildColorVars(colors: Record<string, string>, indent = '  '): string {
   return Object.entries(colors)
@@ -80,8 +81,10 @@ const ANTI_FOUC_SCRIPT = `<script>(function(){try{var m=localStorage.getItem('th
 
 export function themePlugin(): Plugin {
   const themeFile = path.resolve(__dirname, '../../data/content/config/theme.json');
+  const seoFile = path.resolve(__dirname, '../../data/content/config/seo.json');
 
   let theme: Theme;
+  let lang = DEFAULT_LANGUAGE;
 
   return {
     name: 'vite-plugin-theme',
@@ -90,6 +93,11 @@ export function themePlugin(): Plugin {
     configResolved() {
       const raw = readFileSync(themeFile, 'utf-8');
       theme = JSON.parse(raw) as Theme;
+
+      if (existsSync(seoFile)) {
+        const seo = JSON.parse(readFileSync(seoFile, 'utf-8')) as { locale?: string };
+        lang = (seo.locale ?? DEFAULT_LANGUAGE).split('_')[0];
+      }
     },
 
     // Serve CSS vars as a virtual CSS module so @tailwindcss/vite includes
@@ -107,14 +115,16 @@ export function themePlugin(): Plugin {
     },
 
     transformIndexHtml(html) {
-      // Keep inline <style> for FOUC prevention: vars are available before
-      // any JS/CSS bundle loads, so the anti-FOUC script's .dark class is
-      // immediately reflected in computed styles.
       const css = buildCss(theme);
       const style = `<style id="theme-vars">${css}</style>`;
       const fonts = buildFontLinks(theme.fontUrls);
+      const themeColor = theme.colors.primary ? `hsl(${theme.colors.primary})` : '';
 
-      return html.replace('</head>', `${ANTI_FOUC_SCRIPT}\n    ${fonts}\n    ${style}\n  </head>`);
+      let out = html;
+      out = out.replace(/(<html[^>]*\blang=")[^"]*(")/i, `$1${lang}$2`);
+      out = out.replace(/(<meta\s+name="theme-color"\s+content=")[^"]*(")/i, `$1${themeColor}$2`);
+      out = out.replace('</head>', `${ANTI_FOUC_SCRIPT}\n    ${fonts}\n    ${style}\n  </head>`);
+      return out;
     },
   };
 }

@@ -72,6 +72,14 @@ function injectBeforeHead(html: string, snippet: string): string {
   return html.replace('</head>', `  ${snippet}\n  </head>`);
 }
 
+function upsertTitle(html: string, text: string): string {
+  const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  if (/<title>[^<]*<\/title>/i.test(html)) {
+    return html.replace(/<title>[^<]*<\/title>/i, `<title>${escaped}</title>`);
+  }
+  return html.replace('</head>', `  <title>${escaped}</title>\n  </head>`);
+}
+
 function jsonLdTag(schema: object): string {
   return `<script type="application/ld+json">${JSON.stringify(schema)}</script>`;
 }
@@ -91,7 +99,8 @@ function handleHome(
   const url = `${seo.siteUrl}/`;
 
   let out = html;
-  out = upsertMeta(out, 'property', 'og:title', title);
+  out = upsertTitle(out, title);
+  out = upsertMeta(out, 'name', 'description', desc);
   out = upsertMeta(out, 'property', 'og:description', desc);
   out = upsertMeta(out, 'property', 'og:image', seo.defaultOgImage);
   out = upsertMeta(out, 'property', 'og:url', url);
@@ -138,7 +147,8 @@ function handleCasePage(
   const canonicalUrl = `${seo.siteUrl}/portfolio/${catSlug}/${caseSlug}`;
 
   let out = html;
-  out = upsertMeta(out, 'property', 'og:title', ogTitle);
+  out = upsertTitle(out, `${ogTitle} — ${seo.siteName}`);
+  out = upsertMeta(out, 'name', 'description', ogDesc);
   out = upsertMeta(out, 'property', 'og:description', ogDesc);
   out = upsertMeta(out, 'property', 'og:image', ogImage);
   out = upsertMeta(out, 'property', 'og:url', canonicalUrl);
@@ -247,6 +257,10 @@ export function createSsgMetaHook(rootDir: string): (route: string, html: string
   return function onPageRendered(route: string, html: string): string {
     // Inject global defaults on every page
     let out = html;
+    out = upsertTitle(out, seo.siteName);
+    if (site?.description) {
+      out = upsertMeta(out, 'name', 'description', site.description);
+    }
     out = upsertMeta(out, 'property', 'og:site_name', seo.siteName);
     out = upsertMeta(out, 'property', 'og:locale', seo.locale);
     out = upsertMeta(out, 'name', 'twitter:card', seo.twitterCard);
