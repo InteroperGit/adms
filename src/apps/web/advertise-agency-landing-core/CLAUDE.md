@@ -95,6 +95,7 @@ pnpm dlx shadcn@latest add <component>
 
 ## Conventions
 
+- `SectionBadge` (`src/components/ui/SectionBadge.tsx`) — shared label pill; props: `label`, `variant?` (`'light'|'dark'`), `className?`; used by `SectionHeader` and `About`; Hero keeps its own inline badge (dot + responsive size)
 - **Imports**: components use `@/types/`, never `@data/`; `cn()` from `@/lib/utils`; `categorySlug()` from `@/lib/categorySlug`
 - **Sections**: self-contained in `src/components/sections/`, use `Container` for layout
 - **Path aliases**: `@/` → `src/`, `@data` → `data/content`
