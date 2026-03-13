@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useSwipe } from '@/hooks/useSwipe';
+import { ImageGalleryNavButtons } from './ImageGalleryNavButtons';
 import { ImageGalleryPreview } from './ImageGalleryPreview';
 import { ImageGalleryThumbnails } from './ImageGalleryThumbnails';
 import { ImageGalleryLightbox } from './ImageGalleryLightbox';
@@ -29,11 +30,10 @@ export function ImageGallery({
 }: ImageGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const touchStartX = useRef(0);
-  const didSwipe = useRef(false);
 
   const prev = () => setActiveIndex((i) => (i - 1 + images.length) % images.length);
   const next = () => setActiveIndex((i) => (i + 1) % images.length);
+  const { onTouchStart, onTouchEnd, didSwipe } = useSwipe(next, prev);
 
   const active = images[activeIndex];
   const multi = images.length > 1;
@@ -53,21 +53,8 @@ export function ImageGallery({
     >
       <div
         className="group relative"
-        onTouchStart={(e) => {
-          touchStartX.current = e.touches[0].clientX;
-          didSwipe.current = false;
-        }}
-        onTouchEnd={(e) => {
-          const delta = touchStartX.current - e.changedTouches[0].clientX;
-          if (Math.abs(delta) > 50) {
-            didSwipe.current = true;
-            if (delta > 0) {
-              next();
-            } else {
-              prev();
-            }
-          }
-        }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
         onClick={() => {
           if (!didSwipe.current) {
             setLightboxOpen(true);
@@ -81,34 +68,12 @@ export function ImageGallery({
         />
         {multi && (
           <>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prev();
-              }}
-              aria-label={prevLabel}
-              className={cn(
-                'absolute left-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer',
-                'items-center justify-center rounded-full bg-black/40 p-2.5 text-white',
-                'opacity-0 backdrop-blur-sm transition-all hover:bg-primary group-hover:opacity-100 sm:flex'
-              )}
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                next();
-              }}
-              aria-label={nextLabel}
-              className={cn(
-                'absolute right-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer',
-                'items-center justify-center rounded-full bg-black/40 p-2.5 text-white',
-                'opacity-0 backdrop-blur-sm transition-all hover:bg-primary group-hover:opacity-100 sm:flex'
-              )}
-            >
-              <ChevronRight size={20} />
-            </button>
+            <ImageGalleryNavButtons
+              onPrev={prev}
+              onNext={next}
+              prevLabel={prevLabel}
+              nextLabel={nextLabel}
+            />
             <span
               className={cn(
                 'absolute bottom-3 right-3 z-10 hidden rounded-full bg-black/50',

@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useSwipe } from '@/hooks/useSwipe';
 import type { ImageGalleryItem } from './index';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
@@ -29,7 +30,7 @@ export function ImageGalleryLightbox({
 }: ImageGalleryLightboxProps) {
   const active = images[activeIndex];
   const multi = images.length > 1;
-  const touchStartX = useRef(0);
+  const { onTouchStart, onTouchEnd } = useSwipe(onNext, onPrev);
 
   const navBtn = cn(
     'absolute top-1/2 hidden -translate-y-1/2',
@@ -73,22 +74,7 @@ export function ImageGalleryLightbox({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Image with swipe support + desktop-only nav buttons */}
-        <div
-          className="relative"
-          onTouchStart={(e) => {
-            touchStartX.current = e.touches[0].clientX;
-          }}
-          onTouchEnd={(e) => {
-            const delta = touchStartX.current - e.changedTouches[0].clientX;
-            if (Math.abs(delta) > 50) {
-              if (delta > 0) {
-                onNext();
-              } else {
-                onPrev();
-              }
-            }
-          }}
-        >
+        <div className="relative" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <OptimizedImage
             src={active.src}
             alt={`${altPrefix} ${activeIndex + 1}`}

@@ -29,7 +29,9 @@ export function ContactInfo({ isDark }: { isDark: boolean }) {
           />
           <ContactItem icon={MapPin} label={contactLabels.address} value={address} />
         </ul>
-        {siteData.yandexMapUrl && <ContactMap url={siteData.yandexMapUrl} className="mt-6" isDark={isDark} />}
+        {siteData.yandexMapUrl && (
+          <ContactMap url={siteData.yandexMapUrl} className="mt-6" isDark={isDark} />
+        )}
       </div>
 
       <div>

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { useFadeIn } from '@/hooks/useFadeIn';
 import { YandexReviews } from './YandexReviews';
 import { TestimonialsEmpty } from './TestimonialsEmpty';
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from '@/hooks/useTheme';
 
 export function Testimonials() {
   const orgId = siteData.yandexMapsOrgId?.trim() || '';

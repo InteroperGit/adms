@@ -7,7 +7,7 @@ import { ContactHours } from './ContactHours';
 import { contactContent } from '@/types/sections/contact';
 import { cn } from '@/lib/utils';
 import { useFadeIn } from '@/hooks/useFadeIn';
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from '@/hooks/useTheme';
 
 export function Contact() {
   const { ref, isVisible } = useFadeIn();

@@ -5,7 +5,7 @@ import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
 import { siteData } from '@/types/config/siteData';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
 import { HeaderMobileNav } from './HeaderMobileNav';
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from '@/hooks/useTheme';
 
 // 4 buttons: 0=Phone, 1=Telegram, 2=VK, 3=CTA
 const HEADER_BUTTON_COUNT = 4;

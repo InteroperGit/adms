@@ -8,7 +8,7 @@ import { MetrikaScript } from '@/components/analytics/MetrikaScript';
 import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
 import { HomeHashScroll } from '@/components/ui/HomeHashScroll';
 import { SkipToContent } from '@/components/ui/SkipToContent';
-import {ThemeProvider} from "@/contexts/ThemeContext.tsx";
+import { ThemeProvider } from '@/contexts/ThemeContext.tsx';
 
 export default function App() {
   const location = useLocation();
