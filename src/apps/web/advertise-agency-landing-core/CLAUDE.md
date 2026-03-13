@@ -110,3 +110,4 @@ pnpm dlx shadcn@latest add <component>
 - **`@theme inline`** in `index.css` required for Tailwind v4 + shadcn — do not revert to `@theme`
 - **`scripts/` conventions**: new scripts go under `scripts/` (included in `tsconfig.node.json`); use `import * as path from 'path'` — `esModuleInterop` is off
 - **Curly braces always** in `if`/`else`/`for`/`while` bodies — enforced by ESLint `curly: ['error', 'all']`; body always on new line
+- **Named condition variables** — extract non-trivial boolean expressions from `if` conditions into named `const` variables (`const hasUnused = unused.length > 0`); keeps conditions self-documenting and avoids re-reading compound logic

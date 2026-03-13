@@ -1,6 +1,6 @@
 # 008 — Site Improvements PRD
 
-## Status: T1 ✅ done · T2 ✅ done · T3 ✅ done · T4 ✅ done (all satisfies → Zod, validate.ts covers all 26 files, 2026-03-11) · T5 ✅ done (SectionDivider, useFadeIn, count-up, CTA pulse, card hover lift, 2026-03-11) · T6 ✅ done (data/legal/*.json, src/types/legal/index.ts, LegalBlockRenderer, 2026-03-12) · T7 ✅ done (MetrikaScript, SiteDataSchema extended, 2026-03-12) · T8 ✅ done (generate-json-schemas.ts + new-client.ts + $schema in examples + .vscode/settings.json, 2026-03-12) · T10 ✅ done (useDarkMode, Sun/Moon toggle, virtual CSS module, semantic token replacements, carousel dark mode, 2026-03-12) | rest not started
+## Status: T1 ✅ done · T2 ✅ done · T3 ✅ done · T4 ✅ done (all satisfies → Zod, validate.ts covers all 26 files, 2026-03-11) · T5 ✅ done (SectionDivider, useFadeIn, count-up, CTA pulse, card hover lift, 2026-03-11) · T6 ✅ done (data/legal/*.json, src/types/legal/index.ts, LegalBlockRenderer, 2026-03-12) · T7 ✅ done (MetrikaScript, SiteDataSchema extended, 2026-03-12) · T8 ✅ done (generate-json-schemas.ts + new-client.ts + $schema in examples + .vscode/settings.json, 2026-03-12) · T9 ✅ done (rollup-plugin-visualizer, manualChunks vendor+icons, scripts/check-icons.ts, pnpm analyze + check-icons, 2026-03-13) · T10 ✅ done (useDarkMode, Sun/Moon toggle, virtual CSS module, semantic token replacements, carousel dark mode, 2026-03-12)
 
 ## Goal
 
@@ -351,5 +351,5 @@ The theme system already uses CSS variables. Extend it to support dark mode.
 | T6 | Legal pages: migrate to JSON | medium | medium | — | ✅ done |
 | T7 | Analytics: Yandex Metrika + consent | medium | small | — (useCookieConsent + SiteDataSchema ready) | ✅ done |
 | T8 | DX: JSON Schema + new-client CLI | low | medium | T4 ✅ (Zod schemas exported) | ✅ done |
-| T9 | Performance: bundle analysis + icons | low | small | — |
+| T9 | Performance: bundle analysis + icons | low | small | — | ✅ done |
 | T10 | Dark mode toggle | low | large | — (themePlugin + ThemeSchema ready) | ✅ done |
