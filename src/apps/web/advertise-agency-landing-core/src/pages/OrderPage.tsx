@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
@@ -8,6 +7,7 @@ import { orderFormsData } from '@/types/config/orderForms';
 import { siteData } from '@/types/config/siteData';
 import { resolveIcon } from '@/types/shared/iconMap';
 import { cn } from '@/lib/utils';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 const formEntries = Object.entries(orderFormsData.forms);
 
@@ -17,9 +17,7 @@ export function OrderPage() {
   const formId = searchParams.get('form') ?? p.defaultFormId;
   const definition = orderFormsData.forms[formId] ?? Object.values(orderFormsData.forms)[0];
 
-  useEffect(() => {
-    document.title = `${p.title} — ${siteData.name}`;
-  }, [p.title]);
+  useDocumentTitle(`${p.title} — ${siteData.name}`);
 
   return (
     <>

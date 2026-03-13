@@ -3,9 +3,9 @@ import App from './App';
 import Home from './pages/Home';
 import { PortfolioCategoryPage } from './pages/PortfolioCategoryPage';
 import { PortfolioCasePage } from './pages/PortfolioCasePage';
-import PrivacyPolicy from '@/pages/PrivacyPolicy.tsx';
-import UserAgreement from '@/pages/UserAgreement.tsx';
-import Consent from '@/pages/Consent.tsx';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import UserAgreement from '@/pages/UserAgreement';
+import Consent from '@/pages/Consent';
 import { OrderPage } from '@/pages/OrderPage';
 
 const routes: RouteObject[] = [

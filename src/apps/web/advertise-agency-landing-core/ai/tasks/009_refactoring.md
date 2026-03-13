@@ -1,6 +1,6 @@
 # PDR-009: Code Review & Refactoring Plan
 
-**Status:** In progress — R1 ✅ done, R2 ✅ done, R3 ✅ done (no-op), R4 ✅ done, R5 ✅ done, R6 ✅ done, R7 ✅ done, R8 ✅ done, R9 ✅ done, R10 ✅ done, R12 ✅ done
+**Status:** In progress — R1 ✅ done, R2 ✅ done, R3 ✅ done (no-op), R4 ✅ done, R5 ✅ done, R6 ✅ done, R7 ✅ done, R8 ✅ done, R9 ✅ done, R10 ✅ done, R12 ✅ done, R13 ✅ done, R14 ✅ done, R15 ✅ done, R16 ✅ done, R17 ✅ done
 **Date:** 2026-03-13
 **Scope:** Full codebase review — component decomposition, code simplification, style consistency
 
@@ -242,7 +242,7 @@ export function BlockRenderer({ block, caseGradient, caseTitle }: BlockRendererP
 
 ---
 
-## R12. `PortfolioCategoryPage` and `PortfolioPage` — near-duplicates
+## R12. `PortfolioCategoryPage` and `PortfolioPage` — near-duplicates ✅ done
 
 **Files:**
 - `src/pages/PortfolioPage.tsx` (36 lines)
@@ -258,7 +258,7 @@ However: SSG generates separate routes for `/portfolio` and `/portfolio/:categor
 
 ---
 
-## R13. `document.title` set imperatively in `useEffect`
+## R13. `document.title` set imperatively in `useEffect` ✅ done
 
 **Files:**
 - `src/pages/PortfolioPage.tsx:15-17`
@@ -281,7 +281,7 @@ export function useDocumentTitle(title: string) {
 
 ---
 
-## R14. `import` with `.tsx` extension
+## R14. `import` with `.tsx` extension ✅ done
 
 **File:** `src/App.tsx:9` — `import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx'`
 **File:** `src/components/sections/header/DarkModeToggle.tsx:3` — `import { Button } from '@/components/ui/button.tsx'`
@@ -294,7 +294,7 @@ export function useDocumentTitle(title: string) {
 
 ---
 
-## R15. `useScrolled` hook exists but is unused
+## R15. `useScrolled` hook exists but is unused ✅ done
 
 **File:** `src/hooks/useScrolled.ts` (14 lines)
 
@@ -306,7 +306,7 @@ export function useDocumentTitle(title: string) {
 
 ---
 
-## R16. `TestimonialNav` and `TestimonialStrip` import data directly
+## R16. `TestimonialNav` and `TestimonialStrip` import data directly ✅ done
 
 **Files:**
 - `src/components/sections/testimonials/TestimonialNav.tsx:2` — imports `testimonials` just for `.length`
@@ -320,7 +320,7 @@ export function useDocumentTitle(title: string) {
 
 ---
 
-## R17. `HeroCTA` — array indexing without safety
+## R17. `HeroCTA` — array indexing without safety ✅ done
 
 **File:** `src/components/sections/hero/HeroCTA.tsx:12-25`
 

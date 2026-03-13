@@ -1,5 +1,4 @@
 // src/pages/PortfolioCategoryPage.tsx
-import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
@@ -10,6 +9,7 @@ import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { categories } from '@/types/config/categories';
 import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
 import { siteData } from '@/types/config/siteData';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 const ALL_ITEMS = Object.values(portfolioCaseMap);
 
@@ -22,13 +22,12 @@ export function PortfolioCategoryPage() {
   const category = isAll ? null : categories.find((c) => c.slug === categorySlug);
   const categoryLabel = categorySlug === 'all' ? portfolioConfig.allLabel : (category?.name ?? '');
 
-  useEffect(() => {
-    if (isAll) {
-      document.title = `${p.title} — ${siteData.name}`;
-    } else if (category) {
-      document.title = `${category.name} — ${p.title} — ${siteData.name}`;
-    }
-  }, [isAll, category, p.title]);
+  const pageTitle = isAll
+    ? `${p.title} — ${siteData.name}`
+    : category
+      ? `${category.name} — ${p.title} — ${siteData.name}`
+      : document.title;
+  useDocumentTitle(pageTitle);
 
   if (!isAll && !category) {
     return (
