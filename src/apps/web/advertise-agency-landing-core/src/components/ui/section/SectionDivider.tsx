@@ -1,23 +1,23 @@
 import { cn } from '@/lib/utils';
 
 type Variant =
-  | 'white-to-muted'
-  | 'muted-to-white'
-  | 'white-to-dark'
+  | 'bg-to-muted'
+  | 'muted-to-bg'
+  | 'bg-to-dark'
   | 'dark-to-primary'
   | 'primary-to-muted'
   | 'muted-to-primary'
-  | 'primary-to-white'
+  | 'primary-to-bg'
   | 'muted-to-surface-dark';
 
 const VARIANTS: Record<Variant, { bg: string; fill: string }> = {
-  'white-to-muted': { bg: 'hsl(var(--background))', fill: 'hsl(var(--muted))' },
-  'muted-to-white': { bg: 'hsl(var(--muted))', fill: 'hsl(var(--background))' },
-  'white-to-dark': { bg: 'hsl(var(--background))', fill: 'hsl(var(--foreground))' },
+  'bg-to-muted': { bg: 'hsl(var(--background))', fill: 'hsl(var(--muted))' },
+  'muted-to-bg': { bg: 'hsl(var(--muted))', fill: 'hsl(var(--background))' },
+  'bg-to-dark': { bg: 'hsl(var(--background))', fill: 'hsl(var(--foreground))' },
   'dark-to-primary': { bg: 'hsl(var(--foreground))', fill: 'hsl(var(--primary))' },
   'primary-to-muted': { bg: 'hsl(var(--primary))', fill: 'hsl(var(--muted))' },
   'muted-to-primary': { bg: 'hsl(var(--muted))', fill: 'hsl(var(--primary))' },
-  'primary-to-white': { bg: 'hsl(var(--primary))', fill: 'hsl(var(--background))' },
+  'primary-to-bg': { bg: 'hsl(var(--primary))', fill: 'hsl(var(--background))' },
   'muted-to-surface-dark': {
     bg: 'hsl(var(--muted))',
     fill: 'hsl(var(--surface-dark, var(--foreground)))',

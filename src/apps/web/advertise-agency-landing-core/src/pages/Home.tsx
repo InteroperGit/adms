@@ -15,17 +15,17 @@ export default function Home() {
       <Carousel />
       <Hero />
       <About />
-      <SectionDivider variant="white-to-muted" />
+      <SectionDivider variant="bg-to-muted" />
       <Services />
-      <SectionDivider variant="muted-to-white" />
+      <SectionDivider variant="muted-to-bg" />
       <Portfolio />
-      <SectionDivider variant="white-to-muted" flipX />
+      <SectionDivider variant="bg-to-muted" flipX />
       <Advantages />
       <SectionDivider variant="muted-to-primary" />
       <CallToAction />
-      <SectionDivider variant="primary-to-white" />
+      <SectionDivider variant="primary-to-bg" />
       <Testimonials />
-      <SectionDivider variant="white-to-muted" flipX />
+      <SectionDivider variant="bg-to-muted" flipX />
       <Contact />
       <SectionDivider variant="muted-to-surface-dark" />
     </main>

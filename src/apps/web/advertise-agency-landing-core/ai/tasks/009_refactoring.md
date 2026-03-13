@@ -123,7 +123,7 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
 
 ---
 
-## R5. `SectionDivider` variant naming uses "white" — misleading in dark mode
+## R5. `SectionDivider` variant naming uses "white" — misleading in dark mode ✅ done
 
 **File:** `src/components/ui/SectionDivider.tsx`
 
@@ -135,7 +135,7 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
 
 ---
 
-## R6. `ScrollToTop` — unused `className` prop
+## R6. `ScrollToTop` — unused `className` prop ✅ done
 
 **File:** `src/components/ui/ScrollToTop.tsx:11`
 
@@ -147,7 +147,7 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
 
 ---
 
-## R7. `DarkModeToggle` — Button used without `variant`, overrides all styles
+## R7. `DarkModeToggle` — Button used without `variant`, overrides all styles ✅ done
 
 **File:** `src/components/sections/header/DarkModeToggle.tsx`
 

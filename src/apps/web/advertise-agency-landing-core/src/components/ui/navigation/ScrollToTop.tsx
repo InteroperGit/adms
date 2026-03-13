@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils';
 interface ScrollToTopProps {
   threshold?: number; // px от верха, после которых кнопка появляется
   navSelector?: string; // CSS-селектор навигации для скролла
-  className?: string;
 }
 
 export function ScrollToTop({ threshold = 300, navSelector = 'nav' }: ScrollToTopProps) {
