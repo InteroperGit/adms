@@ -4,7 +4,7 @@ import { CaseHero } from '@/components/portfolio/CaseHero';
 import { CaseOverview } from '@/components/portfolio/CaseOverview';
 import { CaseCTA } from '@/components/portfolio/CaseCTA';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
-import { BlockRenderer } from '@/components/portfolio/blocks/BlockRenderer';
+import { BlockRenderer } from '@/components/blocks/BlockRenderer';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
 import { portfolioPageContent } from '@/types/sections/portfolioPage';
