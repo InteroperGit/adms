@@ -1,12 +1,8 @@
 import raw from '@data/sections/contact.json';
 import { z } from 'zod';
+import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
-const CtaLinkSchema = z.object({
-  label: z.string(),
-  href: z.string(),
-});
-
-export type CtaLink = z.infer<typeof CtaLinkSchema>;
+export type { LabeledLink } from '@/types/shared/labeledLink';
 
 export const ContactContentSchema = z.object({
   label: z.string(),
@@ -17,7 +13,7 @@ export const ContactContentSchema = z.object({
     contact: z.object({ label: z.string(), placeholder: z.string() }),
     message: z.object({ label: z.string(), placeholder: z.string() }),
     consent: z.string(),
-    consentLinks: z.array(CtaLinkSchema),
+    consentLinks: z.array(LabeledLinkSchema),
     consentJoiner: z.string(),
     submit: z.string(),
     disclaimer: z.string(),

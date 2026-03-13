@@ -2,11 +2,9 @@ import { useState, useSyncExternalStore } from 'react';
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cookiesContent } from '@/types/config/cookies';
-import { ConsentState } from '@/hooks/useCookieConsent';
+import { ConsentState, STORAGE_KEY, CONSENT_EVENT } from '@/hooks/useCookieConsent';
 import { CookieActions } from './CookieActions';
 import { cn } from '@/lib/utils';
-
-const STORAGE_KEY = 'cookie_consent';
 
 export function CookieBanner() {
   // getServerSnapshot returns true (consent assumed) so SSG renders no banner in HTML.
@@ -21,6 +19,7 @@ export function CookieBanner() {
 
   function save(value: (typeof ConsentState)[keyof typeof ConsentState]) {
     localStorage.setItem(STORAGE_KEY, value);
+    window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: value }));
     setDismissed(true);
   }
 

@@ -8,8 +8,8 @@ export const ConsentState = {
 
 export type ConsentValue = (typeof ConsentState)[keyof typeof ConsentState] | null;
 
-const STORAGE_KEY = 'cookie_consent';
-const CONSENT_EVENT = 'cookie_consent_change';
+export const STORAGE_KEY = 'cookie_consent';
+export const CONSENT_EVENT = 'cookie_consent_change';
 
 export function useCookieConsent(): ConsentValue {
   const [consent, setConsent] = useState<ConsentValue>(() =>

@@ -1,17 +1,13 @@
 import raw from '@data/sections/callToAction.json';
 import { z } from 'zod';
+import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
-const CtaLinkSchema = z.object({
-  label: z.string(),
-  href: z.string(),
-});
-
-export type CtaLink = z.infer<typeof CtaLinkSchema>;
+export type { LabeledLink } from '@/types/shared/labeledLink';
 
 export const CallToActionContentSchema = z.object({
   title: z.string(),
   subtitle: z.string(),
-  cta: z.array(CtaLinkSchema),
+  cta: z.array(LabeledLinkSchema),
 });
 
 export type CallToActionContent = z.infer<typeof CallToActionContentSchema>;

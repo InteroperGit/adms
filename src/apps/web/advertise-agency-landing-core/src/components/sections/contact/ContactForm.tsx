@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ContactSuccess } from './ContactSuccess';
 import { ContactFormFields } from './ContactFormFields';
+import type { FormState } from './ContactFormFields';
 import { ContactConsent } from './ContactConsent';
 import { contactContent } from '@/types/sections/contact';
 
-type FormState = { name: string; contact: string; message: string };
 const EMPTY: FormState = { name: '', contact: '', message: '' };
 
 export function ContactForm() {

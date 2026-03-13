@@ -1,17 +1,13 @@
 import raw from '@data/config/cookies.json';
 import { z } from 'zod';
-
-const CtaLinkSchema = z.object({
-  label: z.string(),
-  href: z.string(),
-});
+import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
 export const CookiesContentSchema = z.object({
   ariaLabel: z.string(),
   closeLabel: z.string(),
   title: z.string(),
   text: z.string(),
-  privacyLink: CtaLinkSchema,
+  privacyLink: LabeledLinkSchema,
   acceptAll: z.string(),
   necessaryOnly: z.string(),
 });

@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { contactContent } from '@/types/sections/contact';
 
-type FormState = { name: string; contact: string; message: string };
+export type FormState = { name: string; contact: string; message: string };
 
 interface ContactFormFieldsProps {
   form: FormState;

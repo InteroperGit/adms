@@ -11,7 +11,7 @@ export function CallToAction() {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="mb-4 text-white">{callToAction.title}</h2>
           <p className="mb-8 text-white/75">{callToAction.subtitle}</p>
-          <CtaButtons cta={[callToAction.cta[0], callToAction.cta[1]]} />
+          <CtaButtons cta={callToAction.cta} />
         </div>
       </Container>
     </section>

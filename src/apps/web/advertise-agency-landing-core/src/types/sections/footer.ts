@@ -1,12 +1,6 @@
 import raw from '@data/sections/footer.json';
 import { z } from 'zod';
-
-const CtaLinkSchema = z.object({
-  label: z.string(),
-  href: z.string(),
-});
-
-export type CtaLink = z.infer<typeof CtaLinkSchema>;
+import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
 export const FooterContentSchema = z.object({
   description: z.string(),
@@ -15,7 +9,7 @@ export const FooterContentSchema = z.object({
   contactsTitle: z.string(),
   copyright: z.string(),
   tagline: z.string(),
-  legalLinks: z.array(CtaLinkSchema),
+  legalLinks: z.array(LabeledLinkSchema),
 });
 
 export type FooterContent = z.infer<typeof FooterContentSchema>;

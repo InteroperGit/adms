@@ -1,10 +1,6 @@
 import raw from '@data/config/portfolio.json';
 import { z } from 'zod';
-
-const CtaLinkSchema = z.object({
-  label: z.string(),
-  href: z.string(),
-});
+import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
 export const PortfolioConfigSchema = z.object({
   perPage: z.number(),
@@ -15,7 +11,7 @@ export const PortfolioConfigSchema = z.object({
   emptyLabel: z.string(),
   notFoundCategory: z.string(),
   allProjectsLink: z.string(),
-  cta: CtaLinkSchema,
+  cta: LabeledLinkSchema,
 });
 
 export type PortfolioConfig = z.infer<typeof PortfolioConfigSchema>;

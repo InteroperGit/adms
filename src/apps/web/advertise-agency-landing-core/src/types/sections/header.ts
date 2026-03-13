@@ -1,17 +1,13 @@
 import raw from '@data/sections/header.json';
 import { z } from 'zod';
+import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
-const CtaLinkSchema = z.object({
-  label: z.string(),
-  href: z.string(),
-});
-
-export type CtaLink = z.infer<typeof CtaLinkSchema>;
+export type { LabeledLink } from '@/types/shared/labeledLink';
 
 export const HeaderContentSchema = z.object({
   lang: z.string(),
   logo: z.object({ letter: z.string(), text: z.string() }),
-  nav: z.array(CtaLinkSchema),
+  nav: z.array(LabeledLinkSchema),
   navCta: z.string(),
   openMenuLabel: z.string(),
   closeMenuLabel: z.string(),

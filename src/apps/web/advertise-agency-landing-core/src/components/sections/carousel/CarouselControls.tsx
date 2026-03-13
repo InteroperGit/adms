@@ -17,7 +17,7 @@ const arrowClass = cn(
   'flex h-11 w-11 items-center justify-center',
   'rounded-full border border-border dark:border-white/30',
   'bg-white/70 text-foreground backdrop-blur-sm dark:bg-white/20 dark:text-white',
-  'cursor-pointer transition-colors hover:bg-white dark:hover:bg-white/35'
+  'cursor-pointer transition-colors hover:bg-primary hover:text-primary-foreground hover:border-primary dark:hover:bg-primary dark:hover:text-primary-foreground dark:hover:border-primary'
 );
 
 export function CarouselControls({

@@ -1,6 +1,6 @@
 # PDR-009: Code Review & Refactoring Plan
 
-**Status:** In progress — R1 ✅ done, R2 ✅ done, R3 ✅ done (no-op), R4 ✅ done, R5 ✅ done, R6 ✅ done, R7 ✅ done, R8 ✅ done, R9 ✅ done, R10 ✅ done, R12 ✅ done, R13 ✅ done, R14 ✅ done, R15 ✅ done, R16 ✅ done, R17 ✅ done
+**Status:** In progress — R1 ✅ done, R2 ✅ done, R3 ✅ done (no-op), R4 ✅ done, R5 ✅ done, R6 ✅ done, R7 ✅ done, R8 ✅ done, R9 ✅ done, R10 ✅ done, R12 ✅ done, R13 ✅ done, R14 ✅ done, R15 ✅ done, R16 ✅ done, R17 ✅ done, R18 ✅ done, R19 ✅ done, R20 ✅ done, R21 ✅ done, R22 ✅ done, R23 ✅ done
 **Date:** 2026-03-13
 **Scope:** Full codebase review — component decomposition, code simplification, style consistency
 
@@ -344,7 +344,7 @@ export function HeroCTA({ cta }: HeroCTAProps) {
 
 ---
 
-## R18. `CtaButtons` — typed as tuple `[CtaLink, CtaLink]` with local interface
+## R18. `CtaButtons` — typed as tuple `[CtaLink, CtaLink]` with local interface ✅ done
 
 **File:** `src/components/sections/call-to-action/CtaButtons.tsx:6-8`
 
@@ -356,7 +356,7 @@ export function HeroCTA({ cta }: HeroCTAProps) {
 
 ---
 
-## R19. `useCookieConsent` — CONSENT_EVENT never dispatched
+## R19. `useCookieConsent` — CONSENT_EVENT never dispatched ✅ done
 
 **File:** `src/hooks/useCookieConsent.ts:12-13`
 
@@ -372,7 +372,7 @@ Option 2 is needed if MetrikaScript should react to consent changes without page
 
 ---
 
-## R20. `STORAGE_KEY` duplicated between CookieBanner and useCookieConsent
+## R20. `STORAGE_KEY` duplicated between CookieBanner and useCookieConsent ✅ done
 
 **Files:**
 - `src/components/banners/CookieBanner.tsx:9` — `const STORAGE_KEY = 'cookie_consent'`
@@ -386,7 +386,7 @@ Option 2 is needed if MetrikaScript should react to consent changes without page
 
 ---
 
-## R21. `CtaLinkSchema` duplicated 8 times across type modules
+## R21. `CtaLinkSchema` duplicated 8 times across type modules ✅ done
 
 **Files (each defines identical `z.object({ label: z.string(), href: z.string() })`):**
 - `src/types/sections/header.ts:4`
@@ -412,7 +412,7 @@ Import in all 8 modules. Remove local definitions and re-exports.
 
 ---
 
-## R22. `FormState` type duplicated in ContactForm and ContactFormFields
+## R22. `FormState` type duplicated in ContactForm and ContactFormFields ✅ done
 
 **Files:**
 - `src/components/sections/contact/ContactForm.tsx:9`
@@ -426,7 +426,7 @@ Import in all 8 modules. Remove local definitions and re-exports.
 
 ---
 
-## R23. Fade-in section wrapper pattern repeated 6 times
+## R23. Fade-in section wrapper pattern repeated 6 times ✅ done
 
 **Pattern repeated in:** About, Advantages, Services, Portfolio, Contact, Testimonials — all use:
 ```tsx

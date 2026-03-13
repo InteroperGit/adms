@@ -1,19 +1,15 @@
 import raw from '@data/sections/hero.json';
 import { z } from 'zod';
+import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
-const CtaLinkSchema = z.object({
-  label: z.string(),
-  href: z.string(),
-});
-
-export type CtaLink = z.infer<typeof CtaLinkSchema>;
+export type { LabeledLink } from '@/types/shared/labeledLink';
 
 export const HeroContentSchema = z.object({
   badge: z.string(),
   title: z.string(),
   titleHighlight: z.string(),
   subtitle: z.string(),
-  cta: z.array(CtaLinkSchema),
+  cta: z.array(LabeledLinkSchema),
   stats: z.array(z.object({ value: z.string(), label: z.string() })),
 });
 

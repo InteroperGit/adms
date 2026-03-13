@@ -1,15 +1,10 @@
 import raw from '@data/sections/portfolioSection.json';
 import { z } from 'zod';
 import { ContentBlockSchema } from './blocks';
+import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
 export type { GalleryImage } from './blocks';
-
-const CtaLinkSchema = z.object({
-  label: z.string(),
-  href: z.string(),
-});
-
-export type CtaLink = z.infer<typeof CtaLinkSchema>;
+export type { LabeledLink } from '@/types/shared/labeledLink';
 
 export const PortfolioSectionContentSchema = z.object({
   label: z.string(),
@@ -17,7 +12,7 @@ export const PortfolioSectionContentSchema = z.object({
   description: z.string(),
   allCategory: z.string(),
   detailsLabel: z.string(),
-  cta: CtaLinkSchema,
+  cta: LabeledLinkSchema,
 });
 
 export type PortfolioSectionContent = z.infer<typeof PortfolioSectionContentSchema>;
