@@ -3,7 +3,7 @@ import { Container } from '@/components/layout/Container';
 import { CaseHero } from '@/components/portfolio/CaseHero';
 import { CaseOverview } from '@/components/portfolio/CaseOverview';
 import { CaseCTA } from '@/components/portfolio/CaseCTA';
-import { BreadCrumbs } from '@/components/ui/BreadCrumbs';
+import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { BlockRenderer } from '@/components/portfolio/blocks/BlockRenderer';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';

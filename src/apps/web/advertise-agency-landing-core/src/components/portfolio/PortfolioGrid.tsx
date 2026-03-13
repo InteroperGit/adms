@@ -2,7 +2,7 @@
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { PortfolioCard } from '@/components/ui/PortfolioCard';
+import { PortfolioCard } from '@/components/ui/portfolio/PortfolioCard';
 import { CategoryNav } from '@/components/portfolio/CategoryNav';
 import { Pagination } from '@/components/portfolio/Pagination';
 import { portfolioConfig } from '@/types/config/portfolioConfig';

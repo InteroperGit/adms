@@ -1,6 +1,6 @@
 // src/components/sections/contact/index.tsx
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/SectionHeader';
+import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { ContactForm } from './ContactForm';
 import { ContactInfo } from './ContactInfo';
 import { ContactHours } from './ContactHours';

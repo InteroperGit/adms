@@ -1,4 +1,4 @@
-import { TestimonialCard } from '@/components/ui/TestimonialCard';
+import { TestimonialCard } from '@/components/ui/testimonial/TestimonialCard';
 import { testimonials } from '@/types/sections/testimonials';
 import type { BlockquoteBlock as BlockquoteBlockData } from '@/types/portfolio/blocks';
 

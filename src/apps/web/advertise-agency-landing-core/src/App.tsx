@@ -5,9 +5,9 @@ import { Header } from '@/components/sections/header';
 import { Footer } from '@/components/sections/footer';
 import { CookieBanner } from './components/banners/CookieBanner';
 import { MetrikaScript } from '@/components/analytics/MetrikaScript';
-import { ScrollToTop } from '@/components/ui/ScrollToTop.tsx';
-import { HomeHashScroll } from '@/components/ui/HomeHashScroll';
-import { SkipToContent } from '@/components/ui/SkipToContent';
+import { ScrollToTop } from '@/components/ui/navigation/ScrollToTop';
+import { HomeHashScroll } from '@/components/ui/navigation/HomeHashScroll';
+import { SkipToContent } from '@/components/ui/navigation/SkipToContent';
 import { ThemeProvider } from '@/contexts/ThemeContext.tsx';
 
 export default function App() {

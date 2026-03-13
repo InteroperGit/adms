@@ -1,4 +1,4 @@
-import { SectionIconBox } from '@/components/ui/SectionIconBox';
+import { SectionIconBox } from '@/components/ui/section/SectionIconBox';
 import { ICON_MAP } from '@/types/shared/iconMap';
 import type { Advantage } from '@/types/sections/advantages';
 import { cn } from '@/lib/utils';

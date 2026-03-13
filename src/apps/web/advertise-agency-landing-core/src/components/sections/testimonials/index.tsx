@@ -1,5 +1,5 @@
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/SectionHeader';
+import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { testimonialsSectionContent } from '@/types/sections/testimonialsContent';
 import { siteData } from '@/types/config/siteData';
 import { cn } from '@/lib/utils';

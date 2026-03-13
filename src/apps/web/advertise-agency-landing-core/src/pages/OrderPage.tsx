@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/SectionHeader';
-import { BreadCrumbs } from '@/components/ui/BreadCrumbs';
+import { SectionHeader } from '@/components/ui/section/SectionHeader';
+import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { OrderForm } from '@/components/ui/orderForm';
 import { orderFormsData } from '@/types/config/orderForms';
 import { resolveIcon } from '@/types/shared/iconMap';

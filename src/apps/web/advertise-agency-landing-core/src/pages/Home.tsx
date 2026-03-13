@@ -7,7 +7,7 @@ import { Advantages } from '@/components/sections/advantages';
 import { CallToAction } from '@/components/sections/call-to-action';
 import { Testimonials } from '@/components/sections/testimonials';
 import { Contact } from '@/components/sections/contact';
-import { SectionDivider } from '@/components/ui/SectionDivider';
+import { SectionDivider } from '@/components/ui/section/SectionDivider';
 
 export default function Home() {
   return (

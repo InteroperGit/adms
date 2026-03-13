@@ -1,9 +1,9 @@
 // src/pages/PortfolioPage.tsx
 import { useEffect } from 'react';
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/SectionHeader';
+import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid';
-import { BreadCrumbs } from '@/components/ui/BreadCrumbs';
+import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { portfolioPageContent } from '@/types/sections/portfolioPage';
 import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
 

@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { AboutCard } from '@/components/sections/about/AboutCard';
 import { AboutText } from '@/components/sections/about/AboutText';
 import { AboutValues } from '@/components/sections/about/AboutValues';
-import { SectionHeader } from '@/components/ui/SectionHeader';
+import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { aboutContent } from '@/types/sections/aboutContent';
 import { useFadeIn } from '@/hooks/useFadeIn';
 

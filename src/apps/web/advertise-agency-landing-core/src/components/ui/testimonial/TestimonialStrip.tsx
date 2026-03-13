@@ -1,5 +1,5 @@
 // src/components/ui/TestimonialStrip.tsx
-import { StarRating } from '@/components/ui/StarRating';
+import { StarRating } from '@/components/ui/testimonial/StarRating';
 import { testimonials } from '@/types/sections/testimonials';
 import { cn } from '@/lib/utils';
 

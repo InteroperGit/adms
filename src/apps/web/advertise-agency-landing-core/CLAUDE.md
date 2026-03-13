@@ -19,9 +19,11 @@ Landing page for **РА "Рекламастер"** — full-cycle advertising ag
 src/main.tsx       # Entry: ViteReactSSG({ routes })
 src/router.tsx     # RouteObject[] — all page routes
 src/pages/         # Home, PortfolioPage, PortfolioCasePage, legal, OrderPage
-src/components/    # sections/ | portfolio/ | ui/ | analytics/ banners/ layout/
+src/components/    # sections/ | portfolio/ | ui/ | analytics/ | banners/ | layout/
+                   # ui/ subfolders: section/ legal/ portfolio/ testimonial/ navigation/
+                   #   imageGallery/ orderForm/ — shadcn primitives stay at ui/ root
 src/types/         # Zod schemas + parsed consts (config/ sections/ portfolio/ shared/)
-src/hooks/         # useFadeIn, useActiveSection, useTheme, useCookieConsent, …
+src/hooks/         # useFadeIn, useActiveSection, useTheme, useCookieConsent, useSwipe, …
 src/contexts/      # ThemeContext (dark mode)
 src/plugins/       # themePlugin, imageResizePlugin, ssgMetaPlugin
 scripts/           # validate.ts, generate-json-schemas.ts, new-client.ts
@@ -71,7 +73,7 @@ pnpm dlx shadcn@latest add <component>
 
 ## Conventions
 
-- `SectionBadge` (`src/components/ui/SectionBadge.tsx`) — props: `label`, `variant?` (`'light'|'dark'`), `className?`; used by `SectionHeader` and `About`; Hero keeps its own inline badge
+- `SectionBadge` (`src/components/ui/section/SectionBadge.tsx`) — props: `label`, `variant?` (`'light'|'dark'`), `className?`; used by `SectionHeader` and `About`; Hero keeps its own inline badge
 - **Imports**: components use `@/types/` (never `@data/`); `cn()` from `@/lib/utils`; `categorySlug()` from `@/lib/categorySlug`
 - **Sections**: self-contained in `src/components/sections/`, use `Container` for layout
 - **Path aliases**: `@/` → `src/`, `@data` → `data/content`

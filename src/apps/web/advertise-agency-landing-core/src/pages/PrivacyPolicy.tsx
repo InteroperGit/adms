@@ -2,8 +2,8 @@
 
 import { legalData } from '@/types/config/legalData';
 import { privacyPolicyContent } from '@/types/legal';
-import { LegalPageLayout } from '@/components/ui/LegalPageLayout.tsx';
-import { LegalBlockRenderer } from '@/components/ui/LegalBlockRenderer.tsx';
+import { LegalPageLayout } from '@/components/ui/legal/LegalPageLayout';
+import { LegalBlockRenderer } from '@/components/ui/legal/LegalBlockRenderer';
 
 export default function PrivacyPolicy() {
   const { company, documents } = legalData;

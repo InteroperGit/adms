@@ -62,7 +62,8 @@
 
 ## Dark Mode
 
-- `src/hooks/useDarkMode.ts` — reads `localStorage('theme-mode')` + `matchMedia('prefers-color-scheme: dark')`; toggles `.dark` on `<html>`; returns `{ isDark, toggle }`
+- `src/contexts/ThemeContext.tsx` — exports `ThemeProvider` + `ThemeContext`; reads `localStorage('theme-mode')` + `matchMedia`; toggles `.dark` on `<html>`
+- `src/hooks/useTheme.ts` — `useTheme()` returns `{ isDark, toggle }`; use this everywhere instead of direct context access
 - `themePlugin.ts` — emits `.dark { … }` CSS block from `theme.darkColors` when present; injects anti-FOUC script before fonts
 - `src/index.css` — `@variant dark (&:where(.dark, .dark *));` enables Tailwind `dark:` prefix
 - `data/content/config/theme.json` — optional `darkColors` key (same shape as `colors`)
@@ -72,5 +73,5 @@
 
 - **In-flow** (not fixed) — `bg-background border-b border-border`
 - `useActiveSection` tracks scroll position for nav highlight
-- `useDarkMode` called in `header/index.tsx`; passes `isDark` + `onToggleDark` to both nav sub-components
+- `useTheme` called in `header/index.tsx`; passes `isDark` + `toggle` to nav sub-components
 - Sun/Moon toggle in `HeaderDesktopNav` (between SocialLinks and CTA) and `HeaderMobileNav` (in menu footer)

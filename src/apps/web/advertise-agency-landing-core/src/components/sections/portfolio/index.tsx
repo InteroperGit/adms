@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/SectionHeader';
-import { PortfolioCard } from '@/components/ui/PortfolioCard';
+import { SectionHeader } from '@/components/ui/section/SectionHeader';
+import { PortfolioCard } from '@/components/ui/portfolio/PortfolioCard';
 import { PortfolioFilter } from '@/components/sections/portfolio/PortfolioFilter';
 import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';
