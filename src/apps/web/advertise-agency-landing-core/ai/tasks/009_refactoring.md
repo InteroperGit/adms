@@ -1,6 +1,6 @@
 # PDR-009: Code Review & Refactoring Plan
 
-**Status:** In progress — R1 ✅ done, R2 ✅ done, R3 ✅ done (no-op), R4 ✅ done, R5 ✅ done, R6 ✅ done, R7 ✅ done, R8 ✅ done, R9 ✅ done, R10 ✅ done, R12 ✅ done, R13 ✅ done, R14 ✅ done, R15 ✅ done, R16 ✅ done, R17 ✅ done, R18 ✅ done, R19 ✅ done, R20 ✅ done, R21 ✅ done, R22 ✅ done, R23 ✅ done
+**Status:** In progress — R1 ✅ done, R2 ✅ done, R3 ✅ done (no-op), R4 ✅ done, R5 ✅ done, R6 ✅ done, R7 ✅ done, R8 ✅ done, R9 ✅ done, R10 ✅ done, R12 ✅ done, R13 ✅ done, R14 ✅ done, R15 ✅ done, R16 ✅ done, R17 ✅ done, R18 ✅ done, R19 ✅ done, R20 ✅ done, R21 ✅ done, R22 ✅ done, R23 ✅ done, R24 ✅ done, R25 ✅ done (no-op), R26 ✅ done, R27 ✅ done
 **Date:** 2026-03-13
 **Scope:** Full codebase review — component decomposition, code simplification, style consistency
 
@@ -459,7 +459,7 @@ export function FadeInSection({ id, className, children }: FadeInSectionProps) {
 
 ---
 
-## R24. `BackButton` uses hardcoded `bg-white/90` — breaks dark mode
+## R24. `BackButton` uses hardcoded `bg-white/90` — breaks dark mode ✅ done
 
 **File:** `src/components/ui/BackButton.tsx:18`
 
@@ -471,7 +471,7 @@ export function FadeInSection({ id, className, children }: FadeInSectionProps) {
 
 ---
 
-## R25. Duplicated nav dots + arrow buttons across Carousel and Testimonials
+## R25. Duplicated nav dots + arrow buttons across Carousel and Testimonials ✅ done (no-op)
 
 **Files:**
 - `src/components/sections/carousel/CarouselControls.tsx:39-51` — dot indicators
@@ -483,11 +483,11 @@ export function FadeInSection({ id, className, children }: FadeInSectionProps) {
 
 **Fix:** Extract `<DotIndicators>` and/or `<ArrowNavButtons>` shared components into `src/components/ui/`.
 
-**Impact:** ~20 lines removed across 2 files. Consistent nav UI.
+**Verdict:** `TestimonialNav.tsx` no longer exists — it was removed when testimonials was refactored to use the Yandex Reviews widget (R16). No duplication remains. The other arrow button consumers (`ImageGalleryNavButtons.tsx`, `ImageGalleryLightbox.tsx`) already have distinct styling and context. No extraction needed.
 
 ---
 
-## R26. `HeroStats` (105 lines) — `CountingStat` should be extracted
+## R26. `HeroStats` (105 lines) — `CountingStat` should be extracted ✅ done
 
 **File:** `src/components/sections/hero/HeroStats.tsx`
 
@@ -499,7 +499,7 @@ export function FadeInSection({ id, className, children }: FadeInSectionProps) {
 
 ---
 
-## R27. `ALL_ITEMS` duplicated across portfolio pages
+## R27. `ALL_ITEMS` duplicated across portfolio pages ✅ done
 
 **Files:**
 - `src/pages/PortfolioPage.tsx:10` — `const ALL_ITEMS = Object.values(portfolioCaseMap)`
@@ -513,7 +513,7 @@ export function FadeInSection({ id, className, children }: FadeInSectionProps) {
 
 ---
 
-## R28. Redundant `import './index.css'` in App.tsx
+## R28. Redundant `import './index.css'` in App.tsx ✅ done
 
 **File:** `src/App.tsx:1` — `import './index.css'`
 **Also in:** `src/main.tsx:6` — `import './index.css'`

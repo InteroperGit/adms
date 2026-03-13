@@ -7,11 +7,9 @@ import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { portfolioPageContent } from '@/types/sections/portfolioPage';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { categories } from '@/types/config/categories';
-import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
+import { allPortfolioCases } from '@/types/portfolio/portfolioCases';
 import { siteData } from '@/types/config/siteData';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
-
-const ALL_ITEMS = Object.values(portfolioCaseMap);
 
 export function PortfolioCategoryPage() {
   const { categorySlug } = useParams<{ categorySlug: string }>();
@@ -46,7 +44,9 @@ export function PortfolioCategoryPage() {
     );
   }
 
-  const filtered = isAll ? ALL_ITEMS : ALL_ITEMS.filter((item) => item.category === category!.name);
+  const filtered = isAll
+    ? allPortfolioCases
+    : allPortfolioCases.filter((item) => item.category === category!.name);
 
   const breadcrumbItems = isRoot
     ? [{ label: siteData.homeLabel, href: '/' }, { label: p.title }]

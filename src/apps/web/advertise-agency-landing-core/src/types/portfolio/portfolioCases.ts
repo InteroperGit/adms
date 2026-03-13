@@ -12,3 +12,5 @@ export const portfolioCaseMap: Record<string, PortfolioCase> = Object.fromEntrie
     return [slug, PortfolioCaseSchema.parse(data)];
   })
 );
+
+export const allPortfolioCases: PortfolioCase[] = Object.values(portfolioCaseMap);

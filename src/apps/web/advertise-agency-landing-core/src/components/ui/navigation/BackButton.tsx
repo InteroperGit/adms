@@ -15,7 +15,11 @@ export function BackButton({ label = 'Вернуться назад', className 
     <button
       onClick={() => navigate(-1)}
       className={cn(
-        'fixed right-4 top-4 z-50 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm text-muted-foreground shadow-md backdrop-blur-sm transition-colors hover:text-foreground',
+        'fixed right-4 top-4 z-50',
+        'inline-flex items-center gap-2',
+        'rounded-full border border-border bg-background/90 shadow-md backdrop-blur-sm',
+        'px-4 py-2 text-sm font-medium text-foreground',
+        'transition-colors hover:bg-muted',
         className
       )}
     >
