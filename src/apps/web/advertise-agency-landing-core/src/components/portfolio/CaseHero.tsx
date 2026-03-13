@@ -31,7 +31,6 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
           sizes="100vw"
           priority
           className="absolute inset-0 h-full w-full object-cover"
-          dev={import.meta.env.DEV}
         />
         <div className="absolute inset-0 bg-neutral-900/60" />
         {content}

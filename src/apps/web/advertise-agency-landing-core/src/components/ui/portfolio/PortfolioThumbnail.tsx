@@ -32,7 +32,6 @@ export function PortfolioThumbnail({
           alt={title}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="absolute inset-0 h-full w-full object-cover"
-          dev={import.meta.env.DEV}
         />
       ) : (
         <div

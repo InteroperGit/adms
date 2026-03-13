@@ -17,9 +17,10 @@ export function PortfolioCategoryPage() {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const p = portfolioPageContent;
 
-  const isAll = categorySlug === 'all';
+  const isRoot = !categorySlug;
+  const isAll = isRoot || categorySlug === 'all';
   const category = isAll ? null : categories.find((c) => c.slug === categorySlug);
-  const categoryLabel = isAll ? portfolioConfig.allLabel : (category?.name ?? '');
+  const categoryLabel = categorySlug === 'all' ? portfolioConfig.allLabel : (category?.name ?? '');
 
   useEffect(() => {
     if (isAll) {
@@ -48,15 +49,17 @@ export function PortfolioCategoryPage() {
 
   const filtered = isAll ? ALL_ITEMS : ALL_ITEMS.filter((item) => item.category === category!.name);
 
+  const breadcrumbItems = isRoot
+    ? [{ label: siteData.homeLabel, href: '/' }, { label: p.title }]
+    : [
+        { label: siteData.homeLabel, href: '/' },
+        { label: p.title, href: '/portfolio' },
+        { label: categoryLabel },
+      ];
+
   return (
     <>
-      <BreadCrumbs
-        items={[
-          { label: siteData.homeLabel, href: '/' },
-          { label: p.title, href: '/portfolio' },
-          { label: categoryLabel },
-        ]}
-      />
+      <BreadCrumbs items={breadcrumbItems} />
       <section className="bg-background py-24 md:py-32">
         <Container>
           <SectionHeader

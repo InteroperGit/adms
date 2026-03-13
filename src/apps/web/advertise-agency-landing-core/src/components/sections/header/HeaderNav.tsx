@@ -1,12 +1,12 @@
 import { headerContent } from '@/types/sections/header';
 
-interface Props {
+interface HeaderNavProps {
   isHome: boolean;
   variant?: 'desktop' | 'mobile';
   onLinkClick?: () => void;
 }
 
-export function HeaderNav({ isHome, variant = 'desktop', onLinkClick }: Props) {
+export function HeaderNav({ isHome, variant = 'desktop', onLinkClick }: HeaderNavProps) {
   const isDesktop = variant === 'desktop';
 
   return (

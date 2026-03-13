@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface Props {
+interface CarouselControlsProps {
   total: number;
   current: number;
   onPrev: () => void;
@@ -29,7 +29,7 @@ export function CarouselControls({
   prevLabel,
   nextLabel,
   slideLabel,
-}: Props) {
+}: CarouselControlsProps) {
   return (
     <>
       <button

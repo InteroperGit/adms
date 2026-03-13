@@ -11,11 +11,6 @@ export interface OptimizedImageProps {
   width?: number;
   height?: number;
   className?: string;
-  /**
-   * Pass import.meta.env.DEV from the call site to skip srcset in dev mode.
-   * Defaults to true (plain <img>) — callers in production pass false.
-   */
-  dev?: boolean;
 }
 
 /**
@@ -31,14 +26,13 @@ export function OptimizedImage({
   width,
   height,
   className,
-  dev = true,
 }: OptimizedImageProps) {
   const loadingProps = priority
     ? ({ loading: 'eager', fetchPriority: 'high' } as const)
     : ({ loading: 'lazy', decoding: 'async' } as const);
 
   // In dev mode the plugin hasn't generated _optimized files — render plain img
-  if (dev) {
+  if (import.meta.env.DEV) {
     return (
       <img
         src={src}

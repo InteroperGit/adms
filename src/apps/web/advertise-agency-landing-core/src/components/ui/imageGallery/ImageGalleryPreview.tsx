@@ -20,7 +20,6 @@ export function ImageGalleryPreview({ src, alt, description, onClick }: ImageGal
           alt={alt}
           sizes="(max-width: 768px) 100vw, 800px"
           className="max-h-[260px] w-full object-cover sm:max-h-[560px]"
-          dev={import.meta.env.DEV}
         />
         {description && (
           <div

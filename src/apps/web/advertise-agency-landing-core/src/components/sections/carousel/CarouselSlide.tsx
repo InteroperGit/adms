@@ -3,13 +3,13 @@ import { carouselContent } from '@/types/sections/carouselContent';
 import type { CarouselSlide as CarouselSlideType } from '@/types/sections/carousel';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
-interface Props {
+interface CarouselSlideProps {
   slide: CarouselSlideType;
   isActive: boolean;
   index: number;
 }
 
-export function CarouselSlide({ slide, isActive, index }: Props) {
+export function CarouselSlide({ slide, isActive, index }: CarouselSlideProps) {
   return (
     <div
       aria-hidden={!isActive}
@@ -26,7 +26,6 @@ export function CarouselSlide({ slide, isActive, index }: Props) {
             sizes="100vw"
             priority={index === 0}
             className="h-full w-full object-cover"
-            dev={import.meta.env.DEV}
           />
           <div className="absolute inset-0 dark:bg-black/45" />
         </>

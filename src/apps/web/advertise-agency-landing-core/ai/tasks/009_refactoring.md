@@ -1,6 +1,6 @@
 # PDR-009: Code Review & Refactoring Plan
 
-**Status:** In progress — R1 ✅ done, R2 ✅ done, R3 ✅ done (no-op), R4 ✅ done
+**Status:** In progress — R1 ✅ done, R2 ✅ done, R3 ✅ done (no-op), R4 ✅ done, R5 ✅ done, R6 ✅ done, R7 ✅ done, R8 ✅ done, R9 ✅ done, R10 ✅ done, R12 ✅ done
 **Date:** 2026-03-13
 **Scope:** Full codebase review — component decomposition, code simplification, style consistency
 
@@ -161,7 +161,7 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
 
 ---
 
-## R8. Inconsistent interface naming — `Props` vs descriptive names
+## R8. Inconsistent interface naming — `Props` vs descriptive names ✅ done
 
 **Files with generic `Props`:**
 - `src/components/sections/carousel/CarouselControls.tsx:4` — `interface Props`
@@ -188,7 +188,7 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
 
 ---
 
-## R9. `import.meta.env.DEV` passed as prop to OptimizedImage everywhere
+## R9. `import.meta.env.DEV` passed as prop to OptimizedImage everywhere ✅ done
 
 **Files:** Every OptimizedImage usage passes `dev={import.meta.env.DEV}`:
 - `CarouselSlide.tsx:29`, `CaseHero.tsx:24`, `ImageGalleryLightbox.tsx:97,133`, `PortfolioThumbnail.tsx:35`
@@ -201,7 +201,7 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
 
 ---
 
-## R10. `BlockRenderer` — IIFE for switch can be simplified
+## R10. `BlockRenderer` — IIFE for switch can be simplified ✅ done
 
 **File:** `src/components/portfolio/blocks/BlockRenderer.tsx:29-68`
 
@@ -230,7 +230,7 @@ export function BlockRenderer({ block, caseGradient, caseTitle }: BlockRendererP
 
 ---
 
-## R11. `ChartBlock` — large file (283 lines), 5 chart types in one module
+## R11. `ChartBlock` — large file (283 lines), 5 chart types in one module ✅ done
 
 **File:** `src/components/portfolio/blocks/ChartBlock.tsx`
 

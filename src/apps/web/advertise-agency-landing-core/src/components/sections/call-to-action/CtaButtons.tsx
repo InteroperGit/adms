@@ -7,11 +7,11 @@ interface CtaLink {
   href: string;
 }
 
-interface Props {
+interface CtaButtonsProps {
   cta: [CtaLink, CtaLink];
 }
 
-export function CtaButtons({ cta }: Props) {
+export function CtaButtons({ cta }: CtaButtonsProps) {
   return (
     <div className="flex flex-col justify-center gap-4 sm:flex-row">
       <Button

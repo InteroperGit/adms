@@ -3,7 +3,7 @@ import { DarkModeToggle } from './DarkModeToggle';
 import { HeaderNav } from './HeaderNav';
 import { siteData } from '@/types/config/siteData';
 
-interface Props {
+interface HeaderDesktopNavProps {
   isHome: boolean;
   /** 0=Phone, 1=Telegram, 2=VK, 3=CTA — null when no button is highlighted */
   highlightedActionIndex: number | null;
@@ -11,7 +11,12 @@ interface Props {
   onToggleDark: () => void;
 }
 
-export function HeaderDesktopNav({ isHome, highlightedActionIndex, isDark, onToggleDark }: Props) {
+export function HeaderDesktopNav({
+  isHome,
+  highlightedActionIndex,
+  isDark,
+  onToggleDark,
+}: HeaderDesktopNavProps) {
   return (
     <>
       <HeaderNav isHome={isHome} />

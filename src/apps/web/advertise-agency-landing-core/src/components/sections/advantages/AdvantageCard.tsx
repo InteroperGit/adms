@@ -3,12 +3,12 @@ import { ICON_MAP } from '@/types/shared/iconMap';
 import type { Advantage } from '@/types/sections/advantages';
 import { cn } from '@/lib/utils';
 
-interface Props {
+interface AdvantageCardProps {
   item: Advantage;
   index: number;
 }
 
-export function AdvantageCard({ item, index }: Props) {
+export function AdvantageCard({ item, index }: AdvantageCardProps) {
   const Icon = ICON_MAP[item.icon];
   return (
     <div

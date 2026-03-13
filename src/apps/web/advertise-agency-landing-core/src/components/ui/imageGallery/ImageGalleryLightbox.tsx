@@ -82,7 +82,6 @@ export function ImageGalleryLightbox({
             alt={`${altPrefix} ${activeIndex + 1}`}
             sizes="100vw"
             className="max-h-[55vh] w-full rounded-xl object-contain sm:max-h-[75vh]"
-            dev={import.meta.env.DEV}
           />
           {multi && (
             <>
@@ -122,7 +121,6 @@ export function ImageGalleryLightbox({
                   alt={`${altPrefix} ${i + 1}`}
                   sizes="80px"
                   className="h-full w-full object-cover"
-                  dev={import.meta.env.DEV}
                 />
               </button>
             ))}

@@ -44,7 +44,6 @@ export function ImageGalleryThumbnails({
             alt={`${altPrefix} ${i + 1}`}
             sizes="80px"
             className="h-full w-full object-cover"
-            dev={import.meta.env.DEV}
           />
           {i === activeIndex && (
             <span className="pointer-events-none absolute inset-0 bg-primary/20" />

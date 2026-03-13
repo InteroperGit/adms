@@ -3,11 +3,11 @@ import { SectionIconBox } from '@/components/ui/section/SectionIconBox';
 import { ICON_MAP } from '@/types/shared/iconMap';
 import type { Service } from '@/types/sections/services';
 
-interface Props {
+interface ServiceCardProps {
   service: Service;
 }
 
-export function ServiceCard({ service }: Props) {
+export function ServiceCard({ service }: ServiceCardProps) {
   const Icon = ICON_MAP[service.icon];
   return (
     <Card className="group border-border bg-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
