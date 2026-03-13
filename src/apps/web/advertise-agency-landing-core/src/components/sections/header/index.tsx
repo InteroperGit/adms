@@ -2,10 +2,10 @@ import { useLocation } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { headerContent } from '@/types/sections/header';
 import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
-import { useDarkMode } from '@/hooks/useDarkMode';
 import { siteData } from '@/types/config/siteData';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
 import { HeaderMobileNav } from './HeaderMobileNav';
+import { useTheme } from "@/hooks/useTheme";
 
 // 4 buttons: 0=Phone, 1=Telegram, 2=VK, 3=CTA
 const HEADER_BUTTON_COUNT = 4;
@@ -14,7 +14,7 @@ export function Header() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
   const highlightedActionIndex = useRandomButtonHighlight(HEADER_BUTTON_COUNT);
-  const { isDark, toggle } = useDarkMode();
+  const { isDark, toggle } = useTheme();
 
   return (
     <header id="main-nav" className="border-b border-border bg-background shadow-sm">

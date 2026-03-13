@@ -6,7 +6,7 @@ import { SocialLinks } from '@/components/ui/SocialLinks';
 import { contactContent } from '@/types/sections/contact';
 import { siteData } from '@/types/config/siteData';
 
-export function ContactInfo() {
+export function ContactInfo({ isDark }: { isDark: boolean }) {
   const { directTitle, contactLabels, socialTitle } = contactContent;
   const { phone, email, address, telegram, vk } = siteData.contact;
 
@@ -29,7 +29,7 @@ export function ContactInfo() {
           />
           <ContactItem icon={MapPin} label={contactLabels.address} value={address} />
         </ul>
-        {siteData.yandexMapUrl && <ContactMap url={siteData.yandexMapUrl} className="mt-6" />}
+        {siteData.yandexMapUrl && <ContactMap url={siteData.yandexMapUrl} className="mt-6" isDark={isDark} />}
       </div>
 
       <div>

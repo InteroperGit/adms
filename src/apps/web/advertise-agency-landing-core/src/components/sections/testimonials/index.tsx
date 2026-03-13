@@ -6,10 +6,12 @@ import { cn } from '@/lib/utils';
 import { useFadeIn } from '@/hooks/useFadeIn';
 import { YandexReviews } from './YandexReviews';
 import { TestimonialsEmpty } from './TestimonialsEmpty';
+import { useTheme } from "@/hooks/useTheme";
 
 export function Testimonials() {
   const orgId = siteData.yandexMapsOrgId?.trim() || '';
   const { ref, isVisible } = useFadeIn();
+  const { isDark } = useTheme();
 
   return (
     <section ref={ref} id="testimonials" className="bg-background py-24 md:py-32">
@@ -21,7 +23,7 @@ export function Testimonials() {
             description={testimonialsSectionContent.description}
             className="mb-16"
           />
-          {orgId ? <YandexReviews orgId={orgId} /> : <TestimonialsEmpty />}
+          {orgId ? <YandexReviews orgId={orgId} isDark={isDark} /> : <TestimonialsEmpty />}
         </Container>
       </div>
     </section>

@@ -25,7 +25,8 @@ src/components/
   ui/                 # shadcn primitives + shared UI (ImageGallery, OrderForm, …)
   analytics/ banners/ layout/
 src/types/            # All Zod schemas, types, parsed consts — config/ sections/ portfolio/ shared/
-src/hooks/            # useFadeIn, useActiveSection, useDarkMode, useCookieConsent, …
+src/hooks/            # useFadeIn, useActiveSection, useTheme, useCookieConsent, …
+src/contexts/         # ThemeContext (dark mode state + ThemeProvider)
 src/plugins/          # themePlugin, imageResizePlugin, ssgMetaPlugin
 src/lib/              # cn(), categorySlug(), imageSrcSet helpers
 scripts/              # validate.ts, generate-json-schemas.ts, new-client.ts
