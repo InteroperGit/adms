@@ -10,6 +10,7 @@ import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
 import { portfolioPageContent } from '@/types/sections/portfolioPage';
 import { categories } from '@/types/config/categories';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
+import { siteData } from '@/types/config/siteData';
 
 export function PortfolioCasePage() {
   const { categorySlug, caseSlug } = useParams<{ categorySlug: string; caseSlug: string }>();
@@ -42,7 +43,7 @@ export function PortfolioCasePage() {
     >
       <BreadCrumbs
         items={[
-          { label: 'Главная', href: '/' },
+          { label: siteData.homeLabel, href: '/' },
           { label: portfolioTitle, href: '/portfolio' },
           { label: categoryLabel, href: `/portfolio/${categorySlug}` },
           { label: data.title },

@@ -10,7 +10,7 @@ interface GalleryBlockProps {
 
 export function GalleryBlock({ block, caseTitle }: GalleryBlockProps) {
   const { photoAlt } = portfolioCaseContent;
-  const { prevLabel, nextLabel, counter } = imageGalleryContent;
+  const { prevLabel, nextLabel, counter, closeLabel } = imageGalleryContent;
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -19,6 +19,7 @@ export function GalleryBlock({ block, caseTitle }: GalleryBlockProps) {
         altPrefix={photoAlt.replace('{title}', caseTitle)}
         prevLabel={prevLabel}
         nextLabel={nextLabel}
+        closeLabel={closeLabel}
         counterTemplate={counter}
       />
     </div>

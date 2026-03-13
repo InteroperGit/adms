@@ -13,6 +13,8 @@ export const PortfolioConfigSchema = z.object({
   nextLabel: z.string(),
   pageLabel: z.string(), // template: "{current}" and "{total}" replaced at runtime
   emptyLabel: z.string(),
+  notFoundCategory: z.string(),
+  allProjectsLink: z.string(),
   cta: CtaLinkSchema,
 });
 

@@ -2,6 +2,7 @@
   "$schema": "../../schema/config/site.schema.json",
   "name": "РА «Рекламастер»",
   "description": "Мы создаём рекламу, которая работает",
+  "homeLabel": "Главная",
   "yandexMapsOrgId": "12345678901",
   "yandexMapUrl": "https://yandex.ru/map-widget/v1/?um=constructor%3AHASH&source=constructorLink",
   "yandexMetrikaId": "12345678",

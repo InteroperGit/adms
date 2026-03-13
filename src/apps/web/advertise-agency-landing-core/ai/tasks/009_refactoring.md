@@ -1,6 +1,6 @@
 # PDR-009: Code Review & Refactoring Plan
 
-**Status:** In progress — R1 ✅ done
+**Status:** In progress — R1 ✅ done, R2 ✅ done, R3 ✅ done (no-op), R4 ✅ done
 **Date:** 2026-03-13
 **Scope:** Full codebase review — component decomposition, code simplification, style consistency
 
@@ -18,7 +18,7 @@ The codebase is well-structured overall. Components are already decomposed into 
 
 ---
 
-## R1. Duplicated touch swipe logic (3 locations)
+## R1. Duplicated touch swipe logic (3 locations) ✅ done
 
 **Files:**
 - `src/components/sections/carousel/index.tsx:36-52` — touchStart/touchEnd with 50px threshold
@@ -39,7 +39,7 @@ const swipe = useSwipe(next, prev);
 
 ---
 
-## R2. CaseHero — duplicated JSX for image vs gradient variant
+## R2. CaseHero — duplicated JSX for image vs gradient variant ✅ done
 
 **File:** `src/components/portfolio/CaseHero.tsx:14-55`
 
@@ -81,7 +81,7 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
 
 ---
 
-## R3. Consent checkbox pattern duplicated (2 locations)
+## R3. Consent checkbox pattern duplicated (2 locations) ✅ done (no-op)
 
 **Files:**
 - `src/components/sections/contact/ContactConsent.tsx`
@@ -95,7 +95,7 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
 
 ---
 
-## R4. Hardcoded Russian strings in non-data components
+## R4. Hardcoded Russian strings in non-data components ✅ done
 
 **Files:**
 - `src/components/ui/imageGallery/ImageGalleryLightbox.tsx:68` — `aria-label="Закрыть"`

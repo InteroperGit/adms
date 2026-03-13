@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { carouselSlides } from '@/types/sections/carousel';
+import { carouselContent } from '@/types/sections/carouselContent';
 import { useSwipe } from '@/hooks/useSwipe';
 import { CarouselSlide } from './CarouselSlide';
 import { CarouselControls } from './CarouselControls';
@@ -46,6 +47,9 @@ export function Carousel() {
         onPrev={prev}
         onNext={next}
         onDot={setActive}
+        prevLabel={carouselContent.prevLabel}
+        nextLabel={carouselContent.nextLabel}
+        slideLabel={carouselContent.slideLabel}
       />
     </div>
   );

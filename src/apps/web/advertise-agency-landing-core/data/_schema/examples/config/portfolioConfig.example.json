@@ -6,5 +6,7 @@
   "nextLabel": "Вперёд",
   "pageLabel": "Страница {current} из {total}",
   "emptyLabel": "Проектов в этой категории пока нет.",
+  "notFoundCategory": "Категория не найдена.",
+  "allProjectsLink": "Все проекты",
   "cta": { "label": "Обсудить ваш проект", "href": "/#contact" }
 }

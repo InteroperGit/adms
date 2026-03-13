@@ -9,6 +9,7 @@ import { portfolioPageContent } from '@/types/sections/portfolioPage';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { categories } from '@/types/config/categories';
 import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
+import { siteData } from '@/types/config/siteData';
 
 const ALL_ITEMS = Object.values(portfolioCaseMap);
 
@@ -22,9 +23,9 @@ export function PortfolioCategoryPage() {
 
   useEffect(() => {
     if (isAll) {
-      document.title = `${p.title} — РА «Рекламастер»`;
+      document.title = `${p.title} — ${siteData.name}`;
     } else if (category) {
-      document.title = `${category.name} — Портфолио — РА «Рекламастер»`;
+      document.title = `${category.name} — ${p.title} — ${siteData.name}`;
     }
   }, [isAll, category, p.title]);
 
@@ -32,10 +33,12 @@ export function PortfolioCategoryPage() {
     return (
       <section className="bg-background py-24 md:py-32">
         <Container>
-          <p className="mb-4 text-center text-muted-foreground">Категория не найдена.</p>
+          <p className="mb-4 text-center text-muted-foreground">
+            {portfolioConfig.notFoundCategory}
+          </p>
           <div className="text-center">
             <Link to="/portfolio" className="text-primary underline underline-offset-4">
-              Все проекты
+              {portfolioConfig.allProjectsLink}
             </Link>
           </div>
         </Container>
@@ -49,7 +52,7 @@ export function PortfolioCategoryPage() {
     <>
       <BreadCrumbs
         items={[
-          { label: 'Главная', href: '/' },
+          { label: siteData.homeLabel, href: '/' },
           { label: p.title, href: '/portfolio' },
           { label: categoryLabel },
         ]}

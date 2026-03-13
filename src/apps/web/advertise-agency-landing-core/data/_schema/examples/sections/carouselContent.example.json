@@ -1,4 +1,7 @@
 {
   "$schema": "../../schema/sections/carouselContent.schema.json",
-  "label": "Название агентства"
+  "label": "Название агентства",
+  "prevLabel": "Предыдущий слайд",
+  "nextLabel": "Следующий слайд",
+  "slideLabel": "Слайд {index}"
 }

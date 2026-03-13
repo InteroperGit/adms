@@ -5,6 +5,7 @@ export const ImageGalleryContentSchema = z.object({
   prevLabel: z.string(),
   nextLabel: z.string(),
   counter: z.string(),
+  closeLabel: z.string(),
 });
 
 export type ImageGalleryContent = z.infer<typeof ImageGalleryContentSchema>;

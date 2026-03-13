@@ -5,6 +5,7 @@ import { Container } from '@/components/layout/Container';
 import { DarkModeToggle } from './DarkModeToggle';
 import { HeaderNav } from './HeaderNav';
 import { siteData } from '@/types/config/siteData';
+import { headerContent } from '@/types/sections/header';
 
 interface Props {
   isHome: boolean;
@@ -37,7 +38,7 @@ export function HeaderMobileNav({ isHome, highlightedActionIndex, isDark, onTogg
         <button
           className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted"
           onClick={() => setMenuOpen((prev) => !prev)}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={menuOpen ? headerContent.closeMenuLabel : headerContent.openMenuLabel}
           aria-expanded={menuOpen}
         >
           {menuOpen ? <X size={20} /> : <Menu size={20} />}

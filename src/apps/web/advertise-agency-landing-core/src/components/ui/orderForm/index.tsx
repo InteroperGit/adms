@@ -119,6 +119,7 @@ export function OrderForm({ definition }: OrderFormProps) {
             altPrefix={activeProduct.label}
             prevLabel={imageGalleryContent.prevLabel}
             nextLabel={imageGalleryContent.nextLabel}
+            closeLabel={imageGalleryContent.closeLabel}
             counterTemplate={imageGalleryContent.counter}
           />
         )}

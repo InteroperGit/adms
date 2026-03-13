@@ -15,6 +15,7 @@ interface ImageGalleryLightboxProps {
   onSelect: (index: number) => void;
   prevLabel: string;
   nextLabel: string;
+  closeLabel: string;
 }
 
 export function ImageGalleryLightbox({
@@ -27,6 +28,7 @@ export function ImageGalleryLightbox({
   onSelect,
   prevLabel,
   nextLabel,
+  closeLabel,
 }: ImageGalleryLightboxProps) {
   const active = images[activeIndex];
   const multi = images.length > 1;
@@ -64,7 +66,7 @@ export function ImageGalleryLightbox({
       <button
         className="absolute right-3 top-3 cursor-pointer rounded-full bg-white/20 p-2 text-white transition-colors hover:bg-primary"
         onClick={onClose}
-        aria-label="Закрыть"
+        aria-label={closeLabel}
       >
         <X size={20} />
       </button>

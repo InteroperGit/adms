@@ -13,6 +13,8 @@ export const HeaderContentSchema = z.object({
   logo: z.object({ letter: z.string(), text: z.string() }),
   nav: z.array(CtaLinkSchema),
   navCta: z.string(),
+  openMenuLabel: z.string(),
+  closeMenuLabel: z.string(),
 });
 
 export type HeaderContent = z.infer<typeof HeaderContentSchema>;

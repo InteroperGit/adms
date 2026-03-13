@@ -11,5 +11,7 @@
     { "label": "Портфолио", "href": "#portfolio" },
     { "label": "Контакты", "href": "#contact" }
   ],
-  "navCta": "Связаться"
+  "navCta": "Связаться",
+  "openMenuLabel": "Открыть меню",
+  "closeMenuLabel": "Закрыть меню"
 }

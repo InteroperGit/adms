@@ -16,6 +16,7 @@ export interface ImageGalleryProps {
   altPrefix: string;
   prevLabel: string;
   nextLabel: string;
+  closeLabel: string;
   counterTemplate: string;
   className?: string;
 }
@@ -25,6 +26,7 @@ export function ImageGallery({
   altPrefix,
   prevLabel,
   nextLabel,
+  closeLabel,
   counterTemplate,
   className,
 }: ImageGalleryProps) {
@@ -99,6 +101,7 @@ export function ImageGallery({
           onSelect={setActiveIndex}
           prevLabel={prevLabel}
           nextLabel={nextLabel}
+          closeLabel={closeLabel}
         />
       )}
       {multi && (

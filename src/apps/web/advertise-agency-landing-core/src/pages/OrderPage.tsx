@@ -5,6 +5,7 @@ import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { OrderForm } from '@/components/ui/orderForm';
 import { orderFormsData } from '@/types/config/orderForms';
+import { siteData } from '@/types/config/siteData';
 import { resolveIcon } from '@/types/shared/iconMap';
 import { cn } from '@/lib/utils';
 
@@ -17,12 +18,12 @@ export function OrderPage() {
   const definition = orderFormsData.forms[formId] ?? Object.values(orderFormsData.forms)[0];
 
   useEffect(() => {
-    document.title = `${p.title} — РА «Рекламастер»`;
+    document.title = `${p.title} — ${siteData.name}`;
   }, [p.title]);
 
   return (
     <>
-      <BreadCrumbs items={[{ label: 'Главная', href: '/' }, { label: p.title }]} />
+      <BreadCrumbs items={[{ label: siteData.homeLabel, href: '/' }, { label: p.title }]} />
       <section className="bg-background py-24 md:py-32">
         <Container>
           <SectionHeader

@@ -7,6 +7,9 @@ interface Props {
   onPrev: () => void;
   onNext: () => void;
   onDot: (index: number) => void;
+  prevLabel: string;
+  nextLabel: string;
+  slideLabel: string; // template: "{index}" replaced at runtime
 }
 
 const arrowClass = cn(
@@ -17,19 +20,28 @@ const arrowClass = cn(
   'cursor-pointer transition-colors hover:bg-white dark:hover:bg-white/35'
 );
 
-export function CarouselControls({ total, current, onPrev, onNext, onDot }: Props) {
+export function CarouselControls({
+  total,
+  current,
+  onPrev,
+  onNext,
+  onDot,
+  prevLabel,
+  nextLabel,
+  slideLabel,
+}: Props) {
   return (
     <>
       <button
         onClick={onPrev}
-        aria-label="Предыдущий слайд"
+        aria-label={prevLabel}
         className={cn(arrowClass, 'left-4 md:left-6', 'hidden sm:flex')}
       >
         <ChevronLeft size={20} />
       </button>
       <button
         onClick={onNext}
-        aria-label="Следующий слайд"
+        aria-label={nextLabel}
         className={cn(arrowClass, 'right-4 md:right-6', 'hidden sm:flex')}
       >
         <ChevronRight size={20} />
@@ -40,7 +52,7 @@ export function CarouselControls({ total, current, onPrev, onNext, onDot }: Prop
           <button
             key={i}
             onClick={() => onDot(i)}
-            aria-label={`Слайд ${i + 1}`}
+            aria-label={slideLabel.replace('{index}', String(i + 1))}
             className={cn(
               'h-2 cursor-pointer rounded-full transition-all duration-300',
               i === current

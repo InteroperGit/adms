@@ -6,6 +6,7 @@ import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { portfolioPageContent } from '@/types/sections/portfolioPage';
 import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
+import { siteData } from '@/types/config/siteData';
 
 const ALL_ITEMS = Object.values(portfolioCaseMap);
 
@@ -13,12 +14,12 @@ export function PortfolioPage() {
   const p = portfolioPageContent;
 
   useEffect(() => {
-    document.title = `${p.title} — РА «Рекламастер»`;
+    document.title = `${p.title} — ${siteData.name}`;
   }, [p.title]);
 
   return (
     <>
-      <BreadCrumbs items={[{ label: 'Главная', href: '/' }, { label: p.title }]} />
+      <BreadCrumbs items={[{ label: siteData.homeLabel, href: '/' }, { label: p.title }]} />
       <section className="bg-background py-24 md:py-32">
         <Container>
           <SectionHeader

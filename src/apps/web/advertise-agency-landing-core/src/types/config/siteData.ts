@@ -12,6 +12,7 @@ export type ImageOptimizationConfig = z.infer<typeof ImageOptimizationSchema>;
 export const SiteDataSchema = z.object({
   name: z.string(),
   description: z.string(),
+  homeLabel: z.string(),
   yandexMapsOrgId: z.string().optional(),
   yandexMapUrl: z.string().optional(),
   imageOptimization: ImageOptimizationSchema.optional(),
