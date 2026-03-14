@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils';
-import type { CardsBlock as CardsBlockData } from '@/types/portfolio/blocks';
+import type { CardsBlock as CardsBlockData } from '@/types/blocks';
 
 interface CardsBlockProps {
   block: CardsBlockData;

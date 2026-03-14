@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils';
-import type { ParagraphBlock as ParagraphBlockData } from '@/types/portfolio/blocks';
+import type { ParagraphBlock as ParagraphBlockData } from '@/types/blocks';
 
 interface ParagraphBlockProps {
   block: ParagraphBlockData;

@@ -2,7 +2,7 @@ import raw from '@data/sections/portfolio/imageGallery.json';
 import { z } from 'zod';
 
 /**
- * @module portfolio/imageGallery
+ * @module shared/imageGallery
  * @description UI labels for lightbox gallery navigation and controls.
  */
 

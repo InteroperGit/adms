@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { ImageGallery } from '@/components/ui/imageGallery';
-import { imageGalleryContent } from '@/types/portfolio/imageGallery';
+import { imageGalleryContent } from '@/types/shared/imageGallery';
 import { OrderFormProductTabs } from './OrderFormProductTabs';
 import { OrderFormDynamicFields } from './OrderFormDynamicFields';
 import { OrderFormCustomerFields } from './OrderFormCustomerFields';

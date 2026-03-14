@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils';
-import type { TableBlock as TableBlockData } from '@/types/portfolio/blocks';
+import type { TableBlock as TableBlockData } from '@/types/blocks';
 
 interface TableBlockProps {
   block: TableBlockData;

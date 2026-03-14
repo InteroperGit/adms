@@ -1,4 +1,4 @@
-import type { DividerBlock as DividerBlockData } from '@/types/portfolio/blocks';
+import type { DividerBlock as DividerBlockData } from '@/types/blocks';
 
 interface DividerBlockProps {
   block: DividerBlockData;

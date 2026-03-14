@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils';
-import type { HeadingBlock as HeadingBlockData } from '@/types/portfolio/blocks';
+import type { HeadingBlock as HeadingBlockData } from '@/types/blocks';
 
 interface HeadingBlockProps {
   block: HeadingBlockData;

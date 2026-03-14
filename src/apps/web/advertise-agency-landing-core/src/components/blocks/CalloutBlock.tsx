@@ -1,6 +1,6 @@
 import { cn } from '@/libs/utils';
 import { ICON_MAP } from '@/types/shared/iconMap';
-import type { CalloutBlock as CalloutBlockData } from '@/types/portfolio/blocks';
+import type { CalloutBlock as CalloutBlockData } from '@/types/blocks';
 
 interface CalloutBlockProps {
   block: CalloutBlockData;

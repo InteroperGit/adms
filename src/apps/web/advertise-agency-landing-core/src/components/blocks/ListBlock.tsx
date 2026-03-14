@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils';
-import type { ListBlock as ListBlockData } from '@/types/portfolio/blocks';
+import type { ListBlock as ListBlockData } from '@/types/blocks';
 
 interface ListBlockProps {
   block: ListBlockData;

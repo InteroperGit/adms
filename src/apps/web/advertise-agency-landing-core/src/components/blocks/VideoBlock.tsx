@@ -1,4 +1,4 @@
-import type { VideoBlock as VideoBlockData } from '@/types/portfolio/blocks';
+import type { VideoBlock as VideoBlockData } from '@/types/blocks';
 
 interface VideoBlockProps {
   block: VideoBlockData;

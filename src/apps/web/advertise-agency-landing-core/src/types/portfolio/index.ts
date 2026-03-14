@@ -1,9 +1,9 @@
 import raw from '@data/sections/portfolio/portfolioSection.json';
 import { z } from 'zod';
-import { ContentBlockSchema } from './blocks';
+import { ContentBlockSchema } from '@/types/blocks';
 import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
-export type { GalleryImage } from './blocks';
+export type { GalleryImage } from '@/types/blocks';
 export type { LabeledLink } from '@/types/shared/labeledLink';
 
 /**

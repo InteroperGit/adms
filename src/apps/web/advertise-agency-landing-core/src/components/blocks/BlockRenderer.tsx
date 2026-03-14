@@ -1,5 +1,5 @@
 import type React from 'react';
-import type { ContentBlock } from '@/types/portfolio/blocks';
+import type { ContentBlock } from '@/types/blocks';
 import { HeadingBlock } from './HeadingBlock';
 import { ParagraphBlock } from './ParagraphBlock';
 import { ImageBlock } from './ImageBlock';

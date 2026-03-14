@@ -1,7 +1,7 @@
 import { ImageGallery } from '@/components/ui/imageGallery';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
-import { imageGalleryContent } from '@/types/portfolio/imageGallery';
-import type { GalleryBlock as GalleryBlockData } from '@/types/portfolio/blocks';
+import { imageGalleryContent } from '@/types/shared/imageGallery';
+import type { GalleryBlock as GalleryBlockData } from '@/types/blocks';
 
 interface GalleryBlockProps {
   block: GalleryBlockData;

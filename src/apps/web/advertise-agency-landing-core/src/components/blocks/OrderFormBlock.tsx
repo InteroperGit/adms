@@ -1,4 +1,4 @@
-import type { OrderFormBlock as OrderFormBlockData } from '@/types/portfolio/blocks';
+import type { OrderFormBlock as OrderFormBlockData } from '@/types/blocks';
 import { orderFormsData } from '@/types/config/orderForms';
 import { OrderForm } from '@/components/ui/orderForm';
 

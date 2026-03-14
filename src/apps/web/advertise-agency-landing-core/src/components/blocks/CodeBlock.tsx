@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils';
-import type { CodeBlock as CodeBlockData } from '@/types/portfolio/blocks';
+import type { CodeBlock as CodeBlockData } from '@/types/blocks';
 
 interface CodeBlockProps {
   block: CodeBlockData;
