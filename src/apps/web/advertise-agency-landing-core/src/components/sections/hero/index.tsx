@@ -1,6 +1,6 @@
 import { Container } from '@/components/layout/Container';
 import { heroContent } from '@/types/sections/hero/hero';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { HeroCTA } from './HeroCTA';
 import { HeroStats } from './HeroStats';
 

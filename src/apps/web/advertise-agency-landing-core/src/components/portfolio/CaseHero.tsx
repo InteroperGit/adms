@@ -1,7 +1,7 @@
 // src/components/portfolio/CaseHero.tsx
 import { Badge } from '@/components/ui/badge';
 import { Container } from '@/components/layout/Container';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface CaseHeroProps {

@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import type { BlockColor, ChartBlock as ChartBlockData } from '@/types/portfolio/blocks';
 
 interface ChartBlockProps {

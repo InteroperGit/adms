@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { cookiesContent } from '@/types/config/cookies';
 import { ConsentState, STORAGE_KEY, CONSENT_EVENT } from '@/hooks/useCookieConsent';
 import { CookieActions } from './CookieActions';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 
 /**
  * @component

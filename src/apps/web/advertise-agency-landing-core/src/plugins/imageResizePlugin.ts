@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import path from 'path';
 import type { Plugin, ResolvedConfig } from 'vite';
 // Re-export pure helper so vite.config consumers can use it without importing lib/
-export { resolveImageSrcSet } from '../lib/imageSrcSet';
+export { resolveImageSrcSet } from '../libs/imageSrcSet';
 
 interface ImageOptimizationConfig {
   widths: number[];

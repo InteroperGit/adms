@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { useSwipe } from '@/hooks/useSwipe';
 import { ImageGalleryNavButtons } from './ImageGalleryNavButtons';
 import { ImageGalleryPreview } from './ImageGalleryPreview';

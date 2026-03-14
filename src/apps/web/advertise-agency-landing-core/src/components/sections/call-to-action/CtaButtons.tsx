@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import type { LabeledLink } from '@/types/shared/labeledLink';
 
 interface CtaButtonsProps {

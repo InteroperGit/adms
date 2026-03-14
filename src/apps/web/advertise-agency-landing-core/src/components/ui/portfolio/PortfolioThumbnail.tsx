@@ -1,6 +1,6 @@
 // src/components/ui/PortfolioThumbnail.tsx
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface PortfolioThumbnailProps {

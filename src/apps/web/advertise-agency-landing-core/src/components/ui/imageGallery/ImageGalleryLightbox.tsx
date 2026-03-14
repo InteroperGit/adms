@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { useSwipe } from '@/hooks/useSwipe';
 import type { ImageGalleryItem } from './index';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';

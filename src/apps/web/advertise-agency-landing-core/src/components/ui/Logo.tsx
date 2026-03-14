@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { headerContent } from '@/types/sections/header/header';
 
 interface LogoProps {

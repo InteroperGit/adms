@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/libs/utils.ts';
 
 interface YandexReviewsProps {
   orgId: string;

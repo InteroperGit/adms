@@ -7,7 +7,7 @@ import { CategoryNav } from '@/components/portfolio/CategoryNav';
 import { Pagination } from '@/components/portfolio/Pagination';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import type { PortfolioCase } from '@/types/portfolio';
-import { extractYearMonth } from '@/lib/dateUtils';
+import { extractYearMonth } from '@/libs/dateUtils';
 
 interface PortfolioGridProps {
   items: PortfolioCase[];

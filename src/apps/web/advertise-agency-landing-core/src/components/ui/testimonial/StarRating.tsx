@@ -1,6 +1,6 @@
 // src/components/ui/StarRating.tsx
 import { Star } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 
 interface StarRatingProps {
   rating: number;

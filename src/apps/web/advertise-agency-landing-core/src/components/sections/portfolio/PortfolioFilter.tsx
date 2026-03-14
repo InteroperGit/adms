@@ -1,5 +1,5 @@
 // src/components/sections/portfolio/PortfolioFilter.tsx
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 
 interface PortfolioFilterProps {
   categories: string[];

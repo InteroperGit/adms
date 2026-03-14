@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import type { MetricsBlock as MetricsBlockData } from '@/types/portfolio/blocks';
 
 interface MetricsBlockProps {

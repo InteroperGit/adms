@@ -1,7 +1,7 @@
 // src/components/ui/PortfolioCard.tsx
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { PortfolioThumbnail } from '@/components/ui/portfolio/PortfolioThumbnail';
 import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';

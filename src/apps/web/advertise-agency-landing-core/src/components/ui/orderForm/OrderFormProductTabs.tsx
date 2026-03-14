@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { resolveIcon } from '@/types/shared/iconMap';
 import type { ProductType } from '@/types/config/orderForms';
 

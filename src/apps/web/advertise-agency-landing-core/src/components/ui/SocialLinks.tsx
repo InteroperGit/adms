@@ -1,5 +1,5 @@
 import { Phone, Send } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 
 const PHONE = {
   dark: 'border-green-400/50 bg-green-400/5 text-green-400 hover:bg-green-400/15',

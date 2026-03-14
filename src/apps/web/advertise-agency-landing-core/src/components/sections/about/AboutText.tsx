@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { aboutContent } from '@/types/sections/about/aboutContent';
 import { siteData } from '@/types/config/siteData';
 

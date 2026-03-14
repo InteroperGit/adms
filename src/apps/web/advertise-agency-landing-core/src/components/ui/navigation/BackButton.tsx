@@ -1,7 +1,7 @@
 // src/components/ui/BackButton.tsx
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 
 interface BackButtonProps {
   label?: string;

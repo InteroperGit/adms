@@ -8,8 +8,8 @@ import { PortfolioCard } from '@/components/ui/portfolio/PortfolioCard';
 import { PortfolioFilter } from '@/components/sections/portfolio/PortfolioFilter';
 import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';
-import { categorySlug } from '@/lib/categorySlug';
-import { extractYearMonth } from '@/lib/dateUtils';
+import { categorySlug } from '@/libs/categorySlug';
+import { extractYearMonth } from '@/libs/dateUtils';
 
 const modules = import.meta.glob<PortfolioCase>('@data/portfolio/**/*.json', {
   eager: true,

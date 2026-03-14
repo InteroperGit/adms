@@ -6,7 +6,7 @@ import { OrderForm } from '@/components/ui/orderForm';
 import { orderFormsData } from '@/types/config/orderForms';
 import { siteData } from '@/types/config/siteData';
 import { resolveIcon } from '@/types/shared/iconMap';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 const formEntries = Object.entries(orderFormsData.forms);

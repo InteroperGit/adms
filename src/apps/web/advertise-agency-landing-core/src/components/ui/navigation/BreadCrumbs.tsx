@@ -1,7 +1,7 @@
 // src/components/ui/BreadCrumbs.tsx
 import { ChevronRight } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 
 const pillBase =
   'inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium sm:px-4 sm:py-1.5 sm:text-sm';

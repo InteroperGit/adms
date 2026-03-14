@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import type { ImageBlock as ImageBlockData } from '@/types/portfolio/blocks';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 

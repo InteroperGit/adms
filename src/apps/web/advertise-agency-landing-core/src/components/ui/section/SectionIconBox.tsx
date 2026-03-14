@@ -1,5 +1,5 @@
 // src/components/ui/SectionIconBox.tsx
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import type { IconComponent } from '@/types/shared/iconMap';
 
 interface SectionIconBoxProps {

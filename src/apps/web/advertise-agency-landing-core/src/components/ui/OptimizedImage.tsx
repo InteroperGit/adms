@@ -1,4 +1,4 @@
-import { resolveImageSrcSet } from '@/lib/imageSrcSet';
+import { resolveImageSrcSet } from '@/libs/imageSrcSet';
 
 export interface OptimizedImageProps {
   /** Original image path under /images/, e.g. /images/portfolio/hero.jpg */
