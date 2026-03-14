@@ -50,9 +50,7 @@ function listJsonFiles(dir: string): string[] {
   }
 }
 
-const subDirs = ['config', 'sections', 'portfolio', 'legal'].map((d) =>
-  path.join(dataDir, d)
-);
+const subDirs = ['config', 'sections', 'portfolio', 'legal'].map((d) => path.join(dataDir, d));
 const files = subDirs.flatMap(listJsonFiles);
 
 const referencedIcons = new Set<string>();
@@ -101,7 +99,9 @@ if (hasUnused) {
   if (removeFlag) {
     console.log(`\n✅  Removed ${unused.length} unused icon(s) from iconMap.ts:`);
   } else {
-    console.log(`\n⚠️  Unused icons (${unused.length}) — run with --remove to delete from ICON_MAP:`);
+    console.log(
+      `\n⚠️  Unused icons (${unused.length}) — run with --remove to delete from ICON_MAP:`
+    );
   }
   for (const k of unused) {
     console.log(`  - ${k}`);

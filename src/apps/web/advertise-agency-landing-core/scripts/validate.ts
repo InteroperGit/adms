@@ -130,30 +130,42 @@ console.log('\nSections:');
 
 check('header/header.json', () => HeaderContentSchema.parse(readJson(sec('header/header.json'))));
 check('hero/hero.json', () => HeroContentSchema.parse(readJson(sec('hero/hero.json'))));
-check('carousel/carousel.json', () => CarouselSlidesSchema.parse(readJson(sec('carousel/carousel.json'))));
+check('carousel/carousel.json', () =>
+  CarouselSlidesSchema.parse(readJson(sec('carousel/carousel.json')))
+);
 check('carousel/carouselContent.json', () =>
   CarouselSectionContentSchema.parse(readJson(sec('carousel/carouselContent.json')))
 );
 check('about/aboutContent.json', () =>
   AboutSectionContentSchema.parse(readJson(sec('about/aboutContent.json')))
 );
-check('about/aboutValues.json', () => AboutValuesSchema.parse(readJson(sec('about/aboutValues.json'))));
+check('about/aboutValues.json', () =>
+  AboutValuesSchema.parse(readJson(sec('about/aboutValues.json')))
+);
 check('services/servicesContent.json', () =>
   ServicesSectionContentSchema.parse(readJson(sec('services/servicesContent.json')))
 );
-check('services/services.json', () => ServicesSchema.parse(readJson(sec('services/services.json'))));
+check('services/services.json', () =>
+  ServicesSchema.parse(readJson(sec('services/services.json')))
+);
 check('advantages/advantagesContent.json', () =>
   AdvantagesSectionContentSchema.parse(readJson(sec('advantages/advantagesContent.json')))
 );
-check('advantages/advantages.json', () => AdvantagesSchema.parse(readJson(sec('advantages/advantages.json'))));
+check('advantages/advantages.json', () =>
+  AdvantagesSchema.parse(readJson(sec('advantages/advantages.json')))
+);
 check('call-to-action/callToAction.json', () =>
   CallToActionContentSchema.parse(readJson(sec('call-to-action/callToAction.json')))
 );
 check('testimonials/testimonialsContent.json', () =>
   TestimonialsSectionContentSchema.parse(readJson(sec('testimonials/testimonialsContent.json')))
 );
-check('testimonials/testimonials.json', () => TestimonialsSchema.parse(readJson(sec('testimonials/testimonials.json'))));
-check('contact/contact.json', () => ContactContentSchema.parse(readJson(sec('contact/contact.json'))));
+check('testimonials/testimonials.json', () =>
+  TestimonialsSchema.parse(readJson(sec('testimonials/testimonials.json')))
+);
+check('contact/contact.json', () =>
+  ContactContentSchema.parse(readJson(sec('contact/contact.json')))
+);
 check('footer/footer.json', () => FooterContentSchema.parse(readJson(sec('footer/footer.json'))));
 check('portfolio/portfolioPage.json', () =>
   PortfolioPageContentSchema.parse(readJson(sec('portfolio/portfolioPage.json')))

@@ -378,13 +378,25 @@ async function main(): Promise<void> {
     'sections',
     'imageGallery'
   );
-  copyExample('sections/contact/contact.example.json', 'sections/contact/contact.json', 'sections', 'contact');
-  copyExample('sections/footer/footer.example.json', 'sections/footer/footer.json', 'sections', 'footer');
+  copyExample(
+    'sections/contact/contact.example.json',
+    'sections/contact/contact.json',
+    'sections',
+    'contact'
+  );
+  copyExample(
+    'sections/footer/footer.example.json',
+    'sections/footer/footer.json',
+    'sections',
+    'footer'
+  );
 
   // Create empty portfolio and legal directories with .gitkeep
   mkdirSync(path.join(contentDir, 'portfolio'), { recursive: true });
   mkdirSync(path.join(contentDir, 'legal'), { recursive: true });
-  console.log('  ✓ data/content/portfolio/  (empty — add cases as {category}/{year}/{month}/yyyy_mm_dd_slug.json)');
+  console.log(
+    '  ✓ data/content/portfolio/  (empty — add cases as {category}/{year}/{month}/yyyy_mm_dd_slug.json)'
+  );
   console.log('  ✓ data/content/legal/      (empty — add legal page content here)');
 
   console.log('');
@@ -392,7 +404,9 @@ async function main(): Promise<void> {
   console.log('── Next steps ────────────────────────────────────────────────────────────\n');
   console.log('  1. Edit data/content/config/legal.json        → add legal company details');
   console.log('  2. Edit data/content/sections/**/*.json        → replace placeholder copy');
-  console.log('  3. Add data/content/portfolio/{category}/{year}/{month}/yyyy_mm_dd_slug.json → case study files');
+  console.log(
+    '  3. Add data/content/portfolio/{category}/{year}/{month}/yyyy_mm_dd_slug.json → case study files'
+  );
   console.log('  4. Add data/content/legal/*.json               → legal page content');
   console.log('  5. pnpm validate                               → verify all files');
   console.log('  6. pnpm gen-schemas                            → update IDE autocomplete');

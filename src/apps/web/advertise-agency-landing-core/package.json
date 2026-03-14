@@ -8,7 +8,7 @@
     "build": "tsc -b tsconfig.app.json && vite-react-ssg build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.ts\"",
     "validate": "vite-node scripts/validate.ts",
     "gen-schemas": "vite-node scripts/generate-json-schemas.ts",
     "new-client": "vite-node scripts/new-client.ts",
