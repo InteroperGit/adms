@@ -9,16 +9,20 @@ import { PortfolioFilter } from '@/components/sections/portfolio/PortfolioFilter
 import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';
 import { categorySlug } from '@/lib/categorySlug';
+import { extractYearMonth } from '@/lib/dateUtils';
 
 const modules = import.meta.glob<PortfolioCase>('@data/portfolio/**/*.json', {
   eager: true,
   import: 'default',
 });
 
-const PORTFOLIO_ITEMS = Object.entries(modules).map(([, data]) => ({
-  ...data,
-  href: `/portfolio/${categorySlug(data.category)}/${data.slug}`,
-}));
+const PORTFOLIO_ITEMS = Object.entries(modules).map(([, data]) => {
+  const { year, month } = extractYearMonth(data.publishDate);
+  return {
+    ...data,
+    href: `/portfolio/${categorySlug(data.category)}/${year}/${month}/${data.slug}`,
+  };
+});
 
 const PORTFOLIO_CATEGORIES = [
   portfolioSectionContent.allCategory,

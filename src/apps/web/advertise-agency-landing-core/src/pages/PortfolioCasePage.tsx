@@ -13,7 +13,12 @@ import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { siteData } from '@/types/config/siteData';
 
 export function PortfolioCasePage() {
-  const { categorySlug, caseSlug } = useParams<{ categorySlug: string; caseSlug: string }>();
+  const { categorySlug, caseSlug } = useParams<{
+    categorySlug: string;
+    year: string;
+    month: string;
+    caseSlug: string;
+  }>();
   const data = caseSlug ? portfolioCaseMap[caseSlug] : undefined;
 
   const pc = portfolioCaseContent;

@@ -32,8 +32,61 @@ interface CaseData {
   title: string;
   category: string;
   description: string;
+  publishDate: string;
   meta?: { title?: string; description?: string };
   images?: { og?: string };
+}
+
+// ---------------------------------------------------------------------------
+// Utilities
+// ---------------------------------------------------------------------------
+
+/**
+ * Extract year and month components from an ISO 8601 date string.
+ *
+ * Parses a date string in the format "YYYY-MM-DD" and extracts the year
+ * (first 4 characters) and month (characters 5-6) components.
+ *
+ * @param date - ISO date string in format "YYYY-MM-DD" (e.g., "2024-03-14")
+ * @returns An object containing the extracted year and month as strings
+ * @throws {Error} If the date string is not in the correct "YYYY-MM-DD" format
+ */
+function extractYearMonth(date: string): { year: string; month: string } {
+  if (!date || typeof date !== 'string') {
+    throw new Error('Date must be a non-empty string');
+  }
+
+  if (date.length !== 10) {
+    throw new Error(
+      `Invalid date format. Expected "YYYY-MM-DD", got "${date}" (length ${date.length})`
+    );
+  }
+
+  if (date[4] !== '-' || date[7] !== '-') {
+    throw new Error(
+      `Invalid date format. Expected "YYYY-MM-DD" with dashes at positions 4 and 7, got "${date}"`
+    );
+  }
+
+  const year = date.slice(0, 4);
+  const month = date.slice(5, 7);
+
+  if (!/^\d{4}$/.test(year)) {
+    throw new Error(`Invalid year component in date "${date}". Expected 4 digits, got "${year}"`);
+  }
+
+  if (!/^\d{2}$/.test(month)) {
+    throw new Error(`Invalid month component in date "${date}". Expected 2 digits, got "${month}"`);
+  }
+
+  const monthNum = parseInt(month, 10);
+  if (monthNum < 1 || monthNum > 12) {
+    throw new Error(
+      `Invalid month value in date "${date}". Month must be between 01 and 12, got "${month}"`
+    );
+  }
+
+  return { year, month };
 }
 
 // ---------------------------------------------------------------------------
@@ -144,7 +197,8 @@ function handleCasePage(
 
   // Canonical always points to the real category URL (never /all/)
   const catSlug = categories.find((c) => c.name === caseData.category)?.slug ?? 'all';
-  const canonicalUrl = `${seo.siteUrl}/portfolio/${catSlug}/${caseSlug}`;
+  const { year, month } = extractYearMonth(caseData.publishDate);
+  const canonicalUrl = `${seo.siteUrl}/portfolio/${catSlug}/${year}/${month}/${caseSlug}`;
 
   let out = html;
   out = upsertTitle(out, `${ogTitle} — ${seo.siteName}`);
@@ -212,7 +266,7 @@ const DYNAMIC_ROUTE_PATTERNS = new Set([
   '/portfolio',
   '/portfolio/:slug',
   '/portfolio/:categorySlug',
-  '/portfolio/:categorySlug/:caseSlug',
+  '/portfolio/:categorySlug/:year/:month/:caseSlug',
 ]);
 
 // ---------------------------------------------------------------------------
@@ -231,6 +285,7 @@ export function buildIncludedRoutes(rootDir: string): (paths: string[]) => strin
       JSON.parse(readFileSync(f, 'utf-8')) as {
         slug: string;
         category: string;
+        publishDate: string;
       }
   );
 
@@ -239,10 +294,14 @@ export function buildIncludedRoutes(rootDir: string): (paths: string[]) => strin
 
   // Each case page under /all/ and under its real category
   const caseRoutes = cases.flatMap((c) => {
+    const { year, month } = extractYearMonth(c.publishDate);
     const catSlug = categories.find((cat) => cat.name === c.category)?.slug;
     return catSlug
-      ? [`/portfolio/all/${c.slug}`, `/portfolio/${catSlug}/${c.slug}`]
-      : [`/portfolio/all/${c.slug}`];
+      ? [
+          `/portfolio/all/${year}/${month}/${c.slug}`,
+          `/portfolio/${catSlug}/${year}/${month}/${c.slug}`,
+        ]
+      : [`/portfolio/all/${year}/${month}/${c.slug}`];
   });
 
   return (paths) => [
@@ -290,9 +349,9 @@ export function createSsgMetaHook(rootDir: string): (route: string, html: string
       return handleHome(out, seo, site, legal);
     }
 
-    const caseMatch = /^\/portfolio\/([^/]+)\/([^/]+)$/.exec(route);
+    const caseMatch = /^\/portfolio\/([^/]+)\/(\d{4})\/(\d{2})\/([^/]+)$/.exec(route);
     if (caseMatch) {
-      const caseSlug = caseMatch[2];
+      const caseSlug = caseMatch[4];
       const caseData = caseFileMap[caseSlug] ?? null;
       if (caseData) {
         return handleCasePage(out, caseSlug, caseData, seo, categories);

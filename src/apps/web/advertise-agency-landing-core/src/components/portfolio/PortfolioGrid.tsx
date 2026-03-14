@@ -7,6 +7,7 @@ import { CategoryNav } from '@/components/portfolio/CategoryNav';
 import { Pagination } from '@/components/portfolio/Pagination';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import type { PortfolioCase } from '@/types/portfolio';
+import { extractYearMonth } from '@/lib/dateUtils';
 
 interface PortfolioGridProps {
   items: PortfolioCase[];
@@ -23,10 +24,13 @@ export function PortfolioGrid({ items, activeSlug }: PortfolioGridProps) {
   const safePage = Math.min(page, totalPages);
   const paged = items.slice((safePage - 1) * cfg.perPage, safePage * cfg.perPage);
 
-  const withHref = paged.map((item) => ({
-    ...item,
-    href: `/portfolio/${activeSlug ?? 'all'}/${item.slug}`,
-  }));
+  const withHref = paged.map((item) => {
+    const { year, month } = extractYearMonth(item.publishDate);
+    return {
+      ...item,
+      href: `/portfolio/${activeSlug ?? 'all'}/${year}/${month}/${item.slug}`,
+    };
+  });
 
   function setPage(next: number) {
     const params: Record<string, string> = {};

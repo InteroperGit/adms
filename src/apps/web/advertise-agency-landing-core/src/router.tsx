@@ -15,7 +15,7 @@ const routes: RouteObject[] = [
       { path: '/', element: <Home /> },
       { path: '/portfolio', element: <PortfolioCategoryPage /> },
       { path: '/portfolio/:categorySlug', element: <PortfolioCategoryPage /> },
-      { path: '/portfolio/:categorySlug/:caseSlug', element: <PortfolioCasePage /> },
+      { path: '/portfolio/:categorySlug/:year/:month/:caseSlug', element: <PortfolioCasePage /> },
       { path: '/privacy-policy', element: <PrivacyPolicy /> },
       { path: '/user-agreement', element: <UserAgreement /> },
       { path: '/consent', element: <Consent /> },
