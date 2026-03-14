@@ -1,5 +1,14 @@
 import { cn } from '@/lib/utils';
 
+/**
+ * @component
+ * @description Accessibility skip link hidden until focused, allowing keyboard users to jump to main content
+ * @param {Object} props
+ * @param {string} props.contentAnchor - URL anchor (e.g., "#main-content") to link to
+ * @returns {JSX.Element} Screen-reader-only link, visible on focus
+ * @example
+ * <SkipToContent contentAnchor="#main-content" />
+ */
 export function SkipToContent({ contentAnchor }: { contentAnchor: string }) {
   return (
     <a

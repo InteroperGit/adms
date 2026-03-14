@@ -5,6 +5,16 @@ interface YandexReviewsProps {
   isDark: boolean;
 }
 
+/**
+ * @component
+ * @description Embeds Yandex Maps reviews widget iframe with dark mode support. Applies color inversion filters for dark theme to maintain readability.
+ * @param {YandexReviewsProps} props
+ * @param {string} props.orgId - Yandex Maps organization ID for reviews widget
+ * @param {boolean} props.isDark - Whether dark mode is active; applies color filters and border styling
+ * @returns {JSX.Element} Iframe wrapper with rounded borders containing Yandex reviews widget
+ * @example <caption>Yandex reviews in dark mode</caption>
+ * <YandexReviews orgId="12345678" isDark={true} />
+ */
 export function YandexReviews({ orgId, isDark }: YandexReviewsProps) {
   return (
     <div

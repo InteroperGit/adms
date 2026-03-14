@@ -6,6 +6,15 @@ interface CalloutBlockProps {
   block: CalloutBlockData;
 }
 
+/**
+ * @component
+ * @description Styled callout/alert box with info, success, warning or note styling and optional icon
+ * @param {CalloutBlockProps} props
+ * @param {CalloutBlockData} props.block - Callout data with type, title and text
+ * @returns {JSX.Element} Colored box with left border and icon
+ * @example
+ * <CalloutBlock block={{ type: "warning", title: "Important", text: "Please note this." }} />
+ */
 const TYPE_CONFIG = {
   info: {
     border: 'border-blue-400',

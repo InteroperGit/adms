@@ -6,6 +6,13 @@ import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { FadeInSection } from '@/components/ui/section/FadeInSection';
 import { aboutContent } from '@/types/sections/about/aboutContent';
 
+/**
+ * @component
+ * @description About section showcasing company description, values, and key statistics in two-column layout
+ * @returns {JSX.Element} Fade-in section with header, left text and values, right company card
+ * @example <caption>About page section</caption>
+ * <About />
+ */
 export function About() {
   const about = aboutContent;
 

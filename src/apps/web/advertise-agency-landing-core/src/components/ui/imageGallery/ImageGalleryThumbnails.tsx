@@ -9,6 +9,18 @@ interface ImageGalleryThumbnailsProps {
   altPrefix: string;
 }
 
+/**
+ * @component
+ * @description Horizontal scrollable thumbnail strip with snap alignment and auto-scroll to active image
+ * @param {ImageGalleryThumbnailsProps} props
+ * @param {Array<{ src: string }>} props.images - Images with src property
+ * @param {number} props.activeIndex - Currently selected thumbnail index
+ * @param {(index: number) => void} props.onSelect - Selection callback
+ * @param {string} props.altPrefix - Alt text prefix
+ * @returns {JSX.Element} Scrollable thumbnail container with ring indicator on active
+ * @example
+ * <ImageGalleryThumbnails images={photos} activeIndex={0} onSelect={selectIndex} altPrefix="Thumbnail" />
+ */
 export function ImageGalleryThumbnails({
   images,
   activeIndex,
@@ -33,7 +45,10 @@ export function ImageGalleryThumbnails({
           ref={(el) => {
             thumbRefs.current[i] = el;
           }}
-          onClick={() => onSelect(i)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(i);
+          }}
           className={cn(
             'relative h-14 w-20 shrink-0 cursor-pointer overflow-hidden rounded-lg transition-opacity sm:h-16 sm:w-24 [scroll-snap-align:center]',
             i === activeIndex ? 'ring-2 ring-primary opacity-100' : 'opacity-60 hover:opacity-100'

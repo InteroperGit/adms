@@ -4,6 +4,13 @@ import { Logo } from '@/components/ui/Logo';
 import { footerContent } from '@/types/sections/footer/footer';
 import { siteData } from '@/types/config/siteData';
 
+/**
+ * @component
+ * @description Footer brand column displaying logo, company description, and social media links. Uses dark-mode social link variant.
+ * @returns {JSX.Element} Column layout with logo, description text, and social icons
+ * @example <caption>Footer brand section</caption>
+ * <FooterBrand />
+ */
 export function FooterBrand() {
   return (
     <div className="sm:col-span-2 lg:col-span-1">

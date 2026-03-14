@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 import { footerContent } from '@/types/sections/footer/footer';
 import { siteData } from '@/types/config/siteData';
 
+/**
+ * @component
+ * @description Footer bottom section displaying copyright notice, legal links (privacy policy, user agreement), and tagline. Responsive layout adapting to screen size.
+ * @returns {JSX.Element} Bottom footer bar with copyright, legal navigation, and tagline
+ * @example <caption>Footer bottom bar</caption>
+ * <FooterBottom />
+ */
 export function FooterBottom() {
   const year = new Date().getFullYear();
 

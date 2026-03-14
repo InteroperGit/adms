@@ -1,5 +1,12 @@
 import { MessageSquareOff } from 'lucide-react';
 
+/**
+ * @component
+ * @description Empty state placeholder for testimonials section when Yandex organization ID is not configured. Shows icon and instructions.
+ * @returns {JSX.Element} Centered card with empty state message and configuration hint
+ * @example <caption>Testimonials empty state</caption>
+ * <TestimonialsEmpty />
+ */
 export function TestimonialsEmpty() {
   return (
     <div className="mx-auto flex max-w-md flex-col items-center gap-4 rounded-2xl border border-dashed border-border bg-background px-8 py-12 text-center">

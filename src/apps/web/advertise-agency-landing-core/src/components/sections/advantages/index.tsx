@@ -5,6 +5,13 @@ import { advantages } from '@/types/sections/advantages/advantages';
 import { advantagesContent } from '@/types/sections/advantages/advantagesContent';
 import { AdvantageCard } from './AdvantageCard';
 
+/**
+ * @component
+ * @description Advantages section displaying numbered benefit cards in a responsive grid
+ * @returns {JSX.Element} Fade-in section with header and three-column grid of advantage cards
+ * @example <caption>Advantages/benefits section</caption>
+ * <Advantages />
+ */
 export function Advantages() {
   return (
     <FadeInSection id="advantages" className="bg-muted py-24 md:py-32">

@@ -12,6 +12,19 @@ interface TestimonialCardProps {
   className?: string;
 }
 
+/**
+ * @component
+ * @description Card displaying testimonial with rating stars, quote text, author avatar and attribution
+ * @param {TestimonialCardProps} props
+ * @param {Testimonial} props.testimonial - Testimonial data with text, rating, author info and avatar
+ * @param {boolean} [props.showQuoteIcon=false] - Display large quote icon in corner
+ * @param {number} [props.starSize=16] - Size of rating stars
+ * @param {string} [props.starClassName] - Additional star styling classes
+ * @param {string} [props.className] - Card container classes
+ * @returns {JSX.Element} Blockquote card with stars, text, and author details
+ * @example
+ * <TestimonialCard testimonial={testimonialData} showQuoteIcon starSize={18} />
+ */
 export function TestimonialCard({
   testimonial,
   showQuoteIcon = false,

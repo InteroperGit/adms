@@ -6,6 +6,16 @@ interface MetricsBlockProps {
   caseGradient: string;
 }
 
+/**
+ * @component
+ * @description Grid of key metrics with value, label and description, supporting gradient/solid coloring
+ * @param {MetricsBlockProps} props
+ * @param {MetricsBlockData} props.block - Metrics block with title and items (metric, label, description)
+ * @param {string} props.caseGradient - Fallback gradient for colored metrics
+ * @returns {JSX.Element} Metrics grid with title
+ * @example
+ * <MetricsBlock block={metricsData} caseGradient="from-blue-500 to-purple-500" />
+ */
 export function MetricsBlock({ block, caseGradient }: MetricsBlockProps) {
   const color = block.color;
   const isGradient = color?.type === 'gradient';

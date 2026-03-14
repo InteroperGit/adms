@@ -8,6 +8,16 @@ interface AdvantageCardProps {
   index: number;
 }
 
+/**
+ * @component
+ * @description Single advantage card with icon, index number, title, and description
+ * @param {AdvantageCardProps} props
+ * @param {Advantage} props.item - Advantage object with icon, title, and description
+ * @param {number} props.index - Zero-based index used to display padded sequential number
+ * @returns {JSX.Element} Card with icon box, sequential number, title, and description text
+ * @example <caption>Single advantage in grid</caption>
+ * <AdvantageCard item={advantages[0]} index={0} />
+ */
 export function AdvantageCard({ item, index }: AdvantageCardProps) {
   const Icon = ICON_MAP[item.icon];
   return (

@@ -18,6 +18,24 @@ interface ImageGalleryLightboxProps {
   closeLabel: string;
 }
 
+/**
+ * @component
+ * @description Full-screen lightbox modal for enlarged image viewing with arrow/escape navigation, thumbnail strip and descriptions
+ * @param {ImageGalleryLightboxProps} props
+ * @param {ImageGalleryItem[]} props.images - Gallery images
+ * @param {number} props.activeIndex - Current image index
+ * @param {string} props.altPrefix - Alt text prefix
+ * @param {() => void} props.onClose - Close handler
+ * @param {() => void} props.onPrev - Previous image handler
+ * @param {() => void} props.onNext - Next image handler
+ * @param {(index: number) => void} props.onSelect - Image selection by index
+ * @param {string} props.prevLabel - Previous aria label
+ * @param {string} props.nextLabel - Next aria label
+ * @param {string} props.closeLabel - Close aria label
+ * @returns {JSX.Element} Fixed overlay lightbox with large image and controls
+ * @example
+ * <ImageGalleryLightbox images={images} activeIndex={0} altPrefix="Photo" onClose={handleClose} onPrev={prev} onNext={next} onSelect={selectIndex} prevLabel="Prev" nextLabel="Next" closeLabel="Close" />
+ */
 export function ImageGalleryLightbox({
   images,
   activeIndex,
@@ -108,7 +126,10 @@ export function ImageGalleryLightbox({
             {images.map((img, i) => (
               <button
                 key={img.src}
-                onClick={() => onSelect(i)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSelect(i);
+                }}
                 className={cn(
                   'h-10 w-14 shrink-0 overflow-hidden rounded-md transition-opacity sm:h-14 sm:w-20 sm:rounded-lg',
                   i === activeIndex

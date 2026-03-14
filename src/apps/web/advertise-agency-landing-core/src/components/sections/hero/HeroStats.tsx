@@ -8,6 +8,15 @@ interface HeroStatsProps {
   stats: { value: string; label: string }[];
 }
 
+/**
+ * @component
+ * @description Grid of statistics with count-up animations triggered on scroll into view
+ * @param {HeroStatsProps} props
+ * @param {{ value: string; label: string }[]} props.stats - Array of stat objects (up to 3 items)
+ * @returns {JSX.Element} Three-column grid with divider top and CountingStat components
+ * @example <caption>Hero stats section</caption>
+ * <HeroStats stats={[{ value: "150+", label: "Clients" }, { value: "200+", label: "Projects" }, { value: "10+", label: "Years" }]} />
+ */
 export function HeroStats({ stats }: HeroStatsProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);

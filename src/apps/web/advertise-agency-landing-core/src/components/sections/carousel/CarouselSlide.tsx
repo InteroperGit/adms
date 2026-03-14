@@ -9,6 +9,17 @@ interface CarouselSlideProps {
   index: number;
 }
 
+/**
+ * @component
+ * @description Individual carousel slide with image or gradient background and centered text content
+ * @param {CarouselSlideProps} props
+ * @param {CarouselSlideType} props.slide - Slide data with title, subtitle, optional image and gradient
+ * @param {boolean} props.isActive - Whether this slide is currently visible
+ * @param {number} props.index - Zero-based slide index; used for prioritizing first image load
+ * @returns {JSX.Element} Absolutely positioned slide with crossfade transition and dark overlay
+ * @example <caption>Single carousel slide</caption>
+ * <CarouselSlide slide={slides[0]} isActive={currentIndex === 0} index={0} />
+ */
 export function CarouselSlide({ slide, isActive, index }: CarouselSlideProps) {
   return (
     <div

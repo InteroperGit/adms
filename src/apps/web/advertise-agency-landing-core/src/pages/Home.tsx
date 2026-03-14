@@ -9,6 +9,13 @@ import { Testimonials } from '@/components/sections/testimonials';
 import { Contact } from '@/components/sections/contact';
 import { SectionDivider } from '@/components/ui/section/SectionDivider';
 
+/**
+ * @component
+ * @description Landing page homepage with full-page sections: carousel, hero, about, services, portfolio, advantages, CTA, testimonials, contact
+ * @returns {JSX.Element} Main element with composed section components
+ * @example
+ * <Home />
+ */
 export default function Home() {
   return (
     <main id="main-content" tabIndex={-1}>

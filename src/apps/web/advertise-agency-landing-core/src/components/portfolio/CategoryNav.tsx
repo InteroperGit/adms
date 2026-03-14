@@ -8,6 +8,15 @@ interface CategoryNavProps {
   activeSlug: string | null; // null = /portfolio, "all" = /portfolio/all, etc.
 }
 
+/**
+ * @component
+ * @description Navigation tabs for filtering portfolio cases by category
+ * @param {CategoryNavProps} props
+ * @param {string | null} props.activeSlug - Current category slug; null or "all" highlights the "All" tab
+ * @returns {JSX.Element} Horizontal flex layout with "All" and category filter buttons
+ * @example <caption>Portfolio filter tabs</caption>
+ * <CategoryNav activeSlug="branding" />
+ */
 export function CategoryNav({ activeSlug }: CategoryNavProps) {
   const allActive = activeSlug === null || activeSlug === 'all';
 

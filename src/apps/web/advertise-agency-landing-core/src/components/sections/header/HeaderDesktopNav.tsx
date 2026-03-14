@@ -11,6 +11,18 @@ interface HeaderDesktopNavProps {
   onToggleDark: () => void;
 }
 
+/**
+ * @component
+ * @description Navigation bar content for desktop viewports (hidden on mobile)
+ * @param {HeaderDesktopNavProps} props
+ * @param {boolean} props.isHome - Whether currently on home page; affects nav link hrefs
+ * @param {number | null} props.highlightedActionIndex - Which action button should be highlighted
+ * @param {boolean} props.isDark - Current dark mode state
+ * @param {() => void} props.onToggleDark - Callback to toggle dark mode
+ * @returns {JSX.Element} Horizontal nav with links, social buttons, divider, and dark mode toggle
+ * @example <caption>Desktop header navigation</caption>
+ * <HeaderDesktopNav isHome={true} highlightedActionIndex={0} isDark={false} onToggleDark={toggle} />
+ */
 export function HeaderDesktopNav({
   isHome,
   highlightedActionIndex,

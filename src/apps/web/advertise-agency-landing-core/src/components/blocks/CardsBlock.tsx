@@ -6,6 +6,16 @@ interface CardsBlockProps {
   caseGradient: string;
 }
 
+/**
+ * @component
+ * @description Grid of informational cards with optional colored top bar accent
+ * @param {CardsBlockProps} props
+ * @param {CardsBlockData} props.block - Cards block with title, columns count and items
+ * @param {string} props.caseGradient - Fallback gradient for colored cards
+ * @returns {JSX.Element} Cards grid with title
+ * @example
+ * <CardsBlock block={cardsData} caseGradient="from-blue-500 to-purple-500" />
+ */
 const COLS_CLASS = {
   2: 'sm:grid-cols-2',
   3: 'sm:grid-cols-3',

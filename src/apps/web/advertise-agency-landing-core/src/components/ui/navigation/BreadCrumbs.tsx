@@ -15,6 +15,15 @@ interface BreadCrumbsProps {
   items: BreadCrumbItem[];
 }
 
+/**
+ * @component
+ * @description Semantic breadcrumb navigation with pills styling and chevron separators
+ * @param {BreadCrumbsProps} props
+ * @param {BreadCrumbItem[]} props.items - Breadcrumb items with labels and optional hrefs
+ * @returns {JSX.Element} Nav element with styled breadcrumb links
+ * @example
+ * <BreadCrumbs items={[{ label: "Home", href: "/" }, { label: "Products" }]} />
+ */
 export function BreadCrumbs({ items }: BreadCrumbsProps) {
   return (
     <div className="border-b border-border bg-background">

@@ -8,6 +8,13 @@ import { ContactHours } from './ContactHours';
 import { contactContent } from '@/types/sections/contact/contact';
 import { useTheme } from '@/hooks/useTheme';
 
+/**
+ * @component
+ * @description Full contact section with header, two-column layout containing contact form and contact information (including hours, map, and socials). Theme-aware for dark mode.
+ * @returns {JSX.Element} Full-width section with fade-in animation and responsive grid layout
+ * @example <caption>Contact section on home page</caption>
+ * <Contact />
+ */
 export function Contact() {
   const { isDark } = useTheme();
 

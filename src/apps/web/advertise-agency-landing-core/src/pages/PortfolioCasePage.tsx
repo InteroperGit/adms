@@ -12,6 +12,13 @@ import { categories } from '@/types/config/categories';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { siteData } from '@/types/config/siteData';
 
+/**
+ * @component
+ * @description Portfolio case detail page with hero, overview, content blocks and back navigation
+ * @returns {JSX.Element} Case detail page with breadcrumbs, hero and rendered blocks or 404 message
+ * @example
+ * <PortfolioCasePage />
+ */
 export function PortfolioCasePage() {
   const { categorySlug, caseSlug } = useParams<{
     categorySlug: string;

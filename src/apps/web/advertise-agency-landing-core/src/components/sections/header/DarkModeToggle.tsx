@@ -8,6 +8,17 @@ interface DarkModeToggleProps {
   className?: string;
 }
 
+/**
+ * @component
+ * @description Toggle button for switching between light and dark color modes
+ * @param {DarkModeToggleProps} props
+ * @param {boolean} props.isDark - Current dark mode state
+ * @param {() => void} props.onToggle - Callback when toggle button clicked
+ * @param {string} [props.className] - Optional additional CSS classes
+ * @returns {JSX.Element} Icon button showing sun (dark mode on) or moon (light mode on)
+ * @example <caption>Dark mode toggle in header</caption>
+ * <DarkModeToggle isDark={isDark} onToggle={handleToggle} />
+ */
 export function DarkModeToggle({ isDark, onToggle, className }: DarkModeToggleProps) {
   return (
     <Button

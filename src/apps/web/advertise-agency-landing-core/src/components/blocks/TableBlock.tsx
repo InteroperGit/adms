@@ -5,6 +5,15 @@ interface TableBlockProps {
   block: TableBlockData;
 }
 
+/**
+ * @component
+ * @description Responsive table with mobile-card fallback, optional row highlighting and total row
+ * @param {TableBlockProps} props
+ * @param {TableBlockData} props.block - Table with head, rows, optional total and highlight
+ * @returns {JSX.Element} Table for desktop, card list for mobile
+ * @example
+ * <TableBlock block={{ head: ["Name", "Value"], rows: [["Item", "100"]] }} />
+ */
 export function TableBlock({ block }: TableBlockProps) {
   const highlighted = new Set(block.highlight ?? []);
 

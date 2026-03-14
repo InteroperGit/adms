@@ -28,6 +28,15 @@ function CheckIcon() {
   );
 }
 
+/**
+ * @component
+ * @description List renderer with three styles: checklist, ordered, unordered
+ * @param {ListBlockProps} props
+ * @param {ListBlockData} props.block - List block with style and items
+ * @returns {JSX.Element} ul or ol element with appropriate styling
+ * @example
+ * <ListBlock block={{ style: "checklist", items: ["Item 1", "Item 2"] }} />
+ */
 export function ListBlock({ block }: ListBlockProps) {
   const itemClass = 'text-muted-foreground leading-relaxed';
 

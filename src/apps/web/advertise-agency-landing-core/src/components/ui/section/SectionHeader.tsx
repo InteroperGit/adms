@@ -11,6 +11,20 @@ interface SectionHeaderProps {
   className?: string;
 }
 
+/**
+ * @component
+ * @description Section heading with badge, title, optional highlight span and description text
+ * @param {SectionHeaderProps} props
+ * @param {string} props.label - Badge text
+ * @param {string} props.title - Main heading text
+ * @param {string} [props.description] - Optional subtitle/description
+ * @param {string} [props.titleHighlight] - Portion of title to render in primary color
+ * @param {'light'|'dark'} [props.variant='light'] - Visual theme
+ * @param {string} [props.className] - Additional classes
+ * @returns {JSX.Element} Centered heading container
+ * @example
+ * <SectionHeader label="Featured" title="Our Services" description="Professional solutions" titleHighlight="Services" />
+ */
 export function SectionHeader({
   label,
   title,

@@ -13,6 +13,16 @@ interface LegalBlockRendererProps {
   company: LegalData['company'];
 }
 
+/**
+ * @component
+ * @description Renders legal document content blocks (sections with paragraphs, lists, definitions, contacts) with token substitution for company data
+ * @param {LegalBlockRendererProps} props
+ * @param {LegalContent} props.content - Content structure with sections and blocks
+ * @param {LegalData['company']} props.company - Company data for token replacement ({company.X})
+ * @returns {JSX.Element} Section elements with rendered blocks
+ * @example
+ * <LegalBlockRenderer content={privacyPolicyContent} company={siteData.company} />
+ */
 function renderBlock(block: LegalBlock, company: LegalData['company'], index: number) {
   switch (block.type) {
     case 'p':

@@ -7,6 +7,16 @@ interface ContactConsentProps {
   onChange: (checked: boolean) => void;
 }
 
+/**
+ * @component
+ * @description Renders a consent checkbox with linked legal documents for the contact form. Displays terms/policy links dynamically with separators.
+ * @param {ContactConsentProps} props
+ * @param {boolean} props.checked - Whether the consent is currently checked
+ * @param {function} props.onChange - Callback fired with new checked state when user toggles checkbox
+ * @returns {JSX.Element} Checkbox input with labeled legal links
+ * @example <caption>Contact form consent</caption>
+ * <ContactConsent checked={consent} onChange={setConsent} />
+ */
 export function ContactConsent({ checked, onChange }: ContactConsentProps) {
   const { form: f } = contactContent;
 

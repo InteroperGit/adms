@@ -7,6 +7,13 @@ import { FooterServices } from './FooterServices';
 import { FooterContact } from './FooterContact';
 import { FooterBottom } from './FooterBottom';
 
+/**
+ * @component
+ * @description Full footer section with dark background containing brand/logo, navigation links, services, contact info, and legal bottom bar. Multi-column responsive layout.
+ * @returns {JSX.Element} Footer element with dark background and responsive grid layout
+ * @example <caption>Site footer</caption>
+ * <Footer />
+ */
 export function Footer() {
   return (
     <footer className="bg-surface-dark">

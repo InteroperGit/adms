@@ -4,6 +4,15 @@ interface DividerBlockProps {
   block: DividerBlockData;
 }
 
+/**
+ * @component
+ * @description Divider with multiple visual styles (line, dots, space) for separating content
+ * @param {DividerBlockProps} props
+ * @param {DividerBlockData} props.block - Divider configuration with style option
+ * @returns {JSX.Element} Divider element (hr, dots, or space div)
+ * @example
+ * <DividerBlock block={{ style: "dots" }} />
+ */
 export function DividerBlock({ block }: DividerBlockProps) {
   const style = block.style ?? 'line';
 

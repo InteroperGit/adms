@@ -20,6 +20,22 @@ const arrowClass = cn(
   'cursor-pointer transition-colors hover:bg-primary hover:text-primary-foreground hover:border-primary dark:hover:bg-primary dark:hover:text-primary-foreground dark:hover:border-primary'
 );
 
+/**
+ * @component
+ * @description Navigation controls for carousel including prev/next arrows, dot indicators, and slide counter
+ * @param {CarouselControlsProps} props
+ * @param {number} props.total - Total number of slides
+ * @param {number} props.current - Current active slide index
+ * @param {() => void} props.onPrev - Callback when previous button clicked
+ * @param {() => void} props.onNext - Callback when next button clicked
+ * @param {(index: number) => void} props.onDot - Callback when dot indicator clicked with target index
+ * @param {string} props.prevLabel - Accessibility label for previous button
+ * @param {string} props.nextLabel - Accessibility label for next button
+ * @param {string} props.slideLabel - Template string with {index} placeholder for dot aria-labels
+ * @returns {JSX.Element} Positioned arrows, dot indicators, and slide counter overlays
+ * @example <caption>Carousel controls</caption>
+ * <CarouselControls total={5} current={0} onPrev={prev} onNext={next} onDot={setSlide} prevLabel="Back" nextLabel="Next" slideLabel="Go to slide {index}" />
+ */
 export function CarouselControls({
   total,
   current,

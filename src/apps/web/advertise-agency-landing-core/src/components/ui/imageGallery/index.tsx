@@ -21,6 +21,21 @@ export interface ImageGalleryProps {
   className?: string;
 }
 
+/**
+ * @component
+ * @description Full-featured image gallery with preview, thumbnails, lightbox, keyboard/touch navigation and counter
+ * @param {ImageGalleryProps} props
+ * @param {ImageGalleryItem[]} props.images - Array of image objects with src and optional description
+ * @param {string} props.altPrefix - Alt text prefix for accessibility
+ * @param {string} props.prevLabel - Aria label for previous button
+ * @param {string} props.nextLabel - Aria label for next button
+ * @param {string} props.closeLabel - Aria label for close button
+ * @param {string} props.counterTemplate - Template for counter display with {current} and {total} placeholders
+ * @param {string} [props.className] - Additional container classes
+ * @returns {JSX.Element} Gallery wrapper with preview, nav buttons, thumbnails and lightbox
+ * @example
+ * <ImageGallery images={photos} altPrefix="Project" prevLabel="Previous" nextLabel="Next" closeLabel="Close" counterTemplate="{current}/{total}" />
+ */
 export function ImageGallery({
   images,
   altPrefix,

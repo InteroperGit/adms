@@ -1,6 +1,13 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+/**
+ * @component
+ * @description Effect hook that smoothly scrolls to elements by hash anchor on home page load
+ * @returns {null} Invisible effect component
+ * @example
+ * <HomeHashScroll />
+ */
 export function HomeHashScroll() {
   const location = useLocation();
 

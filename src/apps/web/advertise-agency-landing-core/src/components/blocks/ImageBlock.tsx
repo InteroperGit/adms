@@ -6,6 +6,15 @@ interface ImageBlockProps {
   block: ImageBlockData;
 }
 
+/**
+ * @component
+ * @description Responsive image figure with optional caption
+ * @param {ImageBlockProps} props
+ * @param {ImageBlockData} props.block - Image with src, alt, optional caption and size
+ * @returns {JSX.Element} Figure element with OptimizedImage and caption
+ * @example
+ * <ImageBlock block={{ src: "/images/photo.jpg", alt: "Photo", caption: "Photo caption", size: "medium" }} />
+ */
 const SIZE_CLASS = {
   small: 'max-w-md',
   medium: 'max-w-2xl',

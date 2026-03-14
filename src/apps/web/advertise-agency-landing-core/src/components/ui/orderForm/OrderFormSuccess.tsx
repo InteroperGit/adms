@@ -7,6 +7,16 @@ interface OrderFormSuccessProps {
   onReset: () => void;
 }
 
+/**
+ * @component
+ * @description Success message displayed after form submission with icon, message and reset button
+ * @param {OrderFormSuccessProps} props
+ * @param {SuccessData} props.success - Success message, title and reset button label
+ * @param {() => void} props.onReset - Reset form handler to restart submission
+ * @returns {JSX.Element} Centered success message with icon and button
+ * @example
+ * <OrderFormSuccess success={successConfig} onReset={handleReset} />
+ */
 export function OrderFormSuccess({ success, onReset }: OrderFormSuccessProps) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-4 py-12 text-center">

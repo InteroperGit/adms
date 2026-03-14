@@ -11,6 +11,19 @@ interface CaseHeroProps {
   description: string;
 }
 
+/**
+ * @component
+ * @description Full-height hero section for portfolio case pages with image or gradient background
+ * @param {CaseHeroProps} props
+ * @param {string} props.hero.image - Optional image URL; if provided, overlaid with dark overlay
+ * @param {string} props.hero.gradient - Tailwind gradient class applied when no image
+ * @param {string} props.category - Category badge text displayed above title
+ * @param {string} props.title - Main case title
+ * @param {string} props.description - Subtitle text
+ * @returns {JSX.Element} Hero section with image/gradient background and centered content
+ * @example <caption>Case page hero with image</caption>
+ * <CaseHero hero={{ image: "/img.jpg", gradient: "" }} category="Branding" title="Project Name" description="Brief description" />
+ */
 export function CaseHero({ hero, category, title, description }: CaseHeroProps) {
   const content = (
     <Container className={hero.image ? 'relative z-10' : undefined}>

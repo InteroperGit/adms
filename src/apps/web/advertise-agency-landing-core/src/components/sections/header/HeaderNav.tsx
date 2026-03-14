@@ -6,6 +6,17 @@ interface HeaderNavProps {
   onLinkClick?: () => void;
 }
 
+/**
+ * @component
+ * @description Navigation links list with responsive styling for desktop or mobile layouts
+ * @param {HeaderNavProps} props
+ * @param {boolean} props.isHome - Whether on home page; prefixes hrefs with "/" for other pages
+ * @param {'desktop' | 'mobile'} [props.variant='desktop'] - Layout variant; desktop uses row with hover underlines
+ * @param {() => void} [props.onLinkClick] - Optional callback when link clicked (used to close mobile menu)
+ * @returns {JSX.Element} Navigation list with section anchor links
+ * @example <caption>Mobile navigation links</caption>
+ * <HeaderNav isHome={false} variant="mobile" onLinkClick={closeMobileMenu} />
+ */
 export function HeaderNav({ isHome, variant = 'desktop', onLinkClick }: HeaderNavProps) {
   const isDesktop = variant === 'desktop';
 

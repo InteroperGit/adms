@@ -1,10 +1,21 @@
 /**
- * Returns the `srcset` attribute value for a given original image path.
- * Assumes the imageResizePlugin has generated WebP variants in /images/_optimized/.
+ * @description Builds a responsive image srcset string for use in <img> elements.
+ * Assumes the imageResizePlugin has pre-generated WebP variants with standard width breakpoints.
+ * Returns an empty string if the source path doesn't start with /images/ (invalid paths are silently
+ * ignored, allowing fallback to single image loading).
  *
- * @param src - Original image path under /images/, e.g. /images/portfolio/hero.jpg
- * @param widths - Breakpoint widths; defaults to [320, 640, 960, 1280, 1920]
- * @returns Comma-separated srcset string, or '' if src doesn't start with /images/
+ * @param {string} src - Original image path, must start with /images/ (e.g., /images/portfolio/hero.jpg)
+ * @param {number[]} [widths=[320, 640, 960, 1280, 1920]] - Breakpoint widths in pixels for responsive variants
+ * @returns {string} Comma-separated srcset string (e.g., "/images/_optimized/portfolio/hero-320w.webp 320w, ...") or empty string if invalid
+ *
+ * @example
+ * const srcset = resolveImageSrcSet('/images/portfolio/case-study.jpg');
+ * // Returns: "/images/_optimized/portfolio/case-study-320w.webp 320w, /images/_optimized/portfolio/case-study-640w.webp 640w, ..."
+ *
+ * @example
+ * // Custom widths for small images
+ * const srcset = resolveImageSrcSet('/images/icons/logo.png', [48, 96, 192]);
+ * // Returns: "/images/_optimized/icons/logo-48w.webp 48w, ..."
  */
 export function resolveImageSrcSet(
   src: string,

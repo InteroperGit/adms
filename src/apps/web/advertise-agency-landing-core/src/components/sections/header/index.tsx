@@ -9,6 +9,13 @@ import { useTheme } from '@/hooks/useTheme';
 // 4 buttons: 0=Phone, 1=Telegram, 2=VK, 3=CTA
 const HEADER_BUTTON_COUNT = 4;
 
+/**
+ * @component
+ * @description Main site header with logo, navigation, social links, and dark mode toggle
+ * @returns {JSX.Element} Sticky header bar with responsive desktop and mobile navigation
+ * @example <caption>Main site header</caption>
+ * <Header />
+ */
 export function Header() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';

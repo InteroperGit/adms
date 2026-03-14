@@ -31,6 +31,17 @@ interface SectionDividerProps {
   className?: string;
 }
 
+/**
+ * @component
+ * @description Decorative SVG wave divider between sections with configurable color gradient
+ * @param {SectionDividerProps} props
+ * @param {Variant} props.variant - Predefined gradient variant (e.g., 'bg-to-muted', 'primary-to-bg')
+ * @param {boolean} [props.flipX=false] - Flip wave horizontally for variety
+ * @param {string} [props.className] - Additional classes
+ * @returns {JSX.Element} Div with SVG wave using semantic color tokens
+ * @example
+ * <SectionDivider variant="bg-to-muted" flipX />
+ */
 export function SectionDivider({ variant, flipX = false, className }: SectionDividerProps) {
   const { bg, fill } = VARIANTS[variant];
   return (

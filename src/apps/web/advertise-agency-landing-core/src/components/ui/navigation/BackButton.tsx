@@ -8,6 +8,16 @@ interface BackButtonProps {
   className?: string;
 }
 
+/**
+ * @component
+ * @description Fixed-position back button for navigating to previous page using browser history
+ * @param {BackButtonProps} props
+ * @param {string} [props.label='Вернуться назад'] - Button text
+ * @param {string} [props.className] - Additional button classes
+ * @returns {JSX.Element} Fixed button with arrow icon
+ * @example
+ * <BackButton label="Go Back" />
+ */
 export function BackButton({ label = 'Вернуться назад', className }: BackButtonProps) {
   const navigate = useNavigate();
 

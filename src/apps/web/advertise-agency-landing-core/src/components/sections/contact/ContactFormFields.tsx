@@ -10,6 +10,16 @@ interface ContactFormFieldsProps {
   onChange: (field: keyof FormState, value: string) => void;
 }
 
+/**
+ * @component
+ * @description Renders three input fields for contact form: name (text input), contact (text input), and message (textarea). Controlled component pattern.
+ * @param {ContactFormFieldsProps} props
+ * @param {FormState} props.form - Current form state with name, contact, and message values
+ * @param {function} props.onChange - Callback fired with field name and new value when any field changes
+ * @returns {JSX.Element} Fragment containing labeled input fields
+ * @example <caption>Contact form fields</caption>
+ * <ContactFormFields form={form} onChange={(field, value) => setForm({ ...form, [field]: value })} />
+ */
 export function ContactFormFields({ form, onChange }: ContactFormFieldsProps) {
   const { form: f } = contactContent;
 

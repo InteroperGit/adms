@@ -15,6 +15,18 @@ interface HeaderMobileNavProps {
   onToggleDark: () => void;
 }
 
+/**
+ * @component
+ * @description Mobile navigation with hamburger menu that toggles overlay navigation drawer
+ * @param {HeaderMobileNavProps} props
+ * @param {boolean} props.isHome - Whether currently on home page; affects nav link hrefs
+ * @param {number | null} props.highlightedActionIndex - Which action button should be highlighted
+ * @param {boolean} props.isDark - Current dark mode state
+ * @param {() => void} props.onToggleDark - Callback to toggle dark mode
+ * @returns {JSX.Element} Hamburger menu button and overlay drawer (hidden on desktop)
+ * @example <caption>Mobile header navigation</caption>
+ * <HeaderMobileNav isHome={false} highlightedActionIndex={1} isDark={true} onToggleDark={toggle} />
+ */
 export function HeaderMobileNav({
   isHome,
   highlightedActionIndex,

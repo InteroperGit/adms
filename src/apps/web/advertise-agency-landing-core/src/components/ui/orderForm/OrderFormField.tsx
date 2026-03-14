@@ -9,6 +9,17 @@ interface OrderFormFieldProps {
   onChange: (key: string, value: string | boolean) => void;
 }
 
+/**
+ * @component
+ * @description Renders a single form field based on type (text, number, select, radio, checkbox, textarea)
+ * @param {OrderFormFieldProps} props
+ * @param {FormFieldDefinition} props.field - Field definition with type, label, validation rules, etc.
+ * @param {string | boolean} props.value - Current field value
+ * @param {(key: string, value: string | boolean) => void} props.onChange - Change handler
+ * @returns {JSX.Element} Appropriate input component or null for unknown types
+ * @example
+ * <OrderFormField field={emailField} value="test@example.com" onChange={handleChange} />
+ */
 export function OrderFormField({ field, value, onChange }: OrderFormFieldProps) {
   const id = `field-${field.key}`;
 

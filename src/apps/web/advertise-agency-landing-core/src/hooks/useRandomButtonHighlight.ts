@@ -16,12 +16,30 @@ function pickDifferent(current: number | null, count: number): number {
 }
 
 /**
- * Cycles a highlight through `count` indices in random order.
- * Only one index is active at a time.
- * Both the effect duration and the pause between cycles are randomised.
+ * @description Cycles a highlight through a sequence of indices in random order, with randomized
+ * timing for effect duration and pauses between cycles. Only one index is highlighted at a time,
+ * returning null between highlights. Useful for attention-drawing animations on button arrays or
+ * feature lists.
  *
- * @param count - number of items to cycle through
- * @returns the currently highlighted index, or null when between highlights
+ * @param {number} count - Number of items (indices 0 to count-1) to cycle through
+ * @returns {number | null} Currently highlighted index (0 to count-1), or null when between cycles
+ *
+ * @example
+ * function FeatureButtons() {
+ *   const highlight = useRandomButtonHighlight(4);
+ *   return (
+ *     <div>
+ *       {[0, 1, 2, 3].map(i => (
+ *         <button
+ *           key={i}
+ *           className={highlight === i ? 'ring-2 ring-primary' : ''}
+ *         >
+ *           Feature {i}
+ *         </button>
+ *       ))}
+ *     </div>
+ *   );
+ * }
  */
 export function useRandomButtonHighlight(count: number): number | null {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);

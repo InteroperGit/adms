@@ -10,7 +10,10 @@ interface Theme {
   fontUrls: string[];
 }
 
-/** Map camelCase color keys to kebab-case CSS variable names. */
+/**
+ * @description Maps theme.json color keys (camelCase) to CSS variable names (kebab-case).
+ * Used when generating :root { --color-name: value; } from theme color objects.
+ */
 const COLOR_KEY_MAP: Record<string, string> = {
   background: 'background',
   foreground: 'foreground',
@@ -40,6 +43,13 @@ const VIRTUAL_ID = 'virtual:theme-vars.css';
 const RESOLVED_ID = '\0virtual:theme-vars.css';
 const DEFAULT_LANGUAGE = 'en-US';
 
+/**
+ * @description Generates CSS variable declarations from a colors object.
+ *
+ * @param {Record<string, string>} colors - Color map with camelCase keys
+ * @param {string} [indent='  '] - Indentation for formatting
+ * @returns {string} CSS variable declarations (e.g., "--primary: hsl(5 85% 49%);")
+ */
 function buildColorVars(colors: Record<string, string>, indent = '  '): string {
   return Object.entries(colors)
     .map(([key, value]) => {
@@ -49,6 +59,12 @@ function buildColorVars(colors: Record<string, string>, indent = '  '): string {
     .join('\n');
 }
 
+/**
+ * @description Generates complete CSS with :root variables and optional .dark selector override.
+ *
+ * @param {Theme} theme - Theme object with colors, darkColors, radius, fonts
+ * @returns {string} CSS string with :root and optional .dark blocks
+ */
 function buildCss(theme: Theme): string {
   const rootVars = [
     buildColorVars(theme.colors),
@@ -66,6 +82,12 @@ function buildCss(theme: Theme): string {
   return blocks.join('\n\n');
 }
 
+/**
+ * @description Generates HTML link tags for font preconnect and stylesheet imports.
+ *
+ * @param {string[]} urls - Array of font stylesheet URLs
+ * @returns {string} HTML link tags for fonts injection
+ */
 function buildFontLinks(urls: string[]): string {
   const preconnect = [
     '<link rel="preconnect" href="https://fonts.googleapis.com" />',
@@ -79,6 +101,22 @@ function buildFontLinks(urls: string[]): string {
 
 const ANTI_FOUC_SCRIPT = `<script>(function(){try{var m=localStorage.getItem('theme-mode');if(m==='dark'||(m===null&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})();</script>`;
 
+/**
+ * @description Vite plugin that injects CSS custom properties and font links for theme customization.
+ * Reads theme.json to generate :root CSS variables, optional dark-mode overrides, and injects
+ * an anti-FOUC script to prevent flash of unstyled content when dark mode is active. Serves
+ * CSS variables as a virtual module so @tailwindcss/vite includes them in dev mode.
+ *
+ * @returns {Plugin} Vite plugin with configResolved, resolveId, load, and transformIndexHtml hooks
+ *
+ * @example
+ * // vite.config.ts
+ * import { themePlugin } from './src/plugins/themePlugin';
+ *
+ * export default defineConfig({
+ *   plugins: [themePlugin()],
+ * });
+ */
 export function themePlugin(): Plugin {
   const themeFile = path.resolve(__dirname, '../../data/content/config/theme.json');
   const seoFile = path.resolve(__dirname, '../../data/content/config/seo.json');

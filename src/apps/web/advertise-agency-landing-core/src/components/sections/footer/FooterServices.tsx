@@ -4,6 +4,13 @@ import { services } from '@/types/sections/services/services';
 
 const SERVICES_FOOTER = services.slice(0, 4);
 
+/**
+ * @component
+ * @description Footer services column displaying up to 4 main services. Each service links to the services section (#services) anchor.
+ * @returns {JSX.Element} Column with services title and list of service links
+ * @example <caption>Footer services list</caption>
+ * <FooterServices />
+ */
 export function FooterServices() {
   return (
     <div>

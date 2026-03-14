@@ -5,6 +5,15 @@ interface AboutCardProps {
   card: AboutSectionContent['card'];
 }
 
+/**
+ * @component
+ * @description Visual card component displaying company logo, tagline, and mini statistics
+ * @param {AboutCardProps} props
+ * @param {AboutSectionContent['card']} props.card - Card data with logo tagline and stats array
+ * @returns {JSX.Element} Elevated card with decorative background blob, logo header, and divided stats rows
+ * @example <caption>About section company card</caption>
+ * <AboutCard card={aboutContent.card} />
+ */
 export function AboutCard({ card }: AboutCardProps) {
   return (
     <div className="relative flex items-center justify-center">

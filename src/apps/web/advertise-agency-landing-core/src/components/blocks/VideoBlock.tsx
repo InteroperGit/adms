@@ -4,6 +4,15 @@ interface VideoBlockProps {
   block: VideoBlockData;
 }
 
+/**
+ * @component
+ * @description Responsive video player supporting YouTube, Rutube embeds and local video files with optional caption
+ * @param {VideoBlockProps} props
+ * @param {VideoBlockData} props.block - Video block with URL and optional caption/aspect ratio
+ * @returns {JSX.Element} Figure element with video or iframe
+ * @example
+ * <VideoBlock block={{ url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", caption: "Video" }} />
+ */
 function extractEmbedUrl(url: string): string | null {
   // YouTube: watch?v=ID or youtu.be/ID or shorts/ID
   const ytMatch = url.match(

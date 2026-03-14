@@ -6,6 +6,15 @@ interface OrderFormBlockProps {
   block: OrderFormBlockData;
 }
 
+/**
+ * @component
+ * @description Renders order form by reference to form ID configuration with optional title
+ * @param {OrderFormBlockProps} props
+ * @param {OrderFormBlockData} props.block - Form block with formId and optional title
+ * @returns {JSX.Element|null} OrderForm component or null if form not found
+ * @example
+ * <OrderFormBlock block={{ formId: "consultation", title: "Get Started" }} />
+ */
 export function OrderFormBlock({ block }: OrderFormBlockProps) {
   const definition = orderFormsData.forms[block.formId];
 

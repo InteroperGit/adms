@@ -8,6 +8,17 @@ interface OrderFormProductTabsProps {
   onChange: (key: string) => void;
 }
 
+/**
+ * @component
+ * @description Tab selector for switching between product types in order form with icons and active state
+ * @param {OrderFormProductTabsProps} props
+ * @param {ProductType[]} props.productTypes - Available product configurations
+ * @param {string} props.activeKey - Currently selected product key
+ * @param {(key: string) => void} props.onChange - Product selection handler
+ * @returns {JSX.Element} Grid of tab buttons with icons
+ * @example
+ * <OrderFormProductTabs productTypes={products} activeKey="premium" onChange={selectProduct} />
+ */
 export function OrderFormProductTabs({
   productTypes,
   activeKey,

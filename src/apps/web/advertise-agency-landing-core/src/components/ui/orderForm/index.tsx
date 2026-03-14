@@ -13,6 +13,15 @@ interface OrderFormProps {
   definition: OrderFormDefinition;
 }
 
+/**
+ * @component
+ * @description Complete multi-step order form with product tabs, dynamic fields, customer info, consent and success state
+ * @param {OrderFormProps} props
+ * @param {OrderFormDefinition} props.definition - Form configuration with products, fields, labels, etc.
+ * @returns {JSX.Element} Form wrapper or success message
+ * @example
+ * <OrderForm definition={orderFormDefinition} />
+ */
 function fieldDefaults(fields: FormFieldDefinition[]): Record<string, string> {
   const defaults: Record<string, string> = {};
   for (const f of fields) {

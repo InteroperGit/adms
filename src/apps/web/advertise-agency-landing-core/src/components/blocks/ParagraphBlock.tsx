@@ -5,6 +5,15 @@ interface ParagraphBlockProps {
   block: ParagraphBlockData;
 }
 
+/**
+ * @component
+ * @description Paragraph text block with optional alignment and support for inline HTML
+ * @param {ParagraphBlockProps} props
+ * @param {ParagraphBlockData} props.block - Paragraph with text and optional align
+ * @returns {JSX.Element} Paragraph element with dangerouslySetInnerHTML
+ * @example
+ * <ParagraphBlock block={{ text: "Hello <strong>world</strong>", align: "center" }} />
+ */
 export function ParagraphBlock({ block }: ParagraphBlockProps) {
   return (
     <p

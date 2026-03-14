@@ -42,6 +42,21 @@ interface SocialLinksProps {
   highlightedIndex?: number | null;
 }
 
+/**
+ * @component
+ * @description Renders a group of social contact buttons (phone, Telegram, VK) with optional highlighting and visual variants
+ * @param {SocialLinksProps} props
+ * @param {string} [props.phone] - Phone number for tel: link
+ * @param {string} [props.telegram] - Telegram URL
+ * @param {string} [props.vk] - VK profile URL
+ * @param {'light'|'dark'} [props.variant='light'] - Color scheme variant
+ * @param {'sm'|'md'} [props.size='md'] - Button size (small for mobile bars)
+ * @param {string} [props.className] - Additional container classes
+ * @param {number|null} [props.highlightedIndex] - Index of button to highlight with animation
+ * @returns {JSX.Element} Flex container with conditional buttons
+ * @example
+ * <SocialLinks phone="79991234567" telegram="https://t.me/agency" vk="https://vk.com/agency" variant="light" />
+ */
 export function SocialLinks({
   phone,
   telegram,

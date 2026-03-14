@@ -8,6 +8,16 @@ interface GalleryBlockProps {
   caseTitle: string;
 }
 
+/**
+ * @component
+ * @description Renders image gallery with full lightbox experience
+ * @param {GalleryBlockProps} props
+ * @param {GalleryBlockData} props.block - Gallery block with images array
+ * @param {string} props.caseTitle - Case title for image alt text
+ * @returns {JSX.Element} ImageGallery component
+ * @example
+ * <GalleryBlock block={galleryData} caseTitle="Project Name" />
+ */
 export function GalleryBlock({ block, caseTitle }: GalleryBlockProps) {
   const { photoAlt } = portfolioCaseContent;
   const { prevLabel, nextLabel, counter, closeLabel } = imageGalleryContent;

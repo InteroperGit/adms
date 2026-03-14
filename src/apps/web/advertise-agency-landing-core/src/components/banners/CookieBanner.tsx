@@ -6,6 +6,13 @@ import { ConsentState, STORAGE_KEY, CONSENT_EVENT } from '@/hooks/useCookieConse
 import { CookieActions } from './CookieActions';
 import { cn } from '@/lib/utils';
 
+/**
+ * @component
+ * @description Cookie consent banner with privacy policy link and action buttons, hides after consent or dismissal
+ * @returns {JSX.Element|null} Dialog element with banner or null if dismissed/consented
+ * @example
+ * <CookieBanner />
+ */
 export function CookieBanner() {
   // getServerSnapshot returns true (consent assumed) so SSG renders no banner in HTML.
   // On the client, getSnapshot reads actual localStorage — no hydration mismatch.

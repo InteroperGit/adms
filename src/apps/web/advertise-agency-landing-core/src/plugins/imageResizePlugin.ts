@@ -39,6 +39,23 @@ function findImages(dir: string): string[] {
   return results;
 }
 
+/**
+ * @description Vite plugin for optimizing images during SSG build. Recursively scans
+ * public/images/, generates responsive WebP variants at configured breakpoints using Sharp,
+ * and maintains a cache manifest to skip re-processing unchanged files. Only runs during
+ * production builds, leaving dev server unaffected. Configuration read from site.json's
+ * imageOptimization field.
+ *
+ * @returns {Plugin} Vite plugin with configResolved and buildStart hooks
+ *
+ * @example
+ * // vite.config.ts
+ * import { imageResizePlugin } from './src/plugins/imageResizePlugin';
+ *
+ * export default defineConfig({
+ *   plugins: [imageResizePlugin()],
+ * });
+ */
 export function imageResizePlugin(): Plugin {
   let resolvedConfig: ResolvedConfig;
   let imgConfig: ImageOptimizationConfig = {

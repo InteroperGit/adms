@@ -7,6 +7,17 @@ interface OrderFormConsentProps {
   onChange: (checked: boolean) => void;
 }
 
+/**
+ * @component
+ * @description Consent checkbox with legal links for terms acceptance in forms
+ * @param {OrderFormConsentProps} props
+ * @param {ConsentData} props.consent - Consent text and links configuration
+ * @param {boolean} props.checked - Current checkbox state
+ * @param {(checked: boolean) => void} props.onChange - Change handler
+ * @returns {JSX.Element} Checkbox with label containing text and internal links
+ * @example
+ * <OrderFormConsent consent={consentConfig} checked={agreed} onChange={setAgreed} />
+ */
 export function OrderFormConsent({ consent, checked, onChange }: OrderFormConsentProps) {
   return (
     <div className="flex items-start gap-3">

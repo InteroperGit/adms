@@ -2,6 +2,13 @@
 import { contactContent } from '@/types/sections/contact/contact';
 import { siteData } from '@/types/config/siteData';
 
+/**
+ * @component
+ * @description Displays working hours card showing weekday, Saturday, and Sunday hours in a clean two-column layout.
+ * @returns {JSX.Element} Card container with hours title and three rows (weekdays, Saturday, Sunday)
+ * @example <caption>Contact hours display</caption>
+ * <ContactHours />
+ */
 export function ContactHours() {
   const { hoursTitle, dayLabels } = contactContent;
   const { weekdays, saturday, sunday } = siteData.contact.workingHours;

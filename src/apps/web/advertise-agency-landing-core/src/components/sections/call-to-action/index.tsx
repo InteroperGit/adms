@@ -2,6 +2,13 @@ import { Container } from '@/components/layout/Container';
 import { callToActionContent } from '@/types/sections/call-to-action/callToAction';
 import { CtaButtons } from './CtaButtons';
 
+/**
+ * @component
+ * @description Full-width call-to-action section with prominent title, subtitle, and dual CTA buttons. High-visibility hero-like design with primary brand color.
+ * @returns {JSX.Element} Full-width section with centered text and CTA buttons
+ * @example <caption>Call-to-action section</caption>
+ * <CallToAction />
+ */
 export function CallToAction() {
   const callToAction = callToActionContent;
 

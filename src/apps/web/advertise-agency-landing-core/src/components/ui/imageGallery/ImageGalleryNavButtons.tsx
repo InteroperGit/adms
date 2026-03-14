@@ -14,6 +14,18 @@ const btnClass = cn(
   'opacity-0 backdrop-blur-sm transition-all hover:bg-primary group-hover:opacity-100 sm:flex'
 );
 
+/**
+ * @component
+ * @description Previous/next navigation buttons for gallery preview, visible on hover (desktop only)
+ * @param {ImageGalleryNavButtonsProps} props
+ * @param {() => void} props.onPrev - Previous image callback
+ * @param {() => void} props.onNext - Next image callback
+ * @param {string} props.prevLabel - Aria label for previous button
+ * @param {string} props.nextLabel - Aria label for next button
+ * @returns {JSX.Element} Two navigation buttons positioned absolutely on sides
+ * @example
+ * <ImageGalleryNavButtons onPrev={handlePrev} onNext={handleNext} prevLabel="Previous" nextLabel="Next" />
+ */
 export function ImageGalleryNavButtons({
   onPrev,
   onNext,

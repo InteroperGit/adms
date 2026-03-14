@@ -7,6 +7,15 @@ interface ContactSuccessProps {
   onReset: () => void;
 }
 
+/**
+ * @component
+ * @description Displays a success message after form submission with a send icon, title, description, and reset button to submit another message.
+ * @param {ContactSuccessProps} props
+ * @param {function} props.onReset - Callback to reset form and return to input state
+ * @returns {JSX.Element} Centered success message with icon and reset button
+ * @example <caption>Form submission success</caption>
+ * <ContactSuccess onReset={() => setSubmitted(false)} />
+ */
 export function ContactSuccess({ onReset }: ContactSuccessProps) {
   const { success } = contactContent.form;
 

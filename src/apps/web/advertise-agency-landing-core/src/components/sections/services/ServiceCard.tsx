@@ -7,6 +7,15 @@ interface ServiceCardProps {
   service: Service;
 }
 
+/**
+ * @component
+ * @description Individual service card displaying icon, title, and description. Features hover animation (lift effect) and responsive styling.
+ * @param {ServiceCardProps} props
+ * @param {Service} props.service - Service object with icon key, title, and description
+ * @returns {JSX.Element} Card with icon box header and description content
+ * @example <caption>Service card</caption>
+ * <ServiceCard service={{ icon: 'Zap', title: 'Fast', description: 'Quick delivery' }} />
+ */
 export function ServiceCard({ service }: ServiceCardProps) {
   const Icon = ICON_MAP[service.icon];
   return (

@@ -5,6 +5,15 @@ interface HeroCTAProps {
   cta: { label: string; href: string }[];
 }
 
+/**
+ * @component
+ * @description Call-to-action button group with primary and secondary action options
+ * @param {HeroCTAProps} props
+ * @param {{ label: string; href: string }[]} props.cta - Array of up to two CTA objects [primary, secondary]
+ * @returns {JSX.Element} Responsive flex layout with primary filled button and secondary outline button
+ * @example <caption>Hero section CTA buttons</caption>
+ * <HeroCTA cta={[{ label: "Get Started", href: "/#contact" }, { label: "Learn More", href: "/about" }]} />
+ */
 export function HeroCTA({ cta }: HeroCTAProps) {
   const [primary, secondary] = cta;
   return (

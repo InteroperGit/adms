@@ -3,6 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 
+/**
+ * @component
+ * @description Call-to-action section displayed on portfolio case detail pages to encourage user engagement
+ * @returns {JSX.Element} Section with title, subtitle, and action button linking to contact form
+ * @example <caption>Used in PortfolioCasePage</caption>
+ * <CaseCTA />
+ */
 export function CaseCTA() {
   const { cta } = portfolioCaseContent;
 

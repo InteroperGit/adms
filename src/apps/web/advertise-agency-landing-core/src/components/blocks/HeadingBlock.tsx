@@ -5,6 +5,15 @@ interface HeadingBlockProps {
   block: HeadingBlockData;
 }
 
+/**
+ * @component
+ * @description Semantic heading element (h2, h3, h4) with size-appropriate styling
+ * @param {HeadingBlockProps} props
+ * @param {HeadingBlockData} props.block - Heading with level (2-4) and text
+ * @returns {JSX.Element} Heading tag with font-heading family and responsive size
+ * @example
+ * <HeadingBlock block={{ level: 2, text: "Section Title" }} />
+ */
 const STYLES = {
   2: 'text-2xl md:text-3xl font-bold text-foreground',
   3: 'text-xl md:text-2xl font-semibold text-foreground',

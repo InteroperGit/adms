@@ -9,6 +9,16 @@ interface ScrollToTopProps {
   navSelector?: string; // CSS-селектор навигации для скролла
 }
 
+/**
+ * @component
+ * @description Fixed floating button that appears when scrolled below threshold and returns to top/nav with smooth scroll
+ * @param {ScrollToTopProps} props
+ * @param {number} [props.threshold=300] - Scroll distance in pixels before button appears
+ * @param {string} [props.navSelector='nav'] - CSS selector for nav element to scroll to
+ * @returns {JSX.Element|null} Button when visible, null when hidden
+ * @example
+ * <ScrollToTop threshold={300} navSelector="nav" />
+ */
 export function ScrollToTop({ threshold = 300, navSelector = 'nav' }: ScrollToTopProps) {
   const [visible, setVisible] = useState(
     () => typeof window !== 'undefined' && window.scrollY > threshold

@@ -14,6 +14,16 @@ interface PortfolioGridProps {
   activeSlug: string | null; // current category slug, used to build case hrefs
 }
 
+/**
+ * @component
+ * @description Complete portfolio listing with category filter, paginated grid, and call-to-action
+ * @param {PortfolioGridProps} props
+ * @param {PortfolioCase[]} props.items - Array of portfolio cases to display
+ * @param {string | null} props.activeSlug - Current category filter; null for all cases
+ * @returns {JSX.Element} Category nav, paginated case grid, pagination controls, and contact CTA
+ * @example <caption>Portfolio page listing</caption>
+ * <PortfolioGrid items={allCases} activeSlug="branding" />
+ */
 export function PortfolioGrid({ items, activeSlug }: PortfolioGridProps) {
   const cfg = portfolioConfig;
   const [searchParams, setSearchParams] = useSearchParams();

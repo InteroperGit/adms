@@ -9,6 +9,13 @@ interface FooterContactItem {
   href?: string;
 }
 
+/**
+ * @component
+ * @description Footer contact column displaying phone, email, and address with icons. Phone and email are clickable links (tel: and mailto:); address is plain text.
+ * @returns {JSX.Element} Column with contacts title and list of contact items with icons
+ * @example <caption>Footer contact information</caption>
+ * <FooterContact />
+ */
 export function FooterContact() {
   const { phone, email, address } = siteData.contact;
 

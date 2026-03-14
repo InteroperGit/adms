@@ -9,6 +9,13 @@ import { contactContent } from '@/types/sections/contact/contact';
 
 const EMPTY: FormState = { name: '', contact: '', message: '' };
 
+/**
+ * @component
+ * @description Main contact form section with name, contact, message fields, consent checkbox, and success state. Requires consent before submission.
+ * @returns {JSX.Element} Form container with fields, consent, and submit button, or success message after submission
+ * @example <caption>Contact section form</caption>
+ * <ContactForm />
+ */
 export function ContactForm() {
   const [form, setForm] = useState<FormState>(EMPTY);
   const [submitted, setSubmitted] = useState(false);

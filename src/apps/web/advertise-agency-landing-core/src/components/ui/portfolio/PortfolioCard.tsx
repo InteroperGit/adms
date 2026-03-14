@@ -10,6 +10,15 @@ interface PortfolioCardProps {
   item: PortfolioCase & { href: string };
 }
 
+/**
+ * @component
+ * @description Portfolio case card with thumbnail, title, description, tags and details link
+ * @param {PortfolioCardProps} props
+ * @param {PortfolioCase & { href: string }} props.item - Case data with computed href
+ * @returns {JSX.Element} Card article with hover animation
+ * @example
+ * <PortfolioCard item={{ ...caseData, href: "/portfolio/all/case-slug" }} />
+ */
 export function PortfolioCard({ item }: PortfolioCardProps) {
   const { detailsLabel } = portfolioSectionContent;
 

@@ -8,6 +8,18 @@ interface CountingStatProps {
   animate: boolean;
 }
 
+/**
+ * @component
+ * @description Statistic display with icon, animated count-up number, and label text
+ * @param {CountingStatProps} props
+ * @param {string} props.value - Numeric string with optional suffix (e.g., "150+", "12k")
+ * @param {string} props.label - Descriptive label below the count
+ * @param {LucideIcon} props.icon - Icon component to display above count
+ * @param {boolean} props.animate - Whether to animate count-up from 0 to target number
+ * @returns {JSX.Element} Vertically centered icon, animated count, and label
+ * @example <caption>Hero section stat with animation</caption>
+ * <CountingStat value="150+" label="Happy Clients" icon={Award} animate={true} />
+ */
 export function CountingStat({ value, label, icon: Icon, animate }: CountingStatProps) {
   const match = value.match(/^(\d+)(.*)$/);
   const targetNum = match ? parseInt(match[1], 10) : 0;

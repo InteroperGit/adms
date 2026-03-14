@@ -9,6 +9,18 @@ interface CaseOverviewProps {
   services: string;
 }
 
+/**
+ * @component
+ * @description Overview section on case detail page displaying key project information in a grid
+ * @param {CaseOverviewProps} props
+ * @param {string} props.client - Client name
+ * @param {string} props.category - Project category
+ * @param {string} props.year - Year of project completion
+ * @param {string} props.services - Comma-separated list of services provided
+ * @returns {JSX.Element} Grid layout with four info items (client, category, year, services)
+ * @example <caption>Case overview with project details</caption>
+ * <CaseOverview client="ACME Co" category="Branding" year="2024" services="Logo design, Brand guidelines" />
+ */
 export function CaseOverview({ client, category, year, services }: CaseOverviewProps) {
   const { overviewLabels } = portfolioCaseContent;
 

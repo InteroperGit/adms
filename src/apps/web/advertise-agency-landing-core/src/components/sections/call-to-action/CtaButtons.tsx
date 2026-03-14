@@ -7,6 +7,15 @@ interface CtaButtonsProps {
   cta: LabeledLink[];
 }
 
+/**
+ * @component
+ * @description Renders primary and secondary call-to-action buttons side by side on desktop, stacked on mobile. Primary button has animated pulse effect.
+ * @param {CtaButtonsProps} props
+ * @param {LabeledLink[]} props.cta - Array of up to 2 CTA links; first is primary (white with pulse), second is secondary (outlined)
+ * @returns {JSX.Element} Flex container with primary and secondary buttons
+ * @example <caption>CTA button pair</caption>
+ * <CtaButtons cta={[{ label: 'Get Started', href: '#contact' }, { label: 'Learn More', href: '#' }]} />
+ */
 export function CtaButtons({ cta }: CtaButtonsProps) {
   const [primary, secondary] = cta;
   return (

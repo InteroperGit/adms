@@ -6,6 +6,15 @@ import { SocialLinks } from '@/components/ui/SocialLinks';
 import { contactContent } from '@/types/sections/contact/contact';
 import { siteData } from '@/types/config/siteData';
 
+/**
+ * @component
+ * @description Contact information section rendering phone, email, address with icons, optional map, and social links. Theme-aware for dark mode.
+ * @param {object} props
+ * @param {boolean} props.isDark - Whether dark mode is active (affects map styling)
+ * @returns {JSX.Element} Flex container with contact items, map, and social links
+ * @example <caption>Contact information</caption>
+ * <ContactInfo isDark={isDark} />
+ */
 export function ContactInfo({ isDark }: { isDark: boolean }) {
   const { directTitle, contactLabels, socialTitle } = contactContent;
   const { phone, email, address, telegram, vk } = siteData.contact;

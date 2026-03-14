@@ -5,6 +5,15 @@ interface CodeBlockProps {
   block: CodeBlockData;
 }
 
+/**
+ * @component
+ * @description Code snippet display with optional language label and caption
+ * @param {CodeBlockProps} props
+ * @param {CodeBlockData} props.block - Code block with code string, optional language and caption
+ * @returns {JSX.Element} Pre/code figure with language badge
+ * @example
+ * <CodeBlock block={{ code: "console.log('hello')", language: "javascript", caption: "Example" }} />
+ */
 export function CodeBlock({ block }: CodeBlockProps) {
   return (
     <figure className="mx-auto max-w-4xl">

@@ -6,6 +6,15 @@ interface BlockquoteBlockProps {
   block: BlockquoteBlockData;
 }
 
+/**
+ * @component
+ * @description Renders testimonial via ID reference or inline quote with attribution and role info
+ * @param {BlockquoteBlockProps} props
+ * @param {BlockquoteBlockData} props.block - Blockquote data with either testimonialId or inline quote fields
+ * @returns {JSX.Element|null} TestimonialCard or blockquote element
+ * @example
+ * <BlockquoteBlock block={{ testimonialId: "testimonial-1" }} />
+ */
 export function BlockquoteBlock({ block }: BlockquoteBlockProps) {
   // Variant A — reference existing testimonial by ID
   if ('testimonialId' in block) {

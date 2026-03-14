@@ -7,6 +7,13 @@ import { CarouselControls } from './CarouselControls';
 
 const INTERVAL_MS = 5000;
 
+/**
+ * @component
+ * @description Full-bleed image carousel with auto-advance, pause on hover, and gesture controls
+ * @returns {JSX.Element} 70vh carousel container with slides, controls, and touch/swipe support
+ * @example <caption>Full-page carousel above hero</caption>
+ * <Carousel />
+ */
 export function Carousel() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);

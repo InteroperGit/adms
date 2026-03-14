@@ -4,6 +4,13 @@ import { cn } from '@/lib/utils';
 import { HeroCTA } from './HeroCTA';
 import { HeroStats } from './HeroStats';
 
+/**
+ * @component
+ * @description Full-height hero section with badge, gradient title, subtitle, CTA buttons, and stats
+ * @returns {JSX.Element} Hero banner with gradient/blob background, centered content, and statistics grid
+ * @example <caption>Home page hero section</caption>
+ * <Hero />
+ */
 export function Hero() {
   const hero = heroContent;
 

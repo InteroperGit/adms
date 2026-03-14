@@ -11,6 +11,13 @@ import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 const formEntries = Object.entries(orderFormsData.forms);
 
+/**
+ * @component
+ * @description Standalone order form page with form type selector and breadcrumbs
+ * @returns {JSX.Element} Page with form buttons (if multiple) and selected form
+ * @example
+ * <OrderPage />
+ */
 export function OrderPage() {
   const p = orderFormsData.page;
   const [searchParams, setSearchParams] = useSearchParams();

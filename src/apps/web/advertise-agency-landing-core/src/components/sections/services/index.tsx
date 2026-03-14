@@ -5,6 +5,13 @@ import { servicesSectionContent } from '@/types/sections/services/servicesConten
 import { services } from '@/types/sections/services/services';
 import { ServiceCard } from './ServiceCard';
 
+/**
+ * @component
+ * @description Services section displaying all agency services in a responsive grid of cards with icons, titles, and descriptions. Full-width section with fade-in animation.
+ * @returns {JSX.Element} Full-width section with header and service cards grid
+ * @example <caption>Services section on home page</caption>
+ * <Services />
+ */
 export function Services() {
   const s = servicesSectionContent;
 

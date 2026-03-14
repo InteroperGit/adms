@@ -8,6 +8,17 @@ interface OrderFormCustomerFieldsProps {
   onChange: (key: string, value: string | boolean) => void;
 }
 
+/**
+ * @component
+ * @description Customer information fields section with separator and heading
+ * @param {OrderFormCustomerFieldsProps} props
+ * @param {FormFieldDefinition[]} props.fields - Contact field definitions
+ * @param {Record<string, string | boolean>} props.values - Field values
+ * @param {(key: string, value: string | boolean) => void} props.onChange - Value update handler
+ * @returns {JSX.Element} Section with heading and dynamic fields
+ * @example
+ * <OrderFormCustomerFields fields={contactFields} values={formValues} onChange={updateField} />
+ */
 export function OrderFormCustomerFields({
   fields,
   values,

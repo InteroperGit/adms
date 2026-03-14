@@ -93,6 +93,12 @@ function extractYearMonth(date: string): { year: string; month: string } {
 // HTML helpers
 // ---------------------------------------------------------------------------
 
+/**
+ * @description Escapes HTML special characters to safely include strings in HTML attributes.
+ *
+ * @param {string} s - String to escape
+ * @returns {string} Escaped string safe for use in HTML attributes
+ */
 function escAttr(s: string): string {
   return s
     .replace(/&/g, '&amp;')
@@ -101,7 +107,16 @@ function escAttr(s: string): string {
     .replace(/>/g, '&gt;');
 }
 
-/** Replace content of an existing <meta> tag, or inject a new one before </head>. */
+/**
+ * @description Updates an existing <meta> tag's content attribute or injects a new <meta> tag
+ * before </head> if not found. Searches both name= and content= attribute orderings.
+ *
+ * @param {string} html - HTML string to modify
+ * @param {'name' | 'property'} keyAttr - Meta attribute type (name or property)
+ * @param {string} key - Meta attribute value (e.g., "description", "og:title")
+ * @param {string} value - New content attribute value
+ * @returns {string} Updated HTML string
+ */
 function upsertMeta(
   html: string,
   keyAttr: 'name' | 'property',
@@ -121,10 +136,24 @@ function upsertMeta(
   return html.replace('</head>', `  <meta ${keyAttr}="${key}" content="${escaped}" />\n  </head>`);
 }
 
+/**
+ * @description Injects HTML snippet before </head> tag.
+ *
+ * @param {string} html - HTML string to modify
+ * @param {string} snippet - HTML code to inject (e.g., <link>, <script>, <meta>)
+ * @returns {string} Updated HTML string
+ */
 function injectBeforeHead(html: string, snippet: string): string {
   return html.replace('</head>', `  ${snippet}\n  </head>`);
 }
 
+/**
+ * @description Updates existing <title> tag or injects new one before </head>.
+ *
+ * @param {string} html - HTML string to modify
+ * @param {string} text - New page title text
+ * @returns {string} Updated HTML string
+ */
 function upsertTitle(html: string, text: string): string {
   const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   if (/<title>[^<]*<\/title>/i.test(html)) {
@@ -133,6 +162,12 @@ function upsertTitle(html: string, text: string): string {
   return html.replace('</head>', `  <title>${escaped}</title>\n  </head>`);
 }
 
+/**
+ * @description Wraps a JSON-LD schema object in <script> tags for structured data markup.
+ *
+ * @param {object} schema - JSON-LD schema object (e.g., Organization, BreadcrumbList)
+ * @returns {string} HTML script tag containing JSON-LD schema
+ */
 function jsonLdTag(schema: object): string {
   return `<script type="application/ld+json">${JSON.stringify(schema)}</script>`;
 }
@@ -237,6 +272,13 @@ function handleCasePage(
 // Shared utilities
 // ---------------------------------------------------------------------------
 
+/**
+ * @description Safely reads and parses a JSON file, returning null if not found.
+ *
+ * @template T - Type to parse JSON into
+ * @param {string} filePath - Absolute file path
+ * @returns {T | null} Parsed JSON object or null if file doesn't exist
+ */
 function readJson<T>(filePath: string): T | null {
   if (!existsSync(filePath)) {
     return null;
@@ -244,6 +286,12 @@ function readJson<T>(filePath: string): T | null {
   return JSON.parse(readFileSync(filePath, 'utf-8')) as T;
 }
 
+/**
+ * @description Recursively finds all .json files in a directory tree.
+ *
+ * @param {string} dir - Directory path to scan
+ * @returns {string[]} Array of absolute paths to all .json files found
+ */
 function walkJsonFiles(dir: string): string[] {
   if (!existsSync(dir)) {
     return [];
@@ -273,6 +321,25 @@ const DYNAMIC_ROUTE_PATTERNS = new Set([
 // includedRoutes builder
 // ---------------------------------------------------------------------------
 
+/**
+ * @description Factory function that builds the includedRoutes handler for vite-react-ssg.
+ * Reads portfolio cases and categories from data files to generate all static routes:
+ * listing pages (/portfolio, /portfolio/{category}) and case detail pages with date-based URLs
+ * (/portfolio/{category}/{year}/{month}/{slug}). Returns a function that filters out dynamic
+ * route patterns and inserts concrete routes.
+ *
+ * @param {string} rootDir - Project root directory (used to resolve data/ folder)
+ * @returns {(paths: string[]) => string[]} Function accepting vite-react-ssg routes and returning
+ *   all expanded static paths (listing + case pages)
+ *
+ * @example
+ * // vite.config.ts
+ * import { buildIncludedRoutes } from './src/plugins/ssgMetaPlugin';
+ *
+ * ssgOptions: {
+ *   includedRoutes: buildIncludedRoutes(process.cwd()),
+ * }
+ */
 export function buildIncludedRoutes(rootDir: string): (paths: string[]) => string[] {
   const categories =
     readJson<CategoryEntry[]>(path.resolve(rootDir, 'data/content/config/categories.json')) ?? [];
@@ -316,6 +383,24 @@ export function buildIncludedRoutes(rootDir: string): (paths: string[]) => strin
 // onPageRendered factory — loads config files once, returns the handler
 // ---------------------------------------------------------------------------
 
+/**
+ * @description Factory function creating the onPageRendered hook for vite-react-ssg.
+ * Loads configuration and portfolio case data once, returning a handler that injects
+ * SEO metadata (titles, meta tags, JSON-LD schemas) into rendered HTML. Handles homepage
+ * with organization schema and case pages with breadcrumbs and case-specific metadata.
+ *
+ * @param {string} rootDir - Project root directory (used to resolve data/ folder)
+ * @returns {(route: string, html: string) => string} Handler function that injects SEO metadata
+ *   into HTML for each route during SSG build
+ *
+ * @example
+ * // vite.config.ts
+ * import { createSsgMetaHook } from './src/plugins/ssgMetaPlugin';
+ *
+ * ssgOptions: {
+ *   onPageRendered: createSsgMetaHook(process.cwd()),
+ * }
+ */
 export function createSsgMetaHook(rootDir: string): (route: string, html: string) => string {
   const seo = readJson<SeoConfig>(path.resolve(rootDir, 'data/content/config/seo.json'));
   if (!seo) {

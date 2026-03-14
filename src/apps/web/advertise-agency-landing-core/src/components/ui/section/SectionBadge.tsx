@@ -6,6 +6,17 @@ interface SectionBadgeProps {
   className?: string;
 }
 
+/**
+ * @component
+ * @description Small decorative label badge typically used above section headings
+ * @param {SectionBadgeProps} props
+ * @param {string} props.label - Badge text
+ * @param {'light'|'dark'} [props.variant='light'] - Color scheme
+ * @param {string} [props.className] - Additional classes
+ * @returns {JSX.Element} Rounded pill badge with border and background
+ * @example
+ * <SectionBadge label="Our Services" variant="light" />
+ */
 export function SectionBadge({ label, variant = 'light', className }: SectionBadgeProps) {
   return (
     <div

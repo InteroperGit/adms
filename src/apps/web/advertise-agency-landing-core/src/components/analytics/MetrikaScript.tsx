@@ -35,6 +35,13 @@ function removeMetrika() {
   delete window.ym;
 }
 
+/**
+ * @component
+ * @description Yandex Metrika analytics script injection with cookie consent management and page tracking
+ * @returns {JSX.Element|null} Noscript fallback image or null if no Metrika ID configured
+ * @example
+ * <MetrikaScript />
+ */
 export function MetrikaScript() {
   const metrikaId = siteData.yandexMetrikaId;
   const consent = useCookieConsent();

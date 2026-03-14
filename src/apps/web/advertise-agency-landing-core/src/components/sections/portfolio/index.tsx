@@ -31,6 +31,13 @@ const PORTFOLIO_CATEGORIES = [
 
 const PREVIEW_LIMIT = 6;
 
+/**
+ * @component
+ * @description Portfolio section displaying up to 6 featured cases with category filter. Loads cases from nested JSON data structure with dynamic routing. Includes "View All" CTA.
+ * @returns {JSX.Element} Full-width section with header, category filter tabs, case cards grid, and view all button
+ * @example <caption>Portfolio section on home page</caption>
+ * <Portfolio />
+ */
 export function Portfolio() {
   const p = portfolioSectionContent;
   const [activeCategory, setActiveCategory] = useState(p.allCategory);

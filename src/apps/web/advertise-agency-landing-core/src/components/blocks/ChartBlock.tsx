@@ -6,6 +6,16 @@ interface ChartBlockProps {
   caseGradient: string;
 }
 
+/**
+ * @component
+ * @description Multi-type data visualization renderer (bar, horizontal bar, progress, line, pie charts)
+ * @param {ChartBlockProps} props
+ * @param {ChartBlockData} props.block - Chart configuration with type, items and color
+ * @param {string} props.caseGradient - Fallback gradient for colored elements
+ * @returns {JSX.Element} Rendered chart with title
+ * @example
+ * <ChartBlock block={chartData} caseGradient="from-blue-500 to-purple-500" />
+ */
 // Returns Tailwind bg classes for div-based bars
 function barBgClass(color: BlockColor | undefined, caseGradient: string): string {
   if (!color) {

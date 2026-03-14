@@ -11,6 +11,13 @@ import { allPortfolioCases } from '@/types/portfolio/portfolioCases';
 import { siteData } from '@/types/config/siteData';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
+/**
+ * @component
+ * @description Portfolio listing page with category filtering (all, by category), breadcrumbs and pagination
+ * @returns {JSX.Element} Page with category nav, grid, and CTA or 404 message
+ * @example
+ * <PortfolioCategoryPage />
+ */
 export function PortfolioCategoryPage() {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const p = portfolioPageContent;

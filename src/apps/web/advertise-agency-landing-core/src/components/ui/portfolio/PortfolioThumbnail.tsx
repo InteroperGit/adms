@@ -11,6 +11,19 @@ interface PortfolioThumbnailProps {
   gradient: string;
 }
 
+/**
+ * @component
+ * @description Portfolio case thumbnail with gradient background, optional image, category badge and hover overlay
+ * @param {PortfolioThumbnailProps} props
+ * @param {string} props.href - Link to case detail page
+ * @param {string} [props.image] - Case preview image URL
+ * @param {string} props.title - Case title for alt text
+ * @param {string} props.category - Category label for badge
+ * @param {string} props.gradient - Tailwind gradient classes (fallback if no image)
+ * @returns {JSX.Element} Linked thumbnail with image or pattern overlay
+ * @example
+ * <PortfolioThumbnail href="/portfolio/all/case" image="/images/thumb.jpg" title="Case Title" category="Branding" gradient="from-purple-500 to-pink-500" />
+ */
 export function PortfolioThumbnail({
   href,
   image,
