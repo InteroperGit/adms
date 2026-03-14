@@ -26,18 +26,27 @@ interface BreadCrumbsProps {
  */
 export function BreadCrumbs({ items }: BreadCrumbsProps) {
   return (
-    <div className="border-b border-border bg-background">
+    <div className="border-b border-border dark:border-gray-700 bg-background">
       <Container>
         <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 py-4">
           {items.map((item, i) => {
             const isLast = i === items.length - 1;
             return (
               <span key={i} className="flex items-center gap-2">
-                {i > 0 && <ChevronRight size={12} className="shrink-0 text-muted-foreground/40" />}
+                {i > 0 && (
+                  <span aria-hidden="true" className="shrink-0 mx-1">
+                    {/* Separator uses explicit color tokens for visibility: gray-500 in light mode,
+                        gray-400 in dark mode. Larger size (16px) ensures prominent display. */}
+                    <ChevronRight size={16} className="text-gray-500 dark:text-gray-400" />
+                  </span>
+                )}
                 {isLast || !item.href ? (
                   <span
                     aria-current={isLast ? 'page' : undefined}
-                    className={cn(pillBase, 'border-primary/20 bg-primary/5 text-primary')}
+                    className={cn(
+                      pillBase,
+                      'border-primary/20 dark:border-primary/40 bg-primary/5 text-primary'
+                    )}
                   >
                     {item.label}
                   </span>
@@ -46,9 +55,9 @@ export function BreadCrumbs({ items }: BreadCrumbsProps) {
                     href={item.href}
                     className={cn(
                       pillBase,
-                      'border-border bg-transparent text-muted-foreground',
+                      'border-border dark:border-gray-600 bg-transparent text-muted-foreground',
                       'transition-all duration-200',
-                      'hover:border-primary/20 hover:bg-primary/5 hover:text-primary'
+                      'hover:border-primary/20 dark:hover:border-primary/60 hover:bg-primary/5 hover:text-primary'
                     )}
                   >
                     {item.label}
