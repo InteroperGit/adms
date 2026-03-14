@@ -42,10 +42,13 @@ export function ImageGalleryThumbnails({
       {images.map((image, i) => (
         <button
           key={image.src}
+          type="button"
           ref={(el) => {
             thumbRefs.current[i] = el;
           }}
+          tabIndex={-1}
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
             onSelect(i);
           }}

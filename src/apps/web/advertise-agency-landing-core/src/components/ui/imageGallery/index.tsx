@@ -57,12 +57,14 @@ export function ImageGallery({
 
   return (
     <div
-      tabIndex={0}
+      tabIndex={-1}
       onKeyDown={(e) => {
         if (e.key === 'ArrowLeft') {
+          e.preventDefault();
           prev();
         }
         if (e.key === 'ArrowRight') {
+          e.preventDefault();
           next();
         }
       }}

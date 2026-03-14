@@ -35,7 +35,10 @@ export function ImageGalleryNavButtons({
   return (
     <>
       <button
+        type="button"
+        tabIndex={-1}
         onClick={(e) => {
+          e.preventDefault();
           e.stopPropagation();
           onPrev();
         }}
@@ -45,7 +48,10 @@ export function ImageGalleryNavButtons({
         <ChevronLeft size={20} />
       </button>
       <button
+        type="button"
+        tabIndex={-1}
         onClick={(e) => {
+          e.preventDefault();
           e.stopPropagation();
           onNext();
         }}
