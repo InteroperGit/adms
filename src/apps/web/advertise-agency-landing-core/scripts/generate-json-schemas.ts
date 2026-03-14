@@ -48,7 +48,7 @@ import { PortfolioPageContentSchema } from '../src/types/sections/portfolio/port
 // ── Portfolio schemas ─────────────────────────────────────────────────────────
 import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../src/types/portfolio';
 import { PortfolioCaseContentSchema } from '../src/types/portfolio/portfolioCaseContent';
-import { ImageGalleryContentSchema } from '../src/types/portfolio/imageGallery';
+import { ImageGalleryContentSchema } from '../src/types/shared/imageGallery';
 
 // ── Legal schemas ─────────────────────────────────────────────────────────────
 import { LegalContentSchema } from '../src/types/legal';

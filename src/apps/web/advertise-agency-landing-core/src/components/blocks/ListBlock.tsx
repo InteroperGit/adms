@@ -1,71 +1,27 @@
-import { cn } from '@/libs/utils';
 import type { ListBlock as ListBlockData } from '@/types/blocks';
+import { ChecklistBlock } from './ChecklistBlock';
+import { OrderedListBlock } from './OrderedListBlock';
+import { UnorderedListBlock } from './UnorderedListBlock';
 
 interface ListBlockProps {
   block: ListBlockData;
 }
 
-function CheckIcon() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-      className="mt-0.5 shrink-0"
-    >
-      <circle cx="8" cy="8" r="8" className="fill-primary/15" />
-      <path
-        d="M4.5 8l2.5 2.5 4.5-5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="stroke-primary"
-      />
-    </svg>
-  );
-}
-
 /**
  * @component
- * @description List renderer with three styles: checklist, ordered, unordered
+ * @description Router component that delegates to specific list type components
  * @param {ListBlockProps} props
  * @param {ListBlockData} props.block - List block with style and items
- * @returns {JSX.Element} ul or ol element with appropriate styling
- * @example
- * <ListBlock block={{ style: "checklist", items: ["Item 1", "Item 2"] }} />
+ * @returns {JSX.Element} Appropriate list component based on style
  */
 export function ListBlock({ block }: ListBlockProps) {
-  const itemClass = 'text-muted-foreground leading-relaxed';
-
   if (block.style === 'checklist') {
-    return (
-      <ul className="mx-auto max-w-3xl space-y-3">
-        {block.items.map((item, i) => (
-          <li key={i} className={cn('flex items-start gap-3', itemClass)}>
-            <CheckIcon />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    );
+    return <ChecklistBlock block={block} />;
   }
 
-  const Tag = block.style === 'ordered' ? 'ol' : 'ul';
-  const listClass =
-    block.style === 'ordered'
-      ? 'list-decimal list-outside pl-6 space-y-2'
-      : 'list-disc list-outside pl-6 space-y-2';
+  if (block.style === 'ordered') {
+    return <OrderedListBlock block={block} />;
+  }
 
-  return (
-    <Tag className={cn('mx-auto max-w-3xl', listClass)}>
-      {block.items.map((item, i) => (
-        <li key={i} className={itemClass}>
-          {item}
-        </li>
-      ))}
-    </Tag>
-  );
+  return <UnorderedListBlock block={block} />;
 }
