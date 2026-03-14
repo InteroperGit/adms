@@ -153,7 +153,12 @@ export function OrderForm({ definition }: OrderFormProps) {
 
         <OrderFormConsent consent={definition.consent} checked={consent} onChange={setConsent} />
 
-        <Button type="submit" size="lg" className="w-full rounded-full">
+        <Button
+          type="submit"
+          size="lg"
+          className="w-full cursor-pointer rounded-full"
+          disabled={!consent}
+        >
           {definition.submit}
         </Button>
 
