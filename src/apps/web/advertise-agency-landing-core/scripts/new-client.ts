@@ -252,10 +252,10 @@ async function main(): Promise<void> {
   });
 
   // header.json — inject logo letter
-  const headerRaw = readExample('sections/header.example.json') as Record<string, unknown>;
+  const headerRaw = readExample('sections/header/header.example.json') as Record<string, unknown>;
   const headerLogo = headerRaw['logo'] as Record<string, string> | undefined;
   writeData(
-    'sections/header.json',
+    'sections/header/header.json',
     withSchema(
       { ...headerRaw, logo: { ...(headerLogo ?? {}), letter: logoLetter } },
       'sections',
@@ -281,105 +281,105 @@ async function main(): Promise<void> {
     true
   );
 
-  // Section files — copied from examples
-  copyExample('sections/hero.example.json', 'sections/hero.json', 'sections', 'hero');
+  // Section files — copied from examples (organized by component subfolder)
+  copyExample('sections/hero/hero.example.json', 'sections/hero/hero.json', 'sections', 'hero');
   copyExample(
-    'sections/carousel.example.json',
-    'sections/carousel.json',
+    'sections/carousel/carousel.example.json',
+    'sections/carousel/carousel.json',
     'sections',
     'carousel',
     true
   );
   copyExample(
-    'sections/carouselContent.example.json',
-    'sections/carouselContent.json',
+    'sections/carousel/carouselContent.example.json',
+    'sections/carousel/carouselContent.json',
     'sections',
     'carouselContent'
   );
   copyExample(
-    'sections/aboutContent.example.json',
-    'sections/aboutContent.json',
+    'sections/about/aboutContent.example.json',
+    'sections/about/aboutContent.json',
     'sections',
     'aboutContent'
   );
   copyExample(
-    'sections/aboutValues.example.json',
-    'sections/aboutValues.json',
+    'sections/about/aboutValues.example.json',
+    'sections/about/aboutValues.json',
     'sections',
     'aboutValues',
     true
   );
   copyExample(
-    'sections/servicesContent.example.json',
-    'sections/servicesContent.json',
+    'sections/services/servicesContent.example.json',
+    'sections/services/servicesContent.json',
     'sections',
     'servicesContent'
   );
   copyExample(
-    'sections/services.example.json',
-    'sections/services.json',
+    'sections/services/services.example.json',
+    'sections/services/services.json',
     'sections',
     'services',
     true
   );
   copyExample(
-    'sections/portfolioSection.example.json',
-    'sections/portfolioSection.json',
+    'sections/portfolio/portfolioSection.example.json',
+    'sections/portfolio/portfolioSection.json',
     'sections',
     'portfolioSection'
   );
   copyExample(
-    'sections/portfolioPage.example.json',
-    'sections/portfolioPage.json',
+    'sections/portfolio/portfolioPage.example.json',
+    'sections/portfolio/portfolioPage.json',
     'sections',
     'portfolioPage'
   );
   copyExample(
-    'sections/portfolioCase.example.json',
-    'sections/portfolioCase.json',
+    'sections/portfolio/portfolioCase.example.json',
+    'sections/portfolio/portfolioCase.json',
     'sections',
     'portfolioCase'
   );
   copyExample(
-    'sections/advantagesContent.example.json',
-    'sections/advantagesContent.json',
+    'sections/advantages/advantagesContent.example.json',
+    'sections/advantages/advantagesContent.json',
     'sections',
     'advantagesContent'
   );
   copyExample(
-    'sections/advantages.example.json',
-    'sections/advantages.json',
+    'sections/advantages/advantages.example.json',
+    'sections/advantages/advantages.json',
     'sections',
     'advantages',
     true
   );
   copyExample(
-    'sections/callToAction.example.json',
-    'sections/callToAction.json',
+    'sections/call-to-action/callToAction.example.json',
+    'sections/call-to-action/callToAction.json',
     'sections',
     'callToAction'
   );
   copyExample(
-    'sections/testimonialsContent.example.json',
-    'sections/testimonialsContent.json',
+    'sections/testimonials/testimonialsContent.example.json',
+    'sections/testimonials/testimonialsContent.json',
     'sections',
     'testimonialsContent'
   );
   copyExample(
-    'sections/testimonials.example.json',
-    'sections/testimonials.json',
+    'sections/testimonials/testimonials.example.json',
+    'sections/testimonials/testimonials.json',
     'sections',
     'testimonials',
     true
   );
   copyExample(
-    'sections/imageGallery.example.json',
-    'sections/imageGallery.json',
+    'sections/portfolio/imageGallery.example.json',
+    'sections/portfolio/imageGallery.json',
     'sections',
     'imageGallery'
   );
-  copyExample('sections/contact.example.json', 'sections/contact.json', 'sections', 'contact');
-  copyExample('sections/footer.example.json', 'sections/footer.json', 'sections', 'footer');
+  copyExample('sections/contact/contact.example.json', 'sections/contact/contact.json', 'sections', 'contact');
+  copyExample('sections/footer/footer.example.json', 'sections/footer/footer.json', 'sections', 'footer');
 
   // Create empty portfolio and legal directories with .gitkeep
   mkdirSync(path.join(contentDir, 'portfolio'), { recursive: true });
@@ -390,13 +390,13 @@ async function main(): Promise<void> {
   console.log('');
   console.log('✅  All files generated.\n');
   console.log('── Next steps ────────────────────────────────────────────────────────────\n');
-  console.log('  1. Edit data/content/config/legal.json   → add legal company details');
-  console.log('  2. Edit data/content/sections/*.json     → replace placeholder copy');
-  console.log('  3. Add data/content/portfolio/*.json     → case study files');
-  console.log('  4. Add data/content/legal/*.json         → legal page content');
-  console.log('  5. pnpm validate                         → verify all files');
-  console.log('  6. pnpm gen-schemas                      → update IDE autocomplete');
-  console.log('  7. pnpm dev                              → start dev server');
+  console.log('  1. Edit data/content/config/legal.json        → add legal company details');
+  console.log('  2. Edit data/content/sections/**/*.json        → replace placeholder copy');
+  console.log('  3. Add data/content/portfolio/*.json           → case study files');
+  console.log('  4. Add data/content/legal/*.json               → legal page content');
+  console.log('  5. pnpm validate                               → verify all files');
+  console.log('  6. pnpm gen-schemas                            → update IDE autocomplete');
+  console.log('  7. pnpm dev                                    → start dev server');
   console.log('');
 }
 

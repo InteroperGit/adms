@@ -1,4 +1,4 @@
-import raw from '@data/sections/carouselContent.json';
+import raw from '@data/sections/carousel/carouselContent.json';
 import { z } from 'zod';
 
 export const CarouselSectionContentSchema = z.object({

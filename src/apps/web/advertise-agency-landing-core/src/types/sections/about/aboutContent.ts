@@ -1,4 +1,4 @@
-import raw from '@data/sections/aboutContent.json';
+import raw from '@data/sections/about/aboutContent.json';
 import { z } from 'zod';
 
 export const AboutSectionContentSchema = z.object({

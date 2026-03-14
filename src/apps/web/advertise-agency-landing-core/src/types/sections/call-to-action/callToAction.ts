@@ -1,4 +1,4 @@
-import raw from '@data/sections/callToAction.json';
+import raw from '@data/sections/call-to-action/callToAction.json';
 import { z } from 'zod';
 import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 

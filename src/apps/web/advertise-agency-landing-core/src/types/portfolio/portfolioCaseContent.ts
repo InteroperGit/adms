@@ -1,4 +1,4 @@
-import raw from '@data/sections/portfolioCase.json';
+import raw from '@data/sections/portfolio/portfolioCase.json';
 import { z } from 'zod';
 
 export const PortfolioCaseContentSchema = z.object({

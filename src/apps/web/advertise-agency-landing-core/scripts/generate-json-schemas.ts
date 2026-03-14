@@ -28,22 +28,22 @@ import { SeoConfigSchema } from '../src/types/config/seo';
 import { OrderFormsDataSchema } from '../src/types/config/orderForms';
 
 // ── Section schemas ───────────────────────────────────────────────────────────
-import { HeaderContentSchema } from '../src/types/sections/header';
-import { HeroContentSchema } from '../src/types/sections/hero';
-import { CarouselSlidesSchema } from '../src/types/sections/carousel';
-import { CarouselSectionContentSchema } from '../src/types/sections/carouselContent';
-import { AboutSectionContentSchema } from '../src/types/sections/aboutContent';
-import { AboutValuesSchema } from '../src/types/sections/aboutValues';
-import { ServicesSectionContentSchema } from '../src/types/sections/servicesContent';
-import { ServicesSchema } from '../src/types/sections/services';
-import { AdvantagesSectionContentSchema } from '../src/types/sections/advantagesContent';
-import { AdvantagesSchema } from '../src/types/sections/advantages';
-import { CallToActionContentSchema } from '../src/types/sections/callToAction';
-import { TestimonialsSectionContentSchema } from '../src/types/sections/testimonialsContent';
-import { TestimonialsSchema } from '../src/types/sections/testimonials';
-import { ContactContentSchema } from '../src/types/sections/contact';
-import { FooterContentSchema } from '../src/types/sections/footer';
-import { PortfolioPageContentSchema } from '../src/types/sections/portfolioPage';
+import { HeaderContentSchema } from '../src/types/sections/header/header';
+import { HeroContentSchema } from '../src/types/sections/hero/hero';
+import { CarouselSlidesSchema } from '../src/types/sections/carousel/carousel';
+import { CarouselSectionContentSchema } from '../src/types/sections/carousel/carouselContent';
+import { AboutSectionContentSchema } from '../src/types/sections/about/aboutContent';
+import { AboutValuesSchema } from '../src/types/sections/about/aboutValues';
+import { ServicesSectionContentSchema } from '../src/types/sections/services/servicesContent';
+import { ServicesSchema } from '../src/types/sections/services/services';
+import { AdvantagesSectionContentSchema } from '../src/types/sections/advantages/advantagesContent';
+import { AdvantagesSchema } from '../src/types/sections/advantages/advantages';
+import { CallToActionContentSchema } from '../src/types/sections/call-to-action/callToAction';
+import { TestimonialsSectionContentSchema } from '../src/types/sections/testimonials/testimonialsContent';
+import { TestimonialsSchema } from '../src/types/sections/testimonials/testimonials';
+import { ContactContentSchema } from '../src/types/sections/contact/contact';
+import { FooterContentSchema } from '../src/types/sections/footer/footer';
+import { PortfolioPageContentSchema } from '../src/types/sections/portfolio/portfolioPage';
 
 // ── Portfolio schemas ─────────────────────────────────────────────────────────
 import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../src/types/portfolio';
@@ -57,6 +57,7 @@ type Subfolder = 'config' | 'sections' | 'portfolio' | 'legal';
 
 interface SchemaEntry {
   subfolder: Subfolder;
+  section?: string; // nested subfolder for sections (e.g., 'header', 'carousel', 'about')
   schema: z.ZodTypeAny;
 }
 
@@ -64,7 +65,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const schemaRoot = path.join(root, 'data/_schema/schema');
 
-// Map of output filename → { subfolder, Zod schema }
+// Map of output filename → { subfolder, section?, Zod schema }
 const schemas: Record<string, SchemaEntry> = {
   // Config
   site: { subfolder: 'config', schema: SiteDataSchema },
@@ -75,26 +76,26 @@ const schemas: Record<string, SchemaEntry> = {
   legal: { subfolder: 'config', schema: LegalDataSchema },
   seo: { subfolder: 'config', schema: SeoConfigSchema },
   orderForms: { subfolder: 'config', schema: OrderFormsDataSchema },
-  // Sections
-  header: { subfolder: 'sections', schema: HeaderContentSchema },
-  hero: { subfolder: 'sections', schema: HeroContentSchema },
-  carousel: { subfolder: 'sections', schema: CarouselSlidesSchema },
-  carouselContent: { subfolder: 'sections', schema: CarouselSectionContentSchema },
-  aboutContent: { subfolder: 'sections', schema: AboutSectionContentSchema },
-  aboutValues: { subfolder: 'sections', schema: AboutValuesSchema },
-  servicesContent: { subfolder: 'sections', schema: ServicesSectionContentSchema },
-  services: { subfolder: 'sections', schema: ServicesSchema },
-  advantagesContent: { subfolder: 'sections', schema: AdvantagesSectionContentSchema },
-  advantages: { subfolder: 'sections', schema: AdvantagesSchema },
-  callToAction: { subfolder: 'sections', schema: CallToActionContentSchema },
-  testimonialsContent: { subfolder: 'sections', schema: TestimonialsSectionContentSchema },
-  testimonials: { subfolder: 'sections', schema: TestimonialsSchema },
-  contact: { subfolder: 'sections', schema: ContactContentSchema },
-  footer: { subfolder: 'sections', schema: FooterContentSchema },
-  portfolioPage: { subfolder: 'sections', schema: PortfolioPageContentSchema },
-  portfolioSection: { subfolder: 'sections', schema: PortfolioSectionContentSchema },
-  portfolioCase: { subfolder: 'sections', schema: PortfolioCaseContentSchema },
-  imageGallery: { subfolder: 'sections', schema: ImageGalleryContentSchema },
+  // Sections — organized by component subfolder
+  header: { subfolder: 'sections', section: 'header', schema: HeaderContentSchema },
+  hero: { subfolder: 'sections', section: 'hero', schema: HeroContentSchema },
+  carousel: { subfolder: 'sections', section: 'carousel', schema: CarouselSlidesSchema },
+  carouselContent: { subfolder: 'sections', section: 'carousel', schema: CarouselSectionContentSchema },
+  aboutContent: { subfolder: 'sections', section: 'about', schema: AboutSectionContentSchema },
+  aboutValues: { subfolder: 'sections', section: 'about', schema: AboutValuesSchema },
+  servicesContent: { subfolder: 'sections', section: 'services', schema: ServicesSectionContentSchema },
+  services: { subfolder: 'sections', section: 'services', schema: ServicesSchema },
+  advantagesContent: { subfolder: 'sections', section: 'advantages', schema: AdvantagesSectionContentSchema },
+  advantages: { subfolder: 'sections', section: 'advantages', schema: AdvantagesSchema },
+  callToAction: { subfolder: 'sections', section: 'call-to-action', schema: CallToActionContentSchema },
+  testimonialsContent: { subfolder: 'sections', section: 'testimonials', schema: TestimonialsSectionContentSchema },
+  testimonials: { subfolder: 'sections', section: 'testimonials', schema: TestimonialsSchema },
+  contact: { subfolder: 'sections', section: 'contact', schema: ContactContentSchema },
+  footer: { subfolder: 'sections', section: 'footer', schema: FooterContentSchema },
+  portfolioPage: { subfolder: 'sections', section: 'portfolio', schema: PortfolioPageContentSchema },
+  portfolioSection: { subfolder: 'sections', section: 'portfolio', schema: PortfolioSectionContentSchema },
+  portfolioCase: { subfolder: 'sections', section: 'portfolio', schema: PortfolioCaseContentSchema },
+  imageGallery: { subfolder: 'sections', section: 'portfolio', schema: ImageGalleryContentSchema },
   // Portfolio
   portfolio: { subfolder: 'portfolio', schema: PortfolioCaseSchema },
   // Legal
@@ -106,14 +107,15 @@ let errors = 0;
 
 console.log('\nGenerating JSON Schema files...\n');
 
-for (const [name, { subfolder, schema }] of Object.entries(schemas)) {
+for (const [name, { subfolder, section, schema }] of Object.entries(schemas)) {
   try {
     const jsonSchema = z.toJSONSchema(schema);
-    const outDir = path.join(schemaRoot, subfolder);
+    const outDir = section ? path.join(schemaRoot, subfolder, section) : path.join(schemaRoot, subfolder);
     mkdirSync(outDir, { recursive: true });
     const outPath = path.join(outDir, `${name}.schema.json`);
     writeFileSync(outPath, JSON.stringify(jsonSchema, null, 2) + '\n', 'utf-8');
-    console.log(`  ✓ ${subfolder}/${name}.schema.json`);
+    const logPath = section ? `${subfolder}/${section}/${name}.schema.json` : `${subfolder}/${name}.schema.json`;
+    console.log(`  ✓ ${logPath}`);
     generated++;
   } catch (err) {
     console.error(`  ✗ ${name}: ${(err as Error).message}`);
@@ -138,7 +140,10 @@ if (existsSync(settingsPath)) {
   }
 }
 
-function schemaUrl(subfolder: Subfolder, name: string): string {
+function schemaUrl(subfolder: Subfolder, name: string, section?: string): string {
+  if (section) {
+    return `./data/_schema/schema/${subfolder}/${section}/${name}.schema.json`;
+  }
   return `./data/_schema/schema/${subfolder}/${name}.schema.json`;
 }
 
@@ -156,64 +161,64 @@ const jsonSchemas = [
   { fileMatch: ['data/content/config/legal.json'], url: schemaUrl('config', 'legal') },
   { fileMatch: ['data/content/config/seo.json'], url: schemaUrl('config', 'seo') },
   { fileMatch: ['data/content/config/orderForms.json'], url: schemaUrl('config', 'orderForms') },
-  // Section files
-  { fileMatch: ['data/content/sections/header.json'], url: schemaUrl('sections', 'header') },
-  { fileMatch: ['data/content/sections/hero.json'], url: schemaUrl('sections', 'hero') },
-  { fileMatch: ['data/content/sections/carousel.json'], url: schemaUrl('sections', 'carousel') },
+  // Section files — organized by component subfolder
+  { fileMatch: ['data/content/sections/header/header.json'], url: schemaUrl('sections', 'header', 'header') },
+  { fileMatch: ['data/content/sections/hero/hero.json'], url: schemaUrl('sections', 'hero', 'hero') },
+  { fileMatch: ['data/content/sections/carousel/carousel.json'], url: schemaUrl('sections', 'carousel', 'carousel') },
   {
-    fileMatch: ['data/content/sections/carouselContent.json'],
-    url: schemaUrl('sections', 'carouselContent'),
+    fileMatch: ['data/content/sections/carousel/carouselContent.json'],
+    url: schemaUrl('sections', 'carouselContent', 'carousel'),
   },
   {
-    fileMatch: ['data/content/sections/aboutContent.json'],
-    url: schemaUrl('sections', 'aboutContent'),
+    fileMatch: ['data/content/sections/about/aboutContent.json'],
+    url: schemaUrl('sections', 'aboutContent', 'about'),
   },
   {
-    fileMatch: ['data/content/sections/aboutValues.json'],
-    url: schemaUrl('sections', 'aboutValues'),
+    fileMatch: ['data/content/sections/about/aboutValues.json'],
+    url: schemaUrl('sections', 'aboutValues', 'about'),
   },
   {
-    fileMatch: ['data/content/sections/servicesContent.json'],
-    url: schemaUrl('sections', 'servicesContent'),
+    fileMatch: ['data/content/sections/services/servicesContent.json'],
+    url: schemaUrl('sections', 'servicesContent', 'services'),
   },
-  { fileMatch: ['data/content/sections/services.json'], url: schemaUrl('sections', 'services') },
+  { fileMatch: ['data/content/sections/services/services.json'], url: schemaUrl('sections', 'services', 'services') },
   {
-    fileMatch: ['data/content/sections/advantagesContent.json'],
-    url: schemaUrl('sections', 'advantagesContent'),
-  },
-  {
-    fileMatch: ['data/content/sections/advantages.json'],
-    url: schemaUrl('sections', 'advantages'),
+    fileMatch: ['data/content/sections/advantages/advantagesContent.json'],
+    url: schemaUrl('sections', 'advantagesContent', 'advantages'),
   },
   {
-    fileMatch: ['data/content/sections/callToAction.json'],
-    url: schemaUrl('sections', 'callToAction'),
+    fileMatch: ['data/content/sections/advantages/advantages.json'],
+    url: schemaUrl('sections', 'advantages', 'advantages'),
   },
   {
-    fileMatch: ['data/content/sections/testimonialsContent.json'],
-    url: schemaUrl('sections', 'testimonialsContent'),
+    fileMatch: ['data/content/sections/call-to-action/callToAction.json'],
+    url: schemaUrl('sections', 'callToAction', 'call-to-action'),
   },
   {
-    fileMatch: ['data/content/sections/testimonials.json'],
-    url: schemaUrl('sections', 'testimonials'),
-  },
-  { fileMatch: ['data/content/sections/contact.json'], url: schemaUrl('sections', 'contact') },
-  { fileMatch: ['data/content/sections/footer.json'], url: schemaUrl('sections', 'footer') },
-  {
-    fileMatch: ['data/content/sections/portfolioPage.json'],
-    url: schemaUrl('sections', 'portfolioPage'),
+    fileMatch: ['data/content/sections/testimonials/testimonialsContent.json'],
+    url: schemaUrl('sections', 'testimonialsContent', 'testimonials'),
   },
   {
-    fileMatch: ['data/content/sections/portfolioSection.json'],
-    url: schemaUrl('sections', 'portfolioSection'),
+    fileMatch: ['data/content/sections/testimonials/testimonials.json'],
+    url: schemaUrl('sections', 'testimonials', 'testimonials'),
+  },
+  { fileMatch: ['data/content/sections/contact/contact.json'], url: schemaUrl('sections', 'contact', 'contact') },
+  { fileMatch: ['data/content/sections/footer/footer.json'], url: schemaUrl('sections', 'footer', 'footer') },
+  {
+    fileMatch: ['data/content/sections/portfolio/portfolioPage.json'],
+    url: schemaUrl('sections', 'portfolioPage', 'portfolio'),
   },
   {
-    fileMatch: ['data/content/sections/portfolioCase.json'],
-    url: schemaUrl('sections', 'portfolioCase'),
+    fileMatch: ['data/content/sections/portfolio/portfolioSection.json'],
+    url: schemaUrl('sections', 'portfolioSection', 'portfolio'),
   },
   {
-    fileMatch: ['data/content/sections/imageGallery.json'],
-    url: schemaUrl('sections', 'imageGallery'),
+    fileMatch: ['data/content/sections/portfolio/portfolioCase.json'],
+    url: schemaUrl('sections', 'portfolioCase', 'portfolio'),
+  },
+  {
+    fileMatch: ['data/content/sections/portfolio/imageGallery.json'],
+    url: schemaUrl('sections', 'imageGallery', 'portfolio'),
   },
   // Legal files (all three share the same schema)
   {
@@ -235,24 +240,24 @@ const jsonSchemas = [
     url: schemaUrl('config', 'categories'),
   },
   {
-    fileMatch: ['data/_schema/examples/sections/carousel.example.json'],
-    url: schemaUrl('sections', 'carousel'),
+    fileMatch: ['data/_schema/examples/sections/carousel/carousel.example.json'],
+    url: schemaUrl('sections', 'carousel', 'carousel'),
   },
   {
-    fileMatch: ['data/_schema/examples/sections/aboutValues.example.json'],
-    url: schemaUrl('sections', 'aboutValues'),
+    fileMatch: ['data/_schema/examples/sections/about/aboutValues.example.json'],
+    url: schemaUrl('sections', 'aboutValues', 'about'),
   },
   {
-    fileMatch: ['data/_schema/examples/sections/services.example.json'],
-    url: schemaUrl('sections', 'services'),
+    fileMatch: ['data/_schema/examples/sections/services/services.example.json'],
+    url: schemaUrl('sections', 'services', 'services'),
   },
   {
-    fileMatch: ['data/_schema/examples/sections/advantages.example.json'],
-    url: schemaUrl('sections', 'advantages'),
+    fileMatch: ['data/_schema/examples/sections/advantages/advantages.example.json'],
+    url: schemaUrl('sections', 'advantages', 'advantages'),
   },
   {
-    fileMatch: ['data/_schema/examples/sections/testimonials.example.json'],
-    url: schemaUrl('sections', 'testimonials'),
+    fileMatch: ['data/_schema/examples/sections/testimonials/testimonials.example.json'],
+    url: schemaUrl('sections', 'testimonials', 'testimonials'),
   },
 ];
 

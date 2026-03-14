@@ -1,4 +1,4 @@
-import raw from '@data/sections/portfolioSection.json';
+import raw from '@data/sections/portfolio/portfolioSection.json';
 import { z } from 'zod';
 import { ContentBlockSchema } from './blocks';
 import { LabeledLinkSchema } from '@/types/shared/labeledLink';

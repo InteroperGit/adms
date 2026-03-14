@@ -1,4 +1,4 @@
-import data from '@data/sections/services.json';
+import data from '@data/sections/services/services.json';
 import { z } from 'zod';
 
 export const ServiceSchema = z.object({

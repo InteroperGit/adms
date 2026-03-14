@@ -1,4 +1,4 @@
-import raw from '@data/sections/footer.json';
+import raw from '@data/sections/footer/footer.json';
 import { z } from 'zod';
 import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 

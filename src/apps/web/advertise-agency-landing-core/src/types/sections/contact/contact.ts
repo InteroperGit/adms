@@ -1,4 +1,4 @@
-import raw from '@data/sections/contact.json';
+import raw from '@data/sections/contact/contact.json';
 import { z } from 'zod';
 import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 

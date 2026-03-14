@@ -1,4 +1,4 @@
-import raw from '@data/sections/imageGallery.json';
+import raw from '@data/sections/portfolio/imageGallery.json';
 import { z } from 'zod';
 
 export const ImageGalleryContentSchema = z.object({

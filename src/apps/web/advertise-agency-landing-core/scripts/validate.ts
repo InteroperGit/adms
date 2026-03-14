@@ -21,22 +21,22 @@ import { SeoConfigSchema } from '../src/types/config/seo';
 import { OrderFormsDataSchema } from '../src/types/config/orderForms';
 
 // ── Section schemas ────────────────────────────────────────────────────────────
-import { HeaderContentSchema } from '../src/types/sections/header';
-import { HeroContentSchema } from '../src/types/sections/hero';
-import { CarouselSlidesSchema } from '../src/types/sections/carousel';
-import { CarouselSectionContentSchema } from '../src/types/sections/carouselContent';
-import { AboutSectionContentSchema } from '../src/types/sections/aboutContent';
-import { AboutValuesSchema } from '../src/types/sections/aboutValues';
-import { ServicesSectionContentSchema } from '../src/types/sections/servicesContent';
-import { ServicesSchema } from '../src/types/sections/services';
-import { AdvantagesSectionContentSchema } from '../src/types/sections/advantagesContent';
-import { AdvantagesSchema } from '../src/types/sections/advantages';
-import { CallToActionContentSchema } from '../src/types/sections/callToAction';
-import { TestimonialsSectionContentSchema } from '../src/types/sections/testimonialsContent';
-import { TestimonialsSchema } from '../src/types/sections/testimonials';
-import { ContactContentSchema } from '../src/types/sections/contact';
-import { FooterContentSchema } from '../src/types/sections/footer';
-import { PortfolioPageContentSchema } from '../src/types/sections/portfolioPage';
+import { HeaderContentSchema } from '../src/types/sections/header/header';
+import { HeroContentSchema } from '../src/types/sections/hero/hero';
+import { CarouselSlidesSchema } from '../src/types/sections/carousel/carousel';
+import { CarouselSectionContentSchema } from '../src/types/sections/carousel/carouselContent';
+import { AboutSectionContentSchema } from '../src/types/sections/about/aboutContent';
+import { AboutValuesSchema } from '../src/types/sections/about/aboutValues';
+import { ServicesSectionContentSchema } from '../src/types/sections/services/servicesContent';
+import { ServicesSchema } from '../src/types/sections/services/services';
+import { AdvantagesSectionContentSchema } from '../src/types/sections/advantages/advantagesContent';
+import { AdvantagesSchema } from '../src/types/sections/advantages/advantages';
+import { CallToActionContentSchema } from '../src/types/sections/call-to-action/callToAction';
+import { TestimonialsSectionContentSchema } from '../src/types/sections/testimonials/testimonialsContent';
+import { TestimonialsSchema } from '../src/types/sections/testimonials/testimonials';
+import { ContactContentSchema } from '../src/types/sections/contact/contact';
+import { FooterContentSchema } from '../src/types/sections/footer/footer';
+import { PortfolioPageContentSchema } from '../src/types/sections/portfolio/portfolioPage';
 
 // ── Portfolio schemas ──────────────────────────────────────────────────────────
 import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../src/types/portfolio';
@@ -112,44 +112,44 @@ if (fileExists(cfg('orderForms.json'))) {
 
 console.log('\nSections:');
 
-check('header.json', () => HeaderContentSchema.parse(readJson(sec('header.json'))));
-check('hero.json', () => HeroContentSchema.parse(readJson(sec('hero.json'))));
-check('carousel.json', () => CarouselSlidesSchema.parse(readJson(sec('carousel.json'))));
-check('carouselContent.json', () =>
-  CarouselSectionContentSchema.parse(readJson(sec('carouselContent.json')))
+check('header/header.json', () => HeaderContentSchema.parse(readJson(sec('header/header.json'))));
+check('hero/hero.json', () => HeroContentSchema.parse(readJson(sec('hero/hero.json'))));
+check('carousel/carousel.json', () => CarouselSlidesSchema.parse(readJson(sec('carousel/carousel.json'))));
+check('carousel/carouselContent.json', () =>
+  CarouselSectionContentSchema.parse(readJson(sec('carousel/carouselContent.json')))
 );
-check('aboutContent.json', () =>
-  AboutSectionContentSchema.parse(readJson(sec('aboutContent.json')))
+check('about/aboutContent.json', () =>
+  AboutSectionContentSchema.parse(readJson(sec('about/aboutContent.json')))
 );
-check('aboutValues.json', () => AboutValuesSchema.parse(readJson(sec('aboutValues.json'))));
-check('servicesContent.json', () =>
-  ServicesSectionContentSchema.parse(readJson(sec('servicesContent.json')))
+check('about/aboutValues.json', () => AboutValuesSchema.parse(readJson(sec('about/aboutValues.json'))));
+check('services/servicesContent.json', () =>
+  ServicesSectionContentSchema.parse(readJson(sec('services/servicesContent.json')))
 );
-check('services.json', () => ServicesSchema.parse(readJson(sec('services.json'))));
-check('advantagesContent.json', () =>
-  AdvantagesSectionContentSchema.parse(readJson(sec('advantagesContent.json')))
+check('services/services.json', () => ServicesSchema.parse(readJson(sec('services/services.json'))));
+check('advantages/advantagesContent.json', () =>
+  AdvantagesSectionContentSchema.parse(readJson(sec('advantages/advantagesContent.json')))
 );
-check('advantages.json', () => AdvantagesSchema.parse(readJson(sec('advantages.json'))));
-check('callToAction.json', () =>
-  CallToActionContentSchema.parse(readJson(sec('callToAction.json')))
+check('advantages/advantages.json', () => AdvantagesSchema.parse(readJson(sec('advantages/advantages.json'))));
+check('call-to-action/callToAction.json', () =>
+  CallToActionContentSchema.parse(readJson(sec('call-to-action/callToAction.json')))
 );
-check('testimonialsContent.json', () =>
-  TestimonialsSectionContentSchema.parse(readJson(sec('testimonialsContent.json')))
+check('testimonials/testimonialsContent.json', () =>
+  TestimonialsSectionContentSchema.parse(readJson(sec('testimonials/testimonialsContent.json')))
 );
-check('testimonials.json', () => TestimonialsSchema.parse(readJson(sec('testimonials.json'))));
-check('contact.json', () => ContactContentSchema.parse(readJson(sec('contact.json'))));
-check('footer.json', () => FooterContentSchema.parse(readJson(sec('footer.json'))));
-check('portfolioPage.json', () =>
-  PortfolioPageContentSchema.parse(readJson(sec('portfolioPage.json')))
+check('testimonials/testimonials.json', () => TestimonialsSchema.parse(readJson(sec('testimonials/testimonials.json'))));
+check('contact/contact.json', () => ContactContentSchema.parse(readJson(sec('contact/contact.json'))));
+check('footer/footer.json', () => FooterContentSchema.parse(readJson(sec('footer/footer.json'))));
+check('portfolio/portfolioPage.json', () =>
+  PortfolioPageContentSchema.parse(readJson(sec('portfolio/portfolioPage.json')))
 );
-check('portfolioSection.json', () =>
-  PortfolioSectionContentSchema.parse(readJson(sec('portfolioSection.json')))
+check('portfolio/portfolioSection.json', () =>
+  PortfolioSectionContentSchema.parse(readJson(sec('portfolio/portfolioSection.json')))
 );
-check('portfolioCase.json', () =>
-  PortfolioCaseContentSchema.parse(readJson(sec('portfolioCase.json')))
+check('portfolio/portfolioCase.json', () =>
+  PortfolioCaseContentSchema.parse(readJson(sec('portfolio/portfolioCase.json')))
 );
-check('imageGallery.json', () =>
-  ImageGalleryContentSchema.parse(readJson(sec('imageGallery.json')))
+check('portfolio/imageGallery.json', () =>
+  ImageGalleryContentSchema.parse(readJson(sec('portfolio/imageGallery.json')))
 );
 
 // ── Portfolio cases ────────────────────────────────────────────────────────────

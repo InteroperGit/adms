@@ -1,4 +1,4 @@
-import data from '@data/sections/carousel.json';
+import data from '@data/sections/carousel/carousel.json';
 import { z } from 'zod';
 
 export const CarouselSlideSchema = z.object({

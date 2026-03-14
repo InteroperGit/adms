@@ -1,4 +1,4 @@
-import raw from '@data/sections/hero.json';
+import raw from '@data/sections/hero/hero.json';
 import { z } from 'zod';
 import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 

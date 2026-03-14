@@ -1,4 +1,4 @@
-import data from '@data/sections/aboutValues.json';
+import data from '@data/sections/about/aboutValues.json';
 import { z } from 'zod';
 
 export const AboutValueSchema = z.object({

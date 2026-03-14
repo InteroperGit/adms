@@ -1,4 +1,4 @@
-import data from '@data/sections/advantages.json';
+import data from '@data/sections/advantages/advantages.json';
 import { z } from 'zod';
 
 export const AdvantageSchema = z.object({

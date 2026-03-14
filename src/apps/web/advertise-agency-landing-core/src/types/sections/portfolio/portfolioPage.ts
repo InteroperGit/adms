@@ -1,4 +1,4 @@
-import raw from '@data/sections/portfolioPage.json';
+import raw from '@data/sections/portfolio/portfolioPage.json';
 import { z } from 'zod';
 
 export const PortfolioPageContentSchema = z.object({
