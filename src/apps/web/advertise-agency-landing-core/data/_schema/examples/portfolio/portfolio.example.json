@@ -70,7 +70,15 @@
         { "metric": "00", "label": "единиц", "description": "Дополнительный результат" },
         { "metric": "0 мес.", "label": "реализации", "description": "Срок от брифа до запуска" }
       ],
-      "color": { "type": "gradient" }
+      "color": {
+        "background": {
+          "type": "gradient",
+          "value": "from-amber-400 to-orange-500"
+        },
+        "metric": "text-white",
+        "label": "text-white/70",
+        "description": "text-white/80"
+      }
     },
     {
       "__component": "blockquote",

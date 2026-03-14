@@ -18,12 +18,19 @@ interface MetricsBlockProps {
  */
 export function MetricsBlock({ block, caseGradient }: MetricsBlockProps) {
   const color = block.color;
-  const isGradient = color?.type === 'gradient';
-  const isSolid = color?.type === 'solid';
-  const isPrimary = color?.type === 'primary';
-  const isAccent = color?.type === 'accent';
+  const bgColor = color?.background;
+  const isGradient = bgColor?.type === 'gradient';
+  const isSolid = bgColor?.type === 'solid';
+  const isPrimary = bgColor?.type === 'primary';
+  const isAccent = bgColor?.type === 'accent';
   const colored = isGradient || isSolid || isPrimary || isAccent;
-  const gradientStops = color?.value ?? caseGradient;
+  const gradientStops = bgColor?.value ?? caseGradient;
+
+  // Resolve text colors with custom overrides
+  const metricTextColor = color?.metric || (colored ? 'text-white' : 'text-primary');
+  const labelTextColor = color?.label || (colored ? 'text-white/70' : 'text-muted-foreground');
+  const descriptionTextColor =
+    color?.description || (colored ? 'text-white/80' : 'text-muted-foreground');
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -34,27 +41,18 @@ export function MetricsBlock({ block, caseGradient }: MetricsBlockProps) {
             key={metric}
             className={cn(
               'rounded-2xl p-6',
-              isGradient && cn('bg-gradient-to-br text-white', gradientStops),
-              isSolid && 'bg-primary text-white',
-              isPrimary && 'bg-primary text-white',
-              isAccent && 'bg-accent text-white',
+              isGradient && cn('bg-gradient-to-br', gradientStops),
+              isSolid && 'bg-primary',
+              isPrimary && 'bg-primary',
+              isAccent && 'bg-accent',
               !colored && 'border border-border bg-card shadow-sm'
             )}
           >
-            <p className={cn('text-4xl font-bold leading-none', !colored && 'text-primary')}>
-              {metric}
-            </p>
-            <p
-              className={cn(
-                'mt-1 text-sm font-medium uppercase tracking-widest',
-                colored ? 'text-white/70' : 'text-muted-foreground'
-              )}
-            >
+            <p className={cn('text-4xl font-bold leading-none', metricTextColor)}>{metric}</p>
+            <p className={cn('mt-1 text-sm font-medium uppercase tracking-widest', labelTextColor)}>
               {label}
             </p>
-            <p className={cn('mt-3 text-sm', colored ? 'text-white/80' : 'text-muted-foreground')}>
-              {description}
-            </p>
+            <p className={cn('mt-3 text-sm', descriptionTextColor)}>{description}</p>
           </div>
         ))}
       </div>

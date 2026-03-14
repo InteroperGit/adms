@@ -36,6 +36,38 @@ const BlockColorSchema = z.object({
 
 export type BlockColor = z.infer<typeof BlockColorSchema>;
 
+// ── MetricsBackgroundColor ──────────────────────────────────────────────────
+
+/**
+ * @description Background color styling for metrics block
+ */
+const MetricsBackgroundColorSchema = z.object({
+  /** Color type: solid hex, Tailwind gradient, or semantic (primary/accent) */
+  type: z.enum(['solid', 'gradient', 'primary', 'accent']),
+  /** Tailwind gradient stops for type 'gradient'; falls back to hero.gradient when omitted. */
+  value: z.string().optional(),
+});
+
+export type MetricsBackgroundColor = z.infer<typeof MetricsBackgroundColorSchema>;
+
+// ── MetricsColor ────────────────────────────────────────────────────────────
+
+/**
+ * @description Granular color styling for metrics block (background, metric, label, description)
+ */
+const MetricsColorSchema = z.object({
+  /** Optional background color styling */
+  background: MetricsBackgroundColorSchema.optional(),
+  /** Optional color for metric value (big number); defaults to white if colored, primary if not */
+  metric: z.string().optional(),
+  /** Optional color for label (uppercase text); defaults to white/70 if colored, muted-foreground if not */
+  label: z.string().optional(),
+  /** Optional color for description text; defaults to white/80 if colored, muted-foreground if not */
+  description: z.string().optional(),
+});
+
+export type MetricsColor = z.infer<typeof MetricsColorSchema>;
+
 // ── Individual block schemas ───────────────────────────────────────────────────
 
 /**
@@ -136,15 +168,13 @@ const MetricsBlockSchema = z.object({
   title: z.string().optional(),
   /** Array of metrics with values and descriptions */
   items: z.array(z.object({ metric: z.string(), label: z.string(), description: z.string() })),
-  /** Optional background color styling */
-  color: BlockColorSchema.optional(),
+  /** Optional granular color styling (background, metric, label, description) */
+  color: MetricsColorSchema.optional(),
 });
 
 export type MetricsBlock = z.infer<typeof MetricsBlockSchema>;
 
-/**
- * @description Grid of content cards
- */
+// ── Grid of content cards ────────────────────────────────────────────────────
 const CardsBlockSchema = z.object({
   __component: z.literal('cards'),
   /** Optional block title */
