@@ -2,8 +2,8 @@
   "$schema": "../../schema/sections/header.schema.json",
   "lang": "ru",
   "logo": {
-    "letter": "A",
-    "text": "Агентство"
+    "href": "/",
+    "src": "/logo.svg"
   },
   "nav": [
     { "label": "О нас", "href": "#about" },

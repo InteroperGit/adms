@@ -1,23 +1,13 @@
 // src/components/sections/footer/FooterBrand.tsx
 import { SocialLinks } from '@/components/ui/SocialLinks';
+import { Logo } from '@/components/ui/Logo';
 import { footerContent } from '@/types/sections/footer';
-import { headerContent } from '@/types/sections/header';
 import { siteData } from '@/types/config/siteData';
 
 export function FooterBrand() {
   return (
     <div className="sm:col-span-2 lg:col-span-1">
-      <a href="#" className="mb-4 inline-flex items-center gap-2">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-          {headerContent.logo.letter}
-        </span>
-        <span
-          style={{ fontFamily: 'var(--font-heading)' }}
-          className="text-lg font-bold tracking-tight text-white"
-        >
-          {siteData.name}
-        </span>
-      </a>
+      <Logo className="mb-4" />
       <p className="mb-6 text-sm leading-relaxed text-white/50">
         {footerContent.description.replace('{description}', siteData.description)}
       </p>

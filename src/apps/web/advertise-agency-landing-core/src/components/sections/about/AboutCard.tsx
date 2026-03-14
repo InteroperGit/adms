@@ -1,6 +1,5 @@
 import { type AboutSectionContent } from '@/types/sections/aboutContent';
-import { headerContent } from '@/types/sections/header';
-import { siteData } from '@/types/config/siteData';
+import { Logo } from '@/components/ui/Logo';
 
 interface AboutCardProps {
   card: AboutSectionContent['card'];
@@ -15,12 +14,9 @@ export function AboutCard({ card }: AboutCardProps) {
       {/* Main card */}
       <div className="relative w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
         {/* Card header */}
-        <div className="bg-primary px-6 py-8">
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-2xl font-bold text-white">
-            {headerContent.logo.letter}
-          </div>
-          <p className="text-lg font-semibold text-white">{siteData.name}</p>
-          <p className="mt-1 text-sm text-white/70">{card.tagline}</p>
+        <div className="border-b border-primary bg-card px-6 py-8 dark:bg-primary/15">
+          <Logo className="mb-3" />
+          <p className="mt-1 text-sm text-muted-foreground">{card.tagline}</p>
         </div>
 
         {/* Card body — mini stats */}

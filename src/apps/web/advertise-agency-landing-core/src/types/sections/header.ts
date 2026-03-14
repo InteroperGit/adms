@@ -6,7 +6,7 @@ export type { LabeledLink } from '@/types/shared/labeledLink';
 
 export const HeaderContentSchema = z.object({
   lang: z.string(),
-  logo: z.object({ letter: z.string(), text: z.string() }),
+  logo: z.object({ href: z.string(), src: z.string() }),
   nav: z.array(LabeledLinkSchema),
   navCta: z.string(),
   openMenuLabel: z.string(),
