@@ -2,7 +2,7 @@
 import { Quote } from 'lucide-react';
 import { StarRating } from '@/components/ui/testimonial/StarRating';
 import { cn } from '@/lib/utils';
-import type { Testimonial } from '@/types/sections/testimonials';
+import type { Testimonial } from '@/types/sections/testimonials/testimonials';
 
 interface TestimonialCardProps {
   testimonial: Testimonial;

@@ -5,7 +5,7 @@ import { Container } from '@/components/layout/Container';
 import { DarkModeToggle } from './DarkModeToggle';
 import { HeaderNav } from './HeaderNav';
 import { siteData } from '@/types/config/siteData';
-import { headerContent } from '@/types/sections/header';
+import { headerContent } from '@/types/sections/header/header';
 
 interface HeaderMobileNavProps {
   isHome: boolean;

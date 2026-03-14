@@ -7,7 +7,7 @@ import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { BlockRenderer } from '@/components/blocks/BlockRenderer';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
-import { portfolioPageContent } from '@/types/sections/portfolioPage';
+import { portfolioPageContent } from '@/types/sections/portfolio/portfolioPage';
 import { categories } from '@/types/config/categories';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { siteData } from '@/types/config/siteData';

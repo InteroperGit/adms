@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import { ContactItem } from '@/components/sections/contact/ContactItem';
 import { ContactMap } from '@/components/sections/contact/ContactMap';
 import { SocialLinks } from '@/components/ui/SocialLinks';
-import { contactContent } from '@/types/sections/contact';
+import { contactContent } from '@/types/sections/contact/contact';
 import { siteData } from '@/types/config/siteData';
 
 export function ContactInfo({ isDark }: { isDark: boolean }) {

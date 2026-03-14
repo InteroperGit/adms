@@ -1,5 +1,5 @@
 import { CheckCircle2 } from 'lucide-react';
-import { aboutValues } from '@/types/sections/aboutValues';
+import { aboutValues } from '@/types/sections/about/aboutValues';
 
 export function AboutValues() {
   return (

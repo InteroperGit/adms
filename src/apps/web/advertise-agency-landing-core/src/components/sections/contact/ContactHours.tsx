@@ -1,5 +1,5 @@
 // src/components/sections/contact/ContactHours.tsx
-import { contactContent } from '@/types/sections/contact';
+import { contactContent } from '@/types/sections/contact/contact';
 import { siteData } from '@/types/config/siteData';
 
 export function ContactHours() {

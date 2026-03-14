@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { carouselSlides } from '@/types/sections/carousel';
-import { carouselContent } from '@/types/sections/carouselContent';
+import { carouselSlides } from '@/types/sections/carousel/carousel';
+import { carouselContent } from '@/types/sections/carousel/carouselContent';
 import { useSwipe } from '@/hooks/useSwipe';
 import { CarouselSlide } from './CarouselSlide';
 import { CarouselControls } from './CarouselControls';

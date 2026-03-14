@@ -5,7 +5,7 @@ import { ContactSuccess } from './ContactSuccess';
 import { ContactFormFields } from './ContactFormFields';
 import type { FormState } from './ContactFormFields';
 import { ContactConsent } from './ContactConsent';
-import { contactContent } from '@/types/sections/contact';
+import { contactContent } from '@/types/sections/contact/contact';
 
 const EMPTY: FormState = { name: '', contact: '', message: '' };
 

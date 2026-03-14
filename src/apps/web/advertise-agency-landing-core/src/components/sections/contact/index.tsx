@@ -5,7 +5,7 @@ import { FadeInSection } from '@/components/ui/section/FadeInSection';
 import { ContactForm } from './ContactForm';
 import { ContactInfo } from './ContactInfo';
 import { ContactHours } from './ContactHours';
-import { contactContent } from '@/types/sections/contact';
+import { contactContent } from '@/types/sections/contact/contact';
 import { useTheme } from '@/hooks/useTheme';
 
 export function Contact() {

@@ -1,4 +1,4 @@
-import { type AboutSectionContent } from '@/types/sections/aboutContent';
+import { type AboutSectionContent } from '@/types/sections/about/aboutContent';
 import { Logo } from '@/components/ui/Logo';
 
 interface AboutCardProps {

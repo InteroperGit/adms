@@ -1,5 +1,5 @@
 import { Container } from '@/components/layout/Container';
-import { heroContent } from '@/types/sections/hero';
+import { heroContent } from '@/types/sections/hero/hero';
 import { cn } from '@/lib/utils';
 import { HeroCTA } from './HeroCTA';
 import { HeroStats } from './HeroStats';

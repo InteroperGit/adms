@@ -1,7 +1,7 @@
 // src/components/sections/contact/ContactSuccess.tsx
 import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { contactContent } from '@/types/sections/contact';
+import { contactContent } from '@/types/sections/contact/contact';
 
 interface ContactSuccessProps {
   onReset: () => void;

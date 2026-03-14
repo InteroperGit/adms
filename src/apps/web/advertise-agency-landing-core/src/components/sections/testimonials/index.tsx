@@ -1,7 +1,7 @@
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { FadeInSection } from '@/components/ui/section/FadeInSection';
-import { testimonialsSectionContent } from '@/types/sections/testimonialsContent';
+import { testimonialsSectionContent } from '@/types/sections/testimonials/testimonialsContent';
 import { siteData } from '@/types/config/siteData';
 import { YandexReviews } from './YandexReviews';
 import { TestimonialsEmpty } from './TestimonialsEmpty';

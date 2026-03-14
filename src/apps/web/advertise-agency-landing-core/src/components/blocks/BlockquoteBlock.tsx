@@ -1,5 +1,5 @@
 import { TestimonialCard } from '@/components/ui/testimonial/TestimonialCard';
-import { testimonials } from '@/types/sections/testimonials';
+import { testimonials } from '@/types/sections/testimonials/testimonials';
 import type { BlockquoteBlock as BlockquoteBlockData } from '@/types/portfolio/blocks';
 
 interface BlockquoteBlockProps {

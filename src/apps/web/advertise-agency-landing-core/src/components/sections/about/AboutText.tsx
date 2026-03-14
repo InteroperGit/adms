@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { aboutContent } from '@/types/sections/aboutContent';
+import { aboutContent } from '@/types/sections/about/aboutContent';
 import { siteData } from '@/types/config/siteData';
 
 export function AboutText() {

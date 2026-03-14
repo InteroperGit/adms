@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { headerContent } from '@/types/sections/header';
+import { headerContent } from '@/types/sections/header/header';
 
 interface LogoProps {
   className?: string;

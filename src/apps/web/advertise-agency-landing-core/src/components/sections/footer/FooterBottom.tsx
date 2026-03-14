@@ -1,6 +1,6 @@
 // src/components/sections/footer/FooterBottom.tsx
 import { Link } from 'react-router-dom';
-import { footerContent } from '@/types/sections/footer';
+import { footerContent } from '@/types/sections/footer/footer';
 import { siteData } from '@/types/config/siteData';
 
 export function FooterBottom() {

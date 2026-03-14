@@ -4,7 +4,7 @@ import { AboutText } from '@/components/sections/about/AboutText';
 import { AboutValues } from '@/components/sections/about/AboutValues';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { FadeInSection } from '@/components/ui/section/FadeInSection';
-import { aboutContent } from '@/types/sections/aboutContent';
+import { aboutContent } from '@/types/sections/about/aboutContent';
 
 export function About() {
   const about = aboutContent;

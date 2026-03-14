@@ -1,8 +1,8 @@
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { FadeInSection } from '@/components/ui/section/FadeInSection';
-import { servicesSectionContent } from '@/types/sections/servicesContent';
-import { services } from '@/types/sections/services';
+import { servicesSectionContent } from '@/types/sections/services/servicesContent';
+import { services } from '@/types/sections/services/services';
 import { ServiceCard } from './ServiceCard';
 
 export function Services() {

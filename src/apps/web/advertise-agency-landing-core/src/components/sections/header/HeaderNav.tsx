@@ -1,4 +1,4 @@
-import { headerContent } from '@/types/sections/header';
+import { headerContent } from '@/types/sections/header/header';
 
 interface HeaderNavProps {
   isHome: boolean;

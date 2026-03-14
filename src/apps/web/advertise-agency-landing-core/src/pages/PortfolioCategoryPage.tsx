@@ -4,7 +4,7 @@ import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
-import { portfolioPageContent } from '@/types/sections/portfolioPage';
+import { portfolioPageContent } from '@/types/sections/portfolio/portfolioPage';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { categories } from '@/types/config/categories';
 import { allPortfolioCases } from '@/types/portfolio/portfolioCases';

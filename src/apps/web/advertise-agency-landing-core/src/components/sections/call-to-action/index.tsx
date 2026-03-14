@@ -1,5 +1,5 @@
 import { Container } from '@/components/layout/Container';
-import { callToActionContent } from '@/types/sections/callToAction';
+import { callToActionContent } from '@/types/sections/call-to-action/callToAction';
 import { CtaButtons } from './CtaButtons';
 
 export function CallToAction() {

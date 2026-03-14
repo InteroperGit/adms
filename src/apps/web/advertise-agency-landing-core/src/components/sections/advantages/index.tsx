@@ -1,8 +1,8 @@
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { FadeInSection } from '@/components/ui/section/FadeInSection';
-import { advantages } from '@/types/sections/advantages';
-import { advantagesContent } from '@/types/sections/advantagesContent';
+import { advantages } from '@/types/sections/advantages/advantages';
+import { advantagesContent } from '@/types/sections/advantages/advantagesContent';
 import { AdvantageCard } from './AdvantageCard';
 
 export function Advantages() {
