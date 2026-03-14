@@ -21,6 +21,7 @@ export const portfolioSectionContent = PortfolioSectionContentSchema.parse(raw);
 
 export const PortfolioCaseSchema = z.object({
   slug: z.string(),
+  publishDate: z.string(),
   title: z.string(),
   category: z.string(),
   description: z.string(),

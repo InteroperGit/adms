@@ -31,7 +31,7 @@ export function CarouselSlide({ slide, isActive, index }: CarouselSlideProps) {
         </>
       ) : (
         <>
-          <div className={cn('h-full w-full bg-gradient-to-br', slide.gradient)} />
+          <div className={cn('h-full w-full bg-linear-to-br', slide.gradient)} />
           <div className="absolute inset-0 dark:bg-black/35" />
         </>
       )}

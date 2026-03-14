@@ -2,6 +2,7 @@
 /* Color vars, radius, and font vars injected into :root by themePlugin */
 
 @import 'tailwindcss';
+@source "../data/content";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

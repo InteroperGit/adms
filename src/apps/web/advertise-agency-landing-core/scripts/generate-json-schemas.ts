@@ -231,7 +231,7 @@ const jsonSchemas = [
   },
   // Portfolio case files
   {
-    fileMatch: ['data/content/portfolio/*.json'],
+    fileMatch: ['data/content/portfolio/**/*.json'],
     url: schemaUrl('portfolio', 'portfolio'),
   },
   // Array-root example files — can't carry inline $schema, mapped here instead

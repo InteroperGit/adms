@@ -6,7 +6,7 @@
  * Any schema.parse() failure throws a ZodError with a clear field-level message.
  */
 
-import { readdirSync, readFileSync } from 'fs';
+import { existsSync, readdirSync, readFileSync } from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -70,6 +70,22 @@ function fileExists(filePath: string): boolean {
   } catch {
     return false;
   }
+}
+
+function walkJsonFiles(dir: string): string[] {
+  if (!existsSync(dir)) {
+    return [];
+  }
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      return walkJsonFiles(full);
+    }
+    if (entry.isFile() && entry.name.endsWith('.json')) {
+      return [full];
+    }
+    return [];
+  });
 }
 
 function cfg(name: string) {
@@ -158,17 +174,14 @@ const portfolioDir = path.join(root, 'data/content/portfolio');
 
 console.log('\nPortfolio cases:');
 
-try {
-  const files = readdirSync(portfolioDir).filter((f) => f.endsWith('.json'));
-  if (files.length === 0) {
-    console.log('  (no portfolio cases found)');
-  } else {
-    for (const file of files) {
-      check(file, () => PortfolioCaseSchema.parse(readJson(path.join(portfolioDir, file))));
-    }
-  }
-} catch {
+const files = walkJsonFiles(portfolioDir);
+if (files.length === 0) {
   console.log('  (no portfolio cases found)');
+} else {
+  for (const file of files) {
+    const label = path.relative(portfolioDir, file);
+    check(label, () => PortfolioCaseSchema.parse(readJson(file)));
+  }
 }
 
 // ── Result ─────────────────────────────────────────────────────────────────────

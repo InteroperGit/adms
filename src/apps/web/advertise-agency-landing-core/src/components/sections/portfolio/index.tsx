@@ -10,7 +10,7 @@ import { portfolioSectionContent } from '@/types/portfolio';
 import type { PortfolioCase } from '@/types/portfolio';
 import { categorySlug } from '@/lib/categorySlug';
 
-const modules = import.meta.glob<PortfolioCase>('@data/portfolio/*.json', {
+const modules = import.meta.glob<PortfolioCase>('@data/portfolio/**/*.json', {
   eager: true,
   import: 'default',
 });

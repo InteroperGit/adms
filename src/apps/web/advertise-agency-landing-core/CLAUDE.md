@@ -76,3 +76,4 @@ pnpm dlx shadcn@latest add <component>  # Add shadcn/ui (output → src/componen
 
 - **[`ai/docs/architecture.md`](./ai/docs/architecture.md)** — tech stack, routes, SSG setup, workflow, file naming, dark mode, gotchas
 - **[`ai/docs/data-map.md`](./ai/docs/data-map.md)** — full JSON → type module → component mapping
+- **[`ai/docs/portfolioStructure.md`](./ai/docs/portfolioStructure.md)** — nested portfolio folder structure, case schema, adding new cases

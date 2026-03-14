@@ -190,6 +190,22 @@ function readJson<T>(filePath: string): T | null {
   return JSON.parse(readFileSync(filePath, 'utf-8')) as T;
 }
 
+function walkJsonFiles(dir: string): string[] {
+  if (!existsSync(dir)) {
+    return [];
+  }
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      return walkJsonFiles(full);
+    }
+    if (entry.isFile() && entry.name.endsWith('.json')) {
+      return [full];
+    }
+    return [];
+  });
+}
+
 // Portfolio route params that vite-react-ssg generates from the RouteObject tree —
 // these are replaced by concrete static paths built from actual data files.
 const DYNAMIC_ROUTE_PATTERNS = new Set([
@@ -209,12 +225,10 @@ export function buildIncludedRoutes(rootDir: string): (paths: string[]) => strin
   const catSlugs = ['all', ...categories.map((c) => c.slug)];
 
   const portfolioDir = path.resolve(rootDir, 'data/content/portfolio');
-  const caseFiles = existsSync(portfolioDir)
-    ? readdirSync(portfolioDir).filter((f) => f.endsWith('.json'))
-    : [];
+  const caseFiles = walkJsonFiles(portfolioDir);
   const cases = caseFiles.map(
     (f) =>
-      JSON.parse(readFileSync(path.join(portfolioDir, f), 'utf-8')) as {
+      JSON.parse(readFileSync(f, 'utf-8')) as {
         slug: string;
         category: string;
       }
@@ -254,6 +268,13 @@ export function createSsgMetaHook(rootDir: string): (route: string, html: string
   const categories =
     readJson<CategoryEntry[]>(path.resolve(rootDir, 'data/content/config/categories.json')) ?? [];
 
+  const caseFileMap = Object.fromEntries(
+    walkJsonFiles(path.resolve(rootDir, 'data/content/portfolio')).map((f) => {
+      const data = JSON.parse(readFileSync(f, 'utf-8')) as CaseData & { slug: string };
+      return [data.slug, data];
+    })
+  );
+
   return function onPageRendered(route: string, html: string): string {
     // Inject global defaults on every page
     let out = html;
@@ -272,9 +293,7 @@ export function createSsgMetaHook(rootDir: string): (route: string, html: string
     const caseMatch = /^\/portfolio\/([^/]+)\/([^/]+)$/.exec(route);
     if (caseMatch) {
       const caseSlug = caseMatch[2];
-      const caseData = readJson<CaseData>(
-        path.resolve(rootDir, `data/content/portfolio/${caseSlug}.json`)
-      );
+      const caseData = caseFileMap[caseSlug] ?? null;
       if (caseData) {
         return handleCasePage(out, caseSlug, caseData, seo, categories);
       }
