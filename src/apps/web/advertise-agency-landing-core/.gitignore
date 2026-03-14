@@ -16,11 +16,7 @@ dist-ssr
 .vite-react-ssg-temp
 
 # Content — local only, not tracked in git
-data/portfolio/
-data/site.json
-data/testimonials.json
-data/legal.json
-data/legal/
+data/content/
 public/images/
 !data/_schema/
 
