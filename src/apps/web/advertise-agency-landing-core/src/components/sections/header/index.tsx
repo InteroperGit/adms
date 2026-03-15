@@ -1,6 +1,8 @@
+import { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
+import { useInViewport } from '@/hooks/useInViewport';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
 import { HeaderMobileNav } from './HeaderMobileNav';
 import { Logo } from '@/components/ui/Logo';
@@ -19,11 +21,20 @@ const HEADER_BUTTON_COUNT = 4;
 export function Header() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-  const highlightedActionIndex = useRandomButtonHighlight(HEADER_BUTTON_COUNT);
+  const highlightRaw = useRandomButtonHighlight(HEADER_BUTTON_COUNT);
   const { isDark, toggle } = useTheme();
+  const headerRef = useRef<HTMLElement>(null);
+  const isHeaderVisible = useInViewport(headerRef);
+
+  // Only show highlight when header is in viewport
+  const highlightedActionIndex = isHeaderVisible ? highlightRaw : null;
 
   return (
-    <header id="main-nav" className="border-b border-border bg-background shadow-sm">
+    <header
+      ref={headerRef}
+      id="main-nav"
+      className="border-b border-border bg-background shadow-sm"
+    >
       <Container>
         <div className="flex h-16 items-center justify-between md:h-20">
           <Logo />
