@@ -1,9 +1,10 @@
 // src/pages/PortfolioCategoryPage.tsx
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
+import { NotFound } from '@/pages/NotFound';
 import { portfolioPageContent } from '@/types/sections/portfolio/portfolioPage';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { categories } from '@/types/config/categories';
@@ -35,20 +36,7 @@ export function PortfolioCategoryPage() {
   useDocumentTitle(pageTitle);
 
   if (!isAll && !category) {
-    return (
-      <section className="bg-background py-24 md:py-32">
-        <Container>
-          <p className="mb-4 text-center text-muted-foreground">
-            {portfolioConfig.notFoundCategory}
-          </p>
-          <div className="text-center">
-            <Link to="/portfolio" className="text-primary underline underline-offset-4">
-              {portfolioConfig.allProjectsLink}
-            </Link>
-          </div>
-        </Container>
-      </section>
-    );
+    return <NotFound backLabel={portfolioConfig.allProjectsLink} backHref="/portfolio" />;
   }
 
   const filtered = isAll

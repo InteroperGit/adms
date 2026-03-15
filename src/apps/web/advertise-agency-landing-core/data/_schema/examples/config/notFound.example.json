@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/config/notFound.schema.json",
+  "title": "Страница не найдена",
+  "code": "404",
+  "description": "Запрашиваемая страница не существует или была перемещена.",
+  "backLabel": "На главную",
+  "backHref": "/"
+}

@@ -19,6 +19,7 @@ import { CookiesContentSchema } from '../src/types/config/cookies';
 import { LegalDataSchema } from '../src/types/config/legalData';
 import { SeoConfigSchema } from '../src/types/config/seo';
 import { OrderFormsDataSchema } from '../src/types/config/orderForms';
+import { NotFoundContentSchema } from '../src/types/config/notFound';
 
 // ── Section schemas ────────────────────────────────────────────────────────────
 import { HeaderContentSchema } from '../src/types/sections/header/header';
@@ -122,6 +123,12 @@ if (fileExists(cfg('orderForms.json'))) {
   check('orderForms.json', () => OrderFormsDataSchema.parse(readJson(cfg('orderForms.json'))));
 } else {
   console.log('  – orderForms.json (not found, skipped)');
+}
+
+if (fileExists(cfg('notFound.json'))) {
+  check('notFound.json', () => NotFoundContentSchema.parse(readJson(cfg('notFound.json'))));
+} else {
+  console.log('  – notFound.json (not found, skipped)');
 }
 
 // ── Section files ──────────────────────────────────────────────────────────────

@@ -7,6 +7,7 @@ import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import UserAgreement from '@/pages/UserAgreement';
 import Consent from '@/pages/Consent';
 import { OrderPage } from '@/pages/OrderPage';
+import { NotFound } from '@/pages/NotFound';
 
 const routes: RouteObject[] = [
   {
@@ -20,6 +21,8 @@ const routes: RouteObject[] = [
       { path: '/user-agreement', element: <UserAgreement /> },
       { path: '/consent', element: <Consent /> },
       { path: '/order', element: <OrderPage /> },
+      { path: '/404', element: <NotFound /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ];

@@ -9,7 +9,7 @@ Landing page for **РА "Рекламастер"** — fully static SSG, no back
 ```
 src/main.tsx       # Entry: ViteReactSSG({ routes })
 src/router.tsx     # RouteObject[] — all page routes
-src/pages/         # Home, PortfolioPage, PortfolioCasePage, legal, OrderPage
+src/pages/         # Home, PortfolioPage, PortfolioCategoryPage, PortfolioCasePage, NotFound, legal, OrderPage
 src/components/    # sections/ | portfolio/ | ui/ | analytics/ | banners/ | layout/
 src/types/         # Zod schemas + parsed consts (config/ sections/ portfolio/ blocks/ shared/)
 src/hooks/         # useFadeIn, useActiveSection, useTheme, useCookieConsent, useSwipe

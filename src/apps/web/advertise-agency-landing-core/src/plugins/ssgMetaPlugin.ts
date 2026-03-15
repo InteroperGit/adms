@@ -219,6 +219,15 @@ function handleHome(
   return out;
 }
 
+function handleNotFound(html: string, seo: SeoConfig): string {
+  const title = `404 — Страница не найдена — ${seo.siteName}`;
+
+  let out = html;
+  out = upsertTitle(out, title);
+  out = upsertMeta(out, 'name', 'robots', 'noindex');
+  return out;
+}
+
 function handleCasePage(
   html: string,
   caseSlug: string,
@@ -373,6 +382,7 @@ export function buildIncludedRoutes(rootDir: string): (paths: string[]) => strin
 
   return (paths) => [
     ...paths.filter((p) => !DYNAMIC_ROUTE_PATTERNS.has(p)),
+    '/404',
     '/portfolio',
     ...categoryRoutes,
     ...caseRoutes,
@@ -432,6 +442,10 @@ export function createSsgMetaHook(rootDir: string): (route: string, html: string
 
     if (route === '/') {
       return handleHome(out, seo, site, legal);
+    }
+
+    if (route === '/404') {
+      return handleNotFound(out, seo);
     }
 
     const caseMatch = /^\/portfolio\/([^/]+)\/(\d{4})\/(\d{2})\/([^/]+)$/.exec(route);

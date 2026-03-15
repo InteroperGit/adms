@@ -17,13 +17,25 @@
 ```
 /                                  → Home.tsx (landing, inside App layout)
 /portfolio                         → PortfolioPage.tsx (all cases, paginated)
-/portfolio/:categorySlug           → PortfolioCategoryPage.tsx ("all" shows everything; unknown slug → not-found)
-/portfolio/:categorySlug/:caseSlug → PortfolioCasePage.tsx (SSG per JSON; back → /:categorySlug)
+/portfolio/:categorySlug           → PortfolioCategoryPage.tsx ("all" shows everything; unknown slug → NotFound)
+/portfolio/:categorySlug/:year/:month/:caseSlug → PortfolioCasePage.tsx (SSG per JSON; not found → NotFound)
 /privacy-policy                    → PrivacyPolicy.tsx
 /user-agreement                    → UserAgreement.tsx
 /consent                           → Consent.tsx
 /order                             → OrderPage.tsx (?form=<id> selects form)
+/404                               → NotFound.tsx (explicitly SSG'd page for static dist/404.html)
+*                                  → NotFound.tsx (catch-all route for unmatched URLs inside App layout)
 ```
+
+## Not Found (404) Handling
+
+- **Global 404 page**: `src/pages/NotFound.tsx` — centered full-page layout with title, description, code, and CTA back button
+- **Data**: `data/content/config/notFound.json` — `notFoundContent` (title, code, description, backLabel, backHref)
+- **Router**: `src/router.tsx` includes both explicit `/404` route and catch-all `*` route, both render `<NotFound />`
+- **Props override**: `NotFound` accepts optional `backLabel` and `backHref` props for contextual back links (used by portfolio 404s)
+- **Portfolio 404s**: `PortfolioCategoryPage` and `PortfolioCasePage` render `<NotFound>` with portfolio-specific back links (e.g., "All Projects")
+- **SSG**: `/404` route is included in `includedRoutes`; `vite.config.ts` copies `dist/404/index.html` → `dist/404.html` via `closeBundle` plugin hook for hosting platforms (Netlify, Vercel, etc.)
+- **SEO**: `ssgMetaPlugin.ts` injects `<meta name="robots" content="noindex">` on `/404` route to prevent search engine indexing
 
 ## SSG Build
 

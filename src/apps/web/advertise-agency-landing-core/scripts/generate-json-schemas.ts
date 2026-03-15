@@ -26,6 +26,7 @@ import { CookiesContentSchema } from '../src/types/config/cookies';
 import { LegalDataSchema } from '../src/types/config/legalData';
 import { SeoConfigSchema } from '../src/types/config/seo';
 import { OrderFormsDataSchema } from '../src/types/config/orderForms';
+import { NotFoundContentSchema } from '../src/types/config/notFound';
 
 // ── Section schemas ───────────────────────────────────────────────────────────
 import { HeaderContentSchema } from '../src/types/sections/header/header';
@@ -76,6 +77,7 @@ const schemas: Record<string, SchemaEntry> = {
   legal: { subfolder: 'config', schema: LegalDataSchema },
   seo: { subfolder: 'config', schema: SeoConfigSchema },
   orderForms: { subfolder: 'config', schema: OrderFormsDataSchema },
+  notFound: { subfolder: 'config', schema: NotFoundContentSchema },
   // Sections — organized by component subfolder
   header: { subfolder: 'sections', section: 'header', schema: HeaderContentSchema },
   hero: { subfolder: 'sections', section: 'hero', schema: HeroContentSchema },
@@ -197,6 +199,7 @@ const jsonSchemas = [
   { fileMatch: ['data/content/config/legal.json'], url: schemaUrl('config', 'legal') },
   { fileMatch: ['data/content/config/seo.json'], url: schemaUrl('config', 'seo') },
   { fileMatch: ['data/content/config/orderForms.json'], url: schemaUrl('config', 'orderForms') },
+  { fileMatch: ['data/content/config/notFound.json'], url: schemaUrl('config', 'notFound') },
   // Section files — organized by component subfolder
   {
     fileMatch: ['data/content/sections/header/header.json'],

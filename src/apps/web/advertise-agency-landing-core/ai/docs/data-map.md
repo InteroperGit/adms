@@ -40,6 +40,7 @@ Path alias: `@data` → `./data/content`
 | `config/legal.json` | `src/types/config/legalData.ts` | `legalData` | Company legal details (name, INN, OGRN, etc.) + document versions |
 | `config/orderForms.json` | `src/types/config/orderForms.ts` | `orderFormsData` | Form definitions keyed by ID (productTypes, customerFields, consent, success) |
 | `config/seo.json` | `src/types/config/seo.ts` | `seoConfig` | siteUrl, siteName, locale, twitterCard, defaultOgImage; read at build time by `ssgMetaPlugin.ts` |
+| `config/notFound.json` | `src/types/config/notFound.ts` | `notFoundContent` | Global 404 page copy: title, code, description, backLabel, backHref |
 
 ## legal/ — legal page content
 

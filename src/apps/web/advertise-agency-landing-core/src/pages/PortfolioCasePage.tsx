@@ -5,6 +5,7 @@ import { CaseOverview } from '@/components/portfolio/CaseOverview';
 import { CaseCTA } from '@/components/portfolio/CaseCTA';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { BlockRenderer } from '@/components/blocks/BlockRenderer';
+import { NotFound } from '@/pages/NotFound';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 import { portfolioCaseMap } from '@/types/portfolio/portfolioCases';
 import { portfolioPageContent } from '@/types/sections/portfolio/portfolioPage';
@@ -35,16 +36,7 @@ export function PortfolioCasePage() {
   const categoryLabel = isAll ? portfolioConfig.allLabel : (category?.name ?? categorySlug ?? '');
 
   if (!data) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <h1 className="mb-4 text-2xl font-bold">{pc.notFound.title}</h1>
-          <a href={`/portfolio/${categorySlug ?? ''}`} className="text-primary hover:underline">
-            {pc.notFound.back}
-          </a>
-        </div>
-      </div>
-    );
+    return <NotFound backLabel={pc.notFound.back} backHref={`/portfolio/${categorySlug}`} />;
   }
 
   return (
