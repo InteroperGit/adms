@@ -36,7 +36,8 @@ export function CarouselSlide({ slide, isActive, index }: CarouselSlideProps) {
             alt={slide.alt}
             sizes="100vw"
             priority={index === 0}
-            className="h-full w-full object-cover"
+            className="h-full w-full"
+            imgClassName="object-cover"
           />
           <div className="absolute inset-0 dark:bg-black/45" />
         </>

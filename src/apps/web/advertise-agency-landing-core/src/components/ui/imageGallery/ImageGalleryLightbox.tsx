@@ -99,7 +99,8 @@ export function ImageGalleryLightbox({
             src={active.src}
             alt={`${altPrefix} ${activeIndex + 1}`}
             sizes="100vw"
-            className="max-h-[55vh] w-full rounded-xl object-contain sm:max-h-[75vh]"
+            className="max-h-[55vh] w-full rounded-xl sm:max-h-[75vh]"
+            imgClassName="object-contain"
           />
           {multi && (
             <>
@@ -141,7 +142,8 @@ export function ImageGalleryLightbox({
                   src={img.src}
                   alt={`${altPrefix} ${i + 1}`}
                   sizes="80px"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full"
+                  imgClassName="object-cover"
                 />
               </button>
             ))}

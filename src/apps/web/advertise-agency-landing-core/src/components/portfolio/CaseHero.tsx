@@ -43,7 +43,8 @@ export function CaseHero({ hero, category, title, description }: CaseHeroProps) 
           alt={title}
           sizes="100vw"
           priority
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full"
+          imgClassName="object-cover"
         />
         <div className="absolute inset-0 bg-neutral-900/60" />
         {content}

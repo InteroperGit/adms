@@ -61,7 +61,8 @@ export function ImageGalleryThumbnails({
             src={image.src}
             alt={`${altPrefix} ${i + 1}`}
             sizes="80px"
-            className="h-full w-full object-cover"
+            className="h-full w-full"
+            imgClassName="object-cover"
           />
           {i === activeIndex && (
             <span className="pointer-events-none absolute inset-0 bg-primary/20" />

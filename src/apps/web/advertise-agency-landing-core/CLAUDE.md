@@ -51,4 +51,5 @@ Detailed documentation is organized in `ai/docs/`:
 - **[`ai/docs/components.md`](./ai/docs/components.md)** — Section components, portfolio UI, header, carousel
 - **[`ai/docs/dark-mode.md`](./ai/docs/dark-mode.md)** — Dark mode architecture, ThemeContext, CSS
 - **[`ai/docs/conventions.md`](./ai/docs/conventions.md)** — Code style, naming, imports, React 19 patterns
+- **[`ai/docs/images.md`](./ai/docs/images.md)** — OptimizedImage component, Skeleton, lazy loading patterns
 - **[`ai/docs/devWorkflow.md`](./ai/docs/devWorkflow.md)** — Development workflow, commands, new-client CLI

@@ -37,7 +37,8 @@ export function ImageBlock({ block }: ImageBlockProps) {
         src={block.src}
         alt={block.alt}
         sizes={SIZE_HINTS[size]}
-        className="w-full rounded-xl object-cover shadow-md"
+        className="w-full rounded-xl shadow-md"
+        imgClassName="object-cover"
       />
       {block.caption && (
         <figcaption className="mt-3 text-center text-sm text-muted-foreground">
