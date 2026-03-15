@@ -206,6 +206,87 @@ if (files.length === 0) {
 // ── Result ─────────────────────────────────────────────────────────────────────
 
 console.log('');
+
+// ── Advisory warnings for hex colors that could be semantic tokens ──────────────
+
+/**
+ * Map of common hex colors that match theme tokens.
+ * Used to suggest migrations from hex → semantic tokens.
+ */
+const HEX_TO_TOKEN: Record<string, string> = {
+  '#f65314': 'primary',
+  '#ffffff': 'primary-foreground',
+  '#f5f3ff': 'secondary',
+  '#e0e7ff': 'muted (light indigo)',
+  '#312e81': 'muted-foreground (dark indigo)',
+  '#5b21b6': 'accent (dark purple)',
+  '#e5e7eb': 'border (light gray)',
+  '#1f2937': 'foreground (dark gray)',
+};
+
+let advisories = 0;
+
+/**
+ * Walk portfolio cases and check for hex colors in list blocks that match known tokens.
+ * Emit advisories (non-blocking warnings) suggesting migration to semantic tokens.
+ */
+console.log('Checking for migrable hex colors in list blocks:');
+
+for (const file of files) {
+  const data = readJson(file) as Record<string, unknown>;
+  const content = Array.isArray(data.content) ? data.content : [];
+
+  for (let blockIdx = 0; blockIdx < content.length; blockIdx++) {
+    const block = content[blockIdx] as Record<string, unknown>;
+
+    // Only check list blocks
+    if (block.__component !== 'list') {
+      continue;
+    }
+
+    const colors = block.colors as Record<string, Record<string, Record<string, unknown>>> | undefined;
+    if (!colors) {
+      continue;
+    }
+
+    // Check even and odd row colors
+    for (const position of ['even', 'odd'] as const) {
+      const rowColors = colors[position];
+      if (!rowColors) {
+        continue;
+      }
+
+      // Check background and text colors
+      for (const colorType of ['background', 'text'] as const) {
+        const colorValue = rowColors[colorType];
+
+        // Skip if not a string or already a semantic token
+        if (typeof colorValue !== 'string' || !colorValue.startsWith('#')) {
+          continue;
+        }
+
+        // Check if this hex matches a known token
+        const token = HEX_TO_TOKEN[colorValue.toLowerCase()];
+        if (token) {
+          const label = path.relative(portfolioDir, file);
+          console.log(
+            `  💡 ${label} (block ${blockIdx}, ${position} row ${colorType}): ` +
+            `"${colorValue}" → consider using "${token}"`
+          );
+          advisories++;
+        }
+      }
+    }
+  }
+}
+
+if (advisories > 0) {
+  console.log(`\n  (${advisories} migration opportunity found – entirely optional)`);
+} else {
+  console.log('  (no migrable colors found)');
+}
+
+console.log('');
 if (errors > 0) {
   console.error(`❌  ${errors} validation error(s) found.`);
   process.exit(1);

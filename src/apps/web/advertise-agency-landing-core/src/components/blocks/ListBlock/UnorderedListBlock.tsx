@@ -1,4 +1,5 @@
 import { cn } from '@/libs/utils';
+import { resolveColor } from '@/libs/resolveColor';
 import type { ListBlock as ListBlockData } from '@/types/blocks';
 
 interface UnorderedListBlockProps {
@@ -26,9 +27,9 @@ export function UnorderedListBlock({ block }: UnorderedListBlockProps) {
           : undefined;
 
         const bgStyle = rowColors?.background
-          ? { backgroundColor: rowColors.background }
+          ? { backgroundColor: resolveColor(rowColors.background) }
           : undefined;
-        const textStyle = rowColors?.text ? { color: rowColors.text } : undefined;
+        const textStyle = rowColors?.text ? { color: resolveColor(rowColors.text) } : undefined;
         const textClass = rowColors?.text ? 'leading-relaxed' : defaultTextClass;
 
         return (

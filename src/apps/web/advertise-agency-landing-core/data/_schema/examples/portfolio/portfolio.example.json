@@ -99,6 +99,63 @@
       ]
     },
     {
+      "__component": "list",
+      "style": "unordered",
+      "items": [
+        "Пункт списка с hex цветами",
+        "Пункт списка 2",
+        "Пункт списка 3"
+      ],
+      "colors": {
+        "even": {
+          "background": "#e0e7ff",
+          "text": "#312e81"
+        },
+        "odd": {
+          "background": "#ffffff",
+          "text": "#1f2937"
+        }
+      }
+    },
+    {
+      "__component": "list",
+      "style": "ordered",
+      "items": [
+        "Пункт с семантическими цветами (primary)",
+        "Пункт 2",
+        "Пункт 3"
+      ],
+      "colors": {
+        "even": {
+          "background": "primary",
+          "text": "primary-foreground"
+        },
+        "odd": {
+          "background": "background",
+          "text": "foreground"
+        }
+      }
+    },
+    {
+      "__component": "list",
+      "style": "unordered",
+      "items": [
+        "Пункт с семантическими цветами и прозрачностью (accent/30)",
+        "Пункт 2",
+        "Пункт 3"
+      ],
+      "colors": {
+        "even": {
+          "background": "accent/20",
+          "text": "accent-foreground"
+        },
+        "odd": {
+          "background": "card",
+          "text": "muted-foreground"
+        }
+      }
+    },
+    {
       "__component": "table",
       "title": "Этапы работ",
       "head": ["Этап", "Срок", "Результат"],

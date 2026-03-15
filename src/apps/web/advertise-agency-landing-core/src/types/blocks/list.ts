@@ -17,18 +17,18 @@ export const ListBlockSchema = z.object({
       /** Colors for even rows */
       even: z
         .object({
-          /** Background color (hex color, e.g., "#f3f4f6", "#fef3c7") */
+          /** Background color: hex (#f3f4f6, #fef3c7), semantic token (primary, accent, background), or token/opacity (primary/50) */
           background: z.string().optional(),
-          /** Text color (hex color, e.g., "#1f2937", "#7c3aed") */
+          /** Text color: hex (#1f2937, #7c3aed), semantic token (foreground, primary-foreground), or token/opacity (accent/80) */
           text: z.string().optional(),
         })
         .optional(),
       /** Colors for odd rows */
       odd: z
         .object({
-          /** Background color (hex color, e.g., "#ffffff", "#fef08a") */
+          /** Background color: hex (#ffffff, #fef08a), semantic token (card, muted), or token/opacity (background/30) */
           background: z.string().optional(),
-          /** Text color (hex color, e.g., "#1f2937", "#7c3aed") */
+          /** Text color: hex (#1f2937, #7c3aed), semantic token (muted-foreground, accent-foreground), or token/opacity (foreground/70) */
           text: z.string().optional(),
         })
         .optional(),

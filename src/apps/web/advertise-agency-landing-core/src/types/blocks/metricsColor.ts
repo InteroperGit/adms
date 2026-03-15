@@ -20,11 +20,11 @@ export type MetricsBackgroundColor = z.infer<typeof MetricsBackgroundColorSchema
 export const MetricsColorSchema = z.object({
   /** Optional background color styling */
   background: MetricsBackgroundColorSchema.optional(),
-  /** Optional color for metric value (big number); defaults to white if colored, primary if not */
+  /** Optional color for metric value (big number); hex (#ffffff), semantic token (primary-foreground), or token/opacity (primary-foreground/90); defaults to white if colored, primary if not */
   metric: z.string().optional(),
-  /** Optional color for label (uppercase text); defaults to white/70 if colored, muted-foreground if not */
+  /** Optional color for label (uppercase text); hex (#fafafa), semantic token (muted-foreground), or token/opacity (foreground/70); defaults to white/70 if colored, muted-foreground if not */
   label: z.string().optional(),
-  /** Optional color for description text; defaults to white/80 if colored, muted-foreground if not */
+  /** Optional color for description text; hex (#f5f5f5), semantic token (muted-foreground), or token/opacity (foreground/80); defaults to white/80 if colored, muted-foreground if not */
   description: z.string().optional(),
 });
 
