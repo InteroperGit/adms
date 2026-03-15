@@ -8,10 +8,12 @@ import UserAgreement from '@/pages/UserAgreement';
 import Consent from '@/pages/Consent';
 import { OrderPage } from '@/pages/OrderPage';
 import { NotFound } from '@/pages/NotFound';
+import { RouteError } from '@/pages/RouteError';
 
 const routes: RouteObject[] = [
   {
     element: <App />,
+    errorElement: <RouteError />,
     children: [
       { path: '/', element: <Home /> },
       { path: '/portfolio', element: <PortfolioCategoryPage /> },

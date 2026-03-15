@@ -8,10 +8,15 @@ import { CallToAction } from '@/components/sections/call-to-action';
 import { Testimonials } from '@/components/sections/testimonials';
 import { Contact } from '@/components/sections/contact';
 import { SectionDivider } from '@/components/ui/section/SectionDivider';
+import { ErrorBoundary, SilentErrorFallback } from '@/components/error';
 
 /**
  * @component
- * @description Landing page homepage with full-page sections: carousel, hero, about, services, portfolio, advantages, CTA, testimonials, contact
+ * @description Landing page homepage with full-page sections: carousel, hero, about, services, portfolio, advantages, CTA, testimonials, contact.
+ *
+ * The Carousel is wrapped in an ErrorBoundary with silent fallback, so carousel failures
+ * don't prevent the page from rendering (Hero section remains visible below).
+ *
  * @returns {JSX.Element} Main element with composed section components
  * @example
  * <Home />
@@ -19,7 +24,9 @@ import { SectionDivider } from '@/components/ui/section/SectionDivider';
 export default function Home() {
   return (
     <main id="main-content" tabIndex={-1}>
-      <Carousel />
+      <ErrorBoundary fallback={<SilentErrorFallback />}>
+        <Carousel />
+      </ErrorBoundary>
       <Hero />
       <About />
       <SectionDivider variant="bg-to-muted" />

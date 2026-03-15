@@ -8,17 +8,19 @@ import { ScrollToTop } from '@/components/ui/navigation/ScrollToTop';
 import { HomeHashScroll } from '@/components/ui/navigation/HomeHashScroll';
 import { SkipToContent } from '@/components/ui/navigation/SkipToContent';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { ErrorBoundary } from '@/components/error';
 
 /**
  * @component
  * @description
  * Root application component that wraps all pages and features. Provides:
+ * - Error boundary protection (catches and handles rendering errors)
  * - Dark mode via ThemeProvider context
  * - Global accessibility (skip to content, hash scroll navigation)
  * - Persistent layout (header, footer, scroll-to-top button)
  * - Analytics (Metrika script) and cookies banner
  * - Scroll reset on route navigation
- * @returns {JSX.Element} Full app layout with theme provider, header, page outlet, footer, and utility features
+ * @returns {JSX.Element} Full app layout with theme provider, error boundary, header, page outlet, footer, and utility features
  * @example
  * <App />
  */
@@ -35,11 +37,15 @@ export default function App() {
     <ThemeProvider>
       <SkipToContent contentAnchor="#main-content" />
       <HomeHashScroll />
-      <Header />
-      <Outlet />
-      <Footer />
+      <ErrorBoundary>
+        <Header />
+        <main id="main-content">
+          <Outlet />
+        </main>
+        <Footer />
+        <CookieBanner />
+      </ErrorBoundary>
       <ScrollToTop navSelector="#main-nav" />
-      <CookieBanner />
       <MetrikaScript />
     </ThemeProvider>
   );

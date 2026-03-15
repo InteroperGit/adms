@@ -1,5 +1,7 @@
 import type React from 'react';
 import type { ContentBlock } from '@/types/blocks';
+import { ErrorBoundary } from '@/components/error';
+import { BlockErrorFallback } from './BlockErrorFallback';
 import { HeadingBlock } from './HeadingBlock';
 import { ParagraphBlock } from './ParagraphBlock';
 import { ImageBlock } from './ImageBlock';
@@ -24,12 +26,16 @@ interface BlockRendererProps {
 
 /**
  * @component
- * @description Dispatcher that renders portfolio case content blocks with appropriate spacing based on block type
+ * @description Dispatcher that renders portfolio case content blocks with appropriate spacing and error isolation.
+ *
+ * Each block is wrapped in an ErrorBoundary so rendering errors in one block don't crash the entire page.
+ * Unknown block types return null (dev warning in DEV mode).
+ *
  * @param {BlockRendererProps} props
  * @param {ContentBlock} props.block - Block data with __component type identifier
  * @param {string} props.caseGradient - Gradient for blocks that use color (e.g., metrics, cards, charts)
  * @param {string} props.caseTitle - Case title for gallery alt text
- * @returns {JSX.Element|null} Rendered block with spacing or null for unknown types
+ * @returns {JSX.Element|null} Rendered block wrapped in ErrorBoundary with spacing, or null for unknown types
  * @example
  * <BlockRenderer block={contentBlock} caseGradient="from-blue-500 to-purple-500" caseTitle="Project Name" />
  */
@@ -86,5 +92,11 @@ export function BlockRenderer({ block, caseGradient, caseTitle }: BlockRendererP
     return null;
   }
   const spacing = SPARSE_BLOCKS.has(block.__component) ? 'py-4' : 'py-8';
-  return <div className={spacing}>{rendered}</div>;
+  return (
+    <div className={spacing}>
+      <ErrorBoundary fallback={<BlockErrorFallback />}>
+        {rendered}
+      </ErrorBoundary>
+    </div>
+  );
 }
