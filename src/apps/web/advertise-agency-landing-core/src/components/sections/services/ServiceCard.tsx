@@ -9,7 +9,7 @@ interface ServiceCardProps {
 
 /**
  * @component
- * @description Individual service card displaying icon, title, and description. Features hover animation (lift effect) and responsive styling.
+ * @description Individual service card displaying icon, title, and description. Features hover animation (lift effect) and icon shake on hover.
  * @param {ServiceCardProps} props
  * @param {Service} props.service - Service object with icon key, title, and description
  * @returns {JSX.Element} Card with icon box header and description content
@@ -18,10 +18,11 @@ interface ServiceCardProps {
  */
 export function ServiceCard({ service }: ServiceCardProps) {
   const Icon = ICON_MAP[service.icon];
+
   return (
-    <Card className="group border-border bg-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+    <Card className="group relative border-border bg-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
       <CardHeader className="pb-3">
-        <SectionIconBox icon={Icon} size={22} className="mb-4 h-12 w-12" />
+        <SectionIconBox icon={Icon} size={22} className="icon-shake mb-4 h-12 w-12" />
         <CardTitle className="text-lg font-semibold text-foreground">{service.title}</CardTitle>
       </CardHeader>
       <CardContent>
