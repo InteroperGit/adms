@@ -29,7 +29,7 @@ export function CategoryNav({ activeSlug }: CategoryNavProps) {
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1',
           allActive
             ? 'bg-primary text-white shadow-sm'
-            : 'bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary'
+            : 'border border-primary bg-transparent text-muted-foreground hover:text-foreground'
         )}
       >
         {portfolioConfig.allLabel}
@@ -44,7 +44,7 @@ export function CategoryNav({ activeSlug }: CategoryNavProps) {
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1',
             activeSlug === category.slug
               ? 'bg-primary text-white shadow-sm'
-              : 'bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary'
+              : 'border border-primary bg-transparent text-muted-foreground hover:text-foreground'
           )}
         >
           {category.name}
