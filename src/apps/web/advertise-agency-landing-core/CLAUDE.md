@@ -12,7 +12,7 @@ src/router.tsx     # RouteObject[] — all page routes
 src/pages/         # Home, PortfolioPage, PortfolioCategoryPage, PortfolioCasePage, NotFound, legal, OrderPage
 src/components/    # sections/ | portfolio/ | ui/ | analytics/ | banners/ | layout/
 src/types/         # Zod schemas + parsed consts (config/ sections/ portfolio/ blocks/ shared/)
-src/hooks/         # useFadeIn, useActiveSection, useTheme, useCookieConsent, useSwipe
+src/hooks/         # useFadeIn, useActiveSection, useTheme, useCookieConsent, useSwipe, useRandomButtonHighlight, useInViewport
 src/contexts/      # ThemeContext (dark mode)
 src/plugins/       # themePlugin, imageResizePlugin, ssgMetaPlugin
 scripts/           # validate.ts, generate-json-schemas.ts, new-client.ts
@@ -47,6 +47,7 @@ Detailed documentation is organized in `ai/docs/`:
 
 - **[`ai/docs/architecture.md`](./ai/docs/architecture.md)** — Tech stack, routes, SSG setup, gotchas
 - **[`ai/docs/data-map.md`](./ai/docs/data-map.md)** — Full JSON → type module → component mapping
+- **[`ai/docs/hooks.md`](./ai/docs/hooks.md)** — Custom hooks API reference (useInViewport, useRandomButtonHighlight, useTheme, etc.)
 - **[`ai/docs/portfolioStructure.md`](./ai/docs/portfolioStructure.md)** — Portfolio structure, nesting, adding cases
 - **[`ai/docs/components.md`](./ai/docs/components.md)** — Section components, portfolio UI, header, carousel
 - **[`ai/docs/dark-mode.md`](./ai/docs/dark-mode.md)** — Dark mode architecture, ThemeContext, CSS
