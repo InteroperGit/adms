@@ -1,5 +1,8 @@
+import { useEffect, useRef, useState } from 'react';
 import { type AboutSectionContent } from '@/types/sections/about/aboutContent';
 import { Logo } from '@/components/ui/Logo';
+import { useInViewport } from '@/hooks/useInViewport';
+import { cn } from '@/libs/utils';
 
 interface AboutCardProps {
   card: AboutSectionContent['card'];
@@ -15,8 +18,24 @@ interface AboutCardProps {
  * <AboutCard card={aboutContent.card} />
  */
 export function AboutCard({ card }: AboutCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInViewport = useInViewport(cardRef);
+  const [animatingIndex, setAnimatingIndex] = useState<number>(0);
+
+  useEffect(() => {
+    if (!isInViewport) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setAnimatingIndex((prev) => (prev + 1) % card.stats.length);
+    }, 2500); // Duration of one pulse animation
+
+    return () => clearInterval(interval);
+  }, [isInViewport, card.stats.length]);
+
   return (
-    <div className="relative flex items-center justify-center">
+    <div ref={cardRef} className="relative flex items-center justify-center">
       {/* Decorative background blob */}
       <div className="absolute h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
 
@@ -30,11 +49,19 @@ export function AboutCard({ card }: AboutCardProps) {
 
         {/* Card body — mini stats */}
         <div className="divide-y divide-border">
-          {card.stats.map((item) => (
-            <div key={item.label} className="flex items-center justify-between px-6 py-4">
+          {card.stats.map((item, index) => (
+            <div
+              key={item.label}
+              className={cn(
+                'flex items-center justify-between px-6 py-4 border-l-4 border-l-primary/30 transition-colors',
+                animatingIndex === index && isInViewport && 'animate-cta-pulse'
+              )}
+            >
               <span className="text-sm text-muted-foreground">{item.label}</span>
               <span
-                style={{ fontFamily: 'var(--font-heading)' }}
+                style={{
+                  fontFamily: 'var(--font-heading)',
+                }}
                 className="font-bold text-foreground"
               >
                 {item.value}
