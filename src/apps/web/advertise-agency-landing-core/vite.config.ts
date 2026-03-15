@@ -7,6 +7,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import 'vite-react-ssg'
 import { themePlugin } from './src/plugins/themePlugin'
 import { buildIncludedRoutes, createSsgMetaHook } from './src/plugins/ssgMetaPlugin'
+import { createIncrementalBuildHook } from './src/plugins/incrementalSSG'
 import { imageResizePlugin } from './src/plugins/imageResizePlugin'
 import { copyFileSync } from 'fs'
 
@@ -62,6 +63,10 @@ export default defineConfig(({ mode }) => ({
   ssgOptions: {
     dirStyle: 'nested',
     onPageRendered: createSsgMetaHook(__dirname),
-    includedRoutes: buildIncludedRoutes(__dirname),
+    includedRoutes: (() => {
+      const incremental = createIncrementalBuildHook(__dirname);
+      const allRoutes = buildIncludedRoutes(__dirname);
+      return (paths: string[]) => incremental.filterRoutes(allRoutes(paths));
+    })(),
   },
 }))

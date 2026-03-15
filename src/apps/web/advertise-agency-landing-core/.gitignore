@@ -15,6 +15,9 @@ dist-ssr
 # Vite
 .vite-react-ssg-temp
 
+# Incremental SSG cache — persistent, gitignored
+.ssg-cache/
+
 # Content — local only, not tracked in git
 data/content/
 public/images/
