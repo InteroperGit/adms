@@ -1,7 +1,7 @@
+import { ItemCard } from '@/components/ui/ItemCard';
 import { SectionIconBox } from '@/components/ui/section/SectionIconBox';
 import { ICON_MAP } from '@/types/shared/iconMap';
 import type { Advantage } from '@/types/sections/advantages/advantages';
-import { cn } from '@/libs/utils';
 
 interface AdvantageCardProps {
   item: Advantage;
@@ -21,14 +21,9 @@ interface AdvantageCardProps {
 export function AdvantageCard({ item, index }: AdvantageCardProps) {
   const Icon = ICON_MAP[item.icon];
   return (
-    <div
-      className={cn(
-        'group rounded-2xl border border-border bg-card p-6',
-        'transition-colors duration-300 hover:border-primary/40 hover:bg-background'
-      )}
-    >
+    <ItemCard className="p-6">
       <div className="mb-4 flex items-center gap-4">
-        <SectionIconBox icon={Icon} size={20} className="h-11 w-11 shrink-0" />
+        <SectionIconBox icon={Icon} size={20} className="icon-shake h-11 w-11 shrink-0" />
         <span
           aria-hidden="true"
           style={{ fontFamily: 'var(--font-heading)' }}
@@ -39,6 +34,6 @@ export function AdvantageCard({ item, index }: AdvantageCardProps) {
       </div>
       <h3 className="mb-2 text-base font-semibold text-foreground">{item.title}</h3>
       <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
-    </div>
+    </ItemCard>
   );
 }
