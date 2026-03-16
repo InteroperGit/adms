@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { Container } from '@/components/layout/Container';
 import { CaseHero } from '@/components/portfolio/CaseHero';
 import { CaseOverview } from '@/components/portfolio/CaseOverview';
@@ -83,3 +83,5 @@ export function PortfolioCasePage() {
     </div>
   );
 }
+
+export default PortfolioCasePage;

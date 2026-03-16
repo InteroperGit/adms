@@ -44,33 +44,16 @@ import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../src/types
 import { PortfolioCaseContentSchema } from '../src/types/portfolio/portfolioCaseContent';
 import { ImageGalleryContentSchema } from '../src/types/shared/imageGallery';
 
+// ── Constants ──────────────────────────────────────────────────────────────────
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
+const portfolioDir = path.join(root, 'data/content/portfolio');
 
-let errors = 0;
+// ── Utilities ──────────────────────────────────────────────────────────────────
 
 function readJson(filePath: string): unknown {
   return JSON.parse(readFileSync(filePath, 'utf-8'));
-}
-
-function check(label: string, fn: () => void) {
-  try {
-    fn();
-    console.log(`  ✓ ${label}`);
-  } catch (err) {
-    console.error(`  ✗ ${label}`);
-    console.error((err as Error).message);
-    errors++;
-  }
-}
-
-function fileExists(filePath: string): boolean {
-  try {
-    readFileSync(filePath);
-    return true;
-  } catch {
-    return false;
-  }
 }
 
 function walkJsonFiles(dir: string): string[] {
@@ -89,129 +72,123 @@ function walkJsonFiles(dir: string): string[] {
   });
 }
 
-function cfg(name: string) {
+/** Resolves a path under `data/content/config/`. */
+function cfg(name: string): string {
   return path.join(root, 'data/content/config', name);
 }
 
-function sec(name: string) {
+/** Resolves a path under `data/content/sections/`. */
+function sec(name: string): string {
   return path.join(root, 'data/content/sections', name);
 }
 
-// ── Config files ───────────────────────────────────────────────────────────────
+// ── Validation primitives ──────────────────────────────────────────────────────
 
-console.log('\nConfig:');
+type Schema = {parse: (data: unknown) => unknown};
 
-check('site.json', () => SiteDataSchema.parse(readJson(cfg('site.json'))));
-check('theme.json', () => ThemeSchema.parse(readJson(cfg('theme.json'))));
-check('categories.json', () => CategoriesSchema.parse(readJson(cfg('categories.json'))));
-check('portfolio.json', () => PortfolioConfigSchema.parse(readJson(cfg('portfolio.json'))));
-check('cookies.json', () => CookiesContentSchema.parse(readJson(cfg('cookies.json'))));
-
-if (fileExists(cfg('legal.json'))) {
-  check('legal.json', () => LegalDataSchema.parse(readJson(cfg('legal.json'))));
-} else {
-  console.log('  – legal.json (not found, skipped)');
-}
-
-if (fileExists(cfg('seo.json'))) {
-  check('seo.json', () => SeoConfigSchema.parse(readJson(cfg('seo.json'))));
-} else {
-  console.log('  – seo.json (not found, skipped)');
-}
-
-if (fileExists(cfg('orderForms.json'))) {
-  check('orderForms.json', () => OrderFormsDataSchema.parse(readJson(cfg('orderForms.json'))));
-} else {
-  console.log('  – orderForms.json (not found, skipped)');
-}
-
-if (fileExists(cfg('notFound.json'))) {
-  check('notFound.json', () => NotFoundContentSchema.parse(readJson(cfg('notFound.json'))));
-} else {
-  console.log('  – notFound.json (not found, skipped)');
-}
-
-// ── Section files ──────────────────────────────────────────────────────────────
-
-console.log('\nSections:');
-
-check('header/header.json', () => HeaderContentSchema.parse(readJson(sec('header/header.json'))));
-check('hero/hero.json', () => HeroContentSchema.parse(readJson(sec('hero/hero.json'))));
-check('carousel/carousel.json', () =>
-  CarouselSlidesSchema.parse(readJson(sec('carousel/carousel.json')))
-);
-check('carousel/carouselContent.json', () =>
-  CarouselSectionContentSchema.parse(readJson(sec('carousel/carouselContent.json')))
-);
-check('about/aboutContent.json', () =>
-  AboutSectionContentSchema.parse(readJson(sec('about/aboutContent.json')))
-);
-check('about/aboutValues.json', () =>
-  AboutValuesSchema.parse(readJson(sec('about/aboutValues.json')))
-);
-check('services/servicesContent.json', () =>
-  ServicesSectionContentSchema.parse(readJson(sec('services/servicesContent.json')))
-);
-check('services/services.json', () =>
-  ServicesSchema.parse(readJson(sec('services/services.json')))
-);
-check('advantages/advantagesContent.json', () =>
-  AdvantagesSectionContentSchema.parse(readJson(sec('advantages/advantagesContent.json')))
-);
-check('advantages/advantages.json', () =>
-  AdvantagesSchema.parse(readJson(sec('advantages/advantages.json')))
-);
-check('call-to-action/callToAction.json', () =>
-  CallToActionContentSchema.parse(readJson(sec('call-to-action/callToAction.json')))
-);
-check('testimonials/testimonialsContent.json', () =>
-  TestimonialsSectionContentSchema.parse(readJson(sec('testimonials/testimonialsContent.json')))
-);
-check('testimonials/testimonials.json', () =>
-  TestimonialsSchema.parse(readJson(sec('testimonials/testimonials.json')))
-);
-check('contact/contact.json', () =>
-  ContactContentSchema.parse(readJson(sec('contact/contact.json')))
-);
-check('footer/footer.json', () => FooterContentSchema.parse(readJson(sec('footer/footer.json'))));
-check('portfolio/portfolioPage.json', () =>
-  PortfolioPageContentSchema.parse(readJson(sec('portfolio/portfolioPage.json')))
-);
-check('portfolio/portfolioSection.json', () =>
-  PortfolioSectionContentSchema.parse(readJson(sec('portfolio/portfolioSection.json')))
-);
-check('portfolio/portfolioCase.json', () =>
-  PortfolioCaseContentSchema.parse(readJson(sec('portfolio/portfolioCase.json')))
-);
-check('portfolio/imageGallery.json', () =>
-  ImageGalleryContentSchema.parse(readJson(sec('portfolio/imageGallery.json')))
-);
-
-// ── Portfolio cases ────────────────────────────────────────────────────────────
-
-const portfolioDir = path.join(root, 'data/content/portfolio');
-
-console.log('\nPortfolio cases:');
-
-const files = walkJsonFiles(portfolioDir);
-if (files.length === 0) {
-  console.log('  (no portfolio cases found)');
-} else {
-  for (const file of files) {
-    const label = path.relative(portfolioDir, file);
-    check(label, () => PortfolioCaseSchema.parse(readJson(file)));
+/**
+ * Runs `fn()`, logs a ✓/✗ result line, and returns 1 on error or 0 on success.
+ */
+function check(label: string, fn: () => void): number {
+  try {
+    fn();
+    console.log(`  ✓ ${label}`);
+    return 0;
+  } catch (err) {
+    console.error(`  ✗ ${label}`);
+    console.error((err as Error).message);
+    return 1;
   }
 }
 
-// ── Result ─────────────────────────────────────────────────────────────────────
+/**
+ * Validates an optional file against `schema`.
+ * Logs a skip notice when the file is absent.
+ * Returns 1 on parse error, 0 on success or skip.
+ */
+function checkOptional(label: string, filePath: string, schema: Schema): number {
+  if (!existsSync(filePath)) {
+    console.log(`  – ${label} (not found, skipped)`);
+    return 0;
+  }
+  return check(label, () => schema.parse(readJson(filePath)));
+}
 
-console.log('');
+// ── Config validation ──────────────────────────────────────────────────────────
 
-// ── Advisory warnings for hex colors that could be semantic tokens ──────────────
+function validateConfig(): number {
+  let errors = 0;
+  errors += check('site.json',       () => SiteDataSchema.parse(readJson(cfg('site.json'))));
+  errors += check('theme.json',      () => ThemeSchema.parse(readJson(cfg('theme.json'))));
+  errors += check('categories.json', () => CategoriesSchema.parse(readJson(cfg('categories.json'))));
+  errors += check('portfolio.json',  () => PortfolioConfigSchema.parse(readJson(cfg('portfolio.json'))));
+  errors += check('cookies.json',    () => CookiesContentSchema.parse(readJson(cfg('cookies.json'))));
+  errors += checkOptional('legal.json',      cfg('legal.json'),      LegalDataSchema);
+  errors += checkOptional('seo.json',        cfg('seo.json'),        SeoConfigSchema);
+  errors += checkOptional('orderForms.json', cfg('orderForms.json'), OrderFormsDataSchema);
+  errors += checkOptional('notFound.json',   cfg('notFound.json'),   NotFoundContentSchema);
+  return errors;
+}
+
+// ── Section validation ─────────────────────────────────────────────────────────
 
 /**
- * Map of common hex colors that match theme tokens.
- * Used to suggest migrations from hex → semantic tokens.
+ * All section files paired with their schemas, in display order.
+ * Add a new entry here when a new section JSON + schema is introduced.
+ */
+const SECTION_SCHEMAS: [string, Schema][] = [
+  ['header/header.json',                    HeaderContentSchema],
+  ['hero/hero.json',                        HeroContentSchema],
+  ['carousel/carousel.json',                CarouselSlidesSchema],
+  ['carousel/carouselContent.json',         CarouselSectionContentSchema],
+  ['about/aboutContent.json',               AboutSectionContentSchema],
+  ['about/aboutValues.json',                AboutValuesSchema],
+  ['services/servicesContent.json',         ServicesSectionContentSchema],
+  ['services/services.json',                ServicesSchema],
+  ['advantages/advantagesContent.json',     AdvantagesSectionContentSchema],
+  ['advantages/advantages.json',            AdvantagesSchema],
+  ['call-to-action/callToAction.json',      CallToActionContentSchema],
+  ['testimonials/testimonialsContent.json', TestimonialsSectionContentSchema],
+  ['testimonials/testimonials.json',        TestimonialsSchema],
+  ['contact/contact.json',                  ContactContentSchema],
+  ['footer/footer.json',                    FooterContentSchema],
+  ['portfolio/portfolioPage.json',          PortfolioPageContentSchema],
+  ['portfolio/portfolioSection.json',       PortfolioSectionContentSchema],
+  ['portfolio/portfolioCase.json',          PortfolioCaseContentSchema],
+  ['portfolio/imageGallery.json',           ImageGalleryContentSchema],
+];
+
+function validateSections(): number {
+  return SECTION_SCHEMAS.reduce(
+    (errors, [name, schema]) =>
+      errors + check(name, () => schema.parse(readJson(sec(name)))),
+    0,
+  );
+}
+
+// ── Portfolio case validation ──────────────────────────────────────────────────
+
+function validatePortfolioCases(): {errors: number; files: string[]} {
+  const files = walkJsonFiles(portfolioDir);
+
+  if (files.length === 0) {
+    console.log('  (no portfolio cases found)');
+    return {errors: 0, files: []};
+  }
+
+  const errors = files.reduce((sum, file) => {
+    const label = path.relative(portfolioDir, file);
+    return sum + check(label, () => PortfolioCaseSchema.parse(readJson(file)));
+  }, 0);
+
+  return {errors, files};
+}
+
+// ── Hex color advisory check ───────────────────────────────────────────────────
+
+/**
+ * Hex colors that map to theme semantic tokens.
+ * Used to suggest migrations from hard-coded hex values in list block colors.
  */
 const HEX_TO_TOKEN: Record<string, string> = {
   '#f65314': 'primary',
@@ -224,72 +201,86 @@ const HEX_TO_TOKEN: Record<string, string> = {
   '#1f2937': 'foreground (dark gray)',
 };
 
-let advisories = 0;
-
 /**
- * Walk portfolio cases and check for hex colors in list blocks that match known tokens.
- * Emit advisories (non-blocking warnings) suggesting migration to semantic tokens.
+ * Walks portfolio case files and emits advisory suggestions for hex colors
+ * in list blocks that could be replaced with semantic tokens.
+ * Non-blocking — advisories do not count toward the validation error total.
  */
-console.log('Checking for migrable hex colors in list blocks:');
+function checkHexColorAdvisories(files: string[]): void {
+  let advisories = 0;
 
-for (const file of files) {
-  const data = readJson(file) as Record<string, unknown>;
-  const content = Array.isArray(data.content) ? data.content : [];
+  for (const file of files) {
+    const data = readJson(file) as Record<string, unknown>;
+    const content = Array.isArray(data.content) ? data.content : [];
 
-  for (let blockIdx = 0; blockIdx < content.length; blockIdx++) {
-    const block = content[blockIdx] as Record<string, unknown>;
-
-    // Only check list blocks
-    if (block.__component !== 'list') {
-      continue;
-    }
-
-    const colors = block.colors as Record<string, Record<string, Record<string, unknown>>> | undefined;
-    if (!colors) {
-      continue;
-    }
-
-    // Check even and odd row colors
-    for (const position of ['even', 'odd'] as const) {
-      const rowColors = colors[position];
-      if (!rowColors) {
+    for (let blockIdx = 0; blockIdx < content.length; blockIdx++) {
+      const block = content[blockIdx] as Record<string, unknown>;
+      if (block.__component !== 'list') {
         continue;
       }
 
-      // Check background and text colors
-      for (const colorType of ['background', 'text'] as const) {
-        const colorValue = rowColors[colorType];
+      const colors = block.colors as Record<string, Record<string, unknown>> | undefined;
+      if (!colors) {
+        continue;
+      }
 
-        // Skip if not a string or already a semantic token
-        if (typeof colorValue !== 'string' || !colorValue.startsWith('#')) {
+      for (const position of ['even', 'odd'] as const) {
+        const rowColors = colors[position];
+        if (!rowColors) {
           continue;
         }
 
-        // Check if this hex matches a known token
-        const token = HEX_TO_TOKEN[colorValue.toLowerCase()];
-        if (token) {
-          const label = path.relative(portfolioDir, file);
-          console.log(
-            `  💡 ${label} (block ${blockIdx}, ${position} row ${colorType}): ` +
-            `"${colorValue}" → consider using "${token}"`
-          );
-          advisories++;
+        for (const colorType of ['background', 'text'] as const) {
+          const colorValue = rowColors[colorType];
+          if (typeof colorValue !== 'string' || !colorValue.startsWith('#')) {
+            continue;
+          }
+
+          const token = HEX_TO_TOKEN[colorValue.toLowerCase()];
+          if (token) {
+            const label = path.relative(portfolioDir, file);
+            console.log(
+              `  💡 ${label} (block ${blockIdx}, ${position} row ${colorType}): ` +
+                `"${colorValue}" → consider using "${token}"`,
+            );
+            advisories++;
+          }
         }
       }
     }
   }
+
+  if (advisories > 0) {
+    console.log(`\n  (${advisories} migration opportunity found – entirely optional)`);
+  } else {
+    console.log('  (no migrable colors found)');
+  }
 }
 
-if (advisories > 0) {
-  console.log(`\n  (${advisories} migration opportunity found – entirely optional)`);
-} else {
-  console.log('  (no migrable colors found)');
+// ── Entry ──────────────────────────────────────────────────────────────────────
+
+function main(): void {
+  console.log('\nConfig:');
+  const configErrors = validateConfig();
+
+  console.log('\nSections:');
+  const sectionErrors = validateSections();
+
+  console.log('\nPortfolio cases:');
+  const {errors: caseErrors, files} = validatePortfolioCases();
+
+  console.log('\nChecking for migrable hex colors in list blocks:');
+  checkHexColorAdvisories(files);
+
+  const totalErrors = configErrors + sectionErrors + caseErrors;
+
+  console.log('');
+  if (totalErrors > 0) {
+    console.error(`❌  ${totalErrors} validation error(s) found.`);
+    process.exit(1);
+  } else {
+    console.log('✅  All data files are valid.');
+  }
 }
 
-console.log('');
-if (errors > 0) {
-  console.error(`❌  ${errors} validation error(s) found.`);
-  process.exit(1);
-} else {
-  console.log('✅  All data files are valid.');
-}
+main();

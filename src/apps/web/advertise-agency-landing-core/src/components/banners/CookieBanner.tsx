@@ -1,6 +1,6 @@
 import { useState, useSyncExternalStore } from 'react';
 import { X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { cookiesContent } from '@/types/config/cookies';
 import { ConsentState, STORAGE_KEY, CONSENT_EVENT } from '@/hooks/useCookieConsent';
 import { CookieActions } from './CookieActions';

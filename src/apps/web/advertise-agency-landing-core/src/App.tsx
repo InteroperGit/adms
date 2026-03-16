@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router';
 import { Header } from '@/components/sections/header';
 import { Footer } from '@/components/sections/footer';
 import { CookieBanner } from './components/banners/CookieBanner';
@@ -7,7 +7,6 @@ import { MetrikaScript } from '@/components/analytics/MetrikaScript';
 import { ScrollToTop } from '@/components/ui/navigation/ScrollToTop';
 import { HomeHashScroll } from '@/components/ui/navigation/HomeHashScroll';
 import { SkipToContent } from '@/components/ui/navigation/SkipToContent';
-import { ThemeProvider } from '@/contexts/ThemeContext';
 import { ErrorBoundary } from '@/components/error';
 
 /**
@@ -34,7 +33,7 @@ export default function App() {
   }, [location.pathname, location.hash]);
 
   return (
-    <ThemeProvider>
+    <>
       <SkipToContent contentAnchor="#main-content" />
       <HomeHashScroll />
       <ErrorBoundary>
@@ -47,6 +46,6 @@ export default function App() {
       </ErrorBoundary>
       <ScrollToTop navSelector="#main-nav" />
       <MetrikaScript />
-    </ThemeProvider>
+    </>
   );
 }

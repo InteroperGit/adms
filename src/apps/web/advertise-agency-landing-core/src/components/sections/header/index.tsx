@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { Container } from '@/components/layout/Container';
 import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
 import { useInViewport } from '@/hooks/useInViewport';

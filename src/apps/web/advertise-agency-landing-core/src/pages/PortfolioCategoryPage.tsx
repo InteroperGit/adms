@@ -1,5 +1,5 @@
 // src/pages/PortfolioCategoryPage.tsx
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid';
@@ -68,3 +68,5 @@ export function PortfolioCategoryPage() {
     </>
   );
 }
+
+export default PortfolioCategoryPage;

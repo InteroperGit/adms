@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
@@ -71,3 +71,5 @@ export function OrderPage() {
     </>
   );
 }
+
+export default OrderPage;

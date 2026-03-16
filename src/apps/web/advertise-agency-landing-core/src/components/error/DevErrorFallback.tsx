@@ -44,7 +44,8 @@ export function DevErrorFallback({ error, componentStack }: DevErrorFallbackProp
         <div className={cn('mb-6')}>
           <h1 className={cn('mb-2 text-3xl font-bold text-red-900')}>⚠️ Development Error</h1>
           <p className={cn('text-sm text-red-700')}>
-            This error details are only visible in development mode. Users will see a friendly error message.
+            This error details are only visible in development mode. Users will see a friendly error
+            message.
           </p>
         </div>
 
@@ -52,11 +53,19 @@ export function DevErrorFallback({ error, componentStack }: DevErrorFallbackProp
         {error && (
           <div className={cn('mb-6 rounded-lg bg-red-100 p-4')}>
             <h2 className={cn('mb-2 font-mono text-sm font-bold text-red-900')}>Error Message:</h2>
-            <p className={cn('whitespace-pre-wrap font-mono text-sm text-red-800')}>{error.message}</p>
+            <p className={cn('whitespace-pre-wrap font-mono text-sm text-red-800')}>
+              {error.message}
+            </p>
             {error.stack && (
               <>
-                <h3 className={cn('mb-2 mt-4 font-mono text-sm font-bold text-red-900')}>Stack Trace:</h3>
-                <pre className={cn('overflow-x-auto rounded bg-red-900/5 p-3 font-mono text-xs text-red-800')}>
+                <h3 className={cn('mb-2 mt-4 font-mono text-sm font-bold text-red-900')}>
+                  Stack Trace:
+                </h3>
+                <pre
+                  className={cn(
+                    'overflow-x-auto rounded bg-red-900/5 p-3 font-mono text-xs text-red-800'
+                  )}
+                >
                   {error.stack}
                 </pre>
               </>
@@ -67,8 +76,14 @@ export function DevErrorFallback({ error, componentStack }: DevErrorFallbackProp
         {/* Component Stack */}
         {componentStack && (
           <div className={cn('rounded-lg bg-orange-100 p-4')}>
-            <h2 className={cn('mb-2 font-mono text-sm font-bold text-orange-900')}>React Component Stack:</h2>
-            <pre className={cn('overflow-x-auto rounded bg-orange-900/5 p-3 font-mono text-xs text-orange-800')}>
+            <h2 className={cn('mb-2 font-mono text-sm font-bold text-orange-900')}>
+              React Component Stack:
+            </h2>
+            <pre
+              className={cn(
+                'overflow-x-auto rounded bg-orange-900/5 p-3 font-mono text-xs text-orange-800'
+              )}
+            >
               {componentStack}
             </pre>
           </div>
@@ -77,8 +92,8 @@ export function DevErrorFallback({ error, componentStack }: DevErrorFallbackProp
         {/* Info */}
         <div className={cn('mt-6 rounded-lg bg-blue-50 p-4')}>
           <p className={cn('text-sm text-blue-900')}>
-            💡 <strong>Tip:</strong> Check the browser console for more details. The error is also logged with{' '}
-            <code className={cn('font-mono font-bold')}>[ErrorBoundary]</code> prefix.
+            💡 <strong>Tip:</strong> Check the browser console for more details. The error is also
+            logged with <code className={cn('font-mono font-bold')}>[ErrorBoundary]</code> prefix.
           </p>
         </div>
       </div>

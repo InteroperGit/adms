@@ -1,6 +1,6 @@
 // src/components/portfolio/PortfolioGrid.tsx
 import { useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { Button } from '@/components/ui/button';
 import { PortfolioCard } from '@/components/ui/portfolio/PortfolioCard';
 import { CategoryNav } from '@/components/portfolio/CategoryNav';

@@ -1,6 +1,15 @@
-import { createHash } from 'crypto';
-import { existsSync, readFileSync, readdirSync, statSync, copyFileSync, mkdirSync, writeFileSync, unlinkSync } from 'fs';
-import { join, dirname } from 'path';
+import {createHash} from 'crypto';
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  unlinkSync,
+  writeFileSync,
+} from 'fs';
+import {dirname, join, relative} from 'path';
 
 /**
  * Computes SHA-256 hash of a single file's content.
@@ -12,8 +21,11 @@ export function hashFile(filePath: string): string {
 
 /**
  * Computes SHA-256 hash of multiple files' content using incremental hashing.
+ *
  * Paths are sorted to ensure consistent hashing regardless of glob order.
- * Uses length-prefixed format to avoid separator collision issues.
+ * Uses length-prefixed format (`<len>:<content>`) to prevent cross-file
+ * hash collisions. Missing files contribute a `missing:<path>` sentinel,
+ * keeping them distinct from empty files (length 0).
  */
 export function hashFiles(filePaths: string[]): string {
   const sorted = [...filePaths].sort();
@@ -21,18 +33,20 @@ export function hashFiles(filePaths: string[]): string {
   for (const p of sorted) {
     try {
       const content = readFileSync(p, 'utf-8');
-      // Length-prefix each file's content to prevent cross-file collisions
       hash.update(`${content.length}:${content}`);
     } catch {
-      // Mark missing files with a sentinel so their absence is hashed distinctly
-      hash.update('0:');
+      hash.update(`missing:${p}`);
     }
   }
   return hash.digest('hex');
 }
 
 /**
- * Walks a directory recursively and returns all file paths matching pattern.
+ * Walks `dir` recursively and returns all file paths matching `pattern`,
+ * sorted alphabetically. Returns an empty array when `dir` does not exist.
+ *
+ * Uses an iterative stack to avoid call-stack overflows on deep directory
+ * trees.
  */
 function walkFiles(dir: string, pattern?: RegExp): string[] {
   if (!existsSync(dir)) {
@@ -40,174 +54,87 @@ function walkFiles(dir: string, pattern?: RegExp): string[] {
   }
 
   const results: string[] = [];
+  const stack = [dir];
 
-  function walk(current: string) {
-    const stat = statSync(current);
-    if (stat.isDirectory()) {
-      const entries = readdirSync(current);
-      for (const entry of entries) {
-        walk(join(current, entry));
+  while (stack.length > 0) {
+    const current = stack.pop()!;
+    if (statSync(current).isDirectory()) {
+      for (const entry of readdirSync(current)) {
+        stack.push(join(current, entry));
       }
     } else if (!pattern || pattern.test(current)) {
       results.push(current);
     }
   }
 
-  walk(dir);
   return results.sort();
 }
 
-/**
- * Helper to get all TypeScript source files.
- */
+/** Returns all `.ts` / `.tsx` source files under `srcDir`. */
 function getTsSourceFiles(srcDir: string): string[] {
   return walkFiles(srcDir, /\.(ts|tsx)$/);
 }
 
-/**
- * Extract year and month from ISO 8601 date string (YYYY-MM-DD).
- */
-function extractYearMonth(date: string): { year: string; month: string } {
-  if (!date || typeof date !== 'string' || date.length !== 10) {
-    throw new Error(`Invalid date format. Expected "YYYY-MM-DD", got "${date}"`);
-  }
-  const year = date.slice(0, 4);
-  const month = date.slice(5, 7);
-  return { year, month };
-}
-
-/**
- * Helper to get all JSON files in a directory.
- */
+/** Returns all `.json` files under `dir`. */
 function getJsonFiles(dir: string): string[] {
   return walkFiles(dir, /\.json$/);
 }
 
 /**
- * Computes global hash from source files and config.
- * Global hash invalidates all routes if source code or critical config changes.
+ * Extracts `year` and `month` segments from an ISO 8601 date string
+ * (`YYYY-MM-DD`).
  *
- * Global invalidators:
- * - src/ (all TypeScript files)
- * - vite.config.ts, tailwind.config, postcss.config
- * - data/content/config/ (all JSON config files — affects all pages)
- * - package.json, pnpm-lock.yaml
+ * @throws {Error} When the string does not match the `YYYY-MM-DD` format.
  */
-export function computeGlobalHash(rootDir: string): string {
-  const filesToHash: string[] = [];
-
-  // Source files
-  const srcFiles = getTsSourceFiles(join(rootDir, 'src'));
-  filesToHash.push(...srcFiles);
-
-  // Config files
-  const configFiles = [
-    'vite.config.ts',
-    'tailwind.config.ts',
-    'tailwind.config.js',
-    'postcss.config.ts',
-    'postcss.config.js',
-    'package.json',
-    'pnpm-lock.yaml',
-  ];
-
-  for (const configFile of configFiles) {
-    const filePath = join(rootDir, configFile);
-    if (existsSync(filePath)) {
-      filesToHash.push(filePath);
-    }
+function extractYearMonth(date: string): {year: string; month: string} {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    throw new Error(`Invalid date format. Expected "YYYY-MM-DD", got "${date}"`);
   }
-
-  // All JSON files in data/content/config/ (any config change → full rebuild)
-  const dataConfigFiles = getJsonFiles(join(rootDir, 'data/content/config'));
-  filesToHash.push(...dataConfigFiles);
-
-  return hashFiles(filesToHash);
+  return {year: date.slice(0, 4), month: date.slice(5, 7)};
 }
 
 /**
- * Reads and parses categories from data/content/config/categories.json.
- * Returns empty array if file doesn't exist or is invalid.
+ * Reads and parses `data/content/config/categories.json`.
+ * Returns an empty array when the file is absent or unparseable.
  */
-function getCategories(contentDir: string): Array<{ slug: string; [key: string]: unknown }> {
+function getCategories(
+  contentDir: string,
+): Array<{name?: string; slug: string; [key: string]: unknown}> {
   const categoriesPath = join(contentDir, 'config/categories.json');
   if (!existsSync(categoriesPath)) {
     return [];
   }
   try {
-    const categoriesContent = JSON.parse(readFileSync(categoriesPath, 'utf-8'));
-    return Array.isArray(categoriesContent) ? categoriesContent : [];
+    const parsed = JSON.parse(readFileSync(categoriesPath, 'utf-8'));
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
 }
 
 /**
- * Route-to-data-dependency mapping.
- * Maps each route to the files it depends on.
+ * Builds the route → data-file dependency map for all portfolio case detail
+ * pages.
+ *
+ * For each case JSON, two routes are registered:
+ * - `/portfolio/all/:year/:month/:slug`
+ * - `/portfolio/:categorySlug/:year/:month/:slug`
+ *
+ * A `Map` is built from category names to slugs once upfront, giving O(1)
+ * lookup per case instead of O(n) linear scans.
  */
-interface RouteDataMap {
-  [route: string]: string[];
-}
-
-/**
- * Builds the complete route-to-data-dependency map.
- */
-function buildRouteDataMap(rootDir: string): RouteDataMap {
-  const contentDir = join(rootDir, 'data', 'content');
-  const map: RouteDataMap = {};
-
-  // Helper to check if file exists and add to list
-  const addIfExists = (paths: string[], ...filePaths: string[]) => {
-    for (const fp of filePaths) {
-      if (existsSync(fp)) {
-        paths.push(fp);
-      }
-    }
-  };
-
-  // Home page (/)
-  // Depends on: all sections + portfolioSection + first N cases for preview
-  // (Config files covered by global hash)
-  const homeFiles: string[] = [];
-  const sectionsDir = join(contentDir, 'sections');
-  // Sections are in subdirectories (e.g. sections/hero/hero.json), so scan recursively
-  const sectionFiles = getJsonFiles(sectionsDir);
-  homeFiles.push(...sectionFiles);
-  // Add all portfolio cases (home likely shows featured cases)
-  const portfolioFiles = getJsonFiles(join(contentDir, 'portfolio'));
-  homeFiles.push(...portfolioFiles);
-  map['/'] = homeFiles;
-
-  // Portfolio listing pages
-  // /portfolio and /portfolio/all depend on ALL cases (they render everything)
-  // /portfolio/:category depends only on that category's case files
-  // (Config files covered by global hash)
-  const listingSectionFiles: string[] = [];
-  addIfExists(listingSectionFiles,
-    join(contentDir, 'sections/portfolio/portfolioPage.json'),
-    join(contentDir, 'sections/portfolio/portfolioSection.json'),
+function buildCaseRouteDeps(
+  allCases: string[],
+  categories: Array<{name?: string; slug: string}>,
+): Record<string, string[]> {
+  const categoryByName = new Map(
+    categories.filter((c) => c.name).map((c) => [c.name!, c.slug]),
   );
-  const allCases = getJsonFiles(join(contentDir, 'portfolio'));
-  map['/portfolio'] = [...listingSectionFiles, ...allCases];
-  map['/portfolio/all'] = [...listingSectionFiles, ...allCases];
-  // Each category page depends only on its own category's files
-  const categories = getCategories(contentDir);
-  for (const cat of categories) {
-    if (cat.slug) {
-      const categoryCases = getJsonFiles(join(contentDir, 'portfolio', cat.slug));
-      map[`/portfolio/${cat.slug}`] = [...listingSectionFiles, ...categoryCases];
-    }
-  }
 
-  // Portfolio case detail pages (pattern: /portfolio/:category/:year/:month/:slug)
-  // Each case depends only on: its own JSON
-  // (Config files covered by global hash)
-  const caseFilePaths = allCases;
+  const map: Record<string, string[]> = {};
 
-  for (const caseFile of caseFilePaths) {
+  for (const caseFile of allCases) {
     try {
-      // Parse case data to extract slug, category, and publishDate
       const caseData = JSON.parse(readFileSync(caseFile, 'utf-8')) as {
         slug?: string;
         category?: string;
@@ -215,154 +142,221 @@ function buildRouteDataMap(rootDir: string): RouteDataMap {
       };
 
       if (!caseData.slug || !caseData.category || !caseData.publishDate) {
-        continue; // Skip invalid cases
+        continue;
       }
 
-      // Extract year/month from publishDate
-      const { year, month } = extractYearMonth(caseData.publishDate);
+      const {year, month} = extractYearMonth(caseData.publishDate);
+      const catSlug = categoryByName.get(caseData.category);
 
-      // Find category slug
-      const catSlug = categories.find((c) => c.name === caseData.category)?.slug;
+      const routes = [
+        `/portfolio/all/${year}/${month}/${caseData.slug}`,
+        ...(catSlug ? [`/portfolio/${catSlug}/${year}/${month}/${caseData.slug}`] : []),
+      ];
 
-      // Generate actual web routes for this case
-      const caseRoutes = catSlug
-        ? [
-            `/portfolio/all/${year}/${month}/${caseData.slug}`,
-            `/portfolio/${catSlug}/${year}/${month}/${caseData.slug}`,
-          ]
-        : [`/portfolio/all/${year}/${month}/${caseData.slug}`];
-
-      // Map each route to its source file
-      for (const route of caseRoutes) {
+      for (const route of routes) {
         map[route] = [caseFile];
       }
     } catch {
-      // Skip files that can't be parsed or don't have required fields
+      // Skip invalid / unparseable case files
     }
   }
 
-  // Legal pages (/privacy-policy, /user-agreement, /consent)
-  // Each page depends only on its own JSON file
-  // (Config files covered by global hash)
+  return map;
+}
+
+/**
+ * Computes the global hash from source files and critical configuration.
+ *
+ * A global hash change invalidates all cached routes on the next build.
+ *
+ * **Global invalidators:**
+ * - `src/` — all TypeScript source files
+ * - `vite.config.ts`, `react-router.config.ts`, `tailwind.config.*`,
+ *   `postcss.config.*`
+ * - `package.json`, `pnpm-lock.yaml`
+ * - `data/content/config/**` — any config JSON change affects every page
+ *
+ * @param rootDir - Absolute path to the project root
+ */
+export function computeGlobalHash(rootDir: string): string {
+  const configFiles = [
+    'vite.config.ts',
+    'react-router.config.ts',
+    'tailwind.config.ts',
+    'tailwind.config.js',
+    'postcss.config.ts',
+    'postcss.config.js',
+    'package.json',
+    'pnpm-lock.yaml',
+  ]
+    .map((f) => join(rootDir, f))
+    .filter(existsSync);
+
+  return hashFiles([
+    ...getTsSourceFiles(join(rootDir, 'src')),
+    ...configFiles,
+    ...getJsonFiles(join(rootDir, 'data/content/config')),
+  ]);
+}
+
+/**
+ * Builds a complete route → data-file dependency map for the entire site.
+ *
+ * Config files are intentionally **excluded** from per-route deps — they are
+ * already covered by the global hash and would otherwise invalidate every
+ * route on any config change.
+ *
+ * Route coverage:
+ * - `/` — all section JSON + all portfolio cases
+ * - `/portfolio`, `/portfolio/all` — portfolio section JSON + all cases
+ * - `/portfolio/:slug` — portfolio section JSON + that category's cases
+ * - `/portfolio/:cat/:year/:month/:slug` — the single case JSON file
+ * - `/privacy-policy`, `/user-agreement`, `/consent` — each legal JSON
+ * - `/order`, `/404` — no content deps (covered by global hash)
+ */
+function buildRouteDataMap(rootDir: string): Record<string, string[]> {
+  const contentDir = join(rootDir, 'data', 'content');
+  const portfolioDir = join(contentDir, 'portfolio');
+  const categories = getCategories(contentDir);
+
+  // Computed once and reused by home page + listing pages
+  const allCases = getJsonFiles(portfolioDir);
+
+  // Section JSON files shared by all portfolio listing pages
+  const listingSectionFiles = [
+    join(contentDir, 'sections/portfolio/portfolioPage.json'),
+    join(contentDir, 'sections/portfolio/portfolioSection.json'),
+  ].filter(existsSync);
+
+  const map: Record<string, string[]> = {};
+
+  // Home page — all section copy + all portfolio cases
+  map['/'] = [...getJsonFiles(join(contentDir, 'sections')), ...allCases];
+
+  // Portfolio listing — root and /all show every case; per-category shows only its own cases
+  map['/portfolio'] = [...listingSectionFiles, ...allCases];
+  map['/portfolio/all'] = [...listingSectionFiles, ...allCases];
+  for (const cat of categories) {
+    if (cat.slug) {
+      map[`/portfolio/${cat.slug}`] = [
+        ...listingSectionFiles,
+        ...getJsonFiles(join(portfolioDir, cat.slug)),
+      ];
+    }
+  }
+
+  // Portfolio case detail pages — each case maps to its own JSON only
+  Object.assign(map, buildCaseRouteDeps(allCases, categories));
+
+  // Legal pages — each page depends on its own JSON file
   const legalDir = join(contentDir, 'legal');
-  const legalRouteFileMap: Record<string, string> = {
+  for (const [route, filename] of Object.entries({
     '/privacy-policy': 'privacyPolicy.json',
     '/user-agreement': 'userAgreement.json',
     '/consent': 'consent.json',
-  };
-  for (const [route, filename] of Object.entries(legalRouteFileMap)) {
+  })) {
     const filePath = join(legalDir, filename);
     map[route] = existsSync(filePath) ? [filePath] : [];
   }
 
-  // Order page (/order)
-  // (Config files covered by global hash)
+  // Pages with no content deps — global hash is sufficient
   map['/order'] = [];
-
-  // 404 page
-  // (Config files covered by global hash)
   map['/404'] = [];
 
   return map;
 }
 
 /**
- * RouteManifest maps routes to their content hashes and HTML output paths.
+ * RouteManifest maps each route to its content hash and expected HTML output
+ * path. Persisted to `.ssg-cache/manifest.json` for comparison on subsequent
+ * builds.
  */
 export interface RouteManifest {
   globalHash: string;
-  routes: Record<string, {
-    hash: string;
-    htmlFile: string;
-  }>;
+  routes: Record<string, {hash: string; htmlFile: string}>;
 }
 
 /**
- * Computes the complete route manifest with per-route hashes.
- * This is the main entry point for step 1.
+ * Computes the full route manifest: global hash + per-route content hashes.
+ *
+ * Each route hash combines the route path and a hash of its data files,
+ * ensuring routes with identical (or empty) deps produce distinct hashes.
+ *
+ * @param rootDir - Absolute path to the project root
  */
 export function computeRouteManifest(rootDir: string): RouteManifest {
   const globalHash = computeGlobalHash(rootDir);
   const routeDataMap = buildRouteDataMap(rootDir);
+  const routes: RouteManifest['routes'] = {};
 
-  const manifest: RouteManifest = {
-    globalHash,
-    routes: {},
-  };
-
-  // Compute hash for each route based on its dependencies
-  // Include route path in the hash so routes with identical (or empty) deps get unique hashes
   for (const [route, filePaths] of Object.entries(routeDataMap)) {
     const dataHash = hashFiles(filePaths);
-    const hash = createHash('sha256').update(route + '\0' + dataHash).digest('hex');
-    // Map route to output HTML file (pattern: /path → path/index.html)
-    const htmlFile = route === '/'
-      ? 'index.html'
-      : `${route.replace(/^\//, '')}/index.html`;
+    const hash = createHash('sha256')
+      .update(route + '\0' + dataHash)
+      .digest('hex');
+    // Map route to output HTML file (/path → path/index.html)
+    const htmlFile =
+      route === '/' ? 'index.html' : `${route.replace(/^\//, '')}/index.html`;
 
-    manifest.routes[route] = {
+    routes[route] = {
       hash,
-      htmlFile: htmlFile.replace(/\\/g, '/'), // Normalize to forward slashes
+      // Normalize to forward slashes for cross-platform consistency
+      htmlFile: htmlFile.replace(/\\/g, '/'),
     };
   }
 
-  return manifest;
+  return {globalHash, routes};
 }
 
 /**
- * Loads the previously saved manifest from .ssg-cache/manifest.json.
- * Returns null if file doesn't exist or is corrupted.
+ * Loads the manifest saved from the previous build at
+ * `.ssg-cache/manifest.json`. Returns `null` when the file is absent,
+ * unreadable, or structurally invalid.
  */
 export function loadPreviousManifest(rootDir: string): RouteManifest | null {
   const manifestPath = join(rootDir, '.ssg-cache', 'manifest.json');
-
   if (!existsSync(manifestPath)) {
     return null;
   }
-
   try {
-    const content = readFileSync(manifestPath, 'utf-8');
-    const manifest = JSON.parse(content);
-
-    const isInvalidManifest = typeof manifest !== 'object' ||
-        manifest === null ||
-        typeof manifest.globalHash !== 'string' ||
-        typeof manifest.routes !== 'object';
-
-    return isInvalidManifest
-      ? null
-      : manifest as RouteManifest;
+    const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'));
+    if (
+      typeof manifest !== 'object' ||
+      manifest === null ||
+      typeof manifest.globalHash !== 'string' ||
+      typeof manifest.routes !== 'object'
+    ) {
+      return null;
+    }
+    return manifest as RouteManifest;
   } catch {
-    // File exists but is corrupted or unreadable
     return null;
   }
 }
 
 /**
- * Diff result between previous and current manifests.
+ * Diff result between two consecutive manifests.
  */
 export interface ManifestDiff {
-  /** Routes that changed (hash mismatch) or are new */
+  /** Routes whose content hash changed or are new since the last build. */
   changed: string[];
-  /** Routes that haven't changed */
+  /** Routes whose content hash is identical to the last build. */
   unchanged: string[];
-  /** Whether the global hash changed (forces full rebuild) */
+  /** `true` when the global hash changed, forcing a full rebuild. */
   globalChanged: boolean;
 }
 
 /**
- * Compares previous and current manifests.
- * If global hash changed, all routes are considered changed.
- * Returns routes to rebuild + routes that can be served from cache.
+ * Compares the previous and current manifests and categorises routes into
+ * changed and unchanged.
+ *
+ * When `previous` is `null` (first build) or the global hash changed, every
+ * route in `current` is returned as changed to trigger a full rebuild.
  */
 export function diffManifest(
   previous: RouteManifest | null,
   current: RouteManifest,
 ): ManifestDiff {
-  const changed: string[] = [];
-  const unchanged: string[] = [];
-
-  // If no previous manifest (first build) or global hash changed, invalidate all routes
   if (!previous || previous.globalHash !== current.globalHash) {
     return {
       changed: Object.keys(current.routes),
@@ -371,11 +365,11 @@ export function diffManifest(
     };
   }
 
-  // Global hash is unchanged; compare per-route hashes
+  const changed: string[] = [];
+  const unchanged: string[] = [];
+
   for (const [route, currentRoute] of Object.entries(current.routes)) {
     const previousRoute = previous.routes[route];
-
-    // If route didn't exist before or hash changed, it's dirty
     if (!previousRoute || previousRoute.hash !== currentRoute.hash) {
       changed.push(route);
     } else {
@@ -383,85 +377,29 @@ export function diffManifest(
     }
   }
 
-  // Any routes that existed before but not now are also "changed"
-  // (they'll be removed from cache in the next step)
-  // For now, we just track what's in the current manifest.
-
-  return {
-    changed,
-    unchanged,
-    globalChanged: false,
-  };
+  return {changed, unchanged, globalChanged: false};
 }
 
 /**
- * Incremental build hook interface.
- * Provides methods for filtering routes and managing cache during builds.
- */
-export interface IncrementalHook {
-  /**
-   * Filters routes to only include changed ones for incremental rebuilds.
-   * Returns all routes for full builds (when no cache exists or global hash changed).
-   */
-  filterRoutes(allRoutes: string[]): string[];
-}
-
-/**
- * Creates an incremental build hook for use in vite.config.ts.
- * Loads previous manifest, compares against current manifest, and provides
- * route filtering for incremental SSG builds.
+ * Copies unchanged HTML files from `.ssg-cache/html/` into `distDir`,
+ * skipping the full SSG render for those routes.
  *
- * @example
- * // vite.config.ts
- * import { createIncrementalBuildHook } from './src/plugins/incrementalSSG';
- * import { buildIncludedRoutes } from './src/plugins/ssgMetaPlugin';
- *
- * const incremental = createIncrementalBuildHook(__dirname);
- * const allRoutes = buildIncludedRoutes(__dirname);
- *
- * ssgOptions: {
- *   includedRoutes: (paths) => incremental.filterRoutes(allRoutes(paths))
- * }
- */
-export function createIncrementalBuildHook(rootDir: string): IncrementalHook {
-  const currentManifest = computeRouteManifest(rootDir);
-  const previousManifest = loadPreviousManifest(rootDir);
-  const diff = diffManifest(previousManifest, currentManifest);
-
-  // Convert changed routes array to Set for efficient filtering
-  const changedRoutesSet = new Set(diff.changed);
-
-  return {
-    filterRoutes(allRoutes: string[]): string[] {
-      // If global hash changed or no previous manifest, return all routes
-      if (diff.globalChanged || !previousManifest) {
-        return allRoutes;
-      }
-
-      // Otherwise, only return routes that changed
-      return allRoutes.filter((route) => changedRoutesSet.has(route));
-    },
-  };
-}
-
-/**
- * Restores unchanged HTML files from cache to dist directory.
- * Uses the htmlFile mapping from the manifest to locate and copy files.
- *
- * @param distDir - Path to the dist directory where SSG output is written
- * @param unchanged - Array of route strings that didn't change (can be obtained from ManifestDiff)
- * @param manifest - RouteManifest from previous build (contains htmlFile paths)
+ * @param rootDir   - Absolute project root (locates `.ssg-cache/`)
+ * @param distDir   - Build output directory (e.g. `build/client`)
+ * @param unchanged - Routes that did not change (from {@link diffManifest})
+ * @param manifest  - Previous {@link RouteManifest} (contains `htmlFile` paths)
  *
  * @example
  * const diff = diffManifest(prevManifest, currentManifest);
- * restoreCached(distPath, diff.unchanged, prevManifest);
+ * restoreCached(rootDir, distDir, diff.unchanged, prevManifest);
  */
 export function restoreCached(
+  rootDir: string,
   distDir: string,
   unchanged: string[],
-  manifest: RouteManifest
+  manifest: RouteManifest,
 ): void {
-  const cacheDir = join(distDir, '..', '.ssg-cache', 'html');
+  const cacheDir = join(rootDir, '.ssg-cache', 'html');
 
   for (const route of unchanged) {
     const routeEntry = manifest.routes[route];
@@ -470,104 +408,163 @@ export function restoreCached(
     }
 
     const sourcePath = join(cacheDir, routeEntry.htmlFile);
-    const destPath = join(distDir, routeEntry.htmlFile);
-
-    // Ensure destination directory exists
-    const destDirPath = dirname(destPath);
-    if (!existsSync(destDirPath)) {
-      mkdirSync(destDirPath, { recursive: true });
+    if (!existsSync(sourcePath)) {
+      continue;
     }
 
-    // Copy file from cache to dist
-    if (existsSync(sourcePath)) {
-      try {
-        copyFileSync(sourcePath, destPath);
-      } catch (err) {
-        // Log but don't fail — file might be temporarily locked or cache might be stale
-        console.warn(`[incremental-ssg] Failed to restore ${route}: ${err}`);
-      }
+    const destPath = join(distDir, routeEntry.htmlFile);
+    mkdirSync(dirname(destPath), {recursive: true});
+
+    try {
+      copyFileSync(sourcePath, destPath);
+    } catch (err) {
+      // Log but don't fail — cache might be stale or file temporarily locked
+      console.warn(`[incremental-ssg] Failed to restore ${route}: ${err}`);
     }
   }
 }
 
 /**
- * Removes cached HTML files that are no longer in the current manifest.
- * Prevents stale files from accumulating when routes are removed between builds.
+ * Deletes cached HTML files whose routes are no longer present in `manifest`.
+ * Prevents stale files from accumulating when routes are removed between
+ * builds.
  */
 function cleanStaleCacheFiles(cacheHtmlDir: string, manifest: RouteManifest): void {
   if (!existsSync(cacheHtmlDir)) {
     return;
   }
 
-  const validFiles = new Set(
-    Object.values(manifest.routes).map((r) => r.htmlFile)
-  );
+  const validFiles = new Set(Object.values(manifest.routes).map((r) => r.htmlFile));
 
-  const cachedFiles = walkFiles(cacheHtmlDir, /\.html$/);
-  for (const cachedFile of cachedFiles) {
-    // Convert absolute path to relative (matching htmlFile format)
-    const relative = cachedFile
-      .slice(cacheHtmlDir.length + 1)
-      .replace(/\\/g, '/');
-    if (!validFiles.has(relative)) {
+  for (const cachedFile of walkFiles(cacheHtmlDir, /\.html$/)) {
+    const rel = relative(cacheHtmlDir, cachedFile).replace(/\\/g, '/');
+    if (!validFiles.has(rel)) {
       try {
         unlinkSync(cachedFile);
       } catch {
-        // Ignore cleanup errors — non-critical
+        // Non-critical: ignore cleanup errors
       }
     }
   }
 }
 
 /**
- * Saves all rendered HTML files to cache and writes the manifest.
- * Mirrors the dist/ directory structure into .ssg-cache/html/ and writes
- * manifest.json for comparison on next build.
+ * Transient build diff written by `prerender()` before the React Router build
+ * starts and consumed by `postbuild-cache.ts` after it completes.
  *
- * @param distDir - Path to the dist directory (SSG output)
- * @param manifest - Current RouteManifest to save for next build
+ * Stored at `.ssg-cache/current-diff.json` for the duration of one build.
+ * Allows `postbuild-cache.ts` to restore the routes that `prerender()` skipped
+ * without recomputing the manifest a second time.
+ */
+export interface BuildDiff {
+  /** Routes skipped by `prerender()` — to be restored from cache post-build. */
+  unchanged: string[];
+  /** Routes returned by `prerender()` for React Router to render. */
+  changed: string[];
+  /** `true` when the global hash changed (full rebuild, no routes skipped). */
+  globalChanged: boolean;
+  /** `true` when no previous manifest existed (first build). */
+  firstBuild: boolean;
+  /** Current {@link RouteManifest} computed before the build started. */
+  manifest: RouteManifest;
+}
+
+/** Absolute path to the transient build diff file. */
+function buildDiffPath(rootDir: string): string {
+  return join(rootDir, '.ssg-cache', 'current-diff.json');
+}
+
+/**
+ * Writes the transient {@link BuildDiff} so `postbuild-cache.ts` can restore
+ * unchanged routes after the build without recomputing the manifest.
+ *
+ * Called from `react-router.config.ts` `prerender()` before the build starts.
+ */
+export function writeBuildDiff(rootDir: string, diff: BuildDiff): void {
+  mkdirSync(join(rootDir, '.ssg-cache'), {recursive: true});
+  writeFileSync(buildDiffPath(rootDir), JSON.stringify(diff, null, 2), 'utf-8');
+}
+
+/**
+ * Reads the transient {@link BuildDiff} written by `prerender()`.
+ * Returns `null` when the file is absent, unreadable, or structurally invalid.
+ */
+export function readBuildDiff(rootDir: string): BuildDiff | null {
+  const diffPath = buildDiffPath(rootDir);
+  if (!existsSync(diffPath)) {
+    return null;
+  }
+  try {
+    const parsed = JSON.parse(readFileSync(diffPath, 'utf-8'));
+    if (
+      !parsed ||
+      typeof parsed !== 'object' ||
+      !Array.isArray(parsed.unchanged) ||
+      !Array.isArray(parsed.changed) ||
+      typeof parsed.manifest !== 'object' ||
+      parsed.manifest === null
+    ) {
+      return null;
+    }
+    return parsed as BuildDiff;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Deletes the transient build diff file after it has been consumed.
+ * Safe to call when the file does not exist.
+ */
+export function clearBuildDiff(rootDir: string): void {
+  try {
+    unlinkSync(buildDiffPath(rootDir));
+  } catch {
+    // Non-critical — file may not exist on first build or if prerender() failed
+  }
+}
+
+/**
+ * Copies all rendered HTML files from `distDir` into `.ssg-cache/html/` and
+ * writes the updated manifest to `.ssg-cache/manifest.json`.
+ *
+ * Call this **after** the build completes so the next build can restore
+ * unchanged routes from cache and skip re-rendering them.
+ *
+ * @param rootDir  - Absolute project root (locates `.ssg-cache/`)
+ * @param distDir  - Build output directory whose HTML files are to be cached
+ * @param manifest - {@link RouteManifest} computed for the current build
  *
  * @example
  * const manifest = computeRouteManifest(rootDir);
- * saveCache(distPath, manifest);
+ * // ... run the build ...
+ * saveCache(rootDir, distDir, manifest);
  */
-export function saveCache(distDir: string, manifest: RouteManifest): void {
-  const cacheDir = join(distDir, '..', '.ssg-cache');
+export function saveCache(rootDir: string, distDir: string, manifest: RouteManifest): void {
+  const cacheDir = join(rootDir, '.ssg-cache');
   const cacheHtmlDir = join(cacheDir, 'html');
 
-  // Ensure cache directories exist
-  if (!existsSync(cacheDir)) {
-    mkdirSync(cacheDir, { recursive: true });
-  }
-  if (!existsSync(cacheHtmlDir)) {
-    mkdirSync(cacheHtmlDir, { recursive: true });
-  }
+  // mkdirSync with recursive:true is a no-op when the directory already exists
+  mkdirSync(cacheHtmlDir, {recursive: true});
 
-  // Copy all HTML files from dist to cache
   for (const [route, routeEntry] of Object.entries(manifest.routes)) {
     const sourcePath = join(distDir, routeEntry.htmlFile);
-    const destPath = join(cacheHtmlDir, routeEntry.htmlFile);
-
-    // Ensure destination directory exists
-    const destDirPath = dirname(destPath);
-    if (!existsSync(destDirPath)) {
-      mkdirSync(destDirPath, { recursive: true });
+    if (!existsSync(sourcePath)) {
+      continue;
     }
 
-    // Copy file to cache
-    if (existsSync(sourcePath)) {
-      try {
-        copyFileSync(sourcePath, destPath);
-      } catch (err) {
-        console.warn(`[incremental-ssg] Failed to cache ${route}: ${err}`);
-      }
+    const destPath = join(cacheHtmlDir, routeEntry.htmlFile);
+    mkdirSync(dirname(destPath), {recursive: true});
+
+    try {
+      copyFileSync(sourcePath, destPath);
+    } catch (err) {
+      console.warn(`[incremental-ssg] Failed to cache ${route}: ${err}`);
     }
   }
 
-  // Clean up stale cache files for routes that no longer exist
   cleanStaleCacheFiles(cacheHtmlDir, manifest);
 
-  // Write manifest for next build
   const manifestPath = join(cacheDir, 'manifest.json');
   try {
     writeFileSync(manifestPath, JSON.stringify(manifest, null, 2), 'utf-8');

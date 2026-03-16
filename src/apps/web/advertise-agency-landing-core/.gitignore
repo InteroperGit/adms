@@ -15,6 +15,9 @@ dist-ssr
 # Vite
 .vite-react-ssg-temp
 
+# React Router — generated types directory
+.react-router/
+
 # Incremental SSG cache — persistent, gitignored
 .ssg-cache/
 

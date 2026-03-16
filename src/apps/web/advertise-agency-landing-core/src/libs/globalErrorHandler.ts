@@ -14,7 +14,10 @@
  * Called when a global error is caught, allowing integration with error reporting services
  * like Sentry, Rollbar, etc.
  */
-type OnErrorCallback = (error: Error, context: { timestamp: string; source: 'error' | 'unhandledrejection' }) => void;
+type OnErrorCallback = (
+  error: Error,
+  context: { timestamp: string; source: 'error' | 'unhandledrejection' }
+) => void;
 
 /**
  * Configuration for global error handlers.
@@ -73,16 +76,12 @@ export function initGlobalErrorHandlers(config?: GlobalErrorHandlerConfig): void
     const timestamp = new Date().toISOString();
 
     // Log structured error information
-    console.error(
-      `[GlobalError] Synchronous error at ${timestamp}`,
-      error,
-      {
-        message: event.message,
-        filename: event.filename,
-        lineno: event.lineno,
-        colno: event.colno,
-      }
-    );
+    console.error(`[GlobalError] Synchronous error at ${timestamp}`, error, {
+      message: event.message,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    });
 
     // Invoke error reporting callback if provided
     if (config?.onError) {
@@ -112,14 +111,10 @@ export function initGlobalErrorHandlers(config?: GlobalErrorHandlerConfig): void
     const timestamp = new Date().toISOString();
 
     // Log structured error information
-    console.error(
-      `[GlobalError] Unhandled promise rejection at ${timestamp}`,
-      error,
-      {
-        reason: event.reason,
-        promise: event.promise,
-      }
-    );
+    console.error(`[GlobalError] Unhandled promise rejection at ${timestamp}`, error, {
+      reason: event.reason,
+      promise: event.promise,
+    });
 
     // Invoke error reporting callback if provided
     if (config?.onError) {

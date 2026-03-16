@@ -167,9 +167,9 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   componentDidUpdate(prevProps: ErrorBoundaryProps) {
     // Auto-reset error state when resetKeys change (e.g., on navigation)
     if (this.state.hasError && this.props.resetKeys) {
-      const keysChanged = !prevProps.resetKeys || this.props.resetKeys.some(
-        (key, index) => key !== prevProps.resetKeys?.[index]
-      );
+      const keysChanged =
+        !prevProps.resetKeys ||
+        this.props.resetKeys.some((key, index) => key !== prevProps.resetKeys?.[index]);
 
       if (keysChanged) {
         this.resetError();
@@ -207,7 +207,9 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
       // In development, show detailed error information for debugging
       if (import.meta.env.DEV) {
-        return <DevErrorFallback error={this.state.error} componentStack={this.state.componentStack} />;
+        return (
+          <DevErrorFallback error={this.state.error} componentStack={this.state.componentStack} />
+        );
       }
 
       // In production, show user-friendly error message

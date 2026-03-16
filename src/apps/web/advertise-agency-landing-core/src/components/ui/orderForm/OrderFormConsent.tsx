@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import type { OrderFormConsent as ConsentData } from '@/types/config/orderForms';
 
 interface OrderFormConsentProps {

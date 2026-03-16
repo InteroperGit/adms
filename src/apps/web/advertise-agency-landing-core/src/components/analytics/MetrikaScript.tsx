@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { useCookieConsent, ConsentState } from '@/hooks/useCookieConsent';
 import { siteData } from '@/types/config/siteData';
 

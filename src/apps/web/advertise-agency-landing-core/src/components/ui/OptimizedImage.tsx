@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { resolveImageSrcSet } from '@/libs/imageSrcSet';
 import { Skeleton } from './skeleton';

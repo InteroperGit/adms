@@ -94,9 +94,7 @@ export function BlockRenderer({ block, caseGradient, caseTitle }: BlockRendererP
   const spacing = SPARSE_BLOCKS.has(block.__component) ? 'py-4' : 'py-8';
   return (
     <div className={spacing}>
-      <ErrorBoundary fallback={<BlockErrorFallback />}>
-        {rendered}
-      </ErrorBoundary>
+      <ErrorBoundary fallback={<BlockErrorFallback />}>{rendered}</ErrorBoundary>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Container } from '@/components/layout/Container';
 import { notFoundContent } from '@/types/config/notFound';
 
@@ -31,3 +31,5 @@ export function NotFound({ backLabel, backHref }: NotFoundProps) {
     </div>
   );
 }
+
+export default NotFound;

@@ -84,7 +84,7 @@ function rmCache() {
 }
 
 function rmDist() {
-  const distDir = resolve(rootDir, 'dist');
+  const distDir = resolve(rootDir, 'build');
   if (existsSync(distDir)) {
     rmSync(distDir, { recursive: true });
   }
@@ -134,7 +134,11 @@ async function test0_HashValidation() {
     const hash2 = hashFile(file2);
     if (hash1 === hash2) {
       const duration = Date.now() - startTime;
-      fail('Test 0', `Different files must produce different hashes (${hash1} === ${hash2})`, duration);
+      fail(
+        'Test 0',
+        `Different files must produce different hashes (${hash1} === ${hash2})`,
+        duration
+      );
       return;
     }
 
@@ -155,7 +159,11 @@ async function test0_HashValidation() {
 
     if (combinedHash !== expectedCombined) {
       const duration = Date.now() - startTime;
-      fail('Test 0', `hashFiles mismatch: got ${combinedHash}, expected ${expectedCombined}`, duration);
+      fail(
+        'Test 0',
+        `hashFiles mismatch: got ${combinedHash}, expected ${expectedCombined}`,
+        duration
+      );
       return;
     }
 
@@ -164,7 +172,11 @@ async function test0_HashValidation() {
     const hash_ba = hashFiles([file2, file1]);
     if (hash_ab !== hash_ba) {
       const duration = Date.now() - startTime;
-      fail('Test 0', `hashFiles must be order-independent: [1,2]=${hash_ab} !== [2,1]=${hash_ba}`, duration);
+      fail(
+        'Test 0',
+        `hashFiles must be order-independent: [1,2]=${hash_ab} !== [2,1]=${hash_ba}`,
+        duration
+      );
       return;
     }
 
@@ -172,7 +184,11 @@ async function test0_HashValidation() {
     const hash1_again = hashFile(file1);
     if (hash1 !== hash1_again) {
       const duration = Date.now() - startTime;
-      fail('Test 0', `Hash should be consistent across calls: ${hash1} !== ${hash1_again}`, duration);
+      fail(
+        'Test 0',
+        `Hash should be consistent across calls: ${hash1} !== ${hash1_again}`,
+        duration
+      );
       return;
     }
 
@@ -190,7 +206,7 @@ async function test0_HashValidation() {
       fail(
         'Test 0',
         `All hashes must be unique. Got ${uniqueHashes.size} unique out of ${allHashes.length} hashes`,
-        duration,
+        duration
       );
       return;
     }
@@ -199,7 +215,7 @@ async function test0_HashValidation() {
     pass(
       'Test 0',
       'Hash calculation verified (single, multiple, order-independence, consistency, uniqueness)',
-      duration,
+      duration
     );
   } catch (err) {
     const duration = Date.now() - startTime;
@@ -226,8 +242,8 @@ async function test1_CleanBuild() {
       return;
     }
 
-    if (!existsSync(resolve(rootDir, 'dist/index.html'))) {
-      fail('Test 1', 'dist/index.html not created', duration);
+    if (!existsSync(resolve(rootDir, 'build/client/index.html'))) {
+      fail('Test 1', 'build/client/index.html not created', duration);
       return;
     }
 
@@ -241,7 +257,11 @@ async function test1_CleanBuild() {
     const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'));
     const routeCount = Object.keys(manifest.routes ?? {}).length;
     if (!manifest.globalHash || routeCount === 0) {
-      fail('Test 1', `Invalid manifest: globalHash=${!!manifest.globalHash}, routes=${routeCount}`, duration);
+      fail(
+        'Test 1',
+        `Invalid manifest: globalHash=${!!manifest.globalHash}, routes=${routeCount}`,
+        duration
+      );
       return;
     }
 
@@ -534,13 +554,21 @@ async function test7_ManifestDiffConsistency() {
 
     if (selfDiff.changed.length !== 0) {
       const duration = Date.now() - startTime;
-      fail('Test 7', `Self-diff reports ${selfDiff.changed.length} changed routes (expected 0)`, duration);
+      fail(
+        'Test 7',
+        `Self-diff reports ${selfDiff.changed.length} changed routes (expected 0)`,
+        duration
+      );
       return;
     }
 
     if (selfDiff.unchanged.length !== routeCount) {
       const duration = Date.now() - startTime;
-      fail('Test 7', `Self-diff: ${selfDiff.unchanged.length} unchanged (expected ${routeCount})`, duration);
+      fail(
+        'Test 7',
+        `Self-diff: ${selfDiff.unchanged.length} unchanged (expected ${routeCount})`,
+        duration
+      );
       return;
     }
 
@@ -555,7 +583,11 @@ async function test7_ManifestDiffConsistency() {
 
     if (nullDiff.changed.length !== routeCount) {
       const duration = Date.now() - startTime;
-      fail('Test 7', `Null-diff: ${nullDiff.changed.length} changed (expected ${routeCount})`, duration);
+      fail(
+        'Test 7',
+        `Null-diff: ${nullDiff.changed.length} changed (expected ${routeCount})`,
+        duration
+      );
       return;
     }
 
@@ -571,7 +603,7 @@ async function test7_ManifestDiffConsistency() {
       const savedDiff = diffManifest(savedManifest, manifest);
       if (verbose) {
         log(
-          `Saved manifest: ${savedDiff.changed.length} changed, ${savedDiff.unchanged.length} unchanged, global=${savedDiff.globalChanged}`,
+          `Saved manifest: ${savedDiff.changed.length} changed, ${savedDiff.unchanged.length} unchanged, global=${savedDiff.globalChanged}`
         );
       }
     }
@@ -580,7 +612,7 @@ async function test7_ManifestDiffConsistency() {
     pass(
       'Test 7',
       `diffManifest verified (${routeCount} routes): self=all unchanged, null=all changed`,
-      duration,
+      duration
     );
   } catch (err) {
     const duration = Date.now() - startTime;
@@ -622,17 +654,13 @@ async function test8_HashUniqueness() {
       fail(
         'Test 8',
         `Found ${collisions.length} hash collision(s):\n${collisions.map((c) => `    ${c}`).join('\n')}`,
-        duration,
+        duration
       );
       return;
     }
 
     const duration = Date.now() - startTime;
-    pass(
-      'Test 8',
-      `All ${routes.length} routes have unique hashes`,
-      duration,
-    );
+    pass('Test 8', `All ${routes.length} routes have unique hashes`, duration);
   } catch (err) {
     const duration = Date.now() - startTime;
     fail('Test 8', `Error: ${err instanceof Error ? err.message : err}`, duration);
@@ -662,7 +690,7 @@ async function test9_RouteDepsCorrectness() {
       fail(
         'Test 9',
         'Home (/) and /portfolio have same hash — section deps likely not found',
-        duration,
+        duration
       );
       return;
     }
@@ -690,7 +718,11 @@ async function test9_RouteDepsCorrectness() {
 
     if (!orderHash || !notFoundHash) {
       const duration = Date.now() - startTime;
-      fail('Test 9', `Missing route in manifest: /order=${!!orderHash}, /404=${!!notFoundHash}`, duration);
+      fail(
+        'Test 9',
+        `Missing route in manifest: /order=${!!orderHash}, /404=${!!notFoundHash}`,
+        duration
+      );
       return;
     }
 
@@ -708,6 +740,88 @@ async function test9_RouteDepsCorrectness() {
   }
 }
 
+async function test10_TrueIncrementalNoRender() {
+  log('Test 10: True incremental — no changes → 0 routes rendered, all from cache');
+  const startTime = Date.now();
+
+  // Requires a previous build to exist (run after test1)
+  const manifestPath = resolve(rootDir, '.ssg-cache/manifest.json');
+  if (!existsSync(manifestPath)) {
+    const duration = Date.now() - startTime;
+    skip('Test 10', '.ssg-cache/manifest.json not found — run tests in order', duration);
+    return;
+  }
+
+  try {
+    // Capture what the manifest looks like before the build
+    const manifestBefore = computeRouteManifest(rootDir);
+    const routeCount = Object.keys(manifestBefore.routes).length;
+
+    if (routeCount === 0) {
+      const duration = Date.now() - startTime;
+      skip('Test 10', 'No routes in manifest (data directory may be missing)', duration);
+      return;
+    }
+
+    // Run a build with no data changes
+    const success = build();
+    const duration = Date.now() - startTime;
+
+    if (!success) {
+      fail('Test 10', 'Build failed', duration);
+      return;
+    }
+
+    // current-diff.json must be gone — consumed and cleared by postbuild-cache.ts
+    const diffFile = resolve(rootDir, '.ssg-cache/current-diff.json');
+    if (existsSync(diffFile)) {
+      fail('Test 10', '.ssg-cache/current-diff.json was not cleaned up by postbuild-cache.ts', duration);
+      return;
+    }
+
+    // The saved manifest must be identical to what we computed before the build
+    // (nothing changed → hashes are the same → 0 changed routes)
+    const savedManifest = loadPreviousManifest(rootDir);
+    if (!savedManifest) {
+      fail('Test 10', '.ssg-cache/manifest.json missing after build', duration);
+      return;
+    }
+
+    const diff = diffManifest(savedManifest, manifestBefore);
+    if (diff.changed.length !== 0) {
+      fail(
+        'Test 10',
+        `Expected 0 changed routes but got ${diff.changed.length}: ${diff.changed.slice(0, 3).join(', ')}`,
+        duration
+      );
+      return;
+    }
+
+    // Every expected HTML file must be present (restored from cache by postbuild-cache.ts)
+    const missingFiles = Object.values(savedManifest.routes)
+      .map((r) => resolve(rootDir, 'build/client', r.htmlFile))
+      .filter((f) => !existsSync(f));
+
+    if (missingFiles.length > 0) {
+      fail(
+        'Test 10',
+        `${missingFiles.length} HTML file(s) missing after cache restoration`,
+        duration
+      );
+      return;
+    }
+
+    pass(
+      'Test 10',
+      `All ${routeCount} routes served from cache — 0 routes re-rendered`,
+      duration
+    );
+  } catch (err) {
+    const duration = Date.now() - startTime;
+    fail('Test 10', `Error: ${err instanceof Error ? err.message : err}`, duration);
+  }
+}
+
 async function main() {
   console.log(`\n${colors.cyan}=== Incremental SSG Test Suite ===${colors.reset}\n`);
 
@@ -722,8 +836,12 @@ async function main() {
     await test7_ManifestDiffConsistency();
     await test8_HashUniqueness();
     await test9_RouteDepsCorrectness();
+    await test10_TrueIncrementalNoRender();
   } catch (err) {
-    console.error(`\n${colors.red}Test suite error:${colors.reset}`, err instanceof Error ? err.message : err);
+    console.error(
+      `\n${colors.red}Test suite error:${colors.reset}`,
+      err instanceof Error ? err.message : err
+    );
     // Continue to show summary even on error
   }
 

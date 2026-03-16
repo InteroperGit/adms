@@ -1,4 +1,4 @@
-import { useRouteError } from 'react-router-dom';
+import { useRouteError } from 'react-router';
 import { ErrorFallback } from '@/components/error';
 
 /**
@@ -26,7 +26,10 @@ export function RouteError() {
   } else if (error && typeof error === 'object' && 'statusText' in error) {
     // React-router Response object (from loaders)
     const responseError = error as { statusText?: string; status?: number };
-    console.error('[RouteError] Route response error:', responseError.statusText || responseError.status);
+    console.error(
+      '[RouteError] Route response error:',
+      responseError.statusText || responseError.status
+    );
   } else if (typeof error === 'string') {
     console.error('[RouteError] String error:', error);
   } else {

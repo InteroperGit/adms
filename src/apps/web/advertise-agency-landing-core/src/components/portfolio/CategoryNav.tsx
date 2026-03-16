@@ -1,5 +1,5 @@
 // src/components/portfolio/CategoryNav.tsx
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { cn } from '@/libs/utils';
 import { categories } from '@/types/config/categories';
 import { portfolioConfig } from '@/types/config/portfolioConfig';

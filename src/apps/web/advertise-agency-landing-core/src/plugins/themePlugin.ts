@@ -82,24 +82,6 @@ function buildCss(theme: Theme): string {
   return blocks.join('\n\n');
 }
 
-/**
- * @description Generates HTML link tags for font preconnect and stylesheet imports.
- *
- * @param {string[]} urls - Array of font stylesheet URLs
- * @returns {string} HTML link tags for fonts injection
- */
-function buildFontLinks(urls: string[]): string {
-  const preconnect = [
-    '<link rel="preconnect" href="https://fonts.googleapis.com" />',
-    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />',
-  ].join('\n    ');
-
-  const stylesheets = urls.map((url) => `<link rel="stylesheet" href="${url}" />`).join('\n    ');
-
-  return `${preconnect}\n    ${stylesheets}`;
-}
-
-const ANTI_FOUC_SCRIPT = `<script>(function(){try{var m=localStorage.getItem('theme-mode');if(m==='dark'||(m===null&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})();</script>`;
 
 /**
  * @description Vite plugin that injects CSS custom properties and font links for theme customization.
@@ -155,13 +137,10 @@ export function themePlugin(): Plugin {
     transformIndexHtml(html) {
       const css = buildCss(theme);
       const style = `<style id="theme-vars">${css}</style>`;
-      const fonts = buildFontLinks(theme.fontUrls);
-      const themeColor = theme.colors.primary ? `hsl(${theme.colors.primary})` : '';
 
       let out = html;
       out = out.replace(/(<html[^>]*\blang=")[^"]*(")/i, `$1${lang}$2`);
-      out = out.replace(/(<meta\s+name="theme-color"\s+content=")[^"]*(")/i, `$1${themeColor}$2`);
-      out = out.replace('</head>', `${ANTI_FOUC_SCRIPT}\n    ${fonts}\n    ${style}\n  </head>`);
+      out = out.replace('</head>', `    ${style}\n  </head>`);
       return out;
     },
   };
