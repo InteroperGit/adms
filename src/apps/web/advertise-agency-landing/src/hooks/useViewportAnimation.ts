@@ -21,9 +21,10 @@ import { useEffect, useRef, useState } from 'react';
  *   );
  * }
  */
-export function useViewportAnimation(
-  { threshold = 0.3 } = {}
-): [React.RefObject<HTMLDivElement | null>, boolean] {
+export function useViewportAnimation({ threshold = 0.3 } = {}): [
+  React.RefObject<HTMLDivElement | null>,
+  boolean,
+] {
   const ref = useRef<HTMLDivElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
 

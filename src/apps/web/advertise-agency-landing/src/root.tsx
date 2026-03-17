@@ -54,9 +54,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <ThemeContext.Provider value={{ isDark, toggle }}>
-          {children}
-        </ThemeContext.Provider>
+        <ThemeContext.Provider value={{ isDark, toggle }}>{children}</ThemeContext.Provider>
         <ScrollRestoration />
         <Scripts />
       </body>

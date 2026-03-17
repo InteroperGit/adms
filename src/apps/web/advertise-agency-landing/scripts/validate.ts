@@ -84,7 +84,7 @@ function sec(name: string): string {
 
 // ── Validation primitives ──────────────────────────────────────────────────────
 
-type Schema = {parse: (data: unknown) => unknown};
+type Schema = { parse: (data: unknown) => unknown };
 
 /**
  * Runs `fn()`, logs a ✓/✗ result line, and returns 1 on error or 0 on success.
@@ -118,15 +118,19 @@ function checkOptional(label: string, filePath: string, schema: Schema): number 
 
 function validateConfig(): number {
   let errors = 0;
-  errors += check('site.json',       () => SiteDataSchema.parse(readJson(cfg('site.json'))));
-  errors += check('theme.json',      () => ThemeSchema.parse(readJson(cfg('theme.json'))));
-  errors += check('categories.json', () => CategoriesSchema.parse(readJson(cfg('categories.json'))));
-  errors += check('portfolio.json',  () => PortfolioConfigSchema.parse(readJson(cfg('portfolio.json'))));
-  errors += check('cookies.json',    () => CookiesContentSchema.parse(readJson(cfg('cookies.json'))));
-  errors += checkOptional('legal.json',      cfg('legal.json'),      LegalDataSchema);
-  errors += checkOptional('seo.json',        cfg('seo.json'),        SeoConfigSchema);
+  errors += check('site.json', () => SiteDataSchema.parse(readJson(cfg('site.json'))));
+  errors += check('theme.json', () => ThemeSchema.parse(readJson(cfg('theme.json'))));
+  errors += check('categories.json', () =>
+    CategoriesSchema.parse(readJson(cfg('categories.json')))
+  );
+  errors += check('portfolio.json', () =>
+    PortfolioConfigSchema.parse(readJson(cfg('portfolio.json')))
+  );
+  errors += check('cookies.json', () => CookiesContentSchema.parse(readJson(cfg('cookies.json'))));
+  errors += checkOptional('legal.json', cfg('legal.json'), LegalDataSchema);
+  errors += checkOptional('seo.json', cfg('seo.json'), SeoConfigSchema);
   errors += checkOptional('orderForms.json', cfg('orderForms.json'), OrderFormsDataSchema);
-  errors += checkOptional('notFound.json',   cfg('notFound.json'),   NotFoundContentSchema);
+  errors += checkOptional('notFound.json', cfg('notFound.json'), NotFoundContentSchema);
   return errors;
 }
 
@@ -137,43 +141,42 @@ function validateConfig(): number {
  * Add a new entry here when a new section JSON + schema is introduced.
  */
 const SECTION_SCHEMAS: [string, Schema][] = [
-  ['header/header.json',                    HeaderContentSchema],
-  ['hero/hero.json',                        HeroContentSchema],
-  ['carousel/carousel.json',                CarouselSlidesSchema],
-  ['carousel/carouselContent.json',         CarouselSectionContentSchema],
-  ['about/aboutContent.json',               AboutSectionContentSchema],
-  ['about/aboutValues.json',                AboutValuesSchema],
-  ['services/servicesContent.json',         ServicesSectionContentSchema],
-  ['services/services.json',                ServicesSchema],
-  ['advantages/advantagesContent.json',     AdvantagesSectionContentSchema],
-  ['advantages/advantages.json',            AdvantagesSchema],
-  ['call-to-action/callToAction.json',      CallToActionContentSchema],
+  ['header/header.json', HeaderContentSchema],
+  ['hero/hero.json', HeroContentSchema],
+  ['carousel/carousel.json', CarouselSlidesSchema],
+  ['carousel/carouselContent.json', CarouselSectionContentSchema],
+  ['about/aboutContent.json', AboutSectionContentSchema],
+  ['about/aboutValues.json', AboutValuesSchema],
+  ['services/servicesContent.json', ServicesSectionContentSchema],
+  ['services/services.json', ServicesSchema],
+  ['advantages/advantagesContent.json', AdvantagesSectionContentSchema],
+  ['advantages/advantages.json', AdvantagesSchema],
+  ['call-to-action/callToAction.json', CallToActionContentSchema],
   ['testimonials/testimonialsContent.json', TestimonialsSectionContentSchema],
-  ['testimonials/testimonials.json',        TestimonialsSchema],
-  ['contact/contact.json',                  ContactContentSchema],
-  ['footer/footer.json',                    FooterContentSchema],
-  ['portfolio/portfolioPage.json',          PortfolioPageContentSchema],
-  ['portfolio/portfolioSection.json',       PortfolioSectionContentSchema],
-  ['portfolio/portfolioCase.json',          PortfolioCaseContentSchema],
-  ['portfolio/imageGallery.json',           ImageGalleryContentSchema],
+  ['testimonials/testimonials.json', TestimonialsSchema],
+  ['contact/contact.json', ContactContentSchema],
+  ['footer/footer.json', FooterContentSchema],
+  ['portfolio/portfolioPage.json', PortfolioPageContentSchema],
+  ['portfolio/portfolioSection.json', PortfolioSectionContentSchema],
+  ['portfolio/portfolioCase.json', PortfolioCaseContentSchema],
+  ['portfolio/imageGallery.json', ImageGalleryContentSchema],
 ];
 
 function validateSections(): number {
   return SECTION_SCHEMAS.reduce(
-    (errors, [name, schema]) =>
-      errors + check(name, () => schema.parse(readJson(sec(name)))),
-    0,
+    (errors, [name, schema]) => errors + check(name, () => schema.parse(readJson(sec(name)))),
+    0
   );
 }
 
 // ── Portfolio case validation ──────────────────────────────────────────────────
 
-function validatePortfolioCases(): {errors: number; files: string[]} {
+function validatePortfolioCases(): { errors: number; files: string[] } {
   const files = walkJsonFiles(portfolioDir);
 
   if (files.length === 0) {
     console.log('  (no portfolio cases found)');
-    return {errors: 0, files: []};
+    return { errors: 0, files: [] };
   }
 
   const errors = files.reduce((sum, file) => {
@@ -181,7 +184,7 @@ function validatePortfolioCases(): {errors: number; files: string[]} {
     return sum + check(label, () => PortfolioCaseSchema.parse(readJson(file)));
   }, 0);
 
-  return {errors, files};
+  return { errors, files };
 }
 
 // ── Hex color advisory check ───────────────────────────────────────────────────
@@ -241,7 +244,7 @@ function checkHexColorAdvisories(files: string[]): void {
             const label = path.relative(portfolioDir, file);
             console.log(
               `  💡 ${label} (block ${blockIdx}, ${position} row ${colorType}): ` +
-                `"${colorValue}" → consider using "${token}"`,
+                `"${colorValue}" → consider using "${token}"`
             );
             advisories++;
           }
@@ -267,7 +270,7 @@ function main(): void {
   const sectionErrors = validateSections();
 
   console.log('\nPortfolio cases:');
-  const {errors: caseErrors, files} = validatePortfolioCases();
+  const { errors: caseErrors, files } = validatePortfolioCases();
 
   console.log('\nChecking for migrable hex colors in list blocks:');
   checkHexColorAdvisories(files);

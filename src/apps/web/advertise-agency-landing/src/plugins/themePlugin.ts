@@ -82,7 +82,6 @@ function buildCss(theme: Theme): string {
   return blocks.join('\n\n');
 }
 
-
 /**
  * @description Vite plugin that injects CSS custom properties and font links for theme customization.
  * Reads theme.json to generate :root CSS variables, optional dark-mode overrides, and injects

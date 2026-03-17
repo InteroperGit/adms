@@ -20,7 +20,12 @@ interface SectionBadgeProps {
  * <SectionBadge label="Our Services" variant="light" />
  * <SectionBadge label="Featured" dot variant="light" />
  */
-export function SectionBadge({ label, variant = 'light', dot = false, className }: SectionBadgeProps) {
+export function SectionBadge({
+  label,
+  variant = 'light',
+  dot = false,
+  className,
+}: SectionBadgeProps) {
   return (
     <div
       className={cn(

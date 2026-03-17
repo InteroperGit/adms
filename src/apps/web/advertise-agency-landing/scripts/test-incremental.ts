@@ -775,7 +775,11 @@ async function test10_TrueIncrementalNoRender() {
     // current-diff.json must be gone — consumed and cleared by postbuild-cache.ts
     const diffFile = resolve(rootDir, '.ssg-cache/current-diff.json');
     if (existsSync(diffFile)) {
-      fail('Test 10', '.ssg-cache/current-diff.json was not cleaned up by postbuild-cache.ts', duration);
+      fail(
+        'Test 10',
+        '.ssg-cache/current-diff.json was not cleaned up by postbuild-cache.ts',
+        duration
+      );
       return;
     }
 
@@ -811,11 +815,7 @@ async function test10_TrueIncrementalNoRender() {
       return;
     }
 
-    pass(
-      'Test 10',
-      `All ${routeCount} routes served from cache — 0 routes re-rendered`,
-      duration
-    );
+    pass('Test 10', `All ${routeCount} routes served from cache — 0 routes re-rendered`, duration);
   } catch (err) {
     const duration = Date.now() - startTime;
     fail('Test 10', `Error: ${err instanceof Error ? err.message : err}`, duration);

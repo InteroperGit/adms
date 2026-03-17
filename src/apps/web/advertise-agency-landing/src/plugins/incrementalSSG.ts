@@ -1,4 +1,4 @@
-import {createHash} from 'crypto';
+import { createHash } from 'crypto';
 import {
   copyFileSync,
   existsSync,
@@ -9,7 +9,7 @@ import {
   unlinkSync,
   writeFileSync,
 } from 'fs';
-import {dirname, join, relative} from 'path';
+import { dirname, join, relative } from 'path';
 
 /**
  * Computes SHA-256 hash of a single file's content.
@@ -86,11 +86,11 @@ function getJsonFiles(dir: string): string[] {
  *
  * @throws {Error} When the string does not match the `YYYY-MM-DD` format.
  */
-function extractYearMonth(date: string): {year: string; month: string} {
+function extractYearMonth(date: string): { year: string; month: string } {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     throw new Error(`Invalid date format. Expected "YYYY-MM-DD", got "${date}"`);
   }
-  return {year: date.slice(0, 4), month: date.slice(5, 7)};
+  return { year: date.slice(0, 4), month: date.slice(5, 7) };
 }
 
 /**
@@ -98,8 +98,8 @@ function extractYearMonth(date: string): {year: string; month: string} {
  * Returns an empty array when the file is absent or unparseable.
  */
 function getCategories(
-  contentDir: string,
-): Array<{name?: string; slug: string; [key: string]: unknown}> {
+  contentDir: string
+): Array<{ name?: string; slug: string; [key: string]: unknown }> {
   const categoriesPath = join(contentDir, 'config/categories.json');
   if (!existsSync(categoriesPath)) {
     return [];
@@ -125,11 +125,9 @@ function getCategories(
  */
 function buildCaseRouteDeps(
   allCases: string[],
-  categories: Array<{name?: string; slug: string}>,
+  categories: Array<{ name?: string; slug: string }>
 ): Record<string, string[]> {
-  const categoryByName = new Map(
-    categories.filter((c) => c.name).map((c) => [c.name!, c.slug]),
-  );
+  const categoryByName = new Map(categories.filter((c) => c.name).map((c) => [c.name!, c.slug]));
 
   const map: Record<string, string[]> = {};
 
@@ -145,7 +143,7 @@ function buildCaseRouteDeps(
         continue;
       }
 
-      const {year, month} = extractYearMonth(caseData.publishDate);
+      const { year, month } = extractYearMonth(caseData.publishDate);
       const catSlug = categoryByName.get(caseData.category);
 
       const routes = [
@@ -273,7 +271,7 @@ function buildRouteDataMap(rootDir: string): Record<string, string[]> {
  */
 export interface RouteManifest {
   globalHash: string;
-  routes: Record<string, {hash: string; htmlFile: string}>;
+  routes: Record<string, { hash: string; htmlFile: string }>;
 }
 
 /**
@@ -295,8 +293,7 @@ export function computeRouteManifest(rootDir: string): RouteManifest {
       .update(route + '\0' + dataHash)
       .digest('hex');
     // Map route to output HTML file (/path → path/index.html)
-    const htmlFile =
-      route === '/' ? 'index.html' : `${route.replace(/^\//, '')}/index.html`;
+    const htmlFile = route === '/' ? 'index.html' : `${route.replace(/^\//, '')}/index.html`;
 
     routes[route] = {
       hash,
@@ -305,7 +302,7 @@ export function computeRouteManifest(rootDir: string): RouteManifest {
     };
   }
 
-  return {globalHash, routes};
+  return { globalHash, routes };
 }
 
 /**
@@ -353,10 +350,7 @@ export interface ManifestDiff {
  * When `previous` is `null` (first build) or the global hash changed, every
  * route in `current` is returned as changed to trigger a full rebuild.
  */
-export function diffManifest(
-  previous: RouteManifest | null,
-  current: RouteManifest,
-): ManifestDiff {
+export function diffManifest(previous: RouteManifest | null, current: RouteManifest): ManifestDiff {
   if (!previous || previous.globalHash !== current.globalHash) {
     return {
       changed: Object.keys(current.routes),
@@ -377,7 +371,7 @@ export function diffManifest(
     }
   }
 
-  return {changed, unchanged, globalChanged: false};
+  return { changed, unchanged, globalChanged: false };
 }
 
 /**
@@ -397,7 +391,7 @@ export function restoreCached(
   rootDir: string,
   distDir: string,
   unchanged: string[],
-  manifest: RouteManifest,
+  manifest: RouteManifest
 ): void {
   const cacheDir = join(rootDir, '.ssg-cache', 'html');
 
@@ -413,7 +407,7 @@ export function restoreCached(
     }
 
     const destPath = join(distDir, routeEntry.htmlFile);
-    mkdirSync(dirname(destPath), {recursive: true});
+    mkdirSync(dirname(destPath), { recursive: true });
 
     try {
       copyFileSync(sourcePath, destPath);
@@ -481,7 +475,7 @@ function buildDiffPath(rootDir: string): string {
  * Called from `react-router.config.ts` `prerender()` before the build starts.
  */
 export function writeBuildDiff(rootDir: string, diff: BuildDiff): void {
-  mkdirSync(join(rootDir, '.ssg-cache'), {recursive: true});
+  mkdirSync(join(rootDir, '.ssg-cache'), { recursive: true });
   writeFileSync(buildDiffPath(rootDir), JSON.stringify(diff, null, 2), 'utf-8');
 }
 
@@ -545,7 +539,7 @@ export function saveCache(rootDir: string, distDir: string, manifest: RouteManif
   const cacheHtmlDir = join(cacheDir, 'html');
 
   // mkdirSync with recursive:true is a no-op when the directory already exists
-  mkdirSync(cacheHtmlDir, {recursive: true});
+  mkdirSync(cacheHtmlDir, { recursive: true });
 
   for (const [route, routeEntry] of Object.entries(manifest.routes)) {
     const sourcePath = join(distDir, routeEntry.htmlFile);
@@ -554,7 +548,7 @@ export function saveCache(rootDir: string, distDir: string, manifest: RouteManif
     }
 
     const destPath = join(cacheHtmlDir, routeEntry.htmlFile);
-    mkdirSync(dirname(destPath), {recursive: true});
+    mkdirSync(dirname(destPath), { recursive: true });
 
     try {
       copyFileSync(sourcePath, destPath);

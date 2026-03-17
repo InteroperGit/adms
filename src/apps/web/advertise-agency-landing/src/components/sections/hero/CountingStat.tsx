@@ -23,8 +23,13 @@ interface CountingStatProps {
  * @example <caption>Hero section stat with animation</caption>
  * <CountingStat value="150+" label="Happy Clients" icon={Award} animate={true} isAnimating={true} />
  */
-export function CountingStat({ value, label, icon: Icon, animate, isAnimating = false }: CountingStatProps) {
-
+export function CountingStat({
+  value,
+  label,
+  icon: Icon,
+  animate,
+  isAnimating = false,
+}: CountingStatProps) {
   const match = value.match(/^(\d+)(.*)$/);
   const targetNum = match ? parseInt(match[1], 10) : 0;
   const suffix = match ? match[2] : value;
@@ -34,7 +39,12 @@ export function CountingStat({ value, label, icon: Icon, animate, isAnimating = 
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl border border-transparent bg-primary/10 text-primary dark:border-primary/50', isAnimating && 'animate-cta-pulse-slow')}>
+      <div
+        className={cn(
+          'flex h-10 w-10 items-center justify-center rounded-xl border border-transparent bg-primary/10 text-primary dark:border-primary/50',
+          isAnimating && 'animate-cta-pulse-slow'
+        )}
+      >
         <Icon size={20} />
       </div>
       <span
