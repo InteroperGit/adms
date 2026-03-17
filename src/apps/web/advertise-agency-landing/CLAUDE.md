@@ -1,4 +1,4 @@
-# CLAUDE.md — advertise-agency-landing-core
+# CLAUDE.md — advertise-agency-landing
 
 ## Project Overview
 

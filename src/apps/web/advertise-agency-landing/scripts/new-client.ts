@@ -118,7 +118,7 @@ function copyExample(
 
 async function main(): Promise<void> {
   console.log('\n┌──────────────────────────────────────────────────────────────────────────┐');
-  console.log('│           advertise-agency-landing-core — New Client Setup                │');
+  console.log('│           advertise-agency-landing — New Client Setup                    │');
   console.log('└──────────────────────────────────────────────────────────────────────────┘\n');
   console.log('This wizard generates data/content/ files for a new client.');
   console.log('All generated section files are templates — edit them after generation.\n');

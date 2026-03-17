@@ -21,7 +21,7 @@
       "Bash(claude plugin:*)",
       "Bash(while read:*)",
       "Bash(do echo:*)",
-      "Read(//d/Projects/adms/src/apps/web/advertise-agency-landing-core/**)",
+      "Read(//d/Projects/adms/src/apps/web/advertise-agency-landing/**)",
       "Bash(done)",
       "mcp__context7__resolve-library-id"
     ]
