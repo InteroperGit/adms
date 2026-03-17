@@ -25,20 +25,21 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks(id) {
-          if (
-            id.includes('/react/') ||
-            id.includes('/react-dom/') ||
-            id.includes('/react-router/') ||
-            id.includes('/zod/')
-          ) {
-            return 'vendor';
-          }
-          if (id.includes('/lucide-react/')) {
-            return 'icons';
-          }
+        codeSplitting: {
+          groups: [
+            {
+              name: 'vendor',
+              test: /[\\/](react|react-dom|react-router|zod)[\\/]/,
+              priority: 20,
+            },
+            {
+              name: 'icons',
+              test: /[\\/]lucide-react[\\/]/,
+              priority: 10,
+            },
+          ],
         },
       },
     },

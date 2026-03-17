@@ -2,15 +2,16 @@
 
 ## Tech Stack
 
-| Layer       | Technology                              |
-|-------------|-----------------------------------------|
-| Framework   | Vite 7 + React 19 + TypeScript 5.9     |
-| SSG         | vite-react-ssg 0.9.1-beta.1            |
-| Routing     | react-router-dom v6 (RouteObject[])    |
-| Styling     | Tailwind CSS v4 + shadcn/ui            |
-| Package mgr | pnpm (never npm or yarn)               |
-| Linting     | ESLint + Prettier                       |
-| Icons       | lucide-react (via ICON_MAP only)        |
+| Layer       | Technology                                           |
+|-------------|------------------------------------------------------|
+| Framework   | Vite 8 + React 19 + TypeScript 5.9                  |
+| Bundler     | Rolldown (Rust-based, replaces Rollup + esbuild)     |
+| SSG         | React Router v7 framework mode (`ssr: false`)        |
+| Routing     | react-router v7 (`src/routes.ts`, `RouteConfig`)     |
+| Styling     | Tailwind CSS v4 + shadcn/ui                          |
+| Package mgr | pnpm (never npm or yarn)                             |
+| Linting     | ESLint + Prettier                                    |
+| Icons       | lucide-react (via ICON_MAP only)                     |
 
 ## Routes
 
