@@ -32,7 +32,7 @@ export function AdvantageCard({ item, index }: AdvantageCardProps) {
         </span>
       </div>
       <h3 className="mb-2 text-base font-semibold text-foreground">{item.title}</h3>
-      <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+      <p className="flex-grow text-sm leading-relaxed text-muted-foreground">{item.description}</p>
     </ItemCard>
   );
 }

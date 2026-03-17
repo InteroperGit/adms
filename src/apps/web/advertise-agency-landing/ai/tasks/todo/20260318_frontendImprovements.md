@@ -23,6 +23,7 @@ All changes are white-label safe — no hardcoded brand values; everything flows
 
 ## F1. Staggered grid card reveal animations
 
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** High
 **Impact:** Home page (Services, Portfolio, Advantages grids)
 
@@ -62,6 +63,14 @@ Approach:
 4. Respect `prefers-reduced-motion` — skip delays, show immediately
 
 **Files:** `src/index.css`, `src/hooks/useStaggeredReveal.ts` (new), `src/components/sections/services/index.tsx`, `src/components/sections/advantages/index.tsx`, `src/components/sections/portfolio/index.tsx`
+
+**Status:** ✅ Complete (commit 90135d9)
+- Implemented `useStaggeredReveal` hook with 60ms inter-card delays
+- Added stagger-fade-in animation (0.5s ease-out)
+- Applied to Services, Advantages, Portfolio grids
+- Fixed card heights (ItemCard: h-full flex-col)
+- PortfolioCard: 4-line description limit, aligned badges
+- Respects prefers-reduced-motion
 
 ---
 

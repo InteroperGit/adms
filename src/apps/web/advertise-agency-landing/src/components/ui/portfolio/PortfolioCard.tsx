@@ -25,7 +25,7 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
   return (
     <article
       className={cn(
-        'group overflow-hidden rounded-2xl border border-border bg-card shadow-sm',
+        'group h-full flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm',
         'transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg'
       )}
     >
@@ -37,9 +37,13 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
         gradient={item.hero.gradient}
       />
 
-      <div className="p-6">
+      <div className="flex flex-col flex-grow p-6">
         <h3 className="mb-2 text-lg font-semibold leading-snug text-foreground">{item.title}</h3>
-        <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+        <p className="mb-4 line-clamp-4 text-sm leading-relaxed text-muted-foreground">
+          {item.description}
+        </p>
+
+        <div className="flex-grow" />
 
         <div className="mb-5 flex flex-wrap gap-2">
           {item.tags.map((tag) => (

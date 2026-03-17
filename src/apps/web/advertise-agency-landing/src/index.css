@@ -17,6 +17,17 @@
   }
 }
 
+@keyframes stagger-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes cta-pulse {
   0%,
   100% {
@@ -253,6 +264,16 @@
 .fade-in-section.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ─── Staggered grid item reveal ────────────────────────────────────────────── */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.stagger-visible .stagger-item {
+  animation: stagger-fade-in 0.5s ease-out forwards;
 }
 
 /* ─── Custom utilities ──────────────────────────────────────────────────────── */

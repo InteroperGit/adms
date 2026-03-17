@@ -25,7 +25,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
         <SectionIconBox icon={Icon} size={22} className="icon-shake mb-4 h-12 w-12" />
         <h3 className="text-lg font-semibold text-foreground">{service.title}</h3>
       </div>
-      <p className="text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+      <p className="flex-grow text-sm leading-relaxed text-muted-foreground">
+        {service.description}
+      </p>
     </ItemCard>
   );
 }
