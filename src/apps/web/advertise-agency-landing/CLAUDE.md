@@ -45,6 +45,7 @@ pnpm new-client       # Bootstrap new client
 
 Detailed documentation is organized in `ai/docs/`:
 
+- **[`ai/docs/pdrWorkflow.md`](./ai/docs/pdrWorkflow.md)** — PDR step workflow, validation sequence, marking steps complete
 - **[`ai/docs/architecture.md`](./ai/docs/architecture.md)** — Tech stack, routes, SSG setup, gotchas
 - **[`ai/docs/data-map.md`](./ai/docs/data-map.md)** — Full JSON → type module → component mapping
 - **[`ai/docs/hooks.md`](./ai/docs/hooks.md)** — Custom hooks API reference (useInViewport, useRandomButtonHighlight, useTheme, etc.)
