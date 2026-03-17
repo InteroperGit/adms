@@ -1,8 +1,7 @@
-import { useRef } from 'react';
 import { useLocation } from 'react-router';
 import { Container } from '@/components/layout/Container';
 import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
-import { useInViewport } from '@/hooks/useInViewport';
+import { useViewportAnimation } from '@/hooks/useViewportAnimation';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
 import { HeaderMobileNav } from './HeaderMobileNav';
 import { Logo } from '@/components/ui/Logo';
@@ -21,10 +20,9 @@ const HEADER_BUTTON_COUNT = 4;
 export function Header() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-  const highlightRaw = useRandomButtonHighlight(HEADER_BUTTON_COUNT);
+  const [headerRef, isHeaderVisible] = useViewportAnimation({ threshold: 0 });
+  const highlightRaw = useRandomButtonHighlight(isHeaderVisible ? HEADER_BUTTON_COUNT : 0);
   const { isDark, toggle } = useTheme();
-  const headerRef = useRef<HTMLElement>(null);
-  const isHeaderVisible = useInViewport(headerRef);
 
   // Only show highlight when header is in viewport
   const highlightedActionIndex = isHeaderVisible ? highlightRaw : null;

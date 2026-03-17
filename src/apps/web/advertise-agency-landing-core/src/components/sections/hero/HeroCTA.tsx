@@ -31,7 +31,7 @@ export function HeroCTA({ cta }: HeroCTAProps) {
           asChild
           variant="outline"
           size="lg"
-          className="rounded-full px-8 hover:bg-muted hover:text-primary"
+          className="rounded-full px-8 dark:border-primary/50 hover:bg-muted hover:text-primary"
         >
           <a href={secondary.href}>{secondary.label}</a>
         </Button>

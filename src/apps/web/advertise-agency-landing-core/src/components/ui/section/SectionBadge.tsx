@@ -3,6 +3,7 @@ import { cn } from '@/libs/utils';
 interface SectionBadgeProps {
   label: string;
   variant?: 'light' | 'dark';
+  dot?: boolean;
   className?: string;
 }
 
@@ -12,12 +13,14 @@ interface SectionBadgeProps {
  * @param {SectionBadgeProps} props
  * @param {string} props.label - Badge text
  * @param {'light'|'dark'} [props.variant='light'] - Color scheme
+ * @param {boolean} [props.dot=false] - Show animated dot indicator before label
  * @param {string} [props.className] - Additional classes
  * @returns {JSX.Element} Rounded pill badge with border and background
  * @example
  * <SectionBadge label="Our Services" variant="light" />
+ * <SectionBadge label="Featured" dot variant="light" />
  */
-export function SectionBadge({ label, variant = 'light', className }: SectionBadgeProps) {
+export function SectionBadge({ label, variant = 'light', dot = false, className }: SectionBadgeProps) {
   return (
     <div
       className={cn(
@@ -28,6 +31,7 @@ export function SectionBadge({ label, variant = 'light', className }: SectionBad
         className
       )}
     >
+      {dot && <span className="h-1.5 w-1.5 rounded-full bg-primary" />}
       {label}
     </div>
   );

@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
 import { Award, TrendingUp, Users } from 'lucide-react';
+import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
+import { useViewportAnimation } from '@/hooks/useViewportAnimation';
 import { CountingStat } from './CountingStat';
 
 const STAT_ICONS = [Award, TrendingUp, Users];
@@ -18,30 +19,8 @@ interface HeroStatsProps {
  * <HeroStats stats={[{ value: "150+", label: "Clients" }, { value: "200+", label: "Projects" }, { value: "10+", label: "Years" }]} />
  */
 export function HeroStats({ stats }: HeroStatsProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const raf = requestAnimationFrame(() => setHasAnimated(true));
-      return () => cancelAnimationFrame(raf);
-    }
-    const el = ref.current;
-    if (!el) {
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHasAnimated(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, hasAnimated] = useViewportAnimation({ threshold: 0.3 });
+  const animatingIndex = useRandomButtonHighlight(hasAnimated ? stats.length : 0);
 
   return (
     <div
@@ -57,6 +36,7 @@ export function HeroStats({ stats }: HeroStatsProps) {
             label={stat.label}
             icon={Icon}
             animate={hasAnimated}
+            isAnimating={animatingIndex === i}
           />
         );
       })}

@@ -1,6 +1,6 @@
 import { Container } from '@/components/layout/Container';
 import { heroContent } from '@/types/sections/hero/hero';
-import { cn } from '@/libs/utils';
+import { SectionBadge } from '@/components/ui/section/SectionBadge';
 import { HeroCTA } from './HeroCTA';
 import { HeroStats } from './HeroStats';
 
@@ -31,17 +31,10 @@ export function Hero() {
 
       <Container className="py-24 md:py-32">
         <div className="mx-auto max-w-4xl text-center">
-          <div
-            className={cn(
-              'mb-6 inline-flex items-center gap-2 rounded-full border',
-              'border-primary/20 bg-primary/5',
-              'px-3 py-1 text-xs font-medium text-primary',
-              'sm:px-4 sm:py-1.5 sm:text-sm'
-            )}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            {hero.badge}
-          </div>
+          <SectionBadge
+            label={hero.badge}
+            className="mb-6 px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm"
+          />
 
           <h1 className="mb-6 text-foreground">
             {hero.title}

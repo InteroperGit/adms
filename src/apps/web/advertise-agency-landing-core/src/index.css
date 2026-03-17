@@ -37,6 +37,16 @@
   }
 }
 
+@keyframes cta-pulse-slow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px hsl(var(--primary) / 0);
+  }
+}
+
 @keyframes pulse-green {
   0%,
   100% {
@@ -131,6 +141,7 @@
   --animate-fade-in: fade-in 0.5s ease-out;
   --animate-cta-pulse: cta-pulse 2.5s ease-in-out infinite;
   --animate-cta-pulse-white: cta-pulse-white 2.5s ease-in-out infinite;
+  --animate-cta-pulse-slow: cta-pulse-slow 4s ease-in-out infinite;
   --animate-pulse-green: pulse-green 2s ease-in-out infinite;
   --animate-pulse-tg: pulse-tg 2s ease-in-out infinite;
   --animate-pulse-vk: pulse-vk 2s ease-in-out infinite;
