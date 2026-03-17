@@ -3,6 +3,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import { ContactItem } from '@/components/sections/contact/ContactItem';
 import { ContactMap } from '@/components/sections/contact/ContactMap';
 import { SocialLinks } from '@/components/ui/SocialLinks';
+import { phoneHref } from '@/libs/utils';
 import { contactContent } from '@/types/sections/contact/contact';
 import { siteData } from '@/types/config/siteData';
 
@@ -16,7 +17,7 @@ import { siteData } from '@/types/config/siteData';
  * <ContactInfo isDark={isDark} />
  */
 export function ContactInfo({ isDark }: { isDark: boolean }) {
-  const { directTitle, contactLabels, socialTitle } = contactContent;
+  const { directTitle, contactLabels, socialTitle, mapTitle } = contactContent;
   const { phone, email, address, telegram, vk } = siteData.contact;
 
   return (
@@ -28,7 +29,7 @@ export function ContactInfo({ isDark }: { isDark: boolean }) {
             icon={Phone}
             label={contactLabels.phone}
             value={phone}
-            href={`tel:${phone.replace(/\D/g, '')}`}
+            href={phoneHref(phone)}
           />
           <ContactItem
             icon={Mail}
@@ -39,7 +40,12 @@ export function ContactInfo({ isDark }: { isDark: boolean }) {
           <ContactItem icon={MapPin} label={contactLabels.address} value={address} />
         </ul>
         {siteData.yandexMapUrl && (
-          <ContactMap url={siteData.yandexMapUrl} className="mt-6" isDark={isDark} />
+          <ContactMap
+            url={siteData.yandexMapUrl}
+            title={mapTitle}
+            className="mt-6"
+            isDark={isDark}
+          />
         )}
       </div>
 

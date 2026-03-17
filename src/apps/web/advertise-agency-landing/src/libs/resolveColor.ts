@@ -27,6 +27,30 @@ const SEMANTIC_COLORS: Record<string, string> = {
   ring: 'hsl(var(--ring))',
 };
 
+/** Row colors shape used by list blocks (even/odd striping) */
+type ListItemColors = {
+  even?: { background?: string; text?: string };
+  odd?: { background?: string; text?: string };
+};
+
+/**
+ * Resolves striped row styles for list block items.
+ * Extracts even/odd row colors and returns bgStyle, textStyle, and textClass.
+ *
+ * @param colors - The block.colors field (even/odd row overrides)
+ * @param index  - The zero-based item index
+ */
+export function resolveListItemStyles(colors: ListItemColors | undefined, index: number) {
+  const rowColors = colors ? (index % 2 === 0 ? colors.even : colors.odd) : undefined;
+  return {
+    bgStyle: rowColors?.background
+      ? { backgroundColor: resolveColor(rowColors.background) }
+      : undefined,
+    textStyle: rowColors?.text ? { color: resolveColor(rowColors.text) } : undefined,
+    textClass: rowColors?.text ? 'leading-relaxed' : 'text-muted-foreground leading-relaxed',
+  };
+}
+
 /**
  * Resolves a color string to a CSS value suitable for use in inline styles.
  *

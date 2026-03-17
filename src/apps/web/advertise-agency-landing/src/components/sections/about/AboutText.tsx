@@ -1,4 +1,4 @@
-import { cn } from '@/libs/utils';
+import { cn, interpolate } from '@/libs/utils';
 import { aboutContent } from '@/types/sections/about/aboutContent';
 import { siteData } from '@/types/config/siteData';
 
@@ -22,7 +22,7 @@ export function AboutText() {
             'text-base leading-relaxed text-muted-foreground'
           )}
         >
-          {paragraph.replace('{name}', siteData.name)}
+          {interpolate(paragraph, { name: siteData.name })}
         </p>
       ))}
     </>

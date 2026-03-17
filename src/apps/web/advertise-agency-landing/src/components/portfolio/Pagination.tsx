@@ -1,5 +1,6 @@
 // src/components/portfolio/Pagination.tsx
 import { Button } from '@/components/ui/button';
+import { interpolate } from '@/libs/utils';
 
 interface PaginationProps {
   current: number;
@@ -35,7 +36,7 @@ export function Pagination({
   onPrev,
   onNext,
 }: PaginationProps) {
-  const label = pageLabel.replace('{current}', String(current)).replace('{total}', String(total));
+  const label = interpolate(pageLabel, { current, total });
 
   return (
     <div className="mt-12 flex items-center justify-center gap-4">

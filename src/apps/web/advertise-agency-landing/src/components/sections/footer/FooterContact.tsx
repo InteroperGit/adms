@@ -1,6 +1,7 @@
 // src/components/sections/footer/FooterContact.tsx
 import { ICON_MAP, type IconComponent } from '@/types/shared/iconMap';
 import { footerContent } from '@/types/sections/footer/footer';
+import { phoneHref } from '@/libs/utils';
 import { siteData } from '@/types/config/siteData';
 
 interface FooterContactItem {
@@ -20,7 +21,7 @@ export function FooterContact() {
   const { phone, email, address } = siteData.contact;
 
   const items: FooterContactItem[] = [
-    { icon: ICON_MAP.Phone, value: phone, href: `tel:${phone.replace(/\D/g, '')}` },
+    { icon: ICON_MAP.Phone, value: phone, href: phoneHref(phone) },
     { icon: ICON_MAP.Mail, value: email, href: `mailto:${email}` },
     { icon: ICON_MAP.MapPin, value: address },
   ];

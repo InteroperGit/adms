@@ -98,3 +98,9 @@ export const PortfolioCaseSchema = z.object({
  * @description Portfolio case type inferred from schema
  */
 export type PortfolioCase = z.infer<typeof PortfolioCaseSchema>;
+
+/**
+ * @description Portfolio case with a pre-computed routing href.
+ * Used by listing and card components that need a ready-to-render link.
+ */
+export type PortfolioCaseWithHref = PortfolioCase & { href: string };

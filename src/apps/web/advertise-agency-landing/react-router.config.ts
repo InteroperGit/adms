@@ -1,6 +1,7 @@
 import type { Config } from "@react-router/dev/config";
-import { existsSync, readFileSync, readdirSync } from "fs";
+import { readFileSync } from "fs";
 import path from "path";
+import { readJson, walkJsonFiles, extractYearMonth } from "./scripts/buildUtils";
 import {
   computeRouteManifest,
   loadPreviousManifest,
@@ -21,33 +22,6 @@ interface CaseEntry {
   slug: string;
   category: string;
   publishDate: string;
-}
-
-function readJson<T>(filePath: string): T | null {
-  if (!existsSync(filePath)) {
-    return null;
-  }
-  return JSON.parse(readFileSync(filePath, "utf-8")) as T;
-}
-
-function walkJsonFiles(dir: string): string[] {
-  if (!existsSync(dir)) {
-    return [];
-  }
-  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      return walkJsonFiles(full);
-    }
-    if (entry.isFile() && entry.name.endsWith(".json")) {
-      return [full];
-    }
-    return [];
-  });
-}
-
-function extractYearMonth(date: string): { year: string; month: string } {
-  return { year: date.slice(0, 4), month: date.slice(5, 7) };
 }
 
 // ---------------------------------------------------------------------------

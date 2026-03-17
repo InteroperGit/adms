@@ -2,6 +2,7 @@ import { ImageGallery } from '@/components/ui/imageGallery';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 import { imageGalleryContent } from '@/types/shared/imageGallery';
 import type { GalleryBlock as GalleryBlockData } from '@/types/blocks';
+import { interpolate } from '@/libs/utils';
 
 interface GalleryBlockProps {
   block: GalleryBlockData;
@@ -26,7 +27,7 @@ export function GalleryBlock({ block, caseTitle }: GalleryBlockProps) {
     <div className="mx-auto max-w-4xl">
       <ImageGallery
         images={block.images}
-        altPrefix={photoAlt.replace('{title}', caseTitle)}
+        altPrefix={interpolate(photoAlt, { title: caseTitle })}
         prevLabel={prevLabel}
         nextLabel={nextLabel}
         closeLabel={closeLabel}

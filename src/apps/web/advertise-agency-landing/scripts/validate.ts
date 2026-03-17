@@ -6,9 +6,10 @@
  * Any schema.parse() failure throws a ZodError with a clear field-level message.
  */
 
-import { existsSync, readdirSync, readFileSync } from 'fs';
+import { existsSync } from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { readJson, walkJsonFiles } from './buildUtils';
 
 // ── Config schemas ─────────────────────────────────────────────────────────────
 import { SiteDataSchema } from '../src/types/config/siteData';
@@ -52,32 +53,16 @@ const portfolioDir = path.join(root, 'data/content/portfolio');
 
 // ── Utilities ──────────────────────────────────────────────────────────────────
 
-function readJson(filePath: string): unknown {
-  return JSON.parse(readFileSync(filePath, 'utf-8'));
-}
-
-function walkJsonFiles(dir: string): string[] {
-  if (!existsSync(dir)) {
-    return [];
-  }
-  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      return walkJsonFiles(full);
-    }
-    if (entry.isFile() && entry.name.endsWith('.json')) {
-      return [full];
-    }
-    return [];
-  });
-}
-
-/** Resolves a path under `data/content/config/`. */
+/**
+ * Resolves a path under `data/content/config/`.
+ */
 function cfg(name: string): string {
   return path.join(root, 'data/content/config', name);
 }
 
-/** Resolves a path under `data/content/sections/`. */
+/**
+ * Resolves a path under `data/content/sections/`.
+ */
 function sec(name: string): string {
   return path.join(root, 'data/content/sections', name);
 }

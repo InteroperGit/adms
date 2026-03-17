@@ -27,7 +27,15 @@ export function Testimonials() {
           description={testimonialsSectionContent.description}
           className="mb-16"
         />
-        {orgId ? <YandexReviews orgId={orgId} isDark={isDark} /> : <TestimonialsEmpty />}
+        {orgId ? (
+          <YandexReviews
+            orgId={orgId}
+            title={testimonialsSectionContent.reviewsTitle}
+            isDark={isDark}
+          />
+        ) : (
+          <TestimonialsEmpty />
+        )}
       </Container>
     </FadeInSection>
   );

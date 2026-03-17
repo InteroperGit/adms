@@ -254,3 +254,10 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ─── Custom utilities ──────────────────────────────────────────────────────── */
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading), serif;
+  }
+}

@@ -36,7 +36,10 @@ export function Carousel() {
   }, [paused, reducedMotion, next]);
 
   return (
-    <div
+    <section
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={carouselContent.ariaLabel ?? 'Featured projects'}
       className="relative overflow-hidden"
       style={{ height: '70vh', minHeight: '480px' }}
       onMouseEnter={() => setPaused(true)}
@@ -58,6 +61,6 @@ export function Carousel() {
         nextLabel={carouselContent.nextLabel}
         slideLabel={carouselContent.slideLabel}
       />
-    </div>
+    </section>
   );
 }

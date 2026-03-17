@@ -1,5 +1,7 @@
-import type { PortfolioCase } from '@/types/portfolio';
+import type { PortfolioCase, PortfolioCaseWithHref } from '@/types/portfolio';
 import { PortfolioCaseSchema } from '@/types/portfolio';
+import { categorySlug } from '@/libs/categorySlug';
+import { extractYearMonth } from '@/libs/dateUtils';
 
 const modules = import.meta.glob<PortfolioCase>('@data/portfolio/**/*.json', {
   eager: true,
@@ -24,3 +26,16 @@ export const portfolioCaseMap: Record<string, PortfolioCase> = Object.fromEntrie
  * sorted; caller should sort by publishDate if needed.
  */
 export const allPortfolioCases: PortfolioCase[] = Object.values(portfolioCaseMap);
+
+/**
+ * @description All portfolio cases with computed hrefs for routing.
+ * Use for rendering portfolio listings (sections, pages) that need href attributes.
+ * Each case includes the route path: `/portfolio/{categorySlug}/{year}/{month}/{slug}`
+ */
+export const allPortfolioCasesWithHrefs: PortfolioCaseWithHref[] = allPortfolioCases.map((c) => {
+  const { year, month } = extractYearMonth(c.publishDate);
+  return {
+    ...c,
+    href: `/portfolio/${categorySlug(c.category)}/${year}/${month}/${c.slug}`,
+  };
+});

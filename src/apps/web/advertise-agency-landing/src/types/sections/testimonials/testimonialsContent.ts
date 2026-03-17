@@ -16,6 +16,8 @@ export const TestimonialsSectionContentSchema = z.object({
   title: z.string(),
   /** Section description/intro */
   description: z.string(),
+  /** Iframe title attribute for Yandex reviews widget (accessibility) */
+  reviewsTitle: z.string(),
 });
 
 export type TestimonialsSectionContent = z.infer<typeof TestimonialsSectionContentSchema>;

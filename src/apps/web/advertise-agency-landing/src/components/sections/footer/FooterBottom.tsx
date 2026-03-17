@@ -2,6 +2,7 @@
 import { Link } from 'react-router';
 import { footerContent } from '@/types/sections/footer/footer';
 import { siteData } from '@/types/config/siteData';
+import { interpolate } from '@/libs/utils';
 
 /**
  * @component
@@ -15,9 +16,7 @@ export function FooterBottom() {
 
   return (
     <div className="flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/35 sm:flex-row">
-      <p>
-        {footerContent.copyright.replace('{year}', String(year)).replace('{name}', siteData.name)}
-      </p>
+      <p>{interpolate(footerContent.copyright, { year, name: siteData.name })}</p>
 
       <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:justify-start">
         {footerContent.legalLinks.map((link, i) => (

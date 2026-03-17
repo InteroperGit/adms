@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, writeFileSync, readdirSync, copyFileSync } from 'fs';
 import path from 'path';
 import type { Plugin } from 'vite';
+import { readJson, walkJsonFiles, extractYearMonth } from '../../scripts/buildUtils';
 
 // ---------------------------------------------------------------------------
 // Local types (mirrors src/types/config/* without importing app-side modules)
@@ -83,37 +84,6 @@ function upsertTitle(html: string, text: string): string {
 
 function jsonLdTag(schema: object): string {
   return `<script type="application/ld+json">${JSON.stringify(schema)}</script>`;
-}
-
-// ---------------------------------------------------------------------------
-// Utilities
-// ---------------------------------------------------------------------------
-
-function extractYearMonth(date: string): { year: string; month: string } {
-  return { year: date.slice(0, 4), month: date.slice(5, 7) };
-}
-
-function readJson<T>(filePath: string): T | null {
-  if (!existsSync(filePath)) {
-    return null;
-  }
-  return JSON.parse(readFileSync(filePath, 'utf-8')) as T;
-}
-
-function walkJsonFiles(dir: string): string[] {
-  if (!existsSync(dir)) {
-    return [];
-  }
-  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      return walkJsonFiles(full);
-    }
-    if (entry.isFile() && entry.name.endsWith('.json')) {
-      return [full];
-    }
-    return [];
-  });
 }
 
 // ---------------------------------------------------------------------------
@@ -234,6 +204,7 @@ function handleCasePage(
 export function processBuiltHtml(rootDir: string): void {
   const seo = readJson<SeoConfig>(path.resolve(rootDir, 'data/content/config/seo.json'));
   if (!seo) {
+    console.warn('[seoMetaPlugin] seo.json not found — skipping SEO meta injection');
     return;
   }
 
@@ -320,8 +291,9 @@ export function processBuiltHtml(rootDir: string): void {
   }
 }
 
-// Re-export as a no-op Vite plugin stub so vite.config.ts import keeps working.
-// The actual HTML processing runs via scripts/postbuild-seo.ts after react-router build.
-export function seoMetaPlugin(): Plugin {
+// No-op Vite plugin stub. The actual HTML processing (meta tags, 404 handling) runs
+// via scripts/postbuild-seo.ts after react-router build completes (see build script in package.json).
+// This stub placeholder ensures vite.config.ts plugins array is complete and self-documenting.
+export function seoMetaPluginStub(): Plugin {
   return { name: 'seo-meta-plugin' };
 }

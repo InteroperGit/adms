@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cn } from '@/libs/utils';
+import { cn, interpolate } from '@/libs/utils';
 import { useSwipe } from '@/hooks/useSwipe';
 import { ImageGalleryNavButtons } from './ImageGalleryNavButtons';
 import { ImageGalleryPreview } from './ImageGalleryPreview';
@@ -100,9 +100,7 @@ export function ImageGallery({
                 'opacity-0 backdrop-blur-sm transition-all group-hover:opacity-100 sm:block'
               )}
             >
-              {counterTemplate
-                .replace('{current}', String(activeIndex + 1))
-                .replace('{total}', String(images.length))}
+              {interpolate(counterTemplate, { current: activeIndex + 1, total: images.length })}
             </span>
           </>
         )}

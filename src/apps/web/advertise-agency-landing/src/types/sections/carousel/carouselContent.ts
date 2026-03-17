@@ -18,6 +18,8 @@ export const CarouselSectionContentSchema = z.object({
   nextLabel: z.string(),
   /** Slide counter template with "{index}" placeholder (e.g., "Slide {index}") */
   slideLabel: z.string(),
+  /** ARIA label for carousel region (e.g., "Featured projects carousel") */
+  ariaLabel: z.string().optional(),
 });
 
 export type CarouselSectionContent = z.infer<typeof CarouselSectionContentSchema>;

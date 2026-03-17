@@ -20,6 +20,9 @@ export function BlockquoteBlock({ block }: BlockquoteBlockProps) {
   if ('testimonialId' in block) {
     const testimonial = testimonials.find((t) => t.id === block.testimonialId);
     if (!testimonial) {
+      if (import.meta.env.DEV) {
+        console.warn(`[BlockquoteBlock] Testimonial not found: ${block.testimonialId}`);
+      }
       return null;
     }
     return (

@@ -7,24 +7,11 @@ import { FadeInSection } from '@/components/ui/section/FadeInSection';
 import { PortfolioCard } from '@/components/ui/portfolio/PortfolioCard';
 import { PortfolioFilter } from '@/components/sections/portfolio/PortfolioFilter';
 import { portfolioSectionContent } from '@/types/portfolio';
-import type { PortfolioCase } from '@/types/portfolio';
-import { categorySlug } from '@/libs/categorySlug';
-import { extractYearMonth } from '@/libs/dateUtils';
+import { allPortfolioCasesWithHrefs } from '@/types/portfolio/portfolioCases';
 
-const modules = import.meta.glob<PortfolioCase>('@data/portfolio/**/*.json', {
-  eager: true,
-  import: 'default',
-});
+const PORTFOLIO_ITEMS = allPortfolioCasesWithHrefs;
 
-const PORTFOLIO_ITEMS = Object.entries(modules).map(([, data]) => {
-  const { year, month } = extractYearMonth(data.publishDate);
-  return {
-    ...data,
-    href: `/portfolio/${categorySlug(data.category)}/${year}/${month}/${data.slug}`,
-  };
-});
-
-const PORTFOLIO_CATEGORIES = [
+const PORTFOLIO_CATEGORIES: string[] = [
   portfolioSectionContent.allCategory,
   ...new Set(PORTFOLIO_ITEMS.map((i) => i.category)),
 ];

@@ -1,3 +1,11 @@
 import { createContext } from 'react';
 
-export const ThemeContext = createContext({ isDark: false, toggle: () => {} });
+interface ThemeContextValue {
+  isDark: boolean;
+  toggle: () => void;
+}
+
+export const ThemeContext = createContext<ThemeContextValue>({
+  isDark: false,
+  toggle: () => {},
+});

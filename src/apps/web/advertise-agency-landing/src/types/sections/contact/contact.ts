@@ -50,6 +50,8 @@ export const ContactContentSchema = z.object({
   hoursTitle: z.string(),
   /** Labels for weekdays, Saturday, Sunday */
   dayLabels: z.object({ weekdays: z.string(), saturday: z.string(), sunday: z.string() }),
+  /** Iframe title attribute for embedded map (accessibility) */
+  mapTitle: z.string(),
 });
 
 export type ContactContent = z.infer<typeof ContactContentSchema>;

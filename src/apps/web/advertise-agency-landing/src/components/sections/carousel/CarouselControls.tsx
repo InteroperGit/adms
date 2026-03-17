@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '@/libs/utils';
+import { cn, interpolate } from '@/libs/utils';
 
 interface CarouselControlsProps {
   total: number;
@@ -68,7 +68,7 @@ export function CarouselControls({
           <button
             key={i}
             onClick={() => onDot(i)}
-            aria-label={slideLabel.replace('{index}', String(i + 1))}
+            aria-label={interpolate(slideLabel, { index: i + 1 })}
             className={cn(
               'h-2 cursor-pointer rounded-full transition-all duration-300',
               i === current

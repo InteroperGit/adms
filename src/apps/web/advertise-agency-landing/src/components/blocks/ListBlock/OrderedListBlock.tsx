@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils';
-import { resolveColor } from '@/libs/resolveColor';
+import { resolveListItemStyles } from '@/libs/resolveColor';
 import type { ListBlock as ListBlockData } from '@/types/blocks';
 
 interface OrderedListBlockProps {
@@ -14,24 +14,11 @@ interface OrderedListBlockProps {
  * @returns {JSX.Element} ol element with numbered items
  */
 export function OrderedListBlock({ block }: OrderedListBlockProps) {
-  const defaultTextClass = 'text-muted-foreground leading-relaxed';
-
   return (
-    <ul className="mx-auto max-w-3xl space-y-2">
+    <ol className="mx-auto max-w-3xl space-y-2">
       {block.items.map((item, i) => {
         const number = i + 1;
-        const isEven = i % 2 === 0;
-        const rowColors = block.colors
-          ? isEven
-            ? block.colors.even
-            : block.colors.odd
-          : undefined;
-
-        const bgStyle = rowColors?.background
-          ? { backgroundColor: resolveColor(rowColors.background) }
-          : undefined;
-        const textStyle = rowColors?.text ? { color: resolveColor(rowColors.text) } : undefined;
-        const textClass = rowColors?.text ? 'leading-relaxed' : defaultTextClass;
+        const { bgStyle, textStyle, textClass } = resolveListItemStyles(block.colors, i);
 
         return (
           <li
@@ -44,6 +31,6 @@ export function OrderedListBlock({ block }: OrderedListBlockProps) {
           </li>
         );
       })}
-    </ul>
+    </ol>
   );
 }

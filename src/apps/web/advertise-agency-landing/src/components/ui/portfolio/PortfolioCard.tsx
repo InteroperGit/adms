@@ -4,10 +4,10 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/libs/utils';
 import { PortfolioThumbnail } from '@/components/ui/portfolio/PortfolioThumbnail';
 import { portfolioSectionContent } from '@/types/portfolio';
-import type { PortfolioCase } from '@/types/portfolio';
+import type { PortfolioCaseWithHref } from '@/types/portfolio';
 
 interface PortfolioCardProps {
-  item: PortfolioCase & { href: string };
+  item: PortfolioCaseWithHref;
 }
 
 /**

@@ -58,14 +58,7 @@ export function AboutCard({ card }: AboutCardProps) {
               )}
             >
               <span className="text-sm text-muted-foreground">{item.label}</span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-heading)',
-                }}
-                className="font-bold text-foreground"
-              >
-                {item.value}
-              </span>
+              <span className="font-heading font-bold text-foreground">{item.value}</span>
             </div>
           ))}
         </div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { AlertCircle } from 'lucide-react';
 import { errorFallbackContent } from '@/types/config/errorFallback';
 import { cn } from '@/libs/utils';
@@ -35,7 +34,7 @@ interface ErrorFallbackProps {
  * @param {() => void} [props.onReset] - Optional reset callback
  * @returns {React.ReactElement} The error fallback UI
  */
-export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ onReset }) => {
+export function ErrorFallback({ onReset }: ErrorFallbackProps) {
   const { title, description, resetLabel } = errorFallbackContent;
 
   const handleClick = () => {
@@ -47,20 +46,20 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ onReset }) => {
   };
 
   return (
-    <div className={cn('flex min-h-screen items-center justify-center bg-background px-4')}>
-      <div className={cn('w-full max-w-md text-center')}>
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-md text-center">
         {/* Error Icon */}
-        <div className={cn('mb-6 flex justify-center')}>
-          <div className={cn('rounded-full bg-destructive/10 p-4')}>
-            <AlertCircle className={cn('h-12 w-12 text-destructive')} />
+        <div className="mb-6 flex justify-center">
+          <div className="rounded-full bg-destructive/10 p-4">
+            <AlertCircle className="h-12 w-12 text-destructive" />
           </div>
         </div>
 
         {/* Title */}
-        <h1 className={cn('mb-3 text-2xl font-bold text-foreground')}>{title}</h1>
+        <h1 className="mb-3 text-2xl font-bold text-foreground">{title}</h1>
 
         {/* Description */}
-        <p className={cn('mb-8 text-base text-muted-foreground')}>{description}</p>
+        <p className="mb-8 text-base text-muted-foreground">{description}</p>
 
         {/* Action Button */}
         <button
@@ -76,4 +75,4 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ onReset }) => {
       </div>
     </div>
   );
-};
+}

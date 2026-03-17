@@ -4,6 +4,9 @@ import type { LegalData } from '@/types/config/legalData';
 function applyTokens(text: string, company: LegalData['company']): string {
   return text.replace(/\{company\.(\w+)\}/g, (_, key) => {
     const value = company[key as keyof typeof company];
+    if (!value && import.meta.env.DEV) {
+      console.warn(`[LegalBlockRenderer] Unknown token: {company.${key}}`);
+    }
     return value ?? '';
   });
 }

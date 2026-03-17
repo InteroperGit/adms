@@ -47,10 +47,7 @@ export function CountingStat({
       >
         <Icon size={20} />
       </div>
-      <span
-        style={{ fontFamily: 'var(--font-heading)' }}
-        className="text-3xl font-bold text-foreground"
-      >
+      <span className="font-heading text-3xl font-bold text-foreground">
         {hasNumber ? `${animate ? count : targetNum}${suffix}` : value}
       </span>
       <span className="text-sm text-muted-foreground">{label}</span>

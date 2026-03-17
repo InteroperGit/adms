@@ -3,6 +3,7 @@ import { SocialLinks } from '@/components/ui/SocialLinks';
 import { Logo } from '@/components/ui/Logo';
 import { footerContent } from '@/types/sections/footer/footer';
 import { siteData } from '@/types/config/siteData';
+import { interpolate } from '@/libs/utils';
 
 /**
  * @component
@@ -16,7 +17,7 @@ export function FooterBrand() {
     <div className="sm:col-span-2 lg:col-span-1">
       <Logo className="mb-4" />
       <p className="mb-6 text-sm leading-relaxed text-white/50">
-        {footerContent.description.replace('{description}', siteData.description)}
+        {interpolate(footerContent.description, { description: siteData.description })}
       </p>
       <SocialLinks
         phone={siteData.contact.phone}
