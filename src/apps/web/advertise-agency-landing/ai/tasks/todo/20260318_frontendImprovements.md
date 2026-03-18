@@ -499,7 +499,7 @@ Home page can alternate shapes for visual rhythm: wave → slant → curve → w
 
 ## F11. Scroll progress indicator
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Low
 **Impact:** Global — all pages
 
@@ -534,6 +534,16 @@ Add a thin (2–3px) progress bar at the very top of the viewport:
 4. Color: `bg-primary` → `bg-gradient-to-r from-primary to-accent` for brand reinforcement
 
 **Files:** `src/components/ui/ScrollProgress.tsx` (new), `src/App.tsx`
+
+**Status:** ✅ Complete
+- Created `ScrollProgress.tsx` component with scroll tracking via passive listener
+- Calculates progress as scrollY / (scrollHeight - innerHeight)
+- Only renders on pages longer than 2x viewport height (checked on mount and resize)
+- Uses gradient from primary to accent (`bg-gradient-to-r from-primary to-accent`)
+- Applied smooth width transition (150ms) for responsive feel
+- Added accessibility: `role="progressbar"` with aria attributes (valuenow, min, max, label)
+- Placed in `App.tsx` at the very top (before SkipToContent) to sit above all content
+- Validates with: format ✅, lint ✅, typecheck ✅, build ✅
 
 ---
 

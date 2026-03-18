@@ -7,6 +7,7 @@ import { MetrikaScript } from '@/components/analytics/MetrikaScript';
 import { ScrollToTop } from '@/components/ui/navigation/ScrollToTop';
 import { HomeHashScroll } from '@/components/ui/navigation/HomeHashScroll';
 import { SkipToContent } from '@/components/ui/navigation/SkipToContent';
+import { ScrollProgress } from '@/components/ui/ScrollProgress';
 import { ErrorBoundary } from '@/components/error';
 
 /**
@@ -34,6 +35,7 @@ export default function App() {
 
   return (
     <>
+      <ScrollProgress />
       <SkipToContent contentAnchor="#main-content" />
       <HomeHashScroll />
       <ErrorBoundary>
