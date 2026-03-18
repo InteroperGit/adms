@@ -136,6 +136,17 @@
   }
 }
 
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .group:hover .icon-shake {
   animation: shake 2s ease-in-out infinite;
 }
@@ -308,5 +319,11 @@
 @layer utilities {
   .font-heading {
     font-family: var(--font-heading), serif;
+  }
+
+  /* Mobile nav staggered animation — ensure initial opacity 0 to prevent blink */
+  .mobile-nav-item {
+    opacity: 0;
+    animation: slide-down 0.3s ease-out forwards;
   }
 }

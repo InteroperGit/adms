@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { cn } from '@/libs/utils';
 import { SocialLinks } from '@/components/ui/SocialLinks';
 import { Container } from '@/components/layout/Container';
 import { DarkModeToggle } from './DarkModeToggle';
@@ -34,13 +35,22 @@ export function HeaderMobileNav({
   onToggleDark,
 }: HeaderMobileNavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    document.body.style.overflow = menuOpen && !closing ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [menuOpen]);
+  }, [menuOpen, closing]);
+
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setMenuOpen(false);
+      setClosing(false);
+    }, 200);
+  };
 
   return (
     <>
@@ -62,25 +72,61 @@ export function HeaderMobileNav({
         </button>
       </div>
 
-      {menuOpen && (
-        <div className="fixed inset-x-0 top-16 z-40 border-b border-border bg-background md:hidden">
-          <Container>
-            <div className="py-4">
-              <HeaderNav isHome={isHome} variant="mobile" onLinkClick={() => setMenuOpen(false)} />
-              <div className="flex items-center gap-2 pt-3">
-                <SocialLinks
-                  phone={siteData.contact.phone}
-                  telegram={siteData.contact.telegram}
-                  vk={siteData.contact.vk}
-                  variant="light"
-                  highlightedIndex={highlightedActionIndex}
-                  className="shrink-0"
+      {(menuOpen || closing) && (
+        <>
+          {/* Backdrop overlay */}
+          <div
+            className={cn(
+              'fixed inset-0 top-16 z-30 bg-black/20 backdrop-blur-sm md:hidden',
+              'transition-opacity duration-200',
+              closing ? 'opacity-0' : 'opacity-100'
+            )}
+            onClick={handleClose}
+            aria-hidden="true"
+          />
+
+          {/* Menu drawer */}
+          <div
+            className={cn(
+              'fixed inset-x-0 top-16 z-40 border-b border-border bg-background md:hidden',
+              'overflow-y-auto max-h-[calc(100dvh-4rem)]',
+              'transition-opacity duration-200',
+              closing ? 'opacity-0' : 'opacity-100'
+            )}
+            style={
+              closing
+                ? {
+                    animation: 'slide-down 0.2s ease-out forwards',
+                    animationDirection: 'reverse',
+                  }
+                : {
+                    animation: 'slide-down 0.3s ease-out',
+                  }
+            }
+          >
+            <Container>
+              <div className="py-4">
+                <HeaderNav
+                  isHome={isHome}
+                  variant="mobile"
+                  onLinkClick={() => handleClose()}
+                  animateItems={!closing}
                 />
-                <DarkModeToggle isDark={isDark} onToggle={onToggleDark} className="shrink-0" />
+                <div className="flex items-center gap-2 pt-3">
+                  <SocialLinks
+                    phone={siteData.contact.phone}
+                    telegram={siteData.contact.telegram}
+                    vk={siteData.contact.vk}
+                    variant="light"
+                    highlightedIndex={highlightedActionIndex}
+                    className="shrink-0"
+                  />
+                  <DarkModeToggle isDark={isDark} onToggle={onToggleDark} className="shrink-0" />
+                </div>
               </div>
-            </div>
-          </Container>
-        </div>
+            </Container>
+          </div>
+        </>
       )}
     </>
   );

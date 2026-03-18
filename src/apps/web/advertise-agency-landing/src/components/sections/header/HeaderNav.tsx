@@ -1,9 +1,11 @@
+import { cn } from '@/libs/utils';
 import { headerContent } from '@/types/sections/header/header';
 
 interface HeaderNavProps {
   isHome: boolean;
   variant?: 'desktop' | 'mobile';
   onLinkClick?: () => void;
+  animateItems?: boolean;
 }
 
 /**
@@ -13,26 +15,43 @@ interface HeaderNavProps {
  * @param {boolean} props.isHome - Whether on home page; prefixes hrefs with "/" for other pages
  * @param {'desktop' | 'mobile'} [props.variant='desktop'] - Layout variant; desktop uses row with hover underlines
  * @param {() => void} [props.onLinkClick] - Optional callback when link clicked (used to close mobile menu)
+ * @param {boolean} [props.animateItems=false] - Whether to animate nav items with stagger (mobile only)
  * @returns {JSX.Element} Navigation list with section anchor links
- * @example <caption>Mobile navigation links</caption>
- * <HeaderNav isHome={false} variant="mobile" onLinkClick={closeMobileMenu} />
+ * @example <caption>Mobile navigation links with staggered animation</caption>
+ * <HeaderNav isHome={false} variant="mobile" onLinkClick={closeMobileMenu} animateItems={true} />
  */
-export function HeaderNav({ isHome, variant = 'desktop', onLinkClick }: HeaderNavProps) {
+export function HeaderNav({
+  isHome,
+  variant = 'desktop',
+  onLinkClick,
+  animateItems = false,
+}: HeaderNavProps) {
   const isDesktop = variant === 'desktop';
 
   return (
-    <nav className={isDesktop ? 'hidden items-center gap-8 md:flex' : 'flex flex-col py-4'}>
-      {headerContent.nav.map((link) => {
+    <nav
+      className={cn(
+        isDesktop ? 'hidden items-center gap-8 md:flex' : 'flex flex-col py-4',
+        variant === 'mobile' && animateItems && 'mobile-nav-animating'
+      )}
+    >
+      {headerContent.nav.map((link, index) => {
         const href = isHome ? link.href : `/${link.href}`;
         return (
           <a
             key={link.href}
             href={href}
             onClick={onLinkClick}
-            className={
+            className={cn(
               isDesktop
                 ? 'group relative text-sm font-medium text-muted-foreground transition-colors hover:text-foreground'
-                : 'py-3 text-base font-medium text-muted-foreground transition-colors hover:text-foreground'
+                : 'py-3 text-base font-medium text-muted-foreground transition-colors hover:text-foreground',
+              variant === 'mobile' && animateItems && 'mobile-nav-item'
+            )}
+            style={
+              variant === 'mobile' && animateItems
+                ? { animationDelay: `${index * 40}ms` }
+                : undefined
             }
           >
             {link.label}

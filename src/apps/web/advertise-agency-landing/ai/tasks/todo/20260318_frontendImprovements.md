@@ -367,7 +367,7 @@ Stats count up from 0 via `useCountUp` hook. The animation is basic ease-out-cub
 
 ## F8. Mobile menu drawer polish
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Medium
 **Impact:** `src/components/sections/header/HeaderMobileNav.tsx`
 
@@ -396,6 +396,16 @@ The mobile menu is a `fixed inset-x-0 top-16 z-40` panel that appears/disappears
 5. Add exit animation via `animationName: 'slide-down'` + `animationDirection: 'reverse'` before unmounting (or use a `closing` state with 200ms timeout)
 
 **Files:** `src/components/sections/header/HeaderMobileNav.tsx`, `src/index.css`
+
+**Status:** ✅ Complete
+- Added `@keyframes slide-down` to index.css (0.3s slide-down animation for enter, 0.2s reverse for exit)
+- Implemented `closing` state to handle 200ms exit animation with reverse direction
+- Added semi-transparent backdrop overlay (bg-black/20 backdrop-blur-sm) positioned at top-16, clickable to close
+- Applied `max-h-[calc(100dvh-4rem)]` with overflow-y-auto to menu drawer
+- Staggered nav items with `animation-delay: ${index * 40}ms` for each item
+- Added `animateItems` prop to HeaderNav to conditionally apply animation classes
+- Mobile nav items get `.mobile-nav-item` class when animating (applies slide-down 0.3s ease-out)
+- Respects prefers-reduced-motion via existing media query in index.css
 
 ---
 
