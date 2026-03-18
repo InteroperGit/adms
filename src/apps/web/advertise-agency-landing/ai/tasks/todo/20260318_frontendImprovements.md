@@ -338,7 +338,7 @@ Add visual personality while keeping the data-driven content:
 
 ## F7. Hero stats scroll-triggered count-up refinement
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Medium
 **Impact:** `src/components/sections/hero/HeroStats.tsx`, `CountingStat.tsx`
 
@@ -352,6 +352,16 @@ Stats count up from 0 via `useCountUp` hook. The animation is basic ease-out-cub
 4. Suffix animation: the `+`/`%` suffix fades in 100ms after the number finishes
 
 **Files:** `src/components/sections/hero/HeroStats.tsx`, `src/components/sections/hero/CountingStat.tsx`, `src/hooks/useCountUp.ts`
+
+**Status:** ✅ Complete
+- Added `delay` parameter to `useCountUp` hook (4th param) with timeout-based delay before count animation starts
+- Updated `CountingStat` component: removed `border-t` divider, added card wrapper with `rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 p-6`
+- Added staggered animation: each stat (0–2) starts 200ms after the previous one via `index * STAGGER_DELAY`
+- Stats enter with fade-in (0.5s ease-out) respecting the stagger delay
+- Number animates with scale pop (1.05 → 1, 200ms ease-out) when counting completes
+- Suffix (like `+`, `%`) fades in 100ms after count finishes (delayed animation via `animation-delay`)
+- Removed `border-t border-border pt-12` from HeroStats grid wrapper — card wrapper now provides visual containment
+- Added `@keyframes count-pop` and `@keyframes suffix-fade-in` to `src/index.css`
 
 ---
 

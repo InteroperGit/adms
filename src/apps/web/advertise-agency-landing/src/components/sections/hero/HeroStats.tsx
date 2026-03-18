@@ -14,7 +14,7 @@ interface HeroStatsProps {
  * @description Grid of statistics with count-up animations triggered on scroll into view
  * @param {HeroStatsProps} props
  * @param {{ value: string; label: string }[]} props.stats - Array of stat objects (up to 3 items)
- * @returns {JSX.Element} Three-column grid with divider top and CountingStat components
+ * @returns {JSX.Element} Three-column grid with CountingStat components and staggered animations
  * @example <caption>Hero stats section</caption>
  * <HeroStats stats={[{ value: "150+", label: "Clients" }, { value: "200+", label: "Projects" }, { value: "10+", label: "Years" }]} />
  */
@@ -23,10 +23,7 @@ export function HeroStats({ stats }: HeroStatsProps) {
   const animatingIndex = useRandomButtonHighlight(hasAnimated ? stats.length : 0);
 
   return (
-    <div
-      ref={ref}
-      className="mt-16 grid grid-cols-1 gap-6 border-t border-border pt-12 sm:grid-cols-3"
-    >
+    <div ref={ref} className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-3">
       {stats.map((stat, i) => {
         const Icon = STAT_ICONS[i] ?? Award;
         return (
@@ -36,6 +33,7 @@ export function HeroStats({ stats }: HeroStatsProps) {
             label={stat.label}
             icon={Icon}
             animate={hasAnimated}
+            index={i}
             isAnimating={animatingIndex === i}
           />
         );
