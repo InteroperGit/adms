@@ -459,7 +459,7 @@ The contact form has no client-side validation feedback. Only `required` HTML at
 
 ## F10. Section divider variety
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Low
 **Impact:** `src/components/ui/section/SectionDivider.tsx`
 
@@ -487,6 +487,13 @@ type DividerShape = 'wave' | 'slant' | 'curve';
 Home page can alternate shapes for visual rhythm: wave → slant → curve → wave → ...
 
 **Files:** `src/components/ui/section/SectionDivider.tsx`, `src/pages/Home.tsx`
+
+**Status:** ✅ Complete
+- Added `DividerShape` type with 'wave' | 'slant' | 'curve' variants
+- Defined three SVG path shapes in `SHAPES` record
+- Added `shape` prop to `SectionDivider` component with default 'wave'
+- Updated Home.tsx to alternate shapes across all dividers: wave → slant → curve → wave → slant → curve → wave
+- All validation passes: format, lint, typecheck, build
 
 ---
 
