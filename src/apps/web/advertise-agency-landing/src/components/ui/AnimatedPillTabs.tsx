@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useAnimatedPillPosition } from '@/hooks/useAnimatedPillPosition';
-import {cn} from "@/libs/utils.ts";
+import { cn } from '@/libs/utils.ts';
 
 export interface AnimatedPillTabItem {
   label: React.ReactNode;
@@ -45,16 +45,14 @@ export function AnimatedPillTabs<T extends AnimatedPillTabItem>({
     activeIndex
   );
 
-  const itemClasses = "absolute rounded-full bg-primary shadow-sm";
+  const itemClasses = 'absolute rounded-full bg-primary shadow-sm';
 
   return (
     <div ref={containerRef} className="relative mb-10 flex flex-wrap justify-center gap-2">
       {/* Animated sliding pill */}
       <div
         className={
-          isAnimating
-            ? cn(itemClasses, 'transition-all duration-300 ease-out')
-            : itemClasses
+          isAnimating ? cn(itemClasses, 'transition-all duration-300 ease-out') : itemClasses
         }
         style={{
           left: `${pillPosition.left}px`,

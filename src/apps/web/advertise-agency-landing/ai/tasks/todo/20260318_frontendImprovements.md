@@ -285,7 +285,7 @@ Add a sliding pill background indicator that animates between active items:
 
 ## F6. 404 page redesign
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Medium
 **Impact:** `src/pages/NotFound.tsx`
 
@@ -324,6 +324,15 @@ Add visual personality while keeping the data-driven content:
 5. Add `aria-label` to the code number for screen readers
 
 **Files:** `src/pages/NotFound.tsx`, `src/index.css` (new keyframe)
+
+**Status:** ✅ Complete
+- Added @keyframes float (3s ease-in-out, ±8px vertical motion)
+- Animated '404' code with gradient (primary → accent → primary)
+- Decorative blobs: primary/5 (top-right) and accent/5 (bottom-left) with blur-3xl
+- Dot pattern overlay: 1px dots, 24px spacing, opacity-[0.04]
+- Button: rounded-full outline style (primary border, primary text, hover bg-primary/10)
+- Added aria-label for accessibility
+- Respects prefers-reduced-motion
 
 ---
 
