@@ -633,9 +633,9 @@ focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus
 
 ## F14. Testimonials empty state illustration
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Low
-**Impact:** `src/components/ui/testimonial/TestimonialsEmpty.tsx`
+**Impact:** `src/components/sections/testimonials/TestimonialsEmpty.tsx`
 
 **Current state:**
 The empty state shows a plain `MessageCircle` icon with text:
@@ -657,7 +657,16 @@ Feels like a developer placeholder, not a designed empty state.
 3. Soften the dashed border: `border-border/50` instead of `border-border`
 4. Add a gentle float animation on the icon (reuse `@keyframes float` from F6)
 
-**Files:** `src/components/ui/testimonial/TestimonialsEmpty.tsx`
+**Files:** `src/components/sections/testimonials/TestimonialsEmpty.tsx`
+
+**Status:** ✅ Complete
+- Icon size increased from 36 to 48
+- Added rounded-full bg-muted p-4 circular background around icon
+- Added decorative large quote (`"`) character behind icon (text-6xl, text-muted-foreground/5, select-none)
+- Softened dashed border from `border-border` to `border-border/50`
+- Applied `animate-float` class to icon container (reuses @keyframes float)
+- Added aria-hidden="true" to decorative quote for accessibility
+- All validation passes: format ✅, lint ✅, typecheck ✅, build ✅
 
 ---
 
