@@ -76,6 +76,7 @@ Approach:
 
 ## F2. Enhanced card hover micro-interactions
 
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** High
 **Impact:** ServiceCard, AdvantageCard, PortfolioCard, ItemCard
 
@@ -122,10 +123,17 @@ Differentiate hover states by card type for visual variety:
 
 **Files:** `src/components/ui/ItemCard.tsx`, `src/components/sections/services/ServiceCard.tsx`, `src/components/sections/advantages/AdvantageCard.tsx`, `src/components/ui/portfolio/PortfolioThumbnail.tsx`
 
+**Status:** ✅ Complete (commit 6225c54)
+- ItemCard: increased lift (-translate-y-1) + border-primary/30 in light mode
+- ServiceCard: icon box hover via SectionIconBox (bg-primary, text-white)
+- AdvantageCard: number badge transitions to text-primary/40 on hover
+- PortfolioThumbnail: image zoom scale-105 (500ms), overlay intensifies to bg-black/40
+
 ---
 
 ## F3. Accent color underutilization
 
+**Status:** Pending
 **Priority:** High
 **Impact:** Entire site — visual variety
 
@@ -153,6 +161,7 @@ Keep primary as the dominant brand color; accent provides contrast points. All v
 
 ## F4. CTA section visual depth
 
+**Status:** Pending
 **Priority:** Medium
 **Impact:** `src/components/sections/call-to-action/`
 
@@ -193,6 +202,7 @@ Add atmospheric depth without changing the primary-color identity:
 
 ## F5. Portfolio filter animated indicator
 
+**Status:** Pending
 **Priority:** Medium
 **Impact:** Home portfolio section + PortfolioCategoryPage
 
@@ -239,6 +249,7 @@ Add a sliding pill background indicator that animates between active items:
 
 ## F6. 404 page redesign
 
+**Status:** Pending
 **Priority:** Medium
 **Impact:** `src/pages/NotFound.tsx`
 
@@ -282,6 +293,7 @@ Add visual personality while keeping the data-driven content:
 
 ## F7. Hero stats scroll-triggered count-up refinement
 
+**Status:** Pending
 **Priority:** Medium
 **Impact:** `src/components/sections/hero/HeroStats.tsx`, `CountingStat.tsx`
 
@@ -300,6 +312,7 @@ Stats count up from 0 via `useCountUp` hook. The animation is basic ease-out-cub
 
 ## F8. Mobile menu drawer polish
 
+**Status:** Pending
 **Priority:** Medium
 **Impact:** `src/components/sections/header/HeaderMobileNav.tsx`
 
@@ -333,6 +346,7 @@ The mobile menu is a `fixed inset-x-0 top-16 z-40` panel that appears/disappears
 
 ## F9. Contact form validation & feedback UX
 
+**Status:** Pending
 **Priority:** Medium
 **Impact:** `src/components/sections/contact/ContactForm.tsx`, `ContactFormFields.tsx`
 
@@ -369,6 +383,7 @@ The contact form has no client-side validation feedback. Only `required` HTML at
 
 ## F10. Section divider variety
 
+**Status:** Pending
 **Priority:** Low
 **Impact:** `src/components/ui/section/SectionDivider.tsx`
 
@@ -401,6 +416,7 @@ Home page can alternate shapes for visual rhythm: wave → slant → curve → w
 
 ## F11. Scroll progress indicator
 
+**Status:** Pending
 **Priority:** Low
 **Impact:** Global — all pages
 
@@ -440,6 +456,7 @@ Add a thin (2–3px) progress bar at the very top of the viewport:
 
 ## F12. Portfolio card image lazy loading skeleton
 
+**Status:** Pending
 **Priority:** Low
 **Impact:** `src/components/ui/portfolio/PortfolioThumbnail.tsx`
 
@@ -462,6 +479,7 @@ Add a thin (2–3px) progress bar at the very top of the viewport:
 
 ## F13. Focus-visible ring consistency audit
 
+**Status:** Pending
 **Priority:** Medium
 **Impact:** Global — all interactive elements
 
@@ -503,6 +521,7 @@ focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus
 
 ## F14. Testimonials empty state illustration
 
+**Status:** Pending
 **Priority:** Low
 **Impact:** `src/components/ui/testimonial/TestimonialsEmpty.tsx`
 
@@ -532,6 +551,7 @@ Feels like a developer placeholder, not a designed empty state.
 
 ## F15. About section image/visual element
 
+**Status:** Pending
 **Priority:** Medium
 **Impact:** `src/components/sections/about/AboutCard.tsx`
 
@@ -555,6 +575,7 @@ The decorative blob behind the card (`h-80 w-80 rounded-full bg-primary/5 blur-3
 
 ## F16. Carousel transition variety
 
+**Status:** Pending
 **Priority:** Low
 **Impact:** `src/components/sections/carousel/CarouselSlide.tsx`
 
@@ -589,6 +610,7 @@ Add a subtle zoom + fade combination for more cinematic feel:
 
 ## F17. Footer visual hierarchy enhancement
 
+**Status:** Pending
 **Priority:** Low
 **Impact:** `src/components/sections/footer/`
 
@@ -608,6 +630,7 @@ The footer is functional but visually flat. All four columns have identical styl
 
 ## F18. Cookie banner entrance animation
 
+**Status:** Pending
 **Priority:** Low
 **Impact:** `src/components/banners/CookieBanner.tsx`
 
@@ -632,6 +655,7 @@ The cookie banner appears instantly on page load with no animation. It likely us
 
 ## F19. Portfolio case page hero parallax
 
+**Status:** Pending
 **Priority:** Low
 **Impact:** `src/components/portfolio/CaseHero.tsx`
 
@@ -673,6 +697,7 @@ Add subtle parallax to the background image (CSS-only, no JS):
 
 ## F20. Smooth page transitions
 
+**Status:** Pending
 **Priority:** Low
 **Impact:** `src/App.tsx`, global
 

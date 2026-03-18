@@ -26,7 +26,7 @@ export function AdvantageCard({ item, index }: AdvantageCardProps) {
         <SectionIconBox icon={Icon} size={20} className="icon-shake h-11 w-11 shrink-0" />
         <span
           aria-hidden="true"
-          className="font-heading text-3xl font-bold text-foreground/25 dark:text-foreground/40"
+          className="font-heading text-3xl font-bold text-foreground/25 dark:text-foreground/40 transition-colors duration-300 group-hover:text-primary/40"
         >
           {String(index + 1).padStart(2, '0')}
         </span>

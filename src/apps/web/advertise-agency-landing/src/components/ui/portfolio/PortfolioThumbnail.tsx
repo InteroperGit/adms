@@ -35,7 +35,7 @@ export function PortfolioThumbnail({
     <a
       href={href}
       className={cn(
-        'group/thumb relative block h-40 cursor-pointer bg-gradient-to-br sm:h-52',
+        'group/thumb relative block h-40 cursor-pointer overflow-hidden bg-gradient-to-br sm:h-52',
         gradient
       )}
     >
@@ -44,7 +44,7 @@ export function PortfolioThumbnail({
           src={image}
           alt={title}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="absolute inset-0 h-full w-full"
+          className="absolute inset-0 h-full w-full transition-transform duration-500 group-hover/thumb:scale-105"
           imgClassName="object-cover"
         />
       ) : (
@@ -56,7 +56,7 @@ export function PortfolioThumbnail({
           }}
         />
       )}
-      <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/thumb:bg-black/30" />
+      <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/thumb:bg-black/40" />
       <div className="absolute left-4 top-4">
         <Badge className="border-0 bg-black/50 text-white backdrop-blur-sm">{category}</Badge>
       </div>
