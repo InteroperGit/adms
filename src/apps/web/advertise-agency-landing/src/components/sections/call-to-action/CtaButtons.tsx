@@ -41,8 +41,8 @@ export function CtaButtons({ cta }: CtaButtonsProps) {
           size="lg"
           variant="outline"
           className={cn(
-            'w-full rounded-full border-white/40 bg-transparent px-8 text-white',
-            'hover:border-white hover:bg-white/10 hover:text-white sm:w-auto'
+            'w-full rounded-full border-accent/40 bg-transparent px-8 text-white',
+            'hover:border-accent hover:bg-accent/10 hover:text-white sm:w-auto'
           )}
         >
           <a href={secondary.href}>{secondary.label}</a>

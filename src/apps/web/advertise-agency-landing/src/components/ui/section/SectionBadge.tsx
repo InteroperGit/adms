@@ -2,7 +2,7 @@ import { cn } from '@/libs/utils';
 
 interface SectionBadgeProps {
   label: string;
-  variant?: 'light' | 'dark';
+  variant?: 'light' | 'dark' | 'accent';
   dot?: boolean;
   className?: string;
 }
@@ -32,11 +32,20 @@ export function SectionBadge({
         'inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium',
         variant === 'dark'
           ? 'border border-white/10 bg-white/10 text-white/80'
-          : 'border border-primary/20 bg-primary/5 text-primary dark:border-primary/50',
+          : variant === 'accent'
+            ? 'border border-accent/20 bg-accent/5 text-accent dark:border-accent/50'
+            : 'border border-primary/20 bg-primary/5 text-primary dark:border-primary/50',
         className
       )}
     >
-      {dot && <span className="h-1.5 w-1.5 rounded-full bg-primary" />}
+      {dot && (
+        <span
+          className={cn(
+            'h-1.5 w-1.5 rounded-full',
+            variant === 'accent' ? 'bg-accent' : 'bg-primary'
+          )}
+        />
+      )}
       {label}
     </div>
   );

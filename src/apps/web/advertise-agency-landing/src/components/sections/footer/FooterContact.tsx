@@ -3,6 +3,7 @@ import { ICON_MAP, type IconComponent } from '@/types/shared/iconMap';
 import { footerContent } from '@/types/sections/footer/footer';
 import { phoneHref } from '@/libs/utils';
 import { siteData } from '@/types/config/siteData';
+import { FooterSection } from './FooterSection';
 
 interface FooterContactItem {
   icon: IconComponent;
@@ -27,24 +28,19 @@ export function FooterContact() {
   ];
 
   return (
-    <div>
-      <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-white/40">
-        {footerContent.contactsTitle}
-      </p>
-      <ul className="space-y-4">
-        {items.map(({ icon: Icon, value, href }) => (
-          <li key={value} className="flex items-start gap-3">
-            <Icon size={15} className="mt-0.5 shrink-0 text-primary" />
-            {href ? (
-              <a href={href} className="text-sm text-white/60 transition-colors hover:text-primary">
-                {value}
-              </a>
-            ) : (
-              <span className="text-sm text-white/60">{value}</span>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <FooterSection title={footerContent.contactsTitle} spacing="space-y-4">
+      {items.map(({ icon: Icon, value, href }) => (
+        <li key={value} className="flex items-start gap-3">
+          <Icon size={15} className="mt-0.5 shrink-0 text-primary" />
+          {href ? (
+            <a href={href} className="text-sm text-white/60 transition-colors hover:text-primary">
+              {value}
+            </a>
+          ) : (
+            <span className="text-sm text-white/60">{value}</span>
+          )}
+        </li>
+      ))}
+    </FooterSection>
   );
 }

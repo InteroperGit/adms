@@ -133,7 +133,7 @@ Differentiate hover states by card type for visual variety:
 
 ## F3. Accent color underutilization
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** High
 **Impact:** Entire site — visual variety
 
@@ -156,6 +156,17 @@ Introduce accent as a secondary rhythm throughout the page:
 Keep primary as the dominant brand color; accent provides contrast points. All via semantic tokens so white-label clients just change `--color-accent`.
 
 **Files:** `src/components/ui/section/SectionBadge.tsx`, `src/components/sections/advantages/AdvantageCard.tsx`, `src/components/sections/footer/FooterNav.tsx` (and siblings), `src/components/sections/call-to-action/CtaButtons.tsx`, `src/components/ui/badge.tsx`
+
+**Status:** ✅ Complete
+- Theme: accent color changed from purple (`262 83% 58%`) to golden (`39 85% 52%`)
+- Footer titles: all section headers now use `text-accent/60` (FooterNav, FooterServices, FooterContact)
+- AdvantageCard: alternating icon colors (even=primary, odd=accent) + counter hover color matching icon
+- ServiceCard: alternating icon colors (odd=accent, even=primary)
+- SectionIconBox: added `variant` prop ('primary' | 'accent') with conditional styling
+- SectionBadge: added 'accent' variant
+- CtaButtons: secondary button border changed to accent (`border-accent/40`)
+- FooterSection: new shared component for consistent footer column structure
+
 
 ---
 

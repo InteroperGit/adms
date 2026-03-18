@@ -40,7 +40,7 @@ export function Services() {
               className="stagger-item h-full"
               style={{ animationDelay: `${getDelay(index)}ms` }}
             >
-              <ServiceCard service={service} />
+              <ServiceCard service={service} index={index} />
             </div>
           ))}
         </div>

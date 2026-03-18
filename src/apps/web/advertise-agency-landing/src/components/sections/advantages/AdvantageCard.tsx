@@ -20,13 +20,21 @@ interface AdvantageCardProps {
  */
 export function AdvantageCard({ item, index }: AdvantageCardProps) {
   const Icon = ICON_MAP[item.icon];
+  const isEven = index % 2 === 0;
   return (
     <ItemCard className="p-6">
       <div className="mb-4 flex items-center gap-4">
-        <SectionIconBox icon={Icon} size={20} className="icon-shake h-11 w-11 shrink-0" />
+        <SectionIconBox
+          icon={Icon}
+          size={20}
+          variant={isEven ? 'primary' : 'accent'}
+          className="icon-shake h-11 w-11 shrink-0"
+        />
         <span
           aria-hidden="true"
-          className="font-heading text-3xl font-bold text-foreground/25 dark:text-foreground/40 transition-colors duration-300 group-hover:text-primary/40"
+          className={`font-heading text-3xl font-bold text-foreground/25 dark:text-foreground/40 transition-colors duration-300 ${
+            isEven ? 'group-hover:text-primary/40' : 'group-hover:text-accent/40'
+          }`}
         >
           {String(index + 1).padStart(2, '0')}
         </span>
