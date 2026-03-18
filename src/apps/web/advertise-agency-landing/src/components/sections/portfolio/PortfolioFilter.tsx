@@ -37,6 +37,7 @@ export function PortfolioFilter({ categories, active, onChange }: PortfolioFilte
             'px-3 py-1.5 sm:px-5 sm:py-2',
             'text-xs sm:text-sm font-medium',
             'transition-colors duration-200',
+            'focus-ring',
             isActive
               ? 'text-white'
               : 'border border-accent/40 text-muted-foreground hover:text-foreground'

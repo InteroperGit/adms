@@ -51,8 +51,7 @@ export function CategoryNav({ activeSlug }: CategoryNavProps) {
             'px-3 py-1.5 sm:px-5 sm:py-2',
             'text-xs sm:text-sm font-medium',
             'transition-colors duration-200',
-            'focus-visible:outline-none focus-visible:ring-2',
-            'focus-visible:ring-primary focus-visible:ring-offset-1',
+            'focus-ring',
             isActive
               ? 'border border-transparent text-white'
               : 'border border-accent/40 text-muted-foreground hover:text-foreground'

@@ -17,7 +17,7 @@ export function FooterNav() {
         <li key={link.href}>
           <a
             href={link.href}
-            className="text-sm text-white/60 transition-colors hover:text-primary"
+            className="text-sm text-white/60 transition-colors hover:text-primary focus-ring"
           >
             {link.label}
           </a>

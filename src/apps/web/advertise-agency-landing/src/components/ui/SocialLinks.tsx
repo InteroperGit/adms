@@ -72,7 +72,7 @@ export function SocialLinks({
 
   const base = cn(
     'flex items-center justify-center border transition-colors',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1',
+    'focus-ring',
     isSm ? 'h-10 w-10 rounded-lg' : 'h-11 w-11 rounded-xl'
   );
 

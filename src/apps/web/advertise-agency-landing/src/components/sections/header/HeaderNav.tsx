@@ -44,8 +44,8 @@ export function HeaderNav({
             onClick={onLinkClick}
             className={cn(
               isDesktop
-                ? 'group relative text-sm font-medium text-muted-foreground transition-colors hover:text-foreground'
-                : 'py-3 text-base font-medium text-muted-foreground transition-colors hover:text-foreground',
+                ? 'group relative text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-ring'
+                : 'py-3 text-base font-medium text-muted-foreground transition-colors hover:text-foreground focus-ring',
               variant === 'mobile' && animateItems && 'mobile-nav-item'
             )}
             style={

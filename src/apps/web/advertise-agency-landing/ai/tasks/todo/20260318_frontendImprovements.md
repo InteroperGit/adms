@@ -581,7 +581,7 @@ Add a thin (2–3px) progress bar at the very top of the viewport:
 
 ## F13. Focus-visible ring consistency audit
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Medium
 **Impact:** Global — all interactive elements
 
@@ -608,16 +608,26 @@ focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus
 2. Create a Tailwind utility `focus-ring` in `src/index.css`:
    ```css
    @utility focus-ring {
-     &:focus-visible {
-       outline: none;
-       box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-primary);
-     }
+     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
    }
    ```
 3. Apply to: nav links, filter buttons, footer links, social buttons, dark mode toggle, carousel controls
 4. Ensure offset color changes with dark mode (`ring-offset-background` handles this)
 
 **Files:** `src/index.css`, `src/components/sections/header/HeaderNav.tsx`, `src/components/sections/portfolio/PortfolioFilter.tsx`, `src/components/portfolio/CategoryNav.tsx`, `src/components/sections/footer/FooterNav.tsx`, `src/components/ui/SocialLinks.tsx`, `src/components/sections/header/DarkModeToggle.tsx`, `src/components/sections/carousel/CarouselControls.tsx`
+
+**Status:** ✅ Complete
+- Created `@utility focus-ring` in src/index.css with standardized pattern
+- Applied focus-ring utility to HeaderNav (desktop & mobile nav links)
+- Applied focus-ring utility to PortfolioFilter (category filter buttons)
+- Updated CategoryNav to use focus-ring utility (replaced ring-offset-1 with ring-offset-2)
+- Applied focus-ring utility to FooterNav (main navigation links)
+- Applied focus-ring utility to FooterServices (service links)
+- Applied focus-ring utility to FooterContact (phone/email links)
+- Applied focus-ring utility to FooterBottom (legal navigation links)
+- Updated SocialLinks to use focus-ring utility (replaced ring-offset-1 with ring-offset-2)
+- Applied focus-ring utility to CarouselControls arrows and dot indicators
+- All validation passes: format ✅, lint ✅, typecheck ✅, build ✅
 
 ---
 

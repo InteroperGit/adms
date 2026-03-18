@@ -24,7 +24,7 @@ export function FooterBottom() {
             {i > 0 && <span className="hidden text-white/15 sm:inline">|</span>}
             <Link
               to={link.href}
-              className="whitespace-nowrap transition-colors hover:text-white/70"
+              className="whitespace-nowrap transition-colors hover:text-white/70 focus-ring"
             >
               {link.label}
             </Link>

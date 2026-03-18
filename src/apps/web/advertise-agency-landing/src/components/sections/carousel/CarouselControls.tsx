@@ -17,7 +17,8 @@ const arrowClass = cn(
   'flex h-11 w-11 items-center justify-center',
   'rounded-full border border-border dark:border-white/30',
   'bg-white/70 text-foreground backdrop-blur-sm dark:bg-white/20 dark:text-white',
-  'cursor-pointer transition-colors hover:bg-primary hover:text-primary-foreground hover:border-primary dark:hover:bg-primary dark:hover:text-primary-foreground dark:hover:border-primary'
+  'cursor-pointer transition-colors hover:bg-primary hover:text-primary-foreground hover:border-primary dark:hover:bg-primary dark:hover:text-primary-foreground dark:hover:border-primary',
+  'focus-ring'
 );
 
 /**
@@ -71,6 +72,7 @@ export function CarouselControls({
             aria-label={interpolate(slideLabel, { index: i + 1 })}
             className={cn(
               'h-2 cursor-pointer rounded-full transition-all duration-300',
+              'focus-ring',
               i === current
                 ? 'w-6 bg-foreground dark:bg-white'
                 : 'w-2 bg-foreground/25 hover:bg-foreground/50 dark:bg-white/40 dark:hover:bg-white/65'
