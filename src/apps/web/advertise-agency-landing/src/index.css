@@ -147,6 +147,17 @@
   }
 }
 
+@keyframes particle-burst {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--particle-x), var(--particle-y)) scale(0);
+  }
+}
+
 .group:hover .icon-shake {
   animation: shake 2s ease-in-out infinite;
 }

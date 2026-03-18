@@ -411,7 +411,7 @@ The mobile menu is a `fixed inset-x-0 top-16 z-40` panel that appears/disappears
 
 ## F9. Contact form validation & feedback UX
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Medium
 **Impact:** `src/components/sections/contact/ContactForm.tsx`, `ContactFormFields.tsx`
 
@@ -443,6 +443,17 @@ The contact form has no client-side validation feedback. Only `required` HTML at
 6. Success state: add confetti-like subtle particle burst (CSS-only `::before`/`::after` with animation) around the success checkmark
 
 **Files:** `src/components/sections/contact/ContactForm.tsx`, `src/components/sections/contact/ContactFormFields.tsx`, `src/components/sections/contact/ContactSuccess.tsx`
+
+**Status:** ✅ Complete
+- Added validation state management in ContactForm with errors object
+- Implemented validateField function with rules: name (min 2 chars), contact (email or phone), message (min 10 chars)
+- Added onBlur validation in ContactFormFields with error display below each field
+- Applied `border-destructive focus-visible:ring-destructive` styling to invalid fields
+- Added `isLoading` state to ContactForm with 1200ms simulated submission
+- Submit button shows "Sending..." with animated Loader2 spinner icon during submission
+- Added particle burst animation in ContactSuccess: 4 particles burst outward (0.8s ease-out)
+- Added `@keyframes particle-burst` to index.css using CSS variables for radial position
+- Integrated error messages with aria-invalid and aria-describedby for accessibility
 
 ---
 

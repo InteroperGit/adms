@@ -20,6 +20,7 @@ import {
   StickyNote,
   RectangleHorizontal,
   Box,
+  Loader2,
 } from 'lucide-react';
 import type { ComponentType } from 'react';
 
@@ -56,6 +57,7 @@ export const ICON_MAP: Record<string, IconComponent> = {
   StickyNote,
   RectangleHorizontal,
   Box,
+  Loader2,
 };
 
 /**

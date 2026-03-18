@@ -6,8 +6,10 @@ import { ContactFormFields } from './ContactFormFields';
 import type { FormState } from './ContactFormFields';
 import { ContactConsent } from './ContactConsent';
 import { contactContent } from '@/types/sections/contact/contact';
+import { resolveIcon } from '@/types/shared/iconMap';
 
 const EMPTY: FormState = { name: '', contact: '', message: '' };
+const EMPTY_ERRORS = { name: '', contact: '', message: '' };
 
 /**
  * @component
@@ -18,18 +20,78 @@ const EMPTY: FormState = { name: '', contact: '', message: '' };
  */
 export function ContactForm() {
   const [form, setForm] = useState<FormState>(EMPTY);
+  const [errors, setErrors] = useState<FormState>(EMPTY_ERRORS);
   const [submitted, setSubmitted] = useState(false);
   const [consent, setConsent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { form: f } = contactContent;
+
+  function validateField(field: keyof FormState, value: string): string {
+    if (field === 'name') {
+      return value.trim().length < 2 ? 'Name must be at least 2 characters' : '';
+    }
+    if (field === 'contact') {
+      const isEmpty = !value.trim();
+      const hasValidFormat = /[@\d]/.test(value);
+      if (isEmpty) {
+        return 'Contact is required';
+      }
+      if (!hasValidFormat) {
+        return 'Please enter a valid email or phone number';
+      }
+      return '';
+    }
+    if (field === 'message') {
+      return value.trim().length < 10 ? 'Message must be at least 10 characters' : '';
+    }
+    return '';
+  }
+
+  function handleFieldChange(field: keyof FormState, value: string) {
+    setForm({ ...form, [field]: value });
+    // Clear error on change if it was previously invalid
+    if (errors[field]) {
+      setErrors({ ...errors, [field]: '' });
+    }
+  }
+
+  function handleFieldBlur(field: keyof FormState) {
+    const error = validateField(field, form[field]);
+    setErrors({ ...errors, [field]: error });
+  }
+
+  function isFormValid(): boolean {
+    return (
+      !validateField('name', form.name) &&
+      !validateField('contact', form.contact) &&
+      !validateField('message', form.message) &&
+      form.name.trim() !== '' &&
+      form.contact.trim() !== '' &&
+      form.message.trim() !== ''
+    );
+  }
 
   function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
-    if (!consent) {
+    if (!consent || !isFormValid()) {
+      // Validate all fields on submit attempt
+      setErrors({
+        name: validateField('name', form.name),
+        contact: validateField('contact', form.contact),
+        message: validateField('message', form.message),
+      });
       return;
     }
-    setSubmitted(true);
-    setForm(EMPTY);
-    setConsent(false);
+
+    // Simulate submission
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setSubmitted(true);
+      setForm(EMPTY);
+      setErrors(EMPTY_ERRORS);
+      setConsent(false);
+    }, 1200);
   }
 
   return (
@@ -40,7 +102,9 @@ export function ContactForm() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <ContactFormFields
             form={form}
-            onChange={(field, value) => setForm({ ...form, [field]: value })}
+            errors={errors}
+            onChange={handleFieldChange}
+            onBlur={handleFieldBlur}
           />
 
           <ContactConsent checked={consent} onChange={setConsent} />
@@ -48,10 +112,20 @@ export function ContactForm() {
           <Button
             type="submit"
             size="lg"
-            disabled={!consent}
+            disabled={!consent || isLoading}
             className="w-full rounded-full cursor-pointer disabled:cursor-not-allowed"
           >
-            {f.submit}
+            {isLoading
+              ? (() => {
+                  const LoaderIcon = resolveIcon('Loader2');
+                  return (
+                    <span className="flex items-center gap-2">
+                      {LoaderIcon && <LoaderIcon size={16} className="animate-spin" />}
+                      Sending...
+                    </span>
+                  );
+                })()
+              : f.submit}
           </Button>
 
           <p className="text-center text-xs text-muted-foreground">{f.disclaimer}</p>
