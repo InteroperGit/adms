@@ -172,7 +172,7 @@ Keep primary as the dominant brand color; accent provides contrast points. All v
 
 ## F4. CTA section visual depth
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Medium
 **Impact:** `src/components/sections/call-to-action/`
 
@@ -209,11 +209,18 @@ Add atmospheric depth without changing the primary-color identity:
 
 **Files:** `src/components/sections/call-to-action/index.tsx`
 
+**Status:** ✅ Complete
+- Diagonal gradient applied (from-primary via-primary to-primary/80)
+- Decorative blobs positioned (top-right and bottom-left)
+- Dot pattern overlay at 1px dots, 24px spacing, opacity-[0.04]
+- Padding increased to py-24 md:py-32
+- Container properly z-indexed for layering
+
 ---
 
 ## F5. Portfolio filter animated indicator
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Medium
 **Impact:** Home portfolio section + PortfolioCategoryPage
 
@@ -255,6 +262,24 @@ Add a sliding pill background indicator that animates between active items:
 5. Apply same pattern to both `PortfolioFilter.tsx` and `CategoryNav.tsx`
 
 **Files:** `src/components/sections/portfolio/PortfolioFilter.tsx`, `src/components/portfolio/CategoryNav.tsx`
+
+**Status:** ✅ Complete
+- Created generic `useAnimatedPillPosition` hook (`src/hooks/useAnimatedPillPosition.ts`)
+  - Calculates pill position/width/height based on active item index
+  - Uses useLayoutEffect for synchronous DOM measurements
+  - Type-safe ref handling avoiding deprecated MutableRefObject
+- Created shared `AnimatedPillTabs` component (`src/components/ui/AnimatedPillTabs.tsx`)
+  - Generic component accepting items array, activeValue, and renderItem callback
+  - Flexible rendering: supports buttons, links, or any custom elements
+  - Animates sliding pill with 300ms ease-out transition
+- Refactored `CategoryNav.tsx` to use AnimatedPillTabs
+  - Link-based rendering with proper focus-visible rings
+  - Maintains href routing for portfolio categories
+- Refactored `PortfolioFilter.tsx` to use AnimatedPillTabs
+  - Button-based rendering with onClick callbacks
+  - Maintains onChange prop for state updates
+- Applied consistent responsive padding: px-3 py-1.5 (sm: px-5 py-2)
+- Text color handling: active=text-white, inactive=text-muted-foreground
 
 ---
 

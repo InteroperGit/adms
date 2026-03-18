@@ -41,7 +41,7 @@ export function CtaButtons({ cta }: CtaButtonsProps) {
           size="lg"
           variant="outline"
           className={cn(
-            'w-full rounded-full border-accent/40 bg-transparent px-8 text-white',
+            'w-full rounded-full border-accent/80 bg-transparent px-8 text-white',
             'hover:border-accent hover:bg-accent/10 hover:text-white sm:w-auto'
           )}
         >
