@@ -178,6 +178,15 @@
   }
 }
 
+@keyframes slow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .group:hover .icon-shake {
   animation: shake 2s ease-in-out infinite;
 }
@@ -232,6 +241,10 @@
 /* ─── Utilities ────────────────────────────────────────────────────────────── */
 @utility focus-ring {
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+}
+
+@utility animate-slow-spin {
+  animation: slow-spin 30s linear infinite;
 }
 
 /* ─── Reduced Motion ────────────────────────────────────────────────────────── */
