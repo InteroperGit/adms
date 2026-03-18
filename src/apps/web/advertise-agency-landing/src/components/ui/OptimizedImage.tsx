@@ -21,6 +21,8 @@ export interface OptimizedImageProps {
   aspectRatio?: string;
   /** CSS object-fit value for the image. Default: 'cover' */
   objectFit?: 'cover' | 'contain' | 'fill';
+  /** Optional callback fired when image loads successfully */
+  onLoad?: () => void;
 }
 
 /**
@@ -55,9 +57,15 @@ export function OptimizedImage({
   imgClassName,
   aspectRatio,
   objectFit = 'cover',
+  onLoad,
 }: OptimizedImageProps) {
   // Start as loaded for priority images (no skeleton needed), not loaded for lazy images
   const [loaded, setLoaded] = useState(priority);
+
+  const handleLoad = () => {
+    setLoaded(true);
+    onLoad?.();
+  };
 
   const loadingProps = priority
     ? ({ loading: 'eager', fetchPriority: 'high' } as const)
@@ -90,7 +98,7 @@ export function OptimizedImage({
           width={width}
           height={height}
           className={imgClasses}
-          onLoad={() => setLoaded(true)}
+          onLoad={handleLoad}
           onError={() => setLoaded(true)}
           {...loadingProps}
         />
@@ -112,7 +120,7 @@ export function OptimizedImage({
           width={width}
           height={height}
           className={imgClasses}
-          onLoad={() => setLoaded(true)}
+          onLoad={handleLoad}
           onError={() => setLoaded(true)}
           {...loadingProps}
         />

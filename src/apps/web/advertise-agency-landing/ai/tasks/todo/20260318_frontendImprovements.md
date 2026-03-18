@@ -549,7 +549,7 @@ Add a thin (2–3px) progress bar at the very top of the viewport:
 
 ## F12. Portfolio card image lazy loading skeleton
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-18)
 **Priority:** Low
 **Impact:** `src/components/ui/portfolio/PortfolioThumbnail.tsx`
 
@@ -566,7 +566,16 @@ Add a thin (2–3px) progress bar at the very top of the viewport:
    ```
 2. Add a subtle blur-up transition: image starts at `blur-sm opacity-0` and transitions to `blur-0 opacity-100` on load
 
-**Files:** `src/components/ui/portfolio/PortfolioThumbnail.tsx`
+**Status:** ✅ Complete
+- Added `onLoad` callback to OptimizedImage props (optional callback fired when image loads)
+- Added shimmer skeleton animation to index.css using `@keyframes shimmer` (background position shifts left-to-right over 2s)
+- Added `@keyframes blur-up` animation (blur: 8px → 0, opacity: 0 → 1, 0.6s ease-out)
+- Added blur-up animation to --animate-blur-up in Tailwind theme
+- Updated PortfolioThumbnail to track image load state with useState hook
+- Shimmer skeleton shows conditionally (!imageLoaded) with gradient animation
+- Image applies animate-blur-up class until loaded
+- OptimizedImage calls onLoad callback in handleLoad function after setting loaded state
+- All validation passes: format ✅, lint ✅, typecheck ✅, build ✅
 
 ---
 

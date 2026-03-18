@@ -158,6 +158,26 @@
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes blur-up {
+  from {
+    filter: blur(8px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
 .group:hover .icon-shake {
   animation: shake 2s ease-in-out infinite;
 }
@@ -206,6 +226,7 @@
   --animate-pulse-green: pulse-green 2s ease-in-out infinite;
   --animate-pulse-tg: pulse-tg 2s ease-in-out infinite;
   --animate-pulse-vk: pulse-vk 2s ease-in-out infinite;
+  --animate-blur-up: blur-up 0.6s ease-out;
 }
 
 /* ─── Reduced Motion ────────────────────────────────────────────────────────── */
