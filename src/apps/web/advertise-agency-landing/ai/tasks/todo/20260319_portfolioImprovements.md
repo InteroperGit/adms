@@ -142,6 +142,7 @@ Redesign the inline blockquote as an editorial statement:
 
 ## F4. Cards block — hover states and visual depth
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** High (deliverables/solution presentation must feel premium)
 **Impact:** `src/components/blocks/CardsBlock.tsx`
 
@@ -514,3 +515,4 @@ Visual verification checklist per item:
 - **F1 ✅**: Order-form block premium CTA container — branded rounded-3xl container with gradient bg, decorative blobs, trust badge row (ShieldCheck/Clock/Star), gradient title text
 - **F2 ✅**: Metrics block scroll-triggered count-up — `MetricCard` sub-component with regex parsing (prefix/num/suffix), `useViewportAnimation` (triggerOnce + reduced-motion), `useCountUp` staggered 150ms, stagger entrance with `animationFillMode: both`, `count-pop` + `suffix-fade-in` on completion
 - **F3 ✅**: Blockquote editorial design — `rounded-2xl border bg-card shadow-sm` card, large decorative `"` in `text-primary/10`, `text-xl font-heading` quote text, author avatar initial circle (`bg-primary/10`), `border-t` separator before attribution
+- **F4 ✅**: Cards block hover states & stagger entrance — `group` + `hover:-translate-y-1 hover:shadow-md hover:border-primary/30`, accent bar `h-1.5 w-12` grows to `w-16` on hover, title `group-hover:text-primary`, stagger entrance via `useViewportAnimation` + `stagger-fade-in` with 80ms inter-card delay
