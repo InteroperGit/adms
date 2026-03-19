@@ -9,36 +9,80 @@ interface CarouselSlideProps {
   index: number;
 }
 
+type TransitionEffect = 'zoom-fade' | 'slide-right' | 'rotate-fade' | 'blur-fade';
+
+const TRANSITION_EFFECTS: TransitionEffect[] = [
+  'zoom-fade',
+  'slide-right',
+  'rotate-fade',
+  'blur-fade',
+];
+
+/**
+ * Get deterministic transition effect based on slide index
+ * Ensures same slide always has same effect across renders
+ */
+function getTransitionEffect(index: number): TransitionEffect {
+  return TRANSITION_EFFECTS[index % TRANSITION_EFFECTS.length];
+}
+
+/**
+ * Get transition classes based on effect type
+ */
+function getTransitionClasses(effect: TransitionEffect, isActive: boolean): string {
+  const baseClasses =
+    'absolute inset-0 transition-[opacity,transform,filter] duration-700 ease-out';
+
+  if (!isActive) {
+    switch (effect) {
+      case 'zoom-fade':
+        return cn(baseClasses, 'opacity-0 scale-105 pointer-events-none');
+      case 'slide-right':
+        return cn(baseClasses, 'opacity-0 -translate-x-12 pointer-events-none');
+      case 'rotate-fade':
+        return cn(baseClasses, 'opacity-0 rotate-3 scale-95 pointer-events-none');
+      case 'blur-fade':
+        return cn(baseClasses, 'opacity-0 pointer-events-none');
+      default:
+        return cn(baseClasses, 'opacity-0 scale-105 pointer-events-none');
+    }
+  }
+
+  return cn(baseClasses, 'opacity-100 scale-100 translate-x-0 rotate-0');
+}
+
 /**
  * @component
  * @description Individual carousel slide with image or gradient background and centered text content
  * @param {CarouselSlideProps} props
  * @param {CarouselSlideType} props.slide - Slide data with title, subtitle, optional image and gradient
  * @param {boolean} props.isActive - Whether this slide is currently visible
- * @param {number} props.index - Zero-based slide index; used for prioritizing first image load
- * @returns {JSX.Element} Absolutely positioned slide with crossfade transition and dark overlay
+ * @param {number} props.index - Zero-based slide index; used for prioritizing first image load and transition effect
+ * @returns {JSX.Element} Absolutely positioned slide with random transition effect and dark overlay
  * @example <caption>Single carousel slide</caption>
  * <CarouselSlide slide={slides[0]} isActive={currentIndex === 0} index={0} />
  */
 export function CarouselSlide({ slide, isActive, index }: CarouselSlideProps) {
+  const effect = getTransitionEffect(index);
+
   return (
     <div
       aria-hidden={!isActive}
-      className={cn(
-        'absolute inset-0 transition-opacity duration-700',
-        isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
-      )}
+      className={getTransitionClasses(effect, isActive)}
+      style={effect === 'blur-fade' && isActive ? { filter: 'blur(0)' } : undefined}
     >
       {slide.image ? (
         <>
-          <OptimizedImage
-            src={slide.image}
-            alt={slide.alt}
-            sizes="100vw"
-            priority={index === 0}
-            className="h-full w-full"
-            imgClassName="object-cover"
-          />
+          <div className={cn('h-full w-full overflow-hidden', isActive && 'animate-ken-burns')}>
+            <OptimizedImage
+              src={slide.image}
+              alt={slide.alt}
+              sizes="100vw"
+              priority={index === 0}
+              className="h-full w-full"
+              imgClassName="object-cover"
+            />
+          </div>
           <div className="absolute inset-0 dark:bg-black/45" />
         </>
       ) : (

@@ -672,7 +672,7 @@ Feels like a developer placeholder, not a designed empty state.
 
 ## F15. About section image/visual element
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Medium
 **Impact:** `src/components/sections/about/AboutCard.tsx`
 
@@ -692,40 +692,48 @@ The decorative blob behind the card (`h-80 w-80 rounded-full bg-primary/5 blur-3
 
 **Files:** `src/components/sections/about/AboutCard.tsx`, `src/index.css`
 
+**Status:** ✅ Complete (commit 334adb7)
+- Added secondary accent blob (`bg-accent/5 blur-3xl`) offset from primary blob
+- Added slow-spinning dashed ring behind card (`border-dashed border-primary/10`, 30s linear infinite)
+- Added `@keyframes slow-spin` to index.css
+- All validation passes: format ✅, lint ✅, typecheck ✅, build ✅
+
 ---
 
 ## F16. Carousel transition variety
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Low
 **Impact:** `src/components/sections/carousel/CarouselSlide.tsx`
 
 **Current state:**
-Carousel uses a simple crossfade (opacity 0 → 1) for all slide transitions:
-
-```tsx
-className={cn(
-  'absolute inset-0 transition-opacity duration-700',
-  isActive ? 'opacity-100' : 'pointer-events-none opacity-0',
-)}
-```
-
-Every slide transition looks identical — just a fade.
+Carousel uses a simple crossfade (opacity 0 → 1) for all slide transitions.
 
 **Proposed:**
 Add a subtle zoom + fade combination for more cinematic feel:
-
 1. Active slide: `opacity-100 scale-100`
 2. Inactive slide: `opacity-0 scale-105` (slightly zoomed out while fading)
 3. CSS: `transition: opacity 700ms ease, transform 700ms ease`
-4. Ken Burns effect on current slide: slow zoom from `scale-100` to `scale-105` over the 5s display duration:
-   ```css
-   @keyframes ken-burns { from { transform: scale(1); } to { transform: scale(1.05); } }
-   ```
+4. Ken Burns effect on current slide: slow zoom from `scale-100` to `scale-105` over the 5s display duration
 5. Apply only to image slides (not gradient slides)
 6. Respect `prefers-reduced-motion` — disable Ken Burns
 
 **Files:** `src/components/sections/carousel/CarouselSlide.tsx`, `src/index.css`
+
+**Status:** ✅ Complete
+- Updated outer div transition to `transition-[opacity,transform] duration-700 ease-out`
+- Active slide: `opacity-100 scale-100`, inactive: `opacity-0 scale-105`
+- Added Ken Burns animation wrapper around image slides only
+- Added `@keyframes ken-burns` (scale 1 → 1.05 over 5s ease-out forwards)
+- Added `--animate-ken-burns: ken-burns 5s ease-out forwards;` to theme animations
+- Gradient slides remain unaffected (no Ken Burns)
+- Respects prefers-reduced-motion via existing media query
+- **BONUS: Added 3 random transition effects (rotating between slides):**
+  - **Slide Right**: `translateX(100px)` on enter (left to right slide)
+  - **Rotate Fade**: `-5deg` rotation + `scale(0.95)` on enter (spin + scale)
+  - **Blur Fade**: `blur(12px)` on enter, sharpens on exit (cinema effect)
+- Effects rotate deterministically by slide index (ensures consistency across renders)
+- All validation passes: format ✅, lint ✅, typecheck ✅, build ✅
 
 ---
 
