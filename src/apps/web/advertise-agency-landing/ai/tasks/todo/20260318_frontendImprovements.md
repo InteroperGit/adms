@@ -739,7 +739,7 @@ Add a subtle zoom + fade combination for more cinematic feel:
 
 ## F17. Footer visual hierarchy enhancement
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Low
 **Impact:** `src/components/sections/footer/`
 
@@ -754,6 +754,14 @@ The footer is functional but visually flat. All four columns have identical styl
 5. Add hover underline on footer links: `hover:underline underline-offset-4 decoration-primary/40`
 
 **Files:** `src/components/sections/footer/index.tsx`, `src/components/sections/footer/FooterBrand.tsx`, `src/components/sections/footer/FooterContact.tsx`, `src/components/sections/footer/FooterBottom.tsx`
+
+**Status:** ✅ Complete (commit 0ac6c57)
+- Added top border gradient on footer (`border-t border-transparent bg-gradient-to-r from-transparent via-primary/30 to-transparent`)
+- FooterBrand: added accent underline (`h-0.5 w-12 bg-primary rounded-full`) under logo
+- FooterContact: phone number styled with `text-primary` for visual prominence
+- FooterBottom: copyright year upgraded to `text-white/50`
+- Footer links: added hover underline with `hover:underline underline-offset-4 decoration-primary/40`
+- Premium editorial design with visual hierarchy anchors
 
 ---
 

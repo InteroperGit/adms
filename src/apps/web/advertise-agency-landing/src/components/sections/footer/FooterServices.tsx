@@ -19,7 +19,7 @@ export function FooterServices() {
         <li key={service.title}>
           <a
             href="#services"
-            className="text-sm text-white/60 transition-colors hover:text-primary focus-ring"
+            className="text-sm underline text-white/60 underline-offset-4 decoration-white/60 transition-colors hover:text-primary hover:decoration-primary focus-ring"
           >
             {service.title}
           </a>

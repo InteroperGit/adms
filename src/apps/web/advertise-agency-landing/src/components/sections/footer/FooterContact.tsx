@@ -31,11 +31,11 @@ export function FooterContact() {
     <FooterSection title={footerContent.contactsTitle} spacing="space-y-4">
       {items.map(({ icon: Icon, value, href }) => (
         <li key={value} className="flex items-start gap-3">
-          <Icon size={15} className="mt-0.5 shrink-0 text-primary" />
+          <Icon size={16} className="mt-0.5 shrink-0 text-accent" />
           {href ? (
             <a
               href={href}
-              className="text-sm text-white/60 transition-colors hover:text-primary focus-ring"
+              className="text-sm underline text-white/60 underline-offset-4 decoration-white/60 transition-colors hover:text-primary hover:decoration-primary focus-ring"
             >
               {value}
             </a>

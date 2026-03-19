@@ -15,16 +15,18 @@ export function FooterBottom() {
   const year = new Date().getFullYear();
 
   return (
-    <div className="flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/35 sm:flex-row">
-      <p>{interpolate(footerContent.copyright, { year, name: siteData.name })}</p>
+    <div className="flex flex-col items-center justify-between gap-3 py-6 text-xs sm:flex-row">
+      <p className="text-white/50">
+        {interpolate(footerContent.copyright, { year, name: siteData.name })}
+      </p>
 
-      <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:justify-start">
+      <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-white/35 sm:justify-start">
         {footerContent.legalLinks.map((link, i) => (
           <span key={link.href}>
             {i > 0 && <span className="hidden text-white/15 sm:inline">|</span>}
             <Link
               to={link.href}
-              className="whitespace-nowrap transition-colors hover:text-white/70 focus-ring"
+              className="whitespace-nowrap underline-offset-4 decoration-primary/40 transition-colors hover:text-white/70 hover:underline focus-ring"
             >
               {link.label}
             </Link>
@@ -32,7 +34,7 @@ export function FooterBottom() {
         ))}
       </nav>
 
-      <p>{footerContent.tagline}</p>
+      <p className="text-white/35">{footerContent.tagline}</p>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 // src/components/sections/footer/index.tsx
 import { Container } from '@/components/layout/Container';
-import { Separator } from '@/components/ui/separator';
 import { FooterBrand } from './FooterBrand';
 import { FooterNav } from './FooterNav';
 import { FooterServices } from './FooterServices';
@@ -16,18 +15,24 @@ import { FooterBottom } from './FooterBottom';
  */
 export function Footer() {
   return (
-    <footer className="bg-surface-dark">
+    <footer className="relative overflow-hidden bg-gradient-to-b from-surface-dark via-surface-dark to-black/80">
+      {/* Decorative background blobs */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
+        <div className="absolute -left-32 top-1/3 h-72 w-72 rounded-full bg-accent/5 blur-3xl" />
+      </div>
+
       <Container>
-        <div className="grid grid-cols-1 gap-6 py-12 sm:grid-cols-2 sm:gap-10 sm:py-16 lg:grid-cols-4">
+        <div className="relative z-10 grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 sm:gap-16 sm:py-20 lg:grid-cols-4 lg:gap-8">
           <FooterBrand />
           <FooterNav />
           <FooterServices />
           <FooterContact />
         </div>
 
-        <Separator className="bg-white/10" />
-
-        <FooterBottom />
+        <div className="relative z-10 border-t border-white/10">
+          <FooterBottom />
+        </div>
       </Container>
     </footer>
   );

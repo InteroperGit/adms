@@ -22,7 +22,7 @@ interface FooterSectionProps {
 export function FooterSection({ title, children, spacing = 'space-y-3' }: FooterSectionProps) {
   return (
     <div>
-      <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-accent">{title}</p>
+      <p className="mb-6 text-sm font-bold uppercase tracking-wider text-accent/90">{title}</p>
       <ul className={spacing}>{children}</ul>
     </div>
   );
