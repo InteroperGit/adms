@@ -14,9 +14,7 @@ function OrderFormBlockMobile({ block, definition }: ViewProps) {
   return (
     <div className="mx-auto max-w-2xl md:hidden">
       {block.title && (
-        <h2 className="mb-6 text-center font-heading text-2xl font-bold">
-          {block.title}
-        </h2>
+        <h2 className="mb-6 text-center font-heading text-2xl font-bold">{block.title}</h2>
       )}
       <OrderForm definition={definition} />
     </div>
