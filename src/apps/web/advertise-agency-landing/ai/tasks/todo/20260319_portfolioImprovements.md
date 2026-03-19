@@ -330,6 +330,7 @@ The table is functionally responsive (mobile card fallback) but visually generic
 
 ## F10. Heading block — visual section anchors for h2
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Low (navigation and content hierarchy)
 **Impact:** `src/components/blocks/HeadingBlock.tsx`
 
@@ -523,4 +524,5 @@ Visual verification checklist per item:
 - **F5 ✅**: Progress chart modern bars + scroll animation — `h-2` → `h-3` bars, `useViewportAnimation` (triggerOnce + reduced-motion), width animates `0% → pct%` with `cubic-bezier(0.25,1,0.5,1)` per bar, `index*100ms` stagger, value label fades in 600ms after bar start
 - **F6 ✅**: Bar/Line/H-bar scroll-triggered Recharts animations — each chart mounts Recharts only on viewport entry via `useViewportAnimation`; placeholder `<div style={{ height }}/>` holds space until in-view; `isAnimationActive={true}` + `animationDuration={800}` + `animationEasing="ease-out"` ensures fresh animation on entry
 - **F7 ✅**: Pie/Donut chart animated segment entry — `useViewportAnimation` (triggerOnce + reduced-motion) added; segments animate from `0 CIRCUMFERENCE` → actual `dash gap` values with `0.6s ease-out` + `index * 100ms` stagger; legend fades in after last segment completes
+- **F10 ✅**: Heading block visual section anchors — h2 wrapped in div with gradient accent bar (`mt-2 h-0.5 w-12 rounded-full bg-gradient-to-r from-primary to-accent`, aria-hidden); h3 gets `pt-6 pb-2` spacing in BlockRenderer (was flat `py-4`); h4 unchanged
 - **F9 ✅**: Table block data visualization upgrade — header gradient `from-primary/20 to-primary/12 dark:from-primary/40 dark:to-primary/30` + `text-xs uppercase tracking-wide`; highlighted rows `border-l-2 border-l-primary bg-primary/5 dark:bg-primary/20`; hover uses neutral `muted/80 dark:muted/90` (distinct from selection); odd rows `dark:bg-muted/40`; tfoot `bg-muted/50 dark:bg-muted/70 font-bold`; caption moved below table as `mt-3 text-center italic`; dark mode opacity boosted throughout
