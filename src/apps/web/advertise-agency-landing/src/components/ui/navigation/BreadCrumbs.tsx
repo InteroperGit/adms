@@ -64,7 +64,8 @@ export function BreadCrumbs({ items }: BreadCrumbsProps) {
                         pillBase,
                         'border-border dark:border-gray-600 bg-transparent text-muted-foreground',
                         'transition-all duration-200',
-                        'hover:border-primary/20 dark:hover:border-primary/60 hover:bg-primary/5 hover:text-primary'
+                        'hover:border-primary/20 dark:hover:border-primary/60',
+                        'hover:bg-primary/5 hover:text-primary'
                       )}
                     >
                       {item.label}

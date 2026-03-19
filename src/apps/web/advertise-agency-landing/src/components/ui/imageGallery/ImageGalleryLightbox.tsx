@@ -82,7 +82,10 @@ export function ImageGalleryLightbox({
       onClick={onClose}
     >
       <button
-        className="absolute right-3 top-3 cursor-pointer rounded-full bg-white/20 p-2 text-white transition-colors hover:bg-primary"
+        className={cn(
+          'absolute right-3 top-3 cursor-pointer rounded-full p-2',
+          'bg-white/20 text-white transition-colors hover:bg-primary'
+        )}
         onClick={onClose}
         aria-label={closeLabel}
       >
@@ -132,7 +135,8 @@ export function ImageGalleryLightbox({
                   onSelect(i);
                 }}
                 className={cn(
-                  'h-10 w-14 shrink-0 overflow-hidden rounded-md transition-opacity sm:h-14 sm:w-20 sm:rounded-lg',
+                  'h-10 w-14 shrink-0 overflow-hidden rounded-md transition-opacity',
+                  'sm:h-14 sm:w-20 sm:rounded-lg',
                   i === activeIndex
                     ? 'opacity-100 ring-2 ring-primary'
                     : 'opacity-50 hover:opacity-80'

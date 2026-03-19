@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { Container } from '@/components/layout/Container';
+import { cn } from '@/libs/utils';
 import { notFoundContent } from '@/types/config/notFound';
 
 interface NotFoundProps {
@@ -12,7 +13,12 @@ export function NotFound({ backLabel, backHref }: NotFoundProps) {
   const href = backHref ?? notFoundContent.backHref;
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center py-20 overflow-hidden bg-background">
+    <div
+      className={cn(
+        'relative min-h-screen flex items-center justify-center py-20 overflow-hidden',
+        'bg-background'
+      )}
+    >
       {/* Decorative blobs */}
       <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
@@ -31,9 +37,11 @@ export function NotFound({ backLabel, backHref }: NotFoundProps) {
         <div className="text-center">
           <div className="mb-8">
             <h1
-              className="text-[10rem] md:text-[14rem] font-heading font-bold
-                bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent
-                animate-[float_3s_ease-in-out_infinite] select-none leading-none mb-4"
+              className={cn(
+                'text-[10rem] md:text-[14rem] font-heading font-bold',
+                'bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent',
+                'animate-[float_3s_ease-in-out_infinite] select-none leading-none mb-4'
+              )}
               aria-label={`Error ${notFoundContent.code}`}
             >
               {notFoundContent.code}
@@ -43,7 +51,11 @@ export function NotFound({ backLabel, backHref }: NotFoundProps) {
           </div>
           <Link
             to={href}
-            className="inline-flex items-center justify-center px-8 py-3 text-primary font-medium border border-primary rounded-full hover:bg-primary/10 transition-colors"
+            className={cn(
+              'inline-flex items-center justify-center px-8 py-3',
+              'text-primary font-medium border border-primary rounded-full',
+              'hover:bg-primary/10 transition-colors'
+            )}
           >
             {label}
           </Link>

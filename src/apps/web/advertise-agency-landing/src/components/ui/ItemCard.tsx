@@ -20,8 +20,10 @@ export function ItemCard({ className, children, ...props }: ItemCardProps) {
   return (
     <div
       className={cn(
-        'group relative h-full flex flex-col rounded-2xl border border-border dark:border-primary/30 bg-card',
-        'transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-primary/30 dark:hover:border-primary/50',
+        'group relative h-full flex flex-col rounded-2xl border border-border bg-card',
+        'dark:border-primary/30',
+        'transition-all duration-300 hover:-translate-y-1 hover:shadow-lg',
+        'hover:border-primary/30 dark:hover:border-primary/50',
         className
       )}
       {...props}

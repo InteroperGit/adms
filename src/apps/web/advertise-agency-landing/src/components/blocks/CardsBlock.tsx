@@ -49,7 +49,10 @@ export function CardsBlock({ block, caseGradient }: CardsBlockProps) {
         {block.items.map(({ title, description }, index) => (
           <div
             key={title}
-            className="group rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-md"
+            className={cn(
+              'group rounded-2xl border border-border bg-card p-6 shadow-sm',
+              'transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-md'
+            )}
             style={
               hasAnimated
                 ? { ...STAGGER_ANIMATION_BASE, animationDelay: `${index * 80}ms` }
@@ -65,12 +68,27 @@ export function CardsBlock({ block, caseGradient }: CardsBlockProps) {
               />
             )}
             {(isSolid || isPrimary) && (
-              <div className="mb-3 h-1.5 w-12 rounded-full bg-primary transition-all duration-300 group-hover:w-16" />
+              <div
+                className={cn(
+                  'mb-3 h-1.5 w-12 rounded-full bg-primary',
+                  'transition-all duration-300 group-hover:w-16'
+                )}
+              />
             )}
             {isAccent && (
-              <div className="mb-3 h-1.5 w-12 rounded-full bg-accent transition-all duration-300 group-hover:w-16" />
+              <div
+                className={cn(
+                  'mb-3 h-1.5 w-12 rounded-full bg-accent',
+                  'transition-all duration-300 group-hover:w-16'
+                )}
+              />
             )}
-            <h3 className="mb-2 font-semibold transition-colors duration-200 group-hover:text-primary">
+            <h3
+              className={cn(
+                'mb-2 font-semibold',
+                'transition-colors duration-200 group-hover:text-primary'
+              )}
+            >
               {title}
             </h3>
             <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>

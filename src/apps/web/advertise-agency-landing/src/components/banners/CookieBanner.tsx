@@ -56,7 +56,10 @@ export function CookieBanner() {
       <button
         onClick={() => save(ConsentState.NECESSARY)}
         aria-label={cookiesContent.closeLabel}
-        className="absolute right-4 top-4 text-muted-foreground transition-colors hover:text-foreground"
+        className={cn(
+          'absolute right-4 top-4 text-muted-foreground',
+          'transition-colors hover:text-foreground'
+        )}
       >
         <X size={16} />
       </button>

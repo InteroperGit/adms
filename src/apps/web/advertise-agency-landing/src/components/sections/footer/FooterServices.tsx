@@ -1,4 +1,5 @@
 // src/components/sections/footer/FooterServices.tsx
+import { cn } from '@/libs/utils';
 import { footerContent } from '@/types/sections/footer/footer';
 import { services } from '@/types/sections/services/services';
 import { FooterSection } from './FooterSection';
@@ -19,7 +20,10 @@ export function FooterServices() {
         <li key={service.title}>
           <a
             href="#services"
-            className="text-sm underline text-white/60 underline-offset-4 decoration-white/60 transition-colors hover:text-primary hover:decoration-primary focus-ring"
+            className={cn(
+              'text-sm underline text-white/60 underline-offset-4 decoration-white/60',
+              'transition-colors hover:text-primary hover:decoration-primary focus-ring'
+            )}
           >
             {service.title}
           </a>

@@ -1,3 +1,4 @@
+import { cn } from '@/libs/utils';
 import { TestimonialCard } from '@/components/ui/testimonial/TestimonialCard';
 import { testimonials } from '@/types/sections/testimonials/testimonials';
 import type { BlockquoteBlock as BlockquoteBlockData } from '@/types/blocks';
@@ -38,9 +39,17 @@ export function BlockquoteBlock({ block }: BlockquoteBlockProps) {
 
   // Variant B — inline quote with attribution
   return (
-    <blockquote className="relative mx-auto max-w-3xl overflow-hidden rounded-2xl border border-border/50 bg-card px-8 py-8 shadow-sm">
+    <blockquote
+      className={cn(
+        'relative mx-auto max-w-3xl overflow-hidden rounded-2xl',
+        'border border-border/50 bg-card px-8 py-8 shadow-sm'
+      )}
+    >
       <div
-        className="pointer-events-none absolute -left-2 -top-4 select-none font-heading text-8xl font-bold leading-none text-primary/10"
+        className={cn(
+          'pointer-events-none absolute -left-2 -top-4 select-none',
+          'font-heading text-8xl font-bold leading-none text-primary/10'
+        )}
         aria-hidden="true"
       >
         &ldquo;
@@ -48,9 +57,19 @@ export function BlockquoteBlock({ block }: BlockquoteBlockProps) {
       <p className="relative text-xl font-heading italic leading-relaxed text-foreground">
         «{block.text}»
       </p>
-      <footer className="mt-6 flex items-center gap-3 border-t border-border/50 pt-4 text-sm text-muted-foreground">
+      <footer
+        className={cn(
+          'mt-6 flex items-center gap-3 pt-4 text-sm text-muted-foreground',
+          'border-t border-border/50'
+        )}
+      >
         {block.author && (
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+          <div
+            className={cn(
+              'flex h-9 w-9 shrink-0 items-center justify-center rounded-full',
+              'bg-primary/10 text-sm font-bold text-primary'
+            )}
+          >
             {block.author[0]}
           </div>
         )}

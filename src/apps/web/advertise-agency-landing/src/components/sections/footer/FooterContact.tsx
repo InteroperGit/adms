@@ -1,4 +1,5 @@
 // src/components/sections/footer/FooterContact.tsx
+import { cn } from '@/libs/utils';
 import { ICON_MAP, type IconComponent } from '@/types/shared/iconMap';
 import { footerContent } from '@/types/sections/footer/footer';
 import { phoneHref } from '@/libs/utils';
@@ -35,7 +36,10 @@ export function FooterContact() {
           {href ? (
             <a
               href={href}
-              className="text-sm underline text-white/60 underline-offset-4 decoration-white/60 transition-colors hover:text-primary hover:decoration-primary focus-ring"
+              className={cn(
+                'text-sm underline text-white/60 underline-offset-4 decoration-white/60',
+                'transition-colors hover:text-primary hover:decoration-primary focus-ring'
+              )}
             >
               {value}
             </a>

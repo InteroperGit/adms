@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Play } from 'lucide-react';
+import { cn } from '@/libs/utils';
 import type { VideoBlock as VideoBlockData } from '@/types/blocks';
 
 interface VideoBlockProps {
@@ -82,9 +83,19 @@ function VideoFacadeButton({ thumbnailUrl, caption, onPlay }: VideoFacadeButtonP
           className="h-full w-full object-cover"
         />
       )}
-      <div className="absolute inset-0 bg-black/30 transition-colors duration-300 group-hover:bg-black/45" />
+      <div
+        className={cn(
+          'absolute inset-0 bg-black/30',
+          'transition-colors duration-300 group-hover:bg-black/45'
+        )}
+      />
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary shadow-lg transition-transform duration-300 group-hover:scale-110">
+        <div
+          className={cn(
+            'flex h-16 w-16 items-center justify-center rounded-full bg-primary shadow-lg',
+            'transition-transform duration-300 group-hover:scale-110'
+          )}
+        >
           <Play size={24} fill="white" className="ml-1 text-white" />
         </div>
       </div>

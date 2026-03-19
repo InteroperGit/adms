@@ -77,7 +77,12 @@ export function PortfolioThumbnail({
           }}
         />
       )}
-      <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/thumb:bg-black/40" />
+      <div
+        className={cn(
+          'absolute inset-0 bg-black/0',
+          'transition-colors duration-300 group-hover/thumb:bg-black/40'
+        )}
+      />
       <div className="absolute left-4 top-4">
         <Badge className="border-0 bg-black/50 text-white backdrop-blur-sm">{category}</Badge>
       </div>

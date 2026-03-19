@@ -96,7 +96,10 @@ export function CodeBlock({ block }: CodeBlockProps) {
           type="button"
           onClick={handleCopy}
           aria-label={copied ? 'Скопировано' : 'Скопировать код'}
-          className="flex items-center gap-1.5 rounded px-2 py-1 text-xs text-neutral-400 transition-colors hover:bg-neutral-700 hover:text-neutral-100 focus-ring"
+          className={cn(
+            'flex items-center gap-1.5 rounded px-2 py-1 text-xs',
+            'text-neutral-400 transition-colors hover:bg-neutral-700 hover:text-neutral-100 focus-ring'
+          )}
         >
           {copied ? <Check size={14} /> : <Copy size={14} />}
           {copied ? 'Скопировано' : 'Копировать'}

@@ -98,10 +98,20 @@ export function CarouselSlide({ slide, isActive, index }: CarouselSlideProps) {
           aria-live={isActive ? 'polite' : 'off'}
           aria-atomic="true"
         >
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground dark:text-white/65">
+          <p
+            className={cn(
+              'mb-3 text-sm font-semibold uppercase tracking-[0.2em]',
+              'text-muted-foreground dark:text-white/65'
+            )}
+          >
             {carouselContent.label}
           </p>
-          <h2 className="font-heading mb-4 text-3xl font-bold leading-tight md:text-5xl lg:text-6xl">
+          <h2
+            className={cn(
+              'font-heading mb-4 text-3xl font-bold leading-tight',
+              'md:text-5xl lg:text-6xl'
+            )}
+          >
             {slide.title}
           </h2>
           <p className="text-base text-muted-foreground dark:text-white/80 md:text-lg">

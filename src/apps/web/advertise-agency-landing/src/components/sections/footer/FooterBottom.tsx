@@ -2,7 +2,7 @@
 import { Link } from 'react-router';
 import { footerContent } from '@/types/sections/footer/footer';
 import { siteData } from '@/types/config/siteData';
-import { interpolate } from '@/libs/utils';
+import { cn, interpolate } from '@/libs/utils';
 
 /**
  * @component
@@ -20,13 +20,21 @@ export function FooterBottom() {
         {interpolate(footerContent.copyright, { year, name: siteData.name })}
       </p>
 
-      <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-white/35 sm:justify-start">
+      <nav
+        className={cn(
+          'flex flex-wrap items-center justify-center gap-x-4 gap-y-2',
+          'text-white/35 sm:justify-start'
+        )}
+      >
         {footerContent.legalLinks.map((link, i) => (
           <span key={link.href}>
             {i > 0 && <span className="hidden text-white/15 sm:inline">|</span>}
             <Link
               to={link.href}
-              className="whitespace-nowrap underline-offset-4 decoration-primary/40 transition-colors hover:text-white/70 hover:underline focus-ring"
+              className={cn(
+                'whitespace-nowrap underline-offset-4 decoration-primary/40',
+                'transition-colors hover:text-white/70 hover:underline focus-ring'
+              )}
             >
               {link.label}
             </Link>

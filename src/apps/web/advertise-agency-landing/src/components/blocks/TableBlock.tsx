@@ -36,7 +36,11 @@ export function TableBlock({ block }: TableBlockProps) {
             {row.map((cell, j) => (
               <div key={j} className="flex flex-col py-1.5 first:pt-0 last:pb-0">
                 {block.head[j] && (
-                  <span className="mb-0.5 text-xs font-semibold uppercase tracking-wide text-foreground">
+                  <span
+                    className={cn(
+                      'mb-0.5 text-xs font-semibold uppercase tracking-wide text-foreground'
+                    )}
+                  >
                     {block.head[j]}
                   </span>
                 )}
@@ -47,7 +51,11 @@ export function TableBlock({ block }: TableBlockProps) {
         ))}
         {block.total && (
           <div className="rounded-xl border-2 border-border bg-muted/60 p-4 shadow-sm">
-            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            <div
+              className={cn(
+                'mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground'
+              )}
+            >
               {block.total[0]}
             </div>
             <div className="flex flex-col gap-1">
@@ -66,11 +74,19 @@ export function TableBlock({ block }: TableBlockProps) {
       <div className="hidden overflow-x-auto rounded-xl border border-border shadow-sm sm:block">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gradient-to-r from-primary/20 to-primary/12 dark:from-primary/40 dark:to-primary/30">
+            <tr
+              className={cn(
+                'bg-gradient-to-r from-primary/20 to-primary/12',
+                'dark:from-primary/40 dark:to-primary/30'
+              )}
+            >
               {block.head.map((col) => (
                 <th
                   key={col}
-                  className="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-foreground"
+                  className={cn(
+                    'whitespace-nowrap px-4 py-3 text-left',
+                    'text-xs font-semibold uppercase tracking-wide text-foreground'
+                  )}
                 >
                   {col}
                 </th>
@@ -100,7 +116,11 @@ export function TableBlock({ block }: TableBlockProps) {
           </tbody>
           {block.total && (
             <tfoot>
-              <tr className="border-t-2 border-border bg-muted/50 font-bold text-foreground dark:bg-muted/70">
+              <tr
+                className={cn(
+                  'border-t-2 border-border bg-muted/50 font-bold text-foreground dark:bg-muted/70'
+                )}
+              >
                 {block.total.map((cell, j) => (
                   <td key={j} className="px-4 py-3 text-foreground">
                     {cell}

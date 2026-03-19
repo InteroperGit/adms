@@ -55,7 +55,8 @@ export function TestimonialCard({
       <div className="flex items-center gap-4">
         <div
           className={cn(
-            'flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-sm font-bold text-white',
+            'flex h-11 w-11 shrink-0 items-center justify-center rounded-full',
+            'bg-gradient-to-br text-sm font-bold text-white',
             testimonial.avatarColor
           )}
         >

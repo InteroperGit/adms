@@ -63,7 +63,10 @@ export function HeaderMobileNav({
           highlightedIndex={highlightedActionIndex}
         />
         <button
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted"
+          className={cn(
+            'flex h-10 w-10 items-center justify-center rounded-lg',
+            'text-foreground transition-colors hover:bg-muted'
+          )}
           onClick={() => setMenuOpen((prev) => !prev)}
           aria-label={menuOpen ? headerContent.closeMenuLabel : headerContent.openMenuLabel}
           aria-expanded={menuOpen}

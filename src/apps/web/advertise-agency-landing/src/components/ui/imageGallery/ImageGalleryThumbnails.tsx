@@ -53,7 +53,8 @@ export function ImageGalleryThumbnails({
             onSelect(i);
           }}
           className={cn(
-            'relative h-14 w-20 shrink-0 cursor-pointer overflow-hidden rounded-lg transition-opacity sm:h-16 sm:w-24 [scroll-snap-align:center]',
+            'relative h-14 w-20 shrink-0 cursor-pointer overflow-hidden rounded-lg',
+            'transition-opacity sm:h-16 sm:w-24 [scroll-snap-align:center]',
             i === activeIndex ? 'ring-2 ring-primary opacity-100' : 'opacity-60 hover:opacity-100'
           )}
         >

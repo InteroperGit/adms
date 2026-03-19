@@ -46,7 +46,10 @@ export function CountingStat({
 
   return (
     <div
-      className="rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 dark:border-primary/30 p-6 flex flex-col items-center gap-2"
+      className={cn(
+        'rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 dark:border-primary/30',
+        'p-6 flex flex-col items-center gap-2'
+      )}
       style={
         animate
           ? {
@@ -58,7 +61,8 @@ export function CountingStat({
     >
       <div
         className={cn(
-          'flex h-10 w-10 items-center justify-center rounded-xl border border-transparent bg-primary/10 text-primary dark:border-primary/50',
+          'flex h-10 w-10 items-center justify-center rounded-xl',
+          'border border-transparent bg-primary/10 text-primary dark:border-primary/50',
           isAnimating && 'animate-cta-pulse-slow'
         )}
       >

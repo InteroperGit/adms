@@ -1,3 +1,4 @@
+import { cn } from '@/libs/utils';
 import { ICON_MAP } from '@/types/shared/iconMap';
 import type { CalloutBlock as CalloutBlockData } from '@/types/blocks';
 
@@ -23,18 +24,30 @@ interface CalloutContentProps {
 function SuccessCallout({ title, text }: CalloutContentProps) {
   const Icon = ICON_MAP['CheckCircle'];
   return (
-    <div className="relative mx-auto max-w-3xl overflow-hidden rounded-xl border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50/50 px-5 py-4 dark:border-green-900 dark:from-neutral-900 dark:to-neutral-900">
+    <div
+      className={cn(
+        'relative mx-auto max-w-3xl overflow-hidden rounded-xl px-5 py-4',
+        'border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50/50',
+        'dark:border-green-900 dark:from-neutral-900 dark:to-neutral-900'
+      )}
+    >
       {/* Decorative sparkle dots */}
       <div
         className="pointer-events-none absolute right-3 top-3 h-2 w-2 rounded-full bg-green-300/40"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute bottom-3 right-8 h-1.5 w-1.5 rounded-full bg-green-300/40"
+        className={cn(
+          'pointer-events-none absolute bottom-3 right-8',
+          'h-1.5 w-1.5 rounded-full bg-green-300/40'
+        )}
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute bottom-4 left-4 h-1 w-1 rounded-full bg-emerald-300/40"
+        className={cn(
+          'pointer-events-none absolute bottom-4 left-4',
+          'h-1 w-1 rounded-full bg-emerald-300/40'
+        )}
         aria-hidden="true"
       />
       <div className="flex gap-3">
@@ -53,7 +66,12 @@ function SuccessCallout({ title, text }: CalloutContentProps) {
 function InfoCallout({ title, text }: CalloutContentProps) {
   const Icon = ICON_MAP['Info'];
   return (
-    <div className="mx-auto max-w-3xl rounded-xl border border-blue-400 bg-blue-50 px-5 py-4 shadow-sm dark:bg-neutral-900">
+    <div
+      className={cn(
+        'mx-auto max-w-3xl rounded-xl px-5 py-4 shadow-sm',
+        'border border-blue-400 bg-blue-50 dark:bg-neutral-900'
+      )}
+    >
       <div className="flex gap-3">
         {Icon && <Icon size={20} className="mt-0.5 shrink-0 text-blue-500 dark:text-blue-400" />}
         <div>
@@ -68,7 +86,12 @@ function InfoCallout({ title, text }: CalloutContentProps) {
 function NoteCallout({ title, text }: CalloutContentProps) {
   const Icon = ICON_MAP['StickyNote'];
   return (
-    <div className="mx-auto max-w-3xl rounded-r-xl border-l-4 border-dashed border-border bg-muted/50 px-5 py-4 dark:bg-neutral-900">
+    <div
+      className={cn(
+        'mx-auto max-w-3xl rounded-r-xl px-5 py-4',
+        'border-l-4 border-dashed border-border bg-muted/50 dark:bg-neutral-900'
+      )}
+    >
       <div className="flex gap-3">
         {Icon && (
           <Icon size={20} className="mt-0.5 shrink-0 text-muted-foreground dark:text-neutral-400" />
@@ -87,7 +110,12 @@ function NoteCallout({ title, text }: CalloutContentProps) {
 function WarningCallout({ title, text }: CalloutContentProps) {
   const Icon = ICON_MAP['AlertTriangle'];
   return (
-    <div className="mx-auto max-w-3xl rounded-r-xl border-l-4 border-amber-400 bg-amber-50 px-5 py-4 dark:bg-neutral-900">
+    <div
+      className={cn(
+        'mx-auto max-w-3xl rounded-r-xl px-5 py-4',
+        'border-l-4 border-amber-400 bg-amber-50 dark:bg-neutral-900'
+      )}
+    >
       <div className="flex gap-3">
         {Icon && <Icon size={20} className="mt-0.5 shrink-0 text-amber-500 dark:text-amber-400" />}
         <div>
