@@ -5,6 +5,11 @@
       "title": "Заказать вывеску",
       "description": "Выберите тип продукции и заполните параметры",
       "icon": "LayoutTemplate",
+      "trustBadges": [
+        { "icon": "ShieldCheck", "label": "Бесплатная консультация" },
+        { "icon": "Clock", "label": "Ответим за 2 часа" },
+        { "icon": "Star", "label": "40+ успешных проектов" }
+      ],
       "productTypes": [
         {
           "key": "light-letters",

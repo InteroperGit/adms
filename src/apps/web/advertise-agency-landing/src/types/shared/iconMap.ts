@@ -21,6 +21,8 @@ import {
   RectangleHorizontal,
   Box,
   Loader2,
+  ShieldCheck,
+  Star,
 } from 'lucide-react';
 import type { ComponentType } from 'react';
 
@@ -58,6 +60,8 @@ export const ICON_MAP: Record<string, IconComponent> = {
   RectangleHorizontal,
   Box,
   Loader2,
+  ShieldCheck,
+  Star,
 };
 
 /**

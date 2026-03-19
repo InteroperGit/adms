@@ -121,6 +121,21 @@ const OrderFormSuccessSchema = z.object({
 export type OrderFormSuccess = z.infer<typeof OrderFormSuccessSchema>;
 
 /**
+ * @description Trust badge shown above the order form CTA
+ */
+const TrustBadgeSchema = z.object({
+  /** Icon name (resolved from ICON_MAP) */
+  icon: z.string(),
+  /** Short trust signal label */
+  label: z.string(),
+});
+
+/**
+ * @description Trust badge item
+ */
+export type TrustBadge = z.infer<typeof TrustBadgeSchema>;
+
+/**
  * @description Complete order form configuration
  */
 const OrderFormDefinitionSchema = z.object({
@@ -130,6 +145,8 @@ const OrderFormDefinitionSchema = z.object({
   description: z.string(),
   /** Icon name for the form (resolved from ICON_MAP) */
   icon: z.string(),
+  /** Trust badges shown above the form in OrderFormBlock CTA container */
+  trustBadges: z.array(TrustBadgeSchema).optional(),
   /** Label for product type tabs (shown when multiple product types exist) */
   tabsLabel: z.string().optional(),
   /** Available product types within this form */
