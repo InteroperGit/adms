@@ -32,19 +32,17 @@
 
 - **Global 404 page**: `src/pages/NotFound.tsx` — centered full-page layout with title, description, code, and CTA back button
 - **Data**: `data/content/config/notFound.json` — `notFoundContent` (title, code, description, backLabel, backHref)
-- **Router**: `src/router.tsx` includes both explicit `/404` route and catch-all `*` route, both render `<NotFound />`
+- **Router**: `src/routes.ts` defines routes including explicit `/404` and catch-all `*` routes, both rendering `<NotFound />`
 - **Props override**: `NotFound` accepts optional `backLabel` and `backHref` props for contextual back links (used by portfolio 404s)
 - **Portfolio 404s**: `PortfolioCategoryPage` and `PortfolioCasePage` render `<NotFound>` with portfolio-specific back links (e.g., "All Projects")
-- **SSG**: `/404` route is included in `includedRoutes`; `vite.config.ts` copies `dist/404/index.html` → `dist/404.html` via `closeBundle` plugin hook for hosting platforms (Netlify, Vercel, etc.)
-- **SEO**: `ssgMetaPlugin.ts` injects `<meta name="robots" content="noindex">` on `/404` route to prevent search engine indexing
+- **SSG**: `/404` route is included in `prerender()` function; `scripts/postbuild-seo.ts` copies `build/client/404/index.html` → `build/client/404.html` for hosting platforms (Netlify, Vercel, etc.)
+- **SEO**: `src/plugins/seoMetaPlugin.ts` (called via `scripts/postbuild-seo.ts`) injects `<meta name="robots" content="noindex">` on `/404` route to prevent search engine indexing
 
 ## SSG Build
 
-- `vite-react-ssg 0.9.1-beta.1` + `dirStyle: 'nested'` → `dist/portfolio/<slug>/index.html`
-- `vite.config.ts` must `import 'vite-react-ssg'` to activate `ssgOptions` type augmentation
-- `includedRoutes` generates: `/portfolio`, `/portfolio/all`, `/portfolio/{catSlug}` per category, `/portfolio/all/{caseSlug}` for every case, `/portfolio/{catSlug}/{caseSlug}` for cases in their own category
-- **Add a category**: one entry in `data/content/config/categories.json` → SSG picks it up automatically
-- **Add a case**: new `data/content/portfolio/{slug}.json` → no config change needed
+- React Router v7 framework mode, `ssr: false`
+- `prerender()` function in `react-router.config.ts` controls which routes are pre-rendered.
+- `scripts/postbuild-seo.ts` and `scripts/postbuild-cache.ts` handle post-build HTML processing and caching.
 
 ## Workflow (after every task)
 
@@ -63,7 +61,7 @@
 ## Additional Rules
 
 - **pnpm only** — never use npm or yarn
-- **react-router-dom v6** (not v7) — required by vite-react-ssg peer dependency
+- **react-router v7** (not v6) — required for framework mode
 - **Native DOM event types** in handlers — React 19 dropped synthetic aliases (`React.FormEvent`, `React.MouseEvent`, etc.); use `SubmitEvent`, `MouseEvent`, `InputEvent` etc. instead
 
 ## Key Notes / Gotchas
@@ -77,7 +75,7 @@
 
 - `src/contexts/ThemeContext.tsx` — exports `ThemeProvider` + `ThemeContext`; reads `localStorage('theme-mode')` + `matchMedia`; toggles `.dark` on `<html>`
 - `src/hooks/useTheme.ts` — `useTheme()` returns `{ isDark, toggle }`; use this everywhere instead of direct context access
-- `themePlugin.ts` — emits `.dark { … }` CSS block from `theme.darkColors` when present; injects anti-FOUC script before fonts
+- `themePlugin.ts` — emits `.dark { … }` CSS block from `theme.darkColors` when present
 - `src/index.css` — `@variant dark (&:where(.dark, .dark *));` enables Tailwind `dark:` prefix
 - `data/content/config/theme.json` — optional `darkColors` key (same shape as `colors`)
 - Always-dark surfaces (footer, advantages section) use `bg-foreground dark:bg-neutral-950`
