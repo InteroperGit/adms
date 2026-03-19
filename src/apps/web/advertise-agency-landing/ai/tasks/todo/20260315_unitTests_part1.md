@@ -19,6 +19,8 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 ## Task 0: Test Infrastructure Setup
 
+**Model**: Claude Sonnet 4.6
+
 **Files to create/modify:**
 - `package.json` — add devDependencies
 - `vitest.config.ts` — test runner config
@@ -102,6 +104,8 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 ## Task 1: Utility Functions — `src/libs/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/libs/libs.test.ts`
 
 | Function | Source | Tests |
@@ -117,6 +121,8 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 ## Task 2: Shared Types & Utilities — `src/types/shared/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/types/shared/iconMap.test.ts`
 
 | Function | Source | Tests |
@@ -129,6 +135,8 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 ---
 
 ## Task 3: Custom Hooks — `src/hooks/`
+
+**Model**: Claude Sonnet 4.6
 
 **Test file:** `src/hooks/hooks.test.ts`
 
@@ -155,6 +163,8 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 ## Task 4: Context — `src/contexts/`
 
+**Model**: Claude Sonnet 4.6
+
 **Test file:** `src/contexts/ThemeContext.test.tsx`
 
 | Test | Description |
@@ -169,6 +179,8 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 ---
 
 ## Task 27: Zod Schema Validation — `src/types/`
+
+**Model**: Claude Haiku 4.5
 
 **Test file:** `src/types/schemas.test.ts`
 

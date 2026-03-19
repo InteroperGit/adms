@@ -13,11 +13,13 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 ## Task 15: Header Section — `src/components/sections/header/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/sections/header/header.test.tsx`
 
 | Component | Tests |
 |-----------|-------|
-| `Header` | renders logo, desktop nav, mobile hamburger |
+| `Header` | renders logo, desktop nav, mobile hamburger, `ScrollProgress` bar present |
 | `HeaderDesktopNav` | renders nav links, renders dark mode toggle, renders social links |
 | `HeaderMobileNav` | hamburger opens menu, renders nav links in drawer, closes on link click |
 | `HeaderNav` | renders all nav items, active link has active class |
@@ -32,6 +34,8 @@ Add unit tests for page section components: header, hero, about, services, advan
 ---
 
 ## Task 16: Hero Section — `src/components/sections/hero/`
+
+**Model**: Claude Haiku 4.5
 
 **Test file:** `src/components/sections/hero/hero.test.tsx`
 
@@ -48,6 +52,8 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 ## Task 17: About Section — `src/components/sections/about/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/sections/about/about.test.tsx`
 
 | Component | Tests |
@@ -62,6 +68,8 @@ Add unit tests for page section components: header, hero, about, services, advan
 ---
 
 ## Task 18: Services & Advantages Sections
+
+**Model**: Claude Haiku 4.5
 
 **Test file:** `src/components/sections/services-advantages.test.tsx`
 
@@ -78,6 +86,8 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 ## Task 19: Carousel Section — `src/components/sections/carousel/`
 
+**Model**: Claude Sonnet 4.6
+
 **Test file:** `src/components/sections/carousel/carousel.test.tsx`
 
 | Component | Tests |
@@ -92,6 +102,8 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 ## Task 20: Call-to-Action & Testimonials Sections
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/sections/cta-testimonials.test.tsx`
 
 | Component | Tests |
@@ -105,6 +117,8 @@ Add unit tests for page section components: header, hero, about, services, advan
 ---
 
 ## Task 21: Contact Section — `src/components/sections/contact/`
+
+**Model**: Claude Sonnet 4.6
 
 **Test file:** `src/components/sections/contact/contact.test.tsx`
 

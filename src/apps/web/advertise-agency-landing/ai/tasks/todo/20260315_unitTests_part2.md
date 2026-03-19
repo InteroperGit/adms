@@ -13,6 +13,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ## Task 5: Base UI Components — `src/components/ui/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/ui/base-ui.test.tsx`
 
 | Component | Tests |
@@ -32,6 +34,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ## Task 6: UI Section Utilities — `src/components/ui/section/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/ui/section/section-ui.test.tsx`
 
 | Component | Tests |
@@ -47,6 +51,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 ---
 
 ## Task 7: Navigation UI — `src/components/ui/navigation/`
+
+**Model**: Claude Haiku 4.5
 
 **Test file:** `src/components/ui/navigation/navigation-ui.test.tsx`
 
@@ -68,6 +74,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ## Task 8: Logo, SocialLinks, OptimizedImage — `src/components/ui/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/ui/media-ui.test.tsx`
 
 | Component | Tests |
@@ -82,6 +90,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ## Task 9: Testimonial Components — `src/components/ui/testimonial/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/ui/testimonial/testimonial-ui.test.tsx`
 
 | Component | Tests |
@@ -95,6 +105,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ## Task 10: Portfolio UI Components — `src/components/ui/portfolio/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/ui/portfolio/portfolio-ui.test.tsx`
 
 | Component | Tests |
@@ -107,6 +119,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 ---
 
 ## Task 11: Image Gallery — `src/components/ui/imageGallery/`
+
+**Model**: Claude Sonnet 4.6
 
 **Test file:** `src/components/ui/imageGallery/imageGallery.test.tsx`
 
@@ -127,6 +141,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ## Task 12: Order Form — `src/components/ui/orderForm/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/ui/orderForm/orderForm.test.tsx`
 
 | Component | Tests |
@@ -145,6 +161,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ## Task 13: Legal UI — `src/components/ui/legal/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/ui/legal/legal-ui.test.tsx`
 
 | Component | Tests |
@@ -160,7 +178,9 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 14: Layout & Analytics & Banners
+## Task 14: Layout, Analytics, Banners & New UI Components
+
+**Model**: Claude Haiku 4.5
 
 **Test file:** `src/components/layout-analytics-banners.test.tsx`
 
@@ -170,6 +190,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 | `CookieBanner` | renders when consent not given, hides after accepting, renders privacy link |
 | `CookieActions` | accept button calls handler, necessary-only button calls handler |
 | `MetrikaScript` | does not inject script without consent, injects script with consent |
+| `ScrollProgress` (`src/components/ui/ScrollProgress.tsx`) | renders progress bar, updates width on scroll, hidden on short pages |
+| `PageTransition` (`src/components/layout/PageTransition.tsx`) | renders children, applies transition class on route change |
 
 **Validation:** `pnpm test src/components/layout-analytics-banners`
 
@@ -188,8 +210,8 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 | 11 | `src/components/ui/imageGallery/imageGallery.test.tsx` | 5 gallery components | ~15 |
 | 12 | `src/components/ui/orderForm/orderForm.test.tsx` | 7 form components | ~20 |
 | 13 | `src/components/ui/legal/legal-ui.test.tsx` | 3 legal components | ~10 |
-| 14 | `src/components/layout-analytics-banners.test.tsx` | Container, CookieBanner, MetrikaScript | ~10 |
-| **Subtotal** | **10 test files** | | **~136 tests** |
+| 14 | `src/components/layout-analytics-banners.test.tsx` | Container, CookieBanner, MetrikaScript, ScrollProgress, PageTransition | ~14 |
+| **Subtotal** | **10 test files** | | **~140 tests** |
 
 ## Execution Order
 

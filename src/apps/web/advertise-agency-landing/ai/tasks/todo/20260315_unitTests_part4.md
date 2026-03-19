@@ -13,6 +13,8 @@ Add unit tests for the footer section, portfolio section and page components, co
 
 ## Task 22: Footer Section — `src/components/sections/footer/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/sections/footer/footer.test.tsx`
 
 | Component | Tests |
@@ -30,6 +32,8 @@ Add unit tests for the footer section, portfolio section and page components, co
 
 ## Task 23: Portfolio Section (Home Page) — `src/components/sections/portfolio/`
 
+**Model**: Claude Haiku 4.5
+
 **Test file:** `src/components/sections/portfolio/portfolio-section.test.tsx`
 
 | Component | Tests |
@@ -45,6 +49,8 @@ Add unit tests for the footer section, portfolio section and page components, co
 ---
 
 ## Task 24: Portfolio Page Components — `src/components/portfolio/`
+
+**Model**: Claude Haiku 4.5
 
 **Test file:** `src/components/portfolio/portfolio-page.test.tsx`
 
@@ -66,31 +72,41 @@ Add unit tests for the footer section, portfolio section and page components, co
 
 ## Task 25: Content Block Components — `src/components/blocks/`
 
+**Model**: Claude Sonnet 4.6
+
 **Test file:** `src/components/blocks/blocks.test.tsx`
 
 | Component | Tests |
 |-----------|-------|
 | `BlockRenderer` | dispatches to correct block component based on `type` field |
-| `HeadingBlock` | renders h2/h3 with text |
+| `HeadingBlock` | renders h2/h3/h4 with correct font size class per level (STYLES map) |
 | `ParagraphBlock` | renders paragraph with text, renders HTML via dangerouslySetInnerHTML |
 | `ImageBlock` | renders figure with img, renders caption |
 | `GalleryBlock` | renders ImageGallery with images |
-| `BlockquoteBlock` | renders blockquote with quote and attribution |
-| `MetricsBlock` | renders metric items with values |
-| `CardsBlock` | renders card grid |
-| `TableBlock` | renders table with headers and rows |
+| `BlockquoteBlock` | renders blockquote with quote and attribution (editorial design: large quote mark, primary border) |
+| `MetricsBlock` | renders metric items with values, scroll-triggered count-up (mock IntersectionObserver) |
+| `CardsBlock` | renders card grid, hover state classes present, stagger entrance classes applied |
+| `TableBlock` | renders table with headers and rows, zebra-striping classes present |
 | `DividerBlock` | renders horizontal rule |
-| `CalloutBlock` | renders callout with icon and text |
-| `ListBlock` | renders unordered, ordered, or checklist based on subtype |
-| `VideoBlock` | renders video embed |
-| `CodeBlock` | renders code block with syntax |
-| `OrderFormBlock` | renders embedded order form |
+| `CalloutBlock` | renders callout with correct variant class (info/success/warning/note), renders icon from ICON_MAP |
+| `ListBlock` | routes to `UnorderedListBlock`, `OrderedListBlock`, or `ChecklistBlock` based on subtype |
+| `VideoBlock` | renders facade button (not iframe) before click for YouTube/Rutube, renders iframe after click, renders `<video>` for local file |
+| `CodeBlock` | renders code with syntax highlighting, renders copy button, copy button writes to clipboard |
+| `OrderFormBlock` | renders `OrderFormBlockMobile` + `OrderFormBlockDesktop` pair, returns null for unknown formId, desktop shows trust badges |
+| `ChartBlock` (`src/components/blocks/ChartBlock/`) | routes to BarChart/HorizontalBarChart/ProgressChart/LineChart/PieChart based on `chartType` |
+
+**Mocking notes:**
+- Mock `IntersectionObserver` for scroll-triggered animations (MetricsBlock, CardsBlock)
+- Mock `navigator.clipboard.writeText` for CodeBlock copy button
+- Mock `import.meta.env.DEV` as false for OrderFormBlock null-return test
 
 **Validation:** `pnpm test src/components/blocks`
 
 ---
 
 ## Task 26: Page Components — `src/pages/`
+
+**Model**: Claude Sonnet 4.6
 
 **Test file:** `src/pages/pages.test.tsx`
 
@@ -119,9 +135,9 @@ Add unit tests for the footer section, portfolio section and page components, co
 | 22 | `src/components/sections/footer/footer.test.tsx` | 5 footer components | ~12 |
 | 23 | `src/components/sections/portfolio/portfolio-section.test.tsx` | Portfolio, PortfolioFilter | ~8 |
 | 24 | `src/components/portfolio/portfolio-page.test.tsx` | 6 portfolio page components | ~18 |
-| 25 | `src/components/blocks/blocks.test.tsx` | 15 block components | ~30 |
+| 25 | `src/components/blocks/blocks.test.tsx` | 16 block components (incl. ChartBlock router + VideoBlock facade) | ~40 |
 | 26 | `src/pages/pages.test.tsx` | 6 page components | ~20 |
-| **Subtotal** | **5 test files** | | **~88 tests** |
+| **Subtotal** | **5 test files** | | **~98 tests** |
 
 ## Execution Order
 
@@ -155,7 +171,7 @@ To do **all Part 4 tasks in one session**, work through them in order (22 → 23
 | Part | File | Tasks | Test Files | Est. Tests |
 |------|------|-------|------------|------------|
 | 1 | `20260315_unitTests_part1.md` | 0–4, 27 | 5 | ~80 |
-| 2 | `20260315_unitTests_part2.md` | 5–14 | 10 | ~136 |
+| 2 | `20260315_unitTests_part2.md` | 5–14 | 10 | ~140 |
 | 3 | `20260315_unitTests_part3.md` | 15–21 | 7 | ~89 |
-| 4 | `20260315_unitTests_part4.md` | 22–26 | 5 | ~88 |
-| **Total** | | **28 tasks** | **27 test files** | **~393 tests** |
+| 4 | `20260315_unitTests_part4.md` | 22–26 | 5 | ~98 |
+| **Total** | | **28 tasks** | **27 test files** | **~407 tests** |
