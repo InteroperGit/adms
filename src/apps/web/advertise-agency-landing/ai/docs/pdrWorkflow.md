@@ -14,7 +14,7 @@ Make code changes according to the PDR requirements.
 pnpm format     # Reformat all changed files
 pnpm lint       # Fix any lint errors
 pnpm typecheck  # Type check, fix any errors
-pnpm build      # Full SSG build to dist/
+pnpm build      # Full SSG build to build/client/
 ```
 
 All four commands **must pass** before proceeding. Do not skip any step.

@@ -7,15 +7,15 @@ Landing page for **РА "Рекламастер"** — fully static SSG, no back
 ## Key Structure
 
 ```
-src/main.tsx       # Entry: ViteReactSSG({ routes })
-src/router.tsx     # RouteObject[] — all page routes
+src/entry.client.tsx # Entry: HydratedRouter
+src/routes.ts        # RouteConfig[] — all page routes
 src/pages/         # Home, PortfolioPage, PortfolioCategoryPage, PortfolioCasePage, NotFound, legal, OrderPage
 src/components/    # sections/ | portfolio/ | ui/ | analytics/ | banners/ | layout/
 src/types/         # Zod schemas + parsed consts (config/ sections/ portfolio/ blocks/ shared/)
 src/hooks/         # useFadeIn, useActiveSection, useTheme, useCookieConsent, useSwipe, useRandomButtonHighlight, useInViewport
 src/contexts/      # ThemeContext (dark mode)
-src/plugins/       # themePlugin, imageResizePlugin, ssgMetaPlugin
-scripts/           # validate.ts, generate-json-schemas.ts, new-client.ts
+src/plugins/       # themePlugin, imageResizePlugin, seoMetaPlugin, incrementalSSG
+scripts/           # validate.ts, generate-json-schemas.ts, new-client.ts, postbuild-seo.ts, postbuild-cache.ts
 data/content/      # JSON data (gitignored except _schema/)
 ```
 
@@ -31,8 +31,8 @@ data/content/      # JSON data (gitignored except _schema/)
 ## Quick Commands
 
 ```bash
-pnpm dev              # Dev server
-pnpm build            # SSG build → dist/
+pnpm dev              # Dev server (react-router dev)
+pnpm build            # SSG build → build/client/
 pnpm format           # Format code
 pnpm typecheck        # Type check
 pnpm lint             # Lint
@@ -41,18 +41,19 @@ pnpm gen-schemas      # Generate schemas
 pnpm new-client       # Bootstrap new client
 ```
 
+## Project: advertise-agency-landing
+- Vite 8 + React 19 + TypeScript 5.9 + Tailwind v4 + shadcn/ui (bundler: Rolldown)
+- Package manager: **pnpm only**
+- Working dir: `D:\Projects\adms\src\apps\web\advertise-agency-landing`
+- Branch: `adv-landing-core`
+
 ## Reference Documentation
 
 Detailed documentation is organized in `ai/docs/`:
 
 - **[`ai/docs/pdrWorkflow.md`](./ai/docs/pdrWorkflow.md)** — PDR step workflow, validation sequence, marking steps complete
-- **[`ai/docs/architecture.md`](./ai/docs/architecture.md)** — Tech stack, routes, SSG setup, gotchas
-- **[`ai/docs/data-map.md`](./ai/docs/data-map.md)** — Full JSON → type module → component mapping
-- **[`ai/docs/hooks.md`](./ai/docs/hooks.md)** — Custom hooks API reference (useInViewport, useRandomButtonHighlight, useTheme, etc.)
-- **[`ai/docs/portfolioStructure.md`](./ai/docs/portfolioStructure.md)** — Portfolio structure, nesting, adding cases
-- **[`ai/docs/components.md`](./ai/docs/components.md)** — Section components, portfolio UI, header, carousel
-- **[`ai/docs/dark-mode.md`](./ai/docs/dark-mode.md)** — Dark mode architecture, ThemeContext, CSS
-- **[`ai/docs/errorHandling.md`](./ai/docs/errorHandling.md)** — Error boundaries, global error handlers, dev vs. prod behavior, debugging, and manual verification tests
-- **[`ai/docs/conventions.md`](./ai/docs/conventions.md)** — Code style, naming, imports, React 19 patterns
-- **[`ai/docs/images.md`](./ai/docs/images.md)** — OptimizedImage component, Skeleton, lazy loading patterns
-- **[`ai/docs/devWorkflow.md`](./ai/docs/devWorkflow.md)** — Development workflow, commands, new-client CLI
+- **[`ai/docs/architecture.md`](./ai/docs/architecture.md)** — Tech stack, routes, gotchas, and SSG setup
+- **[`ai/docs/dataArchitecture.md`](./ai/docs/dataArchitecture.md)** — Data architecture, JSON schemas, new-client CLI
+- **[`ai/docs/typesStructure.md`](./ai/docs/typesStructure.md)** — `src/types/` subfolder structure (config, sections, portfolio, blocks, shared)
+- **[`ai/docs/legal.md`](./ai/docs/legal.md)** — Legal page content structure and rendering
+- **[`ai/docs/blocks.md`](./ai/docs/blocks.md)** — Content block types for portfolio cases
