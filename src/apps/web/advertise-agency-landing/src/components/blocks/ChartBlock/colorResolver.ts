@@ -37,18 +37,3 @@ export function resolveChartColor(color: BlockColor | undefined): string {
       return 'hsl(var(--primary))';
   }
 }
-
-/**
- * Legacy wrapper function that delegates to resolveChartColor.
- * Kept for backward compatibility with existing SVG-based chart components.
- * Performs the same color resolution as the main function.
- *
- * @description Backward-compatible color resolution wrapper
- * @param {BlockColor | undefined} color - The block color configuration object
- * @returns {string} CSS color string resolved from BlockColor
- *
- * @deprecated Use resolveChartColor() directly instead
- */
-export function svgColor(color: BlockColor | undefined): string {
-  return resolveChartColor(color);
-}

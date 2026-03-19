@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ChartBlock as ChartBlockData } from '@/types/blocks';
-import { svgColor } from './colorResolver';
+import { useViewportAnimation } from '@/hooks/useViewportAnimation';
+import { resolveChartColor } from './colorResolver';
 
 const R = 60;
 const CX = 80;
@@ -26,6 +27,10 @@ interface SegmentProps {
   isActive: boolean;
   /** Whether this segment should show faded opacity due to another being active */
   isFaded: boolean;
+  /** Whether the chart has entered the viewport (triggers entrance animation) */
+  inView: boolean;
+  /** Segment index for staggered animation delay */
+  index: number;
   /** Called when mouse enters the segment */
   onHover: () => void;
   /** Called when mouse leaves the segment */
@@ -51,6 +56,8 @@ function PieSegment({
   color,
   isActive,
   isFaded,
+  inView,
+  index,
   onHover,
   onLeave,
 }: SegmentProps) {
@@ -63,10 +70,10 @@ function PieSegment({
       stroke={color}
       strokeOpacity={isFaded ? opacity * 0.4 : opacity}
       strokeWidth={isActive ? 34 : 28}
-      strokeDasharray={`${dash} ${gap}`}
+      strokeDasharray={inView ? `${dash} ${gap}` : `0 ${CIRCUMFERENCE}`}
       transform={`rotate(${rotate} ${CX} ${CY})`}
       style={{
-        transition: 'stroke-width 0.2s ease, stroke-opacity 0.2s ease',
+        transition: `stroke-dasharray 0.6s ease-out ${index * 100}ms, stroke-width 0.2s ease, stroke-opacity 0.2s ease`,
         cursor: 'pointer',
       }}
       onMouseEnter={onHover}
@@ -186,10 +193,11 @@ function PieLegendItem({
  */
 export function PieChart({ block }: { block: ChartBlockData }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [viewportRef, inView] = useViewportAnimation({ threshold: 0.2 });
 
   const total = block.items.reduce((s, i) => s + i.value, 0) || 1;
 
-  const baseColor = svgColor(block.color);
+  const baseColor = resolveChartColor(block.color);
   const palette = block.items.map((_, idx) => {
     return 1 - idx * (0.6 / Math.max(block.items.length - 1, 1));
   });
@@ -204,7 +212,10 @@ export function PieChart({ block }: { block: ChartBlockData }) {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:items-start sm:gap-10">
+    <div
+      ref={viewportRef}
+      className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:items-start sm:gap-10"
+    >
       <svg viewBox="0 0 160 160" className="w-40 shrink-0" aria-hidden="true">
         {segments.map(({ dash, gap, rotate, opacity, item, index }) => (
           <PieSegment
@@ -216,12 +227,21 @@ export function PieChart({ block }: { block: ChartBlockData }) {
             color={baseColor}
             isActive={activeIndex === index}
             isFaded={activeIndex !== null && activeIndex !== index}
+            inView={inView}
+            index={index}
             onHover={() => setActiveIndex(index)}
             onLeave={() => setActiveIndex(null)}
           />
         ))}
       </svg>
-      <ul className="space-y-2">
+      <ul
+        className="space-y-2"
+        style={{
+          opacity: inView ? 1 : 0,
+          transform: inView ? 'scale(1)' : 'scale(0.95)',
+          transition: `opacity 0.5s ease-out ${block.items.length * 100}ms, transform 0.5s ease-out ${block.items.length * 100}ms`,
+        }}
+      >
         {block.items.map((item, i) => (
           <PieLegendItem
             key={item.label}

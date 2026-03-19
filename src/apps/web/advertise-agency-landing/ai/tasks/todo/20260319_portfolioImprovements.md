@@ -240,6 +240,7 @@ All Recharts-based charts (`bar`, `line`, `horizontal-bar`) render with `isAnima
 
 ## F7. Pie/Donut chart — animated segment entry
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Medium (channel breakdown visualization — eye-catching data)
 **Impact:** `src/components/blocks/ChartBlock/PieChart.tsx`
 
@@ -519,3 +520,4 @@ Visual verification checklist per item:
 - **F3 ✅**: Blockquote editorial design — `rounded-2xl border bg-card shadow-sm` card, large decorative `"` in `text-primary/10`, `text-xl font-heading` quote text, author avatar initial circle (`bg-primary/10`), `border-t` separator before attribution
 - **F5 ✅**: Progress chart modern bars + scroll animation — `h-2` → `h-3` bars, `useViewportAnimation` (triggerOnce + reduced-motion), width animates `0% → pct%` with `cubic-bezier(0.25,1,0.5,1)` per bar, `index*100ms` stagger, value label fades in 600ms after bar start
 - **F6 ✅**: Bar/Line/H-bar scroll-triggered Recharts animations — each chart mounts Recharts only on viewport entry via `useViewportAnimation`; placeholder `<div style={{ height }}/>` holds space until in-view; `isAnimationActive={true}` + `animationDuration={800}` + `animationEasing="ease-out"` ensures fresh animation on entry
+- **F7 ✅**: Pie/Donut chart animated segment entry — `useViewportAnimation` (triggerOnce + reduced-motion) added; segments animate from `0 CIRCUMFERENCE` → actual `dash gap` values with `0.6s ease-out` + `index * 100ms` stagger; legend fades in after last segment completes
