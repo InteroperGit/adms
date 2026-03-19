@@ -1,6 +1,6 @@
 # PDR: Portfolio Block Modernization & Conversion Improvements
 
-**Status:** Pending
+**Status:** In Progress
 **Date:** 2026-03-19
 **Scope:** All content blocks used in portfolio case articles — visual quality, motion, and conversion-oriented UX. Based on full audit of the bodrost case (`outdoor/2023/11/2023_11_01_bodrost.json`) which exercises every block type.
 
@@ -21,6 +21,7 @@ All changes are white-label safe — no hardcoded brand values; all colors flow 
 
 ## F1. Order-form block — premium CTA container
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Critical (highest conversion impact)
 **Impact:** `src/components/blocks/OrderFormBlock.tsx`
 
@@ -66,6 +67,7 @@ Transform the order-form block into a visually distinct offer section:
 
 ## F2. Metrics block — scroll-triggered count-up animation
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** High (results proof is the #1 conversion signal)
 **Impact:** `src/components/blocks/MetricsBlock.tsx`
 
@@ -93,6 +95,7 @@ The `useCountUp` hook already exists and is used in `HeroStats`. It supports `de
 
 ## F3. Blockquote block — editorial social proof design
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** High (testimonials are the #2 conversion signal after results)
 **Impact:** `src/components/blocks/BlockquoteBlock.tsx`
 
@@ -510,3 +513,4 @@ Visual verification checklist per item:
 
 - **F1 ✅**: Order-form block premium CTA container — branded rounded-3xl container with gradient bg, decorative blobs, trust badge row (ShieldCheck/Clock/Star), gradient title text
 - **F2 ✅**: Metrics block scroll-triggered count-up — `MetricCard` sub-component with regex parsing (prefix/num/suffix), `useViewportAnimation` (triggerOnce + reduced-motion), `useCountUp` staggered 150ms, stagger entrance with `animationFillMode: both`, `count-pop` + `suffix-fade-in` on completion
+- **F3 ✅**: Blockquote editorial design — `rounded-2xl border bg-card shadow-sm` card, large decorative `"` in `text-primary/10`, `text-xl font-heading` quote text, author avatar initial circle (`bg-primary/10`), `border-t` separator before attribution
