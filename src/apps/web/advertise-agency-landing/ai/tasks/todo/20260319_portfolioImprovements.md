@@ -173,6 +173,7 @@ Cards render as flat `rounded-2xl border border-border bg-card p-6 shadow-sm` wi
 
 ## F5. Progress chart — modern bars with scroll-triggered animation
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** High (brand KPI visualization is data credibility)
 **Impact:** `src/components/blocks/ChartBlock/ProgressChart.tsx`
 
@@ -515,4 +516,4 @@ Visual verification checklist per item:
 - **F1 ✅**: Order-form block premium CTA container — branded rounded-3xl container with gradient bg, decorative blobs, trust badge row (ShieldCheck/Clock/Star), gradient title text
 - **F2 ✅**: Metrics block scroll-triggered count-up — `MetricCard` sub-component with regex parsing (prefix/num/suffix), `useViewportAnimation` (triggerOnce + reduced-motion), `useCountUp` staggered 150ms, stagger entrance with `animationFillMode: both`, `count-pop` + `suffix-fade-in` on completion
 - **F3 ✅**: Blockquote editorial design — `rounded-2xl border bg-card shadow-sm` card, large decorative `"` in `text-primary/10`, `text-xl font-heading` quote text, author avatar initial circle (`bg-primary/10`), `border-t` separator before attribution
-- **F4 ✅**: Cards block hover states & stagger entrance — `group` + `hover:-translate-y-1 hover:shadow-md hover:border-primary/30`, accent bar `h-1.5 w-12` grows to `w-16` on hover, title `group-hover:text-primary`, stagger entrance via `useViewportAnimation` + `stagger-fade-in` with 80ms inter-card delay
+- **F5 ✅**: Progress chart modern bars + scroll animation — `h-2` → `h-3` bars, `useViewportAnimation` (triggerOnce + reduced-motion), width animates `0% → pct%` with `cubic-bezier(0.25,1,0.5,1)` per bar, `index*100ms` stagger, value label fades in 600ms after bar start

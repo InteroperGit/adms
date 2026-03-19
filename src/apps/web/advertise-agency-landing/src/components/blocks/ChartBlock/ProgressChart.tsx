@@ -1,4 +1,5 @@
 import { cn } from '@/libs/utils';
+import { useViewportAnimation } from '@/hooks/useViewportAnimation';
 import type { BlockColor, ChartBlock as ChartBlockData } from '@/types/blocks';
 
 /**
@@ -32,7 +33,7 @@ function barBgClass(color: BlockColor | undefined, caseGradient: string): string
  * Each item is rendered as a labeled bar with a percentage-based fill. The bar width
  * is calculated relative to the maximum value in the dataset. Supports custom colors
  * (primary, accent, solid, gradient) with fallback to the provided case gradient.
- * Useful for showing completion rates, utilization, or other percentage-based metrics.
+ * Bars animate from 0% to their target width on scroll entry with staggered delays.
  *
  * @component
  * @description Renders a series of horizontal progress bars with labels and values
@@ -40,35 +41,6 @@ function barBgClass(color: BlockColor | undefined, caseGradient: string): string
  * @param {ChartBlockData} props.block - Chart configuration with items and optional color
  * @param {string} props.caseGradient - Tailwind gradient classes fallback for gradient colors
  * @returns {JSX.Element} Container with list of progress bar rows
- *
- * @example <caption>Task completion progress</caption>
- * <ProgressChart
- *   block={{
- *     __component: 'chart',
- *     type: 'progress',
- *     items: [
- *       { label: 'Phase 1', value: 100, suffix: '%' },
- *       { label: 'Phase 2', value: 75, suffix: '%' },
- *       { label: 'Phase 3', value: 40, suffix: '%' }
- *     ],
- *     color: { type: 'accent' }
- *   }}
- *   caseGradient="from-blue-500 to-purple-500"
- * />
- *
- * @example <caption>Resource utilization bars</caption>
- * <ProgressChart
- *   block={{
- *     __component: 'chart',
- *     type: 'progress',
- *     items: [
- *       { label: 'CPU', value: 85 },
- *       { label: 'Memory', value: 62 },
- *       { label: 'Disk', value: 45 }
- *     ]
- *   }}
- *   caseGradient="from-blue-500 to-purple-500"
- * />
  */
 export function ProgressChart({
   block,
@@ -79,21 +51,32 @@ export function ProgressChart({
 }) {
   const max = Math.max(...block.items.map((i) => i.value), 1);
   const bg = barBgClass(block.color, caseGradient);
+  const [containerRef, inView] = useViewportAnimation({ threshold: 0.2 });
 
   return (
-    <div className="space-y-3">
-      {block.items.map((item) => {
+    <div ref={containerRef} className="space-y-4">
+      {block.items.map((item, index) => {
         const pct = (item.value / max) * 100;
+        const delay = index * 100;
         return (
           <div key={item.label} className="flex items-center gap-3">
             <span className="w-28 shrink-0 text-sm text-muted-foreground">{item.label}</span>
-            <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+            <div className="h-3 flex-1 overflow-hidden rounded-full bg-muted">
               <div
-                className={cn('h-full rounded-full transition-all', bg)}
-                style={{ width: `${pct}%` }}
+                className={cn('h-full rounded-full', bg)}
+                style={{
+                  width: inView ? `${pct}%` : '0%',
+                  transition: `width 0.8s cubic-bezier(0.25, 1, 0.5, 1) ${delay}ms`,
+                }}
               />
             </div>
-            <span className="w-12 shrink-0 text-right text-sm font-semibold text-foreground">
+            <span
+              className="w-12 shrink-0 text-right text-sm font-semibold text-foreground"
+              style={{
+                opacity: inView ? 1 : 0,
+                transition: `opacity 0.4s ease-out ${delay + 600}ms`,
+              }}
+            >
               {item.value}
               {item.suffix}
             </span>
