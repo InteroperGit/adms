@@ -1,9 +1,13 @@
-import { cn } from '@/libs/utils';
 import { ICON_MAP } from '@/types/shared/iconMap';
 import type { CalloutBlock as CalloutBlockData } from '@/types/blocks';
 
 interface CalloutBlockProps {
   block: CalloutBlockData;
+}
+
+interface CalloutContentProps {
+  title?: string;
+  text: string;
 }
 
 /**
@@ -15,54 +19,98 @@ interface CalloutBlockProps {
  * @example
  * <CalloutBlock block={{ type: "warning", title: "Important", text: "Please note this." }} />
  */
-const TYPE_CONFIG = {
-  info: {
-    border: 'border-blue-400',
-    bg: 'bg-blue-50 dark:bg-neutral-900',
-    icon: 'Info',
-    iconClass: 'text-blue-500 dark:text-blue-400',
-    titleClass: 'text-blue-900 dark:text-blue-200',
-    textClass: 'text-blue-800 dark:text-blue-300',
-  },
-  success: {
-    border: 'border-green-400',
-    bg: 'bg-green-50 dark:bg-neutral-900',
-    icon: 'CheckCircle',
-    iconClass: 'text-green-500 dark:text-green-400',
-    titleClass: 'text-green-900 dark:text-green-200',
-    textClass: 'text-green-800 dark:text-green-300',
-  },
-  warning: {
-    border: 'border-amber-400',
-    bg: 'bg-amber-50 dark:bg-neutral-900',
-    icon: 'AlertTriangle',
-    iconClass: 'text-amber-500 dark:text-amber-400',
-    titleClass: 'text-amber-900 dark:text-amber-200',
-    textClass: 'text-amber-800 dark:text-amber-300',
-  },
-  note: {
-    border: 'border-border',
-    bg: 'bg-muted/50 dark:bg-neutral-900',
-    icon: 'StickyNote',
-    iconClass: 'text-muted-foreground dark:text-neutral-400',
-    titleClass: 'text-foreground dark:text-white',
-    textClass: 'text-muted-foreground dark:text-neutral-300',
-  },
-} as const;
 
-export function CalloutBlock({ block }: CalloutBlockProps) {
-  const cfg = TYPE_CONFIG[block.type];
-  const Icon = ICON_MAP[cfg.icon];
-
+function SuccessCallout({ title, text }: CalloutContentProps) {
+  const Icon = ICON_MAP['CheckCircle'];
   return (
-    <div className={cn('mx-auto max-w-3xl rounded-r-xl border-l-4 px-5 py-4', cfg.border, cfg.bg)}>
+    <div className="relative mx-auto max-w-3xl overflow-hidden rounded-xl border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50/50 px-5 py-4 dark:border-green-900 dark:from-neutral-900 dark:to-neutral-900">
+      {/* Decorative sparkle dots */}
+      <div
+        className="pointer-events-none absolute right-3 top-3 h-2 w-2 rounded-full bg-green-300/40"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute bottom-3 right-8 h-1.5 w-1.5 rounded-full bg-green-300/40"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute bottom-4 left-4 h-1 w-1 rounded-full bg-emerald-300/40"
+        aria-hidden="true"
+      />
       <div className="flex gap-3">
-        {Icon && <Icon size={20} className={cn('mt-0.5 shrink-0', cfg.iconClass)} />}
+        {Icon && <Icon size={22} className="mt-0.5 shrink-0 text-green-500 dark:text-green-400" />}
         <div>
-          {block.title && <p className={cn('mb-1 font-semibold', cfg.titleClass)}>{block.title}</p>}
-          <p className={cn('text-sm leading-relaxed', cfg.textClass)}>{block.text}</p>
+          {title && (
+            <p className="mb-1 font-semibold text-green-900 dark:text-green-200">{title}</p>
+          )}
+          <p className="text-sm leading-relaxed text-green-800 dark:text-green-300">{text}</p>
         </div>
       </div>
     </div>
   );
+}
+
+function InfoCallout({ title, text }: CalloutContentProps) {
+  const Icon = ICON_MAP['Info'];
+  return (
+    <div className="mx-auto max-w-3xl rounded-xl border border-blue-400 bg-blue-50 px-5 py-4 shadow-sm dark:bg-neutral-900">
+      <div className="flex gap-3">
+        {Icon && <Icon size={20} className="mt-0.5 shrink-0 text-blue-500 dark:text-blue-400" />}
+        <div>
+          {title && <p className="mb-1 font-semibold text-blue-900 dark:text-blue-200">{title}</p>}
+          <p className="text-sm leading-relaxed text-blue-800 dark:text-blue-300">{text}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NoteCallout({ title, text }: CalloutContentProps) {
+  const Icon = ICON_MAP['StickyNote'];
+  return (
+    <div className="mx-auto max-w-3xl rounded-r-xl border-l-4 border-dashed border-border bg-muted/50 px-5 py-4 dark:bg-neutral-900">
+      <div className="flex gap-3">
+        {Icon && (
+          <Icon size={20} className="mt-0.5 shrink-0 text-muted-foreground dark:text-neutral-400" />
+        )}
+        <div>
+          {title && <p className="mb-1 font-semibold text-foreground dark:text-white">{title}</p>}
+          <p className="text-sm leading-relaxed text-muted-foreground dark:text-neutral-300">
+            {text}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WarningCallout({ title, text }: CalloutContentProps) {
+  const Icon = ICON_MAP['AlertTriangle'];
+  return (
+    <div className="mx-auto max-w-3xl rounded-r-xl border-l-4 border-amber-400 bg-amber-50 px-5 py-4 dark:bg-neutral-900">
+      <div className="flex gap-3">
+        {Icon && <Icon size={20} className="mt-0.5 shrink-0 text-amber-500 dark:text-amber-400" />}
+        <div>
+          {title && (
+            <p className="mb-1 font-semibold text-amber-900 dark:text-amber-200">{title}</p>
+          )}
+          <p className="text-sm leading-relaxed text-amber-800 dark:text-amber-300">{text}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function CalloutBlock({ block }: CalloutBlockProps) {
+  const props = { title: block.title, text: block.text };
+  switch (block.type) {
+    case 'success':
+      return <SuccessCallout {...props} />;
+    case 'info':
+      return <InfoCallout {...props} />;
+    case 'note':
+      return <NoteCallout {...props} />;
+    default:
+      return <WarningCallout {...props} />;
+  }
 }
