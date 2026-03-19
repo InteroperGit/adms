@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router';
+import { Outlet } from 'react-router';
 import { Header } from '@/components/sections/header';
 import { Footer } from '@/components/sections/footer';
+import { PageTransition } from '@/components/layout/PageTransition';
 import { CookieBanner } from './components/banners/CookieBanner';
 import { MetrikaScript } from '@/components/analytics/MetrikaScript';
 import { ScrollToTop } from '@/components/ui/navigation/ScrollToTop';
@@ -9,6 +9,7 @@ import { HomeHashScroll } from '@/components/ui/navigation/HomeHashScroll';
 import { SkipToContent } from '@/components/ui/navigation/SkipToContent';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
 import { ErrorBoundary } from '@/components/error';
+import { useScrollReset } from '@/hooks/useScrollReset';
 
 /**
  * @component
@@ -25,13 +26,7 @@ import { ErrorBoundary } from '@/components/error';
  * <App />
  */
 export default function App() {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (!location.hash) {
-      window.scrollTo(0, 0);
-    }
-  }, [location.pathname, location.hash]);
+  useScrollReset();
 
   return (
     <>
@@ -41,7 +36,9 @@ export default function App() {
       <ErrorBoundary>
         <Header />
         <main id="main-content">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </main>
         <Footer />
         <CookieBanner />

@@ -798,9 +798,9 @@ The cookie banner appears instantly on page load with no animation. It likely us
 
 ---
 
-## F19. Portfolio case page hero parallax
+## F19. Portfolio case page hero parallax (not necessary!!!)
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Low
 **Impact:** `src/components/portfolio/CaseHero.tsx`
 
@@ -838,11 +838,22 @@ Add subtle parallax to the background image (CSS-only, no JS):
 
 **Files:** `src/components/portfolio/CaseHero.tsx`
 
+**Status:** ✅ Complete
+- Added scroll tracking with `useState(0)` for offset
+- Desktop detection: `window.matchMedia('(min-width: 768px)').matches` with lazy initializer (safe for SSG)
+- Prefers-reduced-motion check: `window.matchMedia('(prefers-reduced-motion: reduce)').matches`
+- Passive scroll listener: `window.addEventListener('scroll', onScroll, { passive: true })`
+- Parallax effect: `translateY(${offset}px)` applied only when desktop AND not prefers-reduced-motion
+- Wrapped image in container div with transform applied (avoids transform on img tag)
+- Added `overflow-hidden` to section to contain parallax overflow
+- Safe window checks: `typeof window !== 'undefined'` for SSG compatibility
+- All validation passes: format ✅, lint ✅, typecheck ✅, build ✅
+
 ---
 
 ## F20. Smooth page transitions
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Low
 **Impact:** `src/App.tsx`, global
 
@@ -870,6 +881,17 @@ Add a minimal page-level fade transition using React Router's built-in capabilit
 4. This is lightweight — no View Transitions API dependency, works in all browsers
 
 **Files:** `src/App.tsx`
+
+**Status:** ✅ Complete
+- Imported `useNavigation` from React Router + `cn` utility
+- Added navigation state tracking: `const navigation = useNavigation(); const isNavigating = navigation.state === 'loading'`
+- Wrapped `<Outlet />` in transition container div with:
+  - `key={location.pathname}` to trigger re-render on route change
+  - `animate-fade-in` class (0.5s ease-out fade-in on mount)
+  - Conditional `opacity-50 transition-opacity duration-200` when navigating (exit fade)
+- Leverages existing `@keyframes fade-in` from index.css
+- No View Transitions API dependency — works in all browsers
+- All validation passes: format ✅, lint ✅, typecheck ✅, build ✅
 
 ---
 
