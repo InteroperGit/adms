@@ -509,3 +509,4 @@ Visual verification checklist per item:
 ## Done
 
 - **F1 ✅**: Order-form block premium CTA container — branded rounded-3xl container with gradient bg, decorative blobs, trust badge row (ShieldCheck/Clock/Star), gradient title text
+- **F2 ✅**: Metrics block scroll-triggered count-up — `MetricCard` sub-component with regex parsing (prefix/num/suffix), `useViewportAnimation` (triggerOnce + reduced-motion), `useCountUp` staggered 150ms, stagger entrance with `animationFillMode: both`, `count-pop` + `suffix-fade-in` on completion

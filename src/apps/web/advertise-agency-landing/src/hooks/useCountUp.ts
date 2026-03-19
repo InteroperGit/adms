@@ -33,21 +33,25 @@ export function useCountUp(target: number, animate: boolean, duration = 1500, de
       return;
     }
 
+    let intervalTimer: ReturnType<typeof setInterval> | undefined;
+
     const delayTimer = setTimeout(() => {
       const start = Date.now();
-      const timer = setInterval(() => {
+      intervalTimer = setInterval(() => {
         const elapsed = Date.now() - start;
         const progress = Math.min(elapsed / duration, 1);
         const eased = 1 - (1 - progress) ** 3;
         setCount(Math.round(eased * target));
         if (progress >= 1) {
-          clearInterval(timer);
+          clearInterval(intervalTimer);
         }
       }, 16);
-      return () => clearInterval(timer);
     }, delay);
 
-    return () => clearTimeout(delayTimer);
+    return () => {
+      clearTimeout(delayTimer);
+      clearInterval(intervalTimer);
+    };
   }, [animate, target, duration, delay]);
 
   return count;

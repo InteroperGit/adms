@@ -6,9 +6,9 @@ import { z } from 'zod';
  */
 
 export const MetricsBackgroundColorSchema = z.object({
-  /** Color type: solid hex, Tailwind gradient, or semantic (primary/accent) */
+  /** Color type: 'gradient' (Tailwind stops via value), 'primary' or 'solid' (both → bg-primary), 'accent' (bg-accent) */
   type: z.enum(['solid', 'gradient', 'primary', 'accent']),
-  /** Tailwind gradient stops for type 'gradient'; falls back to hero.gradient when omitted. */
+  /** Tailwind gradient stops for type 'gradient' (e.g. "from-amber-400 to-orange-500"); ignored for other types. */
   value: z.string().optional(),
 });
 

@@ -209,19 +209,20 @@ The `color` field on `metrics`, `cards`, and `chart` blocks is an object with a 
 "color": { "type": "gradient", "value": "from-sky-400 to-blue-500" }
 
 // Solid theme colors (no value needed)
-"color": { "type": "solid" }
 "color": { "type": "primary" }
 "color": { "type": "accent" }
+// "solid" is an alias for "primary" in metrics blocks; prefer "primary"
 ```
 
 | `type` | Effect on `metrics` | Effect on `cards` | Effect on `chart` bars |
 |---|---|---|---|
 | `gradient` | Gradient background on each card | Gradient accent bar | Gradient fill |
-| `solid` / `primary` | `bg-primary` background | `bg-primary` accent bar | `bg-primary` fill |
+| `primary` | `bg-primary` background | `bg-primary` accent bar | `bg-primary` fill |
+| `solid` | Alias for `primary` in metrics; hex value via `value` in cards/charts | `bg-primary` or hex accent bar | hex fill |
 | `accent` | `bg-accent` background | `bg-accent` accent bar | `bg-accent` fill |
 | _(omitted)_ | Neutral white card | No accent bar | `bg-primary` fill |
 
-`value` is only used when `type` is `"gradient"`. When omitted, falls back to the case's `hero.gradient`.
+`value` is only used when `type` is `"gradient"` (for metrics) or `"solid"` (for cards/charts, as a hex color). When gradient `value` is omitted, falls back to the case's `hero.gradient`.
 
 ---
 
