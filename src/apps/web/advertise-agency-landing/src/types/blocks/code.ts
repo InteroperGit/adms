@@ -13,6 +13,8 @@ export const CodeBlockSchema = z.object({
   code: z.string(),
   /** Optional code caption/description */
   caption: z.string().optional(),
+  /** Show line number gutter */
+  showLineNumbers: z.boolean().optional(),
 });
 
 export type CodeBlock = z.infer<typeof CodeBlockSchema>;

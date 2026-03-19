@@ -408,6 +408,7 @@ YouTube videos embed directly as `<iframe src="...autoplay...">` — the iframe 
 
 ## F12. Gallery block — stagger reveal and hover treatment
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Low (visual showcase, browsability)
 **Impact:** `src/components/blocks/GalleryBlock.tsx`
 
@@ -435,6 +436,7 @@ The gallery block passes all images to `ImageGallery` which handles the lightbox
 
 ## F13. Code block — syntax highlighting and copy button
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Low (developer-facing content, polish)
 **Impact:** `src/components/blocks/CodeBlock.tsx`
 
@@ -525,6 +527,8 @@ Visual verification checklist per item:
 - **F5 ✅**: Progress chart modern bars + scroll animation — `h-2` → `h-3` bars, `useViewportAnimation` (triggerOnce + reduced-motion), width animates `0% → pct%` with `cubic-bezier(0.25,1,0.5,1)` per bar, `index*100ms` stagger, value label fades in 600ms after bar start
 - **F6 ✅**: Bar/Line/H-bar scroll-triggered Recharts animations — each chart mounts Recharts only on viewport entry via `useViewportAnimation`; placeholder `<div style={{ height }}/>` holds space until in-view; `isAnimationActive={true}` + `animationDuration={800}` + `animationEasing="ease-out"` ensures fresh animation on entry
 - **F7 ✅**: Pie/Donut chart animated segment entry — `useViewportAnimation` (triggerOnce + reduced-motion) added; segments animate from `0 CIRCUMFERENCE` → actual `dash gap` values with `0.6s ease-out` + `index * 100ms` stagger; legend fades in after last segment completes
+- **F13 ✅**: Code block syntax highlighting + copy button — dark `bg-neutral-900` code area always (regardless of page theme); top bar with language label + copy button (`Copy`→`Check` icon + "Скопировано" feedback, 2s timeout); `tokenizeJson()` regex tokenizer for `language: "json"` (keys=sky-300, strings=emerald-300, numbers=amber-300, booleans/null=rose-400) using `escapeHtml` before tokenizing; optional `showLineNumbers` field added to `CodeBlockSchema` renders left gutter with `text-neutral-500` line numbers; all other languages render plain text; `focus-ring` on copy button
+- **F12 ✅**: Gallery block stagger reveal + hover — replaced `ImageGallery` delegation with a responsive grid (`grid-cols-1/2/3` based on image count); `useStaggeredReveal` + `stagger-item`/`stagger-visible` CSS classes for 80ms per-thumbnail entrance; `ZoomIn` icon overlay (`bg-black/0→bg-black/30`, opacity-0→100 on hover); `aspect-[4/3]` for consistent thumbnail heights; `scale-105` image zoom on hover; `focus-ring` utility on each button; `ImageGalleryLightbox` opened directly on click with prev/next navigation
 - **F11 ✅**: Video block facade pattern — YouTube/Rutube show thumbnail + branded primary play button (h-16 w-16 rounded-full) until clicked; iframe only loads on user interaction; local video unchanged; `autoplay=1` appended to embed URL on click; accessible aria-label; saves ~400KB network overhead per video on page load
 - **F10 ✅**: Heading block visual section anchors — h2 wrapped in div with gradient accent bar (`mt-2 h-0.5 w-12 rounded-full bg-gradient-to-r from-primary to-accent`, aria-hidden); h3 gets `pt-6 pb-2` spacing in BlockRenderer (was flat `py-4`); h4 unchanged
 - **F9 ✅**: Table block data visualization upgrade — header gradient `from-primary/20 to-primary/12 dark:from-primary/40 dark:to-primary/30` + `text-xs uppercase tracking-wide`; highlighted rows `border-l-2 border-l-primary bg-primary/5 dark:bg-primary/20`; hover uses neutral `muted/80 dark:muted/90` (distinct from selection); odd rows `dark:bg-muted/40`; tfoot `bg-muted/50 dark:bg-muted/70 font-bold`; caption moved below table as `mt-3 text-center italic`; dark mode opacity boosted throughout
