@@ -212,6 +212,7 @@ Progress bars are only `h-2` (8px) tall — extremely thin by modern standards. 
 
 ## F6. Bar/Line/Horizontal-bar charts — scroll-triggered Recharts animations
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Medium (animated data builds credibility)
 **Impact:** `src/components/blocks/ChartBlock/BarChart.tsx`, `HorizontalBarChart.tsx`, `LineChart.tsx`
 
@@ -517,3 +518,4 @@ Visual verification checklist per item:
 - **F2 ✅**: Metrics block scroll-triggered count-up — `MetricCard` sub-component with regex parsing (prefix/num/suffix), `useViewportAnimation` (triggerOnce + reduced-motion), `useCountUp` staggered 150ms, stagger entrance with `animationFillMode: both`, `count-pop` + `suffix-fade-in` on completion
 - **F3 ✅**: Blockquote editorial design — `rounded-2xl border bg-card shadow-sm` card, large decorative `"` in `text-primary/10`, `text-xl font-heading` quote text, author avatar initial circle (`bg-primary/10`), `border-t` separator before attribution
 - **F5 ✅**: Progress chart modern bars + scroll animation — `h-2` → `h-3` bars, `useViewportAnimation` (triggerOnce + reduced-motion), width animates `0% → pct%` with `cubic-bezier(0.25,1,0.5,1)` per bar, `index*100ms` stagger, value label fades in 600ms after bar start
+- **F6 ✅**: Bar/Line/H-bar scroll-triggered Recharts animations — each chart mounts Recharts only on viewport entry via `useViewportAnimation`; placeholder `<div style={{ height }}/>` holds space until in-view; `isAnimationActive={true}` + `animationDuration={800}` + `animationEasing="ease-out"` ensures fresh animation on entry
