@@ -22,12 +22,17 @@ export function CookieBanner() {
     () => true
   );
   const [dismissed, setDismissed] = useState(false);
+  const [closing, setClosing] = useState(false);
   const visible = !hasConsent && !dismissed;
 
   function save(value: (typeof ConsentState)[keyof typeof ConsentState]) {
-    localStorage.setItem(STORAGE_KEY, value);
-    window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: value }));
-    setDismissed(true);
+    setClosing(true);
+    const timeout = setTimeout(() => {
+      localStorage.setItem(STORAGE_KEY, value);
+      window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: value }));
+      setDismissed(true);
+      clearTimeout(timeout);
+    }, 200);
   }
 
   if (!visible) {
@@ -41,7 +46,10 @@ export function CookieBanner() {
       className={cn(
         'fixed bottom-0 left-0 right-0 z-50 bg-background px-4 py-5 shadow-lg',
         'border-t border-border',
-        'sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-sm sm:rounded-2xl sm:border'
+        'sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-sm sm:rounded-2xl sm:border',
+        closing
+          ? 'animate-[slide-up_0.2s_ease-out_reverse]'
+          : 'animate-[slide-up_0.4s_ease-out_1s_both]'
       )}
     >
       {/* Закрыть — только necessary */}

@@ -767,7 +767,7 @@ The footer is functional but visually flat. All four columns have identical styl
 
 ## F18. Cookie banner entrance animation
 
-**Status:** Pending
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Low
 **Impact:** `src/components/banners/CookieBanner.tsx`
 
@@ -787,6 +787,14 @@ The cookie banner appears instantly on page load with no animation. It likely us
 4. On dismiss: reverse animation before removing from DOM (200ms fade-out)
 
 **Files:** `src/components/banners/CookieBanner.tsx`, `src/index.css`
+
+**Status:** ✅ Complete
+- Added `@keyframes slide-up` to index.css (opacity: 0→1, translateY: 100%→0)
+- Implemented `closing` state in CookieBanner to track dismissal animation
+- Entrance animation: `animate-[slide-up_0.4s_ease-out_1s_both]` (0.4s duration, 1s delay with backwards fill-mode)
+- Exit animation: `animate-[slide-up_0.2s_ease-out_reverse]` (0.2s reverse animation on dismiss)
+- Modified `save()` function to set closing state first, wait 200ms for animation, then finalize dismissal
+- All validation passes: format ✅, lint ✅, typecheck ✅, build ✅
 
 ---
 
