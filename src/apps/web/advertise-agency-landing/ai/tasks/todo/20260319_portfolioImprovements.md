@@ -308,6 +308,7 @@ All four callout types (`info`, `success`, `warning`, `note`) use identical stru
 
 ## F9. Table block — data visualization upgrade
 
+**Status:** ✅ COMPLETED (2026-03-19)
 **Priority:** Medium (project timelines and pricing tables are decision-making tools)
 **Impact:** `src/components/blocks/TableBlock.tsx`
 
@@ -522,4 +523,4 @@ Visual verification checklist per item:
 - **F5 ✅**: Progress chart modern bars + scroll animation — `h-2` → `h-3` bars, `useViewportAnimation` (triggerOnce + reduced-motion), width animates `0% → pct%` with `cubic-bezier(0.25,1,0.5,1)` per bar, `index*100ms` stagger, value label fades in 600ms after bar start
 - **F6 ✅**: Bar/Line/H-bar scroll-triggered Recharts animations — each chart mounts Recharts only on viewport entry via `useViewportAnimation`; placeholder `<div style={{ height }}/>` holds space until in-view; `isAnimationActive={true}` + `animationDuration={800}` + `animationEasing="ease-out"` ensures fresh animation on entry
 - **F7 ✅**: Pie/Donut chart animated segment entry — `useViewportAnimation` (triggerOnce + reduced-motion) added; segments animate from `0 CIRCUMFERENCE` → actual `dash gap` values with `0.6s ease-out` + `index * 100ms` stagger; legend fades in after last segment completes
-- **F8 ✅**: Callout variant differentiation — `success`: full border + gradient bg + icon circle (bg-green-100 p-1) + 3 decorative sparkle dots; `info`: `rounded-xl border` all sides + `shadow-sm`; `note`: `border-dashed border-border` (was solid); `warning`: unchanged
+- **F9 ✅**: Table block data visualization upgrade — header gradient `from-primary/20 to-primary/12 dark:from-primary/40 dark:to-primary/30` + `text-xs uppercase tracking-wide`; highlighted rows `border-l-2 border-l-primary bg-primary/5 dark:bg-primary/20`; hover uses neutral `muted/80 dark:muted/90` (distinct from selection); odd rows `dark:bg-muted/40`; tfoot `bg-muted/50 dark:bg-muted/70 font-bold`; caption moved below table as `mt-3 text-center italic`; dark mode opacity boosted throughout

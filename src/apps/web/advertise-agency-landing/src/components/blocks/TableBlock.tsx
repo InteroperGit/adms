@@ -20,7 +20,6 @@ export function TableBlock({ block }: TableBlockProps) {
   return (
     <div className="mx-auto max-w-4xl">
       {block.title && <h2 className="mb-6 text-2xl font-bold md:text-3xl">{block.title}</h2>}
-      {block.caption && <p className="mb-3 text-xs text-muted-foreground">{block.caption}</p>}
 
       {/* Mobile: card list */}
       <div className="flex flex-col gap-3 sm:hidden">
@@ -28,8 +27,10 @@ export function TableBlock({ block }: TableBlockProps) {
           <div
             key={i}
             className={cn(
-              'cursor-pointer rounded-xl border border-border p-4 shadow-sm transition-colors hover:bg-primary/10',
-              highlighted.has(i) ? 'bg-primary/5' : 'bg-card'
+              'cursor-pointer rounded-xl border border-border p-4 shadow-sm transition-colors hover:bg-muted/80 dark:hover:bg-muted/90',
+              highlighted.has(i)
+                ? 'border-l-2 border-l-primary bg-primary/5 dark:bg-primary/15'
+                : 'bg-card'
             )}
           >
             {row.map((cell, j) => (
@@ -65,11 +66,11 @@ export function TableBlock({ block }: TableBlockProps) {
       <div className="hidden overflow-x-auto rounded-xl border border-border shadow-sm sm:block">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-muted/60">
+            <tr className="bg-gradient-to-r from-primary/20 to-primary/12 dark:from-primary/40 dark:to-primary/30">
               {block.head.map((col) => (
                 <th
                   key={col}
-                  className="whitespace-nowrap px-4 py-3 text-left font-semibold text-foreground"
+                  className="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-foreground"
                 >
                   {col}
                 </th>
@@ -81,8 +82,12 @@ export function TableBlock({ block }: TableBlockProps) {
               <tr
                 key={i}
                 className={cn(
-                  'cursor-pointer border-t border-border transition-colors hover:bg-primary/10',
-                  highlighted.has(i) ? 'bg-primary/5' : i % 2 === 0 ? 'bg-card' : 'bg-muted/20'
+                  'cursor-pointer border-t border-border transition-colors hover:bg-muted/80 dark:hover:bg-muted/90',
+                  highlighted.has(i)
+                    ? 'border-l-2 border-l-primary bg-primary/5 dark:bg-primary/20'
+                    : i % 2 === 0
+                      ? 'bg-card'
+                      : 'bg-muted/20 dark:bg-muted/40'
                 )}
               >
                 {row.map((cell, j) => (
@@ -95,7 +100,7 @@ export function TableBlock({ block }: TableBlockProps) {
           </tbody>
           {block.total && (
             <tfoot>
-              <tr className="border-t-2 border-border bg-muted/60 font-semibold">
+              <tr className="border-t-2 border-border bg-muted/50 font-bold text-foreground dark:bg-muted/70">
                 {block.total.map((cell, j) => (
                   <td key={j} className="px-4 py-3 text-foreground">
                     {cell}
@@ -106,6 +111,9 @@ export function TableBlock({ block }: TableBlockProps) {
           )}
         </table>
       </div>
+      {block.caption && (
+        <p className="mt-3 text-center text-xs italic text-muted-foreground">{block.caption}</p>
+      )}
     </div>
   );
 }
