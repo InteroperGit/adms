@@ -22,7 +22,7 @@ export function BlockErrorFallback() {
   return (
     <div
       className={cn(
-        'flex min-h-[80px] items-center justify-center',
+        'flex min-h-20 items-center justify-center',
         'rounded-lg border border-dashed border-muted-foreground/20',
         'bg-muted/50 px-4 py-8 text-center'
       )}
