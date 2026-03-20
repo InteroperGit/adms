@@ -1,6 +1,6 @@
 # Plan: Unit Tests — Part 3: Section Components
 
-**Status**: pending (blocked by Part 1 Task 0)
+**Status**: in-progress (Task 15 ✅ 2026-03-21)
 **Date**: 2026-03-15
 **Series**: 3 of 4 (`20260315_unitTests_part1.md` → `_part2.md` → `_part3.md` → `_part4.md`)
 **Prerequisite**: Part 1 Task 0 (test infrastructure) must be completed first. Part 2 is recommended but not strictly required.
@@ -13,7 +13,7 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 ---
 
-## Task 15: Header Section — `src/components/sections/header/`
+## Task 15: Header Section — `src/components/sections/header/` ✅ 2026-03-21
 
 **Model**: Claude Haiku 4.5
 

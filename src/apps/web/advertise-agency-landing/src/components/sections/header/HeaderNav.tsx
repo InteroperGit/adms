@@ -32,7 +32,7 @@ export function HeaderNav({
     <nav
       className={cn(
         isDesktop ? 'hidden items-center gap-8 md:flex' : 'flex flex-col py-4',
-        variant === 'mobile' && animateItems && 'mobile-nav-animating'
+        !isDesktop && animateItems && 'mobile-nav-animating'
       )}
     >
       {headerContent.nav.map((link, index) => {
@@ -46,13 +46,9 @@ export function HeaderNav({
               isDesktop
                 ? 'group relative text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-ring'
                 : 'py-3 text-base font-medium text-muted-foreground transition-colors hover:text-foreground focus-ring',
-              variant === 'mobile' && animateItems && 'mobile-nav-item'
+              !isDesktop && animateItems && 'mobile-nav-item'
             )}
-            style={
-              variant === 'mobile' && animateItems
-                ? { animationDelay: `${index * 40}ms` }
-                : undefined
-            }
+            style={!isDesktop && animateItems ? { animationDelay: `${index * 40}ms` } : undefined}
           >
             {link.label}
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/libs/utils';
 import { SocialLinks } from '@/components/ui/SocialLinks';
@@ -37,6 +37,8 @@ export function HeaderMobileNav({
   const [menuOpen, setMenuOpen] = useState(false);
   const [closing, setClosing] = useState(false);
 
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     document.body.style.overflow = menuOpen && !closing ? 'hidden' : '';
     return () => {
@@ -44,11 +46,20 @@ export function HeaderMobileNav({
     };
   }, [menuOpen, closing]);
 
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current !== null) {
+        clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, []);
+
   const handleClose = () => {
     setClosing(true);
-    setTimeout(() => {
+    closeTimerRef.current = setTimeout(() => {
       setMenuOpen(false);
       setClosing(false);
+      closeTimerRef.current = null;
     }, 200);
   };
 
@@ -112,7 +123,7 @@ export function HeaderMobileNav({
                 <HeaderNav
                   isHome={isHome}
                   variant="mobile"
-                  onLinkClick={() => handleClose()}
+                  onLinkClick={handleClose}
                   animateItems={!closing}
                 />
                 <div className="flex items-center gap-2 pt-3">
