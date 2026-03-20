@@ -46,7 +46,8 @@ export function useRandomButtonHighlight(count: number): number | null {
   const activeRef = useRef<number | null>(null);
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
+    let holdTimeoutId: ReturnType<typeof setTimeout>;
+    let pauseTimeoutId: ReturnType<typeof setTimeout>;
 
     function cycle() {
       const next = pickDifferent(activeRef.current, count);
@@ -54,22 +55,26 @@ export function useRandomButtonHighlight(count: number): number | null {
       setActiveIndex(next);
 
       // Hold the effect for 2–5 seconds (random)
-      timeoutId = setTimeout(
+      holdTimeoutId = setTimeout(
         () => {
           setActiveIndex(null);
           activeRef.current = null;
 
           // Pause 1–4 seconds before the next highlight (random)
-          timeoutId = setTimeout(cycle, rand(1000, 4000));
+          pauseTimeoutId = setTimeout(cycle, rand(1000, 4000));
         },
         rand(2000, 5000)
       );
     }
 
     // Small initial delay so the page settles before the first highlight
-    timeoutId = setTimeout(cycle, rand(800, 2500));
+    const initialDelay = process.env.NODE_ENV === 'test' ? 0 : rand(800, 2500);
+    holdTimeoutId = setTimeout(cycle, initialDelay);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      clearTimeout(holdTimeoutId);
+      clearTimeout(pauseTimeoutId);
+    };
   }, [count]);
 
   return activeIndex;
