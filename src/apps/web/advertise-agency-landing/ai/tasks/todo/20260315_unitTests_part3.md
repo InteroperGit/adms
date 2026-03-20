@@ -9,21 +9,23 @@
 
 Add unit tests for page section components: header, hero, about, services, advantages, carousel, call-to-action, testimonials, and contact.
 
+**Convention:** one test file per component, co-located next to the source file (`ComponentName.test.tsx`).
+
 ---
 
 ## Task 15: Header Section — `src/components/sections/header/`
 
 **Model**: Claude Haiku 4.5
 
-**Test file:** `src/components/sections/header/header.test.tsx`
+**Test files:** one per component
 
-| Component | Tests |
-|-----------|-------|
-| `Header` | renders logo, desktop nav, mobile hamburger, `ScrollProgress` bar present |
-| `HeaderDesktopNav` | renders nav links, renders dark mode toggle, renders social links |
-| `HeaderMobileNav` | hamburger opens menu, renders nav links in drawer, closes on link click |
-| `HeaderNav` | renders all nav items, active link has active class |
-| `DarkModeToggle` | renders Sun/Moon icon, clicking calls toggle |
+| Test file | Component | Tests |
+|-----------|-----------|-------|
+| `Header.test.tsx` | `Header` | renders logo, desktop nav, mobile hamburger, `ScrollProgress` bar present |
+| `HeaderDesktopNav.test.tsx` | `HeaderDesktopNav` | renders nav links, renders dark mode toggle, renders social links |
+| `HeaderMobileNav.test.tsx` | `HeaderMobileNav` | hamburger opens menu, renders nav links in drawer, closes on link click |
+| `HeaderNav.test.tsx` | `HeaderNav` | renders all nav items, active link has active class |
+| `DarkModeToggle.test.tsx` | `DarkModeToggle` | renders Sun/Moon icon, clicking calls toggle |
 
 **Mocking notes:**
 - Mock `useTheme`, `useActiveSection`, `useInViewport`
@@ -37,14 +39,14 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 **Model**: Claude Haiku 4.5
 
-**Test file:** `src/components/sections/hero/hero.test.tsx`
+**Test files:** one per component
 
-| Component | Tests |
-|-----------|-------|
-| `Hero` | renders badge, title, subtitle, CTA buttons, stats section |
-| `HeroCTA` | renders primary and secondary buttons with correct labels and hrefs |
-| `HeroStats` | renders stat items from data |
-| `CountingStat` | renders icon, label, animated number (mock timers) |
+| Test file | Component | Tests |
+|-----------|-----------|-------|
+| `Hero.test.tsx` | `Hero` | renders badge, title, subtitle, CTA buttons, stats section |
+| `HeroCTA.test.tsx` | `HeroCTA` | renders primary and secondary buttons with correct labels and hrefs |
+| `HeroStats.test.tsx` | `HeroStats` | renders stat items from data |
+| `CountingStat.test.tsx` | `CountingStat` | renders icon, label, animated number (mock timers) |
 
 **Validation:** `pnpm test src/components/sections/hero`
 
@@ -54,14 +56,14 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 **Model**: Claude Haiku 4.5
 
-**Test file:** `src/components/sections/about/about.test.tsx`
+**Test files:** one per component
 
-| Component | Tests |
-|-----------|-------|
-| `About` | renders section header, about text, values, about card |
-| `AboutText` | renders paragraphs from content data |
-| `AboutValues` | renders list of values with icons |
-| `AboutCard` | renders logo, tagline, stat items, has pulse animation class |
+| Test file | Component | Tests |
+|-----------|-----------|-------|
+| `About.test.tsx` | `About` | renders section header, about text, values, about card |
+| `AboutText.test.tsx` | `AboutText` | renders paragraphs from content data |
+| `AboutValues.test.tsx` | `AboutValues` | renders list of values with icons |
+| `AboutCard.test.tsx` | `AboutCard` | renders logo, tagline, stat items, has pulse animation class |
 
 **Validation:** `pnpm test src/components/sections/about`
 
@@ -71,16 +73,16 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 **Model**: Claude Haiku 4.5
 
-**Test file:** `src/components/sections/services-advantages.test.tsx`
+**Test files:** one per component, co-located in their respective subfolders
 
-| Component | Tests |
-|-----------|-------|
-| `Services` | renders section header, renders service cards grid |
-| `ServiceCard` | renders icon, title, description inside `ItemCard`, has `icon-shake` class |
-| `Advantages` | renders section header, renders advantage cards grid |
-| `AdvantageCard` | renders icon, index number (padded), title, description inside `ItemCard` |
+| Test file | Component | Tests |
+|-----------|-----------|-------|
+| `src/components/sections/services/Services.test.tsx` | `Services` | renders section header, renders service cards grid |
+| `src/components/sections/services/ServiceCard.test.tsx` | `ServiceCard` | renders icon, title, description inside `ItemCard`, has `icon-shake` class |
+| `src/components/sections/advantages/Advantages.test.tsx` | `Advantages` | renders section header, renders advantage cards grid |
+| `src/components/sections/advantages/AdvantageCard.test.tsx` | `AdvantageCard` | renders icon, index number (padded), title, description inside `ItemCard` |
 
-**Validation:** `pnpm test src/components/sections/services-advantages`
+**Validation:** `pnpm test src/components/sections/services src/components/sections/advantages`
 
 ---
 
@@ -88,13 +90,13 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 **Model**: Claude Sonnet 4.6
 
-**Test file:** `src/components/sections/carousel/carousel.test.tsx`
+**Test files:** one per component
 
-| Component | Tests |
-|-----------|-------|
-| `Carousel` | renders slides, auto-advances (mock timers), pauses on hover |
-| `CarouselSlide` | renders image or gradient background, renders text content |
-| `CarouselControls` | prev/next buttons call handlers, renders dot indicators, renders slide counter |
+| Test file | Component | Tests |
+|-----------|-----------|-------|
+| `Carousel.test.tsx` | `Carousel` | renders slides, auto-advances (mock timers), pauses on hover |
+| `CarouselSlide.test.tsx` | `CarouselSlide` | renders image or gradient background, renders text content |
+| `CarouselControls.test.tsx` | `CarouselControls` | prev/next buttons call handlers, renders dot indicators, renders slide counter |
 
 **Validation:** `pnpm test src/components/sections/carousel`
 
@@ -104,15 +106,15 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 **Model**: Claude Haiku 4.5
 
-**Test file:** `src/components/sections/cta-testimonials.test.tsx`
+**Test files:** one per component, co-located in their respective subfolders
 
-| Component | Tests |
-|-----------|-------|
-| `CallToAction` | renders title, subtitle, CTA buttons |
-| `CtaButtons` | renders primary and secondary buttons, buttons have correct hrefs |
-| `Testimonials` | renders section header, renders Yandex reviews or empty state |
+| Test file | Component | Tests |
+|-----------|-----------|-------|
+| `src/components/sections/call-to-action/CallToAction.test.tsx` | `CallToAction` | renders title, subtitle, CTA buttons |
+| `src/components/sections/call-to-action/CtaButtons.test.tsx` | `CtaButtons` | renders primary and secondary buttons, buttons have correct hrefs |
+| `src/components/sections/testimonials/Testimonials.test.tsx` | `Testimonials` | renders section header, renders Yandex reviews or empty state |
 
-**Validation:** `pnpm test src/components/sections/cta-testimonials`
+**Validation:** `pnpm test src/components/sections/call-to-action src/components/sections/testimonials`
 
 ---
 
@@ -120,18 +122,18 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 **Model**: Claude Sonnet 4.6
 
-**Test file:** `src/components/sections/contact/contact.test.tsx`
+**Test files:** one per component
 
-| Component | Tests |
-|-----------|-------|
-| `Contact` | renders section header, renders form and info columns |
-| `ContactForm` | renders fields, validates required fields, shows success on submit |
-| `ContactFormFields` | renders name, contact, message inputs |
-| `ContactConsent` | renders checkbox, renders legal links |
-| `ContactSuccess` | renders success icon, title, description, reset button |
-| `ContactInfo` | renders phone, email, address with icons |
-| `ContactHours` | renders weekday, Saturday, Sunday hours |
-| `ContactMap` | renders iframe in dark mode with border, renders with shadow in light mode |
+| Test file | Component | Tests |
+|-----------|-----------|-------|
+| `Contact.test.tsx` | `Contact` | renders section header, renders form and info columns |
+| `ContactForm.test.tsx` | `ContactForm` | renders fields, validates required fields, shows success on submit |
+| `ContactFormFields.test.tsx` | `ContactFormFields` | renders name, contact, message inputs |
+| `ContactConsent.test.tsx` | `ContactConsent` | renders checkbox, renders legal links |
+| `ContactSuccess.test.tsx` | `ContactSuccess` | renders success icon, title, description, reset button |
+| `ContactInfo.test.tsx` | `ContactInfo` | renders phone, email, address with icons |
+| `ContactHours.test.tsx` | `ContactHours` | renders weekday, Saturday, Sunday hours |
+| `ContactMap.test.tsx` | `ContactMap` | renders iframe in dark mode with border, renders with shadow in light mode |
 
 **Validation:** `pnpm test src/components/sections/contact`
 
@@ -139,16 +141,16 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 ## Summary — Part 3
 
-| Task | Test File | Scope | Est. Tests |
+| Task | Test Files | Scope | Est. Tests |
 |------|-----------|-------|------------|
-| 15 | `src/components/sections/header/header.test.tsx` | 5 header components | ~15 |
-| 16 | `src/components/sections/hero/hero.test.tsx` | 4 hero components | ~12 |
-| 17 | `src/components/sections/about/about.test.tsx` | 4 about components | ~12 |
-| 18 | `src/components/sections/services-advantages.test.tsx` | 4 service/advantage components | ~12 |
-| 19 | `src/components/sections/carousel/carousel.test.tsx` | 3 carousel components | ~10 |
-| 20 | `src/components/sections/cta-testimonials.test.tsx` | 3 CTA/testimonial components | ~8 |
-| 21 | `src/components/sections/contact/contact.test.tsx` | 7 contact components | ~20 |
-| **Subtotal** | **7 test files** | | **~89 tests** |
+| 15 | 5 files in `src/components/sections/header/` | 5 header components | ~15 |
+| 16 | 4 files in `src/components/sections/hero/` | 4 hero components | ~12 |
+| 17 | 4 files in `src/components/sections/about/` | 4 about components | ~12 |
+| 18 | 4 files in `sections/services/` + `sections/advantages/` | 4 service/advantage components | ~12 |
+| 19 | 3 files in `src/components/sections/carousel/` | 3 carousel components | ~10 |
+| 20 | 3 files in `sections/call-to-action/` + `sections/testimonials/` | 3 CTA/testimonial components | ~8 |
+| 21 | 8 files in `src/components/sections/contact/` | 8 contact components | ~20 |
+| **Subtotal** | **~31 test files** | | **~89 tests** |
 
 ## Execution Order
 
@@ -171,8 +173,8 @@ Each task is designed to be completable in **one Claude session**:
 
 1. **Start session** → Read this plan, identify which task to work on
 2. **Run:** `pnpm test` to confirm existing tests pass
-3. **Implement** the test file for the chosen task
+3. **Implement** one test file per component, co-located next to the source file
 4. **Run:** `pnpm test <path>` to validate
-5. **Commit:** `git add <test-file> && git commit -m "test(taskN): add tests for <area>"`
+5. **Commit:** `git add <test-files> && git commit -m "test(taskN): add tests for <area>"`
 
 To do **all Part 3 tasks in one session**, work through them in order (15 → 16 → ... → 21), committing after each task passes. Then proceed to Part 4.

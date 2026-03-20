@@ -21,7 +21,7 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 **Model**: Claude Sonnet 4.6
 
-**Files to create/modif
+**Files to create/modify:**
 - `package.json` — add devDependencies
 - `vitest.config.ts` — test runner config
 - `src/test/setup.ts` — global test setup
@@ -106,14 +106,14 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 **Model**: Claude Haiku 4.5
 
-**Test file:** `src/libs/libs.test.ts`
+**Test files:** one per module — `src/libs/<module>.test.ts`
 
-| Function | Source | Tests |
-|----------|--------|-------|
-| `cn()` | `utils.ts` | merges classes, resolves Tailwind conflicts, handles falsy values, handles arrays/objects |
-| `extractYearMonth()` | `dateUtils.ts` | valid dates, invalid format, wrong separators, empty string, out-of-range month, edge months (01, 12) |
-| `resolveImageSrcSet()` | `imageSrcSet.ts` | valid `/images/` path, custom widths, non-`/images/` path returns empty, file without extension, deeply nested path |
-| `categorySlug()` | `categorySlug.ts` | known category returns slug, unknown category returns `'all'` |
+| Test file | Function | Tests |
+|-----------|----------|-------|
+| `src/libs/utils.test.ts` | `cn()` | merges classes, resolves Tailwind conflicts, handles falsy values, handles arrays/objects |
+| `src/libs/dateUtils.test.ts` | `extractYearMonth()` | valid dates, invalid format, wrong separators, empty string, out-of-range month, edge months (01, 12) |
+| `src/libs/imageSrcSet.test.ts` | `resolveImageSrcSet()` | valid `/images/` path, custom widths, non-`/images/` path returns empty, file without extension, deeply nested path |
+| `src/libs/categorySlug.test.ts` | `categorySlug()` | known category returns slug, unknown category returns `'all'` |
 
 **Validation:** `pnpm test src/libs`
 
@@ -140,19 +140,19 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 **Test files:** one per hook — `src/hooks/<hookName>.test.ts`
 
-| Hook | Tests |
-|------|-------|
-| `useTheme()` | returns `isDark` and `toggle` from ThemeContext |
-| `useCookieConsent()` | reads localStorage, returns consent state, reacts to storage events |
-| `useCountUp(100, true, 500)` | animates from 0 to target, stays at 0 when `animate=false` |
-| `useDocumentTitle('Title')` | sets `document.title` |
-| `useFadeIn()` | returns a ref, creates IntersectionObserver (mock) |
-| `useInViewport()` | returns boolean based on IntersectionObserver visibility |
-| `useSwipe()` | calls `onLeft`/`onRight` on touch events exceeding threshold |
-| `useRandomButtonHighlight(3)` | returns a number in range [0, count), cycles over time |
+| Test file | Hook | Tests |
+|-----------|------|-------|
+| `useTheme.test.ts` | `useTheme()` | returns `isDark` and `toggle` from ThemeContext |
+| `useCookieConsent.test.ts` | `useCookieConsent()` | reads localStorage, returns consent state, reacts to storage events |
+| `useCountUp.test.ts` | `useCountUp(100, true, 500)` | animates from 0 to target, stays at 0 when `animate=false` |
+| `useDocumentTitle.test.ts` | `useDocumentTitle('Title')` | sets `document.title` |
+| `useFadeIn.test.ts` | `useFadeIn()` | returns a ref, creates IntersectionObserver (mock) |
+| `useInViewport.test.ts` | `useInViewport()` | returns boolean based on IntersectionObserver visibility |
+| `useSwipe.test.ts` | `useSwipe()` | calls `onLeft`/`onRight` on touch events exceeding threshold |
+| `useRandomButtonHighlight.test.ts` | `useRandomButtonHighlight(3)` | returns a number in range [0, count), cycles over time |
 
 **Mocking notes:**
-- Mock `IntersectionObserver` globally in setup or per-test
+- Mock `IntersectionObserver` per-test file (useFadeIn, useInViewport)
 - Mock `localStorage` for `useCookieConsent`
 - Use `vi.useFakeTimers()` for timing-based hooks (`useCountUp`, `useRandomButtonHighlight`)
 - Wrap hook calls in `renderHook()` from `@testing-library/react`
@@ -182,16 +182,14 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 **Model**: Claude Haiku 4.5
 
-**Test file:** `src/types/schemas.test.ts`
+**Test files:** one per schema group
 
-Test that all Zod schemas correctly parse their corresponding JSON data:
-
-| Schema Group | Tests |
-|-------------|-------|
-| Config schemas | `SiteDataSchema`, `ThemeSchema`, `CookiesSchema`, `LegalDataSchema`, `PortfolioConfigSchema`, `CategoriesSchema`, `OrderFormsSchema`, `NotFoundSchema` all parse without errors |
-| Section schemas | All section schemas parse their JSON data correctly |
-| Portfolio schemas | `PortfolioCaseSchema` parses case data, `ContentBlockSchema` discriminated union resolves all block types |
-| Block schemas | Each individual block schema validates correct and rejects invalid data |
+| Test file | Schemas | Tests |
+|-----------|---------|-------|
+| `src/types/config/config-schemas.test.ts` | `SiteDataSchema`, `ThemeSchema`, `CookiesSchema`, `LegalDataSchema`, `PortfolioConfigSchema`, `CategoriesSchema`, `OrderFormsSchema`, `NotFoundSchema` | all parse their JSON without errors |
+| `src/types/sections/section-schemas.test.ts` | all section schemas | each schema parses its JSON correctly |
+| `src/types/portfolio/portfolio-schemas.test.ts` | `PortfolioCaseSchema`, `ContentBlockSchema` | case data parses, discriminated union resolves all block types |
+| `src/types/blocks/block-schemas.test.ts` | each individual block schema | validates correct data, rejects invalid data |
 
 **Mocking notes:**
 - Import schemas and test data directly; no React rendering needed
@@ -203,15 +201,15 @@ Test that all Zod schemas correctly parse their corresponding JSON data:
 
 ## Summary — Part 1
 
-| Task | Test File | Scope | Est. Tests |
+| Task | Test Files | Scope | Est. Tests |
 |------|-----------|-------|------------|
 | 0 | (setup) | Infrastructure | — |
-| 1 | `src/libs/libs.test.ts` | 4 utility functions | ~20 |
-| 2 | `src/types/shared/iconMap.test.ts` | ICON_MAP, resolveIcon | ~5 |
-| 3 | `src/hooks/hooks.test.ts` | 8 hooks | ~25 |
+| 1 | 4 files in `src/libs/` | 4 utility functions | ~20 |
+| 2 | `src/types/shared/iconMap.test.ts` | ICON_MAP, resolveIcon | ~8 |
+| 3 | 8 files in `src/hooks/` | 8 hooks | ~33 |
 | 4 | `src/contexts/ThemeContext.test.tsx` | ThemeProvider | ~5 |
-| 27 | `src/types/schemas.test.ts` | All Zod schemas | ~25 |
-| **Subtotal** | **5 test files** | | **~80 tests** |
+| 27 | 4 files in `src/types/` | All Zod schemas | ~25 |
+| **Subtotal** | **~18 test files** | | **~91 tests** |
 
 ## Execution Order
 
@@ -230,8 +228,8 @@ Each task is designed to be completable in **one Claude session**:
 
 1. **Start session** → Read this plan, identify which task to work on
 2. **Run:** `pnpm test` to confirm existing tests pass
-3. **Implement** the test file for the chosen task
+3. **Implement** one test file at a time, co-located next to the source file
 4. **Run:** `pnpm test <path>` to validate
-5. **Commit:** `git add <test-file> && git commit -m "test(taskN): add tests for <area>"`
+5. **Commit:** `git add <test-files> && git commit -m "test(taskN): add tests for <area>"`
 
 To do **all Part 1 tasks in one session**, work through them in order (0 → 1 → 2 → 27 → 3 → 4), committing after each task passes. Then proceed to Part 2.

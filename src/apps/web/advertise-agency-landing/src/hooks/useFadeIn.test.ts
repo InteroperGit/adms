@@ -52,16 +52,16 @@ describe('useFadeIn', () => {
   it('creates an IntersectionObserver when an element is attached to the ref', () => {
     const el = document.createElement('div');
 
-    const wrapper = () => {
+    const UseWrapper = () => {
       const hookResult = useFadeIn();
       React.useLayoutEffect(() => {
-        // @ts-expect-error force-assign
         hookResult.ref.current = el;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
       return hookResult;
     };
 
-    renderHook(wrapper);
+    renderHook(UseWrapper);
     expect(IntersectionObserver).toHaveBeenCalled();
   });
 
@@ -80,16 +80,16 @@ describe('useFadeIn', () => {
   it('disconnects on unmount when observer was created', () => {
     const el = document.createElement('div');
 
-    const wrapper = () => {
+    const UseWrapper = () => {
       const hookResult = useFadeIn();
       React.useLayoutEffect(() => {
-        // @ts-expect-error force-assign
         hookResult.ref.current = el;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
       return hookResult;
     };
 
-    const { unmount } = renderHook(wrapper);
+    const { unmount } = renderHook(UseWrapper);
     unmount();
     expect(mockObserver.disconnect).toHaveBeenCalled();
   });
