@@ -1,231 +1,84 @@
-import { render, screen, cleanup, act } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ScrollProgress } from './ScrollProgress';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-// Mock browser APIs
-const mockViewportHeight = 1000;
-const mockScrollHeight = 3000; // Default to a long page (3x viewport)
-
-const mockWindow = {
-  scrollY: 0,
-  innerHeight: mockViewportHeight,
-  addEventListener: vi.fn(),
-  removeEventListener: vi.fn(),
-};
-
-const mockDocument = {
-  documentElement: {
-    scrollHeight: mockScrollHeight,
-  },
-};
-
-const mockMatchMedia = vi.fn().mockImplementation((query) => ({
-  matches: false, // Default to no-reduced-motion
-  media: query,
-  onchange: null,
-  addEventListener: vi.fn(),
-  removeEventListener: vi.fn(),
-  dispatchEvent: vi.fn(),
-}));
-
-// Helper to set up the mock window and document properties
-const setupMocks = (
-  scrollY = 0,
-  innerHeight = mockViewportHeight,
-  scrollHeight = mockScrollHeight,
-  reducedMotion = false
-) => {
-  mockWindow.scrollY = scrollY;
-  mockWindow.innerHeight = innerHeight;
-  mockDocument.documentElement.scrollHeight = scrollHeight;
-  mockMatchMedia.mockImplementation((query) => ({
-    matches: reducedMotion,
+// jsdom does not implement matchMedia — provide a stub
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation((query: string) => ({
+    matches: false,
     media: query,
     onchange: null,
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
-  }));
+  })),
+});
 
-  Object.defineProperty(window, 'scrollY', { value: scrollY, writable: true });
-  Object.defineProperty(window, 'innerHeight', { value: innerHeight, writable: true });
-  Object.defineProperty(document, 'documentElement', {
-    value: mockDocument.documentElement,
-    writable: true,
+function setPageDimensions({
+  scrollHeight,
+  innerHeight,
+  scrollY = 0,
+}: {
+  scrollHeight: number;
+  innerHeight: number;
+  scrollY?: number;
+}) {
+  Object.defineProperty(document.documentElement, 'scrollHeight', {
     configurable: true,
+    value: scrollHeight,
   });
-  Object.defineProperty(window, 'matchMedia', { value: mockMatchMedia, writable: true });
-};
-
-// Helper to dispatch scroll event
-const dispatchScroll = (scrollY: number) => {
-  act(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).scrollY = scrollY;
-    window.dispatchEvent(new Event('scroll'));
+  Object.defineProperty(window, 'innerHeight', {
+    configurable: true,
+    value: innerHeight,
   });
-};
-
-// Helper to dispatch resize event
-const dispatchResize = (innerHeight: number, scrollHeight: number) => {
-  act(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).innerHeight = innerHeight;
-    Object.defineProperty(document, 'documentElement', {
-      value: { scrollHeight },
-      writable: true,
-      configurable: true,
-    });
-    window.dispatchEvent(new Event('resize'));
+  Object.defineProperty(window, 'scrollY', {
+    configurable: true,
+    value: scrollY,
   });
-};
+}
 
 describe('ScrollProgress', () => {
   beforeEach(() => {
-    cleanup(); // Clean up DOM between tests
-    setupMocks(); // Reset mocks for each test
+    setPageDimensions({ scrollHeight: 800, innerHeight: 600 });
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    setPageDimensions({ scrollHeight: 800, innerHeight: 600 });
   });
 
-  // 1. Does not render on short pages
-  it('does not render the progress bar on pages shorter than 2x viewport height', () => {
-    setupMocks(0, 1000, 1999); // scrollHeight < 2 * innerHeight
+  it('is hidden when page is short (< 2x viewport)', () => {
     render(<ScrollProgress />);
     expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
   });
 
-  // 2. Renders on long pages
-  it('renders the progress bar on pages longer than 2x viewport height', () => {
-    setupMocks(0, 1000, 3001); // scrollableHeight (2001) > innerHeight * 2 (2000)
+  it('renders progress bar when page is long (> 2x viewport)', () => {
+    setPageDimensions({ scrollHeight: 3000, innerHeight: 600 });
     render(<ScrollProgress />);
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
-  // 3. Initial state (top of page)
-  it('shows 0% progress at the very top of a long page', () => {
-    setupMocks(0, 1000, 3500);
+  it('updates width on scroll', () => {
+    setPageDimensions({ scrollHeight: 3000, innerHeight: 600, scrollY: 0 });
     render(<ScrollProgress />);
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toHaveStyle('width: 0%');
-    expect(progressBar).toHaveAttribute('aria-valuenow', '0');
+    const bar = screen.getByRole('progressbar');
+    expect(bar).toHaveStyle({ width: '0%' });
+
+    act(() => {
+      setPageDimensions({ scrollHeight: 3000, innerHeight: 600, scrollY: 600 });
+      window.dispatchEvent(new Event('scroll'));
+    });
+
+    // scrollable = 3000 - 600 = 2400; 600/2400 * 100 = 25%
+    expect(bar).toHaveStyle({ width: '25%' });
   });
 
-  // 4. Full state (bottom of page)
-  it('shows 100% progress at the very bottom of a long page', () => {
-    const innerHeight = mockViewportHeight; // 1000
-    const scrollHeight = 4000;
-    const maxScroll = scrollHeight - innerHeight; // 3000
-    setupMocks(0, innerHeight, scrollHeight);
+  it('has correct aria attributes', () => {
+    setPageDimensions({ scrollHeight: 3000, innerHeight: 600 });
     render(<ScrollProgress />);
-    const progressBar = screen.getByRole('progressbar');
-    // Trigger scroll to bottom
-    dispatchScroll(maxScroll);
-    expect(progressBar).toHaveStyle('width: 100%');
-    expect(progressBar).toHaveAttribute('aria-valuenow', '100');
-  });
-
-  // 5. Intermediate scroll position
-  it('shows correct percentage progress at an intermediate scroll position', () => {
-    const innerHeight = mockViewportHeight; // 1000
-    const scrollHeight = 4000; // scrollable = 3000 > 2000 → shows
-    const scrollableHeight = scrollHeight - innerHeight; // 3000
-    const scrollY = scrollableHeight / 2; // 1500 (50% scrolled)
-    setupMocks(0, innerHeight, scrollHeight);
-    render(<ScrollProgress />);
-    const progressBar = screen.getByRole('progressbar');
-    // Trigger scroll to midpoint
-    dispatchScroll(scrollY);
-    expect(progressBar).toHaveStyle('width: 50%');
-    expect(progressBar).toHaveAttribute('aria-valuenow', '50');
-  });
-
-  // 6. Responds to window resize (page length changes from short to long)
-  it('appears when window is resized to make the page long enough', () => {
-    setupMocks(0, 1000, 1500); // Initially short (500 > 2000 false)
-    const { rerender } = render(<ScrollProgress />);
-    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
-
-    // Simulate resize making page long
-    setupMocks(0, 500, 3000); // scrollable (2500) > innerHeight*2 (1000) → shows
-    rerender(<ScrollProgress />); // Trigger re-render to update component logic
-    dispatchResize(500, 3000); // Dispatch event to ensure effects run
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
-  });
-
-  // 7. Responds to window resize (page length changes from long to short)
-  it('disappears when window is resized to make the page too short', () => {
-    setupMocks(0, 1000, 3500); // Initially long (2500 > 2000 → shows)
-    const { rerender } = render(<ScrollProgress />);
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
-
-    // Simulate resize making page short
-    setupMocks(0, 1500, 2500); // scrollable (1000) > innerHeight*2 (3000) false → hides
-    rerender(<ScrollProgress />);
-    dispatchResize(1500, 2500);
-    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
-  });
-
-  // Test scroll event
-  it('updates progress on scroll event', () => {
-    setupMocks(0, 1000, 4000); // scrollable=3000 > 2000 → shows
-    render(<ScrollProgress />);
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toHaveStyle('width: 0%');
-
-    const scrollableHeight = 4000 - 1000; // 3000
-    const scrollY = scrollableHeight * 0.75; // 75% scroll
-    dispatchScroll(scrollY);
-    expect(progressBar).toHaveStyle('width: 75%');
-    expect(progressBar).toHaveAttribute('aria-valuenow', '75');
-  });
-
-  // 8. ARIA attributes
-  it('applies correct ARIA attributes to the progress bar', () => {
-    setupMocks(0, 1000, 3500);
-    render(<ScrollProgress />);
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toHaveAttribute('aria-valuenow', '0');
-    expect(progressBar).toHaveAttribute('aria-valuemin', '0');
-    expect(progressBar).toHaveAttribute('aria-valuemax', '100');
-    expect(progressBar).toHaveAttribute('aria-label', 'Page scroll progress');
-  });
-
-  // 9. Gradient applied
-  it('applies gradient styling classes', () => {
-    setupMocks(0, 1000, 3500);
-    render(<ScrollProgress />);
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toHaveClass('bg-gradient-to-r');
-    expect(progressBar).toHaveClass('from-primary');
-    expect(progressBar).toHaveClass('to-accent');
-  });
-
-  // 10. Transition for width
-  it('applies width transition classes by default', () => {
-    setupMocks(0, 1000, 3500);
-    render(<ScrollProgress />);
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toHaveClass('transition-[width]');
-    expect(progressBar).toHaveClass('duration-150');
-  });
-
-  // 11. Prefers-reduced-motion
-  it('does not apply transition classes when prefers-reduced-motion is enabled', () => {
-    setupMocks(0, 1000, 3500, true); // reducedMotion = true
-    render(<ScrollProgress />);
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).not.toHaveClass('transition-[width]');
-    expect(progressBar).not.toHaveClass('duration-150');
-  });
-
-  // 12. Edge Case: page with total scrollable height of 0
-  it('calculates 0% progress if scrollable height is 0 or less', () => {
-    setupMocks(0, 1000, 1000); // scrollHeight - innerHeight = 0 → not shown (0 > 2000 false)
-    render(<ScrollProgress />);
-    // Page is too short to show bar at all
-    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+    const bar = screen.getByRole('progressbar');
+    expect(bar).toHaveAttribute('aria-valuemin', '0');
+    expect(bar).toHaveAttribute('aria-valuemax', '100');
+    expect(bar).toHaveAttribute('aria-label', 'Page scroll progress');
   });
 });

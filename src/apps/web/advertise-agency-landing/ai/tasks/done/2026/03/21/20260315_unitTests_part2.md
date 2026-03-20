@@ -182,7 +182,7 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 14: Layout, Analytics & Banners
+## Task 14: Layout, Analytics & Banners (DONE 2026-03-21)
 
 **Model**: Claude Haiku 4.5
 
@@ -190,6 +190,7 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
+
 | `src/components/layout/Container.test.tsx` | `Container` | renders children, has max-width class, accepts className |
 | `src/components/banners/CookieBanner.test.tsx` | `CookieBanner` | renders when consent not given, hides after accepting, renders privacy link |
 | `src/components/banners/CookieActions.test.tsx` | `CookieActions` | accept button calls handler, necessary-only button calls handler |
