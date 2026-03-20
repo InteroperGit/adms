@@ -34,7 +34,7 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 6: UI Section Utilities — `src/components/ui/section/`
+## Task 6: UI Section Utilities — `src/components/ui/section/` (DONE 2026-03-20)
 
 **Model**: Claude Haiku 4.5
 
@@ -42,11 +42,11 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
-| `SectionBadge.test.tsx` | `SectionBadge` | renders label text, light variant classes, dark variant classes |
-| `SectionHeader.test.tsx` | `SectionHeader` | renders label badge + title + description, renders highlight span, omits description when absent |
-| `SectionIconBox.test.tsx` | `SectionIconBox` | renders icon, applies size class, has hover-primary animation class |
-| `SectionDivider.test.tsx` | `SectionDivider` | renders SVG, applies color gradient |
-| `FadeInSection.test.tsx` | `FadeInSection` | renders children, applies `id` attribute, calls `useFadeIn` |
+| `SectionBadge.test.tsx` | `SectionBadge` | renders label text, light variant classes, dark variant classes | ✅
+| `SectionHeader.test.tsx` | `SectionHeader` | renders label badge + title + description, renders highlight span, omits description when absent | ✅
+| `SectionIconBox.test.tsx` | `SectionIconBox` | renders icon, applies size class, has hover-primary animation class | ✅
+| `SectionDivider.test.tsx` | `SectionDivider` | renders SVG, applies color gradient | ✅
+| `FadeInSection.test.tsx` | `FadeInSection` | renders children, applies `id` attribute, calls `useFadeIn` | ✅
 
 **Validation:** `pnpm test src/components/ui/section`
 

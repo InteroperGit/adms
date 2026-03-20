@@ -64,7 +64,7 @@ describe('OptimizedImage', () => {
   it('renders with aspectRatio prop applying inline style', () => {
     render(<OptimizedImage {...defaultProps} aspectRatio="16/9" />);
     const wrapper = screen.getByAltText(defaultProps.alt).closest('div');
-    expect(wrapper).toHaveStyle('aspect-ratio: 16 / 9');
+    expect(wrapper).toHaveStyle({ aspectRatio: '16/9' });
   });
 
   it('renders with objectFit prop applying class to img', () => {
@@ -167,7 +167,8 @@ describe('OptimizedImage', () => {
     mockResolveImageSrcSet.mockReturnValue(null);
     render(<OptimizedImage {...defaultProps} />);
     const image = screen.getByAltText(defaultProps.alt);
-    expect(image.previousElementSibling).not.toHaveAttribute('type', 'image/webp');
+    const sibling = image.previousElementSibling;
+    expect(sibling).toBeNull();
   });
 
   // 6. Accessibility
@@ -194,6 +195,7 @@ describe('OptimizedImage', () => {
 
   it('passes the sizes prop to the source and img elements', () => {
     vi.stubEnv('DEV', false);
+    mockResolveImageSrcSet.mockReturnValue('/test-image.jpg-srcset.webp');
     render(<OptimizedImage {...defaultProps} sizes="(max-width: 768px) 100vw, 50vw" />);
     const image = screen.getByAltText(defaultProps.alt);
     const source = image.previousElementSibling;

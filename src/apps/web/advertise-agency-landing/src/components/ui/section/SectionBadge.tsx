@@ -44,6 +44,7 @@ export function SectionBadge({
             'h-1.5 w-1.5 rounded-full',
             variant === 'accent' ? 'bg-accent' : 'bg-primary'
           )}
+          data-testid="dot-indicator"
         />
       )}
       {label}

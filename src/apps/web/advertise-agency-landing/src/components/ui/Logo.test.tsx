@@ -37,19 +37,22 @@ describe('Logo', () => {
 
   it('should apply headerContent.logo.src to the src attribute of the <img> tag', () => {
     render(<Logo />);
-    const imgElement = screen.getByRole('img');
+    const linkElement = screen.getByRole('link');
+    const imgElement = linkElement.querySelector('img');
     expect(imgElement).toHaveAttribute('src', headerContent.logo.src);
   });
 
   it('should apply an empty alt attribute to the <img> tag', () => {
     render(<Logo />);
-    const imgElement = screen.getByRole('img');
+    const linkElement = screen.getByRole('link');
+    const imgElement = linkElement.querySelector('img');
     expect(imgElement).toHaveAttribute('alt', '');
   });
 
   it('should apply default classes h-6 w-auto to the <img> tag', () => {
     render(<Logo />);
-    const imgElement = screen.getByRole('img');
+    const linkElement = screen.getByRole('link');
+    const imgElement = linkElement.querySelector('img');
     expect(imgElement).toHaveClass('h-6');
     expect(imgElement).toHaveClass('w-auto');
   });

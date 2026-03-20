@@ -70,6 +70,7 @@ export function SectionDivider({
         preserveAspectRatio="none"
         className={cn('h-full w-full', flipX && '-scale-x-100')}
         xmlns="http://www.w3.org/2000/svg"
+        data-testid="section-divider-svg"
       >
         <path d={path} fill={fill} />
       </svg>

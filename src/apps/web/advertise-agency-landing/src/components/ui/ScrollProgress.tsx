@@ -13,6 +13,16 @@ import { useState, useEffect } from 'react';
 export function ScrollProgress() {
   const [progress, setProgress] = useState(0);
   const [shouldShow, setShouldShow] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     // Check if page is long enough to warrant progress bar
@@ -48,7 +58,7 @@ export function ScrollProgress() {
   return (
     <div className="fixed inset-x-0 top-0 z-50 h-1 bg-transparent">
       <div
-        className="h-full bg-gradient-to-r from-primary to-accent transition-[width] duration-150"
+        className={`h-full bg-gradient-to-r from-primary to-accent${reducedMotion ? '' : ' transition-[width] duration-150'}`}
         style={{ width: `${progress}%` }}
         role="progressbar"
         aria-valuenow={Math.round(progress)}
