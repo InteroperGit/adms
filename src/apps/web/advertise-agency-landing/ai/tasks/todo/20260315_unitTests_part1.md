@@ -119,7 +119,7 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 ---
 
-## Task 2: Shared Types & Utilities — `src/types/shared/`
+## Task 2: Shared Types & Utilities — `src/types/shared/` ✅ (2026-03-20)
 
 **Model**: Claude Haiku 4.5
 
@@ -127,10 +127,10 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 | Function | Source | Tests |
 |----------|--------|-------|
-| `resolveIcon()` | `iconMap.ts` | valid key returns component, invalid key returns fallback, all keys in ICON_MAP are valid LucideIcon components |
-| `ICON_MAP` | `iconMap.ts` | is a non-empty object, all values are functions (React components) |
+| `resolveIcon()` | `iconMap.ts` | valid key returns component, invalid key returns undefined, all keys in ICON_MAP are valid LucideIcon components |
+| `ICON_MAP` | `iconMap.ts` | is a non-empty object, all values are React components (forward refs from lucide-react) |
 
-**Validation:** `pnpm test src/types/shared`
+**Validation:** `pnpm test src/types/shared` ✅ (8 tests pass)
 
 ---
 
