@@ -143,21 +143,21 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 12: Order Form — `src/components/ui/orderForm/`
+## Task 12: Order Form — `src/components/ui/orderForm/` (DONE 2026-03-21)
 
-**Model**: Claude Haiku 4.5
+**Model**: Claude Sonnet 4.6
 
 **Test files:** one per component
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
-| `OrderForm.test.tsx` | `OrderForm` | renders product tabs, renders fields for selected product, shows success on submit |
-| `OrderFormProductTabs.test.tsx` | `OrderFormProductTabs` | renders all tabs, clicking tab calls onChange, active tab has active style |
-| `OrderFormField.test.tsx` | `OrderFormField` | renders text input, select, radio, checkbox, textarea based on type |
-| `OrderFormDynamicFields.test.tsx` | `OrderFormDynamicFields` | renders multiple fields from field definitions |
-| `OrderFormCustomerFields.test.tsx` | `OrderFormCustomerFields` | renders name, phone, email fields |
-| `OrderFormConsent.test.tsx` | `OrderFormConsent` | renders checkbox, renders legal links |
-| `OrderFormSuccess.test.tsx` | `OrderFormSuccess` | renders success message, reset button calls handler |
+| `OrderForm.test.tsx` | `OrderForm` | renders product tabs, renders fields for selected product, shows success on submit | ✅
+| `OrderFormProductTabs.test.tsx` | `OrderFormProductTabs` | renders all tabs, clicking tab calls onChange, active tab has active style | ✅
+| `OrderFormField.test.tsx` | `OrderFormField` | renders text input, select, radio, checkbox, textarea based on type | ✅
+| `OrderFormDynamicFields.test.tsx` | `OrderFormDynamicFields` | renders multiple fields from field definitions | ✅
+| `OrderFormCustomerFields.test.tsx` | `OrderFormCustomerFields` | renders name, phone, email fields | ✅
+| `OrderFormConsent.test.tsx` | `OrderFormConsent` | renders checkbox, renders legal links | ✅
+| `OrderFormSuccess.test.tsx` | `OrderFormSuccess` | renders success message, reset button calls handler | ✅
 
 **Validation:** `pnpm test src/components/ui/orderForm`
 
