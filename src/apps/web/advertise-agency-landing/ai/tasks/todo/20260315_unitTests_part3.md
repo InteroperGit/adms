@@ -35,7 +35,7 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 ---
 
-## Task 16: Hero Section — `src/components/sections/hero/`
+## Task 16: Hero Section — `src/components/sections/hero/` ✅ 2026-03-21
 
 **Model**: Claude Haiku 4.5
 
