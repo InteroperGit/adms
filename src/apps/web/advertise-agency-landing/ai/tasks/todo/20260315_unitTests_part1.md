@@ -1,6 +1,6 @@
 # Plan: Unit Tests — Part 1: Setup & Foundation
 
-**Status**: pending
+**Status**: in_progress
 **Date**: 2026-03-15
 **Series**: 1 of 4 (`20260315_unitTests_part1.md` → `_part2.md` → `_part3.md` → `_part4.md`)
 
@@ -17,11 +17,11 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 ---
 
-## Task 0: Test Infrastructure Setup
+## Task 0: Test Infrastructure Setup ✅ (2026-03-20)
 
 **Model**: Claude Sonnet 4.6
 
-**Files to create/modify:**
+**Files to create/modif
 - `package.json` — add devDependencies
 - `vitest.config.ts` — test runner config
 - `src/test/setup.ts` — global test setup

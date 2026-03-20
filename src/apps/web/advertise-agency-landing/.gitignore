@@ -21,6 +21,9 @@ dist-ssr
 # Incremental SSG cache — persistent, gitignored
 .ssg-cache/
 
+# Vitest coverage output
+coverage/
+
 # Content — local only, not tracked in git
 data/content/
 public/images/
