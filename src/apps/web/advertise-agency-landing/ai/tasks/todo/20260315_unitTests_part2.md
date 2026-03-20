@@ -107,16 +107,16 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 10: Portfolio UI Components — `src/components/ui/portfolio/`
+## Task 10: Portfolio UI Components — `src/components/ui/portfolio/` (DONE 2026-03-21)
 
-**Model**: Claude Haiku 4.5
+**Model**: Claude Sonnet 4.6
 
 **Test files:** one per component
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
-| `PortfolioThumbnail.test.tsx` | `PortfolioThumbnail` | renders image when provided, renders gradient fallback, shows category badge |
-| `PortfolioCard.test.tsx` | `PortfolioCard` | renders title, description, tags, link href, thumbnail |
+| `PortfolioThumbnail.test.tsx` | `PortfolioThumbnail` | renders image when provided, renders gradient fallback, shows category badge | ✅
+| `PortfolioCard.test.tsx` | `PortfolioCard` | renders title, description, tags, link href, thumbnail | ✅
 
 **Validation:** `pnpm test src/components/ui/portfolio`
 
