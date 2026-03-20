@@ -52,19 +52,19 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 7: Navigation UI — `src/components/ui/navigation/`
+## Task 7: Navigation UI — `src/components/ui/navigation/` (DONE 2026-03-20)
 
-**Model**: Claude Haiku 4.5
+**Model**: Claude Sonnet 4.6
 
 **Test files:** one per component
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
-| `BreadCrumbs.test.tsx` | `BreadCrumbs` | renders crumb items, last item is not a link, renders separator between items |
-| `BackButton.test.tsx` | `BackButton` | renders button, clicking calls `history.back()` |
-| `ScrollToTop.test.tsx` | `ScrollToTop` | hidden initially, visible after scroll threshold, clicking scrolls to top |
-| `SkipToContent.test.tsx` | `SkipToContent` | renders hidden link, has `href="#main"` |
-| `HomeHashScroll.test.tsx` | `HomeHashScroll` | calls `scrollIntoView` when hash matches an element |
+| `BreadCrumbs.test.tsx` | `BreadCrumbs` | renders crumb items, last item is not a link, renders separator between items | ✅
+| `BackButton.test.tsx` | `BackButton` | renders button, clicking calls `navigate(-1)` | ✅
+| `ScrollToTop.test.tsx` | `ScrollToTop` | hidden initially, visible after scroll threshold, clicking scrolls to top | ✅
+| `SkipToContent.test.tsx` | `SkipToContent` | renders hidden link, has correct `href` | ✅
+| `HomeHashScroll.test.tsx` | `HomeHashScroll` | calls `scrollIntoView` when hash matches an element | ✅
 
 **Mocking notes:**
 - Mock `window.scrollTo`, `window.scrollY`, `element.scrollIntoView`
