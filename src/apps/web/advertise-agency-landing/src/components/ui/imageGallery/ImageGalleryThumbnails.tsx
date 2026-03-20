@@ -28,8 +28,19 @@ export function ImageGalleryThumbnails({
   altPrefix,
 }: ImageGalleryThumbnailsProps) {
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const mounted = useRef(false);
 
   useEffect(() => {
+    // Trim stale refs when images array shrinks
+    thumbRefs.current = thumbRefs.current.slice(0, images.length);
+  }, [images.length]);
+
+  useEffect(() => {
+    // Skip scrollIntoView on initial mount — index 0 is already visible
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
     thumbRefs.current[activeIndex]?.scrollIntoView({
       behavior: 'smooth',
       inline: 'center',

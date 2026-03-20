@@ -5,7 +5,6 @@ interface ImageGalleryPreviewProps {
   src: string;
   alt: string;
   description?: string;
-  onClick?: () => void;
 }
 
 /**
@@ -15,18 +14,14 @@ interface ImageGalleryPreviewProps {
  * @param {string} props.src - Image source
  * @param {string} props.alt - Alt text for accessibility
  * @param {string} [props.description] - Optional description shown on hover (desktop) or below (mobile)
- * @param {() => void} [props.onClick] - Click handler (typically opens lightbox)
  * @returns {JSX.Element} Rounded preview container with OptimizedImage
  * @example
- * <ImageGalleryPreview src="/images/photo.jpg" alt="Photo" description="Photo description" onClick={openLightbox} />
+ * <ImageGalleryPreview src="/images/photo.jpg" alt="Photo" description="Photo description" />
  */
-export function ImageGalleryPreview({ src, alt, description, onClick }: ImageGalleryPreviewProps) {
+export function ImageGalleryPreview({ src, alt, description }: ImageGalleryPreviewProps) {
   return (
-    <div>
-      <div
-        className="relative cursor-pointer overflow-hidden rounded-2xl bg-muted"
-        onClick={onClick}
-      >
+    <>
+      <div className="relative cursor-pointer overflow-hidden rounded-2xl bg-muted">
         <OptimizedImage
           src={src}
           alt={alt}
@@ -53,6 +48,6 @@ export function ImageGalleryPreview({ src, alt, description, onClick }: ImageGal
           {description}
         </p>
       )}
-    </div>
+    </>
   );
 }

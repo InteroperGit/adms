@@ -122,7 +122,7 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 11: Image Gallery — `src/components/ui/imageGallery/`
+## Task 11: Image Gallery — `src/components/ui/imageGallery/` (DONE 2026-03-21)
 
 **Model**: Claude Sonnet 4.6
 
@@ -130,11 +130,11 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
-| `ImageGallery.test.tsx` | `ImageGallery` | renders preview image, renders thumbnails, clicking thumbnail changes active image |
-| `ImageGalleryPreview.test.tsx` | `ImageGalleryPreview` | renders main image, shows description on hover |
-| `ImageGalleryThumbnails.test.tsx` | `ImageGalleryThumbnails` | renders all thumbnails, active thumbnail has active class |
-| `ImageGalleryNavButtons.test.tsx` | `ImageGalleryNavButtons` | prev/next buttons call handlers |
-| `ImageGalleryLightbox.test.tsx` | `ImageGalleryLightbox` | renders when open, closes on Escape key, shows image, prev/next navigation |
+| `ImageGallery.test.tsx` | `ImageGallery` | renders preview image, renders thumbnails, clicking thumbnail changes active image | ✅
+| `ImageGalleryPreview.test.tsx` | `ImageGalleryPreview` | renders main image, shows description on hover | ✅
+| `ImageGalleryThumbnails.test.tsx` | `ImageGalleryThumbnails` | renders all thumbnails, active thumbnail has active class | ✅
+| `ImageGalleryNavButtons.test.tsx` | `ImageGalleryNavButtons` | prev/next buttons call handlers | ✅
+| `ImageGalleryLightbox.test.tsx` | `ImageGalleryLightbox` | renders when open, closes on Escape key, shows image, prev/next navigation | ✅
 
 **Mocking notes:**
 - Mock `useSwipe` or touch events for gesture tests

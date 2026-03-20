@@ -4,6 +4,7 @@ import { cn } from '@/libs/utils';
 import { useSwipe } from '@/hooks/useSwipe';
 import type { ImageGalleryItem } from './index';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { ImageGalleryThumbnails } from './ImageGalleryThumbnails';
 
 interface ImageGalleryLightboxProps {
   images: ImageGalleryItem[];
@@ -17,6 +18,12 @@ interface ImageGalleryLightboxProps {
   nextLabel: string;
   closeLabel: string;
 }
+
+const navBtn = cn(
+  'absolute top-1/2 hidden -translate-y-1/2',
+  'cursor-pointer rounded-full bg-white/20 p-3',
+  'text-white transition-colors hover:bg-primary sm:flex'
+);
 
 /**
  * @component
@@ -51,12 +58,6 @@ export function ImageGalleryLightbox({
   const active = images[activeIndex];
   const multi = images.length > 1;
   const { onTouchStart, onTouchEnd } = useSwipe(onNext, onPrev);
-
-  const navBtn = cn(
-    'absolute top-1/2 hidden -translate-y-1/2',
-    'cursor-pointer rounded-full bg-white/20 p-3',
-    'text-white transition-colors hover:bg-primary sm:flex'
-  );
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -126,32 +127,12 @@ export function ImageGalleryLightbox({
 
         {/* Thumbnail strip */}
         {multi && (
-          <div className="flex gap-1.5 overflow-x-auto py-1 sm:gap-2">
-            {images.map((img, i) => (
-              <button
-                key={img.src}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSelect(i);
-                }}
-                className={cn(
-                  'h-10 w-14 shrink-0 overflow-hidden rounded-md transition-opacity',
-                  'sm:h-14 sm:w-20 sm:rounded-lg',
-                  i === activeIndex
-                    ? 'opacity-100 ring-2 ring-primary'
-                    : 'opacity-50 hover:opacity-80'
-                )}
-              >
-                <OptimizedImage
-                  src={img.src}
-                  alt={`${altPrefix} ${i + 1}`}
-                  sizes="80px"
-                  className="h-full w-full"
-                  imgClassName="object-cover"
-                />
-              </button>
-            ))}
-          </div>
+          <ImageGalleryThumbnails
+            images={images}
+            activeIndex={activeIndex}
+            onSelect={onSelect}
+            altPrefix={altPrefix}
+          />
         )}
       </div>
     </div>
