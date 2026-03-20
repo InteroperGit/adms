@@ -92,16 +92,16 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 9: Testimonial Components — `src/components/ui/testimonial/`
+## Task 9: Testimonial Components — `src/components/ui/testimonial/` (DONE 2026-03-21)
 
-**Model**: Claude Haiku 4.5
+**Model**: Claude Sonnet 4.6
 
 **Test files:** one per component
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
-| `StarRating.test.tsx` | `StarRating` | renders correct number of filled stars, renders 5 stars total |
-| `TestimonialCard.test.tsx` | `TestimonialCard` | renders author name, quote text, star rating, avatar image |
+| `StarRating.test.tsx` | `StarRating` | renders correct number of filled stars, renders 5 stars total | ✅
+| `TestimonialCard.test.tsx` | `TestimonialCard` | renders author name, quote text, star rating, avatar image | ✅
 
 **Validation:** `pnpm test src/components/ui/testimonial`
 
