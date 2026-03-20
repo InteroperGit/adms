@@ -13,7 +13,6 @@ const mockAboutContent = {
   },
 };
 
-
 const invalidAboutContent = {
   label: 'About',
   title: 123, // Invalid type

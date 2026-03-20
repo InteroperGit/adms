@@ -13,7 +13,7 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 5: Base UI Components — `src/components/ui/`
+## Task 5: Base UI Components — `src/components/ui/` (DONE 2026-03-20)
 
 **Model**: Claude Haiku 4.5
 
@@ -21,14 +21,14 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
-| `Badge.test.tsx` | `Badge` | renders with text, applies variant classes (default, secondary, outline), merges custom className |
-| `Button.test.tsx` | `Button` | renders children, applies variant/size classes, renders as child element with `asChild`, handles click |
-| `Card.test.tsx` | `Card` + subcomponents | renders Card/CardHeader/CardTitle/CardContent/CardDescription/CardFooter, accepts className |
-| `Input.test.tsx` | `Input` | renders, accepts value/onChange, applies className |
-| `Textarea.test.tsx` | `Textarea` | renders, accepts value/onChange |
-| `Separator.test.tsx` | `Separator` | renders horizontal by default, renders vertical |
-| `Skeleton.test.tsx` | `Skeleton` | renders with pulse class, accepts className |
-| `ItemCard.test.tsx` | `ItemCard` | renders children, applies hover classes, merges className, has `group` class |
+| `Badge.test.tsx` | `Badge` | renders with text, applies variant classes (default, secondary, outline), merges custom className | ✅
+| `Button.test.tsx` | `Button` | renders children, applies variant/size classes, renders as child element with `asChild`, handles click | ✅
+| `Card.test.tsx` | `Card` + subcomponents | renders Card/CardHeader/CardTitle/CardContent/CardDescription/CardFooter, accepts className | ✅
+| `Input.test.tsx` | `Input` | renders, accepts value/onChange, applies className | ✅
+| `Textarea.test.tsx` | `Textarea` | renders, accepts value/onChange | ✅
+| `Separator.test.tsx` | `Separator` | renders horizontal by default, renders vertical | ✅
+| `Skeleton.test.tsx` | `Skeleton` | renders with pulse class, accepts className | ✅
+| `ItemCard.test.tsx` | `ItemCard` | renders children, applies hover classes, merges className, has `group` class | ✅ ✅
 
 **Validation:** `pnpm test src/components/ui/Badge src/components/ui/Button` (etc. per file)
 

@@ -12,7 +12,6 @@ const mockCarousel = [
   },
 ];
 
-
 const invalidCarousel = [
   {
     id: 1,

@@ -8,7 +8,6 @@ const mockCarouselContent = {
   slideLabel: 'Slide {index}',
 };
 
-
 const invalidCarouselContent = {
   label: 'Featured Work',
   prevLabel: 123, // Invalid type

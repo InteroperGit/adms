@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Button } from './Button';
+import { Button } from './button';
 
 describe('Button', () => {
   it('renders children', () => {
@@ -11,7 +11,7 @@ describe('Button', () => {
     render(<Button>Default</Button>);
     const button = screen.getByText('Default');
     expect(button).toHaveClass('bg-primary'); // Default variant
-    expect(button).toHaveClass('h-10');       // Default size
+    expect(button).toHaveClass('h-10'); // Default size
     expect(button).toHaveClass('px-4');
     expect(button).toHaveClass('py-2');
   });

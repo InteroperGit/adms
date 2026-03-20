@@ -5,7 +5,6 @@ const mockServices = [
   { icon: 'Palette', title: 'Branding', description: 'Brand identity design.' },
 ];
 
-
 const invalidServices = [
   { icon: 'Palette', title: 123, description: 'Brand identity design.' }, // Invalid type
 ];

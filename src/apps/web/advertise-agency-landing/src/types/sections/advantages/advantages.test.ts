@@ -1,10 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { AdvantagesSchema } from '../advantages/advantages';
 
-const mockAdvantages = [
-  { icon: 'Award', title: 'Quality', description: 'High quality work.' },
-];
-
+const mockAdvantages = [{ icon: 'Award', title: 'Quality', description: 'High quality work.' }];
 
 const invalidAdvantages = [
   { icon: 'Award', title: 123, description: 'High quality work.' }, // Invalid type

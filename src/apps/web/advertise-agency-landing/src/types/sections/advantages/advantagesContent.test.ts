@@ -8,7 +8,6 @@ const mockAdvantagesContent = {
   description: 'Why choose us?',
 };
 
-
 const invalidAdvantagesContent = {
   label: 'Why Us',
   title: 'Our Advantages',

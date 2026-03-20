@@ -10,7 +10,6 @@ const mockHeroContent = {
   stats: [{ value: '100+', label: 'Clients' }],
 };
 
-
 const invalidHeroContent = {
   badge: 'Welcome',
   title: 123, // Invalid type

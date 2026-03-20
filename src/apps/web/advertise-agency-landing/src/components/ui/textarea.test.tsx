@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Textarea } from './Textarea';
+import { Textarea } from './textarea';
 
 describe('Textarea', () => {
   it('renders correctly', () => {

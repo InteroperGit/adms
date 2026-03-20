@@ -14,7 +14,6 @@ const mockTestimonials = [
   },
 ];
 
-
 const invalidTestimonials = [
   {
     id: 1,

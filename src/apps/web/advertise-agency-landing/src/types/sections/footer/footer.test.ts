@@ -14,7 +14,6 @@ const mockFooterContent = {
   ],
 };
 
-
 const invalidFooterContent = {
   description: 123, // Invalid type
   navTitle: 'Navigation',

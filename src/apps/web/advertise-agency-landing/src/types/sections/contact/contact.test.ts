@@ -4,7 +4,7 @@ import { ContactContentSchema } from '../contact/contact';
 const mockContactContent = {
   label: 'Contact',
   title: 'Get in Touch',
-  description: 'We\'d love to hear from you.',
+  description: "We'd love to hear from you.",
   form: {
     name: { label: 'Your Name', placeholder: 'John Doe' },
     contact: { label: 'Your Email or Phone', placeholder: 'email@example.com' },
@@ -28,11 +28,10 @@ const mockContactContent = {
   mapTitle: 'Our Location on Map',
 };
 
-
 const invalidContactContent = {
   label: 'Contact',
   title: 123, // Invalid type
-  description: 'We\'d love to hear from you.',
+  description: "We'd love to hear from you.",
   form: {
     name: { label: 'Your Name', placeholder: 'John Doe' },
     contact: { label: 'Your Email or Phone', placeholder: 'email@example.com' },

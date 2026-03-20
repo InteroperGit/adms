@@ -7,7 +7,6 @@ const mockPortfolioPageContent = {
   description: 'Our latest projects.',
 };
 
-
 const invalidPortfolioPageContent = {
   label: 'Our Work',
   title: 123, // Invalid type

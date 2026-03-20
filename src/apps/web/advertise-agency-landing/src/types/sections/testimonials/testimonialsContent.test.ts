@@ -8,7 +8,6 @@ const mockTestimonialsSectionContent = {
   reviewsTitle: 'Yandex Reviews Widget',
 };
 
-
 const invalidTestimonialsSectionContent = {
   label: 'Clients Love Us',
   title: 123, // Invalid type
@@ -18,10 +17,14 @@ const invalidTestimonialsSectionContent = {
 
 describe('TestimonialsSectionContentSchema', () => {
   it('parses without errors', () => {
-    expect(() => TestimonialsSectionContentSchema.parse(mockTestimonialsSectionContent)).not.toThrow();
+    expect(() =>
+      TestimonialsSectionContentSchema.parse(mockTestimonialsSectionContent)
+    ).not.toThrow();
   });
 
   it('rejects invalid data', () => {
-    expect(() => TestimonialsSectionContentSchema.parse(invalidTestimonialsSectionContent)).toThrow();
+    expect(() =>
+      TestimonialsSectionContentSchema.parse(invalidTestimonialsSectionContent)
+    ).toThrow();
   });
 });

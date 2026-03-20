@@ -12,7 +12,7 @@ src/routes.ts        # RouteConfig[] — all page routes
 src/pages/         # Home, PortfolioPage, PortfolioCategoryPage, PortfolioCasePage, NotFound, legal, OrderPage
 src/components/    # sections/ | portfolio/ | ui/ | analytics/ | banners/ | layout/
 src/types/         # Zod schemas + parsed consts (config/ sections/ portfolio/ blocks/ shared/)
-src/hooks/         # useFadeIn, useActiveSection, useTheme, useCookieConsent, useSwipe, useRandomButtonHighlight, useInViewport
+src/hooks/index.ts       # Consolidates all `use*` hooks for easier import (useAnimatedPillPosition, useCookieConsent, useCountUp, useDocumentTitle, useFadeIn, useInViewport, useRandomButtonHighlight, useScrollReset, useStaggeredReveal, useSwipe, useTheme, useViewportAnimation)
 src/contexts/      # ThemeContext (dark mode)
 src/plugins/       # themePlugin, imageResizePlugin, seoMetaPlugin, incrementalSSG
 scripts/           # validate.ts, generate-json-schemas.ts, new-client.ts, postbuild-seo.ts, postbuild-cache.ts

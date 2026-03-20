@@ -179,7 +179,6 @@ const mockErrorFallbackData = {
   resetLabel: 'Try Again',
 };
 
-
 describe('Config Schemas Validation', () => {
   it('SiteDataSchema parses without errors', () => {
     expect(() => SiteDataSchema.parse(mockSiteData)).not.toThrow();

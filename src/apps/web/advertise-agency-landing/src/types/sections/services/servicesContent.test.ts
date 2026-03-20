@@ -7,7 +7,6 @@ const mockServicesSectionContent = {
   description: 'What we offer.',
 };
 
-
 const invalidServicesSectionContent = {
   label: 'What We Do',
   title: 123, // Invalid type

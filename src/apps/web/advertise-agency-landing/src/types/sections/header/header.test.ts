@@ -16,7 +16,6 @@ const mockHeaderContent = {
   closeMenuLabel: 'Close Menu',
 };
 
-
 const invalidHeaderContent = {
   lang: 'en',
   logo: {

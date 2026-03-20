@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Separator } from './Separator';
+import { Separator } from './separator';
 
 describe('Separator', () => {
   it('renders horizontal by default', () => {

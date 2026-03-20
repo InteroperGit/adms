@@ -3,10 +3,9 @@ import { CallToActionContentSchema } from '../call-to-action/callToAction';
 
 const mockCallToAction = {
   title: 'Ready to Start?',
-  subtitle: 'Let\'s work together.',
+  subtitle: "Let's work together.",
   cta: [{ label: 'Contact Us', href: '/contact' }],
 };
-
 
 const invalidCallToAction = {
   title: 'Ready to Start?',
