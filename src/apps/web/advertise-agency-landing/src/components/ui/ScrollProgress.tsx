@@ -14,7 +14,8 @@ export function ScrollProgress() {
   const [progress, setProgress] = useState(0);
   const [shouldShow, setShouldShow] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(
-    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    () =>
+      typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 
   useEffect(() => {

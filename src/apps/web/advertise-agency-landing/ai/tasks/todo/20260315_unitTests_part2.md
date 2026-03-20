@@ -74,17 +74,19 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 8: Logo, SocialLinks, OptimizedImage — `src/components/ui/`
+## Task 8: Logo, SocialLinks, OptimizedImage — `src/components/ui/` (DONE 2026-03-21)
 
-**Model**: Claude Haiku 4.5
+**Model**: Claude Sonnet 4.6
 
 **Test files:** one per component
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
-| `Logo.test.tsx` | `Logo` | renders `<a>` with `href="/"`, renders `<img>` with alt from config |
-| `SocialLinks.test.tsx` | `SocialLinks` | renders correct number of links, each has `target="_blank"`, applies size variant |
-| `OptimizedImage.test.tsx` | `OptimizedImage` | renders `<img>` with alt, generates srcSet, shows Skeleton while loading, hides Skeleton after load, respects `priority` (no lazy) |
+| `Logo.test.tsx` | `Logo` | renders `<a>` with `href="/"`, renders `<img>` with alt from config | ✅
+| `SocialLinks.test.tsx` | `SocialLinks` | renders correct number of links, each has `target="_blank"`, applies size variant | ✅
+| `OptimizedImage.test.tsx` | `OptimizedImage` | renders `<img>` with alt, generates srcSet, shows Skeleton while loading, hides Skeleton after load, respects `priority` (no lazy) | ✅
+
+**Also fixed:** `ScrollProgress.tsx` — SSR crash (`window is not defined`) in `useState` initializer; used `typeof window !== 'undefined'` guard.
 
 **Validation:** `pnpm test src/components/ui/Logo src/components/ui/SocialLinks src/components/ui/OptimizedImage`
 
