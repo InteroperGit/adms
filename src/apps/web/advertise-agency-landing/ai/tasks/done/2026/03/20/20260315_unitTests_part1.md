@@ -178,7 +178,8 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 ---
 
-## Task 27: Zod Schema Validation — `src/types/`
+## Task 27: Zod Schema Validation — `src/types/` ✅ (2026-03-20)
+**Note**: Implemented unit tests for all config and section schemas, including error cases. Consolidated tests into individual `*.test.ts` files.
 
 **Model**: Claude Haiku 4.5
 
