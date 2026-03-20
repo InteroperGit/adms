@@ -134,11 +134,11 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 
 ---
 
-## Task 3: Custom Hooks — `src/hooks/`
+## Task 3: Custom Hooks — `src/hooks/` ✅ (2026-03-20)
 
 **Model**: Claude Sonnet 4.6
 
-**Test file:** `src/hooks/hooks.test.ts`
+**Test files:** one per hook — `src/hooks/<hookName>.test.ts`
 
 | Hook | Tests |
 |------|-------|
@@ -157,7 +157,7 @@ Set up test infrastructure (Vitest + React Testing Library) and add unit tests f
 - Use `vi.useFakeTimers()` for timing-based hooks (`useCountUp`, `useRandomButtonHighlight`)
 - Wrap hook calls in `renderHook()` from `@testing-library/react`
 
-**Validation:** `pnpm test src/hooks`
+**Validation:** `pnpm test src/hooks` ✅ (33 tests pass across 8 files)
 
 ---
 
