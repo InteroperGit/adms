@@ -163,17 +163,17 @@ Add unit tests for all reusable UI components in `src/components/ui/`, plus layo
 
 ---
 
-## Task 13: Legal UI — `src/components/ui/legal/`
+## Task 13: Legal UI — `src/components/ui/legal/` (DONE 2026-03-21)
 
-**Model**: Claude Haiku 4.5
+**Model**: Claude Sonnet 4.6
 
 **Test files:** one per component
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
-| `LegalBlockRenderer.test.tsx` | `LegalBlockRenderer` | renders paragraph block, unordered list, ordered list, definition list, contact block with company data |
-| `LegalPageLayout.test.tsx` | `LegalPageLayout` | renders header, footer metadata, children |
-| `LegalSection.test.tsx` | `LegalSection` | renders section with heading and children |
+| `LegalBlockRenderer.test.tsx` | `LegalBlockRenderer` | renders paragraph block, unordered list, ordered list, definition list, contact block with company data | ✅
+| `LegalPageLayout.test.tsx` | `LegalPageLayout` | renders header, footer metadata, children | ✅
+| `LegalSection.test.tsx` | `LegalSection` | renders section with heading and children | ✅
 
 **Mocking notes:**
 - Provide mock `legalData` with company info for token substitution
