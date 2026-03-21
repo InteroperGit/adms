@@ -22,14 +22,12 @@ export function FooterBrand() {
       <p className="mb-8 text-sm leading-relaxed text-white/60">
         {interpolate(footerContent.description, { description: siteData.description })}
       </p>
-      <div className="pt-4">
-        <SocialLinks
-          phone={siteData.contact.phone}
-          telegram={siteData.contact.telegram}
-          vk={siteData.contact.vk}
-          variant="dark"
-        />
-      </div>
+      <SocialLinks
+        phone={siteData.contact.phone}
+        telegram={siteData.contact.telegram}
+        vk={siteData.contact.vk}
+        variant="dark"
+      />
     </div>
   );
 }

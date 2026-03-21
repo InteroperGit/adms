@@ -46,7 +46,7 @@ export function PortfolioThumbnail({
         <>
           {!imageLoaded && (
             <div
-              className="absolute inset-0 animate-pulse"
+              className="absolute inset-0"
               style={{
                 backgroundImage:
                   'linear-gradient(90deg, hsl(var(--muted)) 0%, hsl(var(--muted-foreground) / 0.05) 50%, hsl(var(--muted)) 100%)',

@@ -1,8 +1,7 @@
 // src/components/sections/footer/FooterNav.tsx
-import { cn } from '@/libs/utils';
 import { footerContent } from '@/types/sections/footer/footer';
 import { headerContent } from '@/types/sections/header/header';
-import { FooterSection } from './FooterSection';
+import { FooterSection, footerLinkCls } from './FooterSection';
 
 /**
  * @component
@@ -16,13 +15,7 @@ export function FooterNav() {
     <FooterSection title={footerContent.navTitle}>
       {headerContent.nav.map((link) => (
         <li key={link.href}>
-          <a
-            href={link.href}
-            className={cn(
-              'text-sm underline text-white/60 underline-offset-4 decoration-white/60',
-              'transition-colors hover:text-primary hover:decoration-primary focus-ring'
-            )}
-          >
+          <a href={link.href} className={footerLinkCls}>
             {link.label}
           </a>
         </li>

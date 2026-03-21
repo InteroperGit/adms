@@ -3,8 +3,12 @@ import type { ReactNode } from 'react';
 interface FooterSectionProps {
   title: string;
   children: ReactNode;
-  spacing?: 'space-y-3' | 'space-y-4';
+  spacing?: string;
 }
+
+/** Shared link styles for all footer columns. */
+export const footerLinkCls =
+  'text-sm underline text-white/60 underline-offset-4 decoration-white/60 transition-colors hover:text-primary hover:decoration-primary focus-ring';
 
 /**
  * @component
@@ -12,7 +16,7 @@ interface FooterSectionProps {
  * @param {FooterSectionProps} props
  * @param {string} props.title - Section title
  * @param {ReactNode} props.children - List items to render
- * @param {'space-y-3'|'space-y-4'} [props.spacing='space-y-3'] - Vertical spacing between items
+ * @param {string} [props.spacing='space-y-3'] - Tailwind spacing class between items
  * @returns {JSX.Element} Column with title and list items
  * @example <caption>Footer section with items</caption>
  * <FooterSection title="Services">

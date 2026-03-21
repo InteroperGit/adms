@@ -1,6 +1,5 @@
 // src/components/portfolio/CaseOverview.tsx
 import { Container } from '@/components/layout/Container';
-import { cn } from '@/libs/utils';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 
 interface CaseOverviewProps {
@@ -38,11 +37,7 @@ export function CaseOverview({ client, category, year, services }: CaseOverviewP
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {items.map(({ label, value }) => (
             <div key={label}>
-              <p
-                className={cn(
-                  'mb-1 text-xs font-medium uppercase tracking-widest text-muted-foreground'
-                )}
-              >
+              <p className="mb-1 text-xs font-medium uppercase tracking-widest text-muted-foreground">
                 {label}
               </p>
               <p className="font-semibold text-foreground">{value}</p>

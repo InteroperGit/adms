@@ -1,16 +1,22 @@
 // src/components/sections/footer/FooterContact.tsx
-import { cn } from '@/libs/utils';
+import { phoneHref } from '@/libs/utils';
 import { ICON_MAP, type IconComponent } from '@/types/shared/iconMap';
 import { footerContent } from '@/types/sections/footer/footer';
-import { phoneHref } from '@/libs/utils';
 import { siteData } from '@/types/config/siteData';
-import { FooterSection } from './FooterSection';
+import { FooterSection, footerLinkCls } from './FooterSection';
 
 interface FooterContactItem {
   icon: IconComponent;
   value: string;
   href?: string;
 }
+
+const { phone, email, address } = siteData.contact;
+const items: FooterContactItem[] = [
+  { icon: ICON_MAP.Phone, value: phone, href: phoneHref(phone) },
+  { icon: ICON_MAP.Mail, value: email, href: `mailto:${email}` },
+  { icon: ICON_MAP.MapPin, value: address },
+];
 
 /**
  * @component
@@ -20,27 +26,13 @@ interface FooterContactItem {
  * <FooterContact />
  */
 export function FooterContact() {
-  const { phone, email, address } = siteData.contact;
-
-  const items: FooterContactItem[] = [
-    { icon: ICON_MAP.Phone, value: phone, href: phoneHref(phone) },
-    { icon: ICON_MAP.Mail, value: email, href: `mailto:${email}` },
-    { icon: ICON_MAP.MapPin, value: address },
-  ];
-
   return (
     <FooterSection title={footerContent.contactsTitle} spacing="space-y-4">
       {items.map(({ icon: Icon, value, href }) => (
         <li key={value} className="flex items-start gap-3">
           <Icon size={16} className="mt-0.5 shrink-0 text-accent" />
           {href ? (
-            <a
-              href={href}
-              className={cn(
-                'text-sm underline text-white/60 underline-offset-4 decoration-white/60',
-                'transition-colors hover:text-primary hover:decoration-primary focus-ring'
-              )}
-            >
+            <a href={href} className={footerLinkCls}>
               {value}
             </a>
           ) : (

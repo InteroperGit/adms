@@ -1,8 +1,7 @@
 // src/components/sections/footer/FooterServices.tsx
-import { cn } from '@/libs/utils';
 import { footerContent } from '@/types/sections/footer/footer';
 import { services } from '@/types/sections/services/services';
-import { FooterSection } from './FooterSection';
+import { FooterSection, footerLinkCls } from './FooterSection';
 
 const SERVICES_FOOTER = services.slice(0, 4);
 
@@ -18,13 +17,7 @@ export function FooterServices() {
     <FooterSection title={footerContent.servicesTitle}>
       {SERVICES_FOOTER.map((service) => (
         <li key={service.title}>
-          <a
-            href="#services"
-            className={cn(
-              'text-sm underline text-white/60 underline-offset-4 decoration-white/60',
-              'transition-colors hover:text-primary hover:decoration-primary focus-ring'
-            )}
-          >
+          <a href="#services" className={footerLinkCls}>
             {service.title}
           </a>
         </li>

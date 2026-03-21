@@ -14,7 +14,7 @@ interface PortfolioCardProps {
  * @component
  * @description Portfolio case card with thumbnail, title, description, tags and details link
  * @param {PortfolioCardProps} props
- * @param {PortfolioCase & { href: string }} props.item - Case data with computed href
+ * @param {PortfolioCaseWithHref} props.item - Case data with computed href
  * @returns {JSX.Element} Card article with hover animation
  * @example
  * <PortfolioCard item={{ ...caseData, href: "/portfolio/all/case-slug" }} />
@@ -43,11 +43,9 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
           {item.description}
         </p>
 
-        <div className="flex-grow" />
-
         <div className="mb-5 flex flex-wrap gap-2">
           {item.tags.map((tag) => (
-            <Badge key={tag} variant="secondary" className="cursor-pointer text-xs">
+            <Badge key={tag} variant="secondary" className="text-xs">
               {tag}
             </Badge>
           ))}
@@ -56,7 +54,7 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
         <a
           href={item.href}
           className={cn(
-            'inline-flex items-center gap-1.5 rounded-full',
+            'mt-auto inline-flex items-center gap-1.5 rounded-full',
             'px-3 py-1.5 text-sm font-medium text-primary',
             'transition-all duration-200 hover:gap-2.5 hover:bg-primary/10',
             'focus-visible:outline-none focus-visible:ring-2',

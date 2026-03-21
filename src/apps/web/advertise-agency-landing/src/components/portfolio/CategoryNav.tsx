@@ -23,8 +23,7 @@ interface CategoryTabItem extends AnimatedPillTabItem {
  * <CategoryNav activeSlug="branding" />
  */
 export function CategoryNav({ activeSlug }: CategoryNavProps) {
-  const allActive = activeSlug === null || activeSlug === 'all';
-  const activeValue = allActive ? 'all' : activeSlug || 'all';
+  const activeValue = activeSlug && activeSlug !== 'all' ? activeSlug : 'all';
 
   const items: CategoryTabItem[] = [
     {
@@ -40,12 +39,12 @@ export function CategoryNav({ activeSlug }: CategoryNavProps) {
   ];
 
   return (
-    <AnimatedPillTabs
+    <AnimatedPillTabs<CategoryTabItem>
       items={items}
       activeValue={activeValue}
       renderItem={(item, isActive) => (
         <Link
-          to={(item as CategoryTabItem).href}
+          to={item.href}
           className={cn(
             'relative z-10 inline-flex items-center rounded-full',
             'px-3 py-1.5 sm:px-5 sm:py-2',
