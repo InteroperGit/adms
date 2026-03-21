@@ -33,7 +33,7 @@ Then: advance 1ms (initial) → not null; advance 2000ms → null; advance 999ms
 
 ---
 
-## Task T28: Untested hooks
+## Task T28: Untested hooks ✅
 
 **Model**: Claude Haiku 4.5
 
