@@ -104,7 +104,7 @@ Then: advance 1ms (initial) → not null; advance 2000ms → null; advance 999ms
 
 ---
 
-## Task T31: Misc section sub-components
+## Task T31: Misc section sub-components ✅
 
 **Model**: Claude Haiku 4.5
 
