@@ -4,10 +4,16 @@ import { Container } from '@/components/layout/Container';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 
 /**
- * @component
- * @description Call-to-action section displayed on portfolio case detail pages to encourage user engagement
- * @returns {JSX.Element} Section with title, subtitle, and action button linking to contact form
- * @example <caption>Used in PortfolioCasePage</caption>
+ * Call-to-action section rendered at the bottom of every portfolio case detail page.
+ *
+ * All copy and the button link target are data-driven via `portfolioCaseContent.cta`
+ * (`data/sections/portfolio/portfolioCase.json`), so white-label clients configure
+ * them without touching component code.
+ *
+ * @returns Centred section with a heading, subtitle, and a primary pill button.
+ *
+ * @example
+ * // Placed at the end of PortfolioCasePage after the content blocks:
  * <CaseCTA />
  */
 export function CaseCTA() {
@@ -20,7 +26,7 @@ export function CaseCTA() {
           <h2 className="mb-4 text-2xl font-bold md:text-3xl">{cta.title}</h2>
           <p className="mb-8 text-muted-foreground">{cta.subtitle}</p>
           <Button asChild size="lg" className="rounded-full px-8">
-            <a href="/#contact">{cta.label}</a>
+            <a href={cta.href}>{cta.label}</a>
           </Button>
         </div>
       </Container>

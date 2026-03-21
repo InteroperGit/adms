@@ -10,19 +10,56 @@ import type { PortfolioCase, PortfolioCaseWithHref } from '@/types/portfolio';
 import { extractYearMonth } from '@/libs/dateUtils';
 
 interface PortfolioGridProps {
+  /**
+   * Portfolio cases to display, pre-filtered by the parent page component.
+   * The grid slices this array for the current page; it does not filter internally.
+   */
   items: PortfolioCase[];
-  activeSlug: string | null; // current category slug, used to build case hrefs
+  /**
+   * Category slug for the currently active route, used to construct per-case hrefs.
+   *
+   * - `null` — root `/portfolio` listing; hrefs use `"all"` as the category segment.
+   * - `"all"` — explicit all-cases route; hrefs also use `"all"`.
+   * - Any other value — a specific category slug (e.g. `"branding"`).
+   *
+   * Hrefs are built as `/portfolio/{activeSlug ?? 'all'}/{year}/{month}/{slug}`.
+   */
+  activeSlug: string | null;
 }
 
 /**
- * @component
- * @description Complete portfolio listing with category filter, paginated grid, and call-to-action
- * @param {PortfolioGridProps} props
- * @param {PortfolioCase[]} props.items - Array of portfolio cases to display
- * @param {string | null} props.activeSlug - Current category filter; null for all cases
- * @returns {JSX.Element} Category nav, paginated case grid, pagination controls, and contact CTA
- * @example <caption>Portfolio page listing</caption>
- * <PortfolioGrid items={allCases} activeSlug="branding" />
+ * Complete portfolio listing view: category filter tabs, paginated case grid, and a contact CTA.
+ *
+ * **Pagination** is stored in the `?page` URL search param so that:
+ * - Deep links to page N work correctly after SSG pre-render.
+ * - The browser back button returns to the correct page without a full navigation.
+ * - Changing page triggers a smooth scroll to the top of the grid via `gridRef`.
+ *
+ * Page derivation is guarded against stale/out-of-range values:
+ * - `page` is clamped to `≥ 1` (guards against `NaN` and `0`).
+ * - `safePage` is clamped to `≤ totalPages` (guards against URL tampering).
+ * - Page 1 omits the `?page` param entirely for clean canonical URLs.
+ *
+ * **Href construction** — `extractYearMonth` derives `year` and `month` from each
+ * case's `publishDate` so the URL matches the file-system path in `data/portfolio/`.
+ *
+ * **Empty state** — when `items` is empty (e.g. a category with no cases), a full-width
+ * centred message is rendered using `portfolioConfig.emptyLabel`.
+ *
+ * All labels (`prevLabel`, `nextLabel`, `pageLabel`, `emptyLabel`, `cta`) come from
+ * `portfolioConfig` (`data/config/portfolio.json`) for white-label localisation.
+ *
+ * @param props - See {@link PortfolioGridProps}.
+ * @returns A React fragment containing `<CategoryNav>`, the grid, optional `<Pagination>`,
+ *   and a contact CTA button.
+ *
+ * @example
+ * // All cases, root listing:
+ * <PortfolioGrid items={allPortfolioCases} activeSlug={null} />
+ *
+ * @example
+ * // Filtered to a single category:
+ * <PortfolioGrid items={brandingCases} activeSlug="branding" />
  */
 export function PortfolioGrid({ items, activeSlug }: PortfolioGridProps) {
   const cfg = portfolioConfig;

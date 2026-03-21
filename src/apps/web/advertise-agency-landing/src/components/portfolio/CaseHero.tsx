@@ -5,24 +5,56 @@ import { cn } from '@/libs/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface CaseHeroProps {
+  /**
+   * Hero display configuration sourced from the portfolio case JSON.
+   * - `image` — optional absolute path to the hero image (served from `/img/`).
+   *   When present the image is rendered full-bleed with a `bg-neutral-900/60` overlay.
+   * - `gradient` — Tailwind utility classes for the fallback gradient background
+   *   (e.g. `"from-violet-600 to-indigo-700"`), applied when `image` is absent.
+   */
   hero: { image?: string; gradient: string };
+  /** Category label rendered as a frosted-glass badge above the title. */
   category: string;
+  /** Main case title — rendered as the page `<h1>`. */
   title: string;
+  /** Short description rendered below the title. */
   description: string;
 }
 
 /**
- * @component
- * @description Full-height hero section for portfolio case pages with image or gradient background
- * @param {CaseHeroProps} props
- * @param {string} props.hero.image - Optional image URL; if provided, overlaid with dark overlay
- * @param {string} props.hero.gradient - Tailwind gradient class applied when no image
- * @param {string} props.category - Category badge text displayed above title
- * @param {string} props.title - Main case title
- * @param {string} props.description - Subtitle text
- * @returns {JSX.Element} Hero section with image/gradient background and centered content
- * @example <caption>Case page hero with image</caption>
- * <CaseHero hero={{ image: "/img.jpg", gradient: "" }} category="Branding" title="Project Name" description="Brief description" />
+ * Full-height hero section for portfolio case detail pages.
+ *
+ * Supports two visual modes driven by `hero.image`:
+ *
+ * - **Image mode** — `<OptimizedImage>` is positioned absolutely, filling the section.
+ *   A semi-transparent dark overlay (`bg-neutral-900/60`) ensures text contrast.
+ *   The inner `<Container>` receives `relative z-10` to sit above the overlay.
+ * - **Gradient mode** — the section background is set to `bg-gradient-to-br` plus
+ *   the Tailwind classes in `hero.gradient`. No image or overlay is rendered.
+ *
+ * Both modes share identical centred content (badge → h1 → description) extracted
+ * into a `content` variable to avoid JSX duplication.
+ *
+ * @param props - See {@link CaseHeroProps}.
+ * @returns A `<section>` with the appropriate background and centred white content.
+ *
+ * @example
+ * // Image-based hero:
+ * <CaseHero
+ *   hero={{ image: '/img/case-hero.jpg', gradient: '' }}
+ *   category="Брендинг"
+ *   title="Редизайн бренда ACME"
+ *   description="Полный ребрендинг с нуля за 6 недель."
+ * />
+ *
+ * @example
+ * // Gradient-only hero (no image):
+ * <CaseHero
+ *   hero={{ gradient: 'from-violet-600 to-indigo-700' }}
+ *   category="Контекстная реклама"
+ *   title="Кампания для ритейлера"
+ *   description="ROI ×3 за первый квартал."
+ * />
  */
 export function CaseHero({ hero, category, title, description }: CaseHeroProps) {
   const content = (

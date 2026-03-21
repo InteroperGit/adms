@@ -3,29 +3,55 @@ import { Button } from '@/components/ui/button';
 import { interpolate } from '@/libs/utils';
 
 interface PaginationProps {
+  /** Current page number (1-based). */
   current: number;
+  /** Total number of pages. */
   total: number;
+  /** Label for the previous-page button (e.g. `"← Назад"`). */
   prevLabel: string;
+  /** Label for the next-page button (e.g. `"Вперёд →"`). */
   nextLabel: string;
+  /**
+   * Template string for the page indicator rendered between the buttons.
+   * Placeholders `{current}` and `{total}` are replaced at runtime via `interpolate`.
+   * Example: `"{current} из {total}"` → `"2 из 5"`.
+   */
   pageLabel: string;
+  /** Called when the user clicks the previous button. Not called when already on page 1. */
   onPrev: () => void;
+  /** Called when the user clicks the next button. Not called when already on the last page. */
   onNext: () => void;
 }
 
 /**
- * @component
- * @description Pagination controls for navigating between portfolio pages
- * @param {PaginationProps} props
- * @param {number} props.current - Current page number
- * @param {number} props.total - Total number of pages
- * @param {string} props.prevLabel - Label text for previous button
- * @param {string} props.nextLabel - Label text for next button
- * @param {string} props.pageLabel - Template string with {current} and {total} placeholders
- * @param {() => void} props.onPrev - Callback when previous button clicked
- * @param {() => void} props.onNext - Callback when next button clicked
- * @returns {JSX.Element} Centered prev/next buttons with page number display
- * @example <caption>Portfolio pagination</caption>
- * <Pagination current={2} total={5} prevLabel="Back" nextLabel="Next" pageLabel="Page {current} of {total}" onPrev={() => {}} onNext={() => {}} />
+ * Prev / current / next pagination controls for the portfolio case grid.
+ *
+ * Renders two pill-shaped buttons flanking a page indicator label:
+ * `[← Prev]  2 из 5  [Next →]`
+ *
+ * Boundary behaviour:
+ * - Prev button is `disabled` when `current <= 1`.
+ * - Next button is `disabled` when `current >= total`.
+ *
+ * The centre label is produced by calling `interpolate(pageLabel, { current, total })`
+ * from `@/libs/utils`, keeping the format string in `portfolioConfig` for localisation.
+ *
+ * `PortfolioGrid` only renders this component when `totalPages > 1`, so it never
+ * appears for a single-page listing.
+ *
+ * @param props - See {@link PaginationProps}.
+ * @returns A centred flex row with prev button, label span, and next button.
+ *
+ * @example
+ * <Pagination
+ *   current={2}
+ *   total={5}
+ *   prevLabel="← Назад"
+ *   nextLabel="Вперёд →"
+ *   pageLabel="{current} из {total}"
+ *   onPrev={() => setPage(1)}
+ *   onNext={() => setPage(3)}
+ * />
  */
 export function Pagination({
   current,

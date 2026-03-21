@@ -1,6 +1,6 @@
 # Plan: Unit Tests — Part 4: Footer, Portfolio, Blocks & Pages
 
-**Status**: in progress (T22 ✅, T23 ✅)
+**Status**: in progress (T22 ✅, T23 ✅, T24 ✅)
 **Date**: 2026-03-15
 **Series**: 4 of 4 (`20260315_unitTests_part1.md` → `_part2.md` → `_part3.md` → `_part4.md`)
 **Prerequisite**: Part 1 Task 0 (test infrastructure) must be completed first. Parts 2–3 are recommended but not strictly required.
@@ -50,7 +50,7 @@ Add unit tests for the footer section, portfolio section and page components, co
 
 ---
 
-## Task 24: Portfolio Page Components — `src/components/portfolio/`
+## Task 24: Portfolio Page Components — `src/components/portfolio/` ✅
 
 **Model**: Claude Haiku 4.5
 
