@@ -10,8 +10,6 @@ import { CtaButtons } from './CtaButtons';
  * <CallToAction />
  */
 export function CallToAction() {
-  const callToAction = callToActionContent;
-
   return (
     <section className="relative overflow-hidden bg-primary py-24 md:py-32">
       {/* Decorative blobs */}
@@ -29,9 +27,9 @@ export function CallToAction() {
 
       <Container className="relative z-10">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-4 text-white">{callToAction.title}</h2>
-          <p className="mb-8 text-white/75">{callToAction.subtitle}</p>
-          <CtaButtons cta={callToAction.cta} />
+          <h2 className="mb-4 text-white">{callToActionContent.title}</h2>
+          <p className="mb-8 text-white/75">{callToActionContent.subtitle}</p>
+          <CtaButtons cta={callToActionContent.cta} />
         </div>
       </Container>
     </section>

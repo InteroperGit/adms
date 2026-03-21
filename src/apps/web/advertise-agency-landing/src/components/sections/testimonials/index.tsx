@@ -7,6 +7,8 @@ import { YandexReviews } from './YandexReviews';
 import { TestimonialsEmpty } from './TestimonialsEmpty';
 import { useTheme } from '@/hooks/useTheme';
 
+const orgId = siteData.yandexMapsOrgId?.trim() || '';
+
 /**
  * @component
  * @description Testimonials section displaying Yandex Maps reviews iframe if organization ID is configured, otherwise shows empty state. Theme-aware for dark mode.
@@ -15,7 +17,6 @@ import { useTheme } from '@/hooks/useTheme';
  * <Testimonials />
  */
 export function Testimonials() {
-  const orgId = siteData.yandexMapsOrgId?.trim() || '';
   const { isDark } = useTheme();
 
   return (
