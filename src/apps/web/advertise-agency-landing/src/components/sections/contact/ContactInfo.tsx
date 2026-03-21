@@ -1,7 +1,7 @@
 // src/components/sections/contact/ContactInfo.tsx
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { ContactItem } from '@/components/sections/contact/ContactItem';
-import { ContactMap } from '@/components/sections/contact/ContactMap';
+import { WidgetIframe } from '@/components/ui/WidgetIframe';
 import { SocialLinks } from '@/components/ui/SocialLinks';
 import { phoneHref } from '@/libs/utils';
 import { contactContent } from '@/types/sections/contact/contact';
@@ -40,11 +40,13 @@ export function ContactInfo({ isDark }: { isDark: boolean }) {
           <ContactItem icon={MapPin} label={contactLabels.address} value={address} />
         </ul>
         {siteData.yandexMapUrl && (
-          <ContactMap
-            url={siteData.yandexMapUrl}
+          <WidgetIframe
+            src={siteData.yandexMapUrl}
             title={mapTitle}
-            className="mt-6"
+            height={360}
             isDark={isDark}
+            className="mt-6"
+            loading="lazy"
           />
         )}
       </div>

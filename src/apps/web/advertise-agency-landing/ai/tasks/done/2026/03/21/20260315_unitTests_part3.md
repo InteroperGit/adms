@@ -1,6 +1,6 @@
 # Plan: Unit Tests — Part 3: Section Components
 
-**Status**: in-progress (Task 15 ✅ 2026-03-21)
+**Status**: complete (all tasks ✅ 2026-03-21)
 **Date**: 2026-03-15
 **Series**: 3 of 4 (`20260315_unitTests_part1.md` → `_part2.md` → `_part3.md` → `_part4.md`)
 **Prerequisite**: Part 1 Task 0 (test infrastructure) must be completed first. Part 2 is recommended but not strictly required.
@@ -118,22 +118,24 @@ Add unit tests for page section components: header, hero, about, services, advan
 
 ---
 
-## Task 21: Contact Section — `src/components/sections/contact/`
+## Task 21: Contact Section — `src/components/sections/contact/` ✅ 2026-03-21
 
 **Model**: Claude Sonnet 4.6
 
-**Test files:** one per component
+**Notes:** `ContactMap` was deleted during simplify refactor (inlined into `ContactInfo` as direct `WidgetIframe`). Added `FormField.tsx` shared label/error wrapper. `FormField.test.tsx` replaces the planned `ContactMap.test.tsx`.
+
+**Test files:** one per component — 57 tests, 8 files
 
 | Test file | Component | Tests |
 |-----------|-----------|-------|
 | `Contact.test.tsx` | `Contact` | renders section header, renders form and info columns |
-| `ContactForm.test.tsx` | `ContactForm` | renders fields, validates required fields, shows success on submit |
-| `ContactFormFields.test.tsx` | `ContactFormFields` | renders name, contact, message inputs |
-| `ContactConsent.test.tsx` | `ContactConsent` | renders checkbox, renders legal links |
+| `ContactForm.test.tsx` | `ContactForm` | renders fields, loading state, success on submit, reset |
+| `ContactFormFields.test.tsx` | `ContactFormFields` | renders name, contact, message inputs with correct labels |
+| `ContactConsent.test.tsx` | `ContactConsent` | renders checkbox, reflects state, calls onChange, renders legal links |
 | `ContactSuccess.test.tsx` | `ContactSuccess` | renders success icon, title, description, reset button |
-| `ContactInfo.test.tsx` | `ContactInfo` | renders phone, email, address with icons |
-| `ContactHours.test.tsx` | `ContactHours` | renders weekday, Saturday, Sunday hours |
-| `ContactMap.test.tsx` | `ContactMap` | renders iframe in dark mode with border, renders with shadow in light mode |
+| `ContactInfo.test.tsx` | `ContactInfo` | renders phone, email, address, links, map iframe, social links |
+| `ContactHours.test.tsx` | `ContactHours` | renders weekday, Saturday, Sunday hours with labels |
+| `FormField.test.tsx` | `FormField` | renders label with htmlFor, children, error message with correct id |
 
 **Validation:** `pnpm test src/components/sections/contact`
 

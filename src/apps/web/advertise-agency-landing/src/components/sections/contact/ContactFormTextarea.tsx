@@ -1,5 +1,6 @@
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/libs/utils';
+import { FormField } from './FormField';
 
 interface ContactFormTextareaProps {
   id: string;
@@ -23,10 +24,7 @@ export function ContactFormTextarea({
   onBlur,
 }: ContactFormTextareaProps) {
   return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-foreground">
-        {label}
-      </label>
+    <FormField id={id} label={label} error={error}>
       <Textarea
         id={id}
         placeholder={placeholder}
@@ -41,11 +39,6 @@ export function ContactFormTextarea({
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
       />
-      {error && (
-        <p id={`${id}-error`} className="mt-1 text-xs text-destructive dark:text-red-400">
-          {error}
-        </p>
-      )}
-    </div>
+    </FormField>
   );
 }

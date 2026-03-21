@@ -9,7 +9,7 @@ import { contactContent } from '@/types/sections/contact/contact';
 import { resolveIcon } from '@/types/shared/iconMap';
 
 const EMPTY: FormState = { name: '', contact: '', message: '' };
-const EMPTY_ERRORS = { name: '', contact: '', message: '' };
+const LoaderIcon = resolveIcon('Loader2');
 
 /**
  * @component
@@ -18,9 +18,10 @@ const EMPTY_ERRORS = { name: '', contact: '', message: '' };
  * @example <caption>Contact section form</caption>
  * <ContactForm />
  */
+
 export function ContactForm() {
   const [form, setForm] = useState<FormState>(EMPTY);
-  const [errors, setErrors] = useState<FormState>(EMPTY_ERRORS);
+  const [errors, setErrors] = useState<FormState>(EMPTY);
   const [submitted, setSubmitted] = useState(false);
   const [consent, setConsent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,10 +65,7 @@ export function ContactForm() {
     return (
       !validateField('name', form.name) &&
       !validateField('contact', form.contact) &&
-      !validateField('message', form.message) &&
-      form.name.trim() !== '' &&
-      form.contact.trim() !== '' &&
-      form.message.trim() !== ''
+      !validateField('message', form.message)
     );
   }
 
@@ -89,7 +87,7 @@ export function ContactForm() {
       setIsLoading(false);
       setSubmitted(true);
       setForm(EMPTY);
-      setErrors(EMPTY_ERRORS);
+      setErrors(EMPTY);
       setConsent(false);
     }, 1200);
   }
@@ -115,17 +113,14 @@ export function ContactForm() {
             disabled={!consent || isLoading}
             className="w-full rounded-full cursor-pointer disabled:cursor-not-allowed"
           >
-            {isLoading
-              ? (() => {
-                  const LoaderIcon = resolveIcon('Loader2');
-                  return (
-                    <span className="flex items-center gap-2">
-                      {LoaderIcon && <LoaderIcon size={16} className="animate-spin" />}
-                      Sending...
-                    </span>
-                  );
-                })()
-              : f.submit}
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                {LoaderIcon && <LoaderIcon size={16} className="animate-spin" />}
+                {f.sending}
+              </span>
+            ) : (
+              f.submit
+            )}
           </Button>
 
           <p className="text-center text-xs text-muted-foreground">{f.disclaimer}</p>

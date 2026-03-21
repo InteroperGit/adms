@@ -35,6 +35,8 @@ export const ContactContentSchema = z.object({
     consentJoiner: z.string(),
     /** Submit button label */
     submit: z.string(),
+    /** Submit button label while sending */
+    sending: z.string(),
     /** Form footer disclaimer text */
     disclaimer: z.string(),
     /** Success message after form submission */

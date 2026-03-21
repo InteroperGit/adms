@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { cn } from '@/libs/utils';
+import { FormField } from './FormField';
 
 interface ContactFormInputProps {
   id: string;
@@ -21,10 +22,7 @@ export function ContactFormInput({
   onBlur,
 }: ContactFormInputProps) {
   return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-foreground">
-        {label}
-      </label>
+    <FormField id={id} label={label} error={error}>
       <Input
         id={id}
         placeholder={placeholder}
@@ -39,11 +37,6 @@ export function ContactFormInput({
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
       />
-      {error && (
-        <p id={`${id}-error`} className="mt-1 text-xs text-destructive dark:text-red-400">
-          {error}
-        </p>
-      )}
-    </div>
+    </FormField>
   );
 }
