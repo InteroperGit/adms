@@ -22,7 +22,7 @@ describe('AnimatedPillTabs', () => {
     vi.clearAllMocks();
     // Default mock: returns position + isAnimating (matches actual hook return shape)
     mockUseAnimatedPillPosition.mockReturnValue({
-      position: { left: 0, width: 0, height: 0 },
+      position: { top: 0, left: 0, width: 0, height: 0 },
       isAnimating: false,
     });
   });
@@ -107,7 +107,7 @@ describe('AnimatedPillTabs', () => {
 
   // 7. Pill Position via mock
   it('verifies that the pill receives correct position styles from useAnimatedPillPosition hook', () => {
-    const mockPosition = { left: 10, width: 50, height: 30 };
+    const mockPosition = { top: 5, left: 10, width: 50, height: 30 };
     mockUseAnimatedPillPosition.mockReturnValue({
       position: mockPosition,
       isAnimating: false,
@@ -120,6 +120,7 @@ describe('AnimatedPillTabs', () => {
     // The pill is the first div inside the container (absolute positioned)
     const pill = container.querySelector('.absolute.rounded-full.bg-primary');
     expect(pill).toBeInTheDocument();
+    expect(pill).toHaveStyle(`top: ${mockPosition.top}px`);
     expect(pill).toHaveStyle(`left: ${mockPosition.left}px`);
     expect(pill).toHaveStyle(`width: ${mockPosition.width}px`);
     expect(pill).toHaveStyle(`height: ${mockPosition.height}px`);
@@ -128,7 +129,7 @@ describe('AnimatedPillTabs', () => {
   // 8. Pill Animation on activeValue Change (via mock)
   it('applies transition classes when isAnimating is true', () => {
     mockUseAnimatedPillPosition.mockReturnValue({
-      position: { left: 0, width: 0, height: 0 },
+      position: { top: 0, left: 0, width: 0, height: 0 },
       isAnimating: true,
     });
 

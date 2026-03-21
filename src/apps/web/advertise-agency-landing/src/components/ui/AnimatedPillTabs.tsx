@@ -55,10 +55,10 @@ export function AnimatedPillTabs<T extends AnimatedPillTabItem>({
           isAnimating ? cn(itemClasses, 'transition-all duration-300 ease-out') : itemClasses
         }
         style={{
+          top: `${pillPosition.top}px`,
           left: `${pillPosition.left}px`,
           width: `${pillPosition.width}px`,
           height: `${pillPosition.height}px`,
-          top: 0,
         }}
       />
 

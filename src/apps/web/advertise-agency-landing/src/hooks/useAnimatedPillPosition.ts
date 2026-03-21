@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
 interface PillPosition {
+  top: number;
   left: number;
   width: number;
   height: number;
@@ -17,7 +18,7 @@ interface UseAnimatedPillPositionReturn {
  * @param {Object} containerRef - Ref object to the container element
  * @param {Object} itemRefs - Ref object containing array of item elements (buttons/links)
  * @param {number} activeIndex - The index of the currently active item
- * @returns {UseAnimatedPillPositionReturn} Object with position (left, width, height) and isAnimating flag
+ * @returns {UseAnimatedPillPositionReturn} Object with position (top, left, width, height) and isAnimating flag
  * @example
  * const containerRef = useRef<HTMLDivElement>(null);
  * const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -30,7 +31,12 @@ export function useAnimatedPillPosition(
   activeIndex: number
 ): UseAnimatedPillPositionReturn {
   const isFirstRender = useRef(true);
-  const [pillPosition, setPillPosition] = useState<PillPosition>({ left: 0, width: 0, height: 0 });
+  const [pillPosition, setPillPosition] = useState<PillPosition>({
+    top: 0,
+    left: 0,
+    width: 0,
+    height: 0,
+  });
   const [isAnimating, setIsAnimating] = useState(false);
 
   useLayoutEffect(() => {
@@ -41,6 +47,7 @@ export function useAnimatedPillPosition(
       const itemRect = activeItem.getBoundingClientRect();
 
       const newPosition = {
+        top: itemRect.top - containerRect.top,
         left: itemRect.left - containerRect.left,
         width: itemRect.width,
         height: itemRect.height,

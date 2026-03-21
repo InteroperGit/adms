@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 vi.mock('@/hooks/useAnimatedPillPosition', () => ({
   useAnimatedPillPosition: vi.fn(() => ({
-    position: { left: 0, width: 100, height: 36 },
+    position: { top: 0, left: 0, width: 100, height: 36 },
     isAnimating: false,
   })),
 }));

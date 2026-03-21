@@ -12,7 +12,7 @@ vi.mock('@/hooks/useStaggeredReveal', () => ({
 
 vi.mock('@/hooks/useAnimatedPillPosition', () => ({
   useAnimatedPillPosition: () => ({
-    position: { left: 0, width: 0, height: 0 },
+    position: { top: 0, left: 0, width: 0, height: 0 },
     isAnimating: false,
   }),
 }));
