@@ -1,6 +1,7 @@
 import { ItemCard } from '@/components/ui/ItemCard';
 import { SectionIconBox } from '@/components/ui/section/SectionIconBox';
 import { ICON_MAP } from '@/types/shared/iconMap';
+import { cn } from '@/libs/utils';
 import type { Advantage } from '@/types/sections/advantages/advantages';
 
 interface AdvantageCardProps {
@@ -32,15 +33,16 @@ export function AdvantageCard({ item, index }: AdvantageCardProps) {
         />
         <span
           aria-hidden="true"
-          className={`font-heading text-3xl font-bold text-foreground/25 dark:text-foreground/40 transition-colors duration-300 ${
+          className={cn(
+            'font-heading text-3xl font-bold text-foreground/25 dark:text-foreground/40 transition-colors duration-300',
             isEven ? 'group-hover:text-primary/40' : 'group-hover:text-accent/40'
-          }`}
+          )}
         >
           {String(index + 1).padStart(2, '0')}
         </span>
       </div>
       <h3 className="mb-2 text-base font-semibold text-foreground">{item.title}</h3>
-      <p className="flex-grow text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+      <p className="grow text-sm leading-relaxed text-muted-foreground">{item.description}</p>
     </ItemCard>
   );
 }
