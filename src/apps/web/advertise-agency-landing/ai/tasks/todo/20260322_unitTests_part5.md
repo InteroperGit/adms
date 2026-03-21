@@ -90,7 +90,7 @@ Then: advance 1ms (initial) → not null; advance 2000ms → null; advance 999ms
 
 ---
 
-## Task T30: Contact sub-components — `src/components/sections/contact/`
+## Task T30: Contact sub-components — `src/components/sections/contact/` ✅
 
 **Model**: Claude Haiku 4.5
 
