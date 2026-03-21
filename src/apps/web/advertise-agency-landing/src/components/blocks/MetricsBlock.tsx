@@ -3,14 +3,8 @@ import { cn } from '@/libs/utils';
 import { useCountUp } from '@/hooks/useCountUp';
 import { useViewportAnimation } from '@/hooks/useViewportAnimation';
 import type { MetricsBlock as MetricsBlockData } from '@/types/blocks';
+import { HIDDEN_STYLE, STAGGER_ANIMATION_BASE } from './blockAnimations';
 
-const HIDDEN_STYLE: React.CSSProperties = { opacity: 0 };
-const STAGGER_ANIMATION_BASE = {
-  animationName: 'stagger-fade-in',
-  animationDuration: '0.5s',
-  animationTimingFunction: 'ease-out',
-  animationFillMode: 'both',
-} satisfies React.CSSProperties;
 const COUNT_POP_STYLE: React.CSSProperties = { animation: 'count-pop 0.2s ease-out' };
 const SUFFIX_FADE_STYLE: React.CSSProperties = {
   animation: 'suffix-fade-in 0.1s ease-out forwards',
@@ -33,6 +27,20 @@ interface ColorConfig {
   descriptionTextColor: string;
 }
 
+/**
+ * @component
+ * @description Single metric card with scroll-triggered count-up animation. Parses the metric
+ * string to extract optional prefix, numeric target, and suffix. Renders a static value when
+ * not yet in view or when no number is present.
+ * @param {MetricCardProps} props
+ * @param {string} props.metric - Raw metric string, e.g. "120+" or "$4,500"
+ * @param {string} props.label - Short label above the description (uppercase tracking)
+ * @param {string} props.description - Explanatory text below the label
+ * @param {number} props.index - Card index for stagger delay (80ms × index for animation, 150ms × index for count-up)
+ * @param {boolean} props.animate - Whether scroll entry has been detected; gates the animation
+ * @param {ColorConfig} props.colorConfig - Resolved color configuration for background and text
+ * @returns {JSX.Element} Metric card with animated count-up
+ */
 interface MetricCardProps {
   metric: string;
   label: string;
@@ -114,10 +122,12 @@ function MetricCard({ metric, label, description, index, animate, colorConfig }:
 
 /**
  * @component
- * @description Grid of key metrics with scroll-triggered count-up animation, value, label and description, supporting gradient/solid coloring
+ * @description Grid of key metrics with scroll-triggered count-up animation. Each card shows a
+ * value (metric), short label, and description. Supports gradient/solid/primary/accent coloring
+ * for the card background; uncolored cards use a neutral bordered style.
  * @param {MetricsBlockProps} props
- * @param {MetricsBlockData} props.block - Metrics block with title and items (metric, label, description)
- * @param {string} props.caseGradient - Fallback gradient for colored metrics
+ * @param {MetricsBlockData} props.block - Metrics block with optional title and items (metric, label, description)
+ * @param {string} props.caseGradient - Fallback Tailwind gradient stops used when color type is 'gradient'
  * @returns {JSX.Element} Metrics grid with animated count-up on scroll entry
  * @example
  * <MetricsBlock block={metricsData} caseGradient="from-blue-500 to-purple-500" />

@@ -9,10 +9,15 @@ interface ListBlockProps {
 
 /**
  * @component
- * @description Router component that delegates to specific list type components
+ * @description Router component that delegates to the appropriate list renderer based on
+ * `block.style`. Supports `checklist` (checkmark icons), `ordered` (numbered), and
+ * `unordered` (bulleted, the default). All variants support optional striped colors via
+ * `block.colors`.
  * @param {ListBlockProps} props
  * @param {ListBlockData} props.block - List block with style and items
  * @returns {JSX.Element} Appropriate list component based on style
+ * @example
+ * <ListBlock block={{ style: "checklist", items: ["Step one", "Step two"] }} />
  */
 export function ListBlock({ block }: ListBlockProps) {
   if (block.style === 'checklist') {

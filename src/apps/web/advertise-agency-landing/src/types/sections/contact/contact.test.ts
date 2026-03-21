@@ -13,6 +13,7 @@ const mockContactContent = {
     consentLinks: [{ label: 'Privacy Policy', href: '/legal/privacy-policy' }],
     consentJoiner: '',
     submit: 'Send Message',
+    sending: 'Sending...',
     disclaimer: 'We will not share your information with third parties.',
     success: {
       title: 'Message Sent!',
@@ -40,6 +41,7 @@ const invalidContactContent = {
     consentLinks: [{ label: 'Privacy Policy', href: '/legal/privacy-policy' }],
     consentJoiner: '',
     submit: 'Send Message',
+    sending: 'Sending...',
     disclaimer: 'We will not share your information with third parties.',
     success: {
       title: 'Message Sent!',

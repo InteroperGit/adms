@@ -1,44 +1,48 @@
 import { cn } from '@/libs/utils';
 import { useViewportAnimation } from '@/hooks/useViewportAnimation';
 import type { CardsBlock as CardsBlockData } from '@/types/blocks';
+import { HIDDEN_STYLE, STAGGER_ANIMATION_BASE } from './blockAnimations';
 
 interface CardsBlockProps {
   block: CardsBlockData;
   caseGradient: string;
 }
 
-/**
- * @component
- * @description Grid of informational cards with optional colored top bar accent, hover states, and stagger entrance
- * @param {CardsBlockProps} props
- * @param {CardsBlockData} props.block - Cards block with title, columns count and items
- * @param {string} props.caseGradient - Fallback gradient for colored cards
- * @returns {JSX.Element} Cards grid with title
- * @example
- * <CardsBlock block={cardsData} caseGradient="from-blue-500 to-purple-500" />
- */
 const COLS_CLASS = {
   2: 'sm:grid-cols-2',
   3: 'sm:grid-cols-3',
   4: 'sm:grid-cols-2 lg:grid-cols-4',
 } as const;
 
-const HIDDEN_STYLE: React.CSSProperties = { opacity: 0 };
-const STAGGER_ANIMATION_BASE = {
-  animationName: 'stagger-fade-in',
-  animationDuration: '0.5s',
-  animationTimingFunction: 'ease-out',
-  animationFillMode: 'both',
-} satisfies React.CSSProperties;
-
+/**
+ * @component
+ * @description Grid of informational cards with optional colored top bar accent, hover states,
+ * and stagger entrance animation on scroll entry. Card accent bar color is driven by
+ * `block.color` — supports gradient, primary, accent, or solid types; omitting color
+ * renders a plain borderless card with no accent bar.
+ * @param {CardsBlockProps} props
+ * @param {CardsBlockData} props.block - Cards block with optional title, columns count and items
+ * @param {string} props.caseGradient - Fallback Tailwind gradient stops used when color type is 'gradient'
+ * @returns {JSX.Element} Cards grid with optional title
+ * @example
+ * <CardsBlock block={cardsData} caseGradient="from-blue-500 to-purple-500" />
+ */
 export function CardsBlock({ block, caseGradient }: CardsBlockProps) {
   const color = block.color;
   const isGradient = color?.type === 'gradient';
-  const isSolid = color?.type === 'solid';
-  const isPrimary = color?.type === 'primary';
+  const isPrimary = color?.type === 'solid' || color?.type === 'primary';
   const isAccent = color?.type === 'accent';
   const gradientStops = color?.value ?? caseGradient;
   const cols = block.columns ?? 3;
+
+  // Derive accent bar class once — null means no bar rendered
+  const barClass = isGradient
+    ? cn('bg-gradient-to-r', gradientStops)
+    : isPrimary
+      ? 'bg-primary'
+      : isAccent
+        ? 'bg-accent'
+        : null;
 
   const [ref, hasAnimated] = useViewportAnimation({ threshold: 0.1 });
 
@@ -59,27 +63,11 @@ export function CardsBlock({ block, caseGradient }: CardsBlockProps) {
                 : HIDDEN_STYLE
             }
           >
-            {isGradient && (
+            {barClass && (
               <div
                 className={cn(
-                  'mb-3 h-1.5 w-12 rounded-full bg-gradient-to-r transition-all duration-300 group-hover:w-16',
-                  gradientStops
-                )}
-              />
-            )}
-            {(isSolid || isPrimary) && (
-              <div
-                className={cn(
-                  'mb-3 h-1.5 w-12 rounded-full bg-primary',
-                  'transition-all duration-300 group-hover:w-16'
-                )}
-              />
-            )}
-            {isAccent && (
-              <div
-                className={cn(
-                  'mb-3 h-1.5 w-12 rounded-full bg-accent',
-                  'transition-all duration-300 group-hover:w-16'
+                  'mb-3 h-1.5 w-12 rounded-full transition-all duration-300 group-hover:w-16',
+                  barClass
                 )}
               />
             )}

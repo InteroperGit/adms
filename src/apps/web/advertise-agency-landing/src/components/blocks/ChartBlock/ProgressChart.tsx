@@ -3,13 +3,14 @@ import { useViewportAnimation } from '@/hooks/useViewportAnimation';
 import type { BlockColor, ChartBlock as ChartBlockData } from '@/types/blocks';
 
 /**
- * Determines the background CSS class for progress bar fill.
- * Returns a Tailwind class based on the color configuration (primary, accent, solid, or gradient).
- * If no color is specified, defaults to primary color.
+ * Determines the background CSS class for progress bar fill based on color configuration.
+ * `solid` type is treated the same as `primary` because progress bars use Tailwind classes
+ * and cannot apply arbitrary hex colors via a class string. Pass `color.value` via inline
+ * `style` if you need a custom hex fill.
  *
  * @description Maps BlockColor configuration to a Tailwind background class
  * @param {BlockColor | undefined} color - Color configuration object
- * @param {string} caseGradient - Fallback Tailwind gradient class if color type is gradient
+ * @param {string} caseGradient - Fallback Tailwind gradient class if color type is 'gradient'
  * @returns {string} Tailwind class name for the progress bar background
  */
 function barBgClass(color: BlockColor | undefined, caseGradient: string): string {
@@ -22,10 +23,13 @@ function barBgClass(color: BlockColor | undefined, caseGradient: string): string
   if (color.type === 'gradient') {
     return cn('bg-gradient-to-r', color.value ?? caseGradient);
   }
-  if (color.type === 'solid') {
-    return 'bg-primary';
-  }
+  // 'solid' and 'primary' both map to bg-primary; solid.value (hex) cannot be used as a class
   return 'bg-primary';
+}
+
+interface ProgressChartProps {
+  block: ChartBlockData;
+  caseGradient: string;
 }
 
 /**
@@ -37,18 +41,12 @@ function barBgClass(color: BlockColor | undefined, caseGradient: string): string
  *
  * @component
  * @description Renders a series of horizontal progress bars with labels and values
- * @param {Object} props
+ * @param {ProgressChartProps} props
  * @param {ChartBlockData} props.block - Chart configuration with items and optional color
  * @param {string} props.caseGradient - Tailwind gradient classes fallback for gradient colors
  * @returns {JSX.Element} Container with list of progress bar rows
  */
-export function ProgressChart({
-  block,
-  caseGradient,
-}: {
-  block: ChartBlockData;
-  caseGradient: string;
-}) {
+export function ProgressChart({ block, caseGradient }: ProgressChartProps) {
   const max = Math.max(...block.items.map((i) => i.value), 1);
   const bg = barBgClass(block.color, caseGradient);
   const [containerRef, inView] = useViewportAnimation({ threshold: 0.2 });

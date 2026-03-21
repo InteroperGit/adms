@@ -29,7 +29,7 @@ export function BlockErrorFallback() {
       role="status"
       aria-label="Content unavailable"
     >
-      <p className={cn('text-sm text-muted-foreground')}>Content could not be displayed</p>
+      <p className="text-sm text-muted-foreground">Content could not be displayed</p>
     </div>
   );
 }

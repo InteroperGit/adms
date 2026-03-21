@@ -202,14 +202,26 @@ export function PieChart({ block }: { block: ChartBlockData }) {
     return 1 - idx * (0.6 / Math.max(block.items.length - 1, 1));
   });
 
-  const segments = block.items.map((item, i) => {
-    const cumulative = block.items.slice(0, i).reduce((s, it) => s + it.value, 0);
+  // Build segments in O(n) by accumulating cumulative sum inside reduce
+  const segments = block.items.reduce<
+    Array<{
+      dash: number;
+      gap: number;
+      rotate: number;
+      opacity: number;
+      item: (typeof block.items)[number];
+      index: number;
+      cumulative: number;
+    }>
+  >((acc, item, i) => {
+    const prev = acc[i - 1];
+    const cumulative = prev ? prev.cumulative + prev.item.value : 0;
     const pct = item.value / total;
     const dash = pct * CIRCUMFERENCE;
     const gap = CIRCUMFERENCE - dash;
     const rotate = (cumulative / total) * 360 - 90;
-    return { dash, gap, rotate, opacity: palette[i], item, index: i };
-  });
+    return [...acc, { dash, gap, rotate, opacity: palette[i], item, index: i, cumulative }];
+  }, []);
 
   return (
     <div

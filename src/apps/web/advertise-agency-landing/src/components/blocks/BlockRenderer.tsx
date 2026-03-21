@@ -24,21 +24,7 @@ interface BlockRendererProps {
   caseTitle: string;
 }
 
-/**
- * @component
- * @description Dispatcher that renders portfolio case content blocks with appropriate spacing and error isolation.
- *
- * Each block is wrapped in an ErrorBoundary so rendering errors in one block don't crash the entire page.
- * Unknown block types return null (dev warning in DEV mode).
- *
- * @param {BlockRendererProps} props
- * @param {ContentBlock} props.block - Block data with __component type identifier
- * @param {string} props.caseGradient - Gradient for blocks that use color (e.g., metrics, cards, charts)
- * @param {string} props.caseTitle - Case title for gallery alt text
- * @returns {JSX.Element|null} Rendered block wrapped in ErrorBoundary with spacing, or null for unknown types
- * @example
- * <BlockRenderer block={contentBlock} caseGradient="from-blue-500 to-purple-500" caseTitle="Project Name" />
- */
+/** Blocks that need less vertical padding than the default `py-8`. */
 const SPARSE_BLOCKS = new Set(['divider', 'heading']);
 
 function renderBlock(
@@ -86,18 +72,36 @@ function renderBlock(
   }
 }
 
+function getBlockSpacing(block: ContentBlock): string {
+  if (!SPARSE_BLOCKS.has(block.__component)) {
+    return 'py-8';
+  }
+  if (block.__component === 'heading' && (block as { level: number }).level === 3) {
+    return 'pt-6 pb-2';
+  }
+  return 'py-4';
+}
+
+/**
+ * @component
+ * @description Dispatcher that renders portfolio case content blocks with appropriate spacing
+ * and error isolation. Each block is wrapped in an ErrorBoundary so a render error in one
+ * block does not crash the entire page. Unknown block types return null (dev warning logged).
+ * @param {BlockRendererProps} props
+ * @param {ContentBlock} props.block - Block data with `__component` type identifier
+ * @param {string} props.caseGradient - Gradient used by blocks that support color (metrics, cards, charts)
+ * @param {string} props.caseTitle - Case title forwarded to gallery blocks for image alt text
+ * @returns {JSX.Element|null} Rendered block wrapped in ErrorBoundary with spacing, or null for unknown types
+ * @example
+ * <BlockRenderer block={contentBlock} caseGradient="from-blue-500 to-purple-500" caseTitle="Project Name" />
+ */
 export function BlockRenderer({ block, caseGradient, caseTitle }: BlockRendererProps) {
   const rendered = renderBlock(block, caseGradient, caseTitle);
   if (!rendered) {
     return null;
   }
-  const spacing = SPARSE_BLOCKS.has(block.__component)
-    ? block.__component === 'heading' && (block as { level: number }).level === 3
-      ? 'pt-6 pb-2'
-      : 'py-4'
-    : 'py-8';
   return (
-    <div className={spacing}>
+    <div className={getBlockSpacing(block)}>
       <ErrorBoundary fallback={<BlockErrorFallback />}>{rendered}</ErrorBoundary>
     </div>
   );
