@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { WidgetIframe } from './WidgetIframe';
 import { describe, it, expect } from 'vitest';
 import { DARK_IFRAME_FILTER } from '@/libs/utils';
@@ -49,7 +49,7 @@ describe('WidgetIframe', () => {
     expect(iframe).toHaveAttribute('allowFullScreen', '');
   });
 
-  // 6. Renders with border: 'none' and display: 'block' styles
+  // 6. Renders with border: 'none' and display: 'block' always (skeleton overlays via absolute position)
   it('renders iframe with correct inline styles', () => {
     render(<WidgetIframe {...defaultProps} />);
     const iframe = screen.getByTitle(defaultProps.title);
@@ -71,12 +71,20 @@ describe('WidgetIframe', () => {
     expect(iframe).toHaveStyle('filter: none');
   });
 
-  // 9. Applies overflow-hidden and rounded-2xl classes to the wrapper div
+  // 9. Applies relative, overflow-hidden, rounded-2xl classes to the wrapper div
   it('applies base classes to the wrapper div', () => {
     const { container } = render(<WidgetIframe {...defaultProps} />);
     const wrapperDiv = container.firstChild;
+    expect(wrapperDiv).toHaveClass('relative');
     expect(wrapperDiv).toHaveClass('overflow-hidden');
     expect(wrapperDiv).toHaveClass('rounded-2xl');
+  });
+
+  // 9b. Wrapper div has inline height matching height prop
+  it('applies height style to the wrapper div', () => {
+    const { container } = render(<WidgetIframe {...defaultProps} height={400} />);
+    const wrapperDiv = container.firstChild as HTMLElement;
+    expect(wrapperDiv).toHaveStyle({ height: '400px' });
   });
 
   // 10. Applies border border-primary to wrapper div when isDark is true
@@ -117,5 +125,29 @@ describe('WidgetIframe', () => {
     render(<WidgetIframe {...defaultProps} height={0} />);
     const iframe = screen.getByTitle(defaultProps.title);
     expect(iframe).toHaveAttribute('height', '0');
+  });
+
+  // Skeleton: shown before iframe loads
+  it('shows skeleton before iframe fires onLoad', () => {
+    const { container } = render(<WidgetIframe {...defaultProps} />);
+    expect(container.querySelector('.animate-pulse')).toBeInTheDocument();
+  });
+
+  // Skeleton: is positioned absolute over the wrapper
+  it('renders skeleton with absolute inset-0 positioning', () => {
+    const { container } = render(<WidgetIframe {...defaultProps} />);
+    const skeleton = container.querySelector('.animate-pulse');
+    expect(skeleton).toHaveClass('absolute');
+    expect(skeleton).toHaveClass('inset-0');
+  });
+
+  // Skeleton: hidden after onLoad fires
+  it('hides skeleton and keeps iframe visible after onLoad fires', () => {
+    const { container } = render(<WidgetIframe {...defaultProps} />);
+    const iframe = screen.getByTitle(defaultProps.title);
+    expect(container.querySelector('.animate-pulse')).toBeInTheDocument();
+    fireEvent.load(iframe);
+    expect(container.querySelector('.animate-pulse')).not.toBeInTheDocument();
+    expect(iframe.style.display).toBe('block');
   });
 });

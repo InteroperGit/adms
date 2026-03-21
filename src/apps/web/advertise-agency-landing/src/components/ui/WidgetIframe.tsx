@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { cn, DARK_IFRAME_FILTER } from '@/libs/utils';
+import { Skeleton } from './skeleton';
 
-interface YandexIframeProps {
+interface WidgetIframeProps {
   /**
    * The iframe source URL
    */
@@ -30,7 +32,7 @@ interface YandexIframeProps {
 /**
  * @component
  * @description Renders a common embed iframe (maps, reviews widget) with dark mode support and accessibility features. Applies color inversion filters and rounded borders.
- * @param {YandexIframeProps} props
+ * @param {WidgetIframeProps} props
  * @param {string} props.src - Iframe source URL (Yandex Maps or reviews widget URL)
  * @param {string} props.title - Iframe title for accessibility
  * @param {number} props.height - Iframe height in pixels
@@ -39,7 +41,7 @@ interface YandexIframeProps {
  * @param {'lazy' | 'eager'} [props.loading] - Iframe loading strategy (defaults to 'eager')
  * @returns {JSX.Element} Iframe wrapper with dark mode support and proper accessibility
  * @example <caption>Yandex reviews widget with lazy loading</caption>
- * <YandexIframe src="https://yandex.ru/maps-reviews-widget/..." title="Yandex.Maps reviews" height={650} isDark={true} loading="lazy" />
+ * <WidgetIframe src="https://yandex.ru/maps-reviews-widget/..." title="Yandex.Maps reviews" height={650} isDark={true} loading="lazy" />
  */
 export function WidgetIframe({
   src,
@@ -48,15 +50,19 @@ export function WidgetIframe({
   isDark,
   className,
   loading = 'eager',
-}: YandexIframeProps) {
+}: WidgetIframeProps) {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-2xl',
+        'relative overflow-hidden rounded-2xl',
         className,
         isDark ? 'border border-primary' : 'sm:shadow-lg'
       )}
+      style={{ height }}
     >
+      {!loaded && <Skeleton className="absolute inset-0 rounded-none" />}
       <iframe
         src={src}
         title={title}
@@ -69,6 +75,7 @@ export function WidgetIframe({
         }}
         loading={loading}
         allowFullScreen
+        onLoad={() => setLoaded(true)}
       />
     </div>
   );
