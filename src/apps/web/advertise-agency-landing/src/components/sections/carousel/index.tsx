@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { carouselSlides } from '@/types/sections/carousel/carousel';
 import { carouselContent } from '@/types/sections/carousel/carouselContent';
 import { useSwipe } from '@/hooks/useSwipe';
@@ -17,8 +17,12 @@ const INTERVAL_MS = 5000;
 export function Carousel() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const reducedMotion =
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reducedMotion = useMemo(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    []
+  );
 
   const next = useCallback(() => setActive((i) => (i + 1) % carouselSlides.length), []);
   const prev = useCallback(

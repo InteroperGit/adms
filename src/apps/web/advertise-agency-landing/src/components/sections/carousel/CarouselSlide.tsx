@@ -43,8 +43,6 @@ function getTransitionClasses(effect: TransitionEffect, isActive: boolean): stri
         return cn(baseClasses, 'opacity-0 rotate-3 scale-95 pointer-events-none');
       case 'blur-fade':
         return cn(baseClasses, 'opacity-0 pointer-events-none');
-      default:
-        return cn(baseClasses, 'opacity-0 scale-105 pointer-events-none');
     }
   }
 
@@ -66,11 +64,7 @@ export function CarouselSlide({ slide, isActive, index }: CarouselSlideProps) {
   const effect = getTransitionEffect(index);
 
   return (
-    <div
-      aria-hidden={!isActive}
-      className={getTransitionClasses(effect, isActive)}
-      style={effect === 'blur-fade' && isActive ? { filter: 'blur(0)' } : undefined}
-    >
+    <div aria-hidden={!isActive} className={getTransitionClasses(effect, isActive)}>
       {slide.image ? (
         <>
           <div className={cn('h-full w-full overflow-hidden', isActive && 'animate-ken-burns')}>
