@@ -1,20 +1,28 @@
-// src/pages/UserAgreement.tsx
-
 import { legalData } from '@/types/config/legalData';
 import { userAgreementContent } from '@/types/legal';
 import { LegalPageLayout } from '@/components/ui/legal/LegalPageLayout';
 import { LegalBlockRenderer } from '@/components/ui/legal/LegalBlockRenderer';
+import { siteData } from '@/types/config/siteData';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 /**
+ * User agreement (terms of service) page.
+ *
+ * Renders the user agreement legal document using `<LegalPageLayout>` for the
+ * page chrome (title, version, effective date) and `<LegalBlockRenderer>` to
+ * convert the structured JSON content into HTML — substituting `{company.X}`
+ * tokens with values from `legalData.company`.
+ *
  * @component
- * @description User agreement/terms of service page with rendered legal document sections and company token substitution
- * @returns {JSX.Element} Legal page with structured content and metadata
+ * @returns {JSX.Element} User agreement page with structured content and metadata.
  * @example
  * <UserAgreement />
  */
 export default function UserAgreement() {
   const { company, documents } = legalData;
   const { version, effectiveDate } = documents.userAgreement;
+
+  useDocumentTitle(`${userAgreementContent.title} — ${siteData.name}`);
 
   return (
     <LegalPageLayout

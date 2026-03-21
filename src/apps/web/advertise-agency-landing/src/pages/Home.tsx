@@ -11,13 +11,18 @@ import { SectionDivider } from '@/components/ui/section/SectionDivider';
 import { ErrorBoundary, SilentErrorFallback } from '@/components/error';
 
 /**
+ * Landing page — full-page section composition.
+ *
+ * Renders all homepage sections in order: Carousel → Hero → About → Services →
+ * Portfolio → Advantages → CallToAction → Testimonials → Contact, separated by
+ * `<SectionDivider>` transitions.
+ *
+ * The Carousel is wrapped in an `<ErrorBoundary>` with a silent fallback so that
+ * any carousel failure (e.g. missing slide data) does not block the rest of the
+ * page from rendering.
+ *
  * @component
- * @description Landing page homepage with full-page sections: carousel, hero, about, services, portfolio, advantages, CTA, testimonials, contact.
- *
- * The Carousel is wrapped in an ErrorBoundary with silent fallback, so carousel failures
- * don't prevent the page from rendering (Hero section remains visible below).
- *
- * @returns {JSX.Element} Main element with composed section components
+ * @returns {JSX.Element} `<main>` element containing all homepage sections.
  * @example
  * <Home />
  */

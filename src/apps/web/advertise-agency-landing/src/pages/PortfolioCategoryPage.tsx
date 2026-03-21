@@ -1,4 +1,3 @@
-// src/pages/PortfolioCategoryPage.tsx
 import { useParams } from 'react-router';
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
@@ -13,9 +12,17 @@ import { siteData } from '@/types/config/siteData';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 /**
+ * Portfolio listing page — shows all cases or cases filtered to a single category.
+ *
+ * Route params:
+ * - `categorySlug` — optional. Omitted on the root `/portfolio` listing (`isRoot`).
+ *   `"all"` and omitted are treated identically: show every case.
+ *   Any other value is matched against the `categories` config array.
+ *
+ * Renders `<NotFound>` for unrecognised category slugs.
+ *
  * @component
- * @description Portfolio listing page with category filtering (all, by category), breadcrumbs and pagination
- * @returns {JSX.Element} Page with category nav, grid, and CTA or 404 message
+ * @returns {JSX.Element} Breadcrumbs + section with `<SectionHeader>` and `<PortfolioGrid>`, or a 404 page.
  * @example
  * <PortfolioCategoryPage />
  */
@@ -26,13 +33,13 @@ export function PortfolioCategoryPage() {
   const isRoot = !categorySlug;
   const isAll = isRoot || categorySlug === 'all';
   const category = isAll ? null : categories.find((c) => c.slug === categorySlug);
-  const categoryLabel = categorySlug === 'all' ? portfolioConfig.allLabel : (category?.name ?? '');
+  const categoryLabel = isAll ? portfolioConfig.allLabel : (category?.name ?? '');
 
   const pageTitle = isAll
     ? `${p.title} — ${siteData.name}`
     : category
       ? `${category.name} — ${p.title} — ${siteData.name}`
-      : document.title;
+      : `${p.title} — ${siteData.name}`;
   useDocumentTitle(pageTitle);
 
   if (!isAll && !category) {

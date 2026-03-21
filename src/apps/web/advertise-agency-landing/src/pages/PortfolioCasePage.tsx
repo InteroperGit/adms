@@ -12,11 +12,20 @@ import { portfolioPageContent } from '@/types/sections/portfolio/portfolioPage';
 import { categories } from '@/types/config/categories';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { siteData } from '@/types/config/siteData';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 /**
+ * Portfolio case detail page.
+ *
+ * Reads `categorySlug` and `caseSlug` from the URL params, looks up the case
+ * in `portfolioCaseMap`, and renders a full case view: breadcrumbs, hero,
+ * overview metadata, content blocks, and a contact CTA.
+ *
+ * Renders `<NotFound>` (with a back link to the category listing) when the slug
+ * is absent from the case map — e.g. an unpublished case or a mistyped URL.
+ *
  * @component
- * @description Portfolio case detail page with hero, overview, content blocks and back navigation
- * @returns {JSX.Element} Case detail page with breadcrumbs, hero and rendered blocks or 404 message
+ * @returns {JSX.Element} Full case detail layout, or a 404 page.
  * @example
  * <PortfolioCasePage />
  */
@@ -29,14 +38,19 @@ export function PortfolioCasePage() {
   }>();
   const data = caseSlug ? portfolioCaseMap[caseSlug] : undefined;
 
-  const pc = portfolioCaseContent;
-  const portfolioTitle = portfolioPageContent.title;
   const isAll = categorySlug === 'all';
   const category = isAll ? null : categories.find((c) => c.slug === categorySlug);
   const categoryLabel = isAll ? portfolioConfig.allLabel : (category?.name ?? categorySlug ?? '');
 
+  useDocumentTitle(data ? `${data.title} — ${siteData.name}` : siteData.name);
+
   if (!data) {
-    return <NotFound backLabel={pc.notFound.back} backHref={`/portfolio/${categorySlug}`} />;
+    return (
+      <NotFound
+        backLabel={portfolioCaseContent.notFound.back}
+        backHref={`/portfolio/${categorySlug}`}
+      />
+    );
   }
 
   return (
@@ -48,7 +62,7 @@ export function PortfolioCasePage() {
       <BreadCrumbs
         items={[
           { label: siteData.homeLabel, href: '/' },
-          { label: portfolioTitle, href: '/portfolio' },
+          { label: portfolioPageContent.title, href: '/portfolio' },
           { label: categoryLabel, href: `/portfolio/${categorySlug}` },
           { label: data.title },
         ]}
@@ -71,7 +85,7 @@ export function PortfolioCasePage() {
       <Container>
         {data.content.map((block, i) => (
           <BlockRenderer
-            key={i}
+            key={`${block.__component}-${i}`}
             block={block}
             caseGradient={data.hero.gradient}
             caseTitle={data.title}
