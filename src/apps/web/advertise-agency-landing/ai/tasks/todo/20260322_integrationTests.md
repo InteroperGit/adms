@@ -1,0 +1,209 @@
+# Plan: Integration Tests — Test Cases
+
+**Status**: pending
+**Date**: 2026-03-22
+**Depends on**: `20260322_integrationTestsPrepare.md` must be complete first (Playwright installed, config + smoke test in place)
+
+## Goal
+
+Write Playwright integration tests that verify the fully-built SSG site behaves correctly in a real browser. Unit tests (Vitest + jsdom) cover isolated components; these tests cover **cross-component user flows, routing, navigation, and page-level correctness** that unit tests cannot verify.
+
+---
+
+## Scope
+
+7 spec files, one per functional area. All run against `pnpm preview` (port 4173) via the `webServer` config in `playwright.config.ts`.
+
+**Prerequisites before each run:**
+```bash
+pnpm build
+pnpm test:e2e
+```
+
+---
+
+## Task E1: Home page — `tests/integration/home.spec.ts`
+
+**What to test:** The main landing page sections render and are reachable.
+
+| # | Test case |
+|---|-----------|
+| E1.1 | Page has a `<title>` containing the agency name |
+| E1.2 | Hero section heading is visible |
+| E1.3 | Hero stat counters are present (count elements by role or data-testid) |
+| E1.4 | Services section is visible |
+| E1.5 | Advantages section is visible |
+| E1.6 | Contact section form is present (`<form>`) |
+| E1.7 | Footer is present and contains links |
+
+**Notes:**
+- Use `page.locator` with semantic selectors (`role`, `text`) over CSS classes.
+- Do not assert exact copy (copy is gitignored data) — assert structural presence.
+
+**Validation:** `pnpm test:e2e --grep "home"`
+
+---
+
+## Task E2: Navigation — `tests/integration/navigation.spec.ts`
+
+**What to test:** Header nav links and in-page scroll navigation work correctly.
+
+| # | Test case |
+|---|-----------|
+| E2.1 | Header is present on the home page |
+| E2.2 | Clicking "Портфолио" nav link navigates to `/portfolio` |
+| E2.3 | Clicking "Заказать" (CTA) navigates to `/order` |
+| E2.4 | Logo click returns to `/` from another route |
+| E2.5 | Mobile: hamburger menu opens on narrow viewport (375px) |
+| E2.6 | Mobile: nav links are visible after menu opens |
+| E2.7 | Skip-to-content link is in the DOM and focused on first Tab |
+
+**Notes:**
+- Use `page.setViewportSize({ width: 375, height: 812 })` for mobile tests.
+- Assert `page.url()` after navigation.
+
+**Validation:** `pnpm test:e2e --grep "navigation"`
+
+---
+
+## Task E3: Dark mode — `tests/integration/darkMode.spec.ts`
+
+**What to test:** Theme toggle persists and applies correctly.
+
+| # | Test case |
+|---|-----------|
+| E3.1 | Page loads without `.dark` class on `<html>` by default |
+| E3.2 | Clicking the dark mode toggle adds `.dark` to `<html>` |
+| E3.3 | After toggle, reloading the page (same tab) keeps `.dark` (localStorage persistence) |
+| E3.4 | Clicking toggle again removes `.dark` |
+
+**Notes:**
+- `page.evaluate(() => document.documentElement.classList.contains('dark'))` to check state.
+- `page.reload()` to test persistence.
+
+**Validation:** `pnpm test:e2e --grep "dark mode"`
+
+---
+
+## Task E4: Portfolio — `tests/integration/portfolio.spec.ts`
+
+**What to test:** Portfolio listing, category filtering, and case page routing.
+
+| # | Test case |
+|---|-----------|
+| E4.1 | `/portfolio` renders a list of portfolio cards |
+| E4.2 | Category nav is present with at least one category link |
+| E4.3 | Clicking a category link navigates to `/portfolio/:categorySlug` |
+| E4.4 | The active category is visually indicated (aria-current or active class) |
+| E4.5 | Clicking a portfolio card navigates to `/portfolio/:categorySlug/:year/:month/:caseSlug` |
+| E4.6 | Case page renders a heading and back link |
+| E4.7 | Back link on case page navigates back to the category page |
+| E4.8 | Unknown slug `/portfolio/nonexistent` renders the 404 page |
+
+**Notes:**
+- Do not hard-code slugs — derive from a discovered card's `href` attribute.
+- `page.locator('a[href^="/portfolio/"]').first()` to find the first card link.
+
+**Validation:** `pnpm test:e2e --grep "portfolio"`
+
+---
+
+## Task E5: Contact form — `tests/integration/contactForm.spec.ts`
+
+**What to test:** Contact form validation and submission feedback.
+
+| # | Test case |
+|---|-----------|
+| E5.1 | Submit button is disabled when form is empty |
+| E5.2 | Filling all fields and checking consent enables the submit button |
+| E5.3 | Submitting the form shows a loading state (button text changes) |
+| E5.4 | After ~1.5s, success message is visible |
+| E5.5 | Clicking "Отправить ещё" resets the form |
+| E5.6 | Leaving name field empty after blur shows a validation error |
+
+**Notes:**
+- Use `page.waitForSelector` / `page.waitForTimeout` sparingly — prefer `expect(locator).toBeVisible()` with timeout.
+- Mock nothing — this tests the real rendered component.
+
+**Validation:** `pnpm test:e2e --grep "contact form"`
+
+---
+
+## Task E6: Order page — `tests/integration/orderPage.spec.ts`
+
+**What to test:** `/order` renders the order form page correctly.
+
+| # | Test case |
+|---|-----------|
+| E6.1 | `/order` renders without error (no crash) |
+| E6.2 | Page has a form element |
+| E6.3 | Product tabs are present (if `orderFormsData` has multiple forms) |
+| E6.4 | Switching tabs changes visible form fields |
+
+**Notes:**
+- Product tabs are rendered only if multiple forms exist in `orderForms.json`. If data has only one form, skip E6.3–E6.4 with `test.skip`.
+
+**Validation:** `pnpm test:e2e --grep "order page"`
+
+---
+
+## Task E7: Error pages & legal routes — `tests/integration/errorAndLegal.spec.ts`
+
+**What to test:** 404 handling and legal page rendering.
+
+| # | Test case |
+|---|-----------|
+| E7.1 | `/404` renders the Not Found page with a back link |
+| E7.2 | Navigating to an unknown URL (e.g. `/does-not-exist`) renders Not Found |
+| E7.3 | `/privacy-policy` renders without error and has a heading |
+| E7.4 | `/user-agreement` renders without error and has a heading |
+| E7.5 | `/consent` renders without error and has a heading |
+| E7.6 | Legal pages have a back/home link |
+
+**Validation:** `pnpm test:e2e --grep "error and legal"`
+
+---
+
+## Summary
+
+| Task | Spec file | Est. tests |
+|------|-----------|------------|
+| E1 | `home.spec.ts` | 7 |
+| E2 | `navigation.spec.ts` | 7 |
+| E3 | `darkMode.spec.ts` | 4 |
+| E4 | `portfolio.spec.ts` | 8 |
+| E5 | `contactForm.spec.ts` | 6 |
+| E6 | `orderPage.spec.ts` | 4 |
+| E7 | `errorAndLegal.spec.ts` | 6 |
+| **Total** | | **~42 tests** |
+
+---
+
+## What NOT to Test Here
+
+These belong in unit tests (`src/**/*.test.tsx`), not here:
+
+- Internal component state or props
+- Individual React hook behavior
+- CSS class presence (use unit tests with RTL)
+- Recharts rendering internals
+
+---
+
+## Execution Order
+
+E1 → E2 → E3 → E4 → E5 → E6 → E7
+
+All specs are independent and can run in parallel (`fullyParallel: true` in Playwright config), but write them in this order for logical coverage.
+
+---
+
+## Validation (final)
+
+```bash
+pnpm build
+pnpm test:e2e
+pnpm format && pnpm lint && pnpm typecheck
+```
+
+Expected: all ~42 tests pass, no lint/type errors.

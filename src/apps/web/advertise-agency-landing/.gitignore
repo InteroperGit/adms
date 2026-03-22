@@ -32,6 +32,10 @@ public/images/
 # Generated — run pnpm gen-schemas to rebuild
 data/_schema/schema/
 
+# Playwright
+test-results/
+playwright-report/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

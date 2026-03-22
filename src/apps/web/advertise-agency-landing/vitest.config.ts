@@ -22,6 +22,7 @@ export default defineConfig({
         'src/test/**',
         '.react-router/**',
         '*.config.{ts,js}',
+        'tests/**', // Playwright specs — excluded from Vitest coverage
       ],
     },
   },
