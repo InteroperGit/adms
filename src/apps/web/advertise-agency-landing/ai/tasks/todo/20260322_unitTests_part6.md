@@ -31,7 +31,7 @@ All three legal pages share the same `LegalPageLayout` + `LegalSection` + `Legal
 
 ---
 
-## Task T33: List block sub-components — `src/components/blocks/ListBlock/`
+## Task T33: List block sub-components — `src/components/blocks/ListBlock/` ✅
 
 **Model**: Claude Haiku 4.5
 
