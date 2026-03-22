@@ -44,7 +44,7 @@ pnpm test:e2e
 
 ---
 
-## Task E2: Navigation — `tests/integration/navigation.spec.ts`
+## Task E2: Navigation — `tests/integration/navigation.spec.ts` ✅
 
 **What to test:** Header nav links and in-page scroll navigation work correctly.
 
