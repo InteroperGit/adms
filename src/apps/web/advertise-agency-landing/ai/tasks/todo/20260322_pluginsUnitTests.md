@@ -99,6 +99,8 @@ vi.mock('crypto', async (importOriginal) => {
 
 ---
 
+## ✅ T37: seoMetaPlugin — `src/plugins/seoMetaPlugin.ts` — 26 tests, all pass; format/lint/typecheck/build ✓
+
 ## Task T37: seoMetaPlugin — `src/plugins/seoMetaPlugin.ts`
 
 **Model**: Claude Sonnet 4.6
@@ -165,6 +167,8 @@ to return a simple `build/client/` tree with one `index.html`.
 **Validation:** `pnpm test src/plugins/seoMetaPlugin`
 
 ---
+
+## ✅ T38: themePlugin — `src/plugins/themePlugin.ts` — 19 tests, all pass; format/lint/typecheck/build ✓
 
 ## Task T38: themePlugin — `src/plugins/themePlugin.ts`
 
