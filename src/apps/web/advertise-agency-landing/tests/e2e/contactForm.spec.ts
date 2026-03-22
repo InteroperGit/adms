@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 // Helper: navigate to home and scroll the contact section into view
-async function gotoContact(page: Parameters<Parameters<typeof test>[1]>[0]['page']) {
+async function gotoContact(page: Page) {
   await page.goto('/');
   await page.waitForLoadState('domcontentloaded');
   // Scroll the contact section into view so interactive elements are reachable
@@ -10,14 +10,14 @@ async function gotoContact(page: Parameters<Parameters<typeof test>[1]>[0]['page
 }
 
 // Helper: check the consent checkbox reliably across all browsers
-async function checkConsent(page: Parameters<Parameters<typeof test>[1]>[0]['page']) {
+async function checkConsent(page: Page) {
   const checkbox = page.locator('section#contact input#consent');
   await checkbox.scrollIntoViewIfNeeded();
   await checkbox.check({ force: true });
 }
 
 // Helper: locate the contact field input (not the section) unambiguously
-function contactInput(page: Parameters<Parameters<typeof test>[1]>[0]['page']) {
+function contactInput(page: Page) {
   return page.locator('section#contact input#contact');
 }
 
