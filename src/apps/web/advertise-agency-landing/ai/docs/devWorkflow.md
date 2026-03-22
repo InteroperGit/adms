@@ -4,7 +4,7 @@
 
 ```bash
 pnpm dev              # Dev server → http://localhost:5173
-pnpm build            # SSG build → dist/ (tsc -b && vite-react-ssg build)
+pnpm build            # SSG build → build/client/ (react-router build + postbuild scripts)
 pnpm preview          # Preview production build locally
 pnpm lint             # ESLint check
 pnpm format           # Prettier format src/**/*.{ts,tsx,css}
@@ -87,24 +87,18 @@ The CLI prompts for:
 
 ## SSG Build Process
 
-**Build command:** `tsc -b && vite-react-ssg build`
+**Build command:** `tsc -b tsconfig.app.json && react-router build && vite-node scripts/postbuild-seo.ts && vite-node scripts/postbuild-cache.ts`
 
 **Steps:**
-1. TypeScript compilation (`tsc -b`)
-2. Vite bundling + React SSG generation
-3. Routes are auto-generated from:
-   - `src/router.tsx` static routes (`/`, `/privacy-policy`, etc.)
-   - Portfolio cases (recursive glob from `data/content/portfolio/**/*.json`)
-   - Categories (from `data/content/config/categories.json`)
-4. Output: `dist/` (ready to deploy)
+1. TypeScript compilation (`tsc -b tsconfig.app.json`)
+2. React Router v7 framework build (SSG, `ssr: false`)
+3. `postbuild-seo.ts` — injects SEO meta into pre-rendered HTML, copies 404
+4. `postbuild-cache.ts` — incremental SSG cache management
+5. Output: `build/client/` (ready to deploy)
 
-**Route generation examples:**
-- `/` → Home page
-- `/portfolio` → All cases, paginated
-- `/portfolio/branding` → Cases in "branding" category
-- `/portfolio/branding/artplex` → Specific case
-- `/privacy-policy`, `/user-agreement`, `/consent` → Legal pages
-- `/order?form=contact` → Order form with pre-selected form type
+**Route generation:**
+- Routes defined in `src/routes.ts` using `RouteConfig[]` (React Router v7)
+- Prerender list in `react-router.config.ts` → `prerender()` function
 
 ## Schema & IDE Setup
 
@@ -167,8 +161,8 @@ pnpm dlx shadcn@latest add <component-name>
 - Errors show which field violates the schema (helpful for data structure changes)
 
 **Building for production:**
-- `pnpm build` generates static HTML files in `dist/`
-- Preview locally with `pnpm preview` before deploying
+- `pnpm build` generates static HTML files in `build/client/`
+- Preview locally with `vite preview --outDir build/client` before deploying
 - No runtime dependencies — fully static output ready for CDN/S3
 
 ## Troubleshooting
@@ -178,8 +172,7 @@ pnpm dlx shadcn@latest add <component-name>
 - Harmless; only fix errors in `src/` source files
 
 **Peer dependency warnings:**
-- `react-helmet-async` unmet peer (React 19) — harmless, vite-react-ssg still works
-- `react-router-dom@^6.14.1` required — v6 is locked in, v7 not compatible
+- Project uses React Router v7 framework mode (`@react-router/dev`, `@react-router/node`, `ssr: false`); do not downgrade to v6
 
 **Schema not updating in IDE:**
 - Run `pnpm gen-schemas` to regenerate `.vscode/settings.json`

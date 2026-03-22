@@ -17,6 +17,8 @@ src/contexts/      # ThemeContext (dark mode)
 src/plugins/       # themePlugin, imageResizePlugin, seoMetaPlugin, incrementalSSG
 scripts/           # validate.ts, generate-json-schemas.ts, new-client.ts, postbuild-seo.ts, postbuild-cache.ts
 data/content/      # JSON data (gitignored except _schema/)
+ai/tasks/todo/     # Pending PDR task files
+ai/tasks/done/     # Completed PDR task files (YYYY/MM/DD/filename.md)
 ```
 
 ## Key Rules

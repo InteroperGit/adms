@@ -79,3 +79,4 @@ Expected for gitignored JSON files. Check for errors in actual source files (`sr
 - Do not commit until all validation passes
 - Validation sequence cannot be shortened — each step catches different issues
 - If a step involves multiple sub-tasks, validate after each sub-task completes
+- Use `git add -A` (or check `git status` first) when committing — PDR files may have moved from `todo/` to `done/YYYY/MM/DD/` and a path-specific `git add` will fail with "pathspec did not match any files"
