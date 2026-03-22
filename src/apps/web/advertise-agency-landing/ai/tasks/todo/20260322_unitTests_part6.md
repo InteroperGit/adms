@@ -47,7 +47,7 @@ All three legal pages share the same `LegalPageLayout` + `LegalSection` + `Legal
 
 ---
 
-## Task T34: Chart block sub-components — `src/components/blocks/ChartBlock/`
+## Task T34: Chart block sub-components — `src/components/blocks/ChartBlock/` ✅
 
 **Model**: Claude Sonnet 4.6
 
