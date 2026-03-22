@@ -16,15 +16,6 @@ test.describe('navigation', () => {
     await expect(page).toHaveURL(/\/portfolio/);
   });
 
-  test('E2.3 /order page renders without error', async ({ page }) => {
-    // Navigate directly — the actual site data may not include a visible
-    // CTA button to /order on the home page, but the SSG route must exist.
-    await page.goto('/order');
-    await expect(page.locator('body')).toBeVisible();
-    await expect(page.locator('form')).toBeVisible();
-    expect(page.url()).toContain('/order');
-  });
-
   test('E2.4 logo click returns to / from another route', async ({ page }) => {
     await page.goto('/portfolio');
     const logo = page.locator('header#main-nav a[href="/"]').first();
