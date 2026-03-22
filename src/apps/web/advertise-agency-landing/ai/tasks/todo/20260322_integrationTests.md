@@ -129,7 +129,7 @@ pnpm test:e2e
 
 ---
 
-## Task E6: Order page — `tests/integration/orderPage.spec.ts`
+## Task E6: Order page — `tests/integration/orderPage.spec.ts` ✅
 
 **What to test:** `/order` renders the order form page correctly.
 
