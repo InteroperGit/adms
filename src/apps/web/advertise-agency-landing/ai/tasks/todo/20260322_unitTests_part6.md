@@ -1,6 +1,6 @@
 # Plan: Unit Tests — Part 6: Legal Pages, Chart Sub-components & List Sub-components
 
-**Status**: todo
+**Status**: in-progress
 **Date**: 2026-03-22
 **Series**: 6 of N (continuation of parts 1–5)
 
@@ -10,7 +10,7 @@ Add tests for the three legal pages, the Chart block sub-components (BarChart, H
 
 ---
 
-## Task T32: Legal pages — `src/pages/`
+## Task T32: Legal pages — `src/pages/` ✅
 
 **Model**: Claude Haiku 4.5
 
