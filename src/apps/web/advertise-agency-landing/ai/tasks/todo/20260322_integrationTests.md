@@ -66,7 +66,7 @@ pnpm test:e2e
 
 ---
 
-## Task E3: Dark mode — `tests/integration/darkMode.spec.ts`
+## Task E3: Dark mode — `tests/integration/darkMode.spec.ts` ✅
 
 **What to test:** Theme toggle persists and applies correctly.
 
