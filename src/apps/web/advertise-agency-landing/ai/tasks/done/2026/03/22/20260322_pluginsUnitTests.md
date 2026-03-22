@@ -221,6 +221,8 @@ Plugin identity:
 
 ---
 
+## ✅ T39: imageResizePlugin — `src/plugins/imageResizePlugin.ts` — 7 tests, all pass; format/lint/typecheck/build ✓
+
 ## Task T39: imageResizePlugin — `src/plugins/imageResizePlugin.ts`
 
 **Model**: Claude Haiku 4.5
