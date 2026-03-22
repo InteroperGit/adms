@@ -59,3 +59,4 @@ Detailed documentation is organized in `ai/docs/`:
 - **[`ai/docs/typesStructure.md`](./ai/docs/typesStructure.md)** — `src/types/` subfolder structure (config, sections, portfolio, blocks, shared)
 - **[`ai/docs/legal.md`](./ai/docs/legal.md)** — Legal page content structure and rendering
 - **[`ai/docs/blocks.md`](./ai/docs/blocks.md)** — Content block types for portfolio cases
+- **[`ai/docs/unitTests.md`](./ai/docs/unitTests.md)** — Unit test stack, mock patterns, conventions, and coverage map
