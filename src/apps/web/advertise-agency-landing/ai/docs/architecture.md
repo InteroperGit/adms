@@ -23,7 +23,6 @@
 /privacy-policy                    → PrivacyPolicy.tsx
 /user-agreement                    → UserAgreement.tsx
 /consent                           → Consent.tsx
-/order                             → OrderPage.tsx (?form=<id> selects form)
 /404                               → NotFound.tsx (explicitly SSG'd page for static dist/404.html)
 *                                  → NotFound.tsx (catch-all route for unmatched URLs inside App layout)
 ```

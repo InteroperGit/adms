@@ -18,7 +18,6 @@ export default [
       { path: 'privacy-policy', file: './pages/PrivacyPolicy.tsx' },
       { path: 'user-agreement', file: './pages/UserAgreement.tsx' },
       { path: 'consent', file: './pages/Consent.tsx' },
-      { path: 'order', file: './pages/OrderPage.tsx' },
       { id: 'not-found-explicit', path: '404', file: './pages/NotFound.tsx' },
       { id: 'not-found-catch-all', path: '*', file: './pages/NotFound.tsx' },
     ],

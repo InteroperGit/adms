@@ -9,7 +9,7 @@ Landing page for **РА "Рекламастер"** — fully static SSG, no back
 ```
 src/entry.client.tsx # Entry: HydratedRouter
 src/routes.ts        # RouteConfig[] — all page routes
-src/pages/         # Home, PortfolioPage, PortfolioCategoryPage, PortfolioCasePage, NotFound, legal, OrderPage
+src/pages/         # Home, PortfolioPage, PortfolioCategoryPage, PortfolioCasePage, NotFound, legal
 src/components/    # sections/ | portfolio/ | ui/ | analytics/ | banners/ | layout/
 src/types/         # Zod schemas + parsed consts (config/ sections/ portfolio/ blocks/ shared/)
 src/hooks/index.ts       # Consolidates all `use*` hooks for easier import (useAnimatedPillPosition, useCookieConsent, useCountUp, useDocumentTitle, useFadeIn, useInViewport, useRandomButtonHighlight, useScrollReset, useStaggeredReveal, useSwipe, useTheme, useViewportAnimation)
