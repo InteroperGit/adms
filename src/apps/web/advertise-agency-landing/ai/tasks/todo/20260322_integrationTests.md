@@ -85,7 +85,7 @@ pnpm test:e2e
 
 ---
 
-## Task E4: Portfolio — `tests/integration/portfolio.spec.ts`
+## Task E4: Portfolio — `tests/integration/portfolio.spec.ts` ✅
 
 **What to test:** Portfolio listing, category filtering, and case page routing.
 
