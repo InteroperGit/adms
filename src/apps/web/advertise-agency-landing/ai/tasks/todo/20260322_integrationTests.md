@@ -22,7 +22,7 @@ pnpm test:e2e
 
 ---
 
-## Task E1: Home page — `tests/integration/home.spec.ts`
+## Task E1: Home page — `tests/integration/home.spec.ts` ✅
 
 **What to test:** The main landing page sections render and are reachable.
 
