@@ -270,4 +270,4 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm build
 
 ## Done
 
-<!-- mark tasks here as they complete -->
+- ✅ **IT1: Route rendering** — `src/test/integration/routes.test.tsx`, 11 tests; createMemoryRouter inline route tree; all 8 routes (/, /portfolio, /portfolio/:slug, /privacy-policy, /user-agreement, /consent, /404, /* catch-all) verified; all validation passes (182 files, 1156 tests)
