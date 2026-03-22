@@ -83,7 +83,7 @@ vi.mock('recharts', () => ({
 
 ---
 
-## Task T35: blockAnimations utility — `src/components/blocks/blockAnimations.ts`
+## Task T35: blockAnimations utility — `src/components/blocks/blockAnimations.ts` ✅
 
 **Model**: Claude Haiku 4.5
 
