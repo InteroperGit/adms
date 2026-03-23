@@ -158,7 +158,7 @@ displayed portfolio cards.
 
 ---
 
-## Task IT5: Error boundary integration
+## Task IT5: Error boundary integration ✅Done
 
 **File**: `src/test/integration/errorBoundary.test.tsx`
 
