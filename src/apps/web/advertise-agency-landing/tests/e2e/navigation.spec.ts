@@ -23,6 +23,8 @@ test.describe('navigation', () => {
     await expect(page).toHaveURL(/^http:\/\/[^/]+\/$/);
   });
 
+  // E2.5–E2.6: inline viewport guard (run on all 4 desktop browsers).
+  // Full mobile device profile coverage for these scenarios → mobile_home.spec.ts (E7).
   test('E2.5 mobile: hamburger menu opens on narrow viewport', async ({
     page,
   }) => {

@@ -12,10 +12,14 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   projects: [
-    { name: 'Chrome',  use: { ...devices['Desktop Chrome'] } },
-    { name: 'Firefox', use: { ...devices['Desktop Firefox'] } },
-    { name: 'Edge',    use: { ...devices['Desktop Edge'] } },
-    { name: 'Safari',  use: { ...devices['Desktop Safari'] } },
+    // Desktop — skip mobile-only specs
+    { name: 'Chrome',  use: { ...devices['Desktop Chrome'] },  testIgnore: ['**/mobile_*.spec.ts'] },
+    { name: 'Firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: ['**/mobile_*.spec.ts'] },
+    { name: 'Edge',    use: { ...devices['Desktop Edge'] },    testIgnore: ['**/mobile_*.spec.ts'] },
+    { name: 'Safari',  use: { ...devices['Desktop Safari'] },  testIgnore: ['**/mobile_*.spec.ts'] },
+    // Mobile — only run mobile-prefixed specs
+    { name: 'Mobile Chrome', use: { ...devices['Pixel 5'] },   testMatch: ['**/mobile_*.spec.ts'] },
+    { name: 'Mobile Safari', use: { ...devices['iPhone 12'] }, testMatch: ['**/mobile_*.spec.ts'] },
   ],
   webServer: {
     command: 'pnpm preview',
