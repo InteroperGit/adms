@@ -132,7 +132,7 @@ Tests that the dark-mode toggle in `DarkModeToggle` propagates `isDark` through
 
 ---
 
-## Task IT4: Portfolio filtering integration
+## Task IT4: Portfolio filtering integration ✅Done
 
 **File**: `src/test/integration/portfolioFilter.test.tsx`
 
@@ -273,3 +273,4 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm build
 - ✅ **IT1: Route rendering** — `src/test/integration/routes.test.tsx`, 11 tests; createMemoryRouter inline route tree; all 8 routes (/, /portfolio, /portfolio/:slug, /privacy-policy, /user-agreement, /consent, /404, /* catch-all) verified; all validation passes (182 files, 1156 tests)
 - ✅ **IT2: App shell integration** — `src/test/integration/appShell.test.tsx`, 7 tests; verifies header, footer, main#main-content, SkipToContent link, ScrollProgress (null in jsdom), ErrorBoundary no-crash, CookieBanner dialog; required `vi.stubGlobal('localStorage', ...)` for CookieBanner's `useSyncExternalStore`; all validation passes (183 files, 1163 tests)
 - ✅ **IT3: ThemeContext dark-mode integration** — `src/test/integration/darkMode.test.tsx`, 4 tests; renders `DarkModeToggle` inside a real `ThemeContext.Provider` + `useTheme()` consumer to verify the full Provider→context→hook→props chain; `useEffect` writes to `document.documentElement.classList`; tests initial light state, toggle→dark, toggle→light, and aria-label reflection; all validation passes (184 files, 1167 tests)
+- ✅ **IT4: Portfolio filtering integration** — `src/test/integration/portfolioFilter.test.tsx`, 6 tests; 3 fake cases (2 branding + 1 web), perPage=2; mocks PortfolioCard (slug via data-slug), BreadCrumbs; tests real PortfolioGrid + CategoryNav + AnimatedPillTabs + Pagination; key: React Router v7 uses fetch-based routing (`createClientSideRequest`) which fails in jsdom (AbortSignal mismatch between Node built-in and undici); navigation tested by rendering at target paths directly (`renderAt('/portfolio/branding')` etc.) rather than clicking Links; pagination tested via `renderAt('/portfolio?page=2')` (initialEntries parses query string); CategoryNav link hrefs asserted structurally; all validation passes (185 files, 1173 tests)
