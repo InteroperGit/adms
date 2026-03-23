@@ -53,7 +53,7 @@ routes but uses real components. Each test imports the page component it needs.
 
 ---
 
-## Task IT1: Route rendering — core pages
+## Task IT1: Route rendering — core pages ✅ Done
 
 **File**: `src/test/integration/routes.test.tsx`
 
@@ -87,7 +87,7 @@ Tests that navigating to each route renders the correct page landmark.
 
 ---
 
-## Task IT2: App shell integration
+## Task IT2: App shell integration ✅Done
 
 **File**: `src/test/integration/appShell.test.tsx`
 
@@ -111,7 +111,7 @@ correctly when rendered with a real router.
 
 ---
 
-## Task IT3: ThemeContext dark-mode integration
+## Task IT3: ThemeContext dark-mode integration ✅Done
 
 **File**: `src/test/integration/darkMode.test.tsx`
 
@@ -272,3 +272,4 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm build
 
 - ✅ **IT1: Route rendering** — `src/test/integration/routes.test.tsx`, 11 tests; createMemoryRouter inline route tree; all 8 routes (/, /portfolio, /portfolio/:slug, /privacy-policy, /user-agreement, /consent, /404, /* catch-all) verified; all validation passes (182 files, 1156 tests)
 - ✅ **IT2: App shell integration** — `src/test/integration/appShell.test.tsx`, 7 tests; verifies header, footer, main#main-content, SkipToContent link, ScrollProgress (null in jsdom), ErrorBoundary no-crash, CookieBanner dialog; required `vi.stubGlobal('localStorage', ...)` for CookieBanner's `useSyncExternalStore`; all validation passes (183 files, 1163 tests)
+- ✅ **IT3: ThemeContext dark-mode integration** — `src/test/integration/darkMode.test.tsx`, 4 tests; renders `DarkModeToggle` inside a real `ThemeContext.Provider` + `useTheme()` consumer to verify the full Provider→context→hook→props chain; `useEffect` writes to `document.documentElement.classList`; tests initial light state, toggle→dark, toggle→light, and aria-label reflection; all validation passes (184 files, 1167 tests)
