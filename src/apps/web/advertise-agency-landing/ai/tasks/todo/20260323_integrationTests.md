@@ -179,7 +179,7 @@ than crashing the whole tree.
 
 ---
 
-## Task IT6: Navigation links correctness
+## Task IT6: Navigation links correctness ✅Done
 
 **File**: `src/test/integration/navLinks.test.tsx`
 
@@ -274,3 +274,4 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm build
 - ✅ **IT2: App shell integration** — `src/test/integration/appShell.test.tsx`, 7 tests; verifies header, footer, main#main-content, SkipToContent link, ScrollProgress (null in jsdom), ErrorBoundary no-crash, CookieBanner dialog; required `vi.stubGlobal('localStorage', ...)` for CookieBanner's `useSyncExternalStore`; all validation passes (183 files, 1163 tests)
 - ✅ **IT3: ThemeContext dark-mode integration** — `src/test/integration/darkMode.test.tsx`, 4 tests; renders `DarkModeToggle` inside a real `ThemeContext.Provider` + `useTheme()` consumer to verify the full Provider→context→hook→props chain; `useEffect` writes to `document.documentElement.classList`; tests initial light state, toggle→dark, toggle→light, and aria-label reflection; all validation passes (184 files, 1167 tests)
 - ✅ **IT4: Portfolio filtering integration** — `src/test/integration/portfolioFilter.test.tsx`, 6 tests; 3 fake cases (2 branding + 1 web), perPage=2; mocks PortfolioCard (slug via data-slug), BreadCrumbs; tests real PortfolioGrid + CategoryNav + AnimatedPillTabs + Pagination; key: React Router v7 uses fetch-based routing (`createClientSideRequest`) which fails in jsdom (AbortSignal mismatch between Node built-in and undici); navigation tested by rendering at target paths directly (`renderAt('/portfolio/branding')` etc.) rather than clicking Links; pagination tested via `renderAt('/portfolio?page=2')` (initialEntries parses query string); CategoryNav link hrefs asserted structurally; all validation passes (185 files, 1173 tests)
+- ✅ **IT6: Navigation links correctness** — `src/test/integration/navLinks.test.tsx`, 9 tests; uses real data (no `@/types/` mocks); `@data/*.json` fallback factories (try `importOriginal()`, catch → stub) allow module load when data files are absent; `describe.skipIf(!dataExists)` skips gracefully in CI; tests HeaderNav (isHome=true + isHome=false), FooterNav (mirrors headerContent.nav), FooterServices (all links → #services, ≤4 items), FooterBottom legal links (per footerContent.legalLinks + explicit checks for /privacy-policy, /user-agreement, /consent); all validation passes (187 files, 1188 tests)
