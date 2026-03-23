@@ -12,7 +12,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
-    include: ['src/**/*.test.{ts,tsx}'],
+    include: ['src/**/*.test.{ts,tsx}', 'tests/integration/**/*.test.{ts,tsx}'],
     css: false,
     coverage: {
       exclude: [
@@ -22,7 +22,7 @@ export default defineConfig({
         'src/test/**',
         '.react-router/**',
         '*.config.{ts,js}',
-        'tests/**', // Playwright specs — excluded from Vitest coverage
+        'tests/e2e/**', // Playwright e2e specs — excluded from Vitest coverage
       ],
     },
   },

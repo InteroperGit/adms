@@ -1,3 +1,4 @@
+import React from 'react';
 import { existsSync } from 'fs';
 import { resolve } from 'path';
 import { MemoryRouter } from 'react-router';
