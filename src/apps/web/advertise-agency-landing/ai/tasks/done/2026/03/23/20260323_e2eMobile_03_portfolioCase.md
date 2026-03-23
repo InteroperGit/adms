@@ -79,6 +79,6 @@ pnpm exec playwright test mobile_portfolio_case.spec.ts --project="Mobile Safari
 
 ## Acceptance criteria
 
-- [ ] `tests/e2e/mobile_portfolio_case.spec.ts` exists with E9.1–E9.6 (6 tests)
-- [ ] All 6 tests pass on `Mobile Chrome` and `Mobile Safari` (12 runs)
-- [ ] `pnpm format && pnpm lint && pnpm typecheck` pass
+- [x] `tests/e2e/mobile_portfolio_case.spec.ts` exists with E9.1–E9.6 (6 tests)
+- [x] All 6 tests pass on `Mobile Chrome` and `Mobile Safari` (12 runs)
+- [x] `pnpm format && pnpm lint && pnpm typecheck` pass

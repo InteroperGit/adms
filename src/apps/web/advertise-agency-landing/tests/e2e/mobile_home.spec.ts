@@ -2,18 +2,23 @@ import { test, expect } from '@playwright/test';
 
 test.describe('mobile: Home page (E7)', () => {
   test.beforeEach(async ({ page }) => {
+    // Force a very small viewport to ensure mobile layout is triggered regardless of environment defaults
+    await page.setViewportSize({ width: 360, height: 640 });
     await page.goto('/');
   });
 
   test('E7.1 Hero h1 visible on mobile', async ({ page }) => {
+    // Wait for the page to be fully loaded and settled
+    await page.waitForLoadState('networkidle');
     const h1 = page.locator('h1');
     await expect(h1).toBeVisible();
   });
 
   test('E7.2 Desktop action bar hidden on mobile', async ({ page }) => {
     // Desktop action bar has class hidden items-center gap-3 md:flex
-    const desktopActions = page.locator('div.hidden.items-center.md\\:flex');
-    await expect(desktopActions).not.toBeVisible();
+    // It should be strictly hidden on mobile viewports
+    const desktopActions = page.locator('div.hidden.items-center.md\\:flex').first();
+    await expect(desktopActions).toBeHidden();
   });
 
   test('E7.3 Hamburger button visible on mobile', async ({ page }) => {
@@ -171,6 +176,15 @@ test.describe('mobile: Home page (E7)', () => {
             cancelable: true,
           });
           carouselEl.dispatchEvent(startEvent);
+
+          const moveEvent = new TouchEvent('touchmove', {
+            touches: [touchEnd as unknown as Touch],
+            targetTouches: [touchEnd as unknown as Touch],
+            changedTouches: [touchEnd as unknown as Touch],
+            bubbles: true,
+            cancelable: true,
+          });
+          carouselEl.dispatchEvent(moveEvent);
 
           const endEvent = new TouchEvent('touchend', {
             touches: [],
