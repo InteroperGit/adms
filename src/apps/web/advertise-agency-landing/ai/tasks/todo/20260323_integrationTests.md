@@ -271,3 +271,4 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm build
 ## Done
 
 - ✅ **IT1: Route rendering** — `src/test/integration/routes.test.tsx`, 11 tests; createMemoryRouter inline route tree; all 8 routes (/, /portfolio, /portfolio/:slug, /privacy-policy, /user-agreement, /consent, /404, /* catch-all) verified; all validation passes (182 files, 1156 tests)
+- ✅ **IT2: App shell integration** — `src/test/integration/appShell.test.tsx`, 7 tests; verifies header, footer, main#main-content, SkipToContent link, ScrollProgress (null in jsdom), ErrorBoundary no-crash, CookieBanner dialog; required `vi.stubGlobal('localStorage', ...)` for CookieBanner's `useSyncExternalStore`; all validation passes (183 files, 1163 tests)
