@@ -221,7 +221,7 @@ are picked up.
 
 ---
 
-## Task IT8: `ai/docs/integrationTests.md` — update
+## Task IT8: `ai/docs/integrationTests.md` — update ✅Done
 
 Append a **"Vitest integration tests"** section to the existing `ai/docs/integrationTests.md`
 (which currently covers Playwright only):
@@ -276,3 +276,4 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm build
 - ✅ **IT4: Portfolio filtering integration** — `src/test/integration/portfolioFilter.test.tsx`, 6 tests; 3 fake cases (2 branding + 1 web), perPage=2; mocks PortfolioCard (slug via data-slug), BreadCrumbs; tests real PortfolioGrid + CategoryNav + AnimatedPillTabs + Pagination; key: React Router v7 uses fetch-based routing (`createClientSideRequest`) which fails in jsdom (AbortSignal mismatch between Node built-in and undici); navigation tested by rendering at target paths directly (`renderAt('/portfolio/branding')` etc.) rather than clicking Links; pagination tested via `renderAt('/portfolio?page=2')` (initialEntries parses query string); CategoryNav link hrefs asserted structurally; all validation passes (185 files, 1173 tests)
 - ✅ **IT6: Navigation links correctness** — `src/test/integration/navLinks.test.tsx`, 9 tests; uses real data (no `@/types/` mocks); `@data/*.json` fallback factories (try `importOriginal()`, catch → stub) allow module load when data files are absent; `describe.skipIf(!dataExists)` skips gracefully in CI; tests HeaderNav (isHome=true + isHome=false), FooterNav (mirrors headerContent.nav), FooterServices (all links → #services, ≤4 items), FooterBottom legal links (per footerContent.legalLinks + explicit checks for /privacy-policy, /user-agreement, /consent); all validation passes (187 files, 1188 tests)
 - ✅ **IT7: Vitest config — integration include** — no config change needed; `src/**/*.test.{ts,tsx}` already covers `src/test/integration/`; `coverage.exclude` already has `src/test/**` covering all non-test helpers; verified all 6 integration files run under plain `pnpm test` (187 files, 1188 tests)
+- ✅ **IT8: `ai/docs/integrationTests.md` — update** — appended "Vitest Integration Tests" section covering: decision table (unit vs integration vs e2e), all 6 spec files with test counts, `pnpm test src/test/integration` run command, `createMemoryRouter`/`RouterProvider` and `MemoryRouter` router patterns, jsdom Link-click limitation (AbortSignal/undici) + renderAt workaround, data-dependent skip guard pattern (`vi.mock` fallback factory + `describe.skipIf`), mock scope table (what to mock / what NOT to mock), note on `src/test/utils.tsx` vs inline router setup
