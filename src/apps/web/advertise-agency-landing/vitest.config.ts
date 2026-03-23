@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitest/config';
-import path from 'path';
+import * as path from 'path';
 
 export default defineConfig({
   resolve: {
@@ -15,6 +15,7 @@ export default defineConfig({
     include: ['src/**/*.test.{ts,tsx}', 'tests/integration/**/*.test.{ts,tsx}'],
     css: false,
     coverage: {
+      provider: 'v8',
       exclude: [
         'build/**',
         'dist/**',
