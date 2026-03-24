@@ -178,7 +178,7 @@ if (existsSync(settingsPath)) {
   }
 }
 
-function schemaUrl(subfolder: Subfolder, name: string, section?: string): string {
+export function schemaUrl(subfolder: Subfolder, name: string, section?: string): string {
   if (section) {
     return `./data/_schema/schema/${subfolder}/${section}/${name}.schema.json`;
   }
@@ -348,7 +348,7 @@ function walkDir(dir: string): string[] {
   return files;
 }
 
-function getSchemaPathForFile(filePath: string): string | null {
+export function getSchemaPathForFile(filePath: string): string | null {
   const relativePath = path.relative(root, filePath).replace(/\\/g, '/');
 
   // Config files
@@ -388,11 +388,11 @@ function getSchemaPathForFile(filePath: string): string | null {
   return null;
 }
 
-function isObjectRoot(content: unknown): boolean {
+export function isObjectRoot(content: unknown): boolean {
   return typeof content === 'object' && content !== null && !Array.isArray(content);
 }
 
-function injectSchema(obj: Record<string, unknown>, schemaPath: string): Record<string, unknown> {
+export function injectSchema(obj: Record<string, unknown>, schemaPath: string): Record<string, unknown> {
   // Create new object with $schema as first field
   const result: Record<string, unknown> = {
     $schema: schemaPath,

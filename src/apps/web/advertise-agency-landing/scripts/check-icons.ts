@@ -21,7 +21,7 @@ const iconMapPath = path.join(root, 'src/types/shared/iconMap.ts');
 const removeFlag = process.argv.includes('--remove');
 
 /** Recursively extract all values of keys named "icon" from a parsed JSON value. */
-function extractIconValues(obj: unknown): string[] {
+export function extractIconValues(obj: unknown): string[] {
   if (typeof obj !== 'object' || obj === null) {
     return [];
   }
@@ -40,7 +40,7 @@ function extractIconValues(obj: unknown): string[] {
   return result;
 }
 
-function listJsonFiles(dir: string): string[] {
+export function listJsonFiles(dir: string): string[] {
   try {
     return readdirSync(dir)
       .filter((f) => f.endsWith('.json'))
