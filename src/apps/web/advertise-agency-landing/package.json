@@ -5,7 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "react-router dev",
-    "build": "tsc -b tsconfig.app.json && react-router build && vite-node scripts/postbuild-seo.ts && vite-node scripts/postbuild-cache.ts && vite-node scripts/postbuild-sitemap.ts",
+    "postbuild:seo": "vite-node scripts/postbuild-seo.ts",
+    "postbuild:cache": "vite-node scripts/postbuild-cache.ts",
+    "postbuild:sitemap": "vite-node scripts/postbuild-sitemap.ts",
+    "postbuild:robots": "vite-node scripts/postbuild-robots.ts",
+    "postbuild": "pnpm postbuild:seo && pnpm postbuild:cache && pnpm postbuild:sitemap && pnpm postbuild:robots",
+    "build": "tsc -b tsconfig.app.json && react-router build && pnpm postbuild",
     "build:full": "rm -rf .ssg-cache && pnpm build",
     "test-incremental": "vite-node scripts/test-incremental.ts",
     "preview": "vite preview --outDir build/client",

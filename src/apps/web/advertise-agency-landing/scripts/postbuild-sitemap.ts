@@ -46,7 +46,7 @@ interface CaseEntry {
 
 const today = new Date().toISOString().slice(0, 10);
 
-function buildEntries(): SitemapEntry[] {
+export function buildEntries(): SitemapEntry[] {
   const categories =
     readJson<CategoryEntry[]>(resolve(rootDir, 'data/content/config/categories.json')) ?? [];
   const catSlugs = ['all', ...categories.map((c) => c.slug)];
