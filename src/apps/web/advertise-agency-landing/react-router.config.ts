@@ -7,7 +7,7 @@ import {
   loadPreviousManifest,
   diffManifest,
   writeBuildDiff,
-} from "./src/plugins/incrementalSSG.ts";
+} from "./src/plugins/incrementalSSGPlugin.ts";
 
 // ---------------------------------------------------------------------------
 // Helpers (Node-only, runs at build time)

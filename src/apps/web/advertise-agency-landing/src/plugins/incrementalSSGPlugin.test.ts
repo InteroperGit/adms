@@ -36,8 +36,8 @@ import {
   writeBuildDiff,
   readBuildDiff,
   clearBuildDiff,
-} from './incrementalSSG';
-import type { RouteManifest, BuildDiff } from './incrementalSSG';
+} from './incrementalSSGPlugin';
+import type { RouteManifest, BuildDiff } from './incrementalSSGPlugin';
 import { existsSync, readFileSync, writeFileSync, mkdirSync, copyFileSync, unlinkSync } from 'fs';
 
 const ROOT = '/project';
