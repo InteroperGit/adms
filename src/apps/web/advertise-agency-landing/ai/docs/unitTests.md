@@ -90,6 +90,31 @@ vi.mock('@/hooks/useViewportAnimation', () => ({
 vi.mock('@/hooks/useSwipe', () => ({
   useSwipe: () => ({ onTouchStart: vi.fn(), onTouchEnd: vi.fn(), didSwipe: { current: false } }),
 }));
+
+// useFadeIn — return [ref, isVisible]
+vi.mock('@/hooks/useFadeIn', () => ({
+  useFadeIn: () => [{ current: null }, true],
+}));
+
+// useStaggeredReveal — return array of [ref, isVisible] pairs
+vi.mock('@/hooks/useStaggeredReveal', () => ({
+  useStaggeredReveal: (n: number) => Array.from({ length: n }, () => [{ current: null }, true]),
+}));
+
+// useScrollReset — no return value, call on route change
+vi.mock('@/hooks/useScrollReset', () => ({
+  useScrollReset: vi.fn(),
+}));
+
+// useAnimatedPillPosition — return { style, setActiveEl }
+vi.mock('@/hooks/useAnimatedPillPosition', () => ({
+  useAnimatedPillPosition: () => ({ style: {}, setActiveEl: vi.fn() }),
+}));
+
+// useRandomButtonHighlight — return highlighted index
+vi.mock('@/hooks/useRandomButtonHighlight', () => ({
+  useRandomButtonHighlight: () => 0,
+}));
 ```
 
 ### Child components (orchestration tests)
@@ -170,6 +195,10 @@ it('shows success after 1200ms', () => {
 | Hook | Return values under various inputs, side effects |
 | Utility function | Input → output, edge cases |
 | Plugin | File transforms, emitted assets |
+| Block component | Renders correct element per block type, passes props to children |
+| Error boundary | Catches thrown errors, renders fallback UI |
+| Schema / type guard | Valid inputs pass, invalid inputs throw/fail with correct message |
+| Form component | Field rendering, onChange propagation, submit / success state |
 
 **Do not test:**
 - CSS class names (unless functionally meaningful, e.g. `.group`, `.icon-shake`)
@@ -192,10 +221,23 @@ container.querySelector('svg circle')       // SVG elements
 | Area | Test files location |
 |---|---|
 | UI primitives (shadcn + wrappers) | `src/components/ui/*.test.tsx` |
-| Section components | `src/components/sections/**/*.test.tsx` |
-| Portfolio components | `src/components/portfolio/**/*.test.tsx` |
-| Block components | `src/components/blocks/**/*.test.tsx` |
+| Section components (header, hero, about, advantages, services, carousel, CTA, testimonials, contact, footer, portfolio) | `src/components/sections/**/*.test.tsx` |
+| Portfolio case components | `src/components/portfolio/**/*.test.tsx` |
+| Block components (paragraph, heading, image, gallery, video, code, table, divider, callout, blockquote, cards, metrics, list, chart, order form) | `src/components/blocks/**/*.test.tsx` |
+| Block animations utility | `src/components/blocks/blockAnimations.test.ts` |
+| Error components (ErrorBoundary, ErrorFallback, DevErrorFallback, SilentErrorFallback) | `src/components/error/**/*.test.tsx` |
+| Layout components | `src/components/layout/**/*.test.tsx` |
+| Analytics components | `src/components/analytics/**/*.test.tsx` |
+| Banner components | `src/components/banners/**/*.test.tsx` |
+| UI navigation components | `src/components/ui/navigation/**/*.test.tsx` |
+| UI image gallery components | `src/components/ui/imageGallery/**/*.test.tsx` |
+| UI section primitives | `src/components/ui/section/**/*.test.tsx` |
+| UI legal components | `src/components/ui/legal/**/*.test.tsx` |
+| UI order form components | `src/components/ui/orderForm/**/*.test.tsx` |
+| UI testimonial components | `src/components/ui/testimonial/**/*.test.tsx` |
+| UI portfolio card components | `src/components/ui/portfolio/**/*.test.tsx` |
 | Pages | `src/pages/**/*.test.tsx` |
+| Contexts | `src/contexts/**/*.test.tsx` |
 | Hooks | `src/hooks/*.test.ts` |
 | Libs / utilities | `src/libs/*.test.ts` |
 | Types / schemas | `src/types/**/*.test.ts` |
