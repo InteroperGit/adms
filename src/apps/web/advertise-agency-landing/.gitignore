@@ -29,8 +29,12 @@ coverage/
 
 # Content — local only, not tracked in git
 data/content/
-public/images/
 !data/_schema/
+
+# Public — only favicon.svg and logo.svg are tracked
+public/*
+!public/favicon.svg
+!public/logo.svg
 
 # Generated — run pnpm gen-schemas to rebuild
 data/_schema/schema/
