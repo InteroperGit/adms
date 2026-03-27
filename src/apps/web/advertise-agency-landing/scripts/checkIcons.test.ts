@@ -15,7 +15,7 @@ vi.mock('../src/types/shared/iconMap', () => ({
 }));
 
 import { readdirSync } from 'fs';
-import { extractIconValues, listJsonFiles } from './check-icons';
+import { extractIconValues, listJsonFiles } from './checkIcons';
 
 beforeEach(() => {
   vi.resetAllMocks();

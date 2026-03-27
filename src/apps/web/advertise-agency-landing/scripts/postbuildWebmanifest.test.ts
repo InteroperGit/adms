@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildWebmanifest } from './postbuild-webmanifest';
+import { buildWebmanifest } from './postbuildWebmanifest';
 
 const site = {
   name: 'РА «Рекламастер»',

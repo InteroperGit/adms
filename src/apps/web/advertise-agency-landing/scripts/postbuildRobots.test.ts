@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildRobotsContent } from './postbuild-robots';
+import { buildRobotsContent } from './postbuildRobots';
 
 describe('buildRobotsContent', () => {
   it('contains User-agent wildcard', () => {

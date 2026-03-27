@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { schemaUrl, getSchemaPathForFile, isObjectRoot, injectSchema } from './generate-json-schemas.js';
+import { schemaUrl, getSchemaPathForFile, isObjectRoot, injectSchema } from './generateJsonSchemas.js';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
