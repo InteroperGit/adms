@@ -20,6 +20,8 @@
     "gen-schemas": "vite-node scripts/generateJsonSchemas.ts",
     "new-client": "vite-node scripts/newClient.ts",
     "check-icons": "vite-node scripts/checkIcons.ts",
+    "pull:assets:S3": "bash scripts/pullAssetsFromD3.sh",
+    "pull:assets:S3:win": "powershell -ExecutionPolicy Bypass -File scripts/pullAssetsFromD3.ps1",
     "copy:assets:S3": "bash scripts/copyAssetsToS3.sh",
     "copy:assets:S3:win": "powershell -ExecutionPolicy Bypass -File scripts/copyAssetsToS3.ps1",
     "copy:content:S3": "bash scripts/copyContentToS3.sh",
