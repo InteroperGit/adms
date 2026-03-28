@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router';
@@ -111,7 +112,7 @@ vi.mock('@/components/ui/navigation/BreadCrumbs', () => ({
   BreadCrumbs: () => <nav data-testid="breadcrumbs" />,
 }));
 
-import { PortfolioCategoryPage } from './PortfolioCategoryPage';
+import { PortfolioCategoryPage } from '@/pages/PortfolioCategoryPage';
 
 function renderAtRoute(path: string) {
   return render(
@@ -124,7 +125,7 @@ function renderAtRoute(path: string) {
   );
 }
 
-describe('PortfolioCategoryPage', () => {
+describe('PortfolioCategoryPage (integration)', () => {
   it('renders section header title', () => {
     renderAtRoute('/portfolio/all');
     expect(screen.getByText('Наши работы')).toBeInTheDocument();
@@ -183,7 +184,6 @@ describe('PortfolioCategoryPage', () => {
   it('passes case with non-/images/ path — still included in results', () => {
     renderAtRoute('/portfolio/branding');
     const items = screen.getAllByTestId('grid-item');
-    // case-3 has external image path but still renders
     expect(items.some((el) => el.textContent === 'Кейс 3')).toBe(true);
   });
 

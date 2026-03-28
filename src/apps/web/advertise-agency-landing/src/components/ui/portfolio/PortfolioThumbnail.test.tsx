@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { PortfolioThumbnail } from './PortfolioThumbnail';
 
@@ -53,5 +53,30 @@ describe('PortfolioThumbnail', () => {
     const link = container.querySelector('a');
     expect(link).toHaveClass('from-purple-500');
     expect(link).toHaveClass('to-pink-500');
+  });
+
+  // T2 fix — shimmer / imageLoaded state
+  it('does not show shimmer when no image is provided', () => {
+    const { container } = render(<PortfolioThumbnail {...defaultProps} />);
+    const shimmer = container.querySelector('[style*="shimmer"]');
+    expect(shimmer).not.toBeInTheDocument();
+  });
+
+  it('shows shimmer initially when image is provided', () => {
+    const { container } = render(
+      <PortfolioThumbnail {...defaultProps} image="/images/thumb.jpg" />
+    );
+    const shimmer = container.querySelector('[aria-hidden="true"]');
+    expect(shimmer).toBeInTheDocument();
+  });
+
+  it('dismisses shimmer after OptimizedImage onLoad fires', () => {
+    const { container } = render(
+      <PortfolioThumbnail {...defaultProps} image="/images/thumb.jpg" />
+    );
+    const img = screen.getByTestId('optimized-image');
+    fireEvent.load(img);
+    const shimmer = container.querySelector('[aria-hidden="true"]');
+    expect(shimmer).not.toBeInTheDocument();
   });
 });

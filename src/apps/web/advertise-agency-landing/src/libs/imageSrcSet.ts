@@ -23,6 +23,9 @@ export function resolveImageSrcSet(
 ): string {
   const prefix = '/images/';
   if (!src.startsWith(prefix)) {
+    if (import.meta.env.DEV) {
+      console.warn(`[imageSrcSet] unexpected path: ${src}`);
+    }
     return '';
   }
   const relPath = src.slice(prefix.length);

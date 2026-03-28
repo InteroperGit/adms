@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { resolveImageSrcSet } from '@/libs/imageSrcSet';
 import { Skeleton } from './skeleton';
 import { cn } from '@/libs/utils';
@@ -59,13 +59,31 @@ export function OptimizedImage({
   objectFit = 'cover',
   onLoad,
 }: OptimizedImageProps) {
-  // Start as loaded for priority images (no skeleton needed), not loaded for lazy images
-  const [loaded, setLoaded] = useState(priority);
+  // Start as loaded for priority images or when src is empty (no skeleton needed)
+  const [loaded, setLoaded] = useState(priority || !src);
 
   const handleLoad = () => {
     setLoaded(true);
     onLoad?.();
   };
+
+  const handleError = () => {
+    setLoaded(true);
+    onLoad?.();
+  };
+
+  // Ref callback: fires synchronously when the <img> mounts. If the browser already
+  // has the image cached, onLoad never fires — img.complete catches that case.
+  const imgRefCallback = useCallback(
+    (img: HTMLImageElement | null) => {
+      if (img?.complete && !loaded) {
+        setLoaded(true);
+        onLoad?.();
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [src]
+  );
 
   const loadingProps = priority
     ? ({ loading: 'eager', fetchPriority: 'high' } as const)
@@ -92,6 +110,7 @@ export function OptimizedImage({
       <div className={containerStyle} style={wrapperInlineStyle}>
         {!loaded && <Skeleton className="absolute inset-0 w-full h-full" />}
         <img
+          ref={imgRefCallback}
           src={src}
           alt={alt}
           sizes={sizes}
@@ -99,7 +118,7 @@ export function OptimizedImage({
           height={height}
           className={imgClasses}
           onLoad={handleLoad}
-          onError={() => setLoaded(true)}
+          onError={handleError}
           {...loadingProps}
         />
       </div>
@@ -114,6 +133,7 @@ export function OptimizedImage({
       <picture>
         {srcset && <source type="image/webp" srcSet={srcset} sizes={sizes} />}
         <img
+          ref={imgRefCallback}
           src={src}
           alt={alt}
           sizes={sizes}
@@ -121,7 +141,7 @@ export function OptimizedImage({
           height={height}
           className={imgClasses}
           onLoad={handleLoad}
-          onError={() => setLoaded(true)}
+          onError={handleError}
           {...loadingProps}
         />
       </picture>

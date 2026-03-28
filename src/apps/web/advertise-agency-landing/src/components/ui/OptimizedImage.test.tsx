@@ -193,6 +193,24 @@ describe('OptimizedImage', () => {
     expect(screen.getByTestId('skeleton-mock')).toBeInTheDocument(); // Default shows skeleton
   });
 
+  // 8. Empty / falsy src — T1 fix
+  it('does not show skeleton when src is empty', () => {
+    render(<OptimizedImage src="" alt="No src" />);
+    expect(screen.queryByTestId('skeleton-mock')).not.toBeInTheDocument();
+  });
+
+  it('calls onLoad callback when image errors (so parent shimmer is dismissed)', async () => {
+    const handleLoad = vi.fn();
+    render(<OptimizedImage {...defaultProps} onLoad={handleLoad} />);
+    const image = screen.getByAltText(defaultProps.alt);
+
+    image.dispatchEvent(new Event('error'));
+
+    await waitFor(() => {
+      expect(handleLoad).toHaveBeenCalledTimes(1);
+    });
+  });
+
   it('passes the sizes prop to the source and img elements', () => {
     vi.stubEnv('DEV', false);
     mockResolveImageSrcSet.mockReturnValue('/test-image.jpg-srcset.webp');

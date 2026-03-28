@@ -32,7 +32,7 @@ export function PortfolioThumbnail({
   category,
   gradient,
 }: PortfolioThumbnailProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(() => !image);
 
   return (
     <a

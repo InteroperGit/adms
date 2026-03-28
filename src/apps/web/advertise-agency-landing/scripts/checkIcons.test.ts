@@ -75,6 +75,7 @@ describe('listJsonFiles', () => {
   });
 
   it('returns only .json filenames mapped to full paths', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     vi.mocked(readdirSync).mockReturnValue(['a.json', 'b.json'] as any);
     expect(listJsonFiles('/some/dir')).toEqual([
       path.join('/some/dir', 'a.json'),
@@ -83,6 +84,7 @@ describe('listJsonFiles', () => {
   });
 
   it('skips non-.json files', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     vi.mocked(readdirSync).mockReturnValue(['a.json', 'b.ts', 'c.md', 'd.json'] as any);
     expect(listJsonFiles('/some/dir')).toEqual([
       path.join('/some/dir', 'a.json'),
