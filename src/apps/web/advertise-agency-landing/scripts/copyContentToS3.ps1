@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-. "$PSScriptRoot\s3-common.ps1" -Prefix CONTENT
+. "$PSScriptRoot\s3Common.ps1" -Prefix CONTENT
 
 $root = Resolve-Path (Join-Path $PSScriptRoot '..')
 

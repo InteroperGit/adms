@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-. "$PSScriptRoot\s3-common.ps1" -Prefix ASSETS
+. "$PSScriptRoot\s3Common.ps1" -Prefix ASSETS
 
 $root        = Resolve-Path (Join-Path $PSScriptRoot '..')
 $endpointArgs = @('--endpoint-url', $env:ASSETS_S3_ENDPOINT)
