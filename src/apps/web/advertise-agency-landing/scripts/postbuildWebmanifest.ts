@@ -68,7 +68,9 @@ try {
 
   const manifest = buildWebmanifest(site, theme.colors.primary);
   writeFileSync(resolve(distDir, 'site.webmanifest'), JSON.stringify(manifest, null, 2), 'utf-8');
-  log(`${colors.green}\u2713${colors.reset} site.webmanifest written to build/client/site.webmanifest in ${Date.now() - start}ms`);
+  log(
+    `${colors.green}\u2713${colors.reset} site.webmanifest written to build/client/site.webmanifest in ${Date.now() - start}ms`
+  );
 } catch (err) {
   console.error(`${colors.yellow}[webmanifest] Error:${colors.reset}`, err);
   process.exit(1);

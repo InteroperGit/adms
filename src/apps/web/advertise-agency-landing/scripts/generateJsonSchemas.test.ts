@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { schemaUrl, getSchemaPathForFile, isObjectRoot, injectSchema } from './generateJsonSchemas.js';
+import {
+  schemaUrl,
+  getSchemaPathForFile,
+  isObjectRoot,
+  injectSchema,
+} from './generateJsonSchemas.js';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -9,9 +14,7 @@ const root = path.resolve(__dirname, '..');
 
 describe('schemaUrl', () => {
   it('returns correct path without section', () => {
-    expect(schemaUrl('config', 'site')).toBe(
-      './data/_schema/schema/config/site.schema.json'
-    );
+    expect(schemaUrl('config', 'site')).toBe('./data/_schema/schema/config/site.schema.json');
   });
 
   it('returns correct nested path with section', () => {

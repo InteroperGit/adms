@@ -47,7 +47,9 @@ describe('buildWebmanifest', () => {
   it('icons includes apple-touch-icon entry', () => {
     const manifest = buildWebmanifest(site, '17 93% 52%') as Record<string, unknown>;
     const icons = manifest.icons as Array<Record<string, string>>;
-    expect(icons.some((i) => i.src === '/apple-touch-icon.png' && i.sizes === '180x180')).toBe(true);
+    expect(icons.some((i) => i.src === '/apple-touch-icon.png' && i.sizes === '180x180')).toBe(
+      true
+    );
   });
 
   it('icons includes favicon.svg entry', () => {

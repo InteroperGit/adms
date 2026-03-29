@@ -96,7 +96,11 @@ export function PortfolioGrid({ items, activeSlug }: PortfolioGridProps) {
     <>
       <CategoryNav activeSlug={activeSlug} />
 
-      <div key={activeSlug ?? 'all'} ref={gridRef} className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <div
+        key={activeSlug ?? 'all'}
+        ref={gridRef}
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
+      >
         {withHref.length > 0 ? (
           withHref.map((item) => <PortfolioCard key={item.slug} item={item} />)
         ) : (

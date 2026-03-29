@@ -46,7 +46,7 @@ describe('walkJsonFiles', () => {
     vi.mocked(readdirSync).mockReturnValue([
       { name: 'a.json', isDirectory: () => false, isFile: () => true },
       { name: 'b.txt', isDirectory: () => false, isFile: () => true },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
     const result = walkJsonFiles('/dir');
     expect(result).toEqual([path.join('/dir', 'a.json')]);

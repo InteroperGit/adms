@@ -392,7 +392,10 @@ export function isObjectRoot(content: unknown): boolean {
   return typeof content === 'object' && content !== null && !Array.isArray(content);
 }
 
-export function injectSchema(obj: Record<string, unknown>, schemaPath: string): Record<string, unknown> {
+export function injectSchema(
+  obj: Record<string, unknown>,
+  schemaPath: string
+): Record<string, unknown> {
   // Create new object with $schema as first field
   const result: Record<string, unknown> = {
     $schema: schemaPath,

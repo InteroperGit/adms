@@ -40,7 +40,9 @@ try {
   const start = Date.now();
   log('Generating robots.txt...');
   writeFileSync(resolve(distDir, 'robots.txt'), content, 'utf-8');
-  log(`${colors.green}\u2713${colors.reset} robots.txt written to build/client/robots.txt in ${Date.now() - start}ms`);
+  log(
+    `${colors.green}\u2713${colors.reset} robots.txt written to build/client/robots.txt in ${Date.now() - start}ms`
+  );
 } catch (err) {
   console.error(`${colors.yellow}[robots] Error:${colors.reset}`, err);
   process.exit(1);

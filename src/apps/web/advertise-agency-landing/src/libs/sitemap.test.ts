@@ -57,7 +57,13 @@ describe('buildSitemapXml', () => {
 
   it('supports all changefreq values', () => {
     const freqs: SitemapEntry['changefreq'][] = [
-      'always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never',
+      'always',
+      'hourly',
+      'daily',
+      'weekly',
+      'monthly',
+      'yearly',
+      'never',
     ];
     for (const changefreq of freqs) {
       const xml = buildSitemapXml([{ loc: 'https://example.com/', changefreq }]);
