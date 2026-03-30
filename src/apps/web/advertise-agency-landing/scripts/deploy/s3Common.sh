@@ -6,7 +6,7 @@ set -euo pipefail
 S3_PREFIX="${1:?Usage: source s3-common.sh <PREFIX>  (e.g. ASSETS or CONTENT)}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ENV_FILE="$SCRIPT_DIR/../.env.deploy"
+ENV_FILE="$SCRIPT_DIR/../../.env.deploy"
 
 if [[ ! -f "$ENV_FILE" ]]; then
   echo "FATAL: .env.deploy not found at $ENV_FILE" >&2

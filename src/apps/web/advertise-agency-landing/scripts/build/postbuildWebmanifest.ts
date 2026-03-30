@@ -11,11 +11,11 @@
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { writeFileSync } from 'fs';
-import { readJson } from './buildUtils';
+import { readJson } from '../utils/buildUtils';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const rootDir = resolve(__dirname, '..');
+const rootDir = resolve(__dirname, '..', '..');
 const distDir = resolve(rootDir, 'build/client');
 
 const colors = {

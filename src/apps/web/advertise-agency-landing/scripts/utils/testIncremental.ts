@@ -28,11 +28,11 @@ import {
   computeRouteManifest,
   diffManifest,
   loadPreviousManifest,
-} from '../src/plugins/incrementalSSGPlugin';
+} from '../../src/plugins/incrementalSSGPlugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const rootDir = resolve(__dirname, '..');
+const rootDir = resolve(__dirname, '..', '..');
 
 interface TestResult {
   name: string;

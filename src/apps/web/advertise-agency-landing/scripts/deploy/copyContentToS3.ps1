@@ -31,7 +31,7 @@ function Format-Bytes {
 . "$PSScriptRoot\s3Common.ps1" -Prefix CONTENT
 
 $S3Uri = "s3://$($env:CONTENT_S3_BUCKET)"
-$RootDir = Resolve-Path (Join-Path $PSScriptRoot '..')
+$RootDir = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 $BuildDir = Join-Path $RootDir 'build\client'
 $endpointArgs = @('--endpoint-url', $env:CONTENT_S3_ENDPOINT)
 

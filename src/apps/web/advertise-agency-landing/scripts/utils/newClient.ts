@@ -13,7 +13,7 @@ import * as readline from 'readline';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, '..', '..');
 const examplesDir = path.join(root, 'data/_schema/examples');
 const contentDir = path.join(root, 'data/content');
 

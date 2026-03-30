@@ -24,7 +24,7 @@ import {
   saveCache,
   readBuildDiff,
   clearBuildDiff,
-} from '../src/plugins/incrementalSSGPlugin.ts';
+} from '../../src/plugins/incrementalSSGPlugin.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -66,7 +66,7 @@ function formatDuration(ms: number): string {
 
 async function main() {
   const startTime = Date.now();
-  const rootDir = resolve(__dirname, '..');
+  const rootDir = resolve(__dirname, '..', '..');
   const distDir = resolve(rootDir, 'build/client');
 
   try {

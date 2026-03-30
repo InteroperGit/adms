@@ -1,7 +1,7 @@
 import type { Config } from "@react-router/dev/config";
 import { readFileSync } from "fs";
 import path from "path";
-import { readJson, walkJsonFiles, extractYearMonth } from "./scripts/buildUtils";
+import { readJson, walkJsonFiles, extractYearMonth } from "./scripts/utils/buildUtils";
 import {
   computeRouteManifest,
   loadPreviousManifest,

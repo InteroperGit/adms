@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, writeFileSync, readdirSync, copyFileSync } from 'fs';
 import path from 'path';
 import type { Plugin } from 'vite';
-import { readJson, walkJsonFiles, extractYearMonth } from '../../scripts/buildUtils';
+import { readJson, walkJsonFiles, extractYearMonth } from '../../scripts/utils/buildUtils';
 
 // ---------------------------------------------------------------------------
 // Local types (mirrors src/types/config/* without importing app-side modules)

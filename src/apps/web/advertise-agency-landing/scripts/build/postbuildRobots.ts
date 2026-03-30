@@ -15,7 +15,7 @@ import { writeFileSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const distDir = resolve(__dirname, '..', 'build/client');
+const distDir = resolve(__dirname, '..', '..', 'build/client');
 
 const colors = {
   reset: '\x1b[0m',

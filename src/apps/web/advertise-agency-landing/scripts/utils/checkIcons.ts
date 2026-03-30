@@ -11,10 +11,10 @@
 import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
-import { ICON_MAP } from '../src/types/shared/iconMap';
+import { ICON_MAP } from '../../src/types/shared/iconMap';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, '..', '..');
 const dataDir = path.join(root, 'data/content');
 const iconMapPath = path.join(root, 'src/types/shared/iconMap.ts');
 

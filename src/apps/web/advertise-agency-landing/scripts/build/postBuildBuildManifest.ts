@@ -167,7 +167,7 @@ async function generateManifests() {
 
   // Resolve paths
   const scriptDir = join(import.meta.dirname);
-  const rootDir = join(scriptDir, '..');
+  const rootDir = join(scriptDir, '..', '..');
   const buildDir = join(rootDir, 'build/client');
 
   log('Starting manifest generation...');

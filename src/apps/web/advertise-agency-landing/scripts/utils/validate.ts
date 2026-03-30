@@ -12,43 +12,43 @@ import { fileURLToPath } from 'url';
 import { readJson, walkJsonFiles } from './buildUtils';
 
 // ── Config schemas ─────────────────────────────────────────────────────────────
-import { SiteDataSchema } from '../src/types/config/siteData';
-import { ThemeSchema } from '../src/types/config/theme';
-import { CategoriesSchema } from '../src/types/config/categories';
-import { PortfolioConfigSchema } from '../src/types/config/portfolioConfig';
-import { CookiesContentSchema } from '../src/types/config/cookies';
-import { LegalDataSchema } from '../src/types/config/legalData';
-import { SeoConfigSchema } from '../src/types/config/seo';
-import { OrderFormsDataSchema } from '../src/types/config/orderForms';
-import { NotFoundContentSchema } from '../src/types/config/notFound';
+import { SiteDataSchema } from '../../src/types/config/siteData';
+import { ThemeSchema } from '../../src/types/config/theme';
+import { CategoriesSchema } from '../../src/types/config/categories';
+import { PortfolioConfigSchema } from '../../src/types/config/portfolioConfig';
+import { CookiesContentSchema } from '../../src/types/config/cookies';
+import { LegalDataSchema } from '../../src/types/config/legalData';
+import { SeoConfigSchema } from '../../src/types/config/seo';
+import { OrderFormsDataSchema } from '../../src/types/config/orderForms';
+import { NotFoundContentSchema } from '../../src/types/config/notFound';
 
 // ── Section schemas ────────────────────────────────────────────────────────────
-import { HeaderContentSchema } from '../src/types/sections/header/header';
-import { HeroContentSchema } from '../src/types/sections/hero/hero';
-import { CarouselSlidesSchema } from '../src/types/sections/carousel/carousel';
-import { CarouselSectionContentSchema } from '../src/types/sections/carousel/carouselContent';
-import { AboutSectionContentSchema } from '../src/types/sections/about/aboutContent';
-import { AboutValuesSchema } from '../src/types/sections/about/aboutValues';
-import { ServicesSectionContentSchema } from '../src/types/sections/services/servicesContent';
-import { ServicesSchema } from '../src/types/sections/services/services';
-import { AdvantagesSectionContentSchema } from '../src/types/sections/advantages/advantagesContent';
-import { AdvantagesSchema } from '../src/types/sections/advantages/advantages';
-import { CallToActionContentSchema } from '../src/types/sections/call-to-action/callToAction';
-import { TestimonialsSectionContentSchema } from '../src/types/sections/testimonials/testimonialsContent';
-import { TestimonialsSchema } from '../src/types/sections/testimonials/testimonials';
-import { ContactContentSchema } from '../src/types/sections/contact/contact';
-import { FooterContentSchema } from '../src/types/sections/footer/footer';
-import { PortfolioPageContentSchema } from '../src/types/sections/portfolio/portfolioPage';
+import { HeaderContentSchema } from '../../src/types/sections/header/header';
+import { HeroContentSchema } from '../../src/types/sections/hero/hero';
+import { CarouselSlidesSchema } from '../../src/types/sections/carousel/carousel';
+import { CarouselSectionContentSchema } from '../../src/types/sections/carousel/carouselContent';
+import { AboutSectionContentSchema } from '../../src/types/sections/about/aboutContent';
+import { AboutValuesSchema } from '../../src/types/sections/about/aboutValues';
+import { ServicesSectionContentSchema } from '../../src/types/sections/services/servicesContent';
+import { ServicesSchema } from '../../src/types/sections/services/services';
+import { AdvantagesSectionContentSchema } from '../../src/types/sections/advantages/advantagesContent';
+import { AdvantagesSchema } from '../../src/types/sections/advantages/advantages';
+import { CallToActionContentSchema } from '../../src/types/sections/call-to-action/callToAction';
+import { TestimonialsSectionContentSchema } from '../../src/types/sections/testimonials/testimonialsContent';
+import { TestimonialsSchema } from '../../src/types/sections/testimonials/testimonials';
+import { ContactContentSchema } from '../../src/types/sections/contact/contact';
+import { FooterContentSchema } from '../../src/types/sections/footer/footer';
+import { PortfolioPageContentSchema } from '../../src/types/sections/portfolio/portfolioPage';
 
 // ── Portfolio schemas ──────────────────────────────────────────────────────────
-import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../src/types/portfolio';
-import { PortfolioCaseContentSchema } from '../src/types/portfolio/portfolioCaseContent';
-import { ImageGalleryContentSchema } from '../src/types/shared/imageGallery';
+import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../../src/types/portfolio';
+import { PortfolioCaseContentSchema } from '../../src/types/portfolio/portfolioCaseContent';
+import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, '..', '..');
 const portfolioDir = path.join(root, 'data/content/portfolio');
 
 // ── Utilities ──────────────────────────────────────────────────────────────────

@@ -13,12 +13,12 @@
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { writeFileSync, readFileSync } from 'fs';
-import { readJson, walkJsonFiles, extractYearMonth } from './buildUtils';
-import { buildSitemapXml, type SitemapEntry } from '../src/libs/sitemap';
+import { readJson, walkJsonFiles, extractYearMonth } from '../utils/buildUtils';
+import { buildSitemapXml, type SitemapEntry } from '../../src/libs/sitemap';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const rootDir = resolve(__dirname, '..');
+const rootDir = resolve(__dirname, '..', '..');
 const distDir = resolve(rootDir, 'build/client');
 
 const BASE_URL = (process.env.SITE_URL ?? 'https://example.com').replace(/\/$/, '');

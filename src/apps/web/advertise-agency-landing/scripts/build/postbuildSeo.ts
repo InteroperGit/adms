@@ -9,11 +9,11 @@
 
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
-import { processBuiltHtml } from '../src/plugins/seoMetaPlugin.ts';
+import { processBuiltHtml } from '../../src/plugins/seoMetaPlugin.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const rootDir = resolve(__dirname, '..');
+const rootDir = resolve(__dirname, '..', '..');
 
 const colors = {
   reset: '\x1b[0m',

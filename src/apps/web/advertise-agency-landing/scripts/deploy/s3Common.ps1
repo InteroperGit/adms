@@ -7,7 +7,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$envFile = Join-Path $PSScriptRoot '..\.env.deploy'
+$envFile = Join-Path $PSScriptRoot '..\..\.env.deploy'
 if (-not (Test-Path $envFile)) {
     Write-Host "FATAL: .env.deploy not found at $envFile" -ForegroundColor Red
     exit 1

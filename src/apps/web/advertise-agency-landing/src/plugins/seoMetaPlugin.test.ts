@@ -12,14 +12,14 @@ vi.mock('fs', () => {
   return { ...mod, default: mod };
 });
 
-vi.mock('../../scripts/buildUtils', () => ({
+vi.mock('../../scripts/utils/buildUtils', () => ({
   readJson: vi.fn(),
   walkJsonFiles: vi.fn(() => []),
   extractYearMonth: vi.fn(() => ({ year: '2024', month: '05' })),
 }));
 
 import { processBuiltHtml } from './seoMetaPlugin';
-import { readJson, walkJsonFiles, extractYearMonth } from '../../scripts/buildUtils';
+import { readJson, walkJsonFiles, extractYearMonth } from '../../scripts/utils/buildUtils';
 import { readFileSync } from 'fs';
 
 const ROOT = '/project';

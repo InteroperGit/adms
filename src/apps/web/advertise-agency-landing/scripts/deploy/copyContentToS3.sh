@@ -5,7 +5,7 @@ set -euo pipefail
 # Only uploads changed files, deletes removed files, updates manifests last
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 BUILD_DIR="$ROOT_DIR/build/client"
 # Convert to Windows path with forward slashes for Node.js
 BUILD_DIR_NODE=$(cygpath -wm "$BUILD_DIR" 2>/dev/null || echo "$BUILD_DIR" | sed 's|^/d/|D:/|' | sed 's|\\|/|g')
