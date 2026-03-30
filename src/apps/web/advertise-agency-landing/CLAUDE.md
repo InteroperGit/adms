@@ -70,3 +70,4 @@ Detailed documentation is organized in `ai/docs/`:
 - **[`ai/docs/devWorkflow.md`](./ai/docs/devWorkflow.md)** — Dev commands, build pipeline, preview server
 - **[`ai/docs/unitTests.md`](./ai/docs/unitTests.md)** — Unit test stack, mock patterns, conventions, and coverage map
 - **[`ai/docs/integrationTests.md`](./ai/docs/integrationTests.md)** — Playwright e2e + Vitest integration tests (patterns, skip guards, mock scope)
+- **[`ai/docs/deployment.md`](./ai/docs/deployment.md)** — S3 deployment guide, manifest-based selective sync, troubleshooting
