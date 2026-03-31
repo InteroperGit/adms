@@ -42,6 +42,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content={themeColor} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         {/* Anti-FOUC: must execute before any paint to prevent dark-mode flash */}
         <script dangerouslySetInnerHTML={{ __html: ANTI_FOUC_SCRIPT }} />
