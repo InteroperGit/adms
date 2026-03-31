@@ -34,10 +34,8 @@ coverage/
 data/content/
 !data/_schema/
 
-# Public — only favicon.svg and logo.svg are tracked
-public/*
-!public/favicon.svg
-!public/logo.svg
+# Public — all files synced to S3, not tracked in git
+public/
 
 # Generated — run pnpm gen-schemas to rebuild
 data/_schema/schema/
