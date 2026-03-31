@@ -16,8 +16,15 @@ interface LogoProps {
  */
 export function Logo({ className }: LogoProps) {
   return (
-    <a href={headerContent.logo.href} className={cn('inline-flex', className)}>
-      <img src={headerContent.logo.src} alt="" className="h-6 w-auto" />
+    <a
+      href={headerContent.logo.href}
+      className={cn('inline-flex', className)}
+    >
+      <img
+        src={headerContent.logo.src}
+        alt=""
+        className="h-6 w-auto transition-all duration-300 hover:brightness-125"
+      />
     </a>
   );
 }
