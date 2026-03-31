@@ -10,7 +10,7 @@
     "postbuild:sitemap": "vite-node scripts/build/postbuildSitemap.ts",
     "postbuild:robots": "vite-node scripts/build/postbuildRobots.ts",
     "postbuild:buildManifest": "vite-node scripts/build/postBuildBuildManifest.ts",
-    "postbuild": "pnpm postbuild:buildManifest && pnpm postbuild:seo && pnpm postbuild:cache && pnpm postbuild:sitemap && pnpm postbuild:robots",
+    "postbuild": "pnpm postbuild:cache && pnpm postbuild:seo && pnpm postbuild:buildManifest && pnpm postbuild:sitemap && pnpm postbuild:robots",
     "build": "tsc -b tsconfig.app.json && react-router build && pnpm postbuild",
     "build:full": "rm -rf .ssg-cache && pnpm build",
     "test-incremental": "vite-node scripts/utils/testIncremental.ts",

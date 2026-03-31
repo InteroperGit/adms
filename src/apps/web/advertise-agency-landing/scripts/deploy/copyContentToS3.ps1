@@ -7,7 +7,7 @@ param(
 )
 
 Set-StrictMode -Version Latest
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Continue'
 
 # S3 constants
 $MANIFEST_FILE = 'manifest.json'
@@ -31,20 +31,24 @@ function Format-Bytes {
 . "$PSScriptRoot\s3Common.ps1" -Prefix CONTENT
 
 $S3Uri = "s3://$($env:CONTENT_S3_BUCKET)"
-$RootDir = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
+$RootDir = Resolve-Path "$PSScriptRoot\..\.."
 $BuildDir = Join-Path $RootDir 'build\client'
 $endpointArgs = @('--endpoint-url', $env:CONTENT_S3_ENDPOINT)
 
-# Temp files for cleanup
-$TempBuildMeta = "$env:TEMP\buildMeta.$PID.json"
-$TempManifest = "$env:TEMP\manifest.$PID.json"
+# Temp files for cleanup (defined at script scope for Cleanup function)
+$script:TempBuildMeta = "$env:TEMP\buildMeta.$PID.json"
+$script:TempManifest = "$env:TEMP\manifest.$PID.json"
 
-# Cleanup function
+# Cleanup function - uses script scope variables
 function Cleanup {
-    Remove-Item $TempBuildMeta -Force -ErrorAction SilentlyContinue
-    Remove-Item $TempManifest -Force -ErrorAction SilentlyContinue
+    Write-Dim "Cleaning up temporary files..."
+    if (Test-Path $script:TempBuildMeta) {
+        Remove-Item $script:TempBuildMeta -Force -ErrorAction SilentlyContinue
+    }
+    if (Test-Path $script:TempManifest) {
+        Remove-Item $script:TempManifest -Force -ErrorAction SilentlyContinue
+    }
 }
-trap { Cleanup; exit 1 }
 
 # Counters (derived from arrays at end)
 $BytesUploaded = 0
@@ -260,25 +264,20 @@ foreach ($file in $ChangedFiles) {
     }
 }
 
-# Delete removed files
+# Skip deletion of removed files for safety
+# Files in remote but not in local manifest are NOT deleted
+# This prevents accidental data loss during deployment
 if ($RemovedFiles.Count -gt 0) {
     Write-Host ""
-    Write-Info "Deleting removed files..."
-
-    foreach ($file in $RemovedFiles) {
-        $Dest = "$S3Uri/$file"
-        $AwsParams = @(
-            's3', 'rm', $Dest,
-            '--quiet'
-        ) + $endpointArgs
-
-        aws @AwsParams 2>$null
-        if ($LASTEXITCODE -eq 0) {
-            $FilesRemoved++
-        } else {
-            Write-Err "Failed to delete: $file"
-        }
-    }
+    Write-Info "Files to remove (skipped for safety): $($RemovedFiles.Count)"
+    # Uncomment below to enable deletion:
+    # Write-Info "Deleting removed files..."
+    # foreach ($file in $RemovedFiles) {
+    #     $Dest = "$S3Uri/$file"
+    #     $AwsParams = @('s3', 'rm', $Dest, '--quiet') + $endpointArgs
+    #     aws @AwsParams 2>$null
+    #     if ($LASTEXITCODE -eq 0) { $FilesRemoved++ }
+    # }
 }
 
 # Upload manifests LAST (critical for atomic state)

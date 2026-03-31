@@ -16,10 +16,7 @@ interface LogoProps {
  */
 export function Logo({ className }: LogoProps) {
   return (
-    <a
-      href={headerContent.logo.href}
-      className={cn('inline-flex', className)}
-    >
+    <a href={headerContent.logo.href} className={cn('inline-flex', className)}>
       <img
         src={headerContent.logo.src}
         alt=""
