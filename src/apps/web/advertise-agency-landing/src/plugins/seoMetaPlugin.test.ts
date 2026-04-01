@@ -422,7 +422,7 @@ describe('handleCasePage (route /portfolio/...)', () => {
     title: 'My Case',
     category: 'Digital',
     description: 'A great case study',
-    publishDate: '2024-05-15',
+    publishedAt: '2024-05-15',
     meta: { title: 'Meta Title', description: 'Meta Description' },
     images: { og: 'https://example.com/case-og.jpg' },
   };

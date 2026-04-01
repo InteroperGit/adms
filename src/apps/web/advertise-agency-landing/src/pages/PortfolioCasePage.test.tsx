@@ -6,7 +6,7 @@ import type { PortfolioCase } from '@/types/portfolio';
 const { MOCK_CASE } = vi.hoisted(() => {
   const MOCK_CASE: PortfolioCase = {
     slug: 'test-case',
-    publishDate: '2024-05-10',
+    publishedAt: '2024-05-10',
     title: 'Тестовый кейс',
     category: 'Брендинг',
     description: 'Описание тестового кейса',

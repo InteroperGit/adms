@@ -452,7 +452,7 @@ export default {
 2. **T0.2:** Update all existing portfolio JSON files — rename `publishDate` to `publishedAt` (script or manual)
 3. **T0.3:** Update `ai/docs/*.md` — update documentation examples to use `publishedAt`
 4. **T0.4:** Verify `pnpm validate` passes with updated schema
-
+q
 ### Phase 1: Core Types & Schemas (6 tasks)
 5. **T1:** Create `src/types/articles/article.ts` — `BaseArticleSchema` (with `publishedAt` required)
 6. **T2:** Create `src/types/articles/portfolioArticle.ts` — extends base with `overview`

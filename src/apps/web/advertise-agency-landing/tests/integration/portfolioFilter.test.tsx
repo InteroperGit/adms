@@ -86,7 +86,7 @@ vi.mock('@/types/portfolio/portfolioCases', () => ({
   allPortfolioCases: [
     {
       slug: 'case-branding-1',
-      publishDate: '2024-03-15',
+      publishedAt: '2024-03-15',
       title: 'Брендинг кейс 1',
       category: 'Брендинг',
       description: 'Описание 1',
@@ -98,7 +98,7 @@ vi.mock('@/types/portfolio/portfolioCases', () => ({
     },
     {
       slug: 'case-branding-2',
-      publishDate: '2024-03-20',
+      publishedAt: '2024-03-20',
       title: 'Брендинг кейс 2',
       category: 'Брендинг',
       description: 'Описание 2',
@@ -110,7 +110,7 @@ vi.mock('@/types/portfolio/portfolioCases', () => ({
     },
     {
       slug: 'case-web-1',
-      publishDate: '2024-04-10',
+      publishedAt: '2024-04-10',
       title: 'Веб кейс 1',
       category: 'Веб',
       description: 'Описание веб',

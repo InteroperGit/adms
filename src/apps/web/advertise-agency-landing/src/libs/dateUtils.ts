@@ -1,15 +1,19 @@
 /**
  * Extract year and month components from an ISO 8601 date string.
  *
- * Parses a date string in the format "YYYY-MM-DD" and extracts the year
- * (first 4 characters) and month (characters 5-6) components.
+ * Supports both "YYYY-MM-DD" and "YYYY-MM-DDTHH:mm:ssZ" formats.
+ * Extracts the year (first 4 characters) and month (characters 5-6) components.
  *
- * @param date - ISO date string in format "YYYY-MM-DD" (e.g., "2024-03-14")
+ * @param date - ISO date string in format "YYYY-MM-DD" or "YYYY-MM-DDTHH:mm:ssZ"
  * @returns An object containing the extracted year and month as strings
- * @throws {Error} If the date string is not in the correct "YYYY-MM-DD" format
+ * @throws {Error} If the date string is not in a valid format
  *
  * @example
  * const { year, month } = extractYearMonth("2024-03-14");
+ * console.log(year, month); // "2024" "03"
+ *
+ * @example
+ * const { year, month } = extractYearMonth("2024-03-14T00:00:00Z");
  * console.log(year, month); // "2024" "03"
  *
  * @example
@@ -21,9 +25,10 @@ export function extractYearMonth(date: string): { year: string; month: string } 
     throw new Error('Date must be a non-empty string');
   }
 
-  if (date.length !== 10) {
+  // Support both "YYYY-MM-DD" (10 chars) and "YYYY-MM-DDTHH:mm:ssZ" (20 chars) formats
+  if (date.length < 10) {
     throw new Error(
-      `Invalid date format. Expected "YYYY-MM-DD", got "${date}" (length ${date.length})`
+      `Invalid date format. Expected "YYYY-MM-DD" or "YYYY-MM-DDTHH:mm:ssZ", got "${date}" (length ${date.length})`
     );
   }
 

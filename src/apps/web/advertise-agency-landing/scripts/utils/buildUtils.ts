@@ -36,8 +36,11 @@ export function walkJsonFiles(dir: string): string[] {
 }
 
 /**
- * Extract year and month from ISO date string (YYYY-MM-DD).
+ * Extract year and month from ISO date string (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ).
  */
 export function extractYearMonth(date: string): { year: string; month: string } {
-  return { year: date.slice(0, 4), month: date.slice(5, 7) };
+  if (date.length >= 7) {
+    return { year: date.slice(0, 4), month: date.slice(5, 7) };
+  }
+  throw new Error(`Invalid date format: ${date}`);
 }

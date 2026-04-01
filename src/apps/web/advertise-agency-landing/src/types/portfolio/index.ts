@@ -44,8 +44,8 @@ export const portfolioSectionContent = PortfolioSectionContentSchema.parse(raw);
 export const PortfolioCaseSchema = z.object({
   /** Unique identifier for case (used in URL slug) */
   slug: z.string(),
-  /** Publication date in YYYY-MM-DD format */
-  publishDate: z.string(),
+  /** Publication date in ISO datetime format (e.g., "2024-01-15T00:00:00Z") */
+  publishedAt: z.string(),
   /** Case project title */
   title: z.string(),
   /** Category slug (branding, contextual-ads, outdoor, etc.) */

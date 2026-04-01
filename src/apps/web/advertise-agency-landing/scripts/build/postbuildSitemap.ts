@@ -41,7 +41,7 @@ interface CategoryEntry {
 interface CaseEntry {
   slug: string;
   category: string;
-  publishDate: string;
+  publishedAt: string;
 }
 
 const today = new Date().toISOString().slice(0, 10);
@@ -69,13 +69,13 @@ export function buildEntries(): SitemapEntry[] {
   }));
 
   const caseRoutes: SitemapEntry[] = cases.flatMap((c) => {
-    const { year, month } = extractYearMonth(c.publishDate);
+    const { year, month } = extractYearMonth(c.publishedAt);
     const catSlug = categories.find((cat) => cat.name === c.category)?.slug;
     const entry = (p: string): SitemapEntry => ({
       loc: `${BASE_URL}${p}`,
       changefreq: 'monthly',
       priority: 0.7,
-      lastmod: c.publishDate.slice(0, 10),
+      lastmod: c.publishedAt.slice(0, 10),
     });
     const allPath = `/portfolio/all/${year}/${month}/${c.slug}`;
     return catSlug

@@ -41,7 +41,7 @@ interface PortfolioGridProps {
  * - Page 1 omits the `?page` param entirely for clean canonical URLs.
  *
  * **Href construction** — `extractYearMonth` derives `year` and `month` from each
- * case's `publishDate` so the URL matches the file-system path in `data/portfolio/`.
+ * case's `publishedAt` so the URL matches the file-system path in `data/portfolio/`.
  *
  * **Empty state** — when `items` is empty (e.g. a category with no cases), a full-width
  * centred message is rendered using `portfolioConfig.emptyLabel`.
@@ -72,7 +72,7 @@ export function PortfolioGrid({ items, activeSlug }: PortfolioGridProps) {
   const paged = items.slice((safePage - 1) * cfg.perPage, safePage * cfg.perPage);
 
   const withHref: PortfolioCaseWithHref[] = paged.map((item) => {
-    const { year, month } = extractYearMonth(item.publishDate);
+    const { year, month } = extractYearMonth(item.publishedAt);
     return {
       ...item,
       href: `/portfolio/${activeSlug ?? 'all'}/${year}/${month}/${item.slug}`,

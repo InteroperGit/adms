@@ -21,7 +21,7 @@ interface CategoryEntry {
 interface CaseEntry {
   slug: string;
   category: string;
-  publishDate: string;
+  publishedAt: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -54,7 +54,7 @@ export default {
 
     // Each case under /all/ and under its own category
     const caseRoutes = cases.flatMap((c) => {
-      const { year, month } = extractYearMonth(c.publishDate);
+      const { year, month } = extractYearMonth(c.publishedAt);
       const catSlug = categories.find((cat) => cat.name === c.category)?.slug;
       const allPath = `/portfolio/all/${year}/${month}/${c.slug}`;
       return catSlug

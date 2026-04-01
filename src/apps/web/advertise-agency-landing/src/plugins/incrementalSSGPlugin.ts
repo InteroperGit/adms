@@ -136,14 +136,14 @@ function buildCaseRouteDeps(
       const caseData = JSON.parse(readFileSync(caseFile, 'utf-8')) as {
         slug?: string;
         category?: string;
-        publishDate?: string;
+        publishedAt?: string;
       };
 
-      if (!caseData.slug || !caseData.category || !caseData.publishDate) {
+      if (!caseData.slug || !caseData.category || !caseData.publishedAt) {
         continue;
       }
 
-      const { year, month } = extractYearMonth(caseData.publishDate);
+      const { year, month } = extractYearMonth(caseData.publishedAt);
       const catSlug = categoryByName.get(caseData.category);
 
       const routes = [

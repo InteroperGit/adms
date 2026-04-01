@@ -78,7 +78,7 @@ The CLI prompts for:
 
 **Commit message format:**
 - Type prefix: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`
-- Example: `feat(portfolioCase): add publishDate field to case schema`
+- Example: `feat(portfolioCase): add publishedAt field to case schema`
 - Reference task: `closes #NNN` or task ID if applicable
 
 **Branch convention:**
@@ -179,6 +179,6 @@ pnpm dlx shadcn@latest add <component-name>
 - Reload VSCode window if schema mappings don't appear
 
 **Portfolio cases not showing:**
-- Ensure case JSON includes required fields: `slug`, `publishDate`, `category`, `title`, `description`, `hero`, `tags`, `meta`, `overview`, `content`
+- Ensure case JSON includes required fields: `slug`, `publishedAt`, `category`, `title`, `description`, `hero`, `tags`, `meta`, `overview`, `content`
 - Run `pnpm validate` to check schema compliance
 - Verify category name matches entry in `data/content/config/categories.json`

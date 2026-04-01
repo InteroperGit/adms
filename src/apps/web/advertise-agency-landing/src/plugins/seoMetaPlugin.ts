@@ -34,7 +34,7 @@ interface CaseData {
   title: string;
   category: string;
   description: string;
-  publishDate: string;
+  publishedAt: string;
   meta?: { title?: string; description?: string };
   images?: { og?: string };
 }
@@ -154,7 +154,7 @@ function handleCasePage(
   const ogImage = caseData.images?.og ?? seo.defaultOgImage;
 
   const catSlug = categories.find((c) => c.name === caseData.category)?.slug ?? 'all';
-  const { year, month } = extractYearMonth(caseData.publishDate);
+  const { year, month } = extractYearMonth(caseData.publishedAt);
   const canonicalUrl = `${seo.siteUrl}/portfolio/${catSlug}/${year}/${month}/${caseSlug}`;
 
   let out = html;

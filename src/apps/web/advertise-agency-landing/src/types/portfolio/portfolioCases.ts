@@ -23,7 +23,7 @@ export const portfolioCaseMap: Record<string, PortfolioCase> = Object.fromEntrie
 /**
  * @description All portfolio cases as an array, extracted from portfolioCaseMap values.
  * Use for rendering portfolio listings and filtering by category. Note: not automatically
- * sorted; caller should sort by publishDate if needed.
+ * sorted; caller should sort by publishedAt if needed.
  */
 export const allPortfolioCases: PortfolioCase[] = Object.values(portfolioCaseMap);
 
@@ -33,7 +33,7 @@ export const allPortfolioCases: PortfolioCase[] = Object.values(portfolioCaseMap
  * Each case includes the route path: `/portfolio/{categorySlug}/{year}/{month}/{slug}`
  */
 export const allPortfolioCasesWithHrefs: PortfolioCaseWithHref[] = allPortfolioCases.map((c) => {
-  const { year, month } = extractYearMonth(c.publishDate);
+  const { year, month } = extractYearMonth(c.publishedAt);
   return {
     ...c,
     href: `/portfolio/${categorySlug(c.category)}/${year}/${month}/${c.slug}`,

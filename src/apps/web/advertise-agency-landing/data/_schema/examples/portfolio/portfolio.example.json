@@ -1,7 +1,7 @@
 {
   "$schema": "../../schema/portfolio/portfolio.schema.json",
   "slug": "example-project",
-  "publishDate": "2024-01-15",
+  "publishedAt": "2024-01-15",
   "title": "Название проекта",
   "category": "Брендинг",
   "description": "Краткое описание проекта для карточки портфолио (1-2 предложения).",

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Portfolio cases are organized in a **nested folder hierarchy** by category, year, and month. Each case file includes a required `publishDate` field for chronological ordering.
+Portfolio cases are organized in a **nested folder hierarchy** by category, year, and month. Each case file includes a required `publishedAt` field for chronological ordering.
 
 ## Directory Structure
 
@@ -24,7 +24,7 @@ data/content/portfolio/
 Each portfolio case file must include:
 
 - **`slug`** (string, required) — unique identifier (should match filename suffix)
-- **`publishDate`** (string, required) — ISO date format `"YYYY-MM-DD"`
+- **`publishedAt`** (string, required) — ISO date format `"YYYY-MM-DD"`
 - **`category`** (string, required) — category name (matched against `data/content/config/categories.json`)
 - **`title`** (string, required) — case title
 - **`description`** (string, required) — short description (1–2 sentences)
@@ -51,7 +51,7 @@ Each portfolio case file must include:
 ```json
 {
   "slug": "artplex",
-  "publishDate": "2024-08-01",
+  "publishedAt": "2024-08-01",
   "title": "ArtPlex Cinema Brand Identity",
   "category": "Брендинг",
   "description": "Full brand identity redesign for an independent art cinema.",
@@ -93,7 +93,7 @@ Each portfolio case file must include:
 
 1. **Create the directory structure**: `data/content/portfolio/{category}/{year}/{month}/`
 2. **Name the file**: `{yyyy_mm_dd}_{slug}.json` (where day defaults to 01 if exact date unknown)
-3. **Add required fields**: `slug`, `publishDate`, `category`, `title`, `description`, `hero`, `tags`, `meta`, `overview`, `content`
+3. **Add required fields**: `slug`, `publishedAt`, `category`, `title`, `description`, `hero`, `tags`, `meta`, `overview`, `content`
 4. **Run validation**: `pnpm validate` to verify the case against the schema
 5. **Generate schemas**: `pnpm gen-schemas` to update IDE autocomplete (optional, for initial setup)
 
@@ -115,7 +115,7 @@ The build process automatically generates these routes:
 ```typescript
 export const PortfolioCaseSchema = z.object({
   slug: z.string(),
-  publishDate: z.string(), // ISO date "YYYY-MM-DD"
+  publishedAt: z.string(), // ISO date "YYYY-MM-DD"
   title: z.string(),
   category: z.string(),
   description: z.string(),
@@ -187,4 +187,4 @@ data/content/portfolio/
 ...
 ```
 
-All 11 existing cases were migrated and assigned `publishDate` fields based on their intended publication dates.
+All 11 existing cases were migrated and assigned `publishedAt` fields based on their intended publication dates.

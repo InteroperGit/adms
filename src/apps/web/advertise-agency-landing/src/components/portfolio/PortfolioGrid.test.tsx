@@ -49,7 +49,7 @@ import { PortfolioGrid } from './PortfolioGrid';
 function makeCase(n: number): PortfolioCase {
   return {
     slug: `case-${n}`,
-    publishDate: '2024-03-15',
+    publishedAt: '2024-03-15',
     title: `Case ${n}`,
     category: 'Брендинг',
     description: `Description ${n}`,
