@@ -454,13 +454,13 @@ export default {
 4. **T0.4:** Verify `pnpm validate` passes with updated schema
 q
 ### Phase 1: Core Types & Schemas (6 tasks)
-5. **T1:** Create `src/types/articles/article.ts` — `BaseArticleSchema` (with `publishedAt` required)
-6. **T2:** Create `src/types/articles/portfolioArticle.ts` — extends base with `overview`
-7. **T3:** Create `src/types/articles/serviceArticle.ts` — alias to `BaseArticleSchema`
-8. **T4:** Create `src/types/articles/newsArticle.ts` — extends base with `source`
-9. **T5:** Create `src/types/articles/blogArticle.ts` — alias to `BaseArticleSchema`
-10. **T6:** Create `src/types/articles/allArticles.ts` — loader with path-based type inference
-11. **T7:** Update `scripts/generate-json-schemas.ts` — generate JSON Schema for all article types
+5. **T1 ✅:** Create `src/types/articles/article.ts` — `BaseArticleSchema` (with `publishedAt` required)
+6. **T2 ✅:** Create `src/types/articles/portfolioArticle.ts` — extends base with `overview`
+7. **T3 ✅:** Create `src/types/articles/serviceArticle.ts` — alias to `BaseArticleSchema`
+8. **T4 ✅:** Create `src/types/articles/newsArticle.ts` — extends base with `source`
+9. **T5 ✅:** Create `src/types/articles/blogArticle.ts` — alias to `BaseArticleSchema`
+10. **T6 ✅:** Create `src/types/articles/allArticles.ts` — loader with path-based type inference
+11. **T7 ✅:** Update `scripts/generate-json-schemas.ts` — generate JSON Schema for all article types
 
 ### Phase 2: Shared Components (6 tasks)
 8. **T8:** Create `src/components/articles/ArticleHero.tsx` — extract from `CaseHero`

@@ -17,6 +17,50 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { z } from 'zod';
 
+// ── Path constants ─────────────────────────────────────────────────────────────
+
+const DATA_CONTENT_DIR = 'data/content';
+const CONFIG_DIR = `${DATA_CONTENT_DIR}/config`;
+const SECTIONS_DIR = `${DATA_CONTENT_DIR}/sections`;
+const LEGAL_DIR = `${DATA_CONTENT_DIR}/legal`;
+const PORTFOLIO_DIR = `${DATA_CONTENT_DIR}/portfolio`;
+const SCHEMA_BASE = './data/_schema/schema';
+const EXAMPLES_DIR = 'data/_schema/examples';
+
+// Relative schema paths used in $schema refs and vscode settings
+const REL_CONFIG = `../../_schema/schema/config`;
+const REL_SECTIONS = `../../_schema/schema/sections`;
+const REL_LEGAL = `../../_schema/schema/legal`;
+const REL_PORTFOLIO = `../../../../../_schema/schema/portfolio`;
+
+// Section subfolders used for both source data and schema output
+const SECTION_SUBFOLDERS = {
+  header: 'header',
+  hero: 'hero',
+  carousel: 'carousel',
+  about: 'about',
+  services: 'services',
+  advantages: 'advantages',
+  'call-to-action': 'call-to-action',
+  testimonials: 'testimonials',
+  contact: 'contact',
+  footer: 'footer',
+  portfolio: 'portfolio',
+} as const;
+
+// Array-root files (no inline $schema — mapped via .vscode/settings.json only)
+const ARRAY_ROOT_CONFIG = ['categories'];
+const ARRAY_ROOT_SECTIONS = ['carousel', 'testimonials', 'advantages', 'services', 'aboutValues'];
+
+// Schema output subfolder names
+const SUBFOLDERS = {
+  config: 'config',
+  sections: 'sections',
+  portfolio: 'portfolio',
+  legal: 'legal',
+  articles: 'articles',
+} as const;
+
 // ── Config schemas ────────────────────────────────────────────────────────────
 import { SiteDataSchema } from '../../src/types/config/siteData';
 import { ThemeSchema } from '../../src/types/config/theme';
@@ -54,7 +98,16 @@ import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
 // ── Legal schemas ─────────────────────────────────────────────────────────────
 import { LegalContentSchema } from '../../src/types/legal';
 
-type Subfolder = 'config' | 'sections' | 'portfolio' | 'legal';
+// ── Article schemas ────────────────────────────────────────────────────────────
+import {
+  BaseArticleSchema,
+  PortfolioArticleSchema,
+  ServiceArticleSchema,
+  NewsArticleSchema,
+  BlogArticleSchema,
+} from '../../src/types/articles';
+
+type Subfolder = (typeof SUBFOLDERS)[keyof typeof SUBFOLDERS];
 
 interface SchemaEntry {
   subfolder: Subfolder;
@@ -64,76 +117,127 @@ interface SchemaEntry {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..', '..');
-const schemaRoot = path.join(root, 'data/_schema/schema');
+const schemaRoot = path.join(root, SCHEMA_BASE);
+const contentDir = path.join(root, DATA_CONTENT_DIR);
 
 // Map of output filename → { subfolder, section?, Zod schema }
 const schemas: Record<string, SchemaEntry> = {
   // Config
-  site: { subfolder: 'config', schema: SiteDataSchema },
-  theme: { subfolder: 'config', schema: ThemeSchema },
-  categories: { subfolder: 'config', schema: CategoriesSchema },
-  portfolioConfig: { subfolder: 'config', schema: PortfolioConfigSchema },
-  cookies: { subfolder: 'config', schema: CookiesContentSchema },
-  legal: { subfolder: 'config', schema: LegalDataSchema },
-  seo: { subfolder: 'config', schema: SeoConfigSchema },
-  orderForms: { subfolder: 'config', schema: OrderFormsDataSchema },
-  notFound: { subfolder: 'config', schema: NotFoundContentSchema },
+  site: { subfolder: SUBFOLDERS.config, schema: SiteDataSchema },
+  theme: { subfolder: SUBFOLDERS.config, schema: ThemeSchema },
+  categories: { subfolder: SUBFOLDERS.config, schema: CategoriesSchema },
+  portfolioConfig: { subfolder: SUBFOLDERS.config, schema: PortfolioConfigSchema },
+  cookies: { subfolder: SUBFOLDERS.config, schema: CookiesContentSchema },
+  legal: { subfolder: SUBFOLDERS.config, schema: LegalDataSchema },
+  seo: { subfolder: SUBFOLDERS.config, schema: SeoConfigSchema },
+  orderForms: { subfolder: SUBFOLDERS.config, schema: OrderFormsDataSchema },
+  notFound: { subfolder: SUBFOLDERS.config, schema: NotFoundContentSchema },
   // Sections — organized by component subfolder
-  header: { subfolder: 'sections', section: 'header', schema: HeaderContentSchema },
-  hero: { subfolder: 'sections', section: 'hero', schema: HeroContentSchema },
-  carousel: { subfolder: 'sections', section: 'carousel', schema: CarouselSlidesSchema },
+  header: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.header,
+    schema: HeaderContentSchema,
+  },
+  hero: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.hero,
+    schema: HeroContentSchema,
+  },
+  carousel: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.carousel,
+    schema: CarouselSlidesSchema,
+  },
   carouselContent: {
-    subfolder: 'sections',
-    section: 'carousel',
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.carousel,
     schema: CarouselSectionContentSchema,
   },
-  aboutContent: { subfolder: 'sections', section: 'about', schema: AboutSectionContentSchema },
-  aboutValues: { subfolder: 'sections', section: 'about', schema: AboutValuesSchema },
+  aboutContent: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.about,
+    schema: AboutSectionContentSchema,
+  },
+  aboutValues: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.about,
+    schema: AboutValuesSchema,
+  },
   servicesContent: {
-    subfolder: 'sections',
-    section: 'services',
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.services,
     schema: ServicesSectionContentSchema,
   },
-  services: { subfolder: 'sections', section: 'services', schema: ServicesSchema },
+  services: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.services,
+    schema: ServicesSchema,
+  },
   advantagesContent: {
-    subfolder: 'sections',
-    section: 'advantages',
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.advantages,
     schema: AdvantagesSectionContentSchema,
   },
-  advantages: { subfolder: 'sections', section: 'advantages', schema: AdvantagesSchema },
+  advantages: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.advantages,
+    schema: AdvantagesSchema,
+  },
   callToAction: {
-    subfolder: 'sections',
-    section: 'call-to-action',
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS['call-to-action'],
     schema: CallToActionContentSchema,
   },
   testimonialsContent: {
-    subfolder: 'sections',
-    section: 'testimonials',
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.testimonials,
     schema: TestimonialsSectionContentSchema,
   },
-  testimonials: { subfolder: 'sections', section: 'testimonials', schema: TestimonialsSchema },
-  contact: { subfolder: 'sections', section: 'contact', schema: ContactContentSchema },
-  footer: { subfolder: 'sections', section: 'footer', schema: FooterContentSchema },
+  testimonials: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.testimonials,
+    schema: TestimonialsSchema,
+  },
+  contact: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.contact,
+    schema: ContactContentSchema,
+  },
+  footer: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.footer,
+    schema: FooterContentSchema,
+  },
   portfolioPage: {
-    subfolder: 'sections',
-    section: 'portfolio',
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.portfolio,
     schema: PortfolioPageContentSchema,
   },
   portfolioSection: {
-    subfolder: 'sections',
-    section: 'portfolio',
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.portfolio,
     schema: PortfolioSectionContentSchema,
   },
   portfolioCase: {
-    subfolder: 'sections',
-    section: 'portfolio',
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.portfolio,
     schema: PortfolioCaseContentSchema,
   },
-  imageGallery: { subfolder: 'sections', section: 'portfolio', schema: ImageGalleryContentSchema },
+  imageGallery: {
+    subfolder: SUBFOLDERS.sections,
+    section: SECTION_SUBFOLDERS.portfolio,
+    schema: ImageGalleryContentSchema,
+  },
   // Portfolio
-  portfolio: { subfolder: 'portfolio', schema: PortfolioCaseSchema },
+  portfolio: { subfolder: SUBFOLDERS.portfolio, schema: PortfolioCaseSchema },
   // Legal
-  legalContent: { subfolder: 'legal', schema: LegalContentSchema },
+  legalContent: { subfolder: SUBFOLDERS.legal, schema: LegalContentSchema },
+  // Articles
+  article: { subfolder: SUBFOLDERS.articles, schema: BaseArticleSchema },
+  portfolioArticle: { subfolder: SUBFOLDERS.articles, schema: PortfolioArticleSchema },
+  serviceArticle: { subfolder: SUBFOLDERS.articles, schema: ServiceArticleSchema },
+  newsArticle: { subfolder: SUBFOLDERS.articles, schema: NewsArticleSchema },
+  blogArticle: { subfolder: SUBFOLDERS.articles, schema: BlogArticleSchema },
 };
 
 let generated = 0;
@@ -165,7 +269,6 @@ for (const [name, { subfolder, section, schema }] of Object.entries(schemas)) {
 
 const vscodeDir = path.join(root, '.vscode');
 mkdirSync(vscodeDir, { recursive: true });
-
 const settingsPath = path.join(vscodeDir, 'settings.json');
 
 // Read existing settings to merge, if any
@@ -179,143 +282,100 @@ if (existsSync(settingsPath)) {
 }
 
 export function schemaUrl(subfolder: Subfolder, name: string, section?: string): string {
-  if (section) {
-    return `./data/_schema/schema/${subfolder}/${section}/${name}.schema.json`;
-  }
-  return `./data/_schema/schema/${subfolder}/${name}.schema.json`;
+  const base = `${SCHEMA_BASE}/${subfolder}`;
+  return section ? `${base}/${section}/${name}.schema.json` : `${base}/${name}.schema.json`;
 }
+
+type SectionSubfolder = (typeof SECTION_SUBFOLDERS)[keyof typeof SECTION_SUBFOLDERS];
+
+// Helper to build a single jsonSchemas entry
+function schemaEntry(
+  filePattern: string | string[],
+  subfolder: Subfolder,
+  name: string,
+  section?: string
+) {
+  return {
+    fileMatch: Array.isArray(filePattern) ? filePattern : [filePattern],
+    url: schemaUrl(subfolder, name, section),
+  };
+}
+
+const configSchema = (name: string) =>
+  schemaEntry(`${CONFIG_DIR}/${name}.json`, SUBFOLDERS.config, name);
+const sectionSchema = (sub: SectionSubfolder, name: string) =>
+  schemaEntry(`${SECTIONS_DIR}/${sub}/${name}.json`, SUBFOLDERS.sections, name, sub);
+
+// Mapping of section subfolder → example file schema name (differs for some)
+const EXAMPLE_SCHEMA_NAME: Record<string, string> = {
+  carousel: 'carousel',
+  about: 'aboutValues',
+  services: 'services',
+  advantages: 'advantages',
+  testimonials: 'testimonials',
+};
 
 // Build json.schemas array: map each data file to its schema
 const jsonSchemas = [
   // Config files
-  { fileMatch: ['data/content/config/site.json'], url: schemaUrl('config', 'site') },
-  { fileMatch: ['data/content/config/theme.json'], url: schemaUrl('config', 'theme') },
-  { fileMatch: ['data/content/config/categories.json'], url: schemaUrl('config', 'categories') },
-  {
-    fileMatch: ['data/content/config/portfolio.json'],
-    url: schemaUrl('config', 'portfolioConfig'),
-  },
-  { fileMatch: ['data/content/config/cookies.json'], url: schemaUrl('config', 'cookies') },
-  { fileMatch: ['data/content/config/legal.json'], url: schemaUrl('config', 'legal') },
-  { fileMatch: ['data/content/config/seo.json'], url: schemaUrl('config', 'seo') },
-  { fileMatch: ['data/content/config/orderForms.json'], url: schemaUrl('config', 'orderForms') },
-  { fileMatch: ['data/content/config/notFound.json'], url: schemaUrl('config', 'notFound') },
+  configSchema('site'),
+  configSchema('theme'),
+  configSchema('categories'),
+  configSchema('portfolioConfig'),
+  configSchema('cookies'),
+  configSchema('legal'),
+  configSchema('seo'),
+  configSchema('orderForms'),
+  configSchema('notFound'),
+
   // Section files — organized by component subfolder
-  {
-    fileMatch: ['data/content/sections/header/header.json'],
-    url: schemaUrl('sections', 'header', 'header'),
-  },
-  {
-    fileMatch: ['data/content/sections/hero/hero.json'],
-    url: schemaUrl('sections', 'hero', 'hero'),
-  },
-  {
-    fileMatch: ['data/content/sections/carousel/carousel.json'],
-    url: schemaUrl('sections', 'carousel', 'carousel'),
-  },
-  {
-    fileMatch: ['data/content/sections/carousel/carouselContent.json'],
-    url: schemaUrl('sections', 'carouselContent', 'carousel'),
-  },
-  {
-    fileMatch: ['data/content/sections/about/aboutContent.json'],
-    url: schemaUrl('sections', 'aboutContent', 'about'),
-  },
-  {
-    fileMatch: ['data/content/sections/about/aboutValues.json'],
-    url: schemaUrl('sections', 'aboutValues', 'about'),
-  },
-  {
-    fileMatch: ['data/content/sections/services/servicesContent.json'],
-    url: schemaUrl('sections', 'servicesContent', 'services'),
-  },
-  {
-    fileMatch: ['data/content/sections/services/services.json'],
-    url: schemaUrl('sections', 'services', 'services'),
-  },
-  {
-    fileMatch: ['data/content/sections/advantages/advantagesContent.json'],
-    url: schemaUrl('sections', 'advantagesContent', 'advantages'),
-  },
-  {
-    fileMatch: ['data/content/sections/advantages/advantages.json'],
-    url: schemaUrl('sections', 'advantages', 'advantages'),
-  },
-  {
-    fileMatch: ['data/content/sections/call-to-action/callToAction.json'],
-    url: schemaUrl('sections', 'callToAction', 'call-to-action'),
-  },
-  {
-    fileMatch: ['data/content/sections/testimonials/testimonialsContent.json'],
-    url: schemaUrl('sections', 'testimonialsContent', 'testimonials'),
-  },
-  {
-    fileMatch: ['data/content/sections/testimonials/testimonials.json'],
-    url: schemaUrl('sections', 'testimonials', 'testimonials'),
-  },
-  {
-    fileMatch: ['data/content/sections/contact/contact.json'],
-    url: schemaUrl('sections', 'contact', 'contact'),
-  },
-  {
-    fileMatch: ['data/content/sections/footer/footer.json'],
-    url: schemaUrl('sections', 'footer', 'footer'),
-  },
-  {
-    fileMatch: ['data/content/sections/portfolio/portfolioPage.json'],
-    url: schemaUrl('sections', 'portfolioPage', 'portfolio'),
-  },
-  {
-    fileMatch: ['data/content/sections/portfolio/portfolioSection.json'],
-    url: schemaUrl('sections', 'portfolioSection', 'portfolio'),
-  },
-  {
-    fileMatch: ['data/content/sections/portfolio/portfolioCase.json'],
-    url: schemaUrl('sections', 'portfolioCase', 'portfolio'),
-  },
-  {
-    fileMatch: ['data/content/sections/portfolio/imageGallery.json'],
-    url: schemaUrl('sections', 'imageGallery', 'portfolio'),
-  },
+  sectionSchema('header', 'header'),
+  sectionSchema('hero', 'hero'),
+  sectionSchema('carousel', 'carousel'),
+  sectionSchema('carousel', 'carouselContent'),
+  sectionSchema('about', 'aboutContent'),
+  sectionSchema('about', 'aboutValues'),
+  sectionSchema('services', 'servicesContent'),
+  sectionSchema('services', 'services'),
+  sectionSchema('advantages', 'advantagesContent'),
+  sectionSchema('advantages', 'advantages'),
+  sectionSchema('call-to-action', 'callToAction'),
+  sectionSchema('testimonials', 'testimonialsContent'),
+  sectionSchema('testimonials', 'testimonials'),
+  sectionSchema('contact', 'contact'),
+  sectionSchema('footer', 'footer'),
+  sectionSchema('portfolio', 'portfolioPage'),
+  sectionSchema('portfolio', 'portfolioSection'),
+  sectionSchema('portfolio', 'portfolioCase'),
+  sectionSchema('portfolio', 'imageGallery'),
+
   // Legal files (all three share the same schema)
   {
     fileMatch: [
-      'data/content/legal/privacyPolicy.json',
-      'data/content/legal/userAgreement.json',
-      'data/content/legal/consent.json',
+      `${LEGAL_DIR}/privacyPolicy.json`,
+      `${LEGAL_DIR}/userAgreement.json`,
+      `${LEGAL_DIR}/consent.json`,
     ],
-    url: schemaUrl('legal', 'legalContent'),
+    url: schemaUrl(SUBFOLDERS.legal, 'legalContent'),
   },
+
   // Portfolio case files
   {
-    fileMatch: ['data/content/portfolio/**/*.json'],
-    url: schemaUrl('portfolio', 'portfolio'),
+    fileMatch: [`${PORTFOLIO_DIR}/**/*.json`],
+    url: schemaUrl(SUBFOLDERS.portfolio, 'portfolio'),
   },
+
   // Array-root example files — can't carry inline $schema, mapped here instead
   {
-    fileMatch: ['data/_schema/examples/config/categories.example.json'],
-    url: schemaUrl('config', 'categories'),
+    fileMatch: [`${EXAMPLES_DIR}/config/categories.example.json`],
+    url: schemaUrl(SUBFOLDERS.config, 'categories'),
   },
-  {
-    fileMatch: ['data/_schema/examples/sections/carousel/carousel.example.json'],
-    url: schemaUrl('sections', 'carousel', 'carousel'),
-  },
-  {
-    fileMatch: ['data/_schema/examples/sections/about/aboutValues.example.json'],
-    url: schemaUrl('sections', 'aboutValues', 'about'),
-  },
-  {
-    fileMatch: ['data/_schema/examples/sections/services/services.example.json'],
-    url: schemaUrl('sections', 'services', 'services'),
-  },
-  {
-    fileMatch: ['data/_schema/examples/sections/advantages/advantages.example.json'],
-    url: schemaUrl('sections', 'advantages', 'advantages'),
-  },
-  {
-    fileMatch: ['data/_schema/examples/sections/testimonials/testimonials.example.json'],
-    url: schemaUrl('sections', 'testimonials', 'testimonials'),
-  },
+  ...Object.entries(SECTION_SUBFOLDERS)
+    .filter(([sub]) => EXAMPLE_SCHEMA_NAME[sub])
+    .map(([sub, section]) => ({
+      fileMatch: [`${EXAMPLES_DIR}/sections/${sub}/${EXAMPLE_SCHEMA_NAME[sub]}.example.json`],
+      url: schemaUrl(SUBFOLDERS.sections, EXAMPLE_SCHEMA_NAME[sub], section),
+    })),
 ];
 
 const settings = {
@@ -350,39 +410,39 @@ function walkDir(dir: string): string[] {
 
 export function getSchemaPathForFile(filePath: string): string | null {
   const relativePath = path.relative(root, filePath).replace(/\\/g, '/');
+  const configPrefix = `${CONFIG_DIR}/`;
+  const legalPrefix = `${LEGAL_DIR}/`;
+  const sectionsPrefix = `${SECTIONS_DIR}/`;
+  const portfolioPrefix = `${PORTFOLIO_DIR}/`;
 
   // Config files
-  if (relativePath.startsWith('data/content/config/')) {
+  if (relativePath.startsWith(configPrefix)) {
     const filename = path.basename(filePath, '.json');
-    // categories.json is array-root, skip
-    if (filename === 'categories') {
+    if (ARRAY_ROOT_CONFIG.includes(filename)) {
       return null;
     }
-    return `../../_schema/schema/config/${filename}.schema.json`;
+    return `${REL_CONFIG}/${filename}.schema.json`;
   }
 
-  // Legal files - all share one schema
-  if (relativePath.startsWith('data/content/legal/')) {
-    return '../../_schema/schema/legal/legalContent.schema.json';
+  // Legal files — all share one schema
+  if (relativePath.startsWith(legalPrefix)) {
+    return `${REL_LEGAL}/legalContent.schema.json`;
   }
 
   // Section files
-  if (relativePath.startsWith('data/content/sections/')) {
+  if (relativePath.startsWith(sectionsPrefix)) {
     const filename = path.basename(filePath, '.json');
-    // Array-root files - skip
-    const arrayRootFiles = ['carousel', 'testimonials', 'advantages', 'services', 'aboutValues'];
-    if (arrayRootFiles.includes(filename)) {
+    if (ARRAY_ROOT_SECTIONS.includes(filename)) {
       return null;
     }
-    // Extract section subfolder: data/content/sections/{section}/{filename}.json
     const parts = relativePath.split('/');
     const section = parts[3];
-    return `../../_schema/schema/sections/${section}/${filename}.schema.json`;
+    return `${REL_SECTIONS}/${section}/${filename}.schema.json`;
   }
 
-  // Portfolio case files - nested: portfolio/{category}/{year}/{month}/{filename}.json
-  if (relativePath.startsWith('data/content/portfolio/')) {
-    return '../../../../../_schema/schema/portfolio/portfolio.schema.json';
+  // Portfolio case files
+  if (relativePath.startsWith(portfolioPrefix)) {
+    return `${REL_PORTFOLIO}/portfolio.schema.json`;
   }
 
   return null;
@@ -411,7 +471,6 @@ export function injectSchema(
   return result;
 }
 
-const contentDir = path.join(root, 'data/content');
 const jsonFiles = walkDir(contentDir);
 let injected = 0;
 let skipped = 0;
