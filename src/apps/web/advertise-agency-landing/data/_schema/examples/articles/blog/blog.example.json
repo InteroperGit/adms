@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../_schema/schema/articles/blogArticle.schema.json",
+  "type": "blog",
+  "slug": "design-trends-2026",
+  "publishedAt": "2026-04-15T00:00:00Z",
+  "title": "Design Trends to Watch in 2026",
+  "description": "Emerging visual design patterns and techniques shaping the industry.",
+  "hero": {
+    "image": "/images/articles/blog/design-trends/hero.jpg",
+    "gradient": "from-pink-600 to-orange-500"
+  },
+  "tags": ["Design", "Trends", "Creative"],
+  "category": "Design",
+  "author": {
+    "name": "Анна Сидорова",
+    "avatar": "/images/team/anna.jpg",
+    "title": "Creative Director"
+  },
+  "readTime": 6,
+  "meta": {
+    "title": "Design Trends 2026 — Рекламастер",
+    "description": "Emerging visual design patterns shaping the industry.",
+    "ogUrl": "https://example.ru/blog/design-trends-2026",
+    "ogImage": "/images/articles/blog/design-trends/og.jpg"
+  },
+  "content": [
+    {
+      "__component": "heading",
+      "level": 2,
+      "text": "Introduction"
+    },
+    {
+      "__component": "paragraph",
+      "text": "From AI-generated typography to kinetic layouts, here's what's next."
+    }
+  ],
+  "images": {
+    "preview": "/images/articles/blog/design-trends/preview.jpg",
+    "og": "/images/articles/blog/design-trends/og.jpg"
+  }
+}

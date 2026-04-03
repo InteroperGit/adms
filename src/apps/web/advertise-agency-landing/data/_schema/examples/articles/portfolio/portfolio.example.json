@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../../_schema/schema/articles/article.schema.json",
+  "type": "portfolio",
+  "slug": "example-portfolio",
+  "publishedAt": "2024-08-01T00:00:00Z",
+  "title": "Brand Identity for Example Studio",
+  "description": "A comprehensive brand identity project for a creative studio.",
+  "hero": {
+    "image": "/images/articles/example/hero.jpg",
+    "gradient": "from-indigo-600 to-violet-500"
+  },
+  "tags": ["Branding", "Identity", "Design"],
+  "category": "Branding",
+  "author": {
+    "name": "Иван Петров",
+    "avatar": "/images/team/ivan.jpg",
+    "title": "Lead Designer"
+  },
+  "readTime": 5,
+  "meta": {
+    "title": "Example Studio Portfolio — Рекламастер",
+    "description": "A comprehensive brand identity project.",
+    "ogUrl": "https://example.ru/portfolio/example-portfolio",
+    "ogImage": "/images/articles/example/og.jpg"
+  },
+  "overview": {
+    "client": "Example Studio",
+    "year": "2024",
+    "services": "Branding, Identity, Design"
+  },
+  "content": [
+    {
+      "__component": "heading",
+      "level": 2,
+      "text": "Challenge"
+    },
+    {
+      "__component": "paragraph",
+      "text": "Example Studio needed a complete brand overhaul to appeal to a younger demographic."
+    }
+  ],
+  "images": {
+    "preview": "/images/articles/example/preview.jpg",
+    "og": "/images/articles/example/og.jpg"
+  }
+}

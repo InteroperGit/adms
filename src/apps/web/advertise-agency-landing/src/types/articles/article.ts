@@ -9,7 +9,11 @@ import { ContentBlockSchema } from '@/types/blocks';
  * ArticleType is inferred from file path, not from JSON content.
  */
 
+export const ArticleTypeSchema = z.enum(['portfolio', 'service', 'news', 'blog']);
+export type ArticleType = z.infer<typeof ArticleTypeSchema>;
+
 export const BaseArticleSchema = z.object({
+  type: ArticleTypeSchema,
   slug: z.string(),
   publishedAt: z.string(), // ISO datetime (e.g., "2024-08-01T00:00:00Z")
   updatedAt: z.string().optional(),
@@ -45,5 +49,3 @@ export const BaseArticleSchema = z.object({
 });
 
 export type BaseArticle = z.infer<typeof BaseArticleSchema>;
-
-export type ArticleType = 'portfolio' | 'service' | 'news' | 'blog';

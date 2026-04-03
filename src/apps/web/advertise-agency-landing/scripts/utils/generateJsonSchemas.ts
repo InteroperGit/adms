@@ -376,6 +376,24 @@ const jsonSchemas = [
       fileMatch: [`${EXAMPLES_DIR}/sections/${sub}/${EXAMPLE_SCHEMA_NAME[sub]}.example.json`],
       url: schemaUrl(SUBFOLDERS.sections, EXAMPLE_SCHEMA_NAME[sub], section),
     })),
+
+  // Article example files
+  {
+    fileMatch: [`${EXAMPLES_DIR}/articles/portfolio/portfolio.example.json`],
+    url: schemaUrl(SUBFOLDERS.articles, 'article'),
+  },
+  {
+    fileMatch: [`${EXAMPLES_DIR}/articles/service/service.example.json`],
+    url: schemaUrl(SUBFOLDERS.articles, 'serviceArticle'),
+  },
+  {
+    fileMatch: [`${EXAMPLES_DIR}/articles/news/news.example.json`],
+    url: schemaUrl(SUBFOLDERS.articles, 'newsArticle'),
+  },
+  {
+    fileMatch: [`${EXAMPLES_DIR}/articles/blog/blog.example.json`],
+    url: schemaUrl(SUBFOLDERS.articles, 'blogArticle'),
+  },
 ];
 
 const settings = {

@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../_schema/schema/articles/newsArticle.schema.json",
+  "type": "news",
+  "slug": "q1-2026-update",
+  "publishedAt": "2026-04-01T10:00:00Z",
+  "title": "Company Update: Q1 2026",
+  "description": "Key milestones and achievements from Q1.",
+  "hero": {
+    "gradient": "from-blue-600 to-cyan-500"
+  },
+  "tags": ["Company", "News"],
+  "category": "Company",
+  "source": "Internal",
+  "meta": {
+    "title": "Q1 2026 Update — Рекламастер",
+    "description": "Key milestones from Q1.",
+    "ogUrl": "https://example.ru/news/q1-2026-update",
+    "ogImage": "/images/articles/news/q1-2026/og.jpg"
+  },
+  "content": [
+    {
+      "__component": "paragraph",
+      "text": "We're excited to share our key milestones from Q1 2026."
+    }
+  ],
+  "images": {
+    "preview": "/images/articles/news/q1-2026/preview.jpg",
+    "og": "/images/articles/news/q1-2026/og.jpg"
+  }
+}
