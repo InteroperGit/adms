@@ -31,7 +31,7 @@ const EXAMPLES_DIR = 'data/_schema/examples';
 const REL_CONFIG = `../../_schema/schema/config`;
 const REL_SECTIONS = `../../_schema/schema/sections`;
 const REL_LEGAL = `../../_schema/schema/legal`;
-const REL_PORTFOLIO = `../../../../../_schema/schema/portfolio`;
+const REL_PORTFOLIO_ARTICLES = `../../../../../_schema/schema/articles`;
 
 // Section subfolders used for both source data and schema output
 const SECTION_SUBFOLDERS = {
@@ -91,8 +91,9 @@ import { FooterContentSchema } from '../../src/types/sections/footer/footer';
 import { PortfolioPageContentSchema } from '../../src/types/sections/portfolio/portfolioPage';
 
 // ── Portfolio schemas ─────────────────────────────────────────────────────────
-import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../../src/types/portfolio';
+import { PortfolioSectionContentSchema } from '../../src/types/portfolio';
 import { PortfolioCaseContentSchema } from '../../src/types/portfolio/portfolioCaseContent';
+import { PortfolioArticleSchema } from '../../src/types/articles/portfolioArticle';
 import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
 
 // ── Legal schemas ─────────────────────────────────────────────────────────────
@@ -224,8 +225,6 @@ const schemas: Record<string, SchemaEntry> = {
     schema: PortfolioCaseContentSchema,
   },
   imageGallery: { subfolder: SUBFOLDERS.config, schema: ImageGalleryContentSchema },
-  // Portfolio
-  portfolio: { subfolder: SUBFOLDERS.portfolio, schema: PortfolioCaseSchema },
   // Legal
   legalContent: { subfolder: SUBFOLDERS.legal, schema: LegalContentSchema },
   // Articles
@@ -358,7 +357,7 @@ const jsonSchemas = [
   // Portfolio case files
   {
     fileMatch: [`${PORTFOLIO_DIR}/**/*.json`],
-    url: schemaUrl(SUBFOLDERS.portfolio, 'portfolio'),
+    url: schemaUrl(SUBFOLDERS.articles, 'portfolioArticle'),
   },
 
   // Array-root example files — can't carry inline $schema, mapped here instead
@@ -456,7 +455,7 @@ export function getSchemaPathForFile(filePath: string): string | null {
 
   // Portfolio case files
   if (relativePath.startsWith(portfolioPrefix)) {
-    return `${REL_PORTFOLIO}/portfolio.schema.json`;
+    return `${REL_PORTFOLIO_ARTICLES}/portfolioArticle.schema.json`;
   }
 
   return null;

@@ -42,8 +42,9 @@ import { FooterContentSchema } from '../../src/types/sections/footer/footer';
 import { PortfolioPageContentSchema } from '../../src/types/sections/portfolio/portfolioPage';
 
 // ── Portfolio schemas ──────────────────────────────────────────────────────────
-import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../../src/types/portfolio';
+import { PortfolioSectionContentSchema } from '../../src/types/portfolio';
 import { PortfolioCaseContentSchema } from '../../src/types/portfolio/portfolioCaseContent';
+import { PortfolioArticleSchema } from '../../src/types/articles/portfolioArticle';
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -166,7 +167,7 @@ function validatePortfolioCases(): { errors: number; files: string[] } {
 
   const errors = files.reduce((sum, file) => {
     const label = path.relative(portfolioDir, file);
-    return sum + check(label, () => PortfolioCaseSchema.parse(readJson(file)));
+    return sum + check(label, () => PortfolioArticleSchema.parse(readJson(file)));
   }, 0);
 
   return { errors, files };

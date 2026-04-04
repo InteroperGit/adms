@@ -1,6 +1,5 @@
 import raw from '@data/sections/portfolio/portfolioSection.json';
 import { z } from 'zod';
-import { ContentBlockSchema } from '@/types/blocks';
 import { LabeledLinkSchema } from '@/types/shared/labeledLink';
 
 export type { GalleryImage } from '@/types/blocks';
@@ -8,9 +7,9 @@ export type { LabeledLink } from '@/types/shared/labeledLink';
 
 /**
  * @module portfolio/index
- * @description Portfolio case types and section content. Defines the main PortfolioCase schema
- * with content blocks, metadata, hero image/gradient, SEO, and case overview. Complements
- * blocks.ts (content block definitions) and portfolioCases.ts (glob-loaded case data).
+ * @description Portfolio section content and type compatibility layer.
+ * Defines the PortfolioSectionContent schema for white-label section headers.
+ * Re-exports PortfolioArticle types for backward compatibility after schema consolidation.
  */
 
 /**
@@ -38,69 +37,10 @@ export type PortfolioSectionContent = z.infer<typeof PortfolioSectionContentSche
  */
 export const portfolioSectionContent = PortfolioSectionContentSchema.parse(raw);
 
-/**
- * @description Single portfolio case with all content blocks, metadata, and hero image
- */
-export const PortfolioCaseSchema = z.object({
-  /** Unique identifier for case (used in URL slug) */
-  slug: z.string(),
-  /** Publication date in ISO datetime format (e.g., "2024-01-15T00:00:00Z") */
-  publishedAt: z.string(),
-  /** Case project title */
-  title: z.string(),
-  /** Category slug (branding, contextual-ads, outdoor, etc.) */
-  category: z.string(),
-  /** Short case description/subtitle */
-  description: z.string(),
-  /** Hero section with background image or gradient */
-  hero: z.object({
-    /** Optional hero image URL */
-    image: z.string().optional(),
-    /** Tailwind gradient class (e.g., "bg-gradient-to-r from-blue-500 to-purple-600") */
-    gradient: z.string(),
-  }),
-  /** Search/filter tags for the case */
-  tags: z.array(z.string()),
-  /** SEO metadata */
-  meta: z.object({
-    /** Meta title for search engines */
-    title: z.string(),
-    /** Meta description for search engines */
-    description: z.string(),
-    /** Optional Open Graph URL */
-    ogUrl: z.string().optional(),
-    /** Optional Open Graph image URL */
-    ogImage: z.string().optional(),
-  }),
-  /** Quick reference info displayed in case header */
-  overview: z.object({
-    /** Client/company name */
-    client: z.string(),
-    /** Year of project completion */
-    year: z.string(),
-    /** Summary of services delivered */
-    services: z.string(),
-  }),
-  /** Array of content blocks (text, images, charts, etc.) */
-  content: z.array(ContentBlockSchema),
-  /** Optional preview and og images for portfolio listing */
-  images: z
-    .object({
-      /** Thumbnail image for case card */
-      preview: z.string().optional(),
-      /** Open Graph image for social sharing */
-      og: z.string().optional(),
-    })
-    .optional(),
-});
+import type { PortfolioArticle } from '@/types/articles/portfolioArticle';
 
-/**
- * @description Portfolio case type inferred from schema
- */
-export type PortfolioCase = z.infer<typeof PortfolioCaseSchema>;
-
-/**
- * @description Portfolio case with a pre-computed routing href.
- * Used by listing and card components that need a ready-to-render link.
- */
-export type PortfolioCaseWithHref = PortfolioCase & { href: string };
+// Compatibility re-exports — new consumers should import from articles directly
+/** @deprecated Use PortfolioArticle from '@/types/articles/portfolioArticle' */
+export type PortfolioCase = PortfolioArticle;
+/** @deprecated Use PortfolioArticleWithHref from '@/types/portfolio/portfolioCases' */
+export type PortfolioCaseWithHref = PortfolioArticle & { href: string };

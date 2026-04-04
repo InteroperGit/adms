@@ -32,6 +32,7 @@ vi.mock('@/components/ui/portfolio/PortfolioThumbnail', () => ({
 }));
 
 const mockItem: PortfolioCaseWithHref = {
+  type: 'portfolio',
   slug: 'test-case',
   publishedAt: '2024-01-01',
   title: 'Тестовый кейс',

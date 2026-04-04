@@ -48,6 +48,7 @@ import { PortfolioGrid } from './PortfolioGrid';
 
 function makeCase(n: number): PortfolioCase {
   return {
+    type: 'portfolio' as const,
     slug: `case-${n}`,
     publishedAt: '2024-03-15',
     title: `Case ${n}`,
