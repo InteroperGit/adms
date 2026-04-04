@@ -202,7 +202,7 @@ vi.mock('@/components/ui/legal/LegalBlockRenderer', () => ({
 // ---------------------------------------------------------------------------
 import App from '@/App';
 import Home from '@/pages/Home';
-import { PortfolioCategoryPage } from '@/pages/PortfolioCategoryPage';
+import { ArticleCategoryPage } from '@/pages/ArticleCategoryPage';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import UserAgreement from '@/pages/UserAgreement';
 import Consent from '@/pages/Consent';
@@ -219,8 +219,8 @@ function makeRouter(initialPath: string) {
         element: <App />,
         children: [
           { index: true, element: <Home /> },
-          { path: 'portfolio', element: <PortfolioCategoryPage /> },
-          { path: 'portfolio/:categorySlug', element: <PortfolioCategoryPage /> },
+          { path: 'portfolio', element: <ArticleCategoryPage /> },
+          { path: 'portfolio/:categorySlug', element: <ArticleCategoryPage /> },
           { path: 'privacy-policy', element: <PrivacyPolicy /> },
           { path: 'user-agreement', element: <UserAgreement /> },
           { path: 'consent', element: <Consent /> },

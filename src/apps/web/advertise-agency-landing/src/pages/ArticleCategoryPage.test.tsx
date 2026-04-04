@@ -57,7 +57,6 @@ vi.mock('@/types/portfolio/portfolioCases', () => ({
       meta: { title: '', description: '' },
       overview: { client: '', year: '2024', services: '' },
       content: [],
-      // no images.preview — tests missing image handling
     },
     {
       slug: 'case-3',
@@ -70,7 +69,7 @@ vi.mock('@/types/portfolio/portfolioCases', () => ({
       meta: { title: '', description: '' },
       overview: { client: '', year: '2024', services: '' },
       content: [],
-      images: { preview: 'https://external.com/img.jpg' }, // non-/images/ path
+      images: { preview: 'https://external.com/img.jpg' },
     },
   ],
 }));
@@ -111,20 +110,20 @@ vi.mock('@/components/ui/navigation/BreadCrumbs', () => ({
   BreadCrumbs: () => <nav data-testid="breadcrumbs" />,
 }));
 
-import { PortfolioCategoryPage } from './PortfolioCategoryPage';
+import { ArticleCategoryPage } from './ArticleCategoryPage';
 
 function renderAtRoute(path: string) {
   return render(
     <MemoryRouter initialEntries={[path]}>
       <Routes>
-        <Route path="/portfolio/:categorySlug" element={<PortfolioCategoryPage />} />
-        <Route path="/portfolio" element={<PortfolioCategoryPage />} />
+        <Route path="/portfolio/:categorySlug" element={<ArticleCategoryPage />} />
+        <Route path="/portfolio" element={<ArticleCategoryPage />} />
       </Routes>
     </MemoryRouter>
   );
 }
 
-describe('PortfolioCategoryPage', () => {
+describe('ArticleCategoryPage', () => {
   it('renders section header title', () => {
     renderAtRoute('/portfolio/all');
     expect(screen.getByText('Наши работы')).toBeInTheDocument();
@@ -183,7 +182,6 @@ describe('PortfolioCategoryPage', () => {
   it('passes case with non-/images/ path — still included in results', () => {
     renderAtRoute('/portfolio/branding');
     const items = screen.getAllByTestId('grid-item');
-    // case-3 has external image path but still renders
     expect(items.some((el) => el.textContent === 'Кейс 3')).toBe(true);
   });
 

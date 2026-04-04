@@ -4,10 +4,10 @@ import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { PortfolioGrid } from '@/components/articles/PortfolioGrid';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { NotFound } from '@/pages/NotFound';
+import { allPortfolioCases } from '@/types/portfolio/portfolioCases';
 import { portfolioPageContent } from '@/types/sections/portfolio/portfolioPage';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { categories } from '@/types/config/categories';
-import { allPortfolioCases } from '@/types/portfolio/portfolioCases';
 import { siteData } from '@/types/config/siteData';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
@@ -17,16 +17,13 @@ import { useDocumentTitle } from '@/hooks/useDocumentTitle';
  * Route params:
  * - `categorySlug` — optional. Omitted on the root `/portfolio` listing (`isRoot`).
  *   `"all"` and omitted are treated identically: show every case.
- *   Any other value is matched against the `categories` config array.
  *
  * Renders `<NotFound>` for unrecognised category slugs.
  *
  * @component
  * @returns {JSX.Element} Breadcrumbs + section with `<SectionHeader>` and `<PortfolioGrid>`, or a 404 page.
- * @example
- * <PortfolioCategoryPage />
  */
-export function PortfolioCategoryPage() {
+export function ArticleCategoryPage() {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const p = portfolioPageContent;
 
@@ -76,4 +73,4 @@ export function PortfolioCategoryPage() {
   );
 }
 
-export default PortfolioCategoryPage;
+export default ArticleCategoryPage;

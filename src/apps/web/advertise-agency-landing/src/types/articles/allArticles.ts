@@ -28,7 +28,12 @@ interface ArticleModule {
 }
 
 const modules = import.meta.glob<ArticleModule>(
-  ['@data/articles/**/*.json', '@data/content/portfolio/**/*.json'],
+  [
+    '@data/portfolio/**/*.json',
+    '@data/services/**/*.json',
+    '@data/news/**/*.json',
+    '@data/blog/**/*.json',
+  ],
   { eager: true, import: 'default' }
 );
 
