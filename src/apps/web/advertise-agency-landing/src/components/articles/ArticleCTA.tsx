@@ -1,32 +1,29 @@
 // src/components/articles/ArticleCTA.tsx
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
-import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
+
+interface ArticleCTAProps {
+  title: string;
+  subtitle: string;
+  label: string;
+  href: string;
+}
 
 /**
- * Call-to-action section rendered at the bottom of every article detail page.
+ * Article-level CTA — data is passed from parent (ArticlePage),
+ * sourced from the article JSON or a site-wide fallback config.
  *
- * All copy and the button link target are data-driven via `portfolioCaseContent.cta`
- * (`data/sections/portfolio/portfolioCase.json`), so white-label clients configure
- * them without touching component code.
- *
- * @returns Centred section with a heading, subtitle, and a primary pill button.
- *
- * @example
- * // Placed at the end of ArticlePage after the content blocks:
- * <ArticleCTA />
+ * @remarks Previously imported `portfolioCaseContent` directly — no longer.
  */
-export function ArticleCTA() {
-  const { cta } = portfolioCaseContent;
-
+export function ArticleCTA({ title, subtitle, label, href }: ArticleCTAProps) {
   return (
     <section className="py-20">
       <Container>
         <div className="mx-auto max-w-xl text-center">
-          <h2 className="mb-4 text-2xl font-bold md:text-3xl">{cta.title}</h2>
-          <p className="mb-8 text-muted-foreground">{cta.subtitle}</p>
+          <h2 className="mb-4 text-2xl font-bold md:text-3xl">{title}</h2>
+          <p className="mb-8 text-muted-foreground">{subtitle}</p>
           <Button asChild size="lg" className="rounded-full px-8">
-            <a href={cta.href}>{cta.label}</a>
+            <a href={href}>{label}</a>
           </Button>
         </div>
       </Container>

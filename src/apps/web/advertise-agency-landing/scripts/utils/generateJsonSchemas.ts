@@ -70,6 +70,7 @@ import { CookiesContentSchema } from '../../src/types/config/cookies';
 import { LegalDataSchema } from '../../src/types/config/legalData';
 import { SeoConfigSchema } from '../../src/types/config/seo';
 import { OrderFormsDataSchema } from '../../src/types/config/orderForms';
+import { DefaultArticleCtaSchema } from '../../src/types/config/defaultArticleCta';
 import { NotFoundContentSchema } from '../../src/types/config/notFound';
 
 // ── Section schemas ───────────────────────────────────────────────────────────
@@ -92,7 +93,6 @@ import { PortfolioPageContentSchema } from '../../src/types/sections/portfolio/p
 
 // ── Portfolio schemas ─────────────────────────────────────────────────────────
 import { PortfolioSectionContentSchema } from '../../src/types/portfolio';
-import { PortfolioCaseContentSchema } from '../../src/types/portfolio/portfolioCaseContent';
 import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
 
 // ── Legal schemas ─────────────────────────────────────────────────────────────
@@ -132,6 +132,7 @@ const schemas: Record<string, SchemaEntry> = {
   seo: { subfolder: SUBFOLDERS.config, schema: SeoConfigSchema },
   orderForms: { subfolder: SUBFOLDERS.config, schema: OrderFormsDataSchema },
   notFound: { subfolder: SUBFOLDERS.config, schema: NotFoundContentSchema },
+  defaultArticleCta: { subfolder: SUBFOLDERS.config, schema: DefaultArticleCtaSchema },
   // Sections — organized by component subfolder
   header: {
     subfolder: SUBFOLDERS.sections,
@@ -217,11 +218,6 @@ const schemas: Record<string, SchemaEntry> = {
     subfolder: SUBFOLDERS.sections,
     section: SECTION_SUBFOLDERS.portfolio,
     schema: PortfolioSectionContentSchema,
-  },
-  portfolioCase: {
-    subfolder: SUBFOLDERS.sections,
-    section: SECTION_SUBFOLDERS.portfolio,
-    schema: PortfolioCaseContentSchema,
   },
   imageGallery: { subfolder: SUBFOLDERS.config, schema: ImageGalleryContentSchema },
   // Legal
@@ -322,6 +318,7 @@ const jsonSchemas = [
   configSchema('orderForms'),
   configSchema('notFound'),
   configSchema('imageGallery'),
+  configSchema('defaultArticleCta'),
 
   // Section files — organized by component subfolder
   sectionSchema('header', 'header'),
@@ -341,7 +338,6 @@ const jsonSchemas = [
   sectionSchema('footer', 'footer'),
   sectionSchema('portfolio', 'portfolioPage'),
   sectionSchema('portfolio', 'portfolioSection'),
-  sectionSchema('portfolio', 'portfolioCase'),
 
   // Legal files (all three share the same schema)
   {

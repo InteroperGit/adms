@@ -7,7 +7,8 @@ import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { BlockRenderer } from '@/components/blocks/BlockRenderer';
 import { NotFound } from '@/pages/NotFound';
 import { articleMap } from '@/types/articles/allArticles';
-import type { ArticleType, BaseArticle } from '@/types/articles/article';
+import type { BaseArticle, ArticleType } from '@/types/articles/article';
+import { defaultArticleCta } from '@/types/config/defaultArticleCta';
 import { categories } from '@/types/config/categories';
 import { siteData } from '@/types/config/siteData';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
@@ -129,7 +130,12 @@ export function ArticlePage() {
         ))}
       </Container>
 
-      <ArticleCTA />
+      <ArticleCTA
+        title={article.cta?.title ?? defaultArticleCta.title}
+        subtitle={article.cta?.subtitle ?? defaultArticleCta.subtitle}
+        label={article.cta?.label ?? defaultArticleCta.label}
+        href={article.cta?.href ?? defaultArticleCta.href}
+      />
     </div>
   );
 }

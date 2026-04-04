@@ -40,6 +40,15 @@ export const BaseArticleSchema = z.object({
     ogImage: z.string().optional(),
   }),
   content: z.array(ContentBlockSchema),
+  /** CTA rendered at the bottom of the article page. Falls back to `defaultArticleCta` if omitted. */
+  cta: z
+    .object({
+      title: z.string(),
+      subtitle: z.string(),
+      label: z.string(),
+      href: z.string(),
+    })
+    .optional(),
   images: z
     .object({
       preview: z.string().optional(),

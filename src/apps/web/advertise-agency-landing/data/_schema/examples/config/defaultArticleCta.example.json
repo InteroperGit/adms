@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../schema/config/defaultArticleCta.schema.json",
+  "title": "Default CTA title",
+  "subtitle": "Default CTA subtitle.",
+  "label": "Button label",
+  "href": "/#contact"
+}

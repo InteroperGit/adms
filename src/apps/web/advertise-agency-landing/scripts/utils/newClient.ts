@@ -335,12 +335,6 @@ async function main(): Promise<void> {
     'portfolioPage'
   );
   copyExample(
-    'sections/portfolio/portfolioCase.example.json',
-    'sections/portfolio/portfolioCase.json',
-    'sections',
-    'portfolioCase'
-  );
-  copyExample(
     'sections/advantages/advantagesContent.example.json',
     'sections/advantages/advantagesContent.json',
     'sections',
