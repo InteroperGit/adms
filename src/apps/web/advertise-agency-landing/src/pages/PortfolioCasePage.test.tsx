@@ -63,16 +63,18 @@ vi.mock('@/types/config/siteData', () => ({
   siteData: { name: 'Рекламастер', homeLabel: 'Главная' },
 }));
 
-vi.mock('@/components/portfolio/CaseHero', () => ({
-  CaseHero: ({ title }: { title: string }) => <div data-testid="case-hero">{title}</div>,
+vi.mock('@/components/articles/ArticleHero', () => ({
+  ArticleHero: ({ title }: { title: string }) => <div data-testid="article-hero">{title}</div>,
 }));
 
-vi.mock('@/components/portfolio/CaseOverview', () => ({
-  CaseOverview: ({ client }: { client: string }) => <div data-testid="case-overview">{client}</div>,
+vi.mock('@/components/articles/PortfolioOverview', () => ({
+  PortfolioOverview: ({ client }: { client: string }) => (
+    <div data-testid="article-overview">{client}</div>
+  ),
 }));
 
-vi.mock('@/components/portfolio/CaseCTA', () => ({
-  CaseCTA: () => <div data-testid="case-cta" />,
+vi.mock('@/components/articles/ArticleCTA', () => ({
+  ArticleCTA: () => <div data-testid="article-cta" />,
 }));
 
 vi.mock('@/components/blocks/BlockRenderer', () => ({
@@ -108,19 +110,19 @@ function renderCase(path: string) {
 }
 
 describe('PortfolioCasePage', () => {
-  it('renders CaseHero with case title when slug matches', () => {
+  it('renders ArticleHero with case title when slug matches', () => {
     renderCase('/portfolio/branding/2024/05/test-case');
-    expect(screen.getByTestId('case-hero')).toHaveTextContent('Тестовый кейс');
+    expect(screen.getByTestId('article-hero')).toHaveTextContent('Тестовый кейс');
   });
 
-  it('renders CaseOverview with client name', () => {
+  it('renders PortfolioOverview with client name', () => {
     renderCase('/portfolio/branding/2024/05/test-case');
-    expect(screen.getByTestId('case-overview')).toHaveTextContent('ООО Клиент');
+    expect(screen.getByTestId('article-overview')).toHaveTextContent('ООО Клиент');
   });
 
-  it('renders CaseCTA section', () => {
+  it('renders ArticleCTA section', () => {
     renderCase('/portfolio/branding/2024/05/test-case');
-    expect(screen.getByTestId('case-cta')).toBeInTheDocument();
+    expect(screen.getByTestId('article-cta')).toBeInTheDocument();
   });
 
   it('renders breadcrumbs', () => {
@@ -133,13 +135,13 @@ describe('PortfolioCasePage', () => {
     expect(screen.getByText('404')).toBeInTheDocument();
   });
 
-  it('does not render CaseHero when slug is unknown', () => {
+  it('does not render ArticleHero when slug is unknown', () => {
     renderCase('/portfolio/branding/2024/05/unknown-slug');
-    expect(screen.queryByTestId('case-hero')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('article-hero')).not.toBeInTheDocument();
   });
 
   it('renders with "all" as categorySlug', () => {
     renderCase('/portfolio/all/2024/05/test-case');
-    expect(screen.getByTestId('case-hero')).toBeInTheDocument();
+    expect(screen.getByTestId('article-hero')).toBeInTheDocument();
   });
 });

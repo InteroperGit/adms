@@ -1,8 +1,8 @@
 import { useParams } from 'react-router';
 import { Container } from '@/components/layout/Container';
-import { CaseHero } from '@/components/portfolio/CaseHero';
-import { CaseOverview } from '@/components/portfolio/CaseOverview';
-import { CaseCTA } from '@/components/portfolio/CaseCTA';
+import { ArticleHero } from '@/components/articles/ArticleHero';
+import { PortfolioOverview } from '@/components/articles/PortfolioOverview';
+import { ArticleCTA } from '@/components/articles/ArticleCTA';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { BlockRenderer } from '@/components/blocks/BlockRenderer';
 import { NotFound } from '@/pages/NotFound';
@@ -68,14 +68,14 @@ export function PortfolioCasePage() {
         ]}
       />
 
-      <CaseHero
+      <ArticleHero
         hero={data.hero}
         category={data.category}
         title={data.title}
         description={data.description}
       />
 
-      <CaseOverview
+      <PortfolioOverview
         client={data.overview.client}
         category={data.category}
         year={data.overview.year}
@@ -87,13 +87,13 @@ export function PortfolioCasePage() {
           <BlockRenderer
             key={`${block.__component}-${i}`}
             block={block}
-            caseGradient={data.hero.gradient}
-            caseTitle={data.title}
+            articleGradient={data.hero.gradient}
+            articleTitle={data.title}
           />
         ))}
       </Container>
 
-      <CaseCTA />
+      <ArticleCTA />
     </div>
   );
 }

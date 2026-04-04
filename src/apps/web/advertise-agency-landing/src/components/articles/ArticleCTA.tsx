@@ -1,10 +1,10 @@
-// src/components/portfolio/CaseCTA.tsx
+// src/components/articles/ArticleCTA.tsx
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
 import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 
 /**
- * Call-to-action section rendered at the bottom of every portfolio case detail page.
+ * Call-to-action section rendered at the bottom of every article detail page.
  *
  * All copy and the button link target are data-driven via `portfolioCaseContent.cta`
  * (`data/sections/portfolio/portfolioCase.json`), so white-label clients configure
@@ -13,10 +13,10 @@ import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
  * @returns Centred section with a heading, subtitle, and a primary pill button.
  *
  * @example
- * // Placed at the end of PortfolioCasePage after the content blocks:
- * <CaseCTA />
+ * // Placed at the end of ArticlePage after the content blocks:
+ * <ArticleCTA />
  */
-export function CaseCTA() {
+export function ArticleCTA() {
   const { cta } = portfolioCaseContent;
 
   return (

@@ -36,14 +36,18 @@ const ITEMS = [
 
 describe('ProgressChart', () => {
   it('renders a label for each item', () => {
-    render(<ProgressChart block={makeBlock(ITEMS)} caseGradient="from-blue-500 to-purple-500" />);
+    render(
+      <ProgressChart block={makeBlock(ITEMS)} articleGradient="from-blue-500 to-purple-500" />
+    );
     expect(screen.getByText('SEO')).toBeInTheDocument();
     expect(screen.getByText('SMM')).toBeInTheDocument();
     expect(screen.getByText('PPC')).toBeInTheDocument();
   });
 
   it('renders the value for each item', () => {
-    render(<ProgressChart block={makeBlock(ITEMS)} caseGradient="from-blue-500 to-purple-500" />);
+    render(
+      <ProgressChart block={makeBlock(ITEMS)} articleGradient="from-blue-500 to-purple-500" />
+    );
     expect(screen.getByText('80')).toBeInTheDocument();
     expect(screen.getByText('60')).toBeInTheDocument();
     expect(screen.getByText('40')).toBeInTheDocument();
@@ -54,14 +58,14 @@ describe('ProgressChart', () => {
       { label: 'Speed', value: 95, suffix: '%' },
       { label: 'Quality', value: 88, suffix: '%' },
     ];
-    render(<ProgressChart block={makeBlock(items)} caseGradient="from-green-500 to-teal-500" />);
+    render(<ProgressChart block={makeBlock(items)} articleGradient="from-green-500 to-teal-500" />);
     expect(screen.getByText('95%')).toBeInTheDocument();
     expect(screen.getByText('88%')).toBeInTheDocument();
   });
 
   it('renders correct number of progress bar rows', () => {
     const { container } = render(
-      <ProgressChart block={makeBlock(ITEMS)} caseGradient="from-blue-500 to-purple-500" />
+      <ProgressChart block={makeBlock(ITEMS)} articleGradient="from-blue-500 to-purple-500" />
     );
     // Each row is a flex div with label + bar + value
     const rows = container.querySelectorAll('.flex.items-center.gap-3');
@@ -70,7 +74,7 @@ describe('ProgressChart', () => {
 
   it('renders 100% width bar for maximum value item when inView', () => {
     const { container } = render(
-      <ProgressChart block={makeBlock(ITEMS)} caseGradient="from-blue-500 to-purple-500" />
+      <ProgressChart block={makeBlock(ITEMS)} articleGradient="from-blue-500 to-purple-500" />
     );
     // Max item is SEO=80, so its bar fill should be 100%
     const fills = container.querySelectorAll('.h-full.rounded-full');
@@ -84,7 +88,7 @@ describe('ProgressChart', () => {
       { label: 'Inactive', value: 0 },
     ];
     const { container } = render(
-      <ProgressChart block={makeBlock(items)} caseGradient="from-blue-500 to-purple-500" />
+      <ProgressChart block={makeBlock(items)} articleGradient="from-blue-500 to-purple-500" />
     );
     const fills = container.querySelectorAll('.h-full.rounded-full');
     const widths = Array.from(fills).map((el) => (el as HTMLElement).style.width);
@@ -93,7 +97,7 @@ describe('ProgressChart', () => {
 
   it('renders without crashing for empty items', () => {
     expect(() =>
-      render(<ProgressChart block={makeBlock([])} caseGradient="from-blue-500 to-purple-500" />)
+      render(<ProgressChart block={makeBlock([])} articleGradient="from-blue-500 to-purple-500" />)
     ).not.toThrow();
   });
 
@@ -101,7 +105,7 @@ describe('ProgressChart', () => {
     const { container } = render(
       <ProgressChart
         block={makeBlock([{ label: 'Test', value: 50 }], { type: 'accent' })}
-        caseGradient="from-blue-500 to-purple-500"
+        articleGradient="from-blue-500 to-purple-500"
       />
     );
     const fill = container.querySelector('.h-full.rounded-full');

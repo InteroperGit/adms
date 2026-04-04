@@ -1,10 +1,10 @@
-// src/components/portfolio/PortfolioGrid.tsx
+// src/components/articles/PortfolioGrid.tsx
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router';
 import { Button } from '@/components/ui/button';
 import { PortfolioCard } from '@/components/ui/portfolio/PortfolioCard';
-import { CategoryNav } from '@/components/portfolio/CategoryNav';
-import { Pagination } from '@/components/portfolio/Pagination';
+import { CategoryNav } from './CategoryNav';
+import { Pagination } from './Pagination';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import type { PortfolioCase, PortfolioCaseWithHref } from '@/types/portfolio';
 import { extractYearMonth } from '@/libs/dateUtils';

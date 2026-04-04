@@ -30,7 +30,7 @@ describe('ChartBlock', () => {
     render(
       <ChartBlock
         block={{ __component: 'chart', type: 'bar', items: [] }}
-        caseGradient={GRADIENT}
+        articleGradient={GRADIENT}
       />
     );
     expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe('ChartBlock', () => {
     render(
       <ChartBlock
         block={{ __component: 'chart', type: 'horizontal-bar', items: [] }}
-        caseGradient={GRADIENT}
+        articleGradient={GRADIENT}
       />
     );
     expect(screen.getByTestId('horizontal-bar-chart')).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('ChartBlock', () => {
     render(
       <ChartBlock
         block={{ __component: 'chart', type: 'progress', items: [] }}
-        caseGradient={GRADIENT}
+        articleGradient={GRADIENT}
       />
     );
     expect(screen.getByTestId('progress-chart')).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('ChartBlock', () => {
     render(
       <ChartBlock
         block={{ __component: 'chart', type: 'line', items: [] }}
-        caseGradient={GRADIENT}
+        articleGradient={GRADIENT}
       />
     );
     expect(screen.getByTestId('line-chart')).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe('ChartBlock', () => {
     render(
       <ChartBlock
         block={{ __component: 'chart', type: 'pie', items: [] }}
-        caseGradient={GRADIENT}
+        articleGradient={GRADIENT}
       />
     );
     expect(screen.getByTestId('pie-chart')).toBeInTheDocument();
@@ -80,7 +80,7 @@ describe('ChartBlock', () => {
     render(
       <ChartBlock
         block={{ __component: 'chart', type: 'bar', title: 'Revenue Chart', items: [] }}
-        caseGradient={GRADIENT}
+        articleGradient={GRADIENT}
       />
     );
     expect(screen.getByText('Revenue Chart')).toBeInTheDocument();
@@ -90,7 +90,7 @@ describe('ChartBlock', () => {
     const { container } = render(
       <ChartBlock
         block={{ __component: 'chart', type: 'bar', items: [] }}
-        caseGradient={GRADIENT}
+        articleGradient={GRADIENT}
       />
     );
     expect(container.querySelector('h2')).not.toBeInTheDocument();

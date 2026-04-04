@@ -37,8 +37,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'heading', level: 2, text: 'Hi' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('heading-block')).toBeInTheDocument();
@@ -48,8 +48,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'paragraph', text: 'text' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('paragraph-block')).toBeInTheDocument();
@@ -59,8 +59,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'image', src: '/img.jpg', alt: 'alt' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('image-block')).toBeInTheDocument();
@@ -70,8 +70,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'gallery', images: [] }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('gallery-block')).toBeInTheDocument();
@@ -81,8 +81,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'blockquote', text: 'quote', author: 'A' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('blockquote-block')).toBeInTheDocument();
@@ -92,8 +92,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'metrics', items: [] }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('metrics-block')).toBeInTheDocument();
@@ -103,8 +103,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'cards', items: [] }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('cards-block')).toBeInTheDocument();
@@ -114,8 +114,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'table', head: [], rows: [] }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('table-block')).toBeInTheDocument();
@@ -125,8 +125,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'chart', type: 'bar', items: [] }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('chart-block')).toBeInTheDocument();
@@ -134,7 +134,11 @@ describe('BlockRenderer', () => {
 
   it('dispatches divider block', () => {
     render(
-      <BlockRenderer block={{ __component: 'divider' }} caseGradient={GRADIENT} caseTitle={TITLE} />
+      <BlockRenderer
+        block={{ __component: 'divider' }}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
+      />
     );
     expect(screen.getByTestId('divider-block')).toBeInTheDocument();
   });
@@ -143,8 +147,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'callout', type: 'info', text: 'note' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('callout-block')).toBeInTheDocument();
@@ -154,8 +158,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'list', style: 'unordered', items: [] }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('list-block')).toBeInTheDocument();
@@ -165,8 +169,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('video-block')).toBeInTheDocument();
@@ -176,8 +180,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'code', code: 'const x = 1;' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('code-block')).toBeInTheDocument();
@@ -187,8 +191,8 @@ describe('BlockRenderer', () => {
     render(
       <BlockRenderer
         block={{ __component: 'order-form', formId: 'consultation' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(screen.getByTestId('order-form-block')).toBeInTheDocument();
@@ -199,7 +203,7 @@ describe('BlockRenderer', () => {
       typeof BlockRenderer
     >[0]['block'];
     const { container } = render(
-      <BlockRenderer block={unknownBlock} caseGradient={GRADIENT} caseTitle={TITLE} />
+      <BlockRenderer block={unknownBlock} articleGradient={GRADIENT} articleTitle={TITLE} />
     );
     expect(container.firstChild).toBeNull();
   });
@@ -208,8 +212,8 @@ describe('BlockRenderer', () => {
     const { container } = render(
       <BlockRenderer
         block={{ __component: 'paragraph', text: 'text' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(container.firstChild).toHaveClass('py-8');
@@ -217,7 +221,11 @@ describe('BlockRenderer', () => {
 
   it('applies py-4 spacing for divider block', () => {
     const { container } = render(
-      <BlockRenderer block={{ __component: 'divider' }} caseGradient={GRADIENT} caseTitle={TITLE} />
+      <BlockRenderer
+        block={{ __component: 'divider' }}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
+      />
     );
     expect(container.firstChild).toHaveClass('py-4');
   });
@@ -226,8 +234,8 @@ describe('BlockRenderer', () => {
     const { container } = render(
       <BlockRenderer
         block={{ __component: 'heading', level: 3, text: 'Sub' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(container.firstChild).toHaveClass('pt-6', 'pb-2');
@@ -237,8 +245,8 @@ describe('BlockRenderer', () => {
     const { container } = render(
       <BlockRenderer
         block={{ __component: 'heading', level: 2, text: 'Title' }}
-        caseGradient={GRADIENT}
-        caseTitle={TITLE}
+        articleGradient={GRADIENT}
+        articleTitle={TITLE}
       />
     );
     expect(container.firstChild).toHaveClass('py-4');

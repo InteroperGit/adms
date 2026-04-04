@@ -12,7 +12,7 @@ const SUFFIX_FADE_STYLE: React.CSSProperties = {
 
 interface MetricsBlockProps {
   block: MetricsBlockData;
-  caseGradient: string;
+  articleGradient: string;
 }
 
 interface ColorConfig {
@@ -127,12 +127,12 @@ function MetricCard({ metric, label, description, index, animate, colorConfig }:
  * for the card background; uncolored cards use a neutral bordered style.
  * @param {MetricsBlockProps} props
  * @param {MetricsBlockData} props.block - Metrics block with optional title and items (metric, label, description)
- * @param {string} props.caseGradient - Fallback Tailwind gradient stops used when color type is 'gradient'
+ * @param {string} props.articleGradient - Fallback Tailwind gradient stops used when color type is 'gradient'
  * @returns {JSX.Element} Metrics grid with animated count-up on scroll entry
  * @example
- * <MetricsBlock block={metricsData} caseGradient="from-blue-500 to-purple-500" />
+ * <MetricsBlock block={metricsData} articleGradient="from-blue-500 to-purple-500" />
  */
-export function MetricsBlock({ block, caseGradient }: MetricsBlockProps) {
+export function MetricsBlock({ block, articleGradient }: MetricsBlockProps) {
   const color = block.color;
   const bgColor = color?.background;
   const isGradient = bgColor?.type === 'gradient';
@@ -147,7 +147,7 @@ export function MetricsBlock({ block, caseGradient }: MetricsBlockProps) {
     isSolid,
     isPrimary,
     isAccent,
-    gradientStops: bgColor?.value ?? caseGradient,
+    gradientStops: bgColor?.value ?? articleGradient,
     metricTextColor: color?.metric || (colored ? 'text-white' : 'text-primary'),
     labelTextColor: color?.label || (colored ? 'text-white/70' : 'text-muted-foreground'),
     descriptionTextColor:

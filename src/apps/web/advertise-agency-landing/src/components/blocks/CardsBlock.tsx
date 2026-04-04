@@ -5,7 +5,7 @@ import { HIDDEN_STYLE, STAGGER_ANIMATION_BASE } from './blockAnimations';
 
 interface CardsBlockProps {
   block: CardsBlockData;
-  caseGradient: string;
+  articleGradient: string;
 }
 
 const COLS_CLASS = {
@@ -22,17 +22,17 @@ const COLS_CLASS = {
  * renders a plain borderless card with no accent bar.
  * @param {CardsBlockProps} props
  * @param {CardsBlockData} props.block - Cards block with optional title, columns count and items
- * @param {string} props.caseGradient - Fallback Tailwind gradient stops used when color type is 'gradient'
+ * @param {string} props.articleGradient - Fallback Tailwind gradient stops used when color type is 'gradient'
  * @returns {JSX.Element} Cards grid with optional title
  * @example
- * <CardsBlock block={cardsData} caseGradient="from-blue-500 to-purple-500" />
+ * <CardsBlock block={cardsData} articleGradient="from-blue-500 to-purple-500" />
  */
-export function CardsBlock({ block, caseGradient }: CardsBlockProps) {
+export function CardsBlock({ block, articleGradient }: CardsBlockProps) {
   const color = block.color;
   const isGradient = color?.type === 'gradient';
   const isPrimary = color?.type === 'solid' || color?.type === 'primary';
   const isAccent = color?.type === 'accent';
-  const gradientStops = color?.value ?? caseGradient;
+  const gradientStops = color?.value ?? articleGradient;
   const cols = block.columns ?? 3;
 
   // Derive accent bar class once — null means no bar rendered

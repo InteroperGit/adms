@@ -1,4 +1,4 @@
-// src/components/portfolio/Pagination.tsx
+// src/components/articles/Pagination.tsx
 import { Button } from '@/components/ui/button';
 import { interpolate } from '@/libs/utils';
 

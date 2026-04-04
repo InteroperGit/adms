@@ -7,7 +7,7 @@ vi.mock('@/components/ui/OptimizedImage', () => ({
   ),
 }));
 
-import { CaseHero } from './CaseHero';
+import { ArticleHero } from './ArticleHero';
 
 const baseProps = {
   category: 'Брендинг',
@@ -15,33 +15,33 @@ const baseProps = {
   description: 'Полный ребрендинг за 6 недель.',
 };
 
-describe('CaseHero', () => {
+describe('ArticleHero', () => {
   describe('common content', () => {
     it('renders the title as h1', () => {
-      render(<CaseHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />);
+      render(<ArticleHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />);
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Редизайн ACME');
     });
 
     it('renders the category badge', () => {
-      render(<CaseHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />);
+      render(<ArticleHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />);
       expect(screen.getByText('Брендинг')).toBeInTheDocument();
     });
 
     it('renders the description', () => {
-      render(<CaseHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />);
+      render(<ArticleHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />);
       expect(screen.getByText('Полный ребрендинг за 6 недель.')).toBeInTheDocument();
     });
   });
 
   describe('gradient mode (no image)', () => {
     it('does not render an image', () => {
-      render(<CaseHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />);
+      render(<ArticleHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />);
       expect(screen.queryByTestId('optimized-image')).not.toBeInTheDocument();
     });
 
     it('applies the gradient class to the section', () => {
       const { container } = render(
-        <CaseHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />
+        <ArticleHero hero={{ gradient: 'from-violet-600 to-indigo-700' }} {...baseProps} />
       );
       const section = container.querySelector('section');
       expect(section).toHaveClass('from-violet-600');
@@ -50,7 +50,7 @@ describe('CaseHero', () => {
 
     it('includes bg-gradient-to-br on the section', () => {
       const { container } = render(
-        <CaseHero hero={{ gradient: 'from-blue-500 to-purple-600' }} {...baseProps} />
+        <ArticleHero hero={{ gradient: 'from-blue-500 to-purple-600' }} {...baseProps} />
       );
       expect(container.querySelector('section')).toHaveClass('bg-gradient-to-br');
     });
@@ -58,7 +58,7 @@ describe('CaseHero', () => {
 
   describe('image mode', () => {
     it('renders the OptimizedImage with the correct src and alt', () => {
-      render(<CaseHero hero={{ image: '/img/hero.jpg', gradient: '' }} {...baseProps} />);
+      render(<ArticleHero hero={{ image: '/img/hero.jpg', gradient: '' }} {...baseProps} />);
       const img = screen.getByTestId('optimized-image');
       expect(img).toHaveAttribute('src', '/img/hero.jpg');
       expect(img).toHaveAttribute('alt', 'Редизайн ACME');
@@ -66,7 +66,7 @@ describe('CaseHero', () => {
 
     it('renders the dark overlay div', () => {
       const { container } = render(
-        <CaseHero hero={{ image: '/img/hero.jpg', gradient: '' }} {...baseProps} />
+        <ArticleHero hero={{ image: '/img/hero.jpg', gradient: '' }} {...baseProps} />
       );
       const overlay = container.querySelector('.bg-neutral-900\\/60');
       expect(overlay).toBeInTheDocument();
@@ -74,7 +74,7 @@ describe('CaseHero', () => {
 
     it('applies bg-neutral-900 to the section', () => {
       const { container } = render(
-        <CaseHero hero={{ image: '/img/hero.jpg', gradient: '' }} {...baseProps} />
+        <ArticleHero hero={{ image: '/img/hero.jpg', gradient: '' }} {...baseProps} />
       );
       expect(container.querySelector('section')).toHaveClass('bg-neutral-900');
     });

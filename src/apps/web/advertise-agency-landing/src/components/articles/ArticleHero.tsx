@@ -1,12 +1,12 @@
-// src/components/portfolio/CaseHero.tsx
+// src/components/articles/ArticleHero.tsx
 import { Badge } from '@/components/ui/badge';
 import { Container } from '@/components/layout/Container';
 import { cn } from '@/libs/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
-interface CaseHeroProps {
+interface ArticleHeroProps {
   /**
-   * Hero display configuration sourced from the portfolio case JSON.
+   * Hero display configuration sourced from the article JSON.
    * - `image` — optional absolute path to the hero image (served from `/img/`).
    *   When present the image is rendered full-bleed with a `bg-neutral-900/60` overlay.
    * - `gradient` — Tailwind utility classes for the fallback gradient background
@@ -15,14 +15,14 @@ interface CaseHeroProps {
   hero: { image?: string; gradient: string };
   /** Category label rendered as a frosted-glass badge above the title. */
   category: string;
-  /** Main case title — rendered as the page `<h1>`. */
+  /** Main article title — rendered as the page `<h1>`. */
   title: string;
   /** Short description rendered below the title. */
   description: string;
 }
 
 /**
- * Full-height hero section for portfolio case detail pages.
+ * Full-height hero section for article detail pages.
  *
  * Supports two visual modes driven by `hero.image`:
  *
@@ -35,12 +35,12 @@ interface CaseHeroProps {
  * Both modes share identical centred content (badge → h1 → description) extracted
  * into a `content` variable to avoid JSX duplication.
  *
- * @param props - See {@link CaseHeroProps}.
+ * @param props - See {@link ArticleHeroProps}.
  * @returns A `<section>` with the appropriate background and centred white content.
  *
  * @example
  * // Image-based hero:
- * <CaseHero
+ * <ArticleHero
  *   hero={{ image: '/img/case-hero.jpg', gradient: '' }}
  *   category="Брендинг"
  *   title="Редизайн бренда ACME"
@@ -49,14 +49,14 @@ interface CaseHeroProps {
  *
  * @example
  * // Gradient-only hero (no image):
- * <CaseHero
+ * <ArticleHero
  *   hero={{ gradient: 'from-violet-600 to-indigo-700' }}
  *   category="Контекстная реклама"
  *   title="Кампания для ритейлера"
  *   description="ROI ×3 за первый квартал."
  * />
  */
-export function CaseHero({ hero, category, title, description }: CaseHeroProps) {
+export function ArticleHero({ hero, category, title, description }: ArticleHeroProps) {
   const content = (
     <Container className={hero.image ? 'relative z-10' : undefined}>
       <div className="mx-auto max-w-3xl text-center">

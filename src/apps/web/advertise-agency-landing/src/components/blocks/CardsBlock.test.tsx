@@ -32,13 +32,13 @@ const baseBlock = {
 
 describe('CardsBlock', () => {
   it('renders card titles', () => {
-    render(<CardsBlock block={baseBlock} caseGradient="from-blue-500 to-purple-500" />);
+    render(<CardsBlock block={baseBlock} articleGradient="from-blue-500 to-purple-500" />);
     expect(screen.getByText('Card One')).toBeInTheDocument();
     expect(screen.getByText('Card Two')).toBeInTheDocument();
   });
 
   it('renders card descriptions', () => {
-    render(<CardsBlock block={baseBlock} caseGradient="from-blue-500 to-purple-500" />);
+    render(<CardsBlock block={baseBlock} articleGradient="from-blue-500 to-purple-500" />);
     expect(screen.getByText('First card description')).toBeInTheDocument();
     expect(screen.getByText('Second card description')).toBeInTheDocument();
   });
@@ -47,7 +47,7 @@ describe('CardsBlock', () => {
     render(
       <CardsBlock
         block={{ ...baseBlock, title: 'Our Services' }}
-        caseGradient="from-blue-500 to-purple-500"
+        articleGradient="from-blue-500 to-purple-500"
       />
     );
     expect(screen.getByText('Our Services')).toBeInTheDocument();
@@ -55,14 +55,14 @@ describe('CardsBlock', () => {
 
   it('does not render title when not provided', () => {
     const { container } = render(
-      <CardsBlock block={baseBlock} caseGradient="from-blue-500 to-purple-500" />
+      <CardsBlock block={baseBlock} articleGradient="from-blue-500 to-purple-500" />
     );
     expect(container.querySelector('h2')).not.toBeInTheDocument();
   });
 
   it('applies hover transition classes to card items', () => {
     const { container } = render(
-      <CardsBlock block={baseBlock} caseGradient="from-blue-500 to-purple-500" />
+      <CardsBlock block={baseBlock} articleGradient="from-blue-500 to-purple-500" />
     );
     const cards = container.querySelectorAll('.transition-all');
     expect(cards.length).toBeGreaterThan(0);
@@ -70,7 +70,7 @@ describe('CardsBlock', () => {
 
   it('hides items initially (opacity-0) before scroll animation', () => {
     const { container } = render(
-      <CardsBlock block={baseBlock} caseGradient="from-blue-500 to-purple-500" />
+      <CardsBlock block={baseBlock} articleGradient="from-blue-500 to-purple-500" />
     );
     // Cards start with HIDDEN_STYLE (opacity: 0) since IntersectionObserver fires isIntersecting: false
     const cardDivs = container.querySelectorAll('[style]');

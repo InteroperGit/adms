@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
-import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid';
+import { PortfolioGrid } from '@/components/articles/PortfolioGrid';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { NotFound } from '@/pages/NotFound';
 import { portfolioPageContent } from '@/types/sections/portfolio/portfolioPage';

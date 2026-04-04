@@ -6,7 +6,7 @@ import { interpolate } from '@/libs/utils';
 
 interface GalleryBlockProps {
   block: GalleryBlockData;
-  caseTitle: string;
+  articleTitle: string;
 }
 
 /**
@@ -14,12 +14,12 @@ interface GalleryBlockProps {
  * @description Renders image gallery with full lightbox experience
  * @param {GalleryBlockProps} props
  * @param {GalleryBlockData} props.block - Gallery block with images array
- * @param {string} props.caseTitle - Case title for image alt text
+ * @param {string} props.articleTitle - Case title for image alt text
  * @returns {JSX.Element} ImageGallery component
  * @example
- * <GalleryBlock block={galleryData} caseTitle="Project Name" />
+ * <GalleryBlock block={galleryData} articleTitle="Project Name" />
  */
-export function GalleryBlock({ block, caseTitle }: GalleryBlockProps) {
+export function GalleryBlock({ block, articleTitle }: GalleryBlockProps) {
   const { photoAlt } = portfolioCaseContent;
   const { prevLabel, nextLabel, counter, closeLabel } = imageGalleryContent;
 
@@ -27,7 +27,7 @@ export function GalleryBlock({ block, caseTitle }: GalleryBlockProps) {
     <div className="mx-auto max-w-4xl">
       <ImageGallery
         images={block.images}
-        altPrefix={interpolate(photoAlt, { title: caseTitle })}
+        altPrefix={interpolate(photoAlt, { title: articleTitle })}
         prevLabel={prevLabel}
         nextLabel={nextLabel}
         closeLabel={closeLabel}

@@ -10,10 +10,10 @@ import type { BlockColor, ChartBlock as ChartBlockData } from '@/types/blocks';
  *
  * @description Maps BlockColor configuration to a Tailwind background class
  * @param {BlockColor | undefined} color - Color configuration object
- * @param {string} caseGradient - Fallback Tailwind gradient class if color type is 'gradient'
+ * @param {string} articleGradient - Fallback Tailwind gradient class if color type is 'gradient'
  * @returns {string} Tailwind class name for the progress bar background
  */
-function barBgClass(color: BlockColor | undefined, caseGradient: string): string {
+function barBgClass(color: BlockColor | undefined, articleGradient: string): string {
   if (!color) {
     return 'bg-primary';
   }
@@ -21,7 +21,7 @@ function barBgClass(color: BlockColor | undefined, caseGradient: string): string
     return 'bg-accent';
   }
   if (color.type === 'gradient') {
-    return cn('bg-gradient-to-r', color.value ?? caseGradient);
+    return cn('bg-gradient-to-r', color.value ?? articleGradient);
   }
   // 'solid' and 'primary' both map to bg-primary; solid.value (hex) cannot be used as a class
   return 'bg-primary';
@@ -29,7 +29,7 @@ function barBgClass(color: BlockColor | undefined, caseGradient: string): string
 
 interface ProgressChartProps {
   block: ChartBlockData;
-  caseGradient: string;
+  articleGradient: string;
 }
 
 /**
@@ -43,12 +43,12 @@ interface ProgressChartProps {
  * @description Renders a series of horizontal progress bars with labels and values
  * @param {ProgressChartProps} props
  * @param {ChartBlockData} props.block - Chart configuration with items and optional color
- * @param {string} props.caseGradient - Tailwind gradient classes fallback for gradient colors
+ * @param {string} props.articleGradient - Tailwind gradient classes fallback for gradient colors
  * @returns {JSX.Element} Container with list of progress bar rows
  */
-export function ProgressChart({ block, caseGradient }: ProgressChartProps) {
+export function ProgressChart({ block, articleGradient }: ProgressChartProps) {
   const max = Math.max(...block.items.map((i) => i.value), 1);
-  const bg = barBgClass(block.color, caseGradient);
+  const bg = barBgClass(block.color, articleGradient);
   const [containerRef, inView] = useViewportAnimation({ threshold: 0.2 });
 
   return (

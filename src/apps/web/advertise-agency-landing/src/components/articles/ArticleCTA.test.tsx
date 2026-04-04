@@ -20,28 +20,28 @@ vi.mock('@/types/portfolio/portfolioCaseContent', () => ({
   },
 }));
 
-import { CaseCTA } from './CaseCTA';
+import { ArticleCTA } from './ArticleCTA';
 
-describe('CaseCTA', () => {
+describe('ArticleCTA', () => {
   it('renders the CTA section heading', () => {
-    render(<CaseCTA />);
+    render(<ArticleCTA />);
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
       'Готовы к похожему результату?'
     );
   });
 
   it('renders the subtitle text', () => {
-    render(<CaseCTA />);
+    render(<ArticleCTA />);
     expect(screen.getByText('Расскажите о вашем проекте.')).toBeInTheDocument();
   });
 
   it('renders the CTA button with the configured label', () => {
-    render(<CaseCTA />);
+    render(<ArticleCTA />);
     expect(screen.getByRole('link', { name: 'Обсудить проект' })).toBeInTheDocument();
   });
 
   it('links the button to the configured href', () => {
-    render(<CaseCTA />);
+    render(<ArticleCTA />);
     expect(screen.getByRole('link', { name: 'Обсудить проект' })).toHaveAttribute(
       'href',
       '/#contact'

@@ -20,8 +20,8 @@ import { OrderFormBlock } from './OrderFormBlock';
 
 interface BlockRendererProps {
   block: ContentBlock;
-  caseGradient: string;
-  caseTitle: string;
+  articleGradient: string;
+  articleTitle: string;
 }
 
 /** Blocks that need less vertical padding than the default `py-8`. */
@@ -29,8 +29,8 @@ const SPARSE_BLOCKS = new Set(['divider', 'heading']);
 
 function renderBlock(
   block: ContentBlock,
-  caseGradient: string,
-  caseTitle: string
+  articleGradient: string,
+  articleTitle: string
 ): React.ReactNode {
   switch (block.__component) {
     case 'heading':
@@ -40,17 +40,17 @@ function renderBlock(
     case 'image':
       return <ImageBlock block={block} />;
     case 'gallery':
-      return <GalleryBlock block={block} caseTitle={caseTitle} />;
+      return <GalleryBlock block={block} articleTitle={articleTitle} />;
     case 'blockquote':
       return <BlockquoteBlock block={block} />;
     case 'metrics':
-      return <MetricsBlock block={block} caseGradient={caseGradient} />;
+      return <MetricsBlock block={block} articleGradient={articleGradient} />;
     case 'cards':
-      return <CardsBlock block={block} caseGradient={caseGradient} />;
+      return <CardsBlock block={block} articleGradient={articleGradient} />;
     case 'table':
       return <TableBlock block={block} />;
     case 'chart':
-      return <ChartBlock block={block} caseGradient={caseGradient} />;
+      return <ChartBlock block={block} articleGradient={articleGradient} />;
     case 'divider':
       return <DividerBlock block={block} />;
     case 'callout':
@@ -89,14 +89,14 @@ function getBlockSpacing(block: ContentBlock): string {
  * block does not crash the entire page. Unknown block types return null (dev warning logged).
  * @param {BlockRendererProps} props
  * @param {ContentBlock} props.block - Block data with `__component` type identifier
- * @param {string} props.caseGradient - Gradient used by blocks that support color (metrics, cards, charts)
- * @param {string} props.caseTitle - Case title forwarded to gallery blocks for image alt text
+ * @param {string} props.articleGradient - Gradient used by blocks that support color (metrics, cards, charts)
+ * @param {string} props.articleTitle - Article title forwarded to gallery blocks for image alt text
  * @returns {JSX.Element|null} Rendered block wrapped in ErrorBoundary with spacing, or null for unknown types
  * @example
- * <BlockRenderer block={contentBlock} caseGradient="from-blue-500 to-purple-500" caseTitle="Project Name" />
+ * <BlockRenderer block={contentBlock} articleGradient="from-blue-500 to-purple-500" articleTitle="Project Name" />
  */
-export function BlockRenderer({ block, caseGradient, caseTitle }: BlockRendererProps) {
-  const rendered = renderBlock(block, caseGradient, caseTitle);
+export function BlockRenderer({ block, articleGradient, articleTitle }: BlockRendererProps) {
+  const rendered = renderBlock(block, articleGradient, articleTitle);
   if (!rendered) {
     return null;
   }

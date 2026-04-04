@@ -88,5 +88,12 @@ src/components/articles/
 12. **T19:** Delete `src/components/portfolio/` directory
 
 ## Validation after T19
-- `pnpm typecheck` passes
-- No imports of `@/components/portfolio/` remain
+- [x] `pnpm typecheck` passes
+- [x] No imports of `@/components/portfolio/` remain
+
+**Completed:** 2026-04-04
+- pnpm format, lint, typecheck, build all pass
+- 12 files created in src/components/articles/
+- src/components/portfolio/ deleted
+- BlockRenderer props: caseGradient/articleGradient, caseTitle → articleTitle
+- All consumer imports updated (PortfolioCasePage, PortfolioCategoryPage, tests)

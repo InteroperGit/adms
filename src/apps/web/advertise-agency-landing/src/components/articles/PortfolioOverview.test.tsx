@@ -15,7 +15,7 @@ vi.mock('@/types/portfolio/portfolioCaseContent', () => ({
   },
 }));
 
-import { CaseOverview } from './CaseOverview';
+import { PortfolioOverview } from './PortfolioOverview';
 
 const defaultProps = {
   client: 'ACME Corp',
@@ -24,29 +24,29 @@ const defaultProps = {
   services: 'Логотип, Гайдлайн',
 };
 
-describe('CaseOverview', () => {
+describe('PortfolioOverview', () => {
   it('renders the client value', () => {
-    render(<CaseOverview {...defaultProps} />);
+    render(<PortfolioOverview {...defaultProps} />);
     expect(screen.getByText('ACME Corp')).toBeInTheDocument();
   });
 
   it('renders the category value', () => {
-    render(<CaseOverview {...defaultProps} />);
+    render(<PortfolioOverview {...defaultProps} />);
     expect(screen.getByText('Брендинг')).toBeInTheDocument();
   });
 
   it('renders the year value', () => {
-    render(<CaseOverview {...defaultProps} />);
+    render(<PortfolioOverview {...defaultProps} />);
     expect(screen.getByText('2024')).toBeInTheDocument();
   });
 
   it('renders the services value', () => {
-    render(<CaseOverview {...defaultProps} />);
+    render(<PortfolioOverview {...defaultProps} />);
     expect(screen.getByText('Логотип, Гайдлайн')).toBeInTheDocument();
   });
 
   it('renders localised labels from overviewLabels', () => {
-    render(<CaseOverview {...defaultProps} />);
+    render(<PortfolioOverview {...defaultProps} />);
     expect(screen.getByText('Клиент')).toBeInTheDocument();
     expect(screen.getByText('Категория')).toBeInTheDocument();
     expect(screen.getByText('Год')).toBeInTheDocument();
@@ -54,13 +54,13 @@ describe('CaseOverview', () => {
   });
 
   it('renders all four grid items', () => {
-    const { container } = render(<CaseOverview {...defaultProps} />);
+    const { container } = render(<PortfolioOverview {...defaultProps} />);
     const grid = container.querySelector('.grid');
     expect(grid?.children).toHaveLength(4);
   });
 
   it('wraps content in a section element', () => {
-    const { container } = render(<CaseOverview {...defaultProps} />);
+    const { container } = render(<PortfolioOverview {...defaultProps} />);
     expect(container.querySelector('section')).toBeInTheDocument();
   });
 });
