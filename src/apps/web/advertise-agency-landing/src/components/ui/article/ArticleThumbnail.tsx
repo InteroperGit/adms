@@ -1,10 +1,9 @@
-// src/components/ui/PortfolioThumbnail.tsx
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/libs/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
-interface PortfolioThumbnailProps {
+interface ArticleThumbnailProps {
   href: string;
   image?: string;
   title: string;
@@ -14,24 +13,24 @@ interface PortfolioThumbnailProps {
 
 /**
  * @component
- * @description Portfolio case thumbnail with gradient background, optional image, category badge and hover overlay
- * @param {PortfolioThumbnailProps} props
- * @param {string} props.href - Link to case detail page
- * @param {string} [props.image] - Case preview image URL
- * @param {string} props.title - Case title for alt text
+ * @description Article thumbnail with gradient background, optional image, category badge and hover overlay
+ * @param {ArticleThumbnailProps} props
+ * @param {string} props.href - Link to article detail page
+ * @param {string} [props.image] - Article preview image URL
+ * @param {string} props.title - Article title for alt text
  * @param {string} props.category - Category label for badge
  * @param {string} props.gradient - Tailwind gradient classes (fallback if no image)
  * @returns {JSX.Element} Linked thumbnail with image or pattern overlay with lazy loading skeleton
  * @example
- * <PortfolioThumbnail href="/portfolio/all/case" image="/images/thumb.jpg" title="Case Title" category="Branding" gradient="from-purple-500 to-pink-500" />
+ * <ArticleThumbnail href="/portfolio/all/case" image="/images/thumb.jpg" title="Case Title" category="Branding" gradient="from-purple-500 to-pink-500" />
  */
-export function PortfolioThumbnail({
+export function ArticleThumbnail({
   href,
   image,
   title,
   category,
   gradient,
-}: PortfolioThumbnailProps) {
+}: ArticleThumbnailProps) {
   const [imageLoaded, setImageLoaded] = useState(() => !image);
 
   return (

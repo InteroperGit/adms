@@ -1,4 +1,5 @@
 import { useParams, useLocation } from 'react-router';
+import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { ArticleGrid } from '@/components/articles/ArticleGrid';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
@@ -130,24 +131,28 @@ export function ArticleCategoryPage() {
   return (
     <>
       <BreadCrumbs items={breadcrumbItems} />
-      <SectionHeader
-        label={cfg.label}
-        title={cfg.label}
-        description={`Все статьи категории «${cfg.label}»`}
-        className="mb-12"
-      />
-      <ArticleGrid
-        items={filtered}
-        articleHref={(item) => getArticleHref(detectedType, item, categorySlug ?? 'all')}
-        detailsLabel={cfg.detailsLabel ?? portfolioSectionContent.detailsLabel}
-        basePath={cfg.basePath}
-        cta={cfg.cta}
-        emptyLabel={cfg.emptyLabel}
-        perPage={cfg.perPage}
-        categories={cfg.hasCategories ? categories : undefined}
-        allLabel={portfolioConfig.allLabel}
-        activeSlug={cfg.hasCategories ? categorySlug : undefined}
-      />
+      <section className="bg-background py-24 md:py-32">
+        <Container>
+          <SectionHeader
+            label={cfg.label}
+            title={cfg.label}
+            description={`Все статьи категории «${cfg.label}»`}
+            className="mb-12"
+          />
+          <ArticleGrid
+            items={filtered}
+            articleHref={(item) => getArticleHref(detectedType, item, categorySlug ?? 'all')}
+            detailsLabel={cfg.detailsLabel ?? portfolioSectionContent.detailsLabel}
+            basePath={cfg.basePath}
+            cta={cfg.cta}
+            emptyLabel={cfg.emptyLabel}
+            perPage={cfg.perPage}
+            categories={cfg.hasCategories ? categories : undefined}
+            allLabel={portfolioConfig.allLabel}
+            activeSlug={cfg.hasCategories ? categorySlug : undefined}
+          />
+        </Container>
+      </section>
     </>
   );
 }

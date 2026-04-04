@@ -2,7 +2,7 @@
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/libs/utils';
-import { PortfolioThumbnail } from '@/components/ui/portfolio/PortfolioThumbnail';
+import { ArticleThumbnail } from '@/components/ui/article/ArticleThumbnail';
 import type { BaseArticle } from '@/types/articles/article';
 
 interface ArticleCardProps {
@@ -28,7 +28,7 @@ export function ArticleCard({ article, detailsLabel }: ArticleCardProps) {
         'transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg'
       )}
     >
-      <PortfolioThumbnail
+      <ArticleThumbnail
         href={article.href}
         image={article.images?.preview}
         title={article.title}
