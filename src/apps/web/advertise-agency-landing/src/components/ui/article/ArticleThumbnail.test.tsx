@@ -41,9 +41,7 @@ describe('ArticleThumbnail', () => {
   });
 
   it('does not render dot pattern when image is provided', () => {
-    const { container } = render(
-      <ArticleThumbnail {...defaultProps} image="/images/thumb.jpg" />
-    );
+    const { container } = render(<ArticleThumbnail {...defaultProps} image="/images/thumb.jpg" />);
     const dotPattern = container.querySelector('[style*="radial-gradient"]');
     expect(dotPattern).not.toBeInTheDocument();
   });
@@ -63,17 +61,13 @@ describe('ArticleThumbnail', () => {
   });
 
   it('shows shimmer initially when image is provided', () => {
-    const { container } = render(
-      <ArticleThumbnail {...defaultProps} image="/images/thumb.jpg" />
-    );
+    const { container } = render(<ArticleThumbnail {...defaultProps} image="/images/thumb.jpg" />);
     const shimmer = container.querySelector('[aria-hidden="true"]');
     expect(shimmer).toBeInTheDocument();
   });
 
   it('dismisses shimmer after OptimizedImage onLoad fires', () => {
-    const { container } = render(
-      <ArticleThumbnail {...defaultProps} image="/images/thumb.jpg" />
-    );
+    const { container } = render(<ArticleThumbnail {...defaultProps} image="/images/thumb.jpg" />);
     const img = screen.getByTestId('optimized-image');
     fireEvent.load(img);
     const shimmer = container.querySelector('[aria-hidden="true"]');

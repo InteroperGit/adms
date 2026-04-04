@@ -14,7 +14,7 @@ Generalize Portfolio Case page mechanism into a reusable Article Engine: portfol
 | 1 | `phase1_coreTypes.md` | T1–T7 (7, all done) | Phase 0 |
 | 2 | `phase2_components.md` | T8–T19 (12) | Phase 1 |
 | 3 | `phase3_pages.md` | T20–T25 (6) | Phase 2 |
-| 4 | `phase4_dataConfig.md` | T26–T29 (4) | Phase 3 |
+| 4 | `phase4_dataConfig.md` | T26–T29 (4, all done) | Phase 3 |
 | 5 | `phase5_ssg.md` | T30–T33 (4) | Phase 3 |
 | 6 | `phase6_cleanup.md` | T34–T36 (3) | Phases 2–5 |
 | 7 | `phase7_docsQa.md` | T37–T40 (4) | All prior |

@@ -24,6 +24,9 @@ const CONFIG_DIR = `${DATA_CONTENT_DIR}/config`;
 const SECTIONS_DIR = `${DATA_CONTENT_DIR}/sections`;
 const LEGAL_DIR = `${DATA_CONTENT_DIR}/legal`;
 const PORTFOLIO_DIR = `${DATA_CONTENT_DIR}/portfolio`;
+const SERVICES_DIR = `${DATA_CONTENT_DIR}/services`;
+const NEWS_DIR = `${DATA_CONTENT_DIR}/news`;
+const BLOG_DIR = `${DATA_CONTENT_DIR}/blog`;
 const SCHEMA_BASE = './data/_schema/schema';
 const EXAMPLES_DIR = 'data/_schema/examples';
 
@@ -72,6 +75,7 @@ import { SeoConfigSchema } from '../../src/types/config/seo';
 import { OrderFormsDataSchema } from '../../src/types/config/orderForms';
 import { DefaultArticleCtaSchema } from '../../src/types/config/defaultArticleCta';
 import { NotFoundContentSchema } from '../../src/types/config/notFound';
+import { ArticleTypesConfigSchema } from '../../src/types/config/articleTypes';
 
 // ── Section schemas ───────────────────────────────────────────────────────────
 import { HeaderContentSchema } from '../../src/types/sections/header/header';
@@ -131,6 +135,7 @@ const schemas: Record<string, SchemaEntry> = {
   orderForms: { subfolder: SUBFOLDERS.config, schema: OrderFormsDataSchema },
   notFound: { subfolder: SUBFOLDERS.config, schema: NotFoundContentSchema },
   defaultArticleCta: { subfolder: SUBFOLDERS.config, schema: DefaultArticleCtaSchema },
+  articleTypes: { subfolder: SUBFOLDERS.config, schema: ArticleTypesConfigSchema },
   // Sections — organized by component subfolder
   header: {
     subfolder: SUBFOLDERS.sections,
@@ -312,6 +317,7 @@ const jsonSchemas = [
   configSchema('notFound'),
   configSchema('imageGallery'),
   configSchema('defaultArticleCta'),
+  configSchema('articleTypes'),
 
   // Section files — organized by component subfolder
   sectionSchema('header', 'header'),
@@ -365,7 +371,7 @@ const jsonSchemas = [
     url: schemaUrl(SUBFOLDERS.articles, 'article'),
   },
   {
-    fileMatch: [`${EXAMPLES_DIR}/articles/service/service.example.json`],
+    fileMatch: [`${EXAMPLES_DIR}/articles/services/service.example.json`],
     url: schemaUrl(SUBFOLDERS.articles, 'serviceArticle'),
   },
   {
@@ -374,6 +380,20 @@ const jsonSchemas = [
   },
   {
     fileMatch: [`${EXAMPLES_DIR}/articles/blog/blog.example.json`],
+    url: schemaUrl(SUBFOLDERS.articles, 'blogArticle'),
+  },
+
+  // Article content file globs
+  {
+    fileMatch: ['data/content/services/**/*.json'],
+    url: schemaUrl(SUBFOLDERS.articles, 'serviceArticle'),
+  },
+  {
+    fileMatch: ['data/content/news/**/*.json'],
+    url: schemaUrl(SUBFOLDERS.articles, 'newsArticle'),
+  },
+  {
+    fileMatch: ['data/content/blog/**/*.json'],
     url: schemaUrl(SUBFOLDERS.articles, 'blogArticle'),
   },
 ];
@@ -443,6 +463,21 @@ export function getSchemaPathForFile(filePath: string): string | null {
   // Portfolio case files
   if (relativePath.startsWith(portfolioPrefix)) {
     return `${REL_PORTFOLIO_ARTICLES}/portfolioArticle.schema.json`;
+  }
+
+  // Service article files
+  if (relativePath.startsWith(`${SERVICES_DIR}/`)) {
+    return `${REL_PORTFOLIO_ARTICLES}/serviceArticle.schema.json`;
+  }
+
+  // News article files
+  if (relativePath.startsWith(`${NEWS_DIR}/`)) {
+    return `${REL_PORTFOLIO_ARTICLES}/newsArticle.schema.json`;
+  }
+
+  // Blog article files
+  if (relativePath.startsWith(`${BLOG_DIR}/`)) {
+    return `${REL_PORTFOLIO_ARTICLES}/blogArticle.schema.json`;
   }
 
   return null;

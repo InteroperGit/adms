@@ -33,7 +33,7 @@ export default {
 ### seoMetaPlugin.ts — key functions
 
 - `handleCasePage()` — parses `/portfolio/:category/:year/:month/:slug` (keep as-is for portfolio)
-- **NEW:** `handleServicePage()` — matches `/services/:category/:year/:month/:slug`
+- **NEW:** `handleServicePage()` — matches `/services/:slug`
 - **NEW:** `handleNewsPage()` — matches `/news/:year/:month/:slug`
 - **NEW:** `handleBlogPage()` — matches `/blog/:year/:month/:slug`
 - All new handlers load data from `articleMap` by slug

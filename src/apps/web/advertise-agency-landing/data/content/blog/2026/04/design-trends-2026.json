@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../../../_schema/schema/articles/blogArticle.schema.json",
+  "type": "blog",
+  "slug": "design-trends-2026",
+  "publishedAt": "2026-04-05T00:00:00Z",
+  "title": "Тренды дизайна 2026 года",
+  "description": "Обзор визуальных трендов и техник, которые определяют будущее дизайна в этом году.",
+  "hero": {
+    "image": "/images/articles/blog/design-trends/hero.jpg",
+    "gradient": "from-pink-600 to-orange-500"
+  },
+  "tags": ["Дизайн", "Тренды", "Креатив"],
+  "category": "Дизайн",
+  "author": {
+    "name": "Анна Сидорова",
+    "avatar": "/images/team/anna.jpg",
+    "title": "Креативный директор"
+  },
+  "readTime": 6,
+  "meta": {
+    "title": "Тренды дизайна 2026 — Рекламастер",
+    "description": "Обзор визуальных трендов, определяющих будущее дизайна.",
+    "ogUrl": "https://example.ru/blog/design-trends-2026",
+    "ogImage": "/images/articles/blog/design-trends/og.jpg"
+  },
+  "content": [
+    {
+      "__component": "heading",
+      "level": 2,
+      "text": "Введение"
+    },
+    {
+      "__component": "paragraph",
+      "text": "От генеративной типографики до кинетических раскладок — разбираем ключевые направления, которые формируют индустрию в этом году."
+    },
+    {
+      "__component": "heading",
+      "level": 2,
+      "text": "Кинетическая типографика"
+    },
+    {
+      "__component": "paragraph",
+      "text": "Анимированные шрифты и динамические заголовки стали одним из самых заметных трендов 2026 года. Они привлекают внимание и усиливают взаимодействие с пользователем."
+    }
+  ],
+  "images": {
+    "preview": "/images/articles/blog/design-trends/preview.jpg",
+    "og": "/images/articles/blog/design-trends/og.jpg"
+  }
+}

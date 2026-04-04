@@ -1,0 +1,25 @@
+{
+  "$schema": "../../_schema/schema/config/articleTypes.schema.json",
+  "types": [
+    {
+      "key": "portfolio",
+      "label": "Portfolio",
+      "icon": "briefcase"
+    },
+    {
+      "key": "service",
+      "label": "Services",
+      "icon": "wrench"
+    },
+    {
+      "key": "news",
+      "label": "News",
+      "icon": "newspaper"
+    },
+    {
+      "key": "blog",
+      "label": "Blog",
+      "icon": "pen"
+    }
+  ]
+}
