@@ -68,6 +68,13 @@ vi.mock('@/types/sections/portfolio/portfolioPage', () => ({
   },
 }));
 
+vi.mock('@/types/articles/allArticles', () => ({
+  allPortfolioArticles: [],
+  allServiceArticles: [],
+  allNewsArticles: [],
+  allBlogArticles: [],
+}));
+
 vi.mock('@/types/config/notFound', () => ({
   notFoundContent: {
     title: 'Страница не найдена',
@@ -79,7 +86,7 @@ vi.mock('@/types/config/notFound', () => ({
 }));
 
 // 3 fake cases: 2 branding + 1 web.
-// category field must match category.name (used by PortfolioCategoryPage filter).
+// category field must match category.name (used by ArticleCategoryPage filter).
 // Order matters for pagination: branding-1, branding-2 on page 1; web-1 on page 2.
 vi.mock('@/types/portfolio/portfolioCases', () => ({
   portfolioCaseMap: {},
@@ -143,7 +150,7 @@ vi.mock('@/components/ui/navigation/BreadCrumbs', () => ({
 // ---------------------------------------------------------------------------
 // Imports — after all vi.mock() declarations
 // ---------------------------------------------------------------------------
-import { PortfolioCategoryPage } from '@/pages/PortfolioCategoryPage';
+import { ArticleCategoryPage } from '@/pages/ArticleCategoryPage';
 
 // ---------------------------------------------------------------------------
 // Router helper — minimal route tree for portfolio pages only.
@@ -155,8 +162,8 @@ import { PortfolioCategoryPage } from '@/pages/PortfolioCategoryPage';
 function makeRouter(initialPath: string) {
   return createMemoryRouter(
     [
-      { path: '/portfolio', element: <PortfolioCategoryPage /> },
-      { path: '/portfolio/:categorySlug', element: <PortfolioCategoryPage /> },
+      { path: '/portfolio', element: <ArticleCategoryPage /> },
+      { path: '/portfolio/:categorySlug', element: <ArticleCategoryPage /> },
     ],
     { initialEntries: [initialPath] }
   );

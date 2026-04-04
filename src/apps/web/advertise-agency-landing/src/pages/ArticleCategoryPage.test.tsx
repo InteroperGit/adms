@@ -88,8 +88,8 @@ vi.mock('@/types/config/notFound', () => ({
   },
 }));
 
-vi.mock('@/components/articles/PortfolioGrid', () => ({
-  PortfolioGrid: ({
+vi.mock('@/components/articles/ArticleGrid', () => ({
+  ArticleGrid: ({
     items,
     activeSlug,
   }: {

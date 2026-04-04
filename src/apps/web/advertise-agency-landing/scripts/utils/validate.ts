@@ -39,7 +39,6 @@ import { TestimonialsSectionContentSchema } from '../../src/types/sections/testi
 import { TestimonialsSchema } from '../../src/types/sections/testimonials/testimonials';
 import { ContactContentSchema } from '../../src/types/sections/contact/contact';
 import { FooterContentSchema } from '../../src/types/sections/footer/footer';
-import { PortfolioPageContentSchema } from '../../src/types/sections/portfolio/portfolioPage';
 
 // ── Portfolio schemas ──────────────────────────────────────────────────────────
 import { PortfolioSectionContentSchema } from '../../src/types/portfolio';
@@ -142,7 +141,6 @@ const SECTION_SCHEMAS: [string, Schema][] = [
   ['testimonials/testimonials.json', TestimonialsSchema],
   ['contact/contact.json', ContactContentSchema],
   ['footer/footer.json', FooterContentSchema],
-  ['portfolio/portfolioPage.json', PortfolioPageContentSchema],
   ['portfolio/portfolioSection.json', PortfolioSectionContentSchema],
 ];
 

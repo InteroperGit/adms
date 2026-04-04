@@ -2,18 +2,22 @@
 import { Link } from 'react-router';
 import { cn } from '@/libs/utils';
 import { AnimatedPillTabs, type AnimatedPillTabItem } from '@/components/ui/AnimatedPillTabs';
-import { categories } from '@/types/config/categories';
-import { portfolioConfig } from '@/types/config/portfolioConfig';
 
 interface CategoryNavProps {
   /**
    * Slug of the currently active category route segment.
    *
-   * - `null` — user is on the root `/portfolio` page (maps to the "All" tab).
-   * - `"all"` — user is on `/portfolio/all` (also maps to the "All" tab).
+   * - `null` — user is on the root listing page (maps to the "All" tab).
+   * - `"all"` — user is on the explicit all-cases route (also maps to "All").
    * - Any other string — must match a `slug` from `categories` config.
    */
   activeSlug: string | null;
+  /** Base path for category hrefs, e.g. "/portfolio", "/services" */
+  basePath: string;
+  /** Category definitions */
+  categories: Array<{ name: string; slug: string }>;
+  /** Label for the "All" tab */
+  allLabel: string;
 }
 
 /** Extends `AnimatedPillTabItem` with the navigation target for each tab. */
@@ -23,44 +27,30 @@ interface CategoryTabItem extends AnimatedPillTabItem {
 }
 
 /**
- * Animated category filter tabs rendered on all portfolio listing pages.
+ * Animated category filter tabs rendered on article listing pages with category taxonomies.
  *
- * Builds a tab list from the `categories` config, prepending a hard-coded "All"
- * entry pointing to `/portfolio`. The list is passed to `AnimatedPillTabs` which
- * manages a sliding pill indicator that animates between the active tab's position.
- *
- * Each tab is rendered as a React Router `<Link>` (client-side navigation). Active
- * styling (`text-white`, transparent border) is set when `item.value === activeValue`;
- * inactive tabs show a muted accent border.
- *
- * The `CategoryTabItem` interface is a local extension of `AnimatedPillTabItem` that
- * adds `href`. It is required so TypeScript can resolve `item.href` inside `renderItem`
- * without a cast — removing it would widen the type to the base interface, losing `href`.
+ * Builds a tab list from the `categories` prop, prepending an "All" entry pointing to `basePath`.
  *
  * @param props - See {@link CategoryNavProps}.
  * @returns An `AnimatedPillTabs` container with one `<Link>` per category plus "All".
  *
  * @example
- * // On /portfolio/branding — "Branding" tab is active:
- * <CategoryNav activeSlug="branding" />
- *
- * @example
- * // On /portfolio or /portfolio/all — "All" tab is active:
- * <CategoryNav activeSlug={null} />
+ * // Portfolio:
+ * <CategoryNav activeSlug="branding" basePath="/portfolio" categories={categories} allLabel="Все" />
  */
-export function CategoryNav({ activeSlug }: CategoryNavProps) {
+export function CategoryNav({ activeSlug, basePath, categories, allLabel }: CategoryNavProps) {
   const activeValue = activeSlug && activeSlug !== 'all' ? activeSlug : 'all';
 
   const items: CategoryTabItem[] = [
     {
-      label: portfolioConfig.allLabel,
+      label: allLabel,
       value: 'all',
-      href: '/portfolio',
+      href: basePath,
     },
     ...categories.map((category) => ({
       label: category.name,
       value: category.slug,
-      href: `/portfolio/${category.slug}`,
+      href: `${basePath}/${category.slug}`,
     })),
   ];
 

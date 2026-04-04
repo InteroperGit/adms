@@ -36,7 +36,7 @@ interface PaginationProps {
  * The centre label is produced by calling `interpolate(pageLabel, { current, total })`
  * from `@/libs/utils`, keeping the format string in `portfolioConfig` for localisation.
  *
- * `PortfolioGrid` only renders this component when `totalPages > 1`, so it never
+ * `ArticleGrid` only renders this component when `totalPages > 1`, so it never
  * appears for a single-page listing.
  *
  * @param props - See {@link PaginationProps}.

@@ -89,8 +89,6 @@ import { TestimonialsSectionContentSchema } from '../../src/types/sections/testi
 import { TestimonialsSchema } from '../../src/types/sections/testimonials/testimonials';
 import { ContactContentSchema } from '../../src/types/sections/contact/contact';
 import { FooterContentSchema } from '../../src/types/sections/footer/footer';
-import { PortfolioPageContentSchema } from '../../src/types/sections/portfolio/portfolioPage';
-
 // ── Portfolio schemas ─────────────────────────────────────────────────────────
 import { PortfolioSectionContentSchema } from '../../src/types/portfolio';
 import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
@@ -208,11 +206,6 @@ const schemas: Record<string, SchemaEntry> = {
     subfolder: SUBFOLDERS.sections,
     section: SECTION_SUBFOLDERS.footer,
     schema: FooterContentSchema,
-  },
-  portfolioPage: {
-    subfolder: SUBFOLDERS.sections,
-    section: SECTION_SUBFOLDERS.portfolio,
-    schema: PortfolioPageContentSchema,
   },
   portfolioSection: {
     subfolder: SUBFOLDERS.sections,
@@ -336,7 +329,6 @@ const jsonSchemas = [
   sectionSchema('testimonials', 'testimonials'),
   sectionSchema('contact', 'contact'),
   sectionSchema('footer', 'footer'),
-  sectionSchema('portfolio', 'portfolioPage'),
   sectionSchema('portfolio', 'portfolioSection'),
 
   // Legal files (all three share the same schema)

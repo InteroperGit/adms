@@ -4,4 +4,5 @@ export { ArticleCTA } from './ArticleCTA';
 export { PortfolioOverview } from './PortfolioOverview';
 export { CategoryNav } from './CategoryNav';
 export { Pagination } from './Pagination';
-export { PortfolioGrid } from './PortfolioGrid';
+export { ArticleGrid } from './ArticleGrid';
+export { ArticleCard } from './ArticleCard';

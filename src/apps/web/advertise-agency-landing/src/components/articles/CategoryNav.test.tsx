@@ -8,48 +8,36 @@ vi.mock('@/hooks/useAnimatedPillPosition', () => ({
   })),
 }));
 
-vi.mock('@/types/config/categories', () => ({
+import { CategoryNav } from './CategoryNav';
+
+const baseProps = {
+  basePath: '/portfolio',
   categories: [
     { name: 'Брендинг', slug: 'branding' },
     { name: 'Контекстная реклама', slug: 'contextual-ads' },
   ],
-}));
-
-vi.mock('@/types/config/portfolioConfig', () => ({
-  portfolioConfig: {
-    perPage: 9,
-    allLabel: 'Все',
-    prevLabel: 'Назад',
-    nextLabel: 'Вперёд',
-    pageLabel: 'Страница {current} из {total}',
-    emptyLabel: 'Проектов нет.',
-    notFoundCategory: 'Категория не найдена.',
-    allProjectsLink: 'Все проекты',
-    cta: { label: 'Обсудить проект', href: '/#contact' },
-  },
-}));
-
-import { CategoryNav } from './CategoryNav';
+  allLabel: 'Все',
+};
 
 describe('CategoryNav', () => {
   it('renders the "All" link', () => {
-    render(<CategoryNav activeSlug={null} />);
+    render(<CategoryNav activeSlug={null} {...baseProps} />);
     expect(screen.getByRole('link', { name: 'Все' })).toBeInTheDocument();
   });
 
   it('renders a link for each category', () => {
-    render(<CategoryNav activeSlug={null} />);
+    render(<CategoryNav activeSlug={null} {...baseProps} />);
     expect(screen.getByRole('link', { name: 'Брендинг' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Контекстная реклама' })).toBeInTheDocument();
   });
 
-  it('"All" link points to /portfolio', () => {
-    render(<CategoryNav activeSlug={null} />);
+  it('"All" link points to basePath', () => {
+    render(<CategoryNav activeSlug={null} {...baseProps} />);
     expect(screen.getByRole('link', { name: 'Все' })).toHaveAttribute('href', '/portfolio');
   });
 
   it('category links point to the correct paths', () => {
-    render(<CategoryNav activeSlug={null} />);
+    render(<CategoryNav activeSlug={null} {...baseProps} />);
     expect(screen.getByRole('link', { name: 'Брендинг' })).toHaveAttribute(
       'href',
       '/portfolio/branding'
@@ -61,22 +49,22 @@ describe('CategoryNav', () => {
   });
 
   it('applies active style to the "All" link when activeSlug is null', () => {
-    render(<CategoryNav activeSlug={null} />);
+    render(<CategoryNav activeSlug={null} {...baseProps} />);
     expect(screen.getByRole('link', { name: 'Все' })).toHaveClass('text-white');
   });
 
   it('applies active style to the "All" link when activeSlug is "all"', () => {
-    render(<CategoryNav activeSlug="all" />);
+    render(<CategoryNav activeSlug="all" {...baseProps} />);
     expect(screen.getByRole('link', { name: 'Все' })).toHaveClass('text-white');
   });
 
   it('applies active style to the matching category link', () => {
-    render(<CategoryNav activeSlug="branding" />);
+    render(<CategoryNav activeSlug="branding" {...baseProps} />);
     expect(screen.getByRole('link', { name: 'Брендинг' })).toHaveClass('text-white');
   });
 
   it('applies inactive style to non-active links', () => {
-    render(<CategoryNav activeSlug="branding" />);
+    render(<CategoryNav activeSlug="branding" {...baseProps} />);
     expect(screen.getByRole('link', { name: 'Все' })).toHaveClass('text-muted-foreground');
     expect(screen.getByRole('link', { name: 'Контекстная реклама' })).toHaveClass(
       'text-muted-foreground'
@@ -84,7 +72,7 @@ describe('CategoryNav', () => {
   });
 
   it('inactive links have an accent border class', () => {
-    render(<CategoryNav activeSlug={null} />);
+    render(<CategoryNav activeSlug={null} {...baseProps} />);
     expect(screen.getByRole('link', { name: 'Брендинг' })).toHaveClass('border-accent/40');
   });
 });
