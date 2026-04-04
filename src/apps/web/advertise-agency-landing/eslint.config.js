@@ -25,7 +25,16 @@ export default defineConfig([
     },
   },
   {
-    files: ['src/components/ui/badge.tsx', 'src/components/ui/button.tsx'],
+    files: ['src/components/ui/*.tsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+  {
+    files: ['src/test/**/*.{ts,tsx}', 'tests/**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: globals.node,
+    },
     rules: {
       'react-refresh/only-export-components': 'off',
     },
