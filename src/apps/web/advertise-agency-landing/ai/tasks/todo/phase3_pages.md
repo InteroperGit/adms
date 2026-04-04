@@ -89,8 +89,7 @@ export default ArticlePage;
 { id: 'portfolio-category', path: 'portfolio/:categorySlug', file: './pages/ArticleCategoryPage.tsx' },
 { path: 'portfolio/:categorySlug/:year/:month/:slug', file: './pages/ArticlePage.tsx' },
 // New article routes
-{ id: 'services', path: 'services', file: './pages/ArticleListPage.tsx' },
-{ path: 'services/:categorySlug/:year/:month/:slug', file: './pages/ArticlePage.tsx' },
+{ path: 'services/:slug', file: './pages/ArticlePage.tsx' },
 { id: 'news', path: 'news', file: './pages/ArticleListPage.tsx' },
 { path: 'news/:year/:month/:slug', file: './pages/ArticlePage.tsx' },
 { id: 'blog', path: 'blog', file: './pages/ArticleListPage.tsx' },
