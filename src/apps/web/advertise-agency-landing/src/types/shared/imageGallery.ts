@@ -7,7 +7,7 @@ import { z } from 'zod';
  */
 
 /**
- * @description UI labels for lightbox gallery component
+ * @description UI labels and alt-text template for image gallery component
  */
 export const ImageGalleryContentSchema = z.object({
   /** Label for previous button */
@@ -18,6 +18,11 @@ export const ImageGalleryContentSchema = z.object({
   counter: z.string(),
   /** Label for close button */
   closeLabel: z.string(),
+  /**
+   * Alt text template for gallery images. Supports `{title}` and `{index}` placeholders
+   * resolved at render time via `interpolate` (e.g. `"{title} — фото {index}"`).
+   */
+  photoAltTemplate: z.string(),
 });
 
 export type ImageGalleryContent = z.infer<typeof ImageGalleryContentSchema>;

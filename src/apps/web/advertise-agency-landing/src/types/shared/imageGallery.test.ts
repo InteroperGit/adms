@@ -8,6 +8,7 @@ describe('ImageGalleryContentSchema', () => {
       nextLabel: 'Next',
       counter: '{current} of {total}',
       closeLabel: 'Close',
+      photoAltTemplate: '{title} — photo {index}',
     };
     expect(() => ImageGalleryContentSchema.parse(validContent)).not.toThrow();
   });

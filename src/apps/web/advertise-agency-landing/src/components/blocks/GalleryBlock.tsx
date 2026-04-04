@@ -1,5 +1,4 @@
 import { ImageGallery } from '@/components/ui/imageGallery';
-import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
 import { imageGalleryContent } from '@/types/shared/imageGallery';
 import type { GalleryBlock as GalleryBlockData } from '@/types/blocks';
 import { interpolate } from '@/libs/utils';
@@ -20,14 +19,13 @@ interface GalleryBlockProps {
  * <GalleryBlock block={galleryData} articleTitle="Project Name" />
  */
 export function GalleryBlock({ block, articleTitle }: GalleryBlockProps) {
-  const { photoAlt } = portfolioCaseContent;
-  const { prevLabel, nextLabel, counter, closeLabel } = imageGalleryContent;
+  const { photoAltTemplate, prevLabel, nextLabel, counter, closeLabel } = imageGalleryContent;
 
   return (
     <div className="mx-auto max-w-4xl">
       <ImageGallery
         images={block.images}
-        altPrefix={interpolate(photoAlt, { title: articleTitle })}
+        altPrefix={interpolate(photoAltTemplate, { title: articleTitle })}
         prevLabel={prevLabel}
         nextLabel={nextLabel}
         closeLabel={closeLabel}

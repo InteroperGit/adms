@@ -7,16 +7,13 @@ vi.mock('@/components/ui/imageGallery', () => ({
   ),
 }));
 
-vi.mock('@/types/portfolio/portfolioCaseContent', () => ({
-  portfolioCaseContent: { photoAlt: 'Photo from {title}' },
-}));
-
 vi.mock('@/types/shared/imageGallery', () => ({
   imageGalleryContent: {
     prevLabel: 'Prev',
     nextLabel: 'Next',
     counter: '{current} of {total}',
     closeLabel: 'Close',
+    photoAltTemplate: 'Photo from {title}',
   },
 }));
 

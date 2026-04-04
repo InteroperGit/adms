@@ -30,8 +30,6 @@ vi.mock('@/types/portfolio/portfolioCaseContent', () => ({
     challengeTitle: 'Задача',
     solutionTitle: 'Решение',
     resultsTitle: 'Результаты',
-    galleryTitle: 'Галерея',
-    photoAlt: '{title} — фото {index}',
     cta: { title: 'Обсудить проект', subtitle: '', label: 'Связаться', href: '/#contact' },
     notFound: { title: 'Кейс не найден', back: 'Назад к портфолио' },
   },

@@ -8,8 +8,6 @@ vi.mock('@/types/portfolio/portfolioCaseContent', () => ({
     challengeTitle: 'Задача',
     solutionTitle: 'Решение',
     resultsTitle: 'Результаты',
-    galleryTitle: 'Галерея',
-    photoAlt: '{title} — фото {index}',
     cta: {
       title: 'Готовы к похожему результату?',
       subtitle: 'Расскажите о вашем проекте.',

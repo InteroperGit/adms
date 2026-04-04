@@ -10,7 +10,7 @@ import { z } from 'zod';
  * - `CaseCTA` — reads `cta` (title, subtitle, label, href)
  * - `CaseOverview` — reads `overviewLabels` (client, category, year, services)
  * - `PortfolioCasePage` — reads `backLabel`, `challengeTitle`, `solutionTitle`,
- *   `resultsTitle`, `galleryTitle`, `photoAlt`, `notFound`
+ *   `resultsTitle`, `notFound`
  */
 
 /**
@@ -43,13 +43,6 @@ export const PortfolioCaseContentSchema = z.object({
   solutionTitle: z.string(),
   /** `<h2>` heading for the results content block section. */
   resultsTitle: z.string(),
-  /** `<h2>` heading for the image gallery section. */
-  galleryTitle: z.string(),
-  /**
-   * Alt text template for case photos. Supports `{title}` and `{index}` placeholders
-   * resolved at render time via `interpolate` (e.g. `"{title} — фото {index}"`).
-   */
-  photoAlt: z.string(),
   /**
    * Copy and link target for the {@link CaseCTA} section rendered at the bottom of every case page.
    * - `title` — section heading.
