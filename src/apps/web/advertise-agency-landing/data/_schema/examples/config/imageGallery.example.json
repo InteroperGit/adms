@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/config/imageGallery.schema.json",
+  "prevLabel": "Предыдущее фото",
+  "nextLabel": "Следующее фото",
+  "counter": "{current} из {total}",
+  "closeLabel": "Закрыть",
+  "photoAltTemplate": "{title} — фото {index}"
+}

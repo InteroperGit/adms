@@ -1,7 +1,0 @@
-{
-  "$schema": "../../schema/sections/imageGallery.schema.json",
-  "prevLabel": "Предыдущее фото",
-  "nextLabel": "Следующее фото",
-  "counter": "{current} из {total}",
-  "closeLabel": "Закрыть"
-}

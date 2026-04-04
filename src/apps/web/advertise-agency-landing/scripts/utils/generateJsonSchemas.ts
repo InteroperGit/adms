@@ -223,11 +223,7 @@ const schemas: Record<string, SchemaEntry> = {
     section: SECTION_SUBFOLDERS.portfolio,
     schema: PortfolioCaseContentSchema,
   },
-  imageGallery: {
-    subfolder: SUBFOLDERS.sections,
-    section: SECTION_SUBFOLDERS.portfolio,
-    schema: ImageGalleryContentSchema,
-  },
+  imageGallery: { subfolder: SUBFOLDERS.config, schema: ImageGalleryContentSchema },
   // Portfolio
   portfolio: { subfolder: SUBFOLDERS.portfolio, schema: PortfolioCaseSchema },
   // Legal
@@ -327,6 +323,7 @@ const jsonSchemas = [
   configSchema('seo'),
   configSchema('orderForms'),
   configSchema('notFound'),
+  configSchema('imageGallery'),
 
   // Section files — organized by component subfolder
   sectionSchema('header', 'header'),
@@ -347,7 +344,6 @@ const jsonSchemas = [
   sectionSchema('portfolio', 'portfolioPage'),
   sectionSchema('portfolio', 'portfolioSection'),
   sectionSchema('portfolio', 'portfolioCase'),
-  sectionSchema('portfolio', 'imageGallery'),
 
   // Legal files (all three share the same schema)
   {

@@ -21,6 +21,7 @@ import { LegalDataSchema } from '../../src/types/config/legalData';
 import { SeoConfigSchema } from '../../src/types/config/seo';
 import { OrderFormsDataSchema } from '../../src/types/config/orderForms';
 import { NotFoundContentSchema } from '../../src/types/config/notFound';
+import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
 
 // ── Section schemas ────────────────────────────────────────────────────────────
 import { HeaderContentSchema } from '../../src/types/sections/header/header';
@@ -43,7 +44,6 @@ import { PortfolioPageContentSchema } from '../../src/types/sections/portfolio/p
 // ── Portfolio schemas ──────────────────────────────────────────────────────────
 import { PortfolioCaseSchema, PortfolioSectionContentSchema } from '../../src/types/portfolio';
 import { PortfolioCaseContentSchema } from '../../src/types/portfolio/portfolioCaseContent';
-import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -116,6 +116,7 @@ function validateConfig(): number {
   errors += checkOptional('seo.json', cfg('seo.json'), SeoConfigSchema);
   errors += checkOptional('orderForms.json', cfg('orderForms.json'), OrderFormsDataSchema);
   errors += checkOptional('notFound.json', cfg('notFound.json'), NotFoundContentSchema);
+  errors += checkOptional('imageGallery.json', cfg('imageGallery.json'), ImageGalleryContentSchema);
   return errors;
 }
 
@@ -144,7 +145,6 @@ const SECTION_SCHEMAS: [string, Schema][] = [
   ['portfolio/portfolioPage.json', PortfolioPageContentSchema],
   ['portfolio/portfolioSection.json', PortfolioSectionContentSchema],
   ['portfolio/portfolioCase.json', PortfolioCaseContentSchema],
-  ['portfolio/imageGallery.json', ImageGalleryContentSchema],
 ];
 
 function validateSections(): number {
