@@ -1,15 +1,18 @@
 import { render, screen } from '@/test/utils';
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('@/types/portfolio/portfolioCaseContent', () => ({
-  portfolioCaseContent: {
-    backLabel: 'Назад',
+vi.mock('@/types/config/portfolioConfig', () => ({
+  portfolioConfig: {
+    perPage: 9,
+    allLabel: 'Все',
+    prevLabel: 'Назад',
+    nextLabel: 'Вперёд',
+    pageLabel: 'Страница {current} из {total}',
+    emptyLabel: 'Проектов нет',
+    notFoundCategory: 'Категория не найдена',
+    allProjectsLink: 'Все проекты',
+    cta: { label: 'CTA', href: '/#contact' },
     overviewLabels: { client: 'Клиент', category: 'Категория', year: 'Год', services: 'Услуги' },
-    challengeTitle: 'Задача',
-    solutionTitle: 'Решение',
-    resultsTitle: 'Результаты',
-    cta: { title: 'CTA', subtitle: 'Sub', label: 'Btn', href: '/#contact' },
-    notFound: { title: 'Не найдено', back: '← Назад' },
   },
 }));
 

@@ -1,6 +1,6 @@
 // src/components/articles/PortfolioOverview.tsx
 import { Container } from '@/components/layout/Container';
-import { portfolioCaseContent } from '@/types/portfolio/portfolioCaseContent';
+import { portfolioConfig } from '@/types/config/portfolioConfig';
 
 interface PortfolioOverviewProps {
   /** Client name as it appears on the article. */
@@ -21,8 +21,8 @@ interface PortfolioOverviewProps {
  * 4 on desktop. Each item shows a small-caps label (from `overviewLabels`) and a
  * semibold value. The section is separated from the content below by a bottom border.
  *
- * Field labels are sourced from `portfolioCaseContent.overviewLabels`
- * (`data/sections/portfolio/portfolioCase.json`) for white-label localisation.
+ * Field labels are sourced from `portfolioConfig.overviewLabels`
+ * (`data/config/portfolio.json`) for white-label localisation.
  *
  * @param props - See {@link PortfolioOverviewProps}.
  * @returns A bordered `<section>` containing the metadata grid.
@@ -36,7 +36,7 @@ interface PortfolioOverviewProps {
  * />
  */
 export function PortfolioOverview({ client, category, year, services }: PortfolioOverviewProps) {
-  const { overviewLabels } = portfolioCaseContent;
+  const { overviewLabels } = portfolioConfig;
 
   const items = [
     { label: overviewLabels.client, value: client },

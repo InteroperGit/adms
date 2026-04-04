@@ -8,7 +8,6 @@ import { z } from 'zod';
  *
  * Components that consume this module:
  * - `CaseCTA` — reads `cta` (title, subtitle, label, href)
- * - `CaseOverview` — reads `overviewLabels` (client, category, year, services)
  * - `PortfolioCasePage` — reads `backLabel`, `challengeTitle`, `solutionTitle`,
  *   `resultsTitle`, `notFound`
  */
@@ -23,20 +22,6 @@ import { z } from 'zod';
 export const PortfolioCaseContentSchema = z.object({
   /** Label for the back-navigation link at the top of the case page (e.g. `"← Назад к портфолио"`). */
   backLabel: z.string(),
-  /**
-   * Localised column headings for the {@link CaseOverview} metadata grid.
-   * Each key corresponds to one of the four grid cells.
-   */
-  overviewLabels: z.object({
-    /** Label above the client name cell. */
-    client: z.string(),
-    /** Label above the category cell. */
-    category: z.string(),
-    /** Label above the year cell. */
-    year: z.string(),
-    /** Label above the services cell. */
-    services: z.string(),
-  }),
   /** `<h2>` heading for the challenge content block section. */
   challengeTitle: z.string(),
   /** `<h2>` heading for the solution content block section. */

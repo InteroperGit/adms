@@ -29,6 +29,13 @@ export const PortfolioConfigSchema = z.object({
   allProjectsLink: z.string(),
   /** Call-to-action button after portfolio grid */
   cta: LabeledLinkSchema,
+  /** Localised column headings for the PortfolioOverview metadata grid on case detail pages. */
+  overviewLabels: z.object({
+    client: z.string(),
+    category: z.string(),
+    year: z.string(),
+    services: z.string(),
+  }),
 });
 
 /**

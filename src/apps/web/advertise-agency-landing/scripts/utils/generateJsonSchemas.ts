@@ -93,7 +93,6 @@ import { PortfolioPageContentSchema } from '../../src/types/sections/portfolio/p
 // ── Portfolio schemas ─────────────────────────────────────────────────────────
 import { PortfolioSectionContentSchema } from '../../src/types/portfolio';
 import { PortfolioCaseContentSchema } from '../../src/types/portfolio/portfolioCaseContent';
-import { PortfolioArticleSchema } from '../../src/types/articles/portfolioArticle';
 import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
 
 // ── Legal schemas ─────────────────────────────────────────────────────────────
