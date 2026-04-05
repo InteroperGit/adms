@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useLocation, Link } from 'react-router';
+import { useLocation } from 'react-router';
 import { Container } from '@/components/layout/Container';
 import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { Pagination } from '@/components/articles/Pagination';
+import { ArticleListItem } from '@/components/articles/ArticleListItem';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { NotFound } from '@/pages/NotFound';
-import type { ArticleType } from '@/types/articles/article';
+import type { ArticleType, BaseArticle } from '@/types/articles/article';
 import {
   allPortfolioArticles,
   allServiceArticles,
@@ -18,16 +19,7 @@ import { newsConfig } from '@/types/config/newsConfig';
 import { blogConfig } from '@/types/config/blogConfig';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
-const ARTICLES_BY_TYPE: Record<
-  ArticleType,
-  Array<{
-    slug: string;
-    title: string;
-    description: string;
-    category: string;
-    hero: { image?: string };
-  }>
-> = {
+const ARTICLES_BY_TYPE: Record<ArticleType, BaseArticle[]> = {
   portfolio: allPortfolioArticles,
   service: allServiceArticles,
   news: allNewsArticles,
@@ -41,7 +33,7 @@ const TYPE_LABEL: Record<ArticleType, string> = {
   blog: 'Блог',
 };
 
-const PER_PAGE = 12;
+const PER_PAGE = 20;
 
 const GRID_DESCRIPTION_MAP: Partial<Record<ArticleType, string>> = {
   portfolio: portfolioConfig.gridDescription,
@@ -64,8 +56,9 @@ function articleHref(
     case 'portfolio':
       return `/portfolio/${article.category.toLowerCase()}/${year}/${month}/${article.slug}`;
     case 'news':
+      return `/news/${year}/${month}/${article.slug}`;
     case 'blog':
-      return `/${type}/${year}/${month}/${article.slug}`;
+      return `/blog/${year}/${month}/${article.slug}`;
   }
 }
 
@@ -114,20 +107,14 @@ export function ArticleListPage() {
             className="mb-12"
           />
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="divide-y divide-border/30 overflow-hidden rounded-xl border border-border/50 bg-card">
             {pageItems.map((article) => (
-              <Link
+              <ArticleListItem
                 key={article.slug}
-                to={articleHref(type, article)}
-                className="group rounded-xl border border-border/50 bg-card p-6 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg"
-              >
-                <h3 className="text-lg font-semibold text-foreground group-hover:text-primary">
-                  {article.title}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground line-clamp-3">
-                  {article.description}
-                </p>
-              </Link>
+                article={article}
+                href={articleHref(type, article)}
+                type={type}
+              />
             ))}
           </div>
 
