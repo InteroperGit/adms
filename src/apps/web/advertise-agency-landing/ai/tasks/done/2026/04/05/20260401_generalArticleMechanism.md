@@ -1,6 +1,6 @@
 # PDR — Generalized Article Mechanism (Index)
 
-**Date:** 2026-04-01 | **Status:** Pending
+**Date:** 2026-04-01 | **Status:** ✅ Phase 7 complete — PDR finished
 **Related:** `portfolioStructure.md`, `blocks.md`, `typesStructure.md`
 
 ## Goal
