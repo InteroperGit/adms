@@ -31,7 +31,7 @@ function log(msg: string) {
 const BASE_URL = (process.env.SITE_URL ?? 'https://example.com').replace(/\/$/, '');
 
 export function buildRobotsContent(baseUrl: string): string {
-  return `User-agent: *\nAllow: /\nDisallow: /order/\n\nSitemap: ${baseUrl}/sitemap.xml\n`;
+  return `User-agent: *\nAllow: /\n\nSitemap: ${baseUrl}/sitemap.xml\n`;
 }
 
 const content = buildRobotsContent(BASE_URL);
