@@ -13,6 +13,9 @@ import {
   allBlogArticles,
 } from '@/types/articles/allArticles';
 import { siteData } from '@/types/config/siteData';
+import { portfolioConfig } from '@/types/config/portfolioConfig';
+import { newsConfig } from '@/types/config/newsConfig';
+import { blogConfig } from '@/types/config/blogConfig';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 const ARTICLES_BY_TYPE: Record<
@@ -39,6 +42,12 @@ const TYPE_LABEL: Record<ArticleType, string> = {
 };
 
 const PER_PAGE = 12;
+
+const GRID_DESCRIPTION_MAP: Partial<Record<ArticleType, string>> = {
+  portfolio: portfolioConfig.gridDescription,
+  news: newsConfig.gridDescription,
+  blog: blogConfig.gridDescription,
+};
 
 function articleHref(
   type: ArticleType,
@@ -101,7 +110,7 @@ export function ArticleListPage() {
           <SectionHeader
             label={TYPE_LABEL[type]}
             title={TYPE_LABEL[type]}
-            description={`Все статьи категории «${TYPE_LABEL[type]}»`}
+            description={GRID_DESCRIPTION_MAP[type]}
             className="mb-12"
           />
 

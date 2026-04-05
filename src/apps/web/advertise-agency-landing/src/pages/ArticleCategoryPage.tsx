@@ -7,6 +7,8 @@ import { NotFound } from '@/pages/NotFound';
 import { allPortfolioCases } from '@/types/portfolio/portfolioCases';
 import { allNewsArticles, allBlogArticles } from '@/types/articles/allArticles';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
+import { newsConfig } from '@/types/config/newsConfig';
+import { blogConfig } from '@/types/config/blogConfig';
 import { portfolioSectionContent } from '@/types/portfolio';
 import { categories } from '@/types/config/categories';
 import { siteData } from '@/types/config/siteData';
@@ -20,7 +22,7 @@ function getArticleHref(type: ArticleType, article: BaseArticle, categorySegment
   const { year, month } = extractYearMonth(article.publishedAt);
   switch (type) {
     case 'portfolio':
-      return `/portfolio/${categorySegment}/${article.slug}`;
+      return `/portfolio/${categorySegment}/${year}/${month}/${article.slug}`;
     case 'news':
       return `/news/${year}/${month}/${article.slug}`;
     case 'blog':
@@ -37,6 +39,8 @@ interface ArticleTypeConfig {
   emptyLabel: string;
   detailsLabel?: string;
   cta?: { label: string; href: string };
+  /** Description shown above the article grid */
+  gridDescription: string;
 }
 
 const TYPE_REGISTRY: Record<ArticleType, ArticleTypeConfig> = {
@@ -49,6 +53,7 @@ const TYPE_REGISTRY: Record<ArticleType, ArticleTypeConfig> = {
     emptyLabel: portfolioConfig.emptyLabel,
     detailsLabel: portfolioSectionContent.detailsLabel,
     cta: portfolioConfig.cta,
+    gridDescription: portfolioConfig.gridDescription,
   },
   news: {
     label: 'Новости',
@@ -56,7 +61,8 @@ const TYPE_REGISTRY: Record<ArticleType, ArticleTypeConfig> = {
     items: allNewsArticles,
     hasCategories: false,
     perPage: 12,
-    emptyLabel: 'Нет новостей',
+    emptyLabel: newsConfig.emptyLabel,
+    gridDescription: newsConfig.gridDescription,
   },
   blog: {
     label: 'Блог',
@@ -64,7 +70,8 @@ const TYPE_REGISTRY: Record<ArticleType, ArticleTypeConfig> = {
     items: allBlogArticles,
     hasCategories: false,
     perPage: 12,
-    emptyLabel: 'Нет записей',
+    emptyLabel: blogConfig.emptyLabel,
+    gridDescription: blogConfig.gridDescription,
   },
 };
 
@@ -136,7 +143,7 @@ export function ArticleCategoryPage() {
           <SectionHeader
             label={cfg.label}
             title={cfg.label}
-            description={`Все статьи категории «${cfg.label}»`}
+            description={cfg.gridDescription}
             className="mb-12"
           />
           <ArticleGrid

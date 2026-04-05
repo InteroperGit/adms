@@ -75,6 +75,8 @@ import { SeoConfigSchema } from '../../src/types/config/seo';
 import { OrderFormsDataSchema } from '../../src/types/config/orderForms';
 import { DefaultArticleCtaSchema } from '../../src/types/config/defaultArticleCta';
 import { NotFoundContentSchema } from '../../src/types/config/notFound';
+import { NewsConfigSchema } from '../../src/types/config/newsConfig';
+import { BlogConfigSchema } from '../../src/types/config/blogConfig';
 import { ArticleTypesConfigSchema } from '../../src/types/config/articleTypes';
 
 // ── Section schemas ───────────────────────────────────────────────────────────
@@ -136,6 +138,8 @@ const schemas: Record<string, SchemaEntry> = {
   notFound: { subfolder: SUBFOLDERS.config, schema: NotFoundContentSchema },
   defaultArticleCta: { subfolder: SUBFOLDERS.config, schema: DefaultArticleCtaSchema },
   articleTypes: { subfolder: SUBFOLDERS.config, schema: ArticleTypesConfigSchema },
+  news: { subfolder: SUBFOLDERS.config, schema: NewsConfigSchema },
+  blog: { subfolder: SUBFOLDERS.config, schema: BlogConfigSchema },
   // Sections — organized by component subfolder
   header: {
     subfolder: SUBFOLDERS.sections,
@@ -318,6 +322,8 @@ const jsonSchemas = [
   configSchema('imageGallery'),
   configSchema('defaultArticleCta'),
   configSchema('articleTypes'),
+  configSchema('news'),
+  configSchema('blog'),
 
   // Section files — organized by component subfolder
   sectionSchema('header', 'header'),

@@ -11,6 +11,8 @@ import { LabeledLinkSchema } from '@/types/shared/labeledLink';
  * @description Portfolio page configuration including pagination, labels, and category settings
  */
 export const PortfolioConfigSchema = z.object({
+  /** Description shown under the section heading on the portfolio grid page */
+  gridDescription: z.string(),
   /** Number of cases to display per page */
   perPage: z.number(),
   /** Label for "all cases" category (e.g., "Все") */
