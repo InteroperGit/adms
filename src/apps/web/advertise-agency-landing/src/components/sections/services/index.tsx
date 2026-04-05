@@ -30,7 +30,7 @@ export function Services() {
         <div
           ref={ref}
           className={cn(
-            'grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3',
+            'grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 sm:items-stretch',
             isVisible && 'stagger-visible'
           )}
         >

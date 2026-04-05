@@ -9,6 +9,7 @@ vi.mock('@/types/shared/iconMap', () => ({
 import { ServiceCard } from './ServiceCard';
 
 const service: Service = {
+  slug: 'context-ads',
   icon: 'Zap',
   title: 'Контекстная реклама',
   description: 'Быстрый и точный охват целевой аудитории',

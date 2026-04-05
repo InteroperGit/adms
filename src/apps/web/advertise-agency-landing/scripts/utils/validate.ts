@@ -22,6 +22,10 @@ import { SeoConfigSchema } from '../../src/types/config/seo';
 import { OrderFormsDataSchema } from '../../src/types/config/orderForms';
 import { NotFoundContentSchema } from '../../src/types/config/notFound';
 import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
+import { ArticleTypesConfigSchema } from '../../src/types/config/articleTypes';
+import { BlogConfigSchema } from '../../src/types/config/blogConfig';
+import { NewsConfigSchema } from '../../src/types/config/newsConfig';
+import { ErrorFallbackContentSchema } from '../../src/types/config/errorFallback';
 
 // ── Section schemas ────────────────────────────────────────────────────────────
 import { HeaderContentSchema } from '../../src/types/sections/header/header';
@@ -43,12 +47,17 @@ import { FooterContentSchema } from '../../src/types/sections/footer/footer';
 // ── Portfolio schemas ──────────────────────────────────────────────────────────
 import { PortfolioSectionContentSchema } from '../../src/types/portfolio';
 import { PortfolioArticleSchema } from '../../src/types/articles/portfolioArticle';
+import { DefaultArticleCtaSchema } from '../../src/types/config/defaultArticleCta';
+import { ServiceArticleSchema } from '../../src/types/articles/serviceArticle';
+import { NewsArticleSchema } from '../../src/types/articles/newsArticle';
+import { BlogArticleSchema } from '../../src/types/articles/blogArticle';
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..', '..');
-const portfolioDir = path.join(root, 'data/content/portfolio');
+const dataDir = path.join(root, 'data/content');
+const portfolioDir = path.join(dataDir, 'portfolio');
 
 // ── Utilities ──────────────────────────────────────────────────────────────────
 
@@ -64,6 +73,13 @@ function cfg(name: string): string {
  */
 function sec(name: string): string {
   return path.join(root, 'data/content/sections', name);
+}
+
+/**
+ * Resolves a path under `data/content/legal/`.
+ */
+function legal(name: string): string {
+  return path.join(root, 'data/content/legal', name);
 }
 
 // ── Validation primitives ──────────────────────────────────────────────────────
@@ -116,6 +132,17 @@ function validateConfig(): number {
   errors += checkOptional('orderForms.json', cfg('orderForms.json'), OrderFormsDataSchema);
   errors += checkOptional('notFound.json', cfg('notFound.json'), NotFoundContentSchema);
   errors += checkOptional('imageGallery.json', cfg('imageGallery.json'), ImageGalleryContentSchema);
+  errors += check('articleTypes.json', () =>
+    ArticleTypesConfigSchema.parse(readJson(cfg('articleTypes.json')))
+  );
+  errors += check('blog.json', () => BlogConfigSchema.parse(readJson(cfg('blog.json'))));
+  errors += check('news.json', () => NewsConfigSchema.parse(readJson(cfg('news.json'))));
+  errors += check('errorFallback.json', () =>
+    ErrorFallbackContentSchema.parse(readJson(cfg('errorFallback.json')))
+  );
+  errors += check('defaultArticleCta.json', () =>
+    DefaultArticleCtaSchema.parse(readJson(cfg('defaultArticleCta.json')))
+  );
   return errors;
 }
 
@@ -123,7 +150,6 @@ function validateConfig(): number {
 
 /**
  * All section files paired with their schemas, in display order.
- * Add a new entry here when a new section JSON + schema is introduced.
  */
 const SECTION_SCHEMAS: [string, Schema][] = [
   ['header/header.json', HeaderContentSchema],
@@ -149,6 +175,55 @@ function validateSections(): number {
     (errors, [name, schema]) => errors + check(name, () => schema.parse(readJson(sec(name)))),
     0
   );
+}
+
+// ── Legal validation ───────────────────────────────────────────────────────────
+
+import { LegalContentSchema } from '../../src/types/legal/index';
+
+function validateLegal(): number {
+  const dir = legal('');
+  if (!existsSync(dir)) {
+    console.log('  – legal/ directory not found, skipped');
+    return 0;
+  }
+  const files = walkJsonFiles(dir);
+  if (files.length === 0) {
+    console.log('  – no legal files found, skipped');
+    return 0;
+  }
+  return files.reduce((sum, file) => {
+    const label = path.relative(dir, file);
+    return sum + check(label, () => LegalContentSchema.parse(readJson(file)));
+  }, 0);
+}
+
+// ── Article validation ─────────────────────────────────────────────────────────
+
+const ARTICLE_DIRS: [string, Schema][] = [
+  ['services', ServiceArticleSchema],
+  ['news', NewsArticleSchema],
+  ['blog', BlogArticleSchema],
+];
+
+function validateArticles(): number {
+  let errors = 0;
+  for (const [subdir, schema] of ARTICLE_DIRS) {
+    const dir = path.join(dataDir, subdir);
+    if (!existsSync(dir)) {
+      console.log(`  – ${subdir}/ not found, skipped`);
+      continue;
+    }
+    const files = walkJsonFiles(dir);
+    if (files.length === 0) {
+      continue;
+    }
+    errors += files.reduce((sum, file) => {
+      const label = `${subdir}/${path.relative(dir, file)}`;
+      return sum + check(label, () => schema.parse(readJson(file)));
+    }, 0);
+  }
+  return errors;
 }
 
 // ── Portfolio case validation ──────────────────────────────────────────────────
@@ -251,13 +326,19 @@ function main(): void {
   console.log('\nSections:');
   const sectionErrors = validateSections();
 
+  console.log('\nLegal:');
+  const legalErrors = validateLegal();
+
+  console.log('\nArticle files:');
+  const articleErrors = validateArticles();
+
   console.log('\nPortfolio cases:');
   const { errors: caseErrors, files } = validatePortfolioCases();
 
   console.log('\nChecking for migrable hex colors in list blocks:');
   checkHexColorAdvisories(files);
 
-  const totalErrors = configErrors + sectionErrors + caseErrors;
+  const totalErrors = configErrors + sectionErrors + legalErrors + articleErrors + caseErrors;
 
   console.log('');
   if (totalErrors > 0) {

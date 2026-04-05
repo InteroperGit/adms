@@ -10,6 +10,8 @@ import { z } from 'zod';
  * @description Single service offering with icon and description
  */
 export const ServiceSchema = z.object({
+  /** URL-friendly slug for the service article */
+  slug: z.string(),
   /** Lucide icon key (resolved via ICON_MAP) */
   icon: z.string(),
   /** Service name/title */
