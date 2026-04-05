@@ -14,7 +14,7 @@ interface NotFoundProps {
  * 404 / not-found page.
  *
  * Rendered both as the dedicated `404` pre-rendered route and inline by
- * `PortfolioCategoryPage` / `PortfolioCasePage` when a slug resolves to
+ * `ArticlePage` / `ArticleCategoryPage` when a slug resolves to
  * nothing. The `backLabel` and `backHref` props let callers override the
  * default back-to-home link with a context-specific destination
  * (e.g. back to the category listing).

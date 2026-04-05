@@ -260,7 +260,7 @@ describe('Route rendering', () => {
 
   it('/portfolio renders the section header title', () => {
     renderAt('/portfolio');
-    expect(screen.getByRole('heading', { level: 2, name: 'Наши работы' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Портфолио' })).toBeInTheDocument();
   });
 
   it('/portfolio/:categorySlug with known slug renders portfolio section', () => {

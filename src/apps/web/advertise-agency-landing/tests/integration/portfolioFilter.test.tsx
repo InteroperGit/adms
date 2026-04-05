@@ -135,10 +135,10 @@ vi.mock('@/types/portfolio/portfolioCases', () => ({
 // Component mocks
 // ---------------------------------------------------------------------------
 
-// PortfolioCard: mocked to avoid image loading; exposes slug via data-slug.
-vi.mock('@/components/ui/portfolio/PortfolioCard', () => ({
-  PortfolioCard: ({ item }: { item: { slug: string } }) => (
-    <div data-testid="portfolio-card" data-slug={item.slug} />
+// ArticleCard: mocked to avoid image loading; exposes slug via data-slug.
+vi.mock('@/components/articles/ArticleCard', () => ({
+  ArticleCard: ({ article }: { article: { slug: string } }) => (
+    <div data-testid="portfolio-card" data-slug={article.slug} />
   ),
 }));
 
@@ -217,8 +217,8 @@ describe('Portfolio filtering integration', () => {
   it('shows pagination controls when total cases exceed perPage', () => {
     renderAt('/portfolio');
     // 3 items, perPage=2 → totalPages=2 → Pagination component renders
-    const nextBtn = screen.getByRole('button', { name: 'Вперёд' });
-    const prevBtn = screen.getByRole('button', { name: 'Назад' });
+    const nextBtn = screen.getByRole('button', { name: 'Вперёд →' });
+    const prevBtn = screen.getByRole('button', { name: /← Назад/ });
     expect(nextBtn).toBeInTheDocument();
     expect(nextBtn).not.toBeDisabled();
     // Prev is disabled on page 1
