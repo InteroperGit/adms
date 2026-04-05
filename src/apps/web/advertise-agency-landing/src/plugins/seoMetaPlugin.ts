@@ -39,6 +39,17 @@ interface CaseData {
   images?: { og?: string };
 }
 
+interface GenericArticleData {
+  title: string;
+  description: string;
+  publishedAt: string;
+  meta?: { title?: string; description?: string; ogUrl?: string; ogImage?: string };
+  images?: { og?: string };
+  tags?: string[];
+  category?: string;
+  author?: { name: string; avatar?: string; title?: string };
+}
+
 // ---------------------------------------------------------------------------
 // HTML helpers
 // ---------------------------------------------------------------------------
@@ -189,6 +200,71 @@ function handleCasePage(
   return out;
 }
 
+function handleGenericArticle(
+  html: string,
+  article: GenericArticleData,
+  seo: SeoConfig,
+  canonicalPath: string,
+  jsonLdType: string,
+  breadcrumbs: Array<{ label: string; item?: string }>
+): string {
+  const ogTitle = article.meta?.title ?? article.title;
+  const ogDesc = article.meta?.description ?? article.description;
+  const ogImage = article.meta?.ogImage ?? article.images?.og ?? seo.defaultOgImage;
+  const canonicalUrl = article.meta?.ogUrl ?? `${seo.siteUrl}${canonicalPath}`;
+
+  let out = html;
+  out = upsertTitle(out, `${ogTitle} — ${seo.siteName}`);
+  out = upsertMeta(out, 'name', 'description', ogDesc);
+  out = upsertMeta(out, 'property', 'og:description', ogDesc);
+  out = upsertMeta(out, 'property', 'og:image', ogImage);
+  out = upsertMeta(out, 'property', 'og:url', canonicalUrl);
+  out = upsertMeta(out, 'property', 'og:type', 'article');
+  out = upsertMeta(out, 'name', 'twitter:title', ogTitle);
+  out = upsertMeta(out, 'name', 'twitter:description', ogDesc);
+  out = upsertMeta(out, 'name', 'twitter:image', ogImage);
+  out = injectBeforeHead(out, `<link rel="canonical" href="${escAttr(canonicalUrl)}" />`);
+
+  const articleSchema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': jsonLdType,
+    headline: article.title,
+    description: ogDesc,
+    datePublished: article.publishedAt,
+    url: canonicalUrl,
+    publisher: {
+      '@type': 'Organization',
+      name: seo.siteName,
+      url: seo.siteUrl,
+    },
+  };
+  if (article.author) {
+    articleSchema.author = {
+      '@type': 'Person',
+      name: article.author.name,
+      ...(article.author.title ? { jobTitle: article.author.title } : {}),
+    };
+  }
+  if (article.images?.og) {
+    articleSchema.image = `${seo.siteUrl}${article.images.og}`;
+  }
+  out = injectBeforeHead(out, jsonLdTag(articleSchema));
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.label,
+      ...(crumb.item ? { item: crumb.item } : {}),
+    })),
+  };
+  out = injectBeforeHead(out, jsonLdTag(breadcrumbSchema));
+
+  return out;
+}
+
 // ---------------------------------------------------------------------------
 // Vite plugin
 // ---------------------------------------------------------------------------
@@ -217,6 +293,26 @@ export function processBuiltHtml(rootDir: string): void {
   const caseFileMap = Object.fromEntries(
     walkJsonFiles(path.resolve(rootDir, 'data/content/portfolio')).map((f) => {
       const data = JSON.parse(readFileSync(f, 'utf-8')) as CaseData & { slug: string };
+      return [data.slug, data];
+    })
+  );
+
+  // Build article file maps (slug → data) for services, news, blog
+  const serviceFileMap = Object.fromEntries(
+    walkJsonFiles(path.resolve(rootDir, 'data/content/services')).map((f) => {
+      const data = JSON.parse(readFileSync(f, 'utf-8')) as GenericArticleData & { slug: string };
+      return [data.slug, data];
+    })
+  );
+  const newsFileMap = Object.fromEntries(
+    walkJsonFiles(path.resolve(rootDir, 'data/content/news')).map((f) => {
+      const data = JSON.parse(readFileSync(f, 'utf-8')) as GenericArticleData & { slug: string };
+      return [data.slug, data];
+    })
+  );
+  const blogFileMap = Object.fromEntries(
+    walkJsonFiles(path.resolve(rootDir, 'data/content/blog')).map((f) => {
+      const data = JSON.parse(readFileSync(f, 'utf-8')) as GenericArticleData & { slug: string };
       return [data.slug, data];
     })
   );
@@ -255,6 +351,48 @@ export function processBuiltHtml(rootDir: string): void {
         const caseData = caseFileMap[caseSlug];
         if (caseData) {
           html = handleCasePage(html, caseSlug, caseData, seo, categories);
+        }
+      }
+
+      // Service article: /services/:slug
+      const serviceMatch = /^\/services\/([^/]+)$/.exec(route);
+      if (serviceMatch) {
+        const serviceSlug = serviceMatch[1];
+        const serviceData = serviceFileMap[serviceSlug];
+        if (serviceData) {
+          html = handleGenericArticle(html, serviceData, seo, serviceMatch[0], 'Article', [
+            { label: 'Главная', item: seo.siteUrl },
+            { label: 'Услуги', item: `${seo.siteUrl}/services` },
+            { label: serviceData.title },
+          ]);
+        }
+      }
+
+      // News article: /news/:year/:month/:slug
+      const newsMatch = /^\/news\/(\d{4})\/(\d{2})\/([^/]+)$/.exec(route);
+      if (newsMatch) {
+        const newsSlug = newsMatch[3];
+        const newsData = newsFileMap[newsSlug];
+        if (newsData) {
+          html = handleGenericArticle(html, newsData, seo, newsMatch[0], 'NewsArticle', [
+            { label: 'Главная', item: seo.siteUrl },
+            { label: 'Новости', item: `${seo.siteUrl}/news` },
+            { label: newsData.title },
+          ]);
+        }
+      }
+
+      // Blog article: /blog/:year/:month/:slug
+      const blogMatch = /^\/blog\/(\d{4})\/(\d{2})\/([^/]+)$/.exec(route);
+      if (blogMatch) {
+        const blogSlug = blogMatch[3];
+        const blogData = blogFileMap[blogSlug];
+        if (blogData) {
+          html = handleGenericArticle(html, blogData, seo, blogMatch[0], 'Article', [
+            { label: 'Главная', item: seo.siteUrl },
+            { label: 'Блог', item: `${seo.siteUrl}/blog` },
+            { label: blogData.title },
+          ]);
         }
       }
     }

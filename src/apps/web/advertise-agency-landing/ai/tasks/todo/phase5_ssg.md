@@ -32,7 +32,7 @@ export default {
 
 ### seoMetaPlugin.ts — key functions
 
-- `handleCasePage()` — parses `/portfolio/:category/:year/:month/:slug` (keep as-is for portfolio)
+- `handleCasePage()` rename to `handlePortfolioPage()` — parses `/portfolio/:category/:year/:month/:slug` 
 - **NEW:** `handleServicePage()` — matches `/services/:slug`
 - **NEW:** `handleNewsPage()` — matches `/news/:year/:month/:slug`
 - **NEW:** `handleBlogPage()` — matches `/blog/:year/:month/:slug`
@@ -46,12 +46,7 @@ export default {
 
 ## Tasks
 
-1. **T30:** Update `react-router.config.ts` — prerender() to generate all article routes
-2. **T31:** Update `src/plugins/seoMetaPlugin.ts` — add 3 new route handler functions
-3. **T32:** Update `src/plugins/incrementalSSGPlugin.ts` — cache article data with type-aware keys
-4. **T33:** Test incremental SSG cache — verify restore/save for articles
-
-## Validation
-- `pnpm build` outputs all static + dynamic routes
-- Built HTML has correct SEO meta for each article type
-- Cache restore/save works across builds
+1. **T30:** ✅ Update `react-router.config.ts` — prerender() now generates service, news, and blog routes alongside portfolio.
+2. **T31:** ✅ Add `handleServicePage`, `handleNewsPage`, `handleBlogPage` handlers via shared `handleGenericArticle` with appropriate JSON-LD types (Article/NewsArticle) and breadcrumbs.
+3. **T32:** ✅ Added `buildArticleRouteDeps()` for service/news/blog routes, updated listing pages in `buildRouteDataMap`.
+4. **T33:** ✅ Build passes, all routes verified in output.

@@ -116,8 +116,7 @@ function getCategories(
  * Builds the route → data-file dependency map for all portfolio case detail
  * pages.
  *
- * For each case JSON, two routes are registered:
- * - `/portfolio/all/:year/:month/:slug`
+ * For each case JSON, one route is registered:
  * - `/portfolio/:categorySlug/:year/:month/:slug`
  *
  * A `Map` is built from category names to slugs once upfront, giving O(1)
@@ -146,16 +145,50 @@ function buildCaseRouteDeps(
       const { year, month } = extractYearMonth(caseData.publishedAt);
       const catSlug = categoryByName.get(caseData.category);
 
-      const routes = [
-        `/portfolio/all/${year}/${month}/${caseData.slug}`,
-        ...(catSlug ? [`/portfolio/${catSlug}/${year}/${month}/${caseData.slug}`] : []),
-      ];
-
-      for (const route of routes) {
+      if (catSlug) {
+        const route = `/portfolio/${catSlug}/${year}/${month}/${caseData.slug}`;
         map[route] = [caseFile];
       }
     } catch {
       // Skip invalid / unparseable case files
+    }
+  }
+
+  return map;
+}
+
+/**
+ * Builds the route → data-file dependency map for generic article types
+ * (services, news, blog) that use flat or date-nested directories.
+ *
+ * Each article maps to its own JSON file only, with routes:
+ * - Service: `/services/:slug`
+ * - News: `/news/:year/:month/:slug`
+ * - Blog: `/blog/:year/:month/:slug`
+ */
+function buildArticleRouteDeps(articles: string[], urlPrefix: string): Record<string, string[]> {
+  const map: Record<string, string[]> = {};
+
+  for (const articleFile of articles) {
+    try {
+      const articleData = JSON.parse(readFileSync(articleFile, 'utf-8')) as {
+        slug?: string;
+        publishedAt?: string;
+      };
+
+      if (!articleData.slug || !articleData.publishedAt) {
+        continue;
+      }
+
+      const { year, month } = extractYearMonth(articleData.publishedAt);
+      const route =
+        urlPrefix === 'services'
+          ? `/services/${articleData.slug}`
+          : `/${urlPrefix}/${year}/${month}/${articleData.slug}`;
+
+      map[route] = [articleFile];
+    } catch {
+      // Skip invalid / unparseable article files
     }
   }
 
@@ -231,9 +264,8 @@ function buildRouteDataMap(rootDir: string): Record<string, string[]> {
   // Home page — all section copy + all portfolio cases
   map['/'] = [...getJsonFiles(join(contentDir, 'sections')), ...allCases];
 
-  // Portfolio listing — root and /all show every case; per-category shows only its own cases
+  // Portfolio listing — root shows all cases; per-category shows only its own cases
   map['/portfolio'] = [...listingSectionFiles, ...allCases];
-  map['/portfolio/all'] = [...listingSectionFiles, ...allCases];
   for (const cat of categories) {
     if (cat.slug) {
       map[`/portfolio/${cat.slug}`] = [
@@ -245,6 +277,20 @@ function buildRouteDataMap(rootDir: string): Record<string, string[]> {
 
   // Portfolio case detail pages — each case maps to its own JSON only
   Object.assign(map, buildCaseRouteDeps(allCases, categories));
+
+  // Article listing pages
+  const serviceArticles = getJsonFiles(join(contentDir, 'services'));
+  const newsArticles = getJsonFiles(join(contentDir, 'news'));
+  const blogArticles = getJsonFiles(join(contentDir, 'blog'));
+
+  map['/services'] = serviceArticles;
+  map['/news'] = newsArticles;
+  map['/blog'] = blogArticles;
+
+  // Article detail pages — each article maps to its own JSON only
+  Object.assign(map, buildArticleRouteDeps(serviceArticles, 'services'));
+  Object.assign(map, buildArticleRouteDeps(newsArticles, 'news'));
+  Object.assign(map, buildArticleRouteDeps(blogArticles, 'blog'));
 
   // Legal pages — each page depends on its own JSON file
   const legalDir = join(contentDir, 'legal');

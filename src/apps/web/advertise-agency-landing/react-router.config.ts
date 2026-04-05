@@ -4,8 +4,8 @@ import path from "path";
 import { readJson, walkJsonFiles, extractYearMonth } from "./scripts/utils/buildUtils";
 import {
   computeRouteManifest,
-  loadPreviousManifest,
   diffManifest,
+  loadPreviousManifest,
   writeBuildDiff,
 } from "./src/plugins/incrementalSSGPlugin.ts";
 
@@ -24,6 +24,11 @@ interface CaseEntry {
   publishedAt: string;
 }
 
+interface GenericArticleEntry {
+  slug: string;
+  publishedAt: string;
+}
+
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
@@ -35,38 +40,60 @@ export default {
   async prerender({ getStaticPaths }) {
     const root = process.cwd();
 
+    // --- Category config ---
     const categories =
       readJson<CategoryEntry[]>(
-        path.resolve(root, "data/content/config/categories.json")
+        path.resolve(root, "data/content/config/categories.json"),
       ) ?? [];
-    const catSlugs = ["all", ...categories.map((c) => c.slug)];
+    const catSlugs = [...categories.map((c) => c.slug)];
 
+    // --- Portfolio routes ---
     const portfolioDir = path.resolve(root, "data/content/portfolio");
-    const cases = walkJsonFiles(portfolioDir).map(
-      (f) => JSON.parse(readFileSync(f, "utf-8")) as CaseEntry
+    const portfolioArticles = walkJsonFiles(portfolioDir).map(
+      (f) => JSON.parse(readFileSync(f, "utf-8")) as CaseEntry,
     );
 
-    // /portfolio + /portfolio/<catSlug> for every category
-    const categoryRoutes = [
-      "/portfolio",
-      ...catSlugs.map((s) => `/portfolio/${s}`),
-    ];
+    const portfolioCategoryRoutes = ["/portfolio", ...catSlugs.map((s) => `/portfolio/${s}`)];
 
-    // Each case under /all/ and under its own category
-    const caseRoutes = cases.flatMap((c) => {
+    const portfolioRoutes = portfolioArticles.flatMap((c) => {
       const { year, month } = extractYearMonth(c.publishedAt);
       const catSlug = categories.find((cat) => cat.name === c.category)?.slug;
-      const allPath = `/portfolio/all/${year}/${month}/${c.slug}`;
       return catSlug
-        ? [allPath, `/portfolio/${catSlug}/${year}/${month}/${c.slug}`]
-        : [allPath];
+        ? [`/portfolio/${catSlug}/${year}/${month}/${c.slug}`]
+        : [];
+    });
+
+    // --- Service / News / Blog article routes ---
+    const svcArticles = walkJsonFiles(path.resolve(root, "data/content/services")).map(
+      (f) => JSON.parse(readFileSync(f, "utf-8")) as GenericArticleEntry,
+    );
+    const newsArticles = walkJsonFiles(path.resolve(root, "data/content/news")).map(
+      (f) => JSON.parse(readFileSync(f, "utf-8")) as GenericArticleEntry,
+    );
+    const blogArticles = walkJsonFiles(path.resolve(root, "data/content/blog")).map(
+      (f) => JSON.parse(readFileSync(f, "utf-8")) as GenericArticleEntry,
+    );
+
+    const svcRoutes = ["/services", ...svcArticles.map((a) => `/services/${a.slug}`)];
+
+    const newsRoutes = newsArticles.flatMap((a) => {
+      const { year, month } = extractYearMonth(a.publishedAt);
+      return [`/news`, `/news/${year}/${month}/${a.slug}`];
+    });
+
+    const blogRoutes = blogArticles.flatMap((a) => {
+      const { year, month } = extractYearMonth(a.publishedAt);
+      return [`/blog`, `/blog/${year}/${month}/${a.slug}`];
     });
 
     const allRoutes = [
       ...getStaticPaths(),
       "/404",
-      ...categoryRoutes,
-      ...caseRoutes,
+      ...portfolioCategoryRoutes,
+      ...portfolioRoutes,
+      ...svcRoutes,
+      ...newsRoutes,
+      ...blogRoutes,
     ];
 
     // Incremental build: compute manifest diff pre-build so React Router only
@@ -85,7 +112,6 @@ export default {
     });
 
     // Return only changed routes — unchanged ones will be restored from cache.
-    // On first build or global hash change every route is in diff.changed.
     const unchangedSet = new Set(diff.unchanged);
     return allRoutes.filter((route) => !unchangedSet.has(route));
   },

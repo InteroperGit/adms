@@ -71,16 +71,15 @@ export function buildEntries(): SitemapEntry[] {
   const caseRoutes: SitemapEntry[] = cases.flatMap((c) => {
     const { year, month } = extractYearMonth(c.publishedAt);
     const catSlug = categories.find((cat) => cat.name === c.category)?.slug;
-    const entry = (p: string): SitemapEntry => ({
-      loc: `${BASE_URL}${p}`,
+    if (!catSlug) {
+      return [];
+    }
+    return {
+      loc: `${BASE_URL}/portfolio/${catSlug}/${year}/${month}/${c.slug}`,
       changefreq: 'monthly',
       priority: 0.7,
       lastmod: c.publishedAt.slice(0, 10),
-    });
-    const allPath = `/portfolio/all/${year}/${month}/${c.slug}`;
-    return catSlug
-      ? [entry(allPath), entry(`/portfolio/${catSlug}/${year}/${month}/${c.slug}`)]
-      : [entry(allPath)];
+    };
   });
 
   return [...staticRoutes, ...categoryRoutes, ...caseRoutes];
