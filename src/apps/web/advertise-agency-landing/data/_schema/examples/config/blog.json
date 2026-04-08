@@ -1,0 +1,7 @@
+{
+  "$schema": "../../schema/config/blog.schema.json",
+  "gridDescription": "Статьи, советы и экспертные материалы в сфере маркетинга и рекламы",
+  "allLabel": "Все",
+  "detailsLabel": "Читать",
+  "emptyLabel": "Статей пока нет. Мы скоро это исправим!"
+}

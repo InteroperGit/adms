@@ -1,0 +1,7 @@
+{
+  "$schema": "../../schema/config/news.schema.json",
+  "gridDescription": "Последние новости и события компании",
+  "allLabel": "Все",
+  "detailsLabel": "Подробнее",
+  "emptyLabel": "Новости пока не добавлены. Загляните позже!"
+}
