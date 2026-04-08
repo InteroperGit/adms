@@ -379,13 +379,13 @@ async function main(): Promise<void> {
     'footer'
   );
 
-  // Create empty portfolio and legal directories with .gitkeep
-  mkdirSync(path.join(contentDir, 'portfolio'), { recursive: true });
+  // Create empty portfolio, legal, and articles directories
+  mkdirSync(path.join(contentDir, 'articles', 'portfolio'), { recursive: true });
   mkdirSync(path.join(contentDir, 'legal'), { recursive: true });
   console.log(
-    '  ✓ data/content/portfolio/  (empty — add cases as {category}/{year}/{month}/yyyy_mm_dd_slug.json)'
+    '  ✓ data/content/articles/portfolio/  (empty — add cases as {category}/{year}/{month}/yyyy_mm_dd_slug.json)'
   );
-  console.log('  ✓ data/content/legal/      (empty — add legal page content here)');
+  console.log('  ✓ data/content/legal/            (empty — add legal page content here)');
 
   console.log('');
   console.log('✅  All files generated.\n');
@@ -393,7 +393,7 @@ async function main(): Promise<void> {
   console.log('  1. Edit data/content/config/legal.json        → add legal company details');
   console.log('  2. Edit data/content/sections/**/*.json        → replace placeholder copy');
   console.log(
-    '  3. Add data/content/portfolio/{category}/{year}/{month}/yyyy_mm_dd_slug.json → case study files'
+    '  3. Add data/content/articles/portfolio/{category}/{year}/{month}/yyyy_mm_dd_slug.json → case study files'
   );
   console.log('  4. Add data/content/legal/*.json               → legal page content');
   console.log('  5. pnpm validate                               → verify all files');

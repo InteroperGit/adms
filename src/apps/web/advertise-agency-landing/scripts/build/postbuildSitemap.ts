@@ -51,7 +51,7 @@ export function buildEntries(): SitemapEntry[] {
     readJson<CategoryEntry[]>(resolve(rootDir, 'data/content/config/categories.json')) ?? [];
   const catSlugs = ['all', ...categories.map((c) => c.slug)];
 
-  const portfolioDir = resolve(rootDir, 'data/content/portfolio');
+  const portfolioDir = resolve(rootDir, 'data/content/articles/portfolio');
   const cases = walkJsonFiles(portfolioDir).map(
     (f) => JSON.parse(readFileSync(f, 'utf-8')) as CaseEntry
   );

@@ -289,29 +289,30 @@ export function processBuiltHtml(rootDir: string): void {
   const categories =
     readJson<CategoryEntry[]>(path.resolve(rootDir, 'data/content/config/categories.json')) ?? [];
 
-  // Build case file map
+  // Build article file maps (slug → data)
+  const articleBase = path.resolve(rootDir, 'data/content/articles');
+
   const caseFileMap = Object.fromEntries(
-    walkJsonFiles(path.resolve(rootDir, 'data/content/portfolio')).map((f) => {
+    walkJsonFiles(path.resolve(articleBase, 'portfolio')).map((f) => {
       const data = JSON.parse(readFileSync(f, 'utf-8')) as CaseData & { slug: string };
       return [data.slug, data];
     })
   );
 
-  // Build article file maps (slug → data) for services, news, blog
   const serviceFileMap = Object.fromEntries(
-    walkJsonFiles(path.resolve(rootDir, 'data/content/services')).map((f) => {
+    walkJsonFiles(path.resolve(articleBase, 'services')).map((f) => {
       const data = JSON.parse(readFileSync(f, 'utf-8')) as GenericArticleData & { slug: string };
       return [data.slug, data];
     })
   );
   const newsFileMap = Object.fromEntries(
-    walkJsonFiles(path.resolve(rootDir, 'data/content/news')).map((f) => {
+    walkJsonFiles(path.resolve(articleBase, 'news')).map((f) => {
       const data = JSON.parse(readFileSync(f, 'utf-8')) as GenericArticleData & { slug: string };
       return [data.slug, data];
     })
   );
   const blogFileMap = Object.fromEntries(
-    walkJsonFiles(path.resolve(rootDir, 'data/content/blog')).map((f) => {
+    walkJsonFiles(path.resolve(articleBase, 'blog')).map((f) => {
       const data = JSON.parse(readFileSync(f, 'utf-8')) as GenericArticleData & { slug: string };
       return [data.slug, data];
     })

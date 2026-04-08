@@ -45,7 +45,7 @@ import { ContactContentSchema } from '../../src/types/sections/contact/contact';
 import { FooterContentSchema } from '../../src/types/sections/footer/footer';
 
 // ── Portfolio schemas ──────────────────────────────────────────────────────────
-import { PortfolioSectionContentSchema } from '../../src/types/portfolio';
+import { PortfolioSectionContentSchema } from '../../src/types/sections/portfolio/portfolioContent';
 import { PortfolioArticleSchema } from '../../src/types/articles/portfolioArticle';
 import { DefaultArticleCtaSchema } from '../../src/types/config/defaultArticleCta';
 import { ServiceArticleSchema } from '../../src/types/articles/serviceArticle';
@@ -57,7 +57,8 @@ import { BlogArticleSchema } from '../../src/types/articles/blogArticle';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..', '..');
 const dataDir = path.join(root, 'data/content');
-const portfolioDir = path.join(dataDir, 'portfolio');
+const articlesDir = path.join(dataDir, 'articles');
+const portfolioDir = path.join(articlesDir, 'portfolio');
 
 // ── Utilities ──────────────────────────────────────────────────────────────────
 

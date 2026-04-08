@@ -120,7 +120,7 @@ pnpm gen-schemas
       "url": "../../_schema/schema/siteData.schema.json"
     },
     {
-      "fileMatch": ["data/content/portfolio/**/*.json"],
+      "fileMatch": ["data/content/articles/portfolio/**/*.json"],
       "url": "../../_schema/schema/portfolioCase.schema.json"
     }
   ]

@@ -48,7 +48,7 @@ export default {
     const catSlugs = [...categories.map((c) => c.slug)];
 
     // --- Portfolio routes ---
-    const portfolioDir = path.resolve(root, "data/content/portfolio");
+    const portfolioDir = path.resolve(root, "data/content/articles/portfolio");
     const portfolioArticles = walkJsonFiles(portfolioDir).map(
       (f) => JSON.parse(readFileSync(f, "utf-8")) as CaseEntry,
     );
@@ -63,14 +63,16 @@ export default {
         : [];
     });
 
-    // --- Service / News / Blog article routes ---
-    const svcArticles = walkJsonFiles(path.resolve(root, "data/content/services")).map(
+    // --- Article routes (blog, news, portfolio, services) ---
+    const articleBase = path.resolve(root, "data/content/articles");
+
+    const svcArticles = walkJsonFiles(path.resolve(articleBase, "services")).map(
       (f) => JSON.parse(readFileSync(f, "utf-8")) as GenericArticleEntry,
     );
-    const newsArticles = walkJsonFiles(path.resolve(root, "data/content/news")).map(
+    const newsArticles = walkJsonFiles(path.resolve(articleBase, "news")).map(
       (f) => JSON.parse(readFileSync(f, "utf-8")) as GenericArticleEntry,
     );
-    const blogArticles = walkJsonFiles(path.resolve(root, "data/content/blog")).map(
+    const blogArticles = walkJsonFiles(path.resolve(articleBase, "blog")).map(
       (f) => JSON.parse(readFileSync(f, "utf-8")) as GenericArticleEntry,
     );
 

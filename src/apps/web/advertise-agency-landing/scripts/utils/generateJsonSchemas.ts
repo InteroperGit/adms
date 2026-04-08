@@ -23,10 +23,7 @@ const DATA_CONTENT_DIR = 'data/content';
 const CONFIG_DIR = `${DATA_CONTENT_DIR}/config`;
 const SECTIONS_DIR = `${DATA_CONTENT_DIR}/sections`;
 const LEGAL_DIR = `${DATA_CONTENT_DIR}/legal`;
-const PORTFOLIO_DIR = `${DATA_CONTENT_DIR}/portfolio`;
-const SERVICES_DIR = `${DATA_CONTENT_DIR}/services`;
-const NEWS_DIR = `${DATA_CONTENT_DIR}/news`;
-const BLOG_DIR = `${DATA_CONTENT_DIR}/blog`;
+const ARTICLES_DIR = `${DATA_CONTENT_DIR}/articles`;
 const SCHEMA_BASE = './data/_schema/schema';
 const EXAMPLES_DIR = 'data/_schema/examples';
 
@@ -34,7 +31,6 @@ const EXAMPLES_DIR = 'data/_schema/examples';
 const REL_CONFIG = `../../_schema/schema/config`;
 const REL_SECTIONS = `../../_schema/schema/sections`;
 const REL_LEGAL = `../../_schema/schema/legal`;
-const REL_PORTFOLIO_ARTICLES = `../../../../../_schema/schema/articles`;
 
 // Section subfolders used for both source data and schema output
 const SECTION_SUBFOLDERS = {
@@ -96,7 +92,7 @@ import { TestimonialsSchema } from '../../src/types/sections/testimonials/testim
 import { ContactContentSchema } from '../../src/types/sections/contact/contact';
 import { FooterContentSchema } from '../../src/types/sections/footer/footer';
 // ── Portfolio schemas ─────────────────────────────────────────────────────────
-import { PortfolioSectionContentSchema } from '../../src/types/portfolio';
+import { PortfolioSectionContentSchema } from '../../src/types/sections/portfolio/portfolioContent';
 import { ImageGalleryContentSchema } from '../../src/types/shared/imageGallery';
 
 // ── Legal schemas ─────────────────────────────────────────────────────────────
@@ -226,8 +222,8 @@ const schemas: Record<string, SchemaEntry> = {
   legalContent: { subfolder: SUBFOLDERS.legal, schema: LegalContentSchema },
   // Articles
   article: { subfolder: SUBFOLDERS.articles, schema: BaseArticleSchema },
-  portfolioArticle: { subfolder: SUBFOLDERS.articles, schema: PortfolioArticleSchema },
-  serviceArticle: { subfolder: SUBFOLDERS.articles, schema: ServiceArticleSchema },
+  portfolio: { subfolder: SUBFOLDERS.articles, schema: PortfolioArticleSchema },
+  service: { subfolder: SUBFOLDERS.articles, schema: ServiceArticleSchema },
   newsArticle: { subfolder: SUBFOLDERS.articles, schema: NewsArticleSchema },
   blogArticle: { subfolder: SUBFOLDERS.articles, schema: BlogArticleSchema },
 };
@@ -355,8 +351,8 @@ const jsonSchemas = [
 
   // Portfolio case files
   {
-    fileMatch: [`${PORTFOLIO_DIR}/**/*.json`],
-    url: schemaUrl(SUBFOLDERS.articles, 'portfolioArticle'),
+    fileMatch: ['data/content/articles/portfolio/**/*.json'],
+    url: schemaUrl(SUBFOLDERS.articles, 'portfolio'),
   },
 
   // Array-root example files — can't carry inline $schema, mapped here instead
@@ -378,29 +374,33 @@ const jsonSchemas = [
   },
   {
     fileMatch: [`${EXAMPLES_DIR}/articles/services/service.example.json`],
-    url: schemaUrl(SUBFOLDERS.articles, 'serviceArticle'),
+    url: schemaUrl(SUBFOLDERS.articles, 'service'),
   },
   {
     fileMatch: [`${EXAMPLES_DIR}/articles/news/news.example.json`],
-    url: schemaUrl(SUBFOLDERS.articles, 'newsArticle'),
+    url: schemaUrl(SUBFOLDERS.articles, 'news'),
   },
   {
     fileMatch: [`${EXAMPLES_DIR}/articles/blog/blog.example.json`],
-    url: schemaUrl(SUBFOLDERS.articles, 'blogArticle'),
+    url: schemaUrl(SUBFOLDERS.articles, 'blog'),
   },
 
   // Article content file globs
   {
-    fileMatch: ['data/content/services/**/*.json'],
-    url: schemaUrl(SUBFOLDERS.articles, 'serviceArticle'),
+    fileMatch: ['data/content/articles/services/**/*.json'],
+    url: schemaUrl(SUBFOLDERS.articles, 'service'),
   },
   {
-    fileMatch: ['data/content/news/**/*.json'],
-    url: schemaUrl(SUBFOLDERS.articles, 'newsArticle'),
+    fileMatch: ['data/content/articles/news/**/*.json'],
+    url: schemaUrl(SUBFOLDERS.articles, 'news'),
   },
   {
-    fileMatch: ['data/content/blog/**/*.json'],
-    url: schemaUrl(SUBFOLDERS.articles, 'blogArticle'),
+    fileMatch: ['data/content/articles/blog/**/*.json'],
+    url: schemaUrl(SUBFOLDERS.articles, 'blog'),
+  },
+  {
+    fileMatch: ['data/content/articles/portfolio/**/*.json'],
+    url: schemaUrl(SUBFOLDERS.articles, 'portfolio'),
   },
 ];
 
@@ -439,7 +439,6 @@ export function getSchemaPathForFile(filePath: string): string | null {
   const configPrefix = `${CONFIG_DIR}/`;
   const legalPrefix = `${LEGAL_DIR}/`;
   const sectionsPrefix = `${SECTIONS_DIR}/`;
-  const portfolioPrefix = `${PORTFOLIO_DIR}/`;
 
   // Config files
   if (relativePath.startsWith(configPrefix)) {
@@ -466,24 +465,13 @@ export function getSchemaPathForFile(filePath: string): string | null {
     return `${REL_SECTIONS}/${section}/${filename}.schema.json`;
   }
 
-  // Portfolio case files
-  if (relativePath.startsWith(portfolioPrefix)) {
-    return `${REL_PORTFOLIO_ARTICLES}/portfolioArticle.schema.json`;
-  }
-
-  // Service article files
-  if (relativePath.startsWith(`${SERVICES_DIR}/`)) {
-    return `${REL_PORTFOLIO_ARTICLES}/serviceArticle.schema.json`;
-  }
-
-  // News article files
-  if (relativePath.startsWith(`${NEWS_DIR}/`)) {
-    return `${REL_PORTFOLIO_ARTICLES}/newsArticle.schema.json`;
-  }
-
-  // Blog article files
-  if (relativePath.startsWith(`${BLOG_DIR}/`)) {
-    return `${REL_PORTFOLIO_ARTICLES}/blogArticle.schema.json`;
+  // Article files — blog, news, services, portfolio
+  const articlesPrefix = `${ARTICLES_DIR}/`;
+  if (relativePath.startsWith(articlesPrefix)) {
+    const parts = relativePath.split('/');
+    const articleType = parts[2]; // articles/blog -> blog, articles/services -> services, etc.
+    const ups = '../../'.repeat(parts.length - 1);
+    return `${ups}_schema/schema/articles/${articleType}.schema.json`;
   }
 
   return null;

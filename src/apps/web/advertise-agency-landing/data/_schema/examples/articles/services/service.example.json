@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../_schema/schema/articles/serviceArticle.schema.json",
+  "$schema": "../../../../../_schema/schema/articles/service.schema.json",
   "type": "service",
   "slug": "seo-basics-guide",
   "publishedAt": "2026-04-01T00:00:00Z",

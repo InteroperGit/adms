@@ -11,7 +11,7 @@
  * Note: This test suite requires data/ directory to be populated.
  * Data structure:
  *   - data/content/config/*.json — site configuration (theme, site, categories, etc.)
- *   - data/content/portfolio/** — portfolio case files
+ *   - data/content/articles/portfolio/** — portfolio case files
  *   - data/content/sections/** — content for each page section
  *
  * If you see "ENOENT" errors for data files, copy sample data first.
@@ -306,12 +306,12 @@ async function test3_SingleCaseAdded() {
   log('Test 3: Single case added (new routes + listings invalidated)');
   const startTime = Date.now();
 
-  const caseDir = resolve(rootDir, 'data/content/portfolio/branding/2024/12');
+  const caseDir = resolve(rootDir, 'data/content/articles/portfolio/branding/2024/12');
 
   // Skip if portfolio directory doesn't exist
-  if (!existsSync(resolve(rootDir, 'data/content/portfolio'))) {
+  if (!existsSync(resolve(rootDir, 'data/content/articles/portfolio'))) {
     const duration = Date.now() - startTime;
-    skip('Test 3', 'data/content/portfolio not found', duration);
+    skip('Test 3', 'data/content/articles/portfolio not found', duration);
     return;
   }
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeAll } from 'vitest';

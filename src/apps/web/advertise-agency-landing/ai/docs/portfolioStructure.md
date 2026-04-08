@@ -7,7 +7,7 @@ Portfolio cases are organized in a **nested folder hierarchy** by category, year
 ## Directory Structure
 
 ```
-data/content/portfolio/
+data/content/articles/portfolio/
 ├── {category-slug}/
 │   ├── {year}/
 │   │   └── {month}/
@@ -91,7 +91,7 @@ Each portfolio case file must include:
 
 ## Adding New Cases
 
-1. **Create the directory structure**: `data/content/portfolio/{category}/{year}/{month}/`
+1. **Create the directory structure**: `data/content/articles/portfolio/{category}/{year}/{month}/`
 2. **Name the file**: `{yyyy_mm_dd}_{slug}.json` (where day defaults to 01 if exact date unknown)
 3. **Add required fields**: `slug`, `publishedAt`, `category`, `title`, `description`, `hero`, `tags`, `meta`, `overview`, `content`
 4. **Run validation**: `pnpm validate` to verify the case against the schema
@@ -163,15 +163,15 @@ This is used in `onPageRendered` to inject meta tags on case pages.
 ### Validation & Schema Generation
 
 - **`scripts/validate.ts`** uses `walkJsonFiles()` helper to recursively discover `**/*.json` files
-- **`scripts/generate-json-schemas.ts`** updates `.vscode/settings.json` with `fileMatch: ['data/content/portfolio/**/*.json']`
+- **`scripts/generate-json-schemas.ts`** updates `.vscode/settings.json` with `fileMatch: ['data/content/articles/portfolio/**/*.json']`
 
 ## Migration History
 
-**March 14, 2026**: Reorganized portfolio structure from flat (`data/content/portfolio/*.json`) to nested folders.
+**March 14, 2026**: Reorganized portfolio structure from flat (`data/content/articles/portfolio/*.json`) to nested folders.
 
 **Before:**
 ```
-data/content/portfolio/
+data/content/articles/portfolio/
 ├── artplex.json
 ├── mobibank.json
 ├── fitstudio.json
@@ -180,7 +180,7 @@ data/content/portfolio/
 
 **After:**
 ```
-data/content/portfolio/
+data/content/articles/portfolio/
 ├── branding/2023/03/2023_03_01_artplex.json
 ├── branding/2023/09/2023_09_01_mobibank.json
 ├── branding/2024/02/2024_02_01_fitstudio.json

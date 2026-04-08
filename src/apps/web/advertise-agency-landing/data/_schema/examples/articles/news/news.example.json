@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../_schema/schema/articles/newsArticle.schema.json",
+  "$schema": "../../../../../_schema/schema/articles/news.schema.json",
   "type": "news",
   "slug": "q1-2026-update",
   "publishedAt": "2026-04-01T10:00:00Z",

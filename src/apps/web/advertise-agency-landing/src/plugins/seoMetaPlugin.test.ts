@@ -426,7 +426,7 @@ describe('handleCasePage (route /portfolio/...)', () => {
     meta: { title: 'Meta Title', description: 'Meta Description' },
     images: { og: 'https://example.com/case-og.jpg' },
   };
-  const CASE_FILE = '/project/data/content/portfolio/digital/2024/05/my-case.json';
+  const CASE_FILE = '/project/data/content/articles/portfolio/digital/2024/05/my-case.json';
 
   beforeEach(() => {
     (readJson as any).mockImplementation((p: string) => {

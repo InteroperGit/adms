@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../_schema/schema/articles/blogArticle.schema.json",
+  "$schema": "../../../../../_schema/schema/articles/blog.schema.json",
   "type": "blog",
   "slug": "design-trends-2026",
   "publishedAt": "2026-04-15T00:00:00Z",

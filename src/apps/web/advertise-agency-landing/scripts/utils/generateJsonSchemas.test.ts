@@ -53,9 +53,9 @@ describe('getSchemaPathForFile', () => {
     expect(getSchemaPathForFile(abs('data/content/sections/carousel/carousel.json'))).toBeNull();
   });
 
-  it('returns portfolio schema path for data/content/portfolio/all/2024/01/case.json', () => {
-    expect(getSchemaPathForFile(abs('data/content/portfolio/all/2024/01/case.json'))).toBe(
-      '../../../../../_schema/schema/portfolio/portfolio.schema.json'
+  it('returns portfolio schema path for data/content/articles/portfolio/all/2024/01/case.json', () => {
+    expect(getSchemaPathForFile(abs('data/content/articles/portfolio/all/2024/01/case.json'))).toBe(
+      '../../../../../_schema/schema/articles/portfolio.schema.json'
     );
   });
 
