@@ -6,6 +6,7 @@ import { CategoryNav } from './CategoryNav';
 import { Pagination } from './Pagination';
 import { ArticleCard } from './ArticleCard';
 import type { BaseArticle } from '@/types/articles/article';
+import { paginationConfig } from '@/types/config/paginationConfig';
 
 interface ArticleGridProps {
   /** Articles to display */
@@ -137,9 +138,9 @@ export function ArticleGrid({
         <Pagination
           current={safePage}
           total={totalPages}
-          prevLabel="← Назад"
-          nextLabel="Вперёд →"
-          pageLabel="{current} из {total}"
+          prevLabel={paginationConfig.prevLabel}
+          nextLabel={paginationConfig.nextLabel}
+          pageLabel={paginationConfig.pageLabel}
           onPrev={() => setPage(safePage - 1)}
           onNext={() => setPage(safePage + 1)}
         />

@@ -17,6 +17,7 @@ import { siteData } from '@/types/config/siteData';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { newsConfig } from '@/types/config/newsConfig';
 import { blogConfig } from '@/types/config/blogConfig';
+import { paginationConfig } from '@/types/config/paginationConfig';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 const ARTICLES_BY_TYPE: Record<ArticleType, BaseArticle[]> = {
@@ -122,9 +123,9 @@ export function ArticleListPage() {
             <Pagination
               current={page}
               total={totalPages}
-              prevLabel="← Назад"
-              nextLabel="Вперёд →"
-              pageLabel="{current} из {total}"
+              prevLabel={paginationConfig.prevLabel}
+              nextLabel={paginationConfig.nextLabel}
+              pageLabel={paginationConfig.pageLabel}
               onPrev={() => setPage((p) => p - 1)}
               onNext={() => setPage((p) => p + 1)}
             />
