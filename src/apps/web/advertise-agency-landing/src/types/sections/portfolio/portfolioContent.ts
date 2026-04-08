@@ -24,8 +24,6 @@ export const PortfolioSectionContentSchema = z.object({
   description: z.string(),
   /** Label for "all cases" category view */
   allCategory: z.string(),
-  /** Label for view case details link */
-  detailsLabel: z.string(),
   /** CTA button linking to portfolio page */
   cta: LabeledLinkSchema,
 });
@@ -36,11 +34,3 @@ export type PortfolioSectionContent = z.infer<typeof PortfolioSectionContentSche
  * @description Parsed portfolio section content from JSON data
  */
 export const portfolioSectionContent = PortfolioSectionContentSchema.parse(raw);
-
-import type { PortfolioArticle } from '@/types/articles/portfolioArticle';
-
-// Compatibility re-exports — new consumers should import from articles directly
-/** @deprecated Use PortfolioArticle from '@/types/articles/portfolioArticle' */
-export type PortfolioCase = PortfolioArticle;
-/** @deprecated Use PortfolioArticleWithHref from '@/types/portfolio/portfolioCases' */
-export type PortfolioCaseWithHref = PortfolioArticle & { href: string };

@@ -4,31 +4,37 @@ import { SectionHeader } from '@/components/ui/section/SectionHeader';
 import { ArticleGrid } from '@/components/articles/ArticleGrid';
 import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
 import { NotFound } from '@/pages/NotFound';
-import { allPortfolioCases } from '@/types/portfolio/portfolioCases';
-import { allNewsArticles, allBlogArticles } from '@/types/articles/allArticles';
+import {
+  allNewsArticles,
+  allBlogArticles,
+  allPortfolioArticles,
+} from '@/types/articles/allArticles';
 import { portfolioConfig } from '@/types/config/portfolioConfig';
 import { newsConfig } from '@/types/config/newsConfig';
 import { blogConfig } from '@/types/config/blogConfig';
-import { portfolioSectionContent } from '@/types/portfolio';
 import { categories } from '@/types/config/categories';
 import { siteData } from '@/types/config/siteData';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
-import { extractYearMonth } from '@/libs/dateUtils';
+import { getArticleHref, type ArticleType } from '@/libs/articleUtils';
 import type { BaseArticle } from '@/types/articles/article';
 
-type ArticleType = 'portfolio' | 'news' | 'blog';
+// --- Constants ---
 
-function getArticleHref(type: ArticleType, article: BaseArticle, categorySegment: string): string {
-  const { year, month } = extractYearMonth(article.publishedAt);
-  switch (type) {
-    case 'portfolio':
-      return `/portfolio/${categorySegment}/${year}/${month}/${article.slug}`;
-    case 'news':
-      return `/news/${year}/${month}/${article.slug}`;
-    case 'blog':
-      return `/blog/${year}/${month}/${article.slug}`;
-  }
-}
+const HOME_PATH = '/';
+const DEFAULT_CATEGORY = 'all';
+const FALLBACK_BACK_LABEL = 'На главную';
+
+// Valid article type path segments, derived from the registry below
+const ARTICLE_PATHS = ['portfolio', 'news', 'blog'] as const;
+
+/** Base path per article type */
+const TYPE_BASE_PATH: Record<ArticleType, string> = {
+  portfolio: '/portfolio',
+  news: '/news',
+  blog: '/blog',
+};
+
+// --- Registry ---
 
 interface ArticleTypeConfig {
   label: string;
@@ -36,52 +42,74 @@ interface ArticleTypeConfig {
   items: BaseArticle[];
   hasCategories: boolean;
   perPage: number;
+  allLabel: string;
   emptyLabel: string;
-  detailsLabel?: string;
+  detailsLabel: string;
   cta?: { label: string; href: string };
-  /** Description shown above the article grid */
   gridDescription: string;
 }
 
 const TYPE_REGISTRY: Record<ArticleType, ArticleTypeConfig> = {
   portfolio: {
     label: 'Портфолио',
-    basePath: '/portfolio',
-    items: allPortfolioCases,
+    basePath: TYPE_BASE_PATH.portfolio,
+    items: allPortfolioArticles,
     hasCategories: true,
     perPage: portfolioConfig.perPage,
+    allLabel: portfolioConfig.allLabel,
     emptyLabel: portfolioConfig.emptyLabel,
-    detailsLabel: portfolioSectionContent.detailsLabel,
+    detailsLabel: portfolioConfig.detailsLabel,
     cta: portfolioConfig.cta,
     gridDescription: portfolioConfig.gridDescription,
   },
   news: {
     label: 'Новости',
-    basePath: '/news',
+    basePath: TYPE_BASE_PATH.news,
     items: allNewsArticles,
     hasCategories: false,
     perPage: 12,
+    allLabel: newsConfig.allLabel,
     emptyLabel: newsConfig.emptyLabel,
+    detailsLabel: newsConfig.detailsLabel,
     gridDescription: newsConfig.gridDescription,
   },
   blog: {
     label: 'Блог',
-    basePath: '/blog',
+    basePath: TYPE_BASE_PATH.blog,
     items: allBlogArticles,
     hasCategories: false,
     perPage: 12,
+    allLabel: blogConfig.allLabel,
     emptyLabel: blogConfig.emptyLabel,
+    detailsLabel: blogConfig.detailsLabel,
     gridDescription: blogConfig.gridDescription,
   },
 };
 
+// --- Helpers ---
+
 function detectType(pathname: string): ArticleType | null {
   const segment = pathname.replace(/^\/|\/$/g, '').split('/')[0];
-  if (segment === 'portfolio' || segment === 'news' || segment === 'blog') {
-    return segment as ArticleType;
-  }
-  return null;
+  return ARTICLE_PATHS.includes(segment as ArticleType) ? (segment as ArticleType) : null;
 }
+
+function buildBreadcrumbs(
+  homeLabel: string,
+  typeLabel: string,
+  categoryLabel: string | null,
+  typeBasePath: string
+): Array<{ label: string; href?: string }> {
+  if (!categoryLabel) {
+    return [{ label: homeLabel, href: HOME_PATH }, { label: typeLabel }];
+  }
+  return [
+    { label: homeLabel, href: HOME_PATH },
+    { label: typeLabel, href: typeBasePath },
+    { label: categoryLabel },
+  ];
+}
+
+// --- Component ---
 
 /**
  * Generic article listing page — shows articles filtered by type and optional category.
@@ -105,39 +133,36 @@ export function ArticleCategoryPage() {
   const detectedType: ArticleType = type ?? 'portfolio';
   const cfg = TYPE_REGISTRY[detectedType];
 
-  const isAll = !categorySlug || categorySlug === 'all';
-  const category =
-    isAll || !cfg.hasCategories ? null : categories.find((c) => c.slug === categorySlug);
+  const isAll = !categorySlug || categorySlug === DEFAULT_CATEGORY;
+  const isRoot = isAll || !cfg.hasCategories;
 
-  const categoryLabel = isAll ? portfolioConfig.allLabel : (category?.name ?? cfg.label);
-  const pageTitle =
-    isAll || !cfg.hasCategories
-      ? `${cfg.label} — ${siteData.name}`
-      : `${category!.name} — ${cfg.label} — ${siteData.name}`;
+  const category = isRoot ? null : categories.find((c) => c.slug === categorySlug);
+
+  const pageTitle = isRoot
+    ? `${cfg.label} — ${siteData.name}`
+    : `${category!.name} — ${cfg.label} — ${siteData.name}`;
   useDocumentTitle(pageTitle);
 
-  if (!isAll && cfg.hasCategories && !category) {
-    const allLabel = cfg.basePath === '/portfolio' ? portfolioConfig.allProjectsLink : 'На главную';
+  // Unknown category → 404
+  if (!isRoot && !category) {
+    const allLabel =
+      cfg.basePath === TYPE_BASE_PATH.portfolio
+        ? portfolioConfig.allProjectsLink
+        : FALLBACK_BACK_LABEL;
     return <NotFound backLabel={allLabel} backHref={cfg.basePath} />;
   }
 
-  const filtered =
-    isAll || !cfg.hasCategories
-      ? cfg.items
-      : cfg.items.filter((item) => item.category === category!.name);
+  const categoryLabel = isAll ? cfg.allLabel : (category?.name ?? cfg.label);
 
-  const breadcrumbItems =
-    isAll || !cfg.hasCategories
-      ? [{ label: siteData.homeLabel, href: '/' }, { label: cfg.label }]
-      : [
-          { label: siteData.homeLabel, href: '/' },
-          { label: cfg.label, href: cfg.basePath },
-          { label: categoryLabel },
-        ];
+  const filtered = isRoot
+    ? cfg.items
+    : cfg.items.filter((item) => item.category === category!.name);
+
+  const breadcrumbs = buildBreadcrumbs(siteData.homeLabel, cfg.label, categoryLabel, cfg.basePath);
 
   return (
     <>
-      <BreadCrumbs items={breadcrumbItems} />
+      <BreadCrumbs items={breadcrumbs} />
       <section className="bg-background py-24 md:py-32">
         <Container>
           <SectionHeader
@@ -148,14 +173,16 @@ export function ArticleCategoryPage() {
           />
           <ArticleGrid
             items={filtered}
-            articleHref={(item) => getArticleHref(detectedType, item, categorySlug ?? 'all')}
-            detailsLabel={cfg.detailsLabel ?? portfolioSectionContent.detailsLabel}
+            articleHref={(item) =>
+              getArticleHref(detectedType, item, categorySlug ?? DEFAULT_CATEGORY)
+            }
+            detailsLabel={cfg.detailsLabel}
             basePath={cfg.basePath}
             cta={cfg.cta}
             emptyLabel={cfg.emptyLabel}
             perPage={cfg.perPage}
             categories={cfg.hasCategories ? categories : undefined}
-            allLabel={portfolioConfig.allLabel}
+            allLabel={cfg.allLabel}
             activeSlug={cfg.hasCategories ? categorySlug : undefined}
           />
         </Container>

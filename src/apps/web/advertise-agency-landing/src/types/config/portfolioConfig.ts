@@ -17,6 +17,8 @@ export const PortfolioConfigSchema = z.object({
   perPage: z.number(),
   /** Label for "all cases" category (e.g., "Все") */
   allLabel: z.string(),
+  /** Label for "view details" link on article cards */
+  detailsLabel: z.string(),
   /** Label for previous page button */
   prevLabel: z.string(),
   /** Label for next page button */

@@ -2,11 +2,13 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
-vi.mock('@/types/sections/portfolio/portfolioPage', () => ({
-  portfolioPageContent: {
+vi.mock('@/types/sections/portfolio', () => ({
+  portfolioSectionContent: {
+    allCategory: 'Все',
     label: 'Портфолио',
     title: 'Наши работы',
     description: 'Примеры проектов',
+    cta: { href: '/portfolio', label: 'Смотреть все' },
   },
 }));
 
@@ -31,9 +33,10 @@ vi.mock('@/types/config/categories', () => ({
   ],
 }));
 
-vi.mock('@/types/portfolio/portfolioCases', () => ({
-  allPortfolioCases: [
+vi.mock('@/types/articles/allArticles', () => ({
+  allPortfolioArticles: [
     {
+      type: 'portfolio' as const,
       slug: 'case-1',
       publishedAt: '2024-01-15',
       title: 'Кейс 1',
@@ -72,6 +75,8 @@ vi.mock('@/types/portfolio/portfolioCases', () => ({
       images: { preview: 'https://external.com/img.jpg' },
     },
   ],
+  allNewsArticles: [],
+  allBlogArticles: [],
 }));
 
 vi.mock('@/types/config/siteData', () => ({
@@ -124,9 +129,9 @@ function renderAtRoute(path: string) {
 }
 
 describe('ArticleCategoryPage', () => {
-  it('renders section header title', () => {
+  it('renders section header label and title', () => {
     renderAtRoute('/portfolio/all');
-    expect(screen.getByText('Наши работы')).toBeInTheDocument();
+    expect(screen.getAllByText('Портфолио')).toHaveLength(2);
   });
 
   it('renders breadcrumbs', () => {

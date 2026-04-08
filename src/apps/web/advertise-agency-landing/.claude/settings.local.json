@@ -26,5 +26,8 @@
       "mcp__context7__resolve-library-id",
       "Skill(claude-md-management:revise-claude-md)"
     ]
+  },
+  "enabledPlugins": {
+    "vercel@claude-plugins-official": true
   }
 }

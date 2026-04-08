@@ -9,6 +9,10 @@ import { z } from 'zod';
 export const NewsConfigSchema = z.object({
   /** Description shown above the news article grid */
   gridDescription: z.string(),
+  /** Label for "all cases" category (e.g., "Все") */
+  allLabel: z.string(),
+  /** Label for "view details" link on article cards */
+  detailsLabel: z.string(),
   /** Label shown when no news articles exist */
   emptyLabel: z.string(),
 });

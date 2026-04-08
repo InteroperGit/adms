@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import { cn } from '@/libs/utils';
 import { AnimatedPillTabs, type AnimatedPillTabItem } from '@/components/ui/AnimatedPillTabs';
 
+const DEFAULT_CATEGORY = 'all';
+
 interface CategoryNavProps {
   /**
    * Slug of the currently active category route segment.
@@ -39,12 +41,12 @@ interface CategoryTabItem extends AnimatedPillTabItem {
  * <CategoryNav activeSlug="branding" basePath="/portfolio" categories={categories} allLabel="Все" />
  */
 export function CategoryNav({ activeSlug, basePath, categories, allLabel }: CategoryNavProps) {
-  const activeValue = activeSlug && activeSlug !== 'all' ? activeSlug : 'all';
+  const activeValue = activeSlug && activeSlug !== DEFAULT_CATEGORY ? activeSlug : DEFAULT_CATEGORY;
 
   const items: CategoryTabItem[] = [
     {
       label: allLabel,
-      value: 'all',
+      value: DEFAULT_CATEGORY,
       href: basePath,
     },
     ...categories.map((category) => ({

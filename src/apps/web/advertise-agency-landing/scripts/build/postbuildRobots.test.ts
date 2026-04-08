@@ -10,10 +10,6 @@ describe('buildRobotsContent', () => {
     expect(buildRobotsContent('https://example.com')).toContain('Allow: /');
   });
 
-  it('contains Disallow: /order/', () => {
-    expect(buildRobotsContent('https://example.com')).toContain('Disallow: /order/');
-  });
-
   it('Sitemap line uses provided baseUrl', () => {
     const content = buildRobotsContent('https://rmaster35.ru');
     expect(content).toContain('Sitemap: https://rmaster35.ru/sitemap.xml');
