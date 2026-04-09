@@ -1,0 +1,60 @@
+/* Google Fonts loaded dynamically via themePlugin from data/theme.json */
+/* Color vars, radius, and font vars injected into :root by themePlugin */
+
+@import 'tailwindcss';
+@source "../data/content";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@import './keyframes.css';
+
+/* ─── Tailwind v4 Theme — maps utilities to CSS vars ───────────────────────── */
+@theme inline {
+  /* Fonts — reference vars injected by themePlugin */
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+
+  /* Colors — all Tailwind utilities resolve through the CSS vars above */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-surface-dark: hsl(var(--surface-dark, var(--foreground)));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  /* Border radius scale */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-cta-pulse: cta-pulse 2.5s ease-in-out infinite;
+  --animate-cta-pulse-white: cta-pulse-white 2.5s ease-in-out infinite;
+  --animate-cta-pulse-slow: cta-pulse-slow 4s ease-in-out infinite;
+  --animate-pulse-green: pulse-green 2s ease-in-out infinite;
+  --animate-pulse-tg: pulse-tg 2s ease-in-out infinite;
+  --animate-pulse-vk: pulse-vk 2s ease-in-out infinite;
+  --animate-blur-up: blur-up 0.6s ease-out;
+  --animate-ken-burns: ken-burns 5s ease-out forwards;
+}
+
+@import './base.css';
+@import './utilities.css';

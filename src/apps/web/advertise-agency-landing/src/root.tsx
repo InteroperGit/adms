@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { theme } from '@/types/config/theme';
 import { ThemeContext } from '@/contexts/ThemeContext';
-import './index.css';
+import './styles/index.css';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — virtual module declared by themePlugin
 import 'virtual:theme-vars.css';
