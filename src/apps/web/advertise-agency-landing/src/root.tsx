@@ -46,6 +46,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         {/* Anti-FOUC: must execute before any paint to prevent dark-mode flash */}
         <script dangerouslySetInnerHTML={{ __html: ANTI_FOUC_SCRIPT }} />
+        {/* Yandex smartcaptcha */}
+        <script src="https://smartcaptcha.cloud.yandex.ru/captcha.js" defer></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {theme.fontUrls.map((url) => (

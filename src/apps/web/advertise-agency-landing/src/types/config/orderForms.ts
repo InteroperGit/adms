@@ -161,6 +161,12 @@ const OrderFormDefinitionSchema = z.object({
   disclaimer: z.string(),
   /** Success message configuration */
   success: OrderFormSuccessSchema,
+  /** Error text when captcha site key is missing */
+  captchaNotConfigured: z.string(),
+  /** Error text when form submission fails */
+  submitFailed: z.string(),
+  /** Button text while submitting */
+  sending: z.string(),
 });
 
 /**

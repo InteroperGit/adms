@@ -7,21 +7,13 @@ import { OrderFormDynamicFields } from './OrderFormDynamicFields';
 import { OrderFormCustomerFields } from './OrderFormCustomerFields';
 import { OrderFormConsent } from './OrderFormConsent';
 import { OrderFormSuccess } from './OrderFormSuccess';
+import { YandexSmartCaptcha } from '../yandex/YandexSmartCaptcha.tsx';
 import type { FormFieldDefinition, OrderFormDefinition } from '@/types/config/orderForms';
 
 interface OrderFormProps {
   definition: OrderFormDefinition;
 }
 
-/**
- * @component
- * @description Complete multi-step order form with product tabs, dynamic fields, customer info, consent and success state
- * @param {OrderFormProps} props
- * @param {OrderFormDefinition} props.definition - Form configuration with products, fields, labels, etc.
- * @returns {JSX.Element} Form wrapper or success message
- * @example
- * <OrderForm definition={orderFormDefinition} />
- */
 function fieldDefaults(fields: FormFieldDefinition[]): Record<string, string> {
   const defaults: Record<string, string> = {};
   for (const f of fields) {
@@ -40,14 +32,28 @@ export function OrderForm({ definition }: OrderFormProps) {
     fieldDefaults(definition.productTypes[0].fields)
   );
   const [consent, setConsent] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const activeProduct = definition.productTypes.find((pt) => pt.key === activeProductKey);
   const productFieldKeys = new Set(activeProduct?.fields.map((f) => f.key) ?? []);
   const customerFieldKeys = new Set(definition.customerFields.map((f) => f.key));
 
+  const smartCaptchaSiteKey = import.meta.env.VITE_SMARTCAPTCHA_SITEKEY;
+  const orderFormApiUrl = import.meta.env.VITE_ORDER_FORM_API_URL;
+
   const handleFieldChange = useCallback((key: string, value: string | boolean) => {
     setValues((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
+  const handleCaptchaSuccess = useCallback((token: string) => {
+    setCaptchaToken(token);
+  }, []);
+
+  const handleCaptchaExpired = useCallback(() => {
+    setCaptchaToken('');
   }, []);
 
   function handleProductChange(key: string) {
@@ -62,11 +68,13 @@ export function OrderForm({ definition }: OrderFormProps) {
       const product = definition.productTypes.find((pt) => pt.key === key);
       return { ...fieldDefaults(product?.fields ?? []), ...next };
     });
+    setCaptchaToken('');
   }
 
-  function handleSubmit(e: { preventDefault(): void }) {
+  async function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
-    if (!consent) {
+
+    if (!consent || !captchaToken || !smartCaptchaSiteKey || !orderFormApiUrl) {
       return;
     }
 
@@ -83,14 +91,40 @@ export function OrderForm({ definition }: OrderFormProps) {
       return;
     }
 
-    setSubmitted(true);
-    setValues({});
-    setConsent(false);
+    setIsSubmitting(true);
+    setSubmitError(false);
+
+    try {
+      const response = await fetch(orderFormApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formData: values,
+          captchaToken,
+          message: 'test',
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      setSubmitted(true);
+      setValues({});
+      setConsent(false);
+      setCaptchaToken('');
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function handleReset() {
     setSubmitted(false);
+    setSubmitError(false);
     setActiveProductKey(definition.productTypes[0].key);
+    setCaptchaToken('');
   }
 
   if (submitted) {
@@ -153,13 +187,27 @@ export function OrderForm({ definition }: OrderFormProps) {
 
         <OrderFormConsent consent={definition.consent} checked={consent} onChange={setConsent} />
 
+        {smartCaptchaSiteKey ? (
+          <YandexSmartCaptcha
+            siteKey={smartCaptchaSiteKey}
+            onTokenChange={handleCaptchaSuccess}
+            onTokenExpired={handleCaptchaExpired}
+          />
+        ) : (
+          <p className="text-sm text-destructive">{definition.captchaNotConfigured}</p>
+        )}
+
+        {submitError && (
+          <p className="text-sm text-destructive text-center">{definition.submitFailed}</p>
+        )}
+
         <Button
           type="submit"
           size="lg"
           className="w-full cursor-pointer rounded-full"
-          disabled={!consent}
+          disabled={!consent || !captchaToken || !smartCaptchaSiteKey || isSubmitting}
         >
-          {definition.submit}
+          {isSubmitting ? definition.sending : definition.submit}
         </Button>
 
         <p className="text-center text-xs text-muted-foreground">{definition.disclaimer}</p>

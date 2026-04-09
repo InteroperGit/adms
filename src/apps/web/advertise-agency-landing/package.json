@@ -57,6 +57,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@react-router/dev": "^7.13.1",
     "@react-router/node": "^7.13.1",
+    "@yandex/smart-captcha": "^2.9.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "isbot": "^5",

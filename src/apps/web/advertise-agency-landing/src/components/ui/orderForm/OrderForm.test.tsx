@@ -66,6 +66,9 @@ const mockDefinition: OrderFormDefinition = {
     text: 'Мы свяжемся с вами.',
     reset: 'Отправить ещё',
   },
+  captchaNotConfigured: 'SmartCaptcha site key is not configured.',
+  submitFailed: 'Failed to send the form. Please try again.',
+  sending: 'Sending...',
 };
 
 function renderForm() {

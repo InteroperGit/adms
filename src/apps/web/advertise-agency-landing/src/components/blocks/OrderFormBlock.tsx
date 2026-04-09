@@ -28,7 +28,7 @@ function OrderFormBlockDesktop({ block, definition }: ViewProps) {
     <div
       className={cn(
         'relative mx-auto hidden max-w-2xl overflow-hidden rounded-3xl px-8 py-10 md:block',
-        'border border-primary/20 bg-gradient-to-br from-primary/5 via-background to-accent/5'
+        'border border-primary/20 bg-linear-to-br from-primary/5 via-background to-accent/5'
       )}
     >
       <div
@@ -62,7 +62,7 @@ function OrderFormBlockDesktop({ block, definition }: ViewProps) {
           <h2
             className={cn(
               'mb-6 text-center font-heading text-3xl font-bold',
-              'bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent'
+              'bg-linear-to-r from-primary to-accent bg-clip-text text-transparent'
             )}
           >
             {block.title}
