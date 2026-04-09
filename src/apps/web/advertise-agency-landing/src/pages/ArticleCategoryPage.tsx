@@ -138,9 +138,12 @@ export function ArticleCategoryPage() {
 
   const category = isRoot ? null : categories.find((c) => c.slug === categorySlug);
 
+  // Compute pageTitle safely before any early return (hooks must be unconditional)
   const pageTitle = isRoot
     ? `${cfg.label} — ${siteData.name}`
-    : `${category!.name} — ${cfg.label} — ${siteData.name}`;
+    : category
+      ? `${category.name} — ${cfg.label} — ${siteData.name}`
+      : cfg.label;
   useDocumentTitle(pageTitle);
 
   // Unknown category → 404

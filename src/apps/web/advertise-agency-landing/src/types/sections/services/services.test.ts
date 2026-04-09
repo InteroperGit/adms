@@ -2,11 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { ServicesSchema } from '../services/services';
 
 const mockServices = [
-  { icon: 'Palette', title: 'Branding', description: 'Brand identity design.' },
+  { slug: 'branding', icon: 'Palette', title: 'Branding', description: 'Brand identity design.' },
 ];
 
 const invalidServices = [
-  { icon: 'Palette', title: 123, description: 'Brand identity design.' }, // Invalid type
+  { slug: 'branding', icon: 'Palette', title: 123, description: 'Brand identity design.' }, // Invalid type
 ];
 
 describe('ServicesSchema', () => {

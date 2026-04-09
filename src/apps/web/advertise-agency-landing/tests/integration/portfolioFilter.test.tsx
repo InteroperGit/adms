@@ -68,7 +68,44 @@ vi.mock('@/types/sections/portfolio/portfolioPage', () => ({
 }));
 
 vi.mock('@/types/articles/allArticles', () => ({
-  allPortfolioArticles: [],
+  allPortfolioArticles: [
+    {
+      slug: 'case-branding-1',
+      publishedAt: '2024-03-15',
+      title: 'Брендинг кейс 1',
+      category: 'Брендинг',
+      description: 'Описание 1',
+      hero: { gradient: 'from-blue-500 to-purple-600' },
+      tags: [],
+      meta: { title: '', description: '' },
+      overview: { client: 'Клиент 1', year: '2024', services: 'Брендинг' },
+      content: [],
+    },
+    {
+      slug: 'case-branding-2',
+      publishedAt: '2024-03-20',
+      title: 'Брендинг кейс 2',
+      category: 'Брендинг',
+      description: 'Описание 2',
+      hero: { gradient: 'from-purple-500 to-pink-600' },
+      tags: [],
+      meta: { title: '', description: '' },
+      overview: { client: 'Клиент 2', year: '2024', services: 'Брендинг' },
+      content: [],
+    },
+    {
+      slug: 'case-web-1',
+      publishedAt: '2024-04-10',
+      title: 'Веб кейс 1',
+      category: 'Веб',
+      description: 'Описание веб',
+      hero: { gradient: 'from-green-500 to-blue-600' },
+      tags: [],
+      meta: { title: '', description: '' },
+      overview: { client: 'Клиент 3', year: '2024', services: 'Веб' },
+      content: [],
+    },
+  ],
   allServiceArticles: [],
   allNewsArticles: [],
   allBlogArticles: [],
@@ -81,6 +118,14 @@ vi.mock('@/types/config/notFound', () => ({
     description: 'Такой страницы не существует.',
     backLabel: 'На главную',
     backHref: '/',
+  },
+}));
+
+vi.mock('@/types/config/paginationConfig', () => ({
+  paginationConfig: {
+    prevLabel: '← Назад',
+    nextLabel: 'Вперёд →',
+    pageLabel: '{current} из {total}',
   },
 }));
 

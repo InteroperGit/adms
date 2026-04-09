@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import { MemoryRouter } from 'react-router';
 
 vi.mock('@/types/shared/iconMap', () => ({
   ICON_MAP: new Proxy({}, { get: () => (props: object) => <svg data-testid="icon" {...props} /> }),
@@ -33,36 +34,60 @@ import { Services } from './index';
 
 describe('Services', () => {
   it('renders section header label', () => {
-    render(<Services />);
+    render(
+      <MemoryRouter>
+        <Services />
+      </MemoryRouter>
+    );
     expect(screen.getByText('Услуги')).toBeInTheDocument();
   });
 
   it('renders section title', () => {
-    render(<Services />);
+    render(
+      <MemoryRouter>
+        <Services />
+      </MemoryRouter>
+    );
     expect(screen.getByText('Наши услуги')).toBeInTheDocument();
   });
 
   it('renders section description', () => {
-    render(<Services />);
+    render(
+      <MemoryRouter>
+        <Services />
+      </MemoryRouter>
+    );
     expect(screen.getByText('Полный спектр рекламных услуг')).toBeInTheDocument();
   });
 
   it('renders all service card titles', () => {
-    render(<Services />);
+    render(
+      <MemoryRouter>
+        <Services />
+      </MemoryRouter>
+    );
     expect(screen.getByText('Контекстная реклама')).toBeInTheDocument();
     expect(screen.getByText('SEO-продвижение')).toBeInTheDocument();
     expect(screen.getByText('SMM')).toBeInTheDocument();
   });
 
   it('renders all service card descriptions', () => {
-    render(<Services />);
+    render(
+      <MemoryRouter>
+        <Services />
+      </MemoryRouter>
+    );
     expect(screen.getByText('Быстрый результат')).toBeInTheDocument();
     expect(screen.getByText('Долгосрочный эффект')).toBeInTheDocument();
     expect(screen.getByText('Социальные сети')).toBeInTheDocument();
   });
 
   it('renders services section element', () => {
-    const { container } = render(<Services />);
+    const { container } = render(
+      <MemoryRouter>
+        <Services />
+      </MemoryRouter>
+    );
     expect(container.querySelector('#services')).toBeInTheDocument();
   });
 });

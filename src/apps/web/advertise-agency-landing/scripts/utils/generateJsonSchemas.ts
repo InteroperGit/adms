@@ -469,8 +469,8 @@ export function getSchemaPathForFile(filePath: string): string | null {
   const articlesPrefix = `${ARTICLES_DIR}/`;
   if (relativePath.startsWith(articlesPrefix)) {
     const parts = relativePath.split('/');
-    const articleType = parts[2]; // articles/blog -> blog, articles/services -> services, etc.
-    const ups = '../../'.repeat(parts.length - 1);
+    const articleType = parts[3]; // data/content/articles/blog -> blog, data/content/articles/portfolio -> portfolio
+    const ups = '../'.repeat(parts.length - 3);
     return `${ups}_schema/schema/articles/${articleType}.schema.json`;
   }
 

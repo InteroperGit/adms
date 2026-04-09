@@ -99,8 +99,10 @@ const mockLegalData = {
 };
 
 const mockPortfolioConfig = {
+  gridDescription: 'Selected portfolio projects.',
   perPage: 9,
   allLabel: 'All',
+  detailsLabel: 'View Details',
   prevLabel: 'Previous',
   nextLabel: 'Next',
   pageLabel: '{current} of {total}',
@@ -108,6 +110,12 @@ const mockPortfolioConfig = {
   notFoundCategory: 'Unknown Category',
   allProjectsLink: 'View All Projects',
   cta: { label: 'Contact Us', href: '/contact' },
+  overviewLabels: {
+    client: 'Client',
+    category: 'Category',
+    year: 'Year',
+    services: 'Services',
+  },
 };
 
 const mockCategoriesData = [
