@@ -1,7 +1,7 @@
 import { Calendar, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/libs/utils';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { OptimizedImage } from '@/components/shared/images/OptimizedImage';
 import { articleTypesConfig } from '@/types/config/articleTypes';
 import type { BaseArticle, ArticleType } from '@/types/articles/article';
 import type { ContentBlock } from '@/types/blocks';

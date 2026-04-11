@@ -4,7 +4,7 @@ import { useRandomButtonHighlight } from '@/hooks/useRandomButtonHighlight';
 import { useViewportAnimation } from '@/hooks/useViewportAnimation';
 import { HeaderDesktopNav } from './HeaderDesktopNav';
 import { HeaderMobileNav } from './HeaderMobileNav';
-import { Logo } from '@/components/ui/Logo';
+import { Logo } from '@/components/shared/logo/Logo';
 import { useTheme } from '@/hooks/useTheme';
 
 // 4 buttons: 0=Phone, 1=Telegram, 2=VK, 3=CTA

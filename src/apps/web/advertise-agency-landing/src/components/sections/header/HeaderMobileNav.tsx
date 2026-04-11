@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/libs/utils';
-import { SocialLinks } from '@/components/ui/SocialLinks';
+import { SocialLinks } from '@/components/shared/socialLinks/SocialLinks';
 import { Container } from '@/components/layout/Container';
 import { DarkModeToggle } from './DarkModeToggle';
 import { HeaderNav } from './HeaderNav';

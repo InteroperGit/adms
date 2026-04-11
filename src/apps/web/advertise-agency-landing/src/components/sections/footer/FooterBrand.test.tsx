@@ -18,11 +18,11 @@ vi.mock('@/types/config/siteData', () => ({
   },
 }));
 
-vi.mock('@/components/ui/Logo', () => ({
+vi.mock('@/components/shared/logo/Logo', () => ({
   Logo: ({ className }: { className?: string }) => <div data-testid="logo" className={className} />,
 }));
 
-vi.mock('@/components/ui/SocialLinks', () => ({
+vi.mock('@/components/shared/socialLinks/SocialLinks', () => ({
   SocialLinks: ({
     phone,
     telegram,

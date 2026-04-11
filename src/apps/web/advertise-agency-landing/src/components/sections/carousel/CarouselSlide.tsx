@@ -1,7 +1,7 @@
 import { cn } from '@/libs/utils';
 import { carouselContent } from '@/types/sections/carousel/carouselContent';
 import type { CarouselSlide as CarouselSlideType } from '@/types/sections/carousel/carousel';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { OptimizedImage } from '@/components/shared/images/OptimizedImage';
 
 interface CarouselSlideProps {
   slide: CarouselSlideType;

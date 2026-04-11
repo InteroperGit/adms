@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { ArticleThumbnail } from './ArticleThumbnail';
 
-vi.mock('@/components/ui/OptimizedImage', () => ({
+vi.mock('@/components/shared/images/OptimizedImage', () => ({
   OptimizedImage: vi.fn(({ alt, onLoad }: { alt: string; onLoad?: () => void }) => (
     <img data-testid="optimized-image" alt={alt} onLoad={onLoad} />
   )),

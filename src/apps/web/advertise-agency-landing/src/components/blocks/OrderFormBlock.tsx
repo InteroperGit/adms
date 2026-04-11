@@ -1,7 +1,7 @@
 import { cn } from '@/libs/utils';
 import type { OrderFormBlock as OrderFormBlockData } from '@/types/blocks';
 import { orderFormsData } from '@/types/config/orderForms';
-import { OrderForm } from '@/components/ui/orderForm';
+import { OrderForm } from '@/components/orderForm';
 import { resolveIcon } from '@/types/shared/iconMap';
 import type { OrderFormDefinition } from '@/types/config/orderForms';
 

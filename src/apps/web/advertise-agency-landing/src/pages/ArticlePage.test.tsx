@@ -52,7 +52,7 @@ vi.mock('@/components/blocks/BlockRenderer', () => ({
   BlockRenderer: () => <div data-testid="block-renderer" />,
 }));
 
-vi.mock('@/components/ui/navigation/BreadCrumbs', () => ({
+vi.mock('@/components/navigation/BreadCrumbs', () => ({
   BreadCrumbs: () => <nav data-testid="breadcrumbs" />,
 }));
 

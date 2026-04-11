@@ -18,7 +18,7 @@ vi.mock('@/types/shared/imageGallery', () => ({
   },
 }));
 
-vi.mock('@/components/ui/imageGallery', () => ({
+vi.mock('@/components/imageGallery', () => ({
   ImageGallery: () => <div data-testid="image-gallery" />,
 }));
 

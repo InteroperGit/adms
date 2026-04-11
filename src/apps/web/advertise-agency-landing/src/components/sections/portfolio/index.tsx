@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/section/SectionHeader';
+import { SectionHeader } from '@/components/shared/section/SectionHeader';
 import { useStaggeredReveal } from '@/hooks/useStaggeredReveal';
 import { ArticleCard } from '@/components/articles/ArticleCard';
 import { PortfolioFilter } from '@/components/sections/portfolio/PortfolioFilter';

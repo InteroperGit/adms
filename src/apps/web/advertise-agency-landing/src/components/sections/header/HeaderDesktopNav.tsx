@@ -1,4 +1,4 @@
-import { SocialLinks } from '@/components/ui/SocialLinks';
+import { SocialLinks } from '@/components/shared/socialLinks/SocialLinks';
 import { DarkModeToggle } from './DarkModeToggle';
 import { HeaderNav } from './HeaderNav';
 import { siteData } from '@/types/config/siteData';

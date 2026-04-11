@@ -1,6 +1,6 @@
 import { Container } from '@/components/layout/Container';
 import { heroContent } from '@/types/sections/hero/hero';
-import { SectionBadge } from '@/components/ui/section/SectionBadge';
+import { SectionBadge } from '@/components/shared/section/SectionBadge';
 import { HeroCTA } from './HeroCTA';
 import { HeroStats } from './HeroStats';
 

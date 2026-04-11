@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { cn } from '@/libs/utils';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { OptimizedImage } from '@/components/shared/images/OptimizedImage';
 
 interface ImageGalleryThumbnailsProps {
   images: { src: string }[];

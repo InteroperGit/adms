@@ -7,7 +7,7 @@ import { Advantages } from '@/components/sections/advantages';
 import { CallToAction } from '@/components/sections/call-to-action';
 import { Testimonials } from '@/components/sections/testimonials';
 import { Contact } from '@/components/sections/contact';
-import { SectionDivider } from '@/components/ui/section/SectionDivider';
+import { SectionDivider } from '@/components/shared/section/SectionDivider';
 import { ErrorBoundary, SilentErrorFallback } from '@/components/error';
 
 /**

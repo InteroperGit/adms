@@ -1,6 +1,6 @@
 // src/components/ui/SectionHeader.tsx
 import { cn } from '@/libs/utils';
-import { SectionBadge } from '@/components/ui/section/SectionBadge';
+import { SectionBadge } from '@/components/shared/section/SectionBadge';
 
 interface SectionHeaderProps {
   label: string;

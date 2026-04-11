@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router';
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/section/SectionHeader';
+import { SectionHeader } from '@/components/shared/section/SectionHeader';
 import { Pagination } from '@/components/articles/Pagination';
 import { ArticleListItem } from '@/components/articles/ArticleListItem';
-import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
+import { BreadCrumbs } from '@/components/navigation/BreadCrumbs';
 import { NotFound } from '@/pages/NotFound';
 import type { ArticleType, BaseArticle } from '@/types/articles/article';
 import {

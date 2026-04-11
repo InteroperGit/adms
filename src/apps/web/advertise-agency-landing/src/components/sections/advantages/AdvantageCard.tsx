@@ -1,5 +1,5 @@
-import { ItemCard } from '@/components/ui/ItemCard';
-import { SectionIconBox } from '@/components/ui/section/SectionIconBox';
+import { ItemCard } from '@/components/shared/cards/ItemCard';
+import { SectionIconBox } from '@/components/shared/section/SectionIconBox';
 import { ICON_MAP } from '@/types/shared/iconMap';
 import { cn } from '@/libs/utils';
 import type { Advantage } from '@/types/sections/advantages/advantages';

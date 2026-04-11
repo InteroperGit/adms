@@ -1,6 +1,6 @@
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/section/SectionHeader';
-import { FadeInSection } from '@/components/ui/section/FadeInSection';
+import { SectionHeader } from '@/components/shared/section/SectionHeader';
+import { FadeInSection } from '@/components/shared/section/FadeInSection';
 import { testimonialsSectionContent } from '@/types/sections/testimonials/testimonialsContent';
 import { siteData } from '@/types/config/siteData';
 import { YandexReviews } from './YandexReviews';

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/libs/utils';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { OptimizedImage } from '@/components/shared/images/OptimizedImage';
 
 interface ArticleThumbnailProps {
   href: string;

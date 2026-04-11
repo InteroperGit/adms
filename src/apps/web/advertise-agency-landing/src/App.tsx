@@ -4,10 +4,10 @@ import { Footer } from '@/components/sections/footer';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { CookieBanner } from './components/banners/CookieBanner';
 import { MetrikaScript } from '@/components/analytics/MetrikaScript';
-import { ScrollToTop } from '@/components/ui/navigation/ScrollToTop';
-import { HomeHashScroll } from '@/components/ui/navigation/HomeHashScroll';
-import { SkipToContent } from '@/components/ui/navigation/SkipToContent';
-import { ScrollProgress } from '@/components/ui/ScrollProgress';
+import { ScrollToTop } from '@/components/navigation/ScrollToTop';
+import { HomeHashScroll } from '@/components/navigation/HomeHashScroll';
+import { SkipToContent } from '@/components/navigation/SkipToContent';
+import { ScrollProgress } from '@/components/shared/scrollProgress/ScrollProgress';
 import { ErrorBoundary } from '@/components/error';
 import { useScrollReset } from '@/hooks/useScrollReset';
 

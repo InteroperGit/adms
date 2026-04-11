@@ -24,7 +24,12 @@
       "Read(//d/Projects/adms/src/apps/web/advertise-agency-landing/**)",
       "Bash(done)",
       "mcp__context7__resolve-library-id",
-      "Skill(claude-md-management:revise-claude-md)"
+      "Skill(claude-md-management:revise-claude-md)",
+      "Read(//d/Projects/adms/**)",
+      "Bash(mkdir -p src/apps/web/advertise-agency-landing/src/components/tabs)",
+      "Bash(mv src/apps/web/advertise-agency-landing/src/components/shared/animatedPillTabs/* src/apps/web/advertise-agency-landing/src/components/tabs/)",
+      "Bash(rmdir src/apps/web/advertise-agency-landing/src/components/shared/animatedPillTabs)",
+      "Bash(mkdir -p src/apps/web/advertise-agency-landing/src/components/cards)"
     ]
   },
   "enabledPlugins": {

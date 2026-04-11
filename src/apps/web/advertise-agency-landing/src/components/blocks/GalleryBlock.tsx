@@ -1,4 +1,4 @@
-import { ImageGallery } from '@/components/ui/imageGallery';
+import { ImageGallery } from '@/components/imageGallery';
 import { imageGalleryContent } from '@/types/shared/imageGallery';
 import type { GalleryBlock as GalleryBlockData } from '@/types/blocks';
 import { interpolate } from '@/libs/utils';

@@ -22,7 +22,7 @@ vi.mock('@/types/legal/index', () => ({
   },
 }));
 
-vi.mock('@/components/ui/legal/LegalBlockRenderer', () => ({
+vi.mock('@/components/legal/LegalBlockRenderer', () => ({
   LegalBlockRenderer: () => <div data-testid="legal-block-renderer" />,
 }));
 

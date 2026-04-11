@@ -64,7 +64,7 @@ vi.mock('@/components/layout/Container', () => ({
   Container: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
-vi.mock('@/components/ui/section/SectionHeader', () => ({
+vi.mock('@/components/shared/section/SectionHeader', () => ({
   SectionHeader: ({
     label,
     title,

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeAll } from 'vitest';
 import { ImageGalleryThumbnails } from './ImageGalleryThumbnails';
 
-vi.mock('@/components/ui/OptimizedImage', () => ({
+vi.mock('@/components/shared/images/OptimizedImage', () => ({
   OptimizedImage: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
 }));
 

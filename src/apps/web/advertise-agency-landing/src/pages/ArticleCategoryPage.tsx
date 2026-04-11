@@ -1,8 +1,8 @@
 import { useParams, useLocation } from 'react-router';
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/section/SectionHeader';
+import { SectionHeader } from '@/components/shared/section/SectionHeader';
 import { ArticleGrid } from '@/components/articles/ArticleGrid';
-import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
+import { BreadCrumbs } from '@/components/navigation/BreadCrumbs';
 import { NotFound } from '@/pages/NotFound';
 import {
   allNewsArticles,

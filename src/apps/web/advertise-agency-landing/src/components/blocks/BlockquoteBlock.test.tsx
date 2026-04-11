@@ -5,7 +5,7 @@ vi.mock('@/types/sections/testimonials/testimonials', () => ({
   testimonials: [{ id: 1, name: 'John Doe', role: 'CEO', company: 'ACME', text: 'Great service!' }],
 }));
 
-vi.mock('@/components/ui/testimonial/TestimonialCard', () => ({
+vi.mock('@/components/shared/testimonial/TestimonialCard', () => ({
   TestimonialCard: ({ testimonial }: { testimonial: { name: string } }) => (
     <div data-testid="testimonial-card">{testimonial.name}</div>
   ),

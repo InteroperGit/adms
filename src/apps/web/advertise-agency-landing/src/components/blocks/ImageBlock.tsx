@@ -1,6 +1,6 @@
 import { cn } from '@/libs/utils';
 import type { ImageBlock as ImageBlockData } from '@/types/blocks';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { OptimizedImage } from '@/components/shared/images/OptimizedImage';
 
 interface ImageBlockProps {
   block: ImageBlockData;

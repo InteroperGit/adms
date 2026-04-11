@@ -1,5 +1,5 @@
 import { type AboutSectionContent } from '@/types/sections/about/aboutContent';
-import { Logo } from '@/components/ui/Logo';
+import { Logo } from '@/components/shared/logo/Logo';
 import { cn } from '@/libs/utils';
 
 interface AboutCardProps {

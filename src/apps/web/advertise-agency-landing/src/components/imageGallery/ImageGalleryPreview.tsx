@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { OptimizedImage } from '@/components/shared/images/OptimizedImage';
 
 interface ImageGalleryPreviewProps {
   src: string;

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { AboutCard } from './AboutCard';
 
-vi.mock('@/components/ui/Logo', () => ({
+vi.mock('@/components/shared/logo/Logo', () => ({
   Logo: ({ className }: { className?: string }) => (
     <div data-testid="logo" className={className}>
       Logo

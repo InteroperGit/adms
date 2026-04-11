@@ -1,5 +1,5 @@
 import { cn } from '@/libs/utils';
-import { TestimonialCard } from '@/components/ui/testimonial/TestimonialCard';
+import { TestimonialCard } from '@/components/shared/testimonial/TestimonialCard';
 import { testimonials } from '@/types/sections/testimonials/testimonials';
 import type { BlockquoteBlock as BlockquoteBlockData } from '@/types/blocks';
 

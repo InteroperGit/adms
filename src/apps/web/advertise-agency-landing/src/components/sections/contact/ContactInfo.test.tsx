@@ -23,13 +23,13 @@ vi.mock('@/types/config/siteData', () => ({
   },
 }));
 
-vi.mock('@/components/ui/SocialLinks', () => ({
+vi.mock('@/components/shared/socialLinks/SocialLinks', () => ({
   SocialLinks: ({ telegram, vk }: { telegram: string; vk: string }) => (
     <div data-testid="social-links" data-telegram={telegram} data-vk={vk} />
   ),
 }));
 
-vi.mock('@/components/ui/WidgetIframe', () => ({
+vi.mock('@/components/shared/widgetIframe/WidgetIframe', () => ({
   WidgetIframe: ({ src, title }: { src: string; title: string }) => (
     <div data-testid="widget-iframe" data-src={src} aria-label={title} />
   ),

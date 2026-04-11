@@ -29,7 +29,7 @@ vi.mock('@/components/sections/testimonials', () => ({
 vi.mock('@/components/sections/contact', () => ({
   Contact: () => <div data-testid="contact" />,
 }));
-vi.mock('@/components/ui/section/SectionDivider', () => ({
+vi.mock('@/components/shared/section/SectionDivider', () => ({
   SectionDivider: () => <hr data-testid="divider" />,
 }));
 

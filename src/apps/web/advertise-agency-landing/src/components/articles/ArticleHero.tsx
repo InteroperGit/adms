@@ -2,7 +2,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Container } from '@/components/layout/Container';
 import { cn } from '@/libs/utils';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { OptimizedImage } from '@/components/shared/images/OptimizedImage';
 
 interface ArticleHeroProps {
   /**

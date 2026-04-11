@@ -1,18 +1,18 @@
 /// <reference types="vitest/globals" />
 import { render, screen, waitFor } from '@testing-library/react';
 import { OptimizedImage } from './OptimizedImage';
-import { resolveImageSrcSet } from '../../libs/imageSrcSet';
+import { resolveImageSrcSet } from '@/libs/imageSrcSet';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 // Mock resolveImageSrcSet as it's an external dependency for srcset generation
-vi.mock('../../libs/imageSrcSet', () => ({
+vi.mock('@/libs/imageSrcSet', () => ({
   resolveImageSrcSet: vi.fn((src: string) => (src ? `${src}-1x.webp 1x` : null)),
 }));
 
 const mockResolveImageSrcSet = resolveImageSrcSet as ReturnType<typeof vi.fn>;
 
 // Mock the Skeleton component to ensure it's rendered/not rendered correctly
-vi.mock('./skeleton', () => ({
+vi.mock('@/components/ui/skeleton', () => ({
   Skeleton: vi.fn(() => <div data-testid="skeleton-mock" />),
 }));
 

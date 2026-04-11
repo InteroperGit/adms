@@ -2,8 +2,8 @@ import { Container } from '@/components/layout/Container';
 import { AboutCard } from '@/components/sections/about/AboutCard';
 import { AboutText } from '@/components/sections/about/AboutText';
 import { AboutValues } from '@/components/sections/about/AboutValues';
-import { SectionHeader } from '@/components/ui/section/SectionHeader';
-import { FadeInSection } from '@/components/ui/section/FadeInSection';
+import { SectionHeader } from '@/components/shared/section/SectionHeader';
+import { FadeInSection } from '@/components/shared/section/FadeInSection';
 import { aboutContent } from '@/types/sections/about/aboutContent';
 
 /**

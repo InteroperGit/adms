@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { resolveImageSrcSet } from '@/libs/imageSrcSet';
-import { Skeleton } from './skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/libs/utils';
 
 export interface OptimizedImageProps {

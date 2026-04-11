@@ -1,8 +1,8 @@
 // src/components/sections/contact/ContactInfo.tsx
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { ContactItem } from '@/components/sections/contact/ContactItem';
-import { WidgetIframe } from '@/components/ui/WidgetIframe';
-import { SocialLinks } from '@/components/ui/SocialLinks';
+import { WidgetIframe } from '@/components/shared/widgetIframe/WidgetIframe';
+import { SocialLinks } from '@/components/shared/socialLinks/SocialLinks';
 import { phoneHref } from '@/libs/utils';
 import { contactContent } from '@/types/sections/contact/contact';
 import { siteData } from '@/types/config/siteData';

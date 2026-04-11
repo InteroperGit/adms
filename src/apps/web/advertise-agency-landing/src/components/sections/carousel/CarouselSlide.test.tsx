@@ -10,7 +10,7 @@ vi.mock('@/types/sections/carousel/carouselContent', () => ({
   },
 }));
 
-vi.mock('@/components/ui/OptimizedImage', () => ({
+vi.mock('@/components/shared/images/OptimizedImage', () => ({
   OptimizedImage: ({ src, alt }: { src: string; alt: string }) => (
     <img src={src} alt={alt} data-testid="optimized-image" />
   ),

@@ -1,7 +1,7 @@
 import { legalData } from '@/types/config/legalData';
 import { consentContent } from '@/types/legal';
-import { LegalPageLayout } from '@/components/ui/legal/LegalPageLayout';
-import { LegalBlockRenderer } from '@/components/ui/legal/LegalBlockRenderer';
+import { LegalPageLayout } from '@/components/legal/LegalPageLayout';
+import { LegalBlockRenderer } from '@/components/legal/LegalBlockRenderer';
 import { siteData } from '@/types/config/siteData';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 

@@ -1,6 +1,6 @@
 // src/components/sections/footer/FooterBrand.tsx
-import { SocialLinks } from '@/components/ui/SocialLinks';
-import { Logo } from '@/components/ui/Logo';
+import { SocialLinks } from '@/components/shared/socialLinks/SocialLinks';
+import { Logo } from '@/components/shared/logo/Logo';
 import { footerContent } from '@/types/sections/footer/footer';
 import { siteData } from '@/types/config/siteData';
 import { interpolate } from '@/libs/utils';

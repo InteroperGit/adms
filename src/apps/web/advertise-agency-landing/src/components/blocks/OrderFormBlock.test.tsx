@@ -17,7 +17,7 @@ vi.mock('@/types/config/orderForms', () => ({
   },
 }));
 
-vi.mock('@/components/ui/orderForm', () => ({
+vi.mock('@/components/orderForm', () => ({
   OrderForm: ({ definition }: { definition: { id: string } }) => (
     <div data-testid="order-form" data-form-id={definition.id} />
   ),

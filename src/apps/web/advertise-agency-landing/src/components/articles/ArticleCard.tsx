@@ -2,7 +2,7 @@
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/libs/utils';
-import { ArticleThumbnail } from '@/components/ui/article/ArticleThumbnail';
+import { ArticleThumbnail } from '@/components/articles/ArticleThumbnail';
 import type { BaseArticle } from '@/types/articles/article';
 
 interface ArticleCardProps {

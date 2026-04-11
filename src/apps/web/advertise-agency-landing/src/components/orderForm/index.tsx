@@ -1,13 +1,13 @@
 import { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { ImageGallery } from '@/components/ui/imageGallery';
+import { ImageGallery } from '@/components/imageGallery';
 import { imageGalleryContent } from '@/types/shared/imageGallery';
 import { OrderFormProductTabs } from './OrderFormProductTabs';
 import { OrderFormDynamicFields } from './OrderFormDynamicFields';
 import { OrderFormCustomerFields } from './OrderFormCustomerFields';
 import { OrderFormConsent } from './OrderFormConsent';
 import { OrderFormSuccess } from './OrderFormSuccess';
-import { YandexSmartCaptcha } from '../yandex/YandexSmartCaptcha.tsx';
+import { YandexSmartCaptcha } from '@/components/yandex/YandexSmartCaptcha';
 import type { FormFieldDefinition, OrderFormDefinition } from '@/types/config/orderForms';
 
 interface OrderFormProps {

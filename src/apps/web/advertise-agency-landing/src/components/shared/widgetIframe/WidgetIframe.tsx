@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { cn, DARK_IFRAME_FILTER } from '@/libs/utils';
-import { Skeleton } from './skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface WidgetIframeProps {
   /**

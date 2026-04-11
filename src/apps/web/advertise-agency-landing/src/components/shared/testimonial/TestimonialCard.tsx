@@ -1,6 +1,6 @@
 // src/components/ui/TestimonialCard.tsx
 import { Quote } from 'lucide-react';
-import { StarRating } from '@/components/ui/testimonial/StarRating';
+import { StarRating } from '@/components/shared/testimonial/StarRating';
 import { cn } from '@/libs/utils';
 import type { Testimonial } from '@/types/sections/testimonials/testimonials';
 

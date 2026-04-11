@@ -3,7 +3,7 @@ import { Container } from '@/components/layout/Container';
 import { ArticleHero } from '@/components/articles/ArticleHero';
 import { PortfolioOverview } from '@/components/articles/PortfolioOverview';
 import { ArticleCTA } from '@/components/articles/ArticleCTA';
-import { BreadCrumbs } from '@/components/ui/navigation/BreadCrumbs';
+import { BreadCrumbs } from '@/components/navigation/BreadCrumbs';
 import { BlockRenderer } from '@/components/blocks/BlockRenderer';
 import { NotFound } from '@/pages/NotFound';
 import { articleMap } from '@/types/articles/allArticles';

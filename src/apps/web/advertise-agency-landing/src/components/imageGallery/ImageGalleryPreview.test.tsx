@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { ImageGalleryPreview } from './ImageGalleryPreview';
 
-vi.mock('@/components/ui/OptimizedImage', () => ({
+vi.mock('@/components/shared/images/OptimizedImage', () => ({
   OptimizedImage: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
 }));
 

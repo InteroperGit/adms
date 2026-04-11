@@ -1,7 +1,10 @@
 // src/components/articles/CategoryNav.tsx
 import { Link } from 'react-router';
 import { cn } from '@/libs/utils';
-import { AnimatedPillTabs, type AnimatedPillTabItem } from '@/components/ui/AnimatedPillTabs';
+import {
+  AnimatedPillTabs,
+  type AnimatedPillTabItem,
+} from '@/components/shared/tabs/AnimatedPillTabs';
 
 const DEFAULT_CATEGORY = 'all';
 

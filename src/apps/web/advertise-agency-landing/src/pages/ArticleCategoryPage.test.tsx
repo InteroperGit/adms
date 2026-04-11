@@ -111,7 +111,7 @@ vi.mock('@/components/articles/ArticleGrid', () => ({
   ),
 }));
 
-vi.mock('@/components/ui/navigation/BreadCrumbs', () => ({
+vi.mock('@/components/navigation/BreadCrumbs', () => ({
   BreadCrumbs: () => <nav data-testid="breadcrumbs" />,
 }));
 

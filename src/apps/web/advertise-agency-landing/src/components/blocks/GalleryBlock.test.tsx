@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('@/components/ui/imageGallery', () => ({
+vi.mock('@/components/imageGallery', () => ({
   ImageGallery: ({ images }: { images: unknown[] }) => (
     <div data-testid="image-gallery" data-count={images.length} />
   ),

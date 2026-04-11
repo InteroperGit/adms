@@ -1,4 +1,4 @@
-import { WidgetIframe } from '@/components/ui/WidgetIframe.tsx';
+import { WidgetIframe } from '@/components/shared/widgetIframe/WidgetIframe.tsx';
 
 interface YandexReviewsProps {
   orgId: string;

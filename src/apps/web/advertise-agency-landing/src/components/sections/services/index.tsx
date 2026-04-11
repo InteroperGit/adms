@@ -1,5 +1,5 @@
 import { Container } from '@/components/layout/Container';
-import { SectionHeader } from '@/components/ui/section/SectionHeader';
+import { SectionHeader } from '@/components/shared/section/SectionHeader';
 import { useStaggeredReveal } from '@/hooks/useStaggeredReveal';
 import { servicesSectionContent } from '@/types/sections/services/servicesContent';
 import { services } from '@/types/sections/services/services';

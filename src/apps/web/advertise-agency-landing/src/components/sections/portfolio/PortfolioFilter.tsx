@@ -1,6 +1,9 @@
 // src/components/sections/portfolio/PortfolioFilter.tsx
 import { cn } from '@/libs/utils';
-import { AnimatedPillTabs, type AnimatedPillTabItem } from '@/components/ui/AnimatedPillTabs';
+import {
+  AnimatedPillTabs,
+  type AnimatedPillTabItem,
+} from '@/components/shared/tabs/AnimatedPillTabs';
 
 interface PortfolioFilterProps {
   categories: string[];

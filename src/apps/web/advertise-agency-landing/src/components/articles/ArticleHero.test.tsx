@@ -1,7 +1,7 @@
 import { render, screen } from '@/test/utils';
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('@/components/ui/OptimizedImage', () => ({
+vi.mock('@/components/shared/images/OptimizedImage', () => ({
   OptimizedImage: ({ src, alt }: { src: string; alt: string }) => (
     <img src={src} alt={alt} data-testid="optimized-image" />
   ),

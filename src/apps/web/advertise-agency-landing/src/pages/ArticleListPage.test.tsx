@@ -66,7 +66,7 @@ vi.mock('@/types/config/notFound', () => ({
   },
 }));
 
-vi.mock('@/components/ui/section/SectionHeader', () => ({
+vi.mock('@/components/shared/section/SectionHeader', () => ({
   SectionHeader: ({ title, description }: { title: string; description: string }) => (
     <div data-testid="section-header">
       <h2>{title}</h2>
@@ -83,7 +83,7 @@ vi.mock('@/components/articles/Pagination', () => ({
   ),
 }));
 
-vi.mock('@/components/ui/navigation/BreadCrumbs', () => ({
+vi.mock('@/components/navigation/BreadCrumbs', () => ({
   BreadCrumbs: () => <nav data-testid="breadcrumbs" />,
 }));
 
