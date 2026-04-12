@@ -9,9 +9,13 @@ vi.doMock('./smartCaptcha', () => ({
     checkCaptchaAsync: mockCheckCaptchaAsync,
 }));
 
-vi.doMock('./messageQueue', () => ({
-    sendMessageToQueueAsync: mockSendMessageToQueueAsync,
-}));
+vi.doMock('./messageQueue', async () => {
+    const actual = await vi.importActual<typeof import('./messageQueue')>('./messageQueue');
+    return {
+        ...actual,
+        sendMessageToQueueAsync: mockSendMessageToQueueAsync,
+    };
+});
 
 vi.doMock('./logs', () => ({
     logWarn: mockLogWarn,
@@ -89,7 +93,15 @@ describe('handler', () => {
 
         expect(res.statusCode).toBe(200);
         expect(JSON.parse(res.body)).toEqual({ messageId: 'msg-123' });
-        expect(mockSendMessageToQueueAsync).toHaveBeenCalledWith(JSON.stringify(order));
+        expect(mockSendMessageToQueueAsync).toHaveBeenCalledWith(
+            expect.objectContaining({
+                type: 'ORDER_SUBMITTED',
+                source: 'orders-intake',
+                correlationId: 'req-2',
+                version: '1.0',
+                payload: order,
+            })
+        );
     });
 
     it('returns 500 when sendMessageToQueueAsync throws', async () => {

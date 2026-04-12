@@ -1,4 +1,4 @@
-import { sendMessageToQueueAsync } from './messageQueue';
+import { sendMessageToQueueAsync, buildOrderMessage } from './messageQueue';
 import { checkCaptchaAsync } from './smartCaptcha';
 import {
     badRequest,
@@ -60,7 +60,8 @@ export const handler = async function (event: Record<string, unknown>) {
             return captchaResponse;
         }
 
-        const messageId = await sendMessageToQueueAsync(JSON.stringify(order));
+        const message = buildOrderMessage(order as Record<string, unknown>, requestId);
+        const messageId = await sendMessageToQueueAsync(message);
         return jsonResponse(200, { messageId });
     }
     catch (error) {
