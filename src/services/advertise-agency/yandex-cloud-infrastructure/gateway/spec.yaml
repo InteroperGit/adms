@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: Reklamaster Api Gateway
+  version: 1.0.0
+
+x-yc-apigateway:
+  cors:
+    origin: '*'
+    methods: '*'
+    allowedHeaders: '*'
+
+servers:
+  - url: https://d5d65k3thivf50tl32mj.ql6wied2.apigw.yandexcloud.net
+paths:
+  /:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        content:
+          '*': Hello, World!
+        http_code: 200
+        http_headers:
+          Content-Type: text/plain
+      responses:
+        '200':
+          description: Function response
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /orders:
+    post:
+      summary: Get, prepare order data to message queue
+      operationId: sendMessage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        '200':
+          description: Function response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: d4e3m3ni48sjdc2cp94a
+        service_account_id: ajereq47qpmlg7ejmbsc
+
+components:
+  schemas:
+    OrderRequest:
+      type: object
+      required:
+        - order
+        - captchaToken
+      additionalProperties: false
+      properties:
+        order:
+          type: object
+          additionalProperties: true
+        captchaToken:
+          type: string
+          minLength: 1
+
+    GenericResponse:
+      type: object
+      additionalProperties: true
