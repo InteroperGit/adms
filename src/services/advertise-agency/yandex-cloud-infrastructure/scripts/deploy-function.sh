@@ -16,7 +16,7 @@ npm run build
 
 echo "Packaging ${FUNCTION_NAME}..."
 cd dist
-zip -r ../index.zip index.js
+zip -r ../index.zip .
 
 echo "Deploying ${FUNCTION_NAME} to Yandex Cloud..."
 yc serverless function deploy version \
