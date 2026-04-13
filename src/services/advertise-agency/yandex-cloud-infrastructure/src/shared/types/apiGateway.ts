@@ -18,18 +18,3 @@ export type Handler = (
     event: APIGatewayProxyEvent,
     context: unknown,
 ) => Promise<APIGatewayProxyResult>;
-
-export function jsonResponse(
-    statusCode: number,
-    data: unknown,
-    extraHeaders?: Record<string, string>,
-): APIGatewayProxyResult {
-    return {
-        statusCode,
-        headers: {
-            'Content-Type': 'application/json',
-            ...extraHeaders,
-        },
-        body: JSON.stringify(data),
-    };
-}

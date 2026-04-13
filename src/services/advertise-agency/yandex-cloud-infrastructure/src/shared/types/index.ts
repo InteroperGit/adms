@@ -14,5 +14,4 @@ export {
     APIGatewayProxyEvent,
     APIGatewayProxyResult,
     Handler,
-    jsonResponse,
 } from './apiGateway';
