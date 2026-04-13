@@ -17,7 +17,7 @@ vi.doMock('./messageQueue', async () => {
     };
 });
 
-vi.doMock('./logs', () => ({
+vi.doMock('../../shared/logger', () => ({
     logWarn: mockLogWarn,
     logError: mockLogError,
 }));
@@ -116,6 +116,6 @@ describe('handler', () => {
 
         expect(res.statusCode).toBe(500);
         expect(JSON.parse(res.body)).toEqual({ ok: false, error: 'SQS error' });
-        expect(mockLogError).toHaveBeenCalledWith(expect.any(Error), { requestId: 'req-3' });
+        expect(mockLogError).toHaveBeenCalledWith('SQS error', { requestId: 'req-3' });
     });
 });

@@ -20,6 +20,7 @@ describe('checkCaptchaAsync', () => {
 
     beforeEach(() => {
         fakeReq = new FakeReq();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         vi.mocked(https.request).mockReturnValue(fakeReq as any);
         vi.spyOn(console, 'error').mockImplementation(() => {});
     });
@@ -27,7 +28,9 @@ describe('checkCaptchaAsync', () => {
     afterEach(() => vi.restoreAllMocks());
 
     function triggerRes(statusCode: number, body: string) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const resCb = vi.mocked(https.request).mock.calls[0][1] as ((res: any) => void) | undefined;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mockRes = new EventEmitter() as any;
         mockRes.statusCode = statusCode;
         resCb?.(mockRes);

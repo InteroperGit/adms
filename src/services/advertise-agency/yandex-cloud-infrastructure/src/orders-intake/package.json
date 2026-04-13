@@ -9,14 +9,21 @@
   },
   "scripts": {
     "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
     "test": "vitest run"
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.758.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^25.6.0",
+    "@typescript-eslint/eslint-plugin": "^8.58.1",
+    "@typescript-eslint/parser": "^8.58.1",
+    "eslint": "^10.2.0",
     "typescript": "^5.9.0",
+    "typescript-eslint": "^8.58.1",
     "vitest": "^3.0.0"
   }
 }

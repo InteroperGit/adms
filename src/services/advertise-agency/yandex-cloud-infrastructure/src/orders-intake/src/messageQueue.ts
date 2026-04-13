@@ -1,7 +1,7 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
-import type { OrderMessage } from './types/orderMessage';
+import type { Message } from '../../shared/types';
 
-export { buildOrderMessage } from './types/orderMessage';
+export { buildOrderMessage } from '../../shared/types';
 
 const sqs = new SQSClient({
     region: process.env.AWS_REGION,
@@ -14,7 +14,7 @@ const sqs = new SQSClient({
 
 const QUEUE_URL = process.env.QUEUE_URL;
 
-export async function sendMessageToQueueAsync(message: OrderMessage): Promise<string | undefined> {
+export async function sendMessageToQueueAsync(message: Message): Promise<string | undefined> {
     const result = await sqs.send(
         new SendMessageCommand({
             QueueUrl: QUEUE_URL,

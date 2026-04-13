@@ -12,10 +12,7 @@ import {
     getOrder,
     getRequestId
 } from './utils';
-import {
-    logWarn,
-    logError
-} from './logs';
+import { logWarn, logError } from '../../shared';
 
 const INNER_ERROR = "Inner error";
 
@@ -65,7 +62,7 @@ export const handler = async function (event: Record<string, unknown>) {
         return jsonResponse(200, { messageId });
     }
     catch (error) {
-        logError(error as Error, { requestId });
+        logError((error as Error)?.message ?? String(error), { requestId });
         return serverError(error as string | Error);
     }
 };

@@ -5,7 +5,10 @@
       "Bash(pnpm build:*)",
       "Bash(pnpm test:*)",
       "Bash(npx tsc:*)",
-      "Bash(npx vitest:*)"
+      "Bash(npx vitest:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm add:*)"
     ]
   }
 }
