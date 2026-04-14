@@ -28,14 +28,13 @@ SQS consumer that processes queued messages. Handles `ORDER_SUBMITTED` messages 
 
 | File | Purpose |
 |---|---|
-| `src/index.ts` | **Lambda handler** — receives `SQSEvent` with `Records[]`; parses each `record.body` as `Message`; dispatches by `message.type` via `dispatchMessage()`; `processOrderMessage()` calls `sendOrderEmail()` and `sendTelegramNotification()` in independent try/catch blocks; deletes message only if both succeed; re-throws on error for SQS retry |
-| `src/messageQueue.ts` | SQS client wrapper — creates `SQSClient` from env vars; exports `receiveMessagesFromQueueAsync(maxMessages)` (returns parsed `Message[]` with `_receiptHandle`) and `deleteMessageFromQueueAsync(receiptHandle)` |
-| `src/sendEmail.ts` | Email sender — reads SMTP config from env vars; creates nodemailer transporter; calls `verify()` + `sendMail()`; resolves subject/HTML from `emailTemplater` via `getTemplate()` + `buildTemplateContext()` |
-| `src/emailTemplater.ts` | Email template registry — `Template` interface (`subject`/`html` functions); `TEMPLATES` map keyed by message type; `ORDER_SUBMITTED` template renders HTML table with payload fields; reads strings from `templateConfig`; exports `getTemplate()`, `registerTemplate()`, `buildTemplateContext()` |
-| `src/sendTelegram.ts` | Telegram sender — reads `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` from env vars; uses built-in `fetch` to POST to Telegram Bot API `/sendMessage` with `MarkdownV2`; resolves text from `telegramTemplater`; logs success/failure; re-throws on API error |
-| `src/telegramTemplater.ts` | Telegram template registry — `TelegramTemplate` interface (`text` function); `TELEGRAM_TEMPLATES` map keyed by message type; `ORDER_SUBMITTED` template produces MarkdownV2 text with bold header, escaped payload fields, monospace footer; reads strings from `templateConfig`; exports `escapeMarkdownV2()`, `getTelegramTemplate()`, `registerTelegramTemplate()`, `buildTelegramTemplateContext()` |
-| `src/templateConfig.ts` | Centralized template string config — reads all user-facing strings from env vars with sensible defaults; exports `getEmailTemplateConfig()` and `getTelegramTemplateConfig()` |
-| `src/utils.ts` | Helpers: `parseBody(event)` — parses `event.body` JSON; `getRequestId(event)` — extracts from `requestContext.requestId` → `event.requestId` → UUID fallback |
+| `src/handler/index.ts` | **Lambda handler** — receives `SQSEvent` with `Records[]`; parses each `record.body` as `Message`; dispatches by `message.type` via `dispatchMessage()`; `processOrderMessage()` calls `sendOrderEmail()` and `sendTelegramNotification()` in independent try/catch blocks; deletes message only if both succeed; re-throws on error for SQS retry |
+| `src/queue/messageQueue.ts` | SQS client wrapper — creates `SQSClient` from env vars; exports `receiveMessagesFromQueueAsync(maxMessages)` (returns parsed `Message[]` with `_receiptHandle`) and `deleteMessageFromQueueAsync(receiptHandle)` |
+| `src/senders/email/sendEmail.ts` | Email sender — reads SMTP config from env vars; creates nodemailer transporter; calls `verify()` + `sendMail()`; resolves subject/HTML from `emailTemplater` via `getTemplate()` + `buildTemplateContext()` |
+| `src/senders/email/emailTemplater.ts` | Email template registry — `Template` interface (`subject`/`html` functions); `TEMPLATES` map keyed by message type; `ORDER_SUBMITTED` template renders HTML table with payload fields; reads strings from `templateConfig`; exports `getTemplate()`, `registerTemplate()`, `buildTemplateContext()` |
+| `src/senders/telegram/sendTelegram.ts` | Telegram sender — reads `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` from env vars; uses built-in `fetch` to POST to Telegram Bot API `/sendMessage` with `MarkdownV2` to multiple chat IDs in parallel; resolves text from `telegramTemplater`; logs success/failure; throws only if all deliveries fail |
+| `src/senders/telegram/telegramTemplater.ts` | Telegram template registry — `TelegramTemplate` interface (`text` function); `TELEGRAM_TEMPLATES` map keyed by message type; `ORDER_SUBMITTED` template produces MarkdownV2 text with bold header, escaped payload fields, monospace footer; reads strings from `templateConfig`; exports `escapeMarkdownV2()`, `getTelegramTemplate()`, `registerTelegramTemplate()`, `buildTelegramTemplateContext()` |
+| `src/config/templateConfig.ts` | Centralized template string config — reads all user-facing strings from JSON config files; exports `getEmailTemplateConfig()` and `getTelegramTemplateConfig()` |
 
 ## Test files
 
@@ -43,13 +42,12 @@ SQS consumer that processes queued messages. Handles `ORDER_SUBMITTED` messages 
 |---|---|
 | `src/index.test.ts` | 8 tests — empty records, valid ORDER_SUBMITTED (both email+Telegram), unknown type skip, invalid JSON skip, email fails/telegram succeeds, telegram fails/email succeeds, both fail, multiple records |
 | `src/sendEmail.test.ts` | 9 tests — transport config, missing SMTP_USER/PASSWORD, custom env values, port 465 secure, verify failure, sendMail failure, unknown template type, EMAIL_FROM/TO overrides |
-| `src/sendTelegram.test.ts` | 6 tests — missing TELEGRAM_BOT_TOKEN, missing TELEGRAM_CHAT_ID, correct API URL/body, ok:false response, network error, unknown template type |
+| `src/sendTelegram.test.ts` | 10 tests — missing TELEGRAM_BOT_TOKEN, missing TELEGRAM_CHAT_ID, correct API URL/body, ok:false response, network error, unknown template type, multiple chat IDs, partial success, all multiple fail, whitespace trimming |
 | `src/emailTemplater.test.ts` | 10 tests — getTemplate for known/unknown types, registerTemplate add/override, buildTemplateContext, ORDER_SUBMITTED subject/html/footer/empty payload/many fields |
 | `src/telegramTemplater.test.ts` | 13 tests — escapeMarkdownV2 (3), getTemplate (2), registerTelegramTemplate (2), buildTelegramTemplateContext (1), ORDER_SUBMITTED template (5) |
 | `src/messageQueue.test.ts` | 5 tests — receiveMessagesFromQueueAsync (correct QueueUrl, parsed messages, invalid JSON fallback, empty response), deleteMessageFromQueueAsync (correct ReceiptHandle) |
-| `src/utils.test.ts` | 7 tests — parseBody (4), getRequestId (3) |
 
-**Total: 58 tests across 7 files**
+**Total: 51 tests across 6 files**
 
 ## Scripts
 
@@ -76,8 +74,10 @@ pnpm format      # prettier --write src
 | `SMTP_PASSWORD` | Yes | — | SMTP password |
 | `EMAIL_FROM` | No | `SMTP_USER` | Sender email |
 | `EMAIL_TO` | No | `SMTP_USER` | Recipient email |
+| `EMAIL_ENABLED` | No | `true` | Set to `false` to disable email notifications |
 | `TELEGRAM_BOT_TOKEN` | Yes | — | Telegram bot token (from @BotFather) |
 | `TELEGRAM_CHAT_ID` | Yes | — | Target chat/channel ID |
+| `TELEGRAM_ENABLED` | No | `true` | Set to `false` to disable telegram notifications |
 
 ### Template configuration
 

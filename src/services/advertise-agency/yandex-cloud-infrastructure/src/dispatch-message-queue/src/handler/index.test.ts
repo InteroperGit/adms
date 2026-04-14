@@ -105,8 +105,9 @@ describe('handler', () => {
     expect(mockDelete).not.toHaveBeenCalled();
   });
 
-  it('throws when email fails but telegram succeeds', async () => {
+  it('deletes message when email fails but telegram succeeds', async () => {
     const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+    mockDelete.mockResolvedValue();
     const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
     mockSendEmail.mockRejectedValue(new Error('SMTP connection failed'));
     const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
@@ -122,14 +123,13 @@ describe('handler', () => {
       payload: {},
     });
 
-    await expect(handler(makeEvent([record]))).rejects.toThrow(
-      'One or more notification deliveries failed'
-    );
-    expect(mockDelete).not.toHaveBeenCalled();
+    await expect(handler(makeEvent([record]))).resolves.toBeUndefined();
+    expect(mockDelete).toHaveBeenCalledWith('rh-123');
   });
 
-  it('throws when telegram fails but email succeeds', async () => {
+  it('deletes message when telegram fails but email succeeds', async () => {
     const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+    mockDelete.mockResolvedValue();
     const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
     mockSendEmail.mockResolvedValue();
     const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
@@ -145,10 +145,8 @@ describe('handler', () => {
       payload: {},
     });
 
-    await expect(handler(makeEvent([record]))).rejects.toThrow(
-      'One or more notification deliveries failed'
-    );
-    expect(mockDelete).not.toHaveBeenCalled();
+    await expect(handler(makeEvent([record]))).resolves.toBeUndefined();
+    expect(mockDelete).toHaveBeenCalledWith('rh-123');
   });
 
   it('throws when both email and telegram fail', async () => {
@@ -169,7 +167,7 @@ describe('handler', () => {
     });
 
     await expect(handler(makeEvent([record]))).rejects.toThrow(
-      'One or more notification deliveries failed'
+      'One or more enabled notification deliveries failed'
     );
     expect(mockDelete).not.toHaveBeenCalled();
   });
@@ -208,5 +206,113 @@ describe('handler', () => {
     expect(mockSendEmail).toHaveBeenCalledTimes(2);
     expect(mockSendTelegram).toHaveBeenCalledTimes(2);
     expect(mockDelete).toHaveBeenCalledTimes(2);
+  });
+
+  it('skips email when EMAIL_ENABLED=false, deletes on telegram success', async () => {
+    process.env.EMAIL_ENABLED = 'false';
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+    mockDelete.mockResolvedValue();
+    const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
+    mockSendEmail.mockResolvedValue();
+    const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
+    mockSendTelegram.mockResolvedValue();
+
+    const record = makeRecord({
+      type: 'ORDER_SUBMITTED',
+      messageId: 'msg-6',
+      timestamp: new Date().toISOString(),
+      source: 'orders-intake',
+      correlationId: 'corr-6',
+      version: '1.0',
+      payload: {},
+    });
+
+    await handler(makeEvent([record]));
+
+    expect(mockSendEmail).not.toHaveBeenCalled();
+    expect(mockSendTelegram).toHaveBeenCalledTimes(1);
+    expect(mockDelete).toHaveBeenCalledWith('rh-123');
+
+    delete process.env.EMAIL_ENABLED;
+  });
+
+  it('skips telegram when TELEGRAM_ENABLED=false, deletes on email success', async () => {
+    process.env.TELEGRAM_ENABLED = 'false';
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+    mockDelete.mockResolvedValue();
+    const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
+    mockSendEmail.mockResolvedValue();
+    const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
+    mockSendTelegram.mockResolvedValue();
+
+    const record = makeRecord({
+      type: 'ORDER_SUBMITTED',
+      messageId: 'msg-7',
+      timestamp: new Date().toISOString(),
+      source: 'orders-intake',
+      correlationId: 'corr-7',
+      version: '1.0',
+      payload: {},
+    });
+
+    await handler(makeEvent([record]));
+
+    expect(mockSendEmail).toHaveBeenCalledTimes(1);
+    expect(mockSendTelegram).not.toHaveBeenCalled();
+    expect(mockDelete).toHaveBeenCalledWith('rh-123');
+
+    delete process.env.TELEGRAM_ENABLED;
+  });
+
+  it('deletes message without sending when both channels are disabled', async () => {
+    process.env.EMAIL_ENABLED = 'false';
+    process.env.TELEGRAM_ENABLED = 'false';
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+    mockDelete.mockResolvedValue();
+    const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
+    const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
+
+    const record = makeRecord({
+      type: 'ORDER_SUBMITTED',
+      messageId: 'msg-8',
+      timestamp: new Date().toISOString(),
+      source: 'orders-intake',
+      correlationId: 'corr-8',
+      version: '1.0',
+      payload: {},
+    });
+
+    await handler(makeEvent([record]));
+
+    expect(mockSendEmail).not.toHaveBeenCalled();
+    expect(mockSendTelegram).not.toHaveBeenCalled();
+    expect(mockDelete).toHaveBeenCalledWith('rh-123');
+
+    delete process.env.EMAIL_ENABLED;
+    delete process.env.TELEGRAM_ENABLED;
+  });
+
+  it('throws when enabled email fails and telegram is disabled', async () => {
+    process.env.TELEGRAM_ENABLED = 'false';
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+    const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
+    mockSendEmail.mockRejectedValue(new Error('SMTP error'));
+
+    const record = makeRecord({
+      type: 'ORDER_SUBMITTED',
+      messageId: 'msg-9',
+      timestamp: new Date().toISOString(),
+      source: 'orders-intake',
+      correlationId: 'corr-9',
+      version: '1.0',
+      payload: {},
+    });
+
+    await expect(handler(makeEvent([record]))).rejects.toThrow(
+      'One or more enabled notification deliveries failed'
+    );
+    expect(mockDelete).not.toHaveBeenCalled();
+
+    delete process.env.TELEGRAM_ENABLED;
   });
 });

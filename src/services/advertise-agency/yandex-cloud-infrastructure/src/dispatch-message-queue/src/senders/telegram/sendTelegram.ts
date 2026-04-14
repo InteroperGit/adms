@@ -42,10 +42,8 @@ export async function sendTelegramNotification(message: OrderMessage): Promise<v
     chatCount: chatIds.length,
   });
 
-  let successCount = 0;
-
-  for (const chatId of chatIds) {
-    try {
+  const results = await Promise.allSettled(
+    chatIds.map(async (chatId) => {
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -65,30 +63,25 @@ export async function sendTelegramNotification(message: OrderMessage): Promise<v
           chatId,
           description: result.description,
         });
-        continue;
+        throw new Error(result.description ?? 'Telegram API error');
       }
 
-      successCount++;
       logInfo('Telegram notification sent successfully', {
         messageId: message.messageId,
         correlationId: message.correlationId,
         chatId,
       });
-    } catch (error) {
-      logError('Telegram delivery failed', {
-        messageId: message.messageId,
-        correlationId: message.correlationId,
-        chatId,
-        error: error instanceof Error ? error.message : String(error),
-      });
-    }
-  }
+    })
+  );
+
+  const successCount = results.filter((r) => r.status === 'fulfilled').length;
+  const failedCount = results.filter((r) => r.status === 'rejected').length;
 
   if (successCount === 0) {
     throw new Error('All Telegram notification deliveries failed');
   }
 
-  if (successCount < chatIds.length) {
+  if (failedCount > 0) {
     logWarn('Some Telegram deliveries failed', {
       messageId: message.messageId,
       correlationId: message.correlationId,
