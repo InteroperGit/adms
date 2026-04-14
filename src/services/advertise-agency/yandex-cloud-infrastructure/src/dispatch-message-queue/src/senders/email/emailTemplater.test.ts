@@ -4,7 +4,7 @@ import {
   registerTemplate,
   buildTemplateContext,
   type TemplateContext,
-} from './emailTemplater';
+} from '@src/senders/email/emailTemplater';
 
 function makeContext(overrides?: Partial<TemplateContext>): TemplateContext {
   return {

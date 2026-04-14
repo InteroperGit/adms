@@ -1,0 +1,13 @@
+{
+  "subject": "New order — {correlationId}",
+  "header": "New order received",
+  "footerCorrelationLabel": "Correlation ID",
+  "footerTimestampLabel": "Received at",
+  "wrapperStyle": "font-family: sans-serif; max-width: 600px; color: #222;",
+  "headerStyle": "margin: 0 0 16px; font-size: 20px;",
+  "tableStyle": "border-collapse: collapse; width: 100%;",
+  "keyCellStyle": "padding: 6px 12px 6px 0; font-weight: 600; color: #555; text-transform: capitalize; vertical-align: top;",
+  "valueCellStyle": "padding: 6px 0; color: #222; vertical-align: top;",
+  "dividerStyle": "border: none; border-top: 1px solid #eee; margin: 20px 0;",
+  "footerStyle": "margin: 0; font-size: 12px; color: #999;"
+}

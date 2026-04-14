@@ -1,5 +1,5 @@
 import { SQSClient, ReceiveMessageCommand, DeleteMessageCommand } from '@aws-sdk/client-sqs';
-import type { Message } from '../../shared/types';
+import type { Message } from '@shared/types';
 
 const client = new SQSClient({
   region: process.env.AWS_REGION || 'ru-central1',

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
-import type { OrderMessage } from '../../shared';
-import { getTemplate, buildTemplateContext } from './emailTemplater';
+import type { OrderMessage } from '@shared';
+import { getTemplate, buildTemplateContext } from '@src/senders/email/emailTemplater';
 
 interface EmailConfig {
   host: string;

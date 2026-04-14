@@ -1,8 +1,8 @@
-import { logInfo, logWarn, logError } from '../../shared';
-import { deleteMessageFromQueueAsync } from './messageQueue';
-import { sendOrderEmail } from './sendEmail';
-import type { Message } from '../../shared';
-import type { OrderMessage } from '../../shared';
+import { logInfo, logWarn, logError } from '@shared';
+import { deleteMessageFromQueueAsync } from '@src/queue/messageQueue';
+import { sendOrderEmail } from '@src/senders/email/sendEmail';
+import { sendTelegramNotification } from '@src/senders/telegram/sendTelegram';
+import type { Message, OrderMessage } from '@shared';
 
 export interface SQSRecord {
   eventVersion: string;
@@ -78,7 +78,34 @@ async function processOrderMessage(message: OrderMessage, receiptHandle: string)
     timestamp: message.timestamp,
   });
 
-  await sendOrderEmail(message);
+  let emailOk = false;
+  let telegramOk = false;
+
+  try {
+    await sendOrderEmail(message);
+    emailOk = true;
+  } catch (error) {
+    logError('Email delivery failed', {
+      messageId: message.messageId,
+      correlationId: message.correlationId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  try {
+    await sendTelegramNotification(message);
+    telegramOk = true;
+  } catch (error) {
+    logError('Telegram delivery failed', {
+      messageId: message.messageId,
+      correlationId: message.correlationId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  if (!emailOk || !telegramOk) {
+    throw new Error('One or more notification deliveries failed');
+  }
 
   await deleteMessageFromQueueAsync(receiptHandle);
 

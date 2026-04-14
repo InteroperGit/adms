@@ -5,8 +5,16 @@
     "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@shared": ["../shared"],
+      "@shared/*": ["../shared/*"],
+      "@data/*": ["data/config/*"],
+      "@src/*": ["src/*"]
+    }
   },
-  "include": ["src", "../shared"]
+  "include": ["src", "../shared", "data/config"]
 }

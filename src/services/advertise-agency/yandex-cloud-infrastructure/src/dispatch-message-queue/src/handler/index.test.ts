@@ -1,18 +1,23 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { handler } from './index';
-import * as messageQueue from './messageQueue';
-import * as sendEmail from './sendEmail';
-import type { SQSEvent, SQSRecord } from './index';
+import { handler } from '@src/handler/index';
+import * as messageQueue from '@src/queue/messageQueue';
+import * as sendEmail from '@src/senders/email/sendEmail';
+import * as sendTelegram from '@src/senders/telegram/sendTelegram';
+import type { SQSEvent, SQSRecord } from '@src/handler/index';
 
-vi.mock('./messageQueue', () => ({
+vi.mock('@src/queue/messageQueue', () => ({
   deleteMessageFromQueueAsync: vi.fn(),
 }));
 
-vi.mock('./sendEmail', () => ({
+vi.mock('@src/senders/email/sendEmail', () => ({
   sendOrderEmail: vi.fn(),
 }));
 
-vi.mock('../../shared', () => ({
+vi.mock('@src/senders/telegram/sendTelegram', () => ({
+  sendTelegramNotification: vi.fn(),
+}));
+
+vi.mock('@shared', () => ({
   logInfo: vi.fn(),
   logWarn: vi.fn(),
   logError: vi.fn(),
@@ -52,6 +57,8 @@ describe('handler', () => {
     mockDelete.mockResolvedValue();
     const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
     mockSendEmail.mockResolvedValue();
+    const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
+    mockSendTelegram.mockResolvedValue();
 
     const record = makeRecord({
       type: 'ORDER_SUBMITTED',
@@ -66,6 +73,7 @@ describe('handler', () => {
     await handler(makeEvent([record]));
 
     expect(mockSendEmail).toHaveBeenCalledTimes(1);
+    expect(mockSendTelegram).toHaveBeenCalledTimes(1);
     expect(mockDelete).toHaveBeenCalledWith('rh-123');
   });
 
@@ -97,9 +105,12 @@ describe('handler', () => {
     expect(mockDelete).not.toHaveBeenCalled();
   });
 
-  it('throws on processing error', async () => {
+  it('throws when email fails but telegram succeeds', async () => {
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
     const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
     mockSendEmail.mockRejectedValue(new Error('SMTP connection failed'));
+    const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
+    mockSendTelegram.mockResolvedValue();
 
     const record = makeRecord({
       type: 'ORDER_SUBMITTED',
@@ -111,7 +122,56 @@ describe('handler', () => {
       payload: {},
     });
 
-    await expect(handler(makeEvent([record]))).rejects.toThrow('SMTP connection failed');
+    await expect(handler(makeEvent([record]))).rejects.toThrow(
+      'One or more notification deliveries failed'
+    );
+    expect(mockDelete).not.toHaveBeenCalled();
+  });
+
+  it('throws when telegram fails but email succeeds', async () => {
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+    const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
+    mockSendEmail.mockResolvedValue();
+    const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
+    mockSendTelegram.mockRejectedValue(new Error('Telegram API error'));
+
+    const record = makeRecord({
+      type: 'ORDER_SUBMITTED',
+      messageId: 'msg-4',
+      timestamp: new Date().toISOString(),
+      source: 'orders-intake',
+      correlationId: 'corr-4',
+      version: '1.0',
+      payload: {},
+    });
+
+    await expect(handler(makeEvent([record]))).rejects.toThrow(
+      'One or more notification deliveries failed'
+    );
+    expect(mockDelete).not.toHaveBeenCalled();
+  });
+
+  it('throws when both email and telegram fail', async () => {
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+    const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
+    mockSendEmail.mockRejectedValue(new Error('SMTP error'));
+    const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
+    mockSendTelegram.mockRejectedValue(new Error('Telegram error'));
+
+    const record = makeRecord({
+      type: 'ORDER_SUBMITTED',
+      messageId: 'msg-5',
+      timestamp: new Date().toISOString(),
+      source: 'orders-intake',
+      correlationId: 'corr-5',
+      version: '1.0',
+      payload: {},
+    });
+
+    await expect(handler(makeEvent([record]))).rejects.toThrow(
+      'One or more notification deliveries failed'
+    );
+    expect(mockDelete).not.toHaveBeenCalled();
   });
 
   it('processes multiple records in one event', async () => {
@@ -119,6 +179,8 @@ describe('handler', () => {
     mockDelete.mockResolvedValue();
     const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
     mockSendEmail.mockResolvedValue();
+    const mockSendTelegram = vi.mocked(sendTelegram.sendTelegramNotification);
+    mockSendTelegram.mockResolvedValue();
 
     const records = [
       makeRecord({
@@ -144,6 +206,7 @@ describe('handler', () => {
     await handler(makeEvent(records));
 
     expect(mockSendEmail).toHaveBeenCalledTimes(2);
+    expect(mockSendTelegram).toHaveBeenCalledTimes(2);
     expect(mockDelete).toHaveBeenCalledTimes(2);
   });
 });

@@ -1,4 +1,5 @@
-import type { OrderMessage } from '../../shared';
+import type { OrderMessage } from '@shared';
+import { getEmailTemplateConfig } from '@src/config/templateConfig';
 
 export interface TemplateContext {
   correlationId: string;
@@ -14,14 +15,16 @@ export interface Template {
 const TEMPLATES = new Map<string, Template>();
 
 function buildOrderEmailHtml(context: TemplateContext): string {
+  const config = getEmailTemplateConfig();
+
   const rows = Object.entries(context.payload)
     .map(
       ([key, value]) => `
       <tr>
-        <td style="padding: 6px 12px 6px 0; font-weight: 600; color: #555; text-transform: capitalize; vertical-align: top;">
+        <td style="${config.keyCellStyle}">
           ${key}
         </td>
-        <td style="padding: 6px 0; color: #222; vertical-align: top;">
+        <td style="${config.valueCellStyle}">
           ${value}
         </td>
       </tr>`
@@ -29,21 +32,24 @@ function buildOrderEmailHtml(context: TemplateContext): string {
     .join('');
 
   return `
-    <div style="font-family: sans-serif; max-width: 600px; color: #222;">
-      <h2 style="margin: 0 0 16px; font-size: 20px;">New order received</h2>
-      <table style="border-collapse: collapse; width: 100%;">
+    <div style="${config.wrapperStyle}">
+      <h2 style="${config.headerStyle}">${config.header}</h2>
+      <table style="${config.tableStyle}">
         ${rows}
       </table>
-      <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
-      <p style="margin: 0; font-size: 12px; color: #999;">
-        Correlation ID: ${context.correlationId}<br />
-        Received at: ${context.timestamp}
+      <hr style="${config.dividerStyle}" />
+      <p style="${config.footerStyle}">
+        ${config.footerCorrelationLabel}: ${context.correlationId}<br />
+        ${config.footerTimestampLabel}: ${context.timestamp}
       </p>
     </div>`;
 }
 
 TEMPLATES.set('ORDER_SUBMITTED', {
-  subject: (ctx) => `New order — ${ctx.correlationId}`,
+  subject: (ctx) => {
+    const config = getEmailTemplateConfig();
+    return config.subject.replace('{correlationId}', ctx.correlationId);
+  },
   html: buildOrderEmailHtml,
 });
 

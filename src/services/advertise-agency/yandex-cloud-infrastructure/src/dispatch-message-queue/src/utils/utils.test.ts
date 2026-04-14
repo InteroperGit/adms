@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseBody, getRequestId } from './utils';
+import { parseBody, getRequestId } from '@src/utils/utils';
 
 describe('parseBody', () => {
   it('parses a valid JSON string body', () => {

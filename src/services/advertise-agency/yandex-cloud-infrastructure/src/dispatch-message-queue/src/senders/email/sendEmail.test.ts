@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import type { OrderMessage } from '../../shared';
+import type { OrderMessage } from '@shared';
 
 const mockVerify = vi.fn();
 const mockSendMail = vi.fn();
@@ -204,5 +204,18 @@ describe('sendOrderEmail', () => {
     const mailOptions = mockSendMail.mock.calls[0][0];
     expect(mailOptions.from).toBe('sender@agency.ru');
     expect(mailOptions.to).toBe('receiver@agency.ru');
+  });
+
+  it('sends to multiple recipients when EMAIL_TO is comma-separated', async () => {
+    setValidEnv();
+    process.env.EMAIL_TO = 'admin@agency.ru,manager@agency.ru,sales@agency.ru';
+    mockVerify.mockResolvedValue(undefined);
+    mockSendMail.mockResolvedValue({});
+
+    const { sendOrderEmail } = await import('./sendEmail');
+    await sendOrderEmail(makeOrderMessage());
+
+    const mailOptions = mockSendMail.mock.calls[0][0];
+    expect(mailOptions.to).toBe('admin@agency.ru,manager@agency.ru,sales@agency.ru');
   });
 });
