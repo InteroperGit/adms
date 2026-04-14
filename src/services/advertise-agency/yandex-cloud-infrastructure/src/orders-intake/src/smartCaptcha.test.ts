@@ -9,6 +9,10 @@ vi.mock('https', () => ({
   },
 }));
 
+vi.mock('../../shared/logger', () => ({
+  logError: vi.fn(),
+}));
+
 class FakeReq extends EventEmitter {
   write = vi.fn();
   end = vi.fn();

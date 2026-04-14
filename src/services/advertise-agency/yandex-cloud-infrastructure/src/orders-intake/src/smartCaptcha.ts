@@ -1,5 +1,6 @@
 import https from 'https';
 import querystring from 'querystring';
+import { logError } from '../../shared';
 
 const SMARTCAPTCHA_SERVER_KEY = process.env.SMARTCAPTCHA_SERVER_KEY;
 
@@ -31,7 +32,7 @@ function checkCaptcha(token: string, ipAddress: string, callback: (ok: boolean) 
 
     res.on('end', () => {
       if (res.statusCode !== 200) {
-        console.error(`Captcha validation error: code=${res.statusCode}; message=${content}`);
+        logError(`Captcha validation error: code=${res.statusCode}; message=${content}`);
         callback(false);
         return;
       }
@@ -40,20 +41,20 @@ function checkCaptcha(token: string, ipAddress: string, callback: (ok: boolean) 
         const parsedContent = JSON.parse(content);
         callback(parsedContent.status === 'ok');
       } catch (err) {
-        console.error('Error parsing response:', err);
+        logError('Error parsing captcha response', { error: err });
         callback(false);
       }
     });
   });
 
   req.on('error', (error) => {
-    console.error(error);
+    logError('Captcha request failed', { error: error instanceof Error ? error.message : String(error) });
     callback(false);
   });
 
   req.on('timeout', () => {
     req.destroy();
-    console.error('Captcha request timed out');
+    logError('Captcha request timed out');
     callback(false);
   });
 

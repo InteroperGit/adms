@@ -1,4 +1,5 @@
-import { sendMessageToQueueAsync, buildOrderMessage } from './messageQueue';
+import { sendMessageToQueueAsync } from './messageQueue';
+import { buildOrderMessage } from '../../shared';
 import { checkCaptchaAsync } from './smartCaptcha';
 import { badRequest, serverError, jsonResponse } from '../../shared';
 import { parseBody, getCaptchaToken, getClientIp, getOrder, getRequestId } from './utils';
@@ -23,6 +24,7 @@ async function validateCaptchaAsync(
 
 export const handler = async function (event: Record<string, unknown>) {
   const requestId = getRequestId(event);
+  const ipAddress = getClientIp(event);
 
   try {
     let body: Record<string, unknown>;
@@ -45,7 +47,7 @@ export const handler = async function (event: Record<string, unknown>) {
       return badRequest(INNER_ERROR);
     }
 
-    const captchaResponse = await validateCaptchaAsync(captchaToken, getClientIp(event), requestId);
+    const captchaResponse = await validateCaptchaAsync(captchaToken, ipAddress, requestId);
     if (captchaResponse) {
       return captchaResponse;
     }
@@ -54,7 +56,7 @@ export const handler = async function (event: Record<string, unknown>) {
     const messageId = await sendMessageToQueueAsync(message);
     return jsonResponse(200, { messageId });
   } catch (error) {
-    logError((error as Error)?.message ?? String(error), { requestId });
-    return serverError(error as string | Error);
+    logError(error instanceof Error ? error.message : String(error), { requestId });
+    return serverError(error instanceof Error ? error : 'Unknown error');
   }
 };

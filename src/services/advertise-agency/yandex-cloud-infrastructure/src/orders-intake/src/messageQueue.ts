@@ -1,7 +1,10 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
 import type { Message } from '../../shared/types';
 
-export { buildOrderMessage } from '../../shared/types';
+const QUEUE_URL = process.env.QUEUE_URL;
+if (!QUEUE_URL) {
+  throw new Error('QUEUE_URL environment variable is required');
+}
 
 const sqs = new SQSClient({
   region: process.env.AWS_REGION,
@@ -11,8 +14,6 @@ const sqs = new SQSClient({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? '',
   },
 });
-
-const QUEUE_URL = process.env.QUEUE_URL;
 
 export async function sendMessageToQueueAsync(message: Message): Promise<string | undefined> {
   const result = await sqs.send(

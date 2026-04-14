@@ -1,4 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { MESSAGE_SOURCE, MESSAGE_VERSION } from '../../shared/types';
+
+// Set env vars before any module mocking so vi.importActual in the mock factory succeeds
+process.env.QUEUE_URL = 'https://queue.url';
+process.env.AWS_ACCESS_KEY_ID = 'test-key';
+process.env.AWS_SECRET_ACCESS_KEY = 'test-secret';
 
 const mockCheckCaptchaAsync = vi.fn();
 const mockSendMessageToQueueAsync = vi.fn();
@@ -96,9 +102,9 @@ describe('handler', () => {
     expect(mockSendMessageToQueueAsync).toHaveBeenCalledWith(
       expect.objectContaining({
         type: 'ORDER_SUBMITTED',
-        source: 'orders-intake',
+        source: MESSAGE_SOURCE,
         correlationId: 'req-2',
-        version: '1.0',
+        version: MESSAGE_VERSION,
         payload: order,
       })
     );
