@@ -1,0 +1,25 @@
+classDiagram
+    class Message {
+        +string type
+        +string messageId
+        +string timestamp
+        +string source
+        +string correlationId
+        +string version
+        +Record~string, unknown~ payload
+    }
+
+    class OrderMessage {
+        +type: 'ORDER_SUBMITTED'
+        +source: 'orders-intake'
+        +version: '1.0'
+    }
+
+    class OrderPayload {
+        +object order
+    }
+
+    Message <|-- OrderMessage : extends
+    OrderMessage *-- OrderPayload : contains in payload
+
+    note for OrderMessage "Fixed fields:\n* type = 'ORDER_SUBMITTED'\n* source = 'orders-intake'\n* version = '1.0'\n\nGenerated:\n* messageId = uuid v4\n* timestamp = ISO 8601\n* correlationId = requestId"

@@ -1,0 +1,24 @@
+flowchart TD
+    Start(["POST /order\n{captchaToken, order}"]) --> Extract["Extract requestId, clientIp"]
+    Extract --> ParseBody["Parse event.body as JSON"]
+    ParseBody -->|"invalid JSON"| Err400a["logWarn: Invalid JSON body\nreturn 400"]
+    ParseBody -->|"valid"| ExtractCaptcha["Extract captchaToken"]
+    ExtractCaptcha -->|"missing"| Err400b["logWarn: Captcha token required\nreturn 400"]
+    ExtractCaptcha -->|"present"| ExtractOrder["Extract order field"]
+    ExtractOrder -->|"missing or not object"| Err400c["logWarn: Order is required\nreturn 400"]
+    ExtractOrder -->|"valid"| VerifyCaptcha["checkCaptchaAsync(token, ip)"]
+    VerifyCaptcha -->|"failed"| Err400d["logWarn: Captcha validation failed\nreturn 400"]
+    VerifyCaptcha -->|"ok"| BuildMsg["buildOrderMessage\norder, requestId"]
+    BuildMsg --> SendSQS["sendMessageToQueueAsync\nmessage"]
+    SendSQS -->|"throws"| Err500["logError: SQS send failed\nreturn 500"]
+    SendSQS -->|"success"| Success["return 200\nmessageId: sqs-id"]
+
+    classDef start fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    classDef process fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef error fill:#ffebee,stroke:#c62828,stroke-width:2px
+    classDef success fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+
+    class Start start
+    class Extract,ParseBody,ExtractCaptcha,ExtractOrder,VerifyCaptcha,BuildMsg,SendSQS process
+    class Err400a,Err400b,Err400c,Err400d,Err500 error
+    class Success success

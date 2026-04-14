@@ -1,0 +1,35 @@
+graph TD
+    index["index.ts\nMain Handler"]
+    mq["messageQueue.ts\nSQS Producer"]
+    sc["smartCaptcha.ts\nCaptcha Verifier"]
+    utils["utils.ts\nRequest Parsers"]
+    shared["../../shared/index.ts\nBarrel Export"]
+    logger["logger.ts\nlogInfo, logWarn, logError"]
+    response["response.ts\nbadRequest, serverError, jsonResponse"]
+    msg["types/message.ts\nMessage interface"]
+    orderMsg["types/orderMessage.ts\nOrderMessage, buildOrderMessage"]
+    agw["types/apiGateway.ts\nAPIGatewayProxyEvent, Handler"]
+    sqs["@aws-sdk/client-sqs\nSQSClient, SendMessageCommand"]
+    https["node:https\nbuilt-in"]
+
+    index --> mq
+    index --> sc
+    index --> utils
+    index --> shared
+    shared --> logger
+    shared --> response
+    shared --> msg
+    shared --> orderMsg
+    shared --> agw
+    mq --> sqs
+    sc --> https
+
+    classDef handler fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef module fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef shared_mod fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    classDef external fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+
+    class index handler
+    class mq,sc,utils module
+    class shared,logger,response,msg,orderMsg,agw shared_mod
+    class sqs,https external

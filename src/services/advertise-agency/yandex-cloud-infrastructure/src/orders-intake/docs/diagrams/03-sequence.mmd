@@ -1,0 +1,34 @@
+sequenceDiagram
+    autonumber
+    participant Client as Browser
+    participant AG as API Gateway
+    participant Handler as Lambda Handler
+    participant SC as SmartCaptcha
+    participant SQS as Message Queue
+
+    Client->>AG: POST /order {captchaToken, order}
+    AG->>Handler: API Gateway Event
+
+    Handler->>Handler: Parse body JSON
+    Handler->>Handler: Extract captchaToken, order
+    Handler->>Handler: Extract requestId, clientIp
+
+    Handler->>SC: POST /validate {secret, token, ip}
+    SC-->>Handler: {status: "ok"} (HTTP 200)
+
+    alt Captcha fails
+        Handler-->>AG: 400 {ok: false, error: "Captcha validation failed"}
+        AG-->>Client: 400
+    else Captcha ok
+        Handler->>Handler: buildOrderMessage(order, requestId)
+        Handler->>SQS: SendMessageCommand(JSON message)
+        SQS-->>Handler: {MessageId: "..."}
+
+        alt SQS error
+            Handler-->>AG: 500 {ok: false, error: "..."}
+            AG-->>Client: 500
+        else SQS success
+            Handler-->>AG: 200 {messageId: "<sqs-id>"}
+            AG-->>Client: 200
+        end
+    end

@@ -1,0 +1,29 @@
+flowchart LR
+    Browser["Browser\n(POST /order)"]
+    APG["Yandex API Gateway"]
+    Lambda["Lambda: orders-intake\n(index.ts)"]
+    Captcha["Yandex SmartCaptcha\nsmartcaptcha.cloud.yandex.ru"]
+    SQS["Yandex Message Queue\n(SQS-compatible)"]
+    Consumer["Lambda: dispatch-queue-messages\n(SQS consumer)"]
+    Shared["../../shared/\nlogger, response, types"]
+
+    Browser -->|"POST {captchaToken, order}"| APG
+    APG -->|"API Gateway Event"| Lambda
+    Lambda -->|"POST {secret, token, ip}"| Captcha
+    Captcha -->|"{status: ok or fail}"| Lambda
+    Lambda -->|"SendMessageCommand"| SQS
+    SQS -->|"poll"| Consumer
+    Lambda -.->|"imports"| Shared
+
+    classDef service fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
+    classDef lambda fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef external fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef shared fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+
+    class Browser service
+    class APG lambda
+    class Lambda lambda
+    class Captcha external
+    class SQS external
+    class Consumer lambda
+    class Shared shared
