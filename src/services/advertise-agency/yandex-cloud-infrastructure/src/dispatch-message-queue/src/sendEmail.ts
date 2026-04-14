@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import type { OrderMessage } from '../../shared';
+import { getTemplate, buildTemplateContext } from './emailTemplater';
 
 interface EmailConfig {
   host: string;
@@ -25,37 +26,13 @@ function getConfig(): EmailConfig {
   return { host, port, user, pass, from, to };
 }
 
-function buildOrderEmailHtml(message: OrderMessage): string {
-  const payload = message.payload as Record<string, string>;
-  const rows = Object.entries(payload)
-    .map(
-      ([key, value]) => `
-      <tr>
-        <td style="padding: 6px 12px 6px 0; font-weight: 600; color: #555; text-transform: capitalize; vertical-align: top;">
-          ${key}
-        </td>
-        <td style="padding: 6px 0; color: #222; vertical-align: top;">
-          ${value}
-        </td>
-      </tr>`
-    )
-    .join('');
-
-  return `
-    <div style="font-family: sans-serif; max-width: 600px; color: #222;">
-      <h2 style="margin: 0 0 16px; font-size: 20px;">New order received</h2>
-      <table style="border-collapse: collapse; width: 100%;">
-        ${rows}
-      </table>
-      <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
-      <p style="margin: 0; font-size: 12px; color: #999;">
-        Correlation ID: ${message.correlationId}<br />
-        Received at: ${message.timestamp}
-      </p>
-    </div>`;
-}
-
 export async function sendOrderEmail(message: OrderMessage): Promise<void> {
+  const template = getTemplate(message.type);
+  if (!template) {
+    throw new Error(`No email template registered for message type: ${message.type}`);
+  }
+
+  const context = buildTemplateContext(message);
   const { host, port, user, pass, from, to } = getConfig();
 
   const transporter = nodemailer.createTransport({
@@ -70,7 +47,7 @@ export async function sendOrderEmail(message: OrderMessage): Promise<void> {
   await transporter.sendMail({
     from,
     to,
-    subject: `New order — ${message.correlationId}`,
-    html: buildOrderEmailHtml(message),
+    subject: template.subject(context),
+    html: template.html(context),
   });
 }

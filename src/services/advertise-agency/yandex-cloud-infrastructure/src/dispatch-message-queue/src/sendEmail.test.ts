@@ -179,68 +179,16 @@ describe('sendOrderEmail', () => {
     await expect(sendOrderEmail(message)).rejects.toThrow('Recipient rejected');
   });
 
-  it('includes correlation ID in subject line', async () => {
+  it('throws when no template exists for message type', async () => {
     setValidEnv();
-    mockVerify.mockResolvedValue(undefined);
-    mockSendMail.mockResolvedValue({});
 
     const { sendOrderEmail } = await import('./sendEmail');
-    await sendOrderEmail(makeOrderMessage({ correlationId: 'unique-corr-id' }));
+    const message = makeOrderMessage({ type: 'UNKNOWN_TYPE' as never });
 
-    const mailOptions = mockSendMail.mock.calls[0][0];
-    expect(mailOptions.subject).toBe('New order — unique-corr-id');
-  });
-
-  it('renders payload fields in email HTML body', async () => {
-    setValidEnv();
-    mockVerify.mockResolvedValue(undefined);
-    mockSendMail.mockResolvedValue({});
-
-    const { sendOrderEmail } = await import('./sendEmail');
-    await sendOrderEmail(
-      makeOrderMessage({
-        payload: { name: 'Alice', phone: '+79001112233', email: 'alice@example.com' },
-      })
+    await expect(sendOrderEmail(message)).rejects.toThrow(
+      'No email template registered for message type: UNKNOWN_TYPE'
     );
-
-    const html = mockSendMail.mock.calls[0][0].html;
-    expect(html).toContain('name');
-    expect(html).toContain('Alice');
-    expect(html).toContain('phone');
-    expect(html).toContain('+79001112233');
-    expect(html).toContain('email');
-    expect(html).toContain('alice@example.com');
-  });
-
-  it('includes correlation ID and timestamp in email HTML footer', async () => {
-    setValidEnv();
-    mockVerify.mockResolvedValue(undefined);
-    mockSendMail.mockResolvedValue({});
-
-    const { sendOrderEmail } = await import('./sendEmail');
-    await sendOrderEmail(
-      makeOrderMessage({
-        correlationId: 'corr-xyz',
-        timestamp: '2026-01-01T00:00:00.000Z',
-      })
-    );
-
-    const html = mockSendMail.mock.calls[0][0].html;
-    expect(html).toContain('corr-xyz');
-    expect(html).toContain('2026-01-01T00:00:00.000Z');
-  });
-
-  it('handles empty payload gracefully', async () => {
-    setValidEnv();
-    mockVerify.mockResolvedValue(undefined);
-    mockSendMail.mockResolvedValue({});
-
-    const { sendOrderEmail } = await import('./sendEmail');
-    await sendOrderEmail(makeOrderMessage({ payload: {} }));
-
-    const html = mockSendMail.mock.calls[0][0].html;
-    expect(html).toContain('New order received');
-    expect(html).toContain('<table');
+    expect(mockCreateTransport).not.toHaveBeenCalled();
   });
 
   it('uses EMAIL_FROM/EMAIL_TO overrides instead of defaulting to SMTP_USER', async () => {
