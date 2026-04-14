@@ -1,49 +1,89 @@
-import { logError, badRequest, serverError, jsonResponse } from '../../shared';
-import { receiveMessagesFromQueueAsync, deleteMessageFromQueueAsync } from './messageQueue';
-import { parseBody, getRequestId } from './utils';
-import type { APIGatewayProxyResult } from '../../shared';
+import { logInfo, logWarn, logError } from '../../shared';
+import { deleteMessageFromQueueAsync } from './messageQueue';
+import { sendOrderEmail } from './sendEmail';
+import type { Message } from '../../shared';
+import type { OrderMessage } from '../../shared';
 
-export async function handler(event: Record<string, unknown>): Promise<APIGatewayProxyResult> {
-  const requestId = getRequestId(event);
+export interface SQSRecord {
+  eventVersion: string;
+  eventSource: string;
+  awsRegion: string;
+  eventTime: string;
+  eventName: string;
+  messageId: string;
+  receiptHandle: string;
+  body: string;
+  attributes: Record<string, string>;
+  messageAttributes: Record<string, unknown>;
+}
 
-  try {
-    const body = parseBody(event);
-    const action = body?.action as string | undefined;
+export interface SQSEvent {
+  Records: SQSRecord[];
+}
 
-    if (!action) {
-      return badRequest('Missing required field: action');
-    }
+export async function handler(event: SQSEvent): Promise<void> {
+  const records = event.Records ?? [];
 
-    switch (action) {
-      case 'poll': {
-        const maxMessages = typeof body?.maxMessages === 'number' ? body.maxMessages : 1;
-        const messages = await receiveMessagesFromQueueAsync(maxMessages);
-
-        if (messages.length === 0) {
-          return jsonResponse(200, { ok: true, messages: [] });
-        }
-
-        return jsonResponse(200, { ok: true, messages });
-      }
-
-      case 'delete': {
-        const receiptHandle = body?.receiptHandle as string | undefined;
-        if (!receiptHandle) {
-          return badRequest('Missing required field: receiptHandle');
-        }
-
-        await deleteMessageFromQueueAsync(receiptHandle);
-        return jsonResponse(200, { ok: true });
-      }
-
-      default:
-        return badRequest(`Unknown action: ${action}`);
-    }
-  } catch (error) {
-    logError('dispatch-queue-messages handler error', {
-      requestId,
-      error: error instanceof Error ? error.message : String(error),
-    });
-    return serverError(error instanceof Error ? error : String(error));
+  if (records.length === 0) {
+    logWarn('No records in trigger event');
+    return;
   }
+
+  for (const record of records) {
+    let message: Message;
+
+    try {
+      message = JSON.parse(record.body) as Message;
+    } catch {
+      logWarn('Failed to parse message body', {
+        messageId: record.messageId,
+        receiptHandle: record.receiptHandle,
+      });
+      continue;
+    }
+
+    try {
+      await dispatchMessage(message, record.receiptHandle);
+    } catch (error) {
+      logError('Failed to process message', {
+        messageId: message.messageId,
+        type: message.type,
+        correlationId: message.correlationId,
+        error: error instanceof Error ? error.message : String(error),
+      });
+      throw error;
+    }
+  }
+}
+
+async function dispatchMessage(message: Message, receiptHandle: string): Promise<void> {
+  switch (message.type) {
+    case 'ORDER_SUBMITTED':
+      await processOrderMessage(message as OrderMessage, receiptHandle);
+      break;
+
+    default:
+      logWarn('Unknown message type, skipping', {
+        messageId: message.messageId,
+        type: message.type,
+      });
+      break;
+  }
+}
+
+async function processOrderMessage(message: OrderMessage, receiptHandle: string): Promise<void> {
+  logInfo('Processing order message', {
+    messageId: message.messageId,
+    correlationId: message.correlationId,
+    timestamp: message.timestamp,
+  });
+
+  await sendOrderEmail(message);
+
+  await deleteMessageFromQueueAsync(receiptHandle);
+
+  logInfo('Order message processed successfully', {
+    messageId: message.messageId,
+    correlationId: message.correlationId,
+  });
 }

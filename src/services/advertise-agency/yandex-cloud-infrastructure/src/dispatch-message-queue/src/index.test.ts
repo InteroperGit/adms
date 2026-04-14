@@ -1,38 +1,41 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { handler } from './index';
 import * as messageQueue from './messageQueue';
+import * as sendEmail from './sendEmail';
+import type { SQSEvent, SQSRecord } from './index';
 
 vi.mock('./messageQueue', () => ({
-  receiveMessagesFromQueueAsync: vi.fn(),
   deleteMessageFromQueueAsync: vi.fn(),
 }));
 
-vi.mock('../../shared', () => ({
-  logError: vi.fn(),
-  logInfo: vi.fn(),
-  logWarn: vi.fn(),
-  badRequest: (error: string) => ({
-    statusCode: 400,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ok: false, error }),
-  }),
-  serverError: (error: string | Error) => ({
-    statusCode: 500,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ok: false, error: error instanceof Error ? error.message : error }),
-  }),
-  jsonResponse: (statusCode: number, payload: unknown) => ({
-    statusCode,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  }),
+vi.mock('./sendEmail', () => ({
+  sendOrderEmail: vi.fn(),
 }));
 
-function makeEvent(body: Record<string, unknown>) {
+vi.mock('../../shared', () => ({
+  logInfo: vi.fn(),
+  logWarn: vi.fn(),
+  logError: vi.fn(),
+}));
+
+function makeRecord(body: Record<string, unknown>, overrides?: Partial<SQSRecord>): SQSRecord {
   return {
+    eventVersion: '1.0',
+    eventSource: 'aws:sqs',
+    awsRegion: 'ru-central1',
+    eventTime: new Date().toISOString(),
+    eventName: 'ObjectCreated:Put',
+    messageId: 'msg-1',
+    receiptHandle: 'rh-123',
     body: JSON.stringify(body),
-    requestContext: { requestId: 'test-req-id' },
+    attributes: {},
+    messageAttributes: {},
+    ...overrides,
   };
+}
+
+function makeEvent(records: SQSRecord[]): SQSEvent {
+  return { Records: records };
 }
 
 describe('handler', () => {
@@ -40,72 +43,107 @@ describe('handler', () => {
     vi.clearAllMocks();
   });
 
-  it('returns 400 when action is missing', async () => {
-    const result = await handler(makeEvent({}));
-    expect(result.statusCode).toBe(400);
-    const payload = JSON.parse(result.body);
-    expect(payload.error).toContain('action');
+  it('does nothing when no records', async () => {
+    await expect(handler(makeEvent([]))).resolves.toBeUndefined();
   });
 
-  it('returns 400 for unknown action', async () => {
-    const result = await handler(makeEvent({ action: 'unknown' }));
-    expect(result.statusCode).toBe(400);
-    const payload = JSON.parse(result.body);
-    expect(payload.error).toContain('Unknown action');
-  });
-
-  it('returns 200 with empty messages on poll', async () => {
-    const mockReceive = vi.mocked(messageQueue.receiveMessagesFromQueueAsync);
-    mockReceive.mockResolvedValue([]);
-    const result = await handler(makeEvent({ action: 'poll' }));
-    expect(result.statusCode).toBe(200);
-    const payload = JSON.parse(result.body);
-    expect(payload.ok).toBe(true);
-    expect(payload.messages).toEqual([]);
-  });
-
-  it('returns 200 with messages on poll', async () => {
-    const mockReceive = vi.mocked(messageQueue.receiveMessagesFromQueueAsync);
-    mockReceive.mockResolvedValue([
-      {
-        type: 'ORDER_SUBMITTED',
-        messageId: 'msg-1',
-        timestamp: '',
-        source: '',
-        correlationId: '',
-        version: '1.0',
-        payload: {},
-      },
-    ] as unknown as import('../../shared/types').Message[]);
-    const result = await handler(makeEvent({ action: 'poll' }));
-    expect(result.statusCode).toBe(200);
-    const payload = JSON.parse(result.body);
-    expect(payload.messages).toHaveLength(1);
-    expect(payload.messages[0].messageId).toBe('msg-1');
-  });
-
-  it('returns 400 on delete without receiptHandle', async () => {
-    const result = await handler(makeEvent({ action: 'delete' }));
-    expect(result.statusCode).toBe(400);
-    const payload = JSON.parse(result.body);
-    expect(payload.error).toContain('receiptHandle');
-  });
-
-  it('returns 200 on successful delete', async () => {
+  it('processes a valid ORDER_SUBMITTED message', async () => {
     const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
     mockDelete.mockResolvedValue();
-    const result = await handler(makeEvent({ action: 'delete', receiptHandle: 'rh-123' }));
-    expect(result.statusCode).toBe(200);
-    const payload = JSON.parse(result.body);
-    expect(payload.ok).toBe(true);
+    const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
+    mockSendEmail.mockResolvedValue();
+
+    const record = makeRecord({
+      type: 'ORDER_SUBMITTED',
+      messageId: 'msg-1',
+      timestamp: new Date().toISOString(),
+      source: 'orders-intake',
+      correlationId: 'corr-1',
+      version: '1.0',
+      payload: { name: 'Test' },
+    });
+
+    await handler(makeEvent([record]));
+
+    expect(mockSendEmail).toHaveBeenCalledTimes(1);
+    expect(mockDelete).toHaveBeenCalledWith('rh-123');
   });
 
-  it('returns 500 on unhandled error', async () => {
-    const mockReceive = vi.mocked(messageQueue.receiveMessagesFromQueueAsync);
-    mockReceive.mockRejectedValue(new Error('SQS down'));
-    const result = await handler(makeEvent({ action: 'poll' }));
-    expect(result.statusCode).toBe(500);
-    const payload = JSON.parse(result.body);
-    expect(payload.error).toBe('SQS down');
+  it('skips messages with unknown type', async () => {
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+
+    const record = makeRecord({
+      type: 'UNKNOWN_TYPE',
+      messageId: 'msg-2',
+      timestamp: '',
+      source: '',
+      correlationId: '',
+      version: '',
+      payload: {},
+    });
+
+    await handler(makeEvent([record]));
+
+    expect(mockDelete).not.toHaveBeenCalled();
+  });
+
+  it('skips messages with invalid JSON body', async () => {
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+
+    const record = makeRecord({} as Record<string, unknown>, { body: 'not json' });
+
+    await handler(makeEvent([record]));
+
+    expect(mockDelete).not.toHaveBeenCalled();
+  });
+
+  it('throws on processing error', async () => {
+    const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
+    mockSendEmail.mockRejectedValue(new Error('SMTP connection failed'));
+
+    const record = makeRecord({
+      type: 'ORDER_SUBMITTED',
+      messageId: 'msg-3',
+      timestamp: new Date().toISOString(),
+      source: 'orders-intake',
+      correlationId: 'corr-3',
+      version: '1.0',
+      payload: {},
+    });
+
+    await expect(handler(makeEvent([record]))).rejects.toThrow('SMTP connection failed');
+  });
+
+  it('processes multiple records in one event', async () => {
+    const mockDelete = vi.mocked(messageQueue.deleteMessageFromQueueAsync);
+    mockDelete.mockResolvedValue();
+    const mockSendEmail = vi.mocked(sendEmail.sendOrderEmail);
+    mockSendEmail.mockResolvedValue();
+
+    const records = [
+      makeRecord({
+        type: 'ORDER_SUBMITTED',
+        messageId: 'msg-1',
+        timestamp: new Date().toISOString(),
+        source: 'orders-intake',
+        correlationId: 'corr-1',
+        version: '1.0',
+        payload: { id: 1 },
+      }),
+      makeRecord({
+        type: 'ORDER_SUBMITTED',
+        messageId: 'msg-2',
+        timestamp: new Date().toISOString(),
+        source: 'orders-intake',
+        correlationId: 'corr-2',
+        version: '1.0',
+        payload: { id: 2 },
+      }),
+    ];
+
+    await handler(makeEvent(records));
+
+    expect(mockSendEmail).toHaveBeenCalledTimes(2);
+    expect(mockDelete).toHaveBeenCalledTimes(2);
   });
 });
