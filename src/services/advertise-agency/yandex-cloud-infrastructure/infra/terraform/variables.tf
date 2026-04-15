@@ -89,3 +89,18 @@ variable "telegram_chat_id" {
   type        = string
   sensitive   = true
 }
+
+# --- Object Storage ---
+
+variable "storage_bucket_name" {
+  description = "Name of the existing Yandex Object Storage bucket"
+  type        = string
+}
+
+# --- API Gateway ---
+
+variable "api_gateway_custom_domain" {
+  description = "Custom domain FQDN for API Gateway (optional)"
+  type        = string
+  default     = ""
+}
