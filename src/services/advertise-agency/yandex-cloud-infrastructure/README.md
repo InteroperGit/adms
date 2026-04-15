@@ -6,9 +6,9 @@ Cloud functions and API Gateway for the advertise agency landing project.
 
 ```
 src/                    # Function source code
-  shared/               # Common utilities (logger, types)
-  order-form/           # Order form submission function
-  captcha-verify/       # SmartCaptcha verification function
+  shared/               # Common utilities (logger, types, response helpers)
+  orders-intake/        # Order submission handler (SQS producer)
+  dispatch-message-queue/ # Queue consumer (email + Telegram notifications)
 gateway/                # API Gateway OpenAPI spec
 infra/terraform/        # Terraform IaC configs
 scripts/                # Deploy helpers
@@ -17,10 +17,10 @@ scripts/                # Deploy helpers
 ## Local Development
 
 ```bash
-cd src/order-form
-npm install
-npm run build
-npm test
+cd src/orders-intake
+pnpm install
+pnpm build
+pnpm test
 ```
 
 ## Deploy
