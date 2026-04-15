@@ -1,5 +1,5 @@
 import { sendMessageToQueueAsync } from './messageQueue';
-import { buildOrderMessage } from '../../shared';
+import { buildOrderMessage } from '../../shared/types';
 import { checkCaptchaAsync } from './smartCaptcha';
 import { badRequest, serverError, jsonResponse } from '../../shared';
 import { parseBody, getCaptchaToken, getClientIp, getOrder, getRequestId } from './utils';

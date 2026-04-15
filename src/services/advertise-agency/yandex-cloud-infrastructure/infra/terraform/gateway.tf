@@ -1,6 +1,6 @@
 resource "yandex_api_gateway" "api_gateway" {
-  name        = "agency-api-gateway"
-  description = "API Gateway for advertise agency backend"
+  name        = "rmaster-api-gateway"
+  description = "API Gateway for Reklamaster backend"
 
   spec = templatefile(
     "${path.module}/../../gateway/spec.yaml.tpl",

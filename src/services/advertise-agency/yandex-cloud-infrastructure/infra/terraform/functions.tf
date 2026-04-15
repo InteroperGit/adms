@@ -7,7 +7,7 @@ resource "yandex_function" "orders_intake" {
   execution_timeout  = var.function_timeout
   service_account_id = yandex_iam_service_account.function_sa.id
 
-  user_hash = filebase64sha256("${path.module}/../../src/orders-intake/dist/orders-intake/src/index.js")
+  user_hash = filebase64sha256("${path.module}/../../src/orders-intake/dist/index.zip")
   content {
     zip_filename = "${path.module}/../../src/orders-intake/dist/index.zip"
   }
@@ -30,7 +30,7 @@ resource "yandex_function" "dispatch_message_queue" {
   execution_timeout  = var.function_timeout
   service_account_id = yandex_iam_service_account.function_sa.id
 
-  user_hash = filebase64sha256("${path.module}/../../src/dispatch-message-queue/dist/dispatch-message-queue/src/handler/index.js")
+  user_hash = filebase64sha256("${path.module}/../../src/dispatch-message-queue/dist/index.zip")
   content {
     zip_filename = "${path.module}/../../src/dispatch-message-queue/dist/index.zip"
   }

@@ -6,8 +6,9 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "src"
   },
-  "include": ["src", "../shared"],
+  "include": ["src"],
   "exclude": ["**/*.test.ts", "**/*.test.js", "**/__tests__"]
 }

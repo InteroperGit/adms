@@ -20,7 +20,9 @@
       "Bash(yc config:*)",
       "Bash(terraform plan:*)",
       "Bash(yc iam:*)",
-      "Bash(yc resource-manager:*)"
+      "Bash(yc resource-manager:*)",
+      "Bash(bash:*)",
+      "Bash(yc serverless:*)"
     ]
   }
 }
