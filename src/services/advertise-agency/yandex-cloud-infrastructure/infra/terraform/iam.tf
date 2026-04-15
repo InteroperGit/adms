@@ -1,5 +1,5 @@
 resource "yandex_iam_service_account" "function_sa" {
-  name        = "function-sa-${var.environment}"
+  name        = "function-sa"
   description = "Service account for cloud functions"
 }
 
@@ -27,6 +27,6 @@ resource "yandex_resourcemanager_folder_iam_member" "function_sa_storage" {
 # Allow service account to manage Message Queue (SQS)
 resource "yandex_resourcemanager_folder_iam_member" "function_sa_mq" {
   folder_id = var.folder_id
-  role      = "message-queue.admin"
+  role      = "ymq.admin"
   member    = "serviceAccount:${yandex_iam_service_account.function_sa.id}"
 }

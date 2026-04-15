@@ -21,6 +21,6 @@
 - Receives POST with order data + captcha token, validates captcha, enqueues to SQS
 - Scripts: `pnpm build` / `pnpm typecheck` / `pnpm lint` / `pnpm test`
 
-### `src/dispatch-queue-messages/` — Queue polling/dispatch handler (SQS consumer)
+### `src/dispatch-message-queue/` — Queue polling/dispatch handler (SQS consumer)
 - Polls SQS queue for messages, supports delete-by-receipt-handle
 - Scripts: `pnpm build` / `pnpm typecheck` / `pnpm lint` / `pnpm test`

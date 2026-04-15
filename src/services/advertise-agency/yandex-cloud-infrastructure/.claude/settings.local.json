@@ -16,7 +16,11 @@
       "Bash(npx @mermaid-js/mermaid-cli -i 01-architecture.mmd -o 01-architecture.svg)",
       "Bash(npx @mermaid-js/mermaid-cli -i 05-data-model.mmd -o 05-data-model.svg)",
       "Bash(mv \"D:/Projects/adms/src/services/advertise-agency/yandex-cloud-infrastructure/ai/tasks/done/20260414_emailTemplater.md\" \"D:/Projects/adms/src/services/advertise-agency/yandex-cloud-infrastructure/ai/tasks/done/2026/04/14/\")",
-      "Bash(mv \"D:/Projects/adms/src/services/advertise-agency/yandex-cloud-infrastructure/ai/tasks/done/20260414_telegramSend.md\" \"D:/Projects/adms/src/services/advertise-agency/yandex-cloud-infrastructure/ai/tasks/done/2026/04/14/\")"
+      "Bash(mv \"D:/Projects/adms/src/services/advertise-agency/yandex-cloud-infrastructure/ai/tasks/done/20260414_telegramSend.md\" \"D:/Projects/adms/src/services/advertise-agency/yandex-cloud-infrastructure/ai/tasks/done/2026/04/14/\")",
+      "Bash(yc config:*)",
+      "Bash(terraform plan:*)",
+      "Bash(yc iam:*)",
+      "Bash(yc resource-manager:*)"
     ]
   }
 }

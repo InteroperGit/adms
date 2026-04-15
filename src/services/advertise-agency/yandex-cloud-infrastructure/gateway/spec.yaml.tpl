@@ -9,8 +9,6 @@ x-yc-apigateway:
     methods: '*'
     allowedHeaders: '*'
 
-servers:
-  - url: ${api_gateway_url}
 paths:
   /:
     get:

@@ -1,3 +1,14 @@
+variable "organization_id" {
+  description = "Yandex Organization ID (used when creating new clouds or referencing organization-scoped resources)"
+  type        = string
+  default     = ""
+}
+
+variable "cloud_id" {
+  description = "Yandex Cloud ID"
+  type        = string
+}
+
 variable "folder_id" {
   description = "Yandex Cloud folder ID"
   type        = string
@@ -92,8 +103,18 @@ variable "telegram_chat_id" {
 
 # --- Object Storage ---
 
-variable "storage_bucket_name" {
-  description = "Name of the existing Yandex Object Storage bucket"
+variable "storage_content_bucket_name" {
+  description = "Name of the existing Yandex Object Storage bucket for content"
+  type        = string
+}
+
+variable "storage_assets_bucket_name" {
+  description = "Name of the existing Yandex Object Storage bucket for assets"
+  type        = string
+}
+
+variable "storage_logs_bucket_name" {
+  description = "Name of the existing Yandex Object Storage bucket for logs"
   type        = string
 }
 
@@ -103,4 +124,20 @@ variable "api_gateway_custom_domain" {
   description = "Custom domain FQDN for API Gateway (optional)"
   type        = string
   default     = ""
+}
+
+# --- Authentication ---
+
+variable "yc_service_account_key_file" {
+  description = "Path to Yandex Cloud service account key JSON file (optional, uses yc CLI profile if not set)"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "yc_token" {
+  description = "Yandex Cloud OAuth/IAM token (optional, overrides yc CLI profile)"
+  type        = string
+  default     = ""
+  sensitive   = true
 }

@@ -15,7 +15,7 @@ src/
 │   │   └── apiGateway.ts    # API Gateway event/result types (no jsonResponse)
 │   └── index.ts             # Barrel re-export
 ├── orders-intake/           # Order submission handler (SQS producer)
-└── dispatch-queue-messages/ # Queue polling/dispatch handler (SQS consumer)
+└── dispatch-message-queue/  # Queue polling/dispatch handler (SQS consumer)
 ```
 
 ## Per-Project Conventions

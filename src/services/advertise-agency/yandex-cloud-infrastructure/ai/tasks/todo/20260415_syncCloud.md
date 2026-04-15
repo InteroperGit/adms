@@ -79,16 +79,23 @@ Goal: align Terraform with the real infrastructure in the Yandex Cloud account �
 
 ### T6. Import existing resources into Terraform state
 
-- [ ] Authenticate to YC (`yc init` or service account key)
-- [ ] Run `terraform import` for each existing resource:
-  - [ ] Service account
-  - [ ] Orders-intake function (existing in YC)
-  - [ ] Dispatch-queue-messages function (existing in YC)
-  - [ ] API Gateway
-  - [ ] S3 bucket
-  - [ ] SQS queue (if managed via Terraform)
-- [ ] Run `terraform plan` to identify drift
+- [x] Authenticate to YC (`yc init` — token via `yc iam create-token`)
+- [x] Run `terraform import` for each existing resource:
+  - [x] Service account (`ajereq47qpmlg7ejmbsc` → `yandex_iam_service_account.function_sa`)
+  - [x] Orders-intake function (`d4e3m3ni48sjdc2cp94a` → `yandex_function.orders_intake`)
+  - [x] Dispatch-queue-messages function — deleted old `send-email`, will be created fresh by TF
+  - [x] API Gateway — deleted old gateway (provider doesn't support import), will be created fresh by TF
+  - [x] S3 buckets (3): `rmaster35ru-content`, `rmaster35ru-assets`, `rmaster35ru-logs`
+- [x] Run `terraform plan` to identify drift
 - [ ] Adjust Terraform config to match live state until plan shows no unexpected changes
+
+**Drift found:**
+- SA name: cloud = `rmaster-cloud-functions`, TF wants `function-sa-prod`
+- SA description: cloud = Russian text, TF = English
+- Storage buckets: have website config, grants, max_size not declared in TF
+- orders_intake: needs new zip upload (build output changed to nested dirs)
+- dispatch_queue_messages: new function (old `send-email` deleted)
+- API Gateway: new (old deleted, provider doesn't support import)
 
 ### T7. Enable remote state backend
 
