@@ -1,0 +1,49 @@
+sequenceDiagram
+    autonumber
+    participant SQS as SQS Queue
+    participant Handler as Lambda Handler
+    participant Email as Email Sender
+    participant SMTP as SMTP Server
+    participant TG as Telegram Sender
+    participant TgAPI as Telegram Bot API
+
+    SQS->>Handler: SQSEvent (Records[])
+
+    loop For each record
+        Handler->>Handler: JSON.parse(body)
+        alt invalid JSON
+            Handler->>Handler: logWarn, continue
+        else valid
+            Handler->>Handler: switch on message.type
+            alt ORDER_SUBMITTED
+                Handler->>Handler: processOrderMessage()
+                Handler->>Handler: check EMAIL_ENABLED, TELEGRAM_ENABLED
+
+                opt Email enabled
+                    Handler->>Email: sendOrderEmail(message)
+                    Email->>Email: resolve template + build context
+                    Email->>SMTP: transporter.sendMail()
+                    SMTP-->>Email: sent
+                    Email-->>Handler: success or error
+                end
+
+                opt Telegram enabled
+                    Handler->>TG: sendTelegramNotification(message)
+                    TG->>TG: resolve template + split chat IDs
+                    TG->>TgAPI: POST /sendMessage (parallel)
+                    TgAPI-->>TG: response
+                    TG-->>Handler: success or error
+                end
+
+                alt any channel succeeded
+                    Handler->>SQS: deleteMessage(receiptHandle)
+                else all enabled channels failed
+                    Handler->>Handler: throw (message stays on queue)
+                end
+            else unknown type
+                Handler->>Handler: logWarn, continue
+            end
+        end
+    end
+
+    Handler-->>SQS: return (batch complete)

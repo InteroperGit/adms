@@ -1,0 +1,51 @@
+graph TD
+    handler["handler/index.ts\nMain Handler + dispatchMessage"]
+    processOrder["handler/processOrderMessage.ts\nOrder Processing + Channel Logic"]
+    mq["queue/messageQueue.ts\nSQS Client"]
+    emailSend["senders/email/sendEmail.ts\nEmail Sender"]
+    emailTpl["senders/email/emailTemplater.ts\nEmail Template Registry"]
+    tgSend["senders/telegram/sendTelegram.ts\nTelegram Sender"]
+    tgTpl["senders/telegram/telegramTemplater.ts\nTelegram Template Registry"]
+    tplConfig["config/templateConfig.ts\nTemplate Config Types"]
+    shared["../../shared/index.ts\nBarrel Export"]
+    logger["logger.ts\nlogInfo, logWarn, logError"]
+    msg["types/message.ts\nMessage interface"]
+    orderMsg["types/orderMessage.ts\nOrderMessage"]
+    sqs["@aws-sdk/client-sqs\nSQSClient, Commands"]
+    nodemailer["nodemailer\nSMTP Transport"]
+    fetch["node:fetch\nbuilt-in"]
+    emailJson["data/config/email-template-config.json"]
+    tgJson["data/config/telegram-template-config.json"]
+
+    handler --> processOrder
+    handler --> mq
+    handler --> shared
+    processOrder --> emailSend
+    processOrder --> tgSend
+    processOrder --> mq
+    emailSend --> emailTpl
+    emailSend --> nodemailer
+    emailSend --> emailJson
+    emailTpl --> tplConfig
+    emailTpl --> shared
+    tgSend --> tgTpl
+    tgSend --> fetch
+    tgSend --> tgJson
+    tgTpl --> tplConfig
+    tgTpl --> shared
+    mq --> sqs
+    shared --> logger
+    shared --> msg
+    shared --> orderMsg
+
+    classDef handler fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef module fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef shared_mod fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    classDef external fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef config fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+
+    class handler,processOrder handler
+    class mq,emailSend,emailTpl,tgSend,tgTpl,tplConfig module
+    class shared,logger,msg,orderMsg shared_mod
+    class sqs,nodemailer,fetch external
+    class emailJson,tgJson config

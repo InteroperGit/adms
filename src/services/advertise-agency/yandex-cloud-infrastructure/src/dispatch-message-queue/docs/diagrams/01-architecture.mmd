@@ -1,0 +1,24 @@
+flowchart LR
+    SQS["Yandex Message Queue\n(SQS-compatible)"]
+    Lambda["Lambda: dispatch-message-queue\n(handler/index.ts)"]
+    Email["SMTP Server\nsmtp.yandex.ru"]
+    Telegram["Telegram Bot API\napi.telegram.org"]
+    Shared["../../shared/\nlogger, types"]
+    Intake["Lambda: orders-intake\n(SQS producer)"]
+
+    Intake -->|"enqueue OrderMessage"| SQS
+    SQS -->|"trigger"| Lambda
+    Lambda -->|"sendMail"| Email
+    Lambda -->|"POST /sendMessage"| Telegram
+    Lambda -.->|imports| Shared
+
+    classDef lambda fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef external fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef shared fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+
+    class SQS external
+    class Lambda lambda
+    class Email external
+    class Telegram external
+    class Shared shared
+    class Intake lambda

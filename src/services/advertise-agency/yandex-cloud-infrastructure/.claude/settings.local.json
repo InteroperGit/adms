@@ -9,7 +9,12 @@
       "Bash(pnpm typecheck:*)",
       "Bash(pnpm lint:*)",
       "Bash(pnpm add:*)",
-      "Bash(pnpm format:*)"
+      "Bash(pnpm format:*)",
+      "Bash(npx @mermaid-js/mermaid-cli -i 02-pipeline.mmd -o 02-pipeline.svg)",
+      "Bash(npx @mermaid-js/mermaid-cli -i 03-sequence.mmd -o 03-sequence.svg)",
+      "Bash(npx @mermaid-js/mermaid-cli -i 04-dependencies.mmd -o 04-dependencies.svg)",
+      "Bash(npx @mermaid-js/mermaid-cli -i 01-architecture.mmd -o 01-architecture.svg)",
+      "Bash(npx @mermaid-js/mermaid-cli -i 05-data-model.mmd -o 05-data-model.svg)"
     ]
   }
 }

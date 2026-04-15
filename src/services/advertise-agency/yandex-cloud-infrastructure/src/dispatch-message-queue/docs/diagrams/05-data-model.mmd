@@ -1,0 +1,47 @@
+classDiagram
+    class Message {
+        +string type
+        +string messageId
+        +string timestamp
+        +string source
+        +string correlationId
+        +string version
+        +Record~string, unknown~ payload
+    }
+
+    class OrderMessage {
+        +type: 'ORDER_SUBMITTED'
+        +source: 'orders-intake'
+        +version: '1.0'
+    }
+
+    class Template {
+        +subject(context): string
+        +html(context): string
+    }
+
+    class TelegramTemplate {
+        +text(context): string
+    }
+
+    class TemplateContext {
+        +string correlationId
+        +string timestamp
+        +Record~string, string~ payload
+    }
+
+    class EmailConfig {
+        +string host
+        +number port
+        +string user
+        +string pass
+        +string from
+        +string to
+    }
+
+    Message <|-- OrderMessage : extends
+    Template ..> TemplateContext : uses
+    TelegramTemplate ..> TemplateContext : uses
+
+    note for OrderMessage "Consumed by dispatch-message-queue\nProduced by orders-intake"
+    note for Template "Registered per message type\nOnly ORDER_SUBMITTED registered"
