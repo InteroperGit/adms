@@ -1,6 +1,6 @@
 import https from 'https';
 import querystring from 'querystring';
-import { logError } from '../../shared';
+import { logError } from '@shared/logger';
 
 const SMARTCAPTCHA_SERVER_KEY = process.env.SMARTCAPTCHA_SERVER_KEY;
 

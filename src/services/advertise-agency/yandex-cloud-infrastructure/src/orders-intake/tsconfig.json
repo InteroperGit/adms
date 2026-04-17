@@ -5,10 +5,19 @@
     "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
+    "baseUrl": ".",
     "outDir": "dist",
-    "rootDir": "src"
+    "paths": {
+      "@shared": ["../shared/src"],
+      "@shared/*": ["../shared/src/*"],
+      "@src/*": ["src/*"]
+    },
   },
+  "references": [
+    { "path": "../shared" }  // ссылка на shared проект
+  ],
   "include": ["src"],
   "exclude": ["**/*.test.ts", "**/*.test.js", "**/__tests__"]
 }

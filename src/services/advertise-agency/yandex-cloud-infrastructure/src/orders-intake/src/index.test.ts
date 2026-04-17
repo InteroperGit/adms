@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { MESSAGE_SOURCE, MESSAGE_VERSION } from '../../shared/types';
+import { MESSAGE_SOURCE, MESSAGE_VERSION } from "@shared/types";
 
 // Set env vars before any module mocking so vi.importActual in the mock factory succeeds
 process.env.QUEUE_URL = 'https://queue.url';

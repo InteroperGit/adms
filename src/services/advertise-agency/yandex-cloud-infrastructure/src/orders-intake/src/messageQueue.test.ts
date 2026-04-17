@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { MESSAGE_SOURCE, MESSAGE_VERSION, buildOrderMessage } from '../../shared/types';
+import { MESSAGE_SOURCE, MESSAGE_VERSION, buildOrderMessage } from "@shared/types";
 
 const mockSend = vi.fn();
 

@@ -2,7 +2,7 @@ import { SQSClient, ReceiveMessageCommand, DeleteMessageCommand } from '@aws-sdk
 import type { Message } from '@shared/types';
 
 const client = new SQSClient({
-  region: process.env.AWS_REGION || 'ru-central1',
+  region: process.env.AWS_REGION,
   endpoint: process.env.AWS_ENDPOINT,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',

@@ -8,7 +8,8 @@
     "node": "20"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build --force",
+    "build-deploy-artifact": "tsx ./scripts/buildDeployArtifact.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "test": "vitest run",
@@ -19,13 +20,16 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/archiver": "^7.0.0",
     "@types/node": "^25.6.0",
     "@typescript-eslint/eslint-plugin": "^8.58.1",
     "@typescript-eslint/parser": "^8.58.1",
+    "archiver": "^7.0.1",
     "eslint": "^10.2.0",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.0",
     "typescript-eslint": "^8.58.1",
-    "prettier": "^3.8.1",
     "vitest": "^3.0.0"
   }
 }

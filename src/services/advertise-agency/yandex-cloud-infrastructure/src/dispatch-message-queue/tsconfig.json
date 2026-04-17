@@ -10,8 +10,8 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@shared": ["../shared"],
-      "@shared/*": ["../shared/*"],
+      "@shared": ["../shared/src"],
+      "@shared/*": ["../shared/src/*"],
       "@data/*": ["data/config/*"],
       "@src/*": ["src/*"]
     }

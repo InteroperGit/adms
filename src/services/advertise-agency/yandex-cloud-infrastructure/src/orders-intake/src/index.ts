@@ -1,9 +1,9 @@
 import { sendMessageToQueueAsync } from './messageQueue';
-import { buildOrderMessage } from '../../shared/types';
+import { buildOrderMessage } from '@shared';
+import { badRequest, serverError, jsonResponse } from '@shared';
+import { logWarn, logError } from '@shared';
 import { checkCaptchaAsync } from './smartCaptcha';
-import { badRequest, serverError, jsonResponse } from '../../shared';
 import { parseBody, getCaptchaToken, getClientIp, getOrder, getRequestId } from './utils';
-import { logWarn, logError } from '../../shared';
 
 const INNER_ERROR = 'Inner error';
 

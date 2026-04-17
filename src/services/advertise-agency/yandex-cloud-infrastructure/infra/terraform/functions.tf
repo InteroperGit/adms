@@ -46,3 +46,6 @@ resource "yandex_function" "dispatch_message_queue" {
     TELEGRAM_CHAT_ID      = var.telegram_chat_id
   }
 }
+
+# NOTE: yandex_serverless_event_trigger is NOT supported by the Terraform provider.
+# The trigger is created via YC CLI. See scripts/create-trigger.sh
