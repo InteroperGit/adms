@@ -99,9 +99,8 @@ export function OrderForm({ definition }: OrderFormProps) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          formData: values,
+          order: values,
           captchaToken,
-          message: 'test',
         }),
       });
 
