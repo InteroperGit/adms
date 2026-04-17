@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { ImageGallery } from '@/components/imageGallery';
 import { imageGalleryContent } from '@/types/shared/imageGallery';
@@ -9,10 +9,17 @@ import { OrderFormConsent } from './OrderFormConsent';
 import { OrderFormSuccess } from './OrderFormSuccess';
 import { YandexSmartCaptcha } from '@/components/yandex/YandexSmartCaptcha';
 import type { FormFieldDefinition, OrderFormDefinition } from '@/types/config/orderForms';
+import { legalData, type DocumentVersion } from '@/types/config/legalData';
 
 interface OrderFormProps {
   definition: OrderFormDefinition;
 }
+
+const legalDocByHref: Record<string, DocumentVersion | undefined> = {
+  '/privacy-policy': legalData.documents.privacyPolicy,
+  '/user-agreement': legalData.documents.userAgreement,
+  '/consent': legalData.documents.consent,
+};
 
 function fieldDefaults(fields: FormFieldDefinition[]): Record<string, string> {
   const defaults: Record<string, string> = {};
@@ -48,10 +55,6 @@ export function OrderForm({ definition }: OrderFormProps) {
     setValues((prev) => ({ ...prev, [key]: value }));
   }, []);
 
-  const handleCaptchaSuccess = useCallback((token: string) => {
-    setCaptchaToken(token);
-  }, []);
-
   const handleCaptchaExpired = useCallback(() => {
     setCaptchaToken('');
   }, []);
@@ -71,14 +74,14 @@ export function OrderForm({ definition }: OrderFormProps) {
     setCaptchaToken('');
   }
 
-  async function handleSubmit(e: { preventDefault(): void }) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!consent || !captchaToken || !smartCaptchaSiteKey || !orderFormApiUrl) {
+    if (!consent || !captchaToken || !smartCaptchaSiteKey || !orderFormApiUrl || !activeProduct) {
       return;
     }
 
-    const allRequired = [...(activeProduct?.fields ?? []), ...definition.customerFields].filter(
+    const allRequired = [...activeProduct.fields, ...definition.customerFields].filter(
       (f) => f.required
     );
 
@@ -94,12 +97,27 @@ export function OrderForm({ definition }: OrderFormProps) {
     setIsSubmitting(true);
     setSubmitError(false);
 
+    const consentRecord = {
+      acceptedAt: new Date().toISOString(),
+      text: definition.consent.text,
+      links: definition.consent.links.map((link) => ({
+        ...link,
+        ...legalDocByHref[link.href],
+      })),
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      screenResolution: `${screen.width}x${screen.height}`,
+      referrer: document.referrer || null,
+    };
+
     try {
       const response = await fetch(orderFormApiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          order: values,
+          order: { ...values, productType: activeProductKey },
+          consent: consentRecord,
           captchaToken,
         }),
       });
@@ -123,94 +141,91 @@ export function OrderForm({ definition }: OrderFormProps) {
     setSubmitted(false);
     setSubmitError(false);
     setActiveProductKey(definition.productTypes[0].key);
+    setValues(fieldDefaults(definition.productTypes[0].fields));
     setCaptchaToken('');
-  }
-
-  if (submitted) {
-    return (
-      <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
-        <OrderFormSuccess success={definition.success} onReset={handleReset} />
-      </div>
-    );
   }
 
   return (
     <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {definition.productTypes.length > 1 && (
-          <>
-            {definition.tabsLabel && (
-              <p className="text-sm font-medium text-foreground">{definition.tabsLabel}</p>
-            )}
-            <OrderFormProductTabs
-              productTypes={definition.productTypes}
-              activeKey={activeProductKey}
-              onChange={handleProductChange}
+      {submitted ? (
+        <OrderFormSuccess success={definition.success} onReset={handleReset} />
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {definition.productTypes.length > 1 && (
+            <>
+              {definition.tabsLabel && (
+                <p className="text-sm font-medium text-foreground">{definition.tabsLabel}</p>
+              )}
+              <OrderFormProductTabs
+                productTypes={definition.productTypes}
+                activeKey={activeProductKey}
+                onChange={handleProductChange}
+              />
+              <hr className="border-border" />
+            </>
+          )}
+
+          {activeProduct?.description && (
+            <p className="text-sm text-muted-foreground">{activeProduct.description}</p>
+          )}
+
+          {activeProduct?.images && activeProduct.images.length > 0 && (
+            <ImageGallery
+              images={activeProduct.images}
+              altPrefix={activeProduct.label}
+              prevLabel={imageGalleryContent.prevLabel}
+              nextLabel={imageGalleryContent.nextLabel}
+              closeLabel={imageGalleryContent.closeLabel}
+              counterTemplate={imageGalleryContent.counter}
             />
-            <hr className="border-border" />
-          </>
-        )}
+          )}
 
-        {activeProduct?.description && (
-          <p className="text-sm text-muted-foreground">{activeProduct.description}</p>
-        )}
+          {activeProduct && (
+            <OrderFormDynamicFields
+              fields={activeProduct.fields}
+              values={Object.fromEntries(
+                Object.entries(values).filter(([k]) => productFieldKeys.has(k))
+              )}
+              onChange={handleFieldChange}
+            />
+          )}
 
-        {activeProduct?.images && activeProduct.images.length > 0 && (
-          <ImageGallery
-            images={activeProduct.images}
-            altPrefix={activeProduct.label}
-            prevLabel={imageGalleryContent.prevLabel}
-            nextLabel={imageGalleryContent.nextLabel}
-            closeLabel={imageGalleryContent.closeLabel}
-            counterTemplate={imageGalleryContent.counter}
-          />
-        )}
-
-        {activeProduct && (
-          <OrderFormDynamicFields
-            fields={activeProduct.fields}
+          <OrderFormCustomerFields
+            fields={definition.customerFields}
             values={Object.fromEntries(
-              Object.entries(values).filter(([k]) => productFieldKeys.has(k))
+              Object.entries(values).filter(([k]) => customerFieldKeys.has(k))
             )}
             onChange={handleFieldChange}
           />
-        )}
 
-        <OrderFormCustomerFields
-          fields={definition.customerFields}
-          values={Object.fromEntries(
-            Object.entries(values).filter(([k]) => customerFieldKeys.has(k))
+          <OrderFormConsent consent={definition.consent} checked={consent} onChange={setConsent} />
+
+          {smartCaptchaSiteKey ? (
+            <YandexSmartCaptcha
+              siteKey={smartCaptchaSiteKey}
+              onTokenChange={setCaptchaToken}
+              onTokenExpired={handleCaptchaExpired}
+            />
+          ) : (
+            <p className="text-sm text-destructive">{definition.captchaNotConfigured}</p>
           )}
-          onChange={handleFieldChange}
-        />
 
-        <OrderFormConsent consent={definition.consent} checked={consent} onChange={setConsent} />
+          {submitError && (
+            <p className="text-sm text-destructive text-center">{definition.submitFailed}</p>
+          )}
 
-        {smartCaptchaSiteKey ? (
-          <YandexSmartCaptcha
-            siteKey={smartCaptchaSiteKey}
-            onTokenChange={handleCaptchaSuccess}
-            onTokenExpired={handleCaptchaExpired}
-          />
-        ) : (
-          <p className="text-sm text-destructive">{definition.captchaNotConfigured}</p>
-        )}
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full cursor-pointer rounded-full"
+            disabled={!consent || !captchaToken || !smartCaptchaSiteKey || isSubmitting}
+          >
+            {isSubmitting ? definition.sending : definition.submit}
+          </Button>
 
-        {submitError && (
-          <p className="text-sm text-destructive text-center">{definition.submitFailed}</p>
-        )}
-
-        <Button
-          type="submit"
-          size="lg"
-          className="w-full cursor-pointer rounded-full"
-          disabled={!consent || !captchaToken || !smartCaptchaSiteKey || isSubmitting}
-        >
-          {isSubmitting ? definition.sending : definition.submit}
-        </Button>
-
-        <p className="text-center text-xs text-muted-foreground">{definition.disclaimer}</p>
-      </form>
+          <p className="text-center text-xs text-muted-foreground">{definition.disclaimer}</p>
+        </form>
+      )}
     </div>
   );
 }
