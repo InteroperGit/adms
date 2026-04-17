@@ -12,34 +12,21 @@ vi.mock('nodemailer', () => ({
 }));
 
 const savedEnv: Record<string, string | undefined> = {};
+const ENV_KEYS = ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASSWORD', 'EMAIL_FROM', 'EMAIL_TO'];
 
 beforeEach(() => {
-  savedEnv.SMTP_HOST = process.env.SMTP_HOST;
-  savedEnv.SMTP_PORT = process.env.SMTP_PORT;
-  savedEnv.SMTP_USER = process.env.SMTP_USER;
-  savedEnv.SMTP_PASSWORD = process.env.SMTP_PASSWORD;
-  savedEnv.EMAIL_FROM = process.env.EMAIL_FROM;
-  savedEnv.EMAIL_TO = process.env.EMAIL_TO;
+  for (const key of ENV_KEYS) {
+    savedEnv[key] = process.env[key];
+  }
   mockVerify.mockReset();
   mockSendMail.mockReset();
   mockCreateTransport.mockReset();
-  mockCreateTransport.mockReturnValue({
-    verify: mockVerify,
-    sendMail: mockSendMail,
-  });
+  mockCreateTransport.mockReturnValue({ verify: mockVerify, sendMail: mockSendMail });
   vi.resetModules();
 });
 
 afterEach(() => {
-  const envKeys = [
-    'SMTP_HOST',
-    'SMTP_PORT',
-    'SMTP_USER',
-    'SMTP_PASSWORD',
-    'EMAIL_FROM',
-    'EMAIL_TO',
-  ];
-  for (const key of envKeys) {
+  for (const key of ENV_KEYS) {
     const val = savedEnv[key];
     if (val === undefined) {
       delete process.env[key];
@@ -63,11 +50,13 @@ function makeOrderMessage(overrides?: Partial<OrderMessage>): OrderMessage {
 }
 
 function setValidEnv() {
+  process.env.SMTP_HOST = 'smtp.yandex.ru';
+  process.env.SMTP_PORT = '465';
   process.env.SMTP_USER = 'test@yandex.ru';
   process.env.SMTP_PASSWORD = 'secret';
+  process.env.EMAIL_FROM = 'test@yandex.ru';
+  process.env.EMAIL_TO = 'test@yandex.ru';
 }
-
-// --- sendOrderEmail tests ---
 
 describe('sendOrderEmail', () => {
   it('creates transport with correct config, verifies, and sends mail', async () => {
@@ -96,26 +85,69 @@ describe('sendOrderEmail', () => {
   });
 
   it('throws when SMTP_USER is missing', async () => {
+    setValidEnv();
     delete process.env.SMTP_USER;
-    process.env.SMTP_PASSWORD = 'secret';
 
     const { sendOrderEmail } = await import('./sendEmail');
-    const message = makeOrderMessage();
-
-    await expect(sendOrderEmail(message)).rejects.toThrow(
-      'SMTP_USER and SMTP_PASSWORD environment variables are required'
-    );
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow('SMTP_USER');
   });
 
   it('throws when SMTP_PASSWORD is missing', async () => {
-    process.env.SMTP_USER = 'test@yandex.ru';
+    setValidEnv();
     delete process.env.SMTP_PASSWORD;
 
     const { sendOrderEmail } = await import('./sendEmail');
-    const message = makeOrderMessage();
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow('SMTP_PASSWORD');
+  });
 
-    await expect(sendOrderEmail(message)).rejects.toThrow(
-      'SMTP_USER and SMTP_PASSWORD environment variables are required'
+  it('throws when SMTP_HOST is missing', async () => {
+    setValidEnv();
+    delete process.env.SMTP_HOST;
+
+    const { sendOrderEmail } = await import('./sendEmail');
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow('SMTP_HOST');
+  });
+
+  it('throws when SMTP_PORT is missing', async () => {
+    setValidEnv();
+    delete process.env.SMTP_PORT;
+
+    const { sendOrderEmail } = await import('./sendEmail');
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow('SMTP_PORT');
+  });
+
+  it('throws when SMTP_PORT is not a number', async () => {
+    setValidEnv();
+    process.env.SMTP_PORT = 'abc';
+
+    const { sendOrderEmail } = await import('./sendEmail');
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow('SMTP_PORT');
+  });
+
+  it('throws when EMAIL_FROM is missing', async () => {
+    setValidEnv();
+    delete process.env.EMAIL_FROM;
+
+    const { sendOrderEmail } = await import('./sendEmail');
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow('EMAIL_FROM');
+  });
+
+  it('throws when EMAIL_TO is missing', async () => {
+    setValidEnv();
+    delete process.env.EMAIL_TO;
+
+    const { sendOrderEmail } = await import('./sendEmail');
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow('EMAIL_TO');
+  });
+
+  it('error lists all missing variables at once', async () => {
+    for (const key of ENV_KEYS) {
+      delete process.env[key];
+    }
+
+    const { sendOrderEmail } = await import('./sendEmail');
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow(
+      'Missing required email environment variables: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, EMAIL_FROM, EMAIL_TO'
     );
   });
 
@@ -144,7 +176,7 @@ describe('sendOrderEmail', () => {
     expect(mailOptions.to).toBe('admin@custom.ru');
   });
 
-  it('uses port 465 with secure=true by default', async () => {
+  it('uses port 465 with secure=true', async () => {
     setValidEnv();
     mockVerify.mockResolvedValue(undefined);
     mockSendMail.mockResolvedValue({});
@@ -162,9 +194,7 @@ describe('sendOrderEmail', () => {
     mockVerify.mockRejectedValue(new Error('Connection refused'));
 
     const { sendOrderEmail } = await import('./sendEmail');
-    const message = makeOrderMessage();
-
-    await expect(sendOrderEmail(message)).rejects.toThrow('Connection refused');
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow('Connection refused');
     expect(mockSendMail).not.toHaveBeenCalled();
   });
 
@@ -174,9 +204,7 @@ describe('sendOrderEmail', () => {
     mockSendMail.mockRejectedValue(new Error('Recipient rejected'));
 
     const { sendOrderEmail } = await import('./sendEmail');
-    const message = makeOrderMessage();
-
-    await expect(sendOrderEmail(message)).rejects.toThrow('Recipient rejected');
+    await expect(sendOrderEmail(makeOrderMessage())).rejects.toThrow('Recipient rejected');
   });
 
   it('throws when no template exists for message type', async () => {
@@ -189,21 +217,6 @@ describe('sendOrderEmail', () => {
       'No email template registered for message type: UNKNOWN_TYPE'
     );
     expect(mockCreateTransport).not.toHaveBeenCalled();
-  });
-
-  it('uses EMAIL_FROM/EMAIL_TO overrides instead of defaulting to SMTP_USER', async () => {
-    setValidEnv();
-    process.env.EMAIL_FROM = 'sender@agency.ru';
-    process.env.EMAIL_TO = 'receiver@agency.ru';
-    mockVerify.mockResolvedValue(undefined);
-    mockSendMail.mockResolvedValue({});
-
-    const { sendOrderEmail } = await import('./sendEmail');
-    await sendOrderEmail(makeOrderMessage());
-
-    const mailOptions = mockSendMail.mock.calls[0][0];
-    expect(mailOptions.from).toBe('sender@agency.ru');
-    expect(mailOptions.to).toBe('receiver@agency.ru');
   });
 
   it('sends to multiple recipients when EMAIL_TO is comma-separated', async () => {

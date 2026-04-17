@@ -48,7 +48,9 @@ function checkCaptcha(token: string, ipAddress: string, callback: (ok: boolean) 
   });
 
   req.on('error', (error) => {
-    logError('Captcha request failed', { error: error instanceof Error ? error.message : String(error) });
+    logError('Captcha request failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     callback(false);
   });
 

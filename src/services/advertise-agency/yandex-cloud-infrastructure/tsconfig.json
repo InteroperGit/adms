@@ -6,9 +6,12 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "rootDir": "src",
-    "outDir": "dist",
-    "composite": true,
+    "noEmit": true
   },
-  "include": ["."]
+  "files": [],
+  "references": [
+    { "path": "src/shared" },
+    { "path": "src/orders-intake" },
+    { "path": "src/dispatch-message-queue" }
+  ]
 }

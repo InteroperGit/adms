@@ -11,6 +11,8 @@ export interface EmailTemplateConfig {
   tableStyle: string;
   keyCellStyle: string;
   valueCellStyle: string;
+  rowEvenBg: string;
+  rowOddBg: string;
   dividerStyle: string;
   footerStyle: string;
 }

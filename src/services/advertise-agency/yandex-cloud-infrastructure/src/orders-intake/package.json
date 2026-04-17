@@ -9,7 +9,6 @@
   },
   "scripts": {
     "build": "tsc --build --force",
-    "build-deploy-artifact": "tsx ./scripts/buildDeployArtifact.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "test": "vitest run",

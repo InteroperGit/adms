@@ -12,15 +12,36 @@ interface EmailConfig {
 }
 
 function getConfig(): EmailConfig {
-  const host = process.env.SMTP_HOST ?? 'smtp.yandex.ru';
-  const port = parseInt(process.env.SMTP_PORT ?? '465', 10);
+  const host = process.env.SMTP_HOST ?? '';
+  const portRaw = process.env.SMTP_PORT ?? '';
+  const port = parseInt(portRaw, 10);
   const user = process.env.SMTP_USER ?? '';
   const pass = process.env.SMTP_PASSWORD ?? '';
-  const from = process.env.EMAIL_FROM ?? user;
-  const to = process.env.EMAIL_TO ?? user;
+  const from = process.env.EMAIL_FROM ?? '';
+  const to = process.env.EMAIL_TO ?? '';
 
-  if (!user || !pass) {
-    throw new Error('SMTP_USER and SMTP_PASSWORD environment variables are required');
+  const missing: string[] = [];
+  if (!host) {
+    missing.push('SMTP_HOST');
+  }
+  if (!portRaw || isNaN(port)) {
+    missing.push('SMTP_PORT');
+  }
+  if (!user) {
+    missing.push('SMTP_USER');
+  }
+  if (!pass) {
+    missing.push('SMTP_PASSWORD');
+  }
+  if (!from) {
+    missing.push('EMAIL_FROM');
+  }
+  if (!to) {
+    missing.push('EMAIL_TO');
+  }
+
+  if (missing.length > 0) {
+    throw new Error(`Missing required email environment variables: ${missing.join(', ')}`);
   }
 
   return { host, port, user, pass, from, to };

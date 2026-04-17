@@ -1,0 +1,24 @@
+{
+  "name": "yandex-cloud-infrastructure",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "build": "npm run build --prefix src/orders-intake && npm run build --prefix src/dispatch-message-queue",
+    "typecheck": "npm run typecheck --prefix src/orders-intake && npm run typecheck --prefix src/dispatch-message-queue",
+    "lint": "npm run lint --prefix src/orders-intake && npm run lint --prefix src/dispatch-message-queue",
+    "test": "npm run test --prefix src/orders-intake && npm run test --prefix src/dispatch-message-queue",
+    "format": "npm run format --prefix src/orders-intake && npm run format --prefix src/dispatch-message-queue",
+    "install:all": "npm install --prefix src/orders-intake && npm install --prefix src/dispatch-message-queue",
+    "build:deploy": "tsx scripts/build-functions/index.ts"
+  },
+  "devDependencies": {
+    "@types/archiver": "^7.0.0",
+    "@types/node": "^25.6.0",
+    "archiver": "^7.0.1",
+    "tsx": "^4.21.0"
+  }
+}

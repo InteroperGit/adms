@@ -1,5 +1,5 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
-import type { Message } from "@shared/types";
+import type { Message } from '@shared/types';
 
 const QUEUE_URL = process.env.QUEUE_URL;
 if (!QUEUE_URL) {

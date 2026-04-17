@@ -16,6 +16,9 @@
       "@src/*": ["src/*"]
     }
   },
-  "include": ["src", "../shared", "data/config"],
+  "references": [
+    { "path": "../shared" }
+  ],
+  "include": ["src"],
   "exclude": ["**/*.test.ts", "**/*.test.js", "**/__tests__"]
 }

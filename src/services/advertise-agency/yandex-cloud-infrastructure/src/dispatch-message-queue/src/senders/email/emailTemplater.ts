@@ -19,8 +19,8 @@ function buildOrderEmailHtml(context: TemplateContext): string {
 
   const rows = Object.entries(context.payload)
     .map(
-      ([key, value]) => `
-      <tr>
+      ([key, value], index) => `
+      <tr style="background-color: ${index % 2 === 0 ? config.rowEvenBg : config.rowOddBg};">
         <td style="${config.keyCellStyle}">
           ${key}
         </td>

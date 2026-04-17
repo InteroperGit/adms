@@ -9,6 +9,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "outDir": "dist",
+    "rootDir": ".",
     "paths": {
       "@shared": ["../shared/src"],
       "@shared/*": ["../shared/src/*"],

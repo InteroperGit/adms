@@ -15,3 +15,11 @@ export {
     APIGatewayProxyResult,
     Handler,
 } from './apiGateway';
+
+export {
+    YMQMessage,
+    YMQEventMetadata,
+    YMQEventDetails,
+    YMQRecord,
+    YMQEvent,
+} from './ymqEvent';

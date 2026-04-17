@@ -1,47 +1,30 @@
 import { logWarn, logError } from '@shared';
-import type { Message, OrderMessage } from '@shared';
+import type { Message, OrderMessage, YMQEvent, YMQRecord } from '@shared';
 import { processOrderMessage } from './processOrderMessage';
 
-export interface SQSRecord {
-  eventVersion: string;
-  eventSource: string;
-  awsRegion: string;
-  eventTime: string;
-  eventName: string;
-  messageId: string;
-  receiptHandle: string;
-  body: string;
-  attributes: Record<string, string>;
-  messageAttributes: Record<string, unknown>;
-}
+export async function handler(event: YMQEvent): Promise<void> {
+  const messages = event.messages ?? [];
 
-export interface SQSEvent {
-  Records: SQSRecord[];
-}
-
-export async function handler(event: SQSEvent): Promise<void> {
-  const records = event.Records ?? [];
-
-  if (records.length === 0) {
-    logWarn('No records in trigger event');
+  if (messages.length === 0) {
+    logWarn('No messages in trigger event');
     return;
   }
 
-  for (const record of records) {
+  for (const record of messages) {
     let message: Message;
 
     try {
-      message = JSON.parse(record.body) as Message;
+      message = JSON.parse(record.details.message.body) as Message;
     } catch {
       logWarn('Failed to parse message body', {
-        messageId: record.messageId,
-        receiptHandle: record.receiptHandle,
+        messageId: record.details.message.message_id,
+        eventId: record.event_metadata.event_id,
       });
       continue;
     }
 
     try {
-      await dispatchMessage(message, record.receiptHandle);
+      await dispatchMessage(message, record);
     } catch (error) {
       logError('Failed to process message', {
         messageId: message.messageId,
@@ -54,10 +37,10 @@ export async function handler(event: SQSEvent): Promise<void> {
   }
 }
 
-async function dispatchMessage(message: Message, receiptHandle: string): Promise<void> {
+async function dispatchMessage(message: Message, _record: YMQRecord): Promise<void> {
   switch (message.type) {
     case 'ORDER_SUBMITTED':
-      await processOrderMessage(message as OrderMessage, receiptHandle);
+      await processOrderMessage(message as OrderMessage);
       break;
 
     default:

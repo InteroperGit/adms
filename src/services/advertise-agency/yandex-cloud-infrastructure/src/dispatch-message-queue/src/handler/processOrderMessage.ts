@@ -1,5 +1,4 @@
 import { logInfo, logWarn, logError } from '@shared';
-import { deleteMessageFromQueueAsync } from '@src/queue/messageQueue';
 import { sendOrderEmail } from '@src/senders/email/sendEmail';
 import { sendTelegramNotification } from '@src/senders/telegram/sendTelegram';
 import type { OrderMessage } from '@shared';
@@ -8,10 +7,7 @@ function isEnabled(envVar: string | undefined): boolean {
   return envVar?.toLowerCase() !== 'false';
 }
 
-export async function processOrderMessage(
-  message: OrderMessage,
-  receiptHandle: string
-): Promise<void> {
+export async function processOrderMessage(message: OrderMessage): Promise<void> {
   logInfo('Processing order message', {
     messageId: message.messageId,
     correlationId: message.correlationId,
@@ -26,43 +22,51 @@ export async function processOrderMessage(
       messageId: message.messageId,
       correlationId: message.correlationId,
     });
-    await deleteMessageFromQueueAsync(receiptHandle);
     return;
   }
 
-  let anyEnabledOk = false;
+  const errors: string[] = [];
 
   if (emailEnabled) {
     try {
       await sendOrderEmail(message);
-      anyEnabledOk = true;
+      logInfo('Email delivered', {
+        messageId: message.messageId,
+        correlationId: message.correlationId,
+      });
     } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
       logError('Email delivery failed', {
         messageId: message.messageId,
         correlationId: message.correlationId,
-        error: error instanceof Error ? error.message : String(error),
+        error: msg,
       });
+      errors.push(`email: ${msg}`);
     }
   }
 
   if (telegramEnabled) {
     try {
       await sendTelegramNotification(message);
-      anyEnabledOk = true;
+      logInfo('Telegram delivered', {
+        messageId: message.messageId,
+        correlationId: message.correlationId,
+      });
     } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
       logError('Telegram delivery failed', {
         messageId: message.messageId,
         correlationId: message.correlationId,
-        error: error instanceof Error ? error.message : String(error),
+        error: msg,
       });
+      errors.push(`telegram: ${msg}`);
     }
   }
 
-  if (!anyEnabledOk) {
-    throw new Error('One or more enabled notification deliveries failed');
+  const enabledCount = [emailEnabled, telegramEnabled].filter(Boolean).length;
+  if (errors.length === enabledCount) {
+    throw new Error(`All enabled deliveries failed: ${errors.join('; ')}`);
   }
-
-  await deleteMessageFromQueueAsync(receiptHandle);
 
   logInfo('Order message processed successfully', {
     messageId: message.messageId,
