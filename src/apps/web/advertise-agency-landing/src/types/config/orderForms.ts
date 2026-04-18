@@ -1,5 +1,6 @@
 import raw from '@data/config/orderForms.json';
 import { z } from 'zod';
+import type { DocumentVersion } from './legalData';
 
 /**
  * @module config/orderForms
@@ -212,3 +213,27 @@ export type OrderFormsData = z.infer<typeof OrderFormsDataSchema>;
  * @description Exported order forms data constant parsed from data/config/orderForms.json
  */
 export const orderFormsData = OrderFormsDataSchema.parse(raw);
+
+export interface OrderConsentLink {
+  label: string;
+  href: string;
+  version?: DocumentVersion['version'];
+  effectiveDate?: DocumentVersion['effectiveDate'];
+}
+
+export interface OrderConsentRecord {
+  acceptedAt: string;
+  text: string;
+  links: OrderConsentLink[];
+  userAgent: string;
+  language: string;
+  timezone: string;
+  screenResolution: string;
+  referrer: string | null;
+}
+
+export interface OrderSubmissionPayload {
+  order: Record<string, string | boolean> & { productType: string };
+  consent: OrderConsentRecord;
+  captchaToken: string;
+}
