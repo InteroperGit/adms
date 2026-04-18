@@ -45,6 +45,16 @@ function makeOrderMessage(overrides?: Partial<OrderMessage>): OrderMessage {
     correlationId: 'corr-1',
     version: '1.0',
     payload: { name: 'John', phone: '+79001234567' },
+    consent: {
+      acceptedAt: '2026-04-14T10:00:00.000Z',
+      text: 'I agree to the terms.',
+      links: [],
+      userAgent: 'Mozilla/5.0',
+      language: 'en',
+      timezone: 'UTC',
+      screenResolution: '1920x1080',
+      referrer: null,
+    },
     ...overrides,
   };
 }

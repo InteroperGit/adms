@@ -1,9 +1,16 @@
 import { sendMessageToQueueAsync } from './messageQueue';
-import { buildOrderMessage } from '@shared';
+import { buildOrderMessage, type OrderConsentRecord } from '@shared';
 import { badRequest, serverError, jsonResponse } from '@shared';
 import { logWarn, logError } from '@shared';
 import { checkCaptchaAsync } from './smartCaptcha';
-import { parseBody, getCaptchaToken, getClientIp, getOrder, getRequestId } from './utils';
+import {
+  parseBody,
+  getCaptchaToken,
+  getClientIp,
+  getOrder,
+  getConsent,
+  getRequestId,
+} from './utils';
 
 const INNER_ERROR = 'Inner error';
 
@@ -47,12 +54,22 @@ export const handler = async function (event: Record<string, unknown>) {
       return badRequest(INNER_ERROR);
     }
 
+    const consent = getConsent(body);
+    if (!consent || typeof consent !== 'object') {
+      logWarn('Consent is required', { requestId });
+      return badRequest(INNER_ERROR);
+    }
+
     const captchaResponse = await validateCaptchaAsync(captchaToken, ipAddress, requestId);
     if (captchaResponse) {
       return captchaResponse;
     }
 
-    const message = buildOrderMessage(order as Record<string, unknown>, requestId);
+    const message = buildOrderMessage(
+      order as Record<string, unknown>,
+      consent as OrderConsentRecord,
+      requestId
+    );
     const messageId = await sendMessageToQueueAsync(message);
     return jsonResponse(200, { messageId });
   } catch (error) {

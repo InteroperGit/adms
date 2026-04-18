@@ -6,7 +6,7 @@
 
 ## Infrastructure Build Rules
 - See `ai/docs/build-rules.md` for per-project conventions (package.json, tsconfig, eslint, vitest, shared module rules)
-- Each function in `src/` is an independent pnpm-managed project targeting Node 20
+- Each function in `src/` is an independent npm run-managed project targeting Node 20
 
 ## Projects
 
@@ -19,8 +19,8 @@
 
 ### `src/orders-intake/` — Order submission handler (SQS producer)
 - Receives POST with order data + captcha token, validates captcha, enqueues to SQS
-- Scripts: `pnpm build` / `pnpm typecheck` / `pnpm lint` / `pnpm test`
+- Scripts: `npm run build` / `npm run typecheck` / `npm run lint` / `npm run test`
 
 ### `src/dispatch-message-queue/` — Queue polling/dispatch handler (SQS consumer)
 - Polls SQS queue for messages, supports delete-by-receipt-handle
-- Scripts: `pnpm build` / `pnpm typecheck` / `pnpm lint` / `pnpm test`
+- Scripts: `npm run build` / `npm run typecheck` / `npm run lint` / `npm run test`

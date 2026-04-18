@@ -11,6 +11,7 @@ function makeContext(overrides?: Partial<TelegramTemplateContext>): TelegramTemp
   return {
     correlationId: 'corr-1',
     timestamp: '2026-04-14T10:00:00.000Z',
+    productType: '',
     payload: { name: 'John', phone: '+79001234567' },
     ...overrides,
   };
@@ -71,7 +72,7 @@ describe('registerTelegramTemplate', () => {
 });
 
 describe('buildTelegramTemplateContext', () => {
-  it('extracts correlationId, timestamp, and payload from a message', () => {
+  it('extracts correlationId, timestamp, productType, and payload from a message', () => {
     const message = {
       type: 'ORDER_SUBMITTED' as const,
       messageId: 'msg-1',
@@ -79,13 +80,30 @@ describe('buildTelegramTemplateContext', () => {
       source: 'orders-intake' as const,
       correlationId: 'corr-xyz',
       version: '1.0' as const,
-      payload: { name: 'Alice', email: 'alice@example.com' },
+      payload: { productType: 'SEO', name: 'Alice', email: 'alice@example.com' },
     };
 
     const ctx = buildTelegramTemplateContext(message);
     expect(ctx.correlationId).toBe('corr-xyz');
     expect(ctx.timestamp).toBe('2026-01-01T00:00:00.000Z');
+    expect(ctx.productType).toBe('SEO');
     expect(ctx.payload).toEqual({ name: 'Alice', email: 'alice@example.com' });
+  });
+
+  it('formats boolean payload fields as Yes / No', () => {
+    const message = {
+      type: 'ORDER_SUBMITTED' as const,
+      messageId: 'msg-2',
+      timestamp: '2026-01-01T00:00:00.000Z',
+      source: 'orders-intake' as const,
+      correlationId: 'corr-bool',
+      version: '1.0' as const,
+      payload: { productType: 'SMM', isUrgent: true, hasContract: false },
+    };
+
+    const ctx = buildTelegramTemplateContext(message);
+    expect(ctx.payload['isUrgent']).toBe('Yes');
+    expect(ctx.payload['hasContract']).toBe('No');
   });
 });
 
@@ -124,5 +142,20 @@ describe('ORDER_SUBMITTED template', () => {
     const template = getTelegramTemplate('ORDER_SUBMITTED');
     const text = template!.text(makeContext({ payload: { note: 'Special: _bold_ *italic*' } }));
     expect(text).toContain('Special: \\_bold\\_ \\*italic\\*');
+  });
+
+  it('renders productType near the top when set', () => {
+    const template = getTelegramTemplate('ORDER_SUBMITTED');
+    const text = template!.text(makeContext({ productType: 'SEO' }));
+    expect(text).toContain('\\*Product:\\* SEO');
+    const productIdx = text.indexOf('Product');
+    const fieldIdx = text.indexOf('\\*name:');
+    expect(productIdx).toBeLessThan(fieldIdx);
+  });
+
+  it('omits productType line when empty', () => {
+    const template = getTelegramTemplate('ORDER_SUBMITTED');
+    const text = template!.text(makeContext({ productType: '' }));
+    expect(text).not.toContain('Product');
   });
 });

@@ -23,12 +23,34 @@ vi.doMock('./messageQueue', async () => {
   };
 });
 
-vi.doMock('../../shared/logger', () => ({
-  logWarn: mockLogWarn,
-  logError: mockLogError,
-}));
+vi.doMock('@shared', async () => {
+  const actual = await vi.importActual<typeof import('@shared')>('@shared');
+  return {
+    ...actual,
+    logWarn: mockLogWarn,
+    logError: mockLogError,
+  };
+});
 
 describe('handler', () => {
+  const consent = {
+    acceptedAt: '2026-04-18T10:00:00.000Z',
+    text: 'I agree to the processing of personal data.',
+    links: [
+      {
+        label: 'Consent',
+        href: 'https://example.com/consent',
+        version: 'v1',
+        effectiveDate: '2026-04-01',
+      },
+    ],
+    userAgent: 'Mozilla/5.0',
+    language: 'ru-RU',
+    timezone: 'Europe/Moscow',
+    screenResolution: '1920x1080',
+    referrer: 'https://example.com',
+  };
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -52,7 +74,7 @@ describe('handler', () => {
 
   it('returns 400 when captchaToken is missing', async () => {
     const handler = await importHandler();
-    const res = await handler({ body: JSON.stringify({ order: { name: 'test' } }) });
+    const res = await handler({ body: JSON.stringify({ order: { name: 'test' }, consent }) });
 
     expect(res.statusCode).toBe(400);
     expect(mockLogWarn).toHaveBeenCalledWith('Captcha token is required', expect.any(Object));
@@ -60,7 +82,7 @@ describe('handler', () => {
 
   it('returns 400 when order is missing', async () => {
     const handler = await importHandler();
-    const res = await handler({ body: JSON.stringify({ captchaToken: 'abc' }) });
+    const res = await handler({ body: JSON.stringify({ captchaToken: 'abc', consent }) });
 
     expect(res.statusCode).toBe(400);
     expect(mockLogWarn).toHaveBeenCalledWith('Order is required', expect.any(Object));
@@ -68,9 +90,31 @@ describe('handler', () => {
 
   it('returns 400 when order is not an object', async () => {
     const handler = await importHandler();
-    const res = await handler({ body: JSON.stringify({ captchaToken: 'abc', order: 'string' }) });
+    const res = await handler({
+      body: JSON.stringify({ captchaToken: 'abc', order: 'string', consent }),
+    });
 
     expect(res.statusCode).toBe(400);
+  });
+
+  it('returns 400 when consent is missing', async () => {
+    const handler = await importHandler();
+    const res = await handler({
+      body: JSON.stringify({ captchaToken: 'abc', order: { name: 'test' } }),
+    });
+
+    expect(res.statusCode).toBe(400);
+    expect(mockLogWarn).toHaveBeenCalledWith('Consent is required', expect.any(Object));
+  });
+
+  it('returns 400 when consent is not an object', async () => {
+    const handler = await importHandler();
+    const res = await handler({
+      body: JSON.stringify({ captchaToken: 'abc', order: { name: 'test' }, consent: 'string' }),
+    });
+
+    expect(res.statusCode).toBe(400);
+    expect(mockLogWarn).toHaveBeenCalledWith('Consent is required', expect.any(Object));
   });
 
   it('returns 400 when captcha validation fails', async () => {
@@ -78,7 +122,7 @@ describe('handler', () => {
 
     const handler = await importHandler();
     const res = await handler({
-      body: JSON.stringify({ captchaToken: 'abc', order: { name: 'test' } }),
+      body: JSON.stringify({ captchaToken: 'abc', order: { name: 'test' }, consent }),
       requestContext: { identity: { sourceIp: '1.2.3.4' }, requestId: 'req-1' },
     });
 
@@ -91,9 +135,9 @@ describe('handler', () => {
     mockSendMessageToQueueAsync.mockResolvedValue('msg-123');
 
     const handler = await importHandler();
-    const order = { name: 'John', phone: '+79991234567' };
+    const order = { productType: 'landing', name: 'John', phone: '+79991234567' };
     const res = await handler({
-      body: JSON.stringify({ captchaToken: 'valid-token', order }),
+      body: JSON.stringify({ captchaToken: 'valid-token', order, consent }),
       requestContext: { identity: { sourceIp: '1.2.3.4' }, requestId: 'req-2' },
     });
 
@@ -106,6 +150,7 @@ describe('handler', () => {
         correlationId: 'req-2',
         version: MESSAGE_VERSION,
         payload: order,
+        consent,
       })
     );
   });
@@ -116,7 +161,11 @@ describe('handler', () => {
 
     const handler = await importHandler();
     const res = await handler({
-      body: JSON.stringify({ captchaToken: 'abc', order: { name: 'test' } }),
+      body: JSON.stringify({
+        captchaToken: 'abc',
+        order: { productType: 'landing', name: 'test' },
+        consent,
+      }),
       requestContext: { identity: { sourceIp: '1.2.3.4' }, requestId: 'req-3' },
     });
 

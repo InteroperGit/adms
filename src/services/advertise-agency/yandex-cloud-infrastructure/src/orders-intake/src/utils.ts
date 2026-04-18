@@ -21,6 +21,10 @@ export function getOrder(body: Record<string, unknown>): unknown {
   return body.order;
 }
 
+export function getConsent(body: Record<string, unknown>): unknown {
+  return body.consent;
+}
+
 export function getRequestId(event: Record<string, unknown>): string {
   const rc = event.requestContext as Record<string, unknown> | undefined;
   return (

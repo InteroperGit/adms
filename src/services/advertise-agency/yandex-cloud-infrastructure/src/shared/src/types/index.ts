@@ -3,6 +3,9 @@ export {
 } from './message';
 
 export {
+    OrderConsentLink,
+    OrderConsentRecord,
+    OrderSubmissionPayload,
     OrderMessageType,
     MESSAGE_VERSION,
     MESSAGE_SOURCE,

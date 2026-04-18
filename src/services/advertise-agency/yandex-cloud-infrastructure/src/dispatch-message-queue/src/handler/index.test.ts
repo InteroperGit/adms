@@ -18,6 +18,17 @@ vi.mock('@shared', () => ({
   logError: vi.fn(),
 }));
 
+const CONSENT = {
+  acceptedAt: '2026-04-18T10:00:00.000Z',
+  text: 'I agree to the terms.',
+  links: [],
+  userAgent: 'Mozilla/5.0',
+  language: 'en',
+  timezone: 'UTC',
+  screenResolution: '1920x1080',
+  referrer: null,
+};
+
 function makeRecord(body: Record<string, unknown>, messageId = 'msg-1'): YMQRecord {
   return {
     event_metadata: {
@@ -66,8 +77,9 @@ describe('handler', () => {
       timestamp: new Date().toISOString(),
       source: 'orders-intake',
       correlationId: 'corr-1',
-      version: '1.0',
+      version: '2.0',
       payload: { name: 'Test' },
+      consent: CONSENT,
     });
 
     await handler(makeEvent([record]));
@@ -123,8 +135,9 @@ describe('handler', () => {
         timestamp: new Date().toISOString(),
         source: 'orders-intake',
         correlationId: 'corr-good',
-        version: '1.0',
+        version: '2.0',
         payload: {},
+        consent: CONSENT,
       },
       'msg-good'
     );
@@ -147,8 +160,9 @@ describe('handler', () => {
       timestamp: new Date().toISOString(),
       source: 'orders-intake',
       correlationId: 'corr-5',
-      version: '1.0',
+      version: '2.0',
       payload: {},
+      consent: CONSENT,
     });
 
     await expect(handler(makeEvent([record]))).rejects.toThrow('All enabled deliveries failed');
@@ -168,8 +182,9 @@ describe('handler', () => {
           timestamp: new Date().toISOString(),
           source: 'orders-intake',
           correlationId: 'corr-1',
-          version: '1.0',
+          version: '2.0',
           payload: { id: 1 },
+          consent: CONSENT,
         },
         'msg-1'
       ),
@@ -180,8 +195,9 @@ describe('handler', () => {
           timestamp: new Date().toISOString(),
           source: 'orders-intake',
           correlationId: 'corr-2',
-          version: '1.0',
+          version: '2.0',
           payload: { id: 2 },
+          consent: CONSENT,
         },
         'msg-2'
       ),
@@ -206,8 +222,9 @@ describe('handler', () => {
       timestamp: new Date().toISOString(),
       source: 'orders-intake',
       correlationId: 'corr-6',
-      version: '1.0',
+      version: '2.0',
       payload: {},
+      consent: CONSENT,
     });
 
     await handler(makeEvent([record]));
@@ -231,8 +248,9 @@ describe('handler', () => {
       timestamp: new Date().toISOString(),
       source: 'orders-intake',
       correlationId: 'corr-7',
-      version: '1.0',
+      version: '2.0',
       payload: {},
+      consent: CONSENT,
     });
 
     await handler(makeEvent([record]));
@@ -255,8 +273,9 @@ describe('handler', () => {
       timestamp: new Date().toISOString(),
       source: 'orders-intake',
       correlationId: 'corr-8',
-      version: '1.0',
+      version: '2.0',
       payload: {},
+      consent: CONSENT,
     });
 
     await handler(makeEvent([record]));
@@ -279,8 +298,9 @@ describe('handler', () => {
       timestamp: new Date().toISOString(),
       source: 'orders-intake',
       correlationId: 'corr-9',
-      version: '1.0',
+      version: '2.0',
       payload: {},
+      consent: CONSENT,
     });
 
     await expect(handler(makeEvent([record]))).rejects.toThrow('All enabled deliveries failed');

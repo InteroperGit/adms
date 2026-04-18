@@ -49,28 +49,47 @@ describe('sendMessageToQueueAsync', () => {
 });
 
 describe('buildOrderMessage', () => {
+  const consent = {
+    acceptedAt: '2026-04-18T10:00:00.000Z',
+    text: 'I agree to the processing of personal data.',
+    links: [
+      {
+        label: 'Consent',
+        href: 'https://example.com/consent',
+        version: 'v1',
+        effectiveDate: '2026-04-01',
+      },
+    ],
+    userAgent: 'Mozilla/5.0',
+    language: 'ru-RU',
+    timezone: 'Europe/Moscow',
+    screenResolution: '1920x1080',
+    referrer: 'https://example.com',
+  };
+
   it('wraps order payload in a structured message', () => {
-    const order = { name: 'John', phone: '+79991234567' };
-    const msg = buildOrderMessage(order, 'req-abc');
+    const order = { name: 'John', phone: '+79991234567', productType: 'landing' };
+    const msg = buildOrderMessage(order, consent, 'req-abc');
 
     expect(msg.type).toBe('ORDER_SUBMITTED');
     expect(msg.source).toBe(MESSAGE_SOURCE);
     expect(msg.correlationId).toBe('req-abc');
     expect(msg.version).toBe(MESSAGE_VERSION);
     expect(msg.payload).toBe(order);
+    expect(msg.consent).toBe(consent);
     expect(typeof msg.messageId).toBe('string');
     expect(typeof msg.timestamp).toBe('string');
   });
 
   it('generates a unique messageId per call', () => {
-    const msg1 = buildOrderMessage({}, 'req-1');
-    const msg2 = buildOrderMessage({}, 'req-1');
+    const msg1 = buildOrderMessage({}, consent, 'req-1');
+    const msg2 = buildOrderMessage({}, consent, 'req-1');
 
     expect(msg1.messageId).not.toBe(msg2.messageId);
   });
 
   it('uses ISO timestamp for timestamp field', () => {
-    const msg = buildOrderMessage({}, 'req-1');
+    const msg = buildOrderMessage({}, consent, 'req-1');
 
     expect(() => new Date(msg.timestamp)).not.toThrow();
   });

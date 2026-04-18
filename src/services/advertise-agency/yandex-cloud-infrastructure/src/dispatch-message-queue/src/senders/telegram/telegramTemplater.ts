@@ -1,9 +1,11 @@
 import type { OrderMessage } from '@shared';
 import { getTelegramTemplateConfig } from '@src/config/templateConfig';
+import { normalizeOrderPayload } from '@src/senders/payloadNormalizer';
 
 export interface TelegramTemplateContext {
   correlationId: string;
   timestamp: string;
+  productType: string;
   payload: Record<string, string>;
 }
 
@@ -22,13 +24,17 @@ function buildOrderTelegramText(context: TelegramTemplateContext): string {
   const config = getTelegramTemplateConfig();
   const header = `\\*${escapeMarkdownV2(config.header)}\\*`;
 
+  const productLine = context.productType
+    ? `\\*${escapeMarkdownV2('Product')}:\\* ${escapeMarkdownV2(context.productType)}`
+    : '';
+
   const fields = Object.entries(context.payload)
     .map(([key, value]) => `\\*${escapeMarkdownV2(key)}:\\* ${escapeMarkdownV2(value)}`)
     .join('\n');
 
   const footer = `\`${escapeMarkdownV2(context.correlationId)}\`${config.footerSeparator}${escapeMarkdownV2(context.timestamp)}`;
 
-  return [header, fields, footer].filter(Boolean).join('\n\n');
+  return [header, productLine, fields, footer].filter(Boolean).join('\n\n');
 }
 
 TELEGRAM_TEMPLATES.set('ORDER_SUBMITTED', {
@@ -44,9 +50,11 @@ export function registerTelegramTemplate(type: string, template: TelegramTemplat
 }
 
 export function buildTelegramTemplateContext(message: OrderMessage): TelegramTemplateContext {
+  const { productType, fields } = normalizeOrderPayload(message.payload as Record<string, unknown>);
   return {
     correlationId: message.correlationId,
     timestamp: message.timestamp,
-    payload: message.payload as Record<string, string>,
+    productType,
+    payload: fields,
   };
 }

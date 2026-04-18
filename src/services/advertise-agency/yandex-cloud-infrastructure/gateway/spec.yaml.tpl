@@ -59,11 +59,62 @@ components:
       required:
         - order
         - captchaToken
+        - consent
       additionalProperties: false
       properties:
         order:
           type: object
+          required:
+            - productType
           additionalProperties: true
+          properties:
+            productType:
+              type: string
+        consent:
+          type: object
+          additionalProperties: true
+          required:
+            - acceptedAt
+            - text
+            - links
+            - userAgent
+            - language
+            - timezone
+            - screenResolution
+            - referrer
+          properties:
+            acceptedAt:
+              type: string
+            text:
+              type: string
+            links:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+                required:
+                  - label
+                  - href
+                properties:
+                  label:
+                    type: string
+                  href:
+                    type: string
+                  version:
+                    type: string
+                  effectiveDate:
+                    type: string
+            userAgent:
+              type: string
+            language:
+              type: string
+            timezone:
+              type: string
+            screenResolution:
+              type: string
+            referrer:
+              type: string
+              nullable: true
         captchaToken:
           type: string
           minLength: 1
