@@ -2,6 +2,7 @@
 // src/components/Header.astro
 import { site } from '@/content/site';
 import { type MenuItem } from '@/types/site';
+import NavLinks from './ui/NavLinks.astro';
 ---
 
 <header class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-lg">
@@ -12,12 +13,7 @@ import { type MenuItem } from '@/types/site';
     </div>
 
     <!-- Правая часть: десктопное меню -->
-    <div class="hidden md:flex items-center gap-6">
-      {site.menu.map((item: MenuItem) => (
-        <a href={item.href} class="link link-hover">{item.label}</a>
-      ))}
-      <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="btn btn-outline btn-sm">{site.phone}</a>
-    </div>
+    <NavLinks items={site.menu} variant="desktop" phone={site.phone} />
 
     <!-- Бургер-кнопка (только на мобильных) -->
     <div class="md:hidden">
@@ -33,13 +29,7 @@ import { type MenuItem } from '@/types/site';
   <input type="checkbox" id="mobile-drawer" class="drawer-toggle" />
   <div class="drawer-side z-50">
     <label for="mobile-drawer" class="drawer-overlay"></label>
-    <ul class="menu p-4 w-72 min-h-full bg-base-200 text-base-content gap-3">
-      {site.menu.map((item: MenuItem) => (
-        <li><a href={item.href}>{item.label}</a></li>
-      ))}
-      <li>
-        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="btn btn-primary btn-block mt-4">Позвонить</a>
-      </li>
-    </ul>
+    <!-- Мобильная навигация -->
+    <NavLinks items={site.menu} variant="mobile" phone={site.phone} />
   </div>
 </header>
