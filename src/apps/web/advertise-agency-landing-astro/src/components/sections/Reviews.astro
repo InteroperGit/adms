@@ -1,17 +1,17 @@
 ---
 // src/components/sections/Reviews.astro
-import type { Review } from '@/types';
 import ReviewCard from '@/components/cards/ReviewCard.astro';
 import Section from '@/components/ui/Section.astro';
-
-export interface Props {
-  reviews: Review[];
-}
-
-const { reviews } = Astro.props;
+import { site } from '@/content/site';
+import { reviews } from '@/content/reviews';
 ---
 
-<Section id="reviews" title="Отзывы клиентов" subtitle="Что говорят о нас наши партнёры и клиенты" background="default">
+<Section
+  id="reviews"
+  title={site.sections.reviews.title}
+  subtitle={site.sections.reviews.subtitle}
+  background="default"
+>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {reviews.map((review) => (
       <ReviewCard review={review} />

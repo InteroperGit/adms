@@ -6,9 +6,13 @@ import Button from '@/components/ui/Button.astro';
 import Section from '@/components/ui/Section.astro';
 ---
 
-<Section id="contacts" title="Как нас найти" subtitle="Свяжитесь с нами удобным для вас способом" background="gradient">
+<Section
+  id="contacts"
+  title={site.sections.contacts.title}
+  subtitle={site.sections.contacts.subtitle}
+  background="gradient"
+>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- Блок контактов -->
     <div class="lg:col-span-1">
       <div class="p-6 rounded-3xl bg-base-100 shadow-lg border border-base-300 h-64 lg:h-80 flex flex-col justify-center">
         <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
@@ -22,14 +26,8 @@ import Section from '@/components/ui/Section.astro';
           workHoursWeekend={site.workHoursWeekend}
           class="text-sm"
         />
-        <div class="mt-4">
-          <Button variant="outline" size="md" href={`mailto:${site.email}`} class="w-full">
-            ✉️ Написать нам
-          </Button>
-        </div>
       </div>
     </div>
-    <!-- Карта -->
     <div class="lg:col-span-2">
       <div class="w-full h-64 lg:h-80 rounded-3xl overflow-hidden shadow-lg border border-base-300">
         <iframe
