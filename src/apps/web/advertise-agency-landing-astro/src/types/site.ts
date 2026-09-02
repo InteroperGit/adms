@@ -8,6 +8,11 @@ export interface LegalItem {
   href: string;
 }
 
+export interface SectionContent {
+  title: string;
+  subtitle?: string;
+}
+
 export interface SiteConfig {
   title: string;
   description: string;
@@ -20,6 +25,12 @@ export interface SiteConfig {
   mapSrc: string;
   menu: MenuItem[];
   legal: LegalItem[];
+  sections: {
+    about: SectionContent;
+    projects: SectionContent;
+    reviews: SectionContent;
+    contacts: SectionContent;
+  };
   footer: {
     copyright: string;
   };

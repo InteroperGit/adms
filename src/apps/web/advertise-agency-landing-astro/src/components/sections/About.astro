@@ -1,37 +1,27 @@
 ---
 // src/components/sections/About.astro
 import Section from '@/components/ui/Section.astro';
+import { site } from '@/content/site';
+import { about } from '@/content/about';
 ---
 
-<Section id="about" title="О нас" background="default">
+<Section id="about" title={site.sections.about.title} background="default">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
     <div>
-      <!-- Заголовок теперь в Section, поэтому здесь его нет -->
-      <p class="text-lg leading-relaxed mb-4">
-        Мы — команда профессионалов в сфере наружной рекламы: от дизайна и изготовления световых букв, 
-        объёмных конструкций до полного монтажа «под ключ».
-      </p>
-      <p class="text-lg leading-relaxed">
-        Работаем с акрилом, неоном, светодиодами, металлокаркасами. Гарантируем качество, сроки и индивидуальный подход.
-      </p>
+      <p class="text-lg leading-relaxed mb-4">{about.description1}</p>
+      <p class="text-lg leading-relaxed">{about.description2}</p>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-        <div class="stat">
-          <div class="stat-value text-primary">12+</div>
-          <div class="stat-title">лет на рынке</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value text-primary">350+</div>
-          <div class="stat-title">проектов</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value text-primary">100%</div>
-          <div class="stat-title">гарантия</div>
-        </div>
+        {about.stats.map((stat) => (
+          <div class="stat">
+            <div class="stat-value text-primary">{stat.value}</div>
+            <div class="stat-title">{stat.label}</div>
+          </div>
+        ))}
       </div>
     </div>
     <div class="flex justify-center">
       <div class="w-full max-w-sm aspect-square bg-primary/10 rounded-2xl flex items-center justify-center text-6xl text-primary">
-        ✨
+        {about.icon}
       </div>
     </div>
   </div>
