@@ -1,15 +1,19 @@
 {
-  "phone": "📞",
-  "email": "✉️",
-  "address": "📍",
-  "clock": "🕐",
-  "arrow": "→",
-  "butterfly": "🦋",
-  "sparkles": "✨",
-  "mail": "📬",
-  "envelope": "✉️",
+  "phone": "fa-phone",
+  "email": "fa-envelope",
+  "address": "fa-location-dot",
+  "clock": "fa-clock",
+  "arrow": "fa-arrow-right",
+  "butterfly": "fa-butterfly",
+  "sparkles": "fa-wand-magic-sparkles",
+  "mail": "fa-paper-plane",
   "menu": {
-    "open": "☰",
-    "close": "✕"
+    "open": "fa-bars",
+    "close": "fa-xmark"
+  },
+  "social": {
+    "youtube": "fa-youtube",
+    "telegram": "fa-telegram",
+    "vk": "fa-vk"
   }
 }
