@@ -1,0 +1,40 @@
+---
+// src/layouts/LegalLayout.astro
+import Layout from '@/layouts/Layout.astro';
+import type { LegalDocument } from '@/types';
+
+export interface Props {
+  document: LegalDocument;
+  title?: string;
+}
+
+const { document, title } = Astro.props;
+
+---
+
+<Layout title={title || `${document.title} | Рекламастер`}>
+  <div class="container mx-auto px-4 py-12">
+    <div class="prose max-w-3xl mx-auto">
+      <h1 class="text-2xl md:text-2xl font-bold mb-6 text-primary">{document.title} </h1>
+      {document.effectiveDate && (
+        <p><strong>Дата вступления в силу:</strong> {document.effectiveDate}</p>
+      )}
+
+      {document.sections.map((section) => {
+        return (
+          <section class="mt-8">
+            <h2>{section.heading}</h2>
+            {section.content && <p>{section.content}</p>}
+            {section.list && (
+              <ul>
+                {section.list.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )}
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</Layout>
