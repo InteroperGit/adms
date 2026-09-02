@@ -1,9 +1,25 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import { privacyPolicy } from '@/content/legal';
 ---
-<Layout title="Политика конфиденциальности">
+
+<Layout title={`${privacyPolicy.title} | Рекламастер`}>
   <div class="container mx-auto px-4 py-12 prose max-w-3xl">
-    <h1>Политика конфиденциальности</h1>
-    <p>Здесь будет текст политики...</p>
+    <h1>{privacyPolicy.title}</h1>
+    <p><strong>Дата вступления в силу:</strong> {privacyPolicy.effectiveDate}</p>
+
+    {privacyPolicy.sections.map((section) => (
+      <div class="mt-6">
+        <h2>{section.heading}</h2>
+        {section.content && <p>{section.content}</p>}
+        {section.list && (
+          <ul>
+            {section.list.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    ))}
   </div>
 </Layout>
