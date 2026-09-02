@@ -1,0 +1,35 @@
+/* src/styles/scrollbar.css */
+
+/* Стилизация скроллбара для WebKit-браузеров (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--fallback-b1, #f1f1f1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fallback-p, #888);
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fallback-p, #555);
+}
+
+/* Стилизация для Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--fallback-p, #888) var(--fallback-b1, #f1f1f1);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
