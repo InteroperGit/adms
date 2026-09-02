@@ -1,2 +1,10 @@
+/* src/styles/global.css */
+
+/* 1. Стили скролла */
+@import './scrollbar.css';
+
+/* 2. Tailwind CSS */
 @import "tailwindcss";
+
+/* 3. DaisyUI */
 @plugin "daisyui";
