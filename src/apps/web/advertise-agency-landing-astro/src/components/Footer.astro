@@ -1,24 +1,21 @@
 ---
 // src/components/Footer.astro
 import { site } from '@/content/site';
+import { icons } from '@/content/icons';
 import type { LegalItem } from '@/types';
 import ContactInfo from '@/components/ui/ContactInfo.astro';
 ---
 
-<footer class="bg-gradient-to-b from-base-300 to-base-300/80 pt-16 pb-8">
+<footer class="bg-gradient-to-b from-base-200 to-base-300 pt-16 pb-8">
   <div class="container mx-auto px-4">
-    <!-- Основные колонки -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-      <!-- Колонка 1: Логотип и описание -->
       <div class="flex flex-col items-center md:items-start text-center md:text-left">
         <h3 class="text-3xl font-bold text-primary">{site.logoText}</h3>
         <p class="text-sm text-base-content/70 max-w-xs mt-2">
           Наружная реклама под ключ: световые буквы, вывески, неон.
         </p>
       </div>
-
-      <!-- Колонка 2: Юридические ссылки -->
-      <div class="flex flex-col items-center md:items-start md:border-l md:border-base-content/20 md:pl-8">
+      <div class="flex flex-col items-center md:items-start">
         <h4 class="text-sm font-semibold uppercase tracking-wider text-base-content/60 mb-3">
           Информация
         </h4>
@@ -30,9 +27,7 @@ import ContactInfo from '@/components/ui/ContactInfo.astro';
           ))}
         </ul>
       </div>
-
-      <!-- Колонка 3: Контакты -->
-      <div class="flex flex-col items-center md:items-start md:border-l md:border-base-content/20 md:pl-8">
+      <div class="flex flex-col items-center md:items-start">
         <h4 class="text-sm font-semibold uppercase tracking-wider text-base-content/60 mb-3">
           Контакты
         </h4>
@@ -46,12 +41,10 @@ import ContactInfo from '@/components/ui/ContactInfo.astro';
         />
       </div>
     </div>
-
-    <!-- Разделитель и копирайт -->
-    <div class="border-t border-base-content/30 mt-12 pt-6 text-center text-sm text-base-content/70">
+    <div class="border-t border-base-content/20 mt-12 pt-6 text-center text-sm text-base-content/50">
       <p>
         © {new Date().getFullYear()} {site.logoText}. Все права защищены.
-        <span class="inline-block ml-1">🦋</span>
+        <span class="inline-block ml-1 text-primary">{icons.butterfly}</span>
       </p>
     </div>
   </div>

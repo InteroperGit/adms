@@ -3,6 +3,7 @@
 import Section from '@/components/ui/Section.astro';
 import { site } from '@/content/site';
 import { about } from '@/content/about';
+import { icons } from '@/content/icons';
 ---
 
 <Section id="about" title={site.sections.about.title} background="default">
@@ -21,7 +22,7 @@ import { about } from '@/content/about';
     </div>
     <div class="flex justify-center">
       <div class="w-full max-w-sm aspect-square bg-primary/10 rounded-2xl flex items-center justify-center text-6xl text-primary">
-        {about.icon}
+        {icons.sparkles}
       </div>
     </div>
   </div>

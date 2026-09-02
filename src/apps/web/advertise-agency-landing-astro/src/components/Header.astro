@@ -1,36 +1,25 @@
 ---
 // src/components/Header.astro
 import { site } from '@/content/site';
-import NavLinks from './ui/NavLinks.astro';
-import Button from '@/components/ui/Button.astro';
-
+import { icons } from '@/content/icons';
+import NavLinks from '@/components/ui/NavLinks.astro';
 ---
 
 <header class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-lg">
   <div class="navbar container mx-auto px-4">
-    <!-- Левая часть: логотип -->
     <div class="flex-1">
       <a href="/" class="text-2xl font-bold text-primary">{site.logoText}</a>
     </div>
-
-    <!-- Правая часть: десктопное меню -->
     <NavLinks items={site.menu} variant="desktop" phone={site.phone} />
-
-    <!-- Бургер-кнопка (только на мобильных) -->
     <div class="md:hidden">
       <label for="mobile-drawer" class="btn btn-ghost btn-circle">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+        <span class="text-2xl">{icons.menu.open}</span>
       </label>
     </div>
   </div>
-
-  <!-- Мобильное меню (Drawer) -->
   <input type="checkbox" id="mobile-drawer" class="drawer-toggle" />
   <div class="drawer-side z-50">
     <label for="mobile-drawer" class="drawer-overlay"></label>
-    <!-- Мобильная навигация -->
     <NavLinks items={site.menu} variant="mobile" phone={site.phone} />
   </div>
 </header>

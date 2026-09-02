@@ -1,8 +1,8 @@
 ---
 // src/components/sections/Contacts.astro
 import { site } from '@/content/site';
+import { icons } from '@/content/icons';
 import ContactInfo from '@/components/ui/ContactInfo.astro';
-import Button from '@/components/ui/Button.astro';
 import Section from '@/components/ui/Section.astro';
 ---
 
@@ -16,7 +16,7 @@ import Section from '@/components/ui/Section.astro';
     <div class="lg:col-span-1">
       <div class="p-6 rounded-3xl bg-base-100 shadow-lg border border-base-300 h-64 lg:h-80 flex flex-col justify-center">
         <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-          <span class="text-primary">📬</span> Свяжитесь с нами
+          <span class="text-primary">{icons.mail}</span> Свяжитесь с нами
         </h3>
         <ContactInfo
           address={site.address}
