@@ -1,5 +1,5 @@
 ---
-// src/components/sections/Contacts.astro
+import { site } from '@/content/site';
 ---
 
 <section id="contacts" class="py-16 px-4 bg-base-200">
@@ -9,26 +9,27 @@
       <div class="lg:col-span-1 space-y-4">
         <div class="flex items-center gap-3">
           <span class="text-2xl">📍</span>
-          <span>Москва, ул. Тверская, д. 7</span>
+          <span>{site.address}</span>
         </div>
         <div class="flex items-center gap-3">
           <span class="text-2xl">📞</span>
-          <a href="tel:+78001234567" class="link link-hover">+7 (800) 123-45-67</a>
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="link link-hover">{site.phone}</a>
         </div>
         <div class="flex items-center gap-3">
           <span class="text-2xl">✉️</span>
-          <a href="mailto:info@svetreklama.ru" class="link link-hover">info@svetreklama.ru</a>
+          <a href={`mailto:${site.email}`} class="link link-hover">{site.email}</a>
         </div>
         <div class="mt-6">
           <p class="font-semibold">Режим работы:</p>
-          <p>Пн–Пт: 10:00 – 20:00</p>
-          <p>Сб–Вс: по записи</p>
+          <p>{site.workHours}</p>
+          <p>{site.workHoursWeekend}</p>
         </div>
       </div>
       <div class="lg:col-span-2">
+        <!-- Карта (оставляем статичным iframe) -->
         <div class="w-full h-64 lg:h-80 rounded-xl overflow-hidden shadow-lg">
           <iframe
-            src="https://yandex.ru/map-widget/v1/?um=constructor%3A1a2b3c4d5e6f7g8h9i0j&source=constructor"
+            src={site.mapSrc}
             width="100%"
             height="100%"
             frameborder="0"

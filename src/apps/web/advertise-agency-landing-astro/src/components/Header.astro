@@ -1,22 +1,22 @@
 ---
 // src/components/Header.astro
-// Компонент шапки с логотипом, десктопной навигацией и мобильным бургер-меню
+import { site } from '@/content/site';
+import { type MenuItem } from '@/types/site';
 ---
 
 <header class="sticky top-0 z-40 bg-base-100 shadow-sm">
   <div class="navbar container mx-auto px-4">
     <!-- Левая часть: логотип -->
     <div class="flex-1">
-      <a href="/" class="text-2xl font-bold text-primary">Рекламастер</a>
+      <a href="/" class="text-2xl font-bold text-primary">{site.logoText}</a>
     </div>
 
-    <!-- Правая часть: десктопное меню (видно только на экранах >= md) -->
+    <!-- Правая часть: десктопное меню -->
     <div class="hidden md:flex items-center gap-6">
-      <a href="#about" class="link link-hover">О нас</a>
-      <a href="#projects" class="link link-hover">Проекты</a>
-      <a href="#reviews" class="link link-hover">Отзывы</a>
-      <a href="#contacts" class="link link-hover">Контакты</a>
-      <a href="tel:+78001234567" class="btn btn-outline btn-sm">+7 (800) 123-45-67</a>
+      {site.menu.map((item: MenuItem) => (
+        <a href={item.href} class="link link-hover">{item.label}</a>
+      ))}
+      <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="btn btn-outline btn-sm">{site.phone}</a>
     </div>
 
     <!-- Бургер-кнопка (только на мобильных) -->
@@ -29,21 +29,16 @@
     </div>
   </div>
 
-  <!-- ============================================ -->
-  <!-- Мобильное меню (Drawer) – работает через чекбокс -->
-  <!-- ============================================ -->
+  <!-- Мобильное меню (Drawer) -->
   <input type="checkbox" id="mobile-drawer" class="drawer-toggle" />
   <div class="drawer-side z-50">
-    <!-- Затемнение (overlay) – при клике закрывает -->
     <label for="mobile-drawer" class="drawer-overlay"></label>
-    <!-- Сама панель -->
     <ul class="menu p-4 w-72 min-h-full bg-base-200 text-base-content gap-3">
-      <li><a href="#about">О нас</a></li>
-      <li><a href="#projects">Проекты</a></li>
-      <li><a href="#reviews">Отзывы</a></li>
-      <li><a href="#contacts">Контакты</a></li>
+      {site.menu.map((item: MenuItem) => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
       <li>
-        <a href="tel:+78001234567" class="btn btn-primary btn-block mt-4">Позвонить</a>
+        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="btn btn-primary btn-block mt-4">Позвонить</a>
       </li>
     </ul>
   </div>
