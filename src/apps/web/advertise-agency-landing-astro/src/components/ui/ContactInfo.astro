@@ -1,5 +1,6 @@
 ---
 // src/components/ui/ContactInfo.astro
+import { icons } from '@/content/icons';
 
 export interface Props {
   phone?: string;
@@ -16,25 +17,25 @@ const { phone, email, address, workHours, workHoursWeekend, class: className = '
 <div class={`space-y-3 ${className}`}>
   {address && (
     <div class="flex items-start gap-3">
-      <span class="text-2xl">📍</span>
+      <span class="text-2xl">{icons.address}</span>
       <span>{address}</span>
     </div>
   )}
   {phone && (
     <div class="flex items-center gap-3">
-      <span class="text-2xl">📞</span>
+      <span class="text-2xl">{icons.phone}</span>
       <a href={`tel:${phone.replace(/\s/g, '')}`} class="link link-hover">{phone}</a>
     </div>
   )}
   {email && (
     <div class="flex items-center gap-3">
-      <span class="text-2xl">✉️</span>
+      <span class="text-2xl">{icons.email}</span>
       <a href={`mailto:${email}`} class="link link-hover">{email}</a>
     </div>
   )}
   {workHours && (
     <div class="flex items-start gap-3">
-      <span class="text-2xl">🕐</span>
+      <span class="text-2xl">{icons.clock}</span>
       <div>
         <p>{workHours}</p>
         {workHoursWeekend && <p>{workHoursWeekend}</p>}

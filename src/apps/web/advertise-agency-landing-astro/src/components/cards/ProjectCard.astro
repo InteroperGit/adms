@@ -2,6 +2,7 @@
 // src/components/cards/ProjectCard.astro
 import type { Project } from '@/types';
 import Button from '@/components/ui/Button.astro';
+import { icons } from '@/content/icons';
 
 export interface Props {
   project: Project;
@@ -10,7 +11,7 @@ export interface Props {
 const { project } = Astro.props;
 ---
 
-<div class="card bg-base-100 shadow-2xl hover:shadow-[0_20px_50px_rgba(100,100,100,0.2)] transition-all rounded-3xl overflow-hidden">
+<div class="card bg-base-100 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] transition-all hover:scale-[1.02] rounded-3xl overflow-hidden">
   <figure>
     <img
       src={project.image}
@@ -29,9 +30,7 @@ const { project } = Astro.props;
     <div class="card-actions justify-end mt-4">
       <Button variant="primary" size="sm" href={`/projects/${project.id}`}>
         Подробнее
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
+        <span class="ml-1">{icons.arrow}</span>
       </Button>
     </div>
   </div>
