@@ -1,0 +1,55 @@
+---
+// src/components/ui/Button.astro
+
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: any; // для передачи остальных атрибутов
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+// Базовые классы DaisyUI
+const baseClasses = 'btn';
+const variantClasses = {
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  outline: 'btn-outline',
+  ghost: 'btn-ghost',
+  link: 'btn-link',
+};
+const sizeClasses = {
+  sm: 'btn-sm',
+  md: 'btn-md',
+  lg: 'btn-lg',
+};
+
+const combinedClasses = [
+  baseClasses,
+  variantClasses[variant],
+  sizeClasses[size],
+  className,
+].filter(Boolean).join(' ');
+---
+
+{
+  href ? (
+    <a href={href} class={combinedClasses} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={combinedClasses} {...rest}>
+      <slot />
+    </button>
+  )
+}
