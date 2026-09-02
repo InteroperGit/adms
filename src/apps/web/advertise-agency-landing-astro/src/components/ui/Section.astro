@@ -1,0 +1,38 @@
+---
+// src/components/ui/Section.astro
+
+export interface Props {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  background?: 'default' | 'gradient' | 'dark' | 'none';
+  class?: string;
+}
+
+const { id, title, subtitle, background = 'default', class: className = '' } = Astro.props;
+
+const bgClasses = {
+  default: 'bg-base-100',
+  gradient: 'bg-gradient-to-b from-base-100 to-base-200/50',
+  dark: 'bg-base-200',
+  none: '',
+};
+
+const sectionClasses = [
+  'py-16 px-4',
+  bgClasses[background],
+  className,
+].filter(Boolean).join(' ');
+---
+
+<section id={id} class={sectionClasses}>
+  <div class="container mx-auto">
+    {title && (
+      <h2 class="text-4xl font-bold text-center mb-4">{title}</h2>
+    )}
+    {subtitle && (
+      <p class="text-center text-gray-500 mb-12 max-w-2xl mx-auto">{subtitle}</p>
+    )}
+    <slot />
+  </div>
+</section>

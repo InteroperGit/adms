@@ -2,44 +2,45 @@
 // src/components/sections/Contacts.astro
 import { site } from '@/content/site';
 import ContactInfo from '@/components/ui/ContactInfo.astro';
+import Button from '@/components/ui/Button.astro';
+import Section from '@/components/ui/Section.astro';
 ---
 
-<section id="contacts" class="py-16 px-4 bg-gradient-to-b from-base-200/50 to-base-100">
-  <div class="container mx-auto">
-    <h2 class="text-4xl font-bold text-center mb-4">Как нас найти</h2>
-    <p class="text-center text-gray-500 mb-12 max-w-2xl mx-auto">
-      Свяжитесь с нами удобным для вас способом
-    </p>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Блок контактов -->
-      <div class="lg:col-span-1">
-        <div class="p-6 rounded-3xl bg-base-100 shadow-lg border border-base-300 h-64 lg:h-80 flex flex-col justify-center">
-          <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-            <span class="text-primary">📬</span> Свяжитесь с нами
-          </h3>
-          <ContactInfo
-            address={site.address}
-            phone={site.phone}
-            email={site.email}
-            workHours={site.workHours}
-            workHoursWeekend={site.workHoursWeekend}
-            class="text-sm"
-          />
-        </div>
-      </div>
-      <!-- Карта -->
-      <div class="lg:col-span-2">
-        <div class="w-full h-64 lg:h-80 rounded-3xl overflow-hidden shadow-lg border border-base-300">
-          <iframe
-            src={site.mapSrc}
-            width="100%"
-            height="100%"
-            frameborder="0"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
+<Section id="contacts" title="Как нас найти" subtitle="Свяжитесь с нами удобным для вас способом" background="gradient">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Блок контактов -->
+    <div class="lg:col-span-1">
+      <div class="p-6 rounded-3xl bg-base-100 shadow-lg border border-base-300 h-64 lg:h-80 flex flex-col justify-center">
+        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+          <span class="text-primary">📬</span> Свяжитесь с нами
+        </h3>
+        <ContactInfo
+          address={site.address}
+          phone={site.phone}
+          email={site.email}
+          workHours={site.workHours}
+          workHoursWeekend={site.workHoursWeekend}
+          class="text-sm"
+        />
+        <div class="mt-4">
+          <Button variant="outline" size="md" href={`mailto:${site.email}`} class="w-full">
+            ✉️ Написать нам
+          </Button>
         </div>
       </div>
     </div>
+    <!-- Карта -->
+    <div class="lg:col-span-2">
+      <div class="w-full h-64 lg:h-80 rounded-3xl overflow-hidden shadow-lg border border-base-300">
+        <iframe
+          src={site.mapSrc}
+          width="100%"
+          height="100%"
+          frameborder="0"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
   </div>
-</section>
+</Section>

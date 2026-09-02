@@ -1,11 +1,12 @@
 ---
 // src/components/sections/About.astro
+import Section from '@/components/ui/Section.astro';
 ---
 
-<section id="about" class="py-16 px-4 container mx-auto">
+<Section id="about" title="О нас" background="default">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
     <div>
-      <h2 class="text-4xl font-bold mb-6">О нас</h2>
+      <!-- Заголовок теперь в Section, поэтому здесь его нет -->
       <p class="text-lg leading-relaxed mb-4">
         Мы — команда профессионалов в сфере наружной рекламы: от дизайна и изготовления световых букв, 
         объёмных конструкций до полного монтажа «под ключ».
@@ -34,4 +35,4 @@
       </div>
     </div>
   </div>
-</section>
+</Section>

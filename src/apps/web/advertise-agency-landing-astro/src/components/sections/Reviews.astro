@@ -2,6 +2,7 @@
 // src/components/sections/Reviews.astro
 import type { Review } from '@/types';
 import ReviewCard from '@/components/cards/ReviewCard.astro';
+import Section from '@/components/ui/Section.astro';
 
 export interface Props {
   reviews: Review[];
@@ -10,11 +11,10 @@ export interface Props {
 const { reviews } = Astro.props;
 ---
 
-<section id="reviews" class="py-16 px-4 container mx-auto">
-  <h2 class="text-4xl font-bold text-center mb-12">Отзывы клиентов</h2>
+<Section id="reviews" title="Отзывы клиентов" subtitle="Что говорят о нас наши партнёры и клиенты" background="default">
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {reviews.map((review) => (
       <ReviewCard review={review} />
     ))}
   </div>
-</section>
+</Section>
