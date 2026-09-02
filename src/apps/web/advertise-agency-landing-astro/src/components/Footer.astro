@@ -1,0 +1,16 @@
+---
+// src/components/Footer.astro
+// Подвал с копирайтом и ссылками на юридические страницы
+---
+
+<footer class="footer footer-center p-10 bg-base-200 text-base-content rounded">
+  <div class="grid grid-flow-col gap-4">
+    <a href="/privacy-policy" class="link link-hover">Политика конфиденциальности</a>
+    <a href="/terms-of-use" class="link link-hover">Согласие на обработку</a>
+  </div>
+  <div>
+    <p class="text-sm">
+      © {new Date().getFullYear()} Рекламастер. Все права защищены.
+    </p>
+  </div>
+</footer>
