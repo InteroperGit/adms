@@ -1,6 +1,7 @@
 ---
 // src/components/sections/Projects.astro
 import type { Project } from '@/types';
+import ProjectCard from '@/components/cards/ProjectCard.astro';
 
 export interface Props {
   projects: Project[];
@@ -13,20 +14,8 @@ const { projects } = Astro.props;
   <div class="container mx-auto">
     <h2 class="text-4xl font-bold text-center mb-12">Наши проекты</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {projects.map((p) => (
-        <div class="card bg-base-100 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] transition-all hover:scale-[1.02] rounded-3xl overflow-hidden">
-          <figure>
-            <img src={p.image} alt={p.title} class="w-full h-48 object-cover rounded-t-3xl" />
-          </figure>
-          <div class="card-body">
-            <h3 class="card-title">{p.title}</h3>
-            <p class="text-sm text-gray-500">Клиент: {p.client}</p>
-            <p>{p.shortDescription}</p>
-            <div class="card-actions justify-end mt-4">
-              <a href={`/projects/${p.id}`} class="btn btn-primary btn-sm">Подробнее</a>
-            </div>
-          </div>
-        </div>
+      {projects.map((project) => (
+        <ProjectCard project={project} />
       ))}
     </div>
   </div>

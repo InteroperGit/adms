@@ -1,0 +1,37 @@
+---
+// src/components/cards/ProjectCard.astro
+import type { Project } from '@/types';
+
+export interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<div class="card bg-base-100 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] transition-all hover:scale-[1.02] rounded-3xl overflow-hidden">
+  <figure>
+    <img
+      src={project.image}
+      alt={project.title}
+      class="w-full h-48 object-cover rounded-t-3xl"
+      loading="lazy"
+    />
+  </figure>
+  <div class="card-body">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="badge badge-ghost text-xs">Клиент</span>
+      <span class="text-sm text-gray-500">{project.client}</span>
+    </div>
+    <h3 class="card-title text-xl font-bold">{project.title}</h3>
+    <p class="text-sm text-gray-600 leading-relaxed">{project.shortDescription}</p>
+    <div class="card-actions justify-end mt-4">
+      <a href={`/projects/${project.id}`} class="btn btn-primary btn-sm">
+        Подробнее
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
