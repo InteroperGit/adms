@@ -1,0 +1,37 @@
+---
+// src/layouts/Layout.astro
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import CookieBanner from '@/components/CookieBanner';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Рекламное агентство Рекламастер', description = 'Световые буквы, вывески, неон' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Подключаем глобальные стили (Tailwind + DaisyUI) -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+    
+    <!-- Иконка (можно оставить стандартную или заменить) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1">
+      <slot /> <!-- сюда будет вставляться содержимое страниц -->
+    </main>
+    <Footer />
+    <CookieBanner client:load />
+  </body>
+</html>
