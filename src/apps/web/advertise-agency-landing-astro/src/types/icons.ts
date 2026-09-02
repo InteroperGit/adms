@@ -7,9 +7,13 @@ export interface Icons {
   butterfly: string;
   sparkles: string;
   mail: string;
-  envelope: string;
   menu: {
     open: string;
     close: string;
+  };
+  social: {
+    youtube: string;
+    telegram: string;
+    vk: string;
   };
 }

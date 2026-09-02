@@ -4,8 +4,6 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import CookieBanner from '@/components/CookieBanner';
 import { site } from '@/content/site';
-
-// ✅ Импортируем глобальные стили — Astro сам соберёт их в финальный CSS
 import '/src/styles/global.css';
 
 export interface Props {
@@ -17,20 +15,20 @@ const { title = site.title, description = site.description } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    
-    <!-- Иконка (можно оставить стандартную или заменить) -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 scroll-smooth">
     <Header />
     <main class="flex-1">
-      <slot /> <!-- сюда будет вставляться содержимое страниц -->
+      <slot />
     </main>
     <Footer />
     <CookieBanner client:load />

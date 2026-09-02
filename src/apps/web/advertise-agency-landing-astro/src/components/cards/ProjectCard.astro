@@ -11,7 +11,7 @@ export interface Props {
 const { project } = Astro.props;
 ---
 
-<div class="card bg-base-100 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] transition-all hover:scale-[1.02] rounded-3xl overflow-hidden">
+<div class="card bg-base-100 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] transition-all rounded-3xl overflow-hidden">
   <figure>
     <img
       src={project.image}
@@ -30,7 +30,7 @@ const { project } = Astro.props;
     <div class="card-actions justify-end mt-4">
       <Button variant="primary" size="sm" href={`/projects/${project.id}`}>
         Подробнее
-        <span class="ml-1">{icons.arrow}</span>
+        <i class={`fas ${icons.arrow} ml-1`}></i>
       </Button>
     </div>
   </div>
