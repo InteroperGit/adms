@@ -1,23 +1,58 @@
 ---
 // src/components/Footer.astro
-// Подвал с копирайтом и ссылками на юридические страницы
-
-import { site } from "@/content/site";
-import { type LegalItem } from "@/types/site";
-
+import { site } from '@/content/site';
+import type { LegalItem } from '@/types';
+import ContactInfo from '@/components/ui/ContactInfo.astro';
 ---
 
-<footer class="footer footer-center p-10 bg-base-200 text-base-content rounded">
-  <div class="grid grid-flow-col gap-4">
-    {
-      site.legal.map((item: LegalItem) => (
-        <a href={item.href} class="link link-hover">{item.label}</a>
-      ))
-    }
-  </div>
-  <div>
-    <p class="text-sm">
-      © {new Date().getFullYear()} {site.footer.copyright}
-    </p>
+<footer class="bg-gradient-to-b from-base-300 to-base-300/80 pt-16 pb-8">
+  <div class="container mx-auto px-4">
+    <!-- Основные колонки -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+      <!-- Колонка 1: Логотип и описание -->
+      <div class="flex flex-col items-center md:items-start text-center md:text-left">
+        <h3 class="text-3xl font-bold text-primary">{site.logoText}</h3>
+        <p class="text-sm text-base-content/70 max-w-xs mt-2">
+          Наружная реклама под ключ: световые буквы, вывески, неон.
+        </p>
+      </div>
+
+      <!-- Колонка 2: Юридические ссылки -->
+      <div class="flex flex-col items-center md:items-start md:border-l md:border-base-content/20 md:pl-8">
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-base-content/60 mb-3">
+          Информация
+        </h4>
+        <ul class="space-y-2">
+          {site.legal.map((item: LegalItem) => (
+            <li>
+              <a href={item.href} class="link link-hover text-sm">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Колонка 3: Контакты -->
+      <div class="flex flex-col items-center md:items-start md:border-l md:border-base-content/20 md:pl-8">
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-base-content/60 mb-3">
+          Контакты
+        </h4>
+        <ContactInfo
+          phone={site.phone}
+          email={site.email}
+          address={site.address}
+          workHours={site.workHours}
+          workHoursWeekend={site.workHoursWeekend}
+          class="text-sm"
+        />
+      </div>
+    </div>
+
+    <!-- Разделитель и копирайт -->
+    <div class="border-t border-base-content/30 mt-12 pt-6 text-center text-sm text-base-content/70">
+      <p>
+        © {new Date().getFullYear()} {site.logoText}. Все права защищены.
+        <span class="inline-block ml-1">🦋</span>
+      </p>
+    </div>
   </div>
 </footer>
