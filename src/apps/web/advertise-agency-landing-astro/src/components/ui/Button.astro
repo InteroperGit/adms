@@ -7,7 +7,7 @@ export interface Props {
   href?: string;
   type?: 'button' | 'submit' | 'reset';
   class?: string;
-  [key: string]: any; // для передачи остальных атрибутов
+  [key: string]: any;
 }
 
 const {
@@ -19,7 +19,6 @@ const {
   ...rest
 } = Astro.props;
 
-// Базовые классы DaisyUI
 const baseClasses = 'btn';
 const variantClasses = {
   primary: 'btn-primary',
@@ -34,10 +33,16 @@ const sizeClasses = {
   lg: 'btn-lg',
 };
 
+// Для outline гарантируем primary-цвет через явные классы
+const outlineClasses = variant === 'outline'
+  ? 'border-primary text-primary hover:bg-primary hover:text-primary-content'
+  : '';
+
 const combinedClasses = [
   baseClasses,
   variantClasses[variant],
   sizeClasses[size],
+  outlineClasses,
   className,
 ].filter(Boolean).join(' ');
 ---
