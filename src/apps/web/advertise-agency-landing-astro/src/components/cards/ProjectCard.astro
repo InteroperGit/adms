@@ -1,6 +1,7 @@
 ---
 // src/components/cards/ProjectCard.astro
 import type { Project } from '@/types';
+import Button from '@/components/ui/Button.astro';
 
 export interface Props {
   project: Project;
@@ -26,12 +27,12 @@ const { project } = Astro.props;
     <h3 class="card-title text-xl font-bold">{project.title}</h3>
     <p class="text-sm text-gray-600 leading-relaxed">{project.shortDescription}</p>
     <div class="card-actions justify-end mt-4">
-      <a href={`/projects/${project.id}`} class="btn btn-primary btn-sm">
+      <Button variant="primary" size="sm" href={`/projects/${project.id}`}>
         Подробнее
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
-      </a>
+      </Button>
     </div>
   </div>
 </div>
