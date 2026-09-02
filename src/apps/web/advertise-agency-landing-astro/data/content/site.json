@@ -1,0 +1,24 @@
+{
+  "title": "Рекламное агентство Рекламастер",
+  "description": "Световые буквы, вывески, неон — наружная реклама под ключ",
+  "logoText": "Рекламастер",
+  "phone": "8 8202 600-635",
+  "email": "info@rmaster35.ru",
+  "address": "г. Череповец, ул. Металлургов, д. 9",
+  "workHours": "Пн–Пт: 09:00 – 18:00",
+  "workHoursWeekend": "Сб–Вс: выходной",
+  "mapSrc": "https://yandex.ru/map-widget/v1/?um=constructor%3A8e9d4dd92e269a69df84774136ae2871466aa55b34f941cb126cfc03efab1fb8&source=constructorLink",
+  "menu": [
+    { "label": "О нас", "href": "#about" },
+    { "label": "Проекты", "href": "#projects" },
+    { "label": "Отзывы", "href": "#reviews" },
+    { "label": "Контакты", "href": "#contacts" }
+  ],
+  "legal": [
+    { "label": "Политика конфиденциальности", "href": "/privacy-policy" },
+    { "label": "Согласие на обработку", "href": "/terms-of-use" }
+  ],
+  "footer": {
+    "copyright": "Все права защищены"
+  }
+}

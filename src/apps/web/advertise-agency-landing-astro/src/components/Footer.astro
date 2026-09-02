@@ -1,16 +1,23 @@
 ---
 // src/components/Footer.astro
 // Подвал с копирайтом и ссылками на юридические страницы
+
+import { site } from "@/content/site";
+import { type LegalItem } from "@/types/site";
+
 ---
 
 <footer class="footer footer-center p-10 bg-base-200 text-base-content rounded">
   <div class="grid grid-flow-col gap-4">
-    <a href="/privacy-policy" class="link link-hover">Политика конфиденциальности</a>
-    <a href="/terms-of-use" class="link link-hover">Согласие на обработку</a>
+    {
+      site.legal.map((item: LegalItem) => (
+        <a href={item.href} class="link link-hover">{item.label}</a>
+      ))
+    }
   </div>
   <div>
     <p class="text-sm">
-      © {new Date().getFullYear()} Рекламастер. Все права защищены.
+      © {new Date().getFullYear()} {site.footer.copyright}
     </p>
   </div>
 </footer>

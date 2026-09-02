@@ -3,6 +3,7 @@
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import CookieBanner from '@/components/CookieBanner';
+import { site } from '@/content/site';
 
 // ✅ Импортируем глобальные стили — Astro сам соберёт их в финальный CSS
 import '/src/styles/global.css';
@@ -12,7 +13,7 @@ export interface Props {
   description?: string;
 }
 
-const { title = 'Рекламное агентство Рекламастер', description = 'Световые буквы, вывески, неон' } = Astro.props;
+const { title = site.title, description = site.description } = Astro.props;
 ---
 
 <!DOCTYPE html>
