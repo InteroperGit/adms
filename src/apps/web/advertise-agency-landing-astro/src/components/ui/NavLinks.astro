@@ -23,7 +23,7 @@ const { items, variant, phone } = Astro.props;
       </Button>
     </div>
   ) : (
-    <ul class="menu p-4 w-72 min-h-full bg-base-200 text-base-content gap-3">
+    <ul data-mobile-nav class="menu p-4 w-72 min-h-full bg-base-200 text-base-content gap-3">
       {items.map((item) => (
         <li><a href={item.href}>{item.label}</a></li>
       ))}
@@ -35,3 +35,12 @@ const { items, variant, phone } = Astro.props;
     </ul>
   )
 }
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('[data-mobile-nav] a').forEach((link) => {
+    link.addEventListener('click', () => {
+      const drawer = document.querySelector<HTMLInputElement>('#mobile-drawer');
+      if (drawer) drawer.checked = false;
+    });
+  });
+</script>
