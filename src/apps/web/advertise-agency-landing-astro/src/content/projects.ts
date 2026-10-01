@@ -1,5 +1,4 @@
-import data from '@/data/content/projects.json';
-import type { Project } from '@/types';
+﻿import data from '@/data/content/projects.json';
+import { parseContent, projectsSchema } from './schemas';
 
-// Типизируем данные
-export const projects = data as Project[];
+export const projects = parseContent(projectsSchema, data, 'data/content/projects.json');
