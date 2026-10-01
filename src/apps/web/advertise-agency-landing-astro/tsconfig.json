@@ -2,8 +2,6 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "strict": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"],

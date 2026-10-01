@@ -60,6 +60,12 @@ pnpm build
 
 Each command must fail the job on a nonzero exit status. Include workflow-file changes in the trigger paths when a CI configuration is created, so edits to the job itself are verified.
 
+## Cookie preference banner
+
+`src/components/CookieBanner.astro` uses a small browser script to save either `accepted` or `declined` under the `cookieConsent` localStorage key. Either choice hides the banner and persists across page loads when storage is available. If storage is blocked or a write fails, visitors can still dismiss it for the current page; it may reappear on the next page load.
+
+This preference only controls the banner. It does not gate the external map or other resources. Changing consent wording or resource loading requires a separate product requirement.
+
 ## Content sources and validation
 
 Edit content in `data/content/*.json` (legal documents are in `data/content/legal/`). These JSON files remain the source of truth; do not duplicate their text in components or TypeScript objects. The small settings documents keep their typed exports in `src/content/`.

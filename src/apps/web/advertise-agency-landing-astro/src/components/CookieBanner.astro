@@ -1,0 +1,34 @@
+<div id="cookie-banner" hidden class="fixed bottom-0 left-0 right-0 z-50 bg-base-100 border-t border-base-300 shadow-lg p-4">
+  <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-center sm:text-left">Мы используем файлы cookie. Продолжая, вы соглашаетесь с <a href="/privacy-policy" class="link link-primary">Политикой конфиденциальности</a> и <a href="/terms-of-use" class="link link-primary">Согласием на обработку</a>.</p>
+    <div class="flex gap-2">
+      <button type="button" data-cookie-choice="declined" class="btn btn-ghost btn-sm">Отклонить</button>
+      <button type="button" data-cookie-choice="accepted" class="btn btn-primary btn-sm">Принять</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const banner = document.querySelector<HTMLElement>('#cookie-banner');
+
+  if (banner) {
+    let consent: string | null = null;
+    try {
+      consent = localStorage.getItem('cookieConsent');
+    } catch {
+      // Storage may be blocked; still let visitors dismiss the banner.
+    }
+    banner.hidden = Boolean(consent);
+
+    banner.querySelectorAll<HTMLButtonElement>('[data-cookie-choice]').forEach((button) => {
+      button.addEventListener('click', () => {
+        try {
+          localStorage.setItem('cookieConsent', button.dataset.cookieChoice!);
+        } catch {
+          // Dismiss for this page even when the choice cannot be persisted.
+        }
+        banner.hidden = true;
+      });
+    });
+  }
+</script>
