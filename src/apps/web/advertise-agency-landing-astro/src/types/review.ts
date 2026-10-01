@@ -1,8 +1,4 @@
-export interface Review {
-  id: number;
-  name: string;
-  position: string;
-  company: string;
-  text: string;
-  avatar: string;
-}
+﻿import type { z } from 'astro/zod';
+import type { reviewSchema } from '@/content/schemas';
+
+export type Review = z.infer<typeof reviewSchema>;
