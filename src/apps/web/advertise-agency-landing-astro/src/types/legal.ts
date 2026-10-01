@@ -6,6 +6,7 @@ export interface LegalSection {
 
 export interface LegalDocument {
   title: string;
+  description: string;
   effectiveDate: string;
   sections: LegalSection[];
 }

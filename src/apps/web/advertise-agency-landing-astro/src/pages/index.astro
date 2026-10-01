@@ -4,9 +4,11 @@ import About from '@/components/sections/About.astro';
 import Projects from '@/components/sections/Projects.astro';
 import Reviews from '@/components/sections/Reviews.astro';
 import Contacts from '@/components/sections/Contacts.astro';
+import { site } from '@/content/site';
 ---
 
-<Layout title="Главная | Рекламастер">
+<Layout title="Главная">
+  <h1 class="sr-only">{site.title}</h1>
   <About />
   <Projects />
   <Reviews />
