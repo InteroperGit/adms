@@ -32,6 +32,7 @@ export interface SiteConfig {
     contacts: SectionContent;
   };
   footer: {
+    description: string;
     copyright: string;
   };
 }

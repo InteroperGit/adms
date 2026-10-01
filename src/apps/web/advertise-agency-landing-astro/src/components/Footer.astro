@@ -12,7 +12,7 @@ import ContactInfo from '@/components/ui/ContactInfo.astro';
       <div class="flex flex-col items-center md:items-start text-center md:text-left">
         <h3 class="text-3xl font-bold text-primary">{site.logoText}</h3>
         <p class="text-sm text-base-content/70 max-w-xs mt-2">
-          Наружная реклама под ключ: световые буквы, вывески, неон.
+          {site.footer.description}
         </p>
       </div>
       <div class="flex flex-col items-center md:items-start">
@@ -43,7 +43,7 @@ import ContactInfo from '@/components/ui/ContactInfo.astro';
     </div>
     <div class="border-t border-base-content/20 mt-12 pt-6 text-center text-sm text-base-content/50">
       <p>
-        © {new Date().getFullYear()} {site.logoText}. Все права защищены.
+        © {new Date().getFullYear()} {site.logoText}. {site.footer.copyright}.
         <i class={`fas ${icons.butterfly} ml-1 text-primary`}></i>
       </p>
     </div>
