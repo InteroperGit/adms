@@ -71,6 +71,8 @@ project-root/
 ├── docs/codex/              # For structured Plan-Todo-Learn protocol
 │   ├── plan/                # Plans and goals
 │   ├── todo/                # Active tasks
+│   ├── fixed/               # Completed tasks grouped by completion date
+│   │   └── yyyyMMdd/        # e.g., 20261001/; tasks and verification results
 │   └── learn/               # Postmortems and lessons learned
 ├── AGENTS.md                # Main instruction file for Codex (root)
 ├── GOALS.md                 # Goals and success criteria
@@ -164,6 +166,7 @@ The file name must match the agent name in the TOML file:
 4. When naming files, strictly follow the rules in Section 2.
 5. Do not create task files in the project root, except for `AGENTS.md`, `GOALS.md`, `PLANS.md`, and `PROMPTS.md`.
 6. If unsure where a file belongs, ask the user or use `docs/codex/` as a safe default.
+7. After completing and verifying a task, mark it completed, record its changes and verification results, and move it from `docs/codex/todo/` to `docs/codex/fixed/yyyyMMdd/`. Use the completion date in the project's local timezone (for example, `20261001`), creating the date folder if needed. Preserve its numbered filename and update relative links in the moved task and links and status in the corresponding plan. Pending tasks remain in `todo/`.
 
 ---
 
@@ -184,6 +187,7 @@ The file name must match the agent name in the TOML file:
 | Development phase      | `harness/build/`       | `phase-01-create-list.md`        |
 | Plan                   | `docs/codex/plan/`     | `20231027_100000_plan.md`        |
 | Current task           | `docs/codex/todo/`     | `001-feature.md`                 |
+| Completed task         | `docs/codex/fixed/yyyyMMdd/` | `20261001/001-feature.md` (relative to `fixed/`) |
 | Postmortem             | `docs/codex/learn/`    | `20231027_110000_learn.md`       |
 | Custom agent           | `.codex/agents/`       | `scaffolder.toml`                |
 | Skill                  | `.codex/skills/`       | `database-migration.md`          |
