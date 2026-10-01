@@ -7,7 +7,10 @@
 @import "tailwindcss";
 
 /* 3. DaisyUI */
-@plugin "daisyui";
+/* Tailwind 4 uses automatic source detection; theme configuration lives here. */
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
 
 /* Переопределяем цвета для светлой темы */
 :root,
