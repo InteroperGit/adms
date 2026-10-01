@@ -3,6 +3,7 @@
 import { site } from '@/content/site';
 import { icons } from '@/content/icons';
 import NavLinks from '@/components/ui/NavLinks.astro';
+import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
 ---
 
 <header class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-lg">
@@ -12,14 +13,10 @@ import NavLinks from '@/components/ui/NavLinks.astro';
     </div>
     <NavLinks items={site.menu} variant="desktop" phone={site.phone} />
     <div class="md:hidden">
-      <label for="mobile-drawer" class="btn btn-ghost btn-circle">
-        <i class={`fas ${icons.menu.open} text-2xl`}></i>
-      </label>
+      <button type="button" id="mobile-menu-open" class="btn btn-ghost btn-circle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false" aria-haspopup="dialog">
+        <i class={`fas ${icons.menu.open} text-2xl`} aria-hidden="true"></i>
+      </button>
     </div>
   </div>
-  <input type="checkbox" id="mobile-drawer" class="drawer-toggle" />
-  <div class="drawer-side z-50">
-    <label for="mobile-drawer" class="drawer-overlay"></label>
-    <NavLinks items={site.menu} variant="mobile" phone={site.phone} />
-  </div>
+  <MobileMenuDialog items={site.menu} phone={site.phone} />
 </header>
