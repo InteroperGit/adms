@@ -16,7 +16,7 @@ import Section from '@/components/ui/Section.astro';
     <div class="lg:col-span-1">
       <div class="p-6 rounded-3xl bg-base-100 shadow-lg border border-base-300 h-64 lg:h-80 flex flex-col justify-center">
         <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-          <i class={`fas ${icons.mail} text-primary`}></i> Свяжитесь с нами
+          <i class={`fas ${icons.mail} text-primary`} aria-hidden="true"></i> Свяжитесь с нами
         </h3>
         <ContactInfo
           address={site.address}
@@ -32,6 +32,7 @@ import Section from '@/components/ui/Section.astro';
       <div class="w-full h-64 lg:h-80 rounded-3xl overflow-hidden shadow-lg border border-base-300">
         <iframe
           src={site.mapSrc}
+          title={`Карта расположения ${site.logoText}: ${site.address}`}
           width="100%"
           height="100%"
           class="border-0"

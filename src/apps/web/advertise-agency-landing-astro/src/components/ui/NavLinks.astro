@@ -14,16 +14,17 @@ const { items, variant, phone } = Astro.props;
 
 {
   variant === 'desktop' ? (
-    <div class="hidden md:flex items-center gap-6">
+    <nav aria-label="Основная навигация" class="hidden md:flex items-center gap-6">
       {items.map((item) => (
         <a href={item.href} class="link link-hover">{item.label}</a>
       ))}
       <Button variant="outline" size="sm" href={`tel:${phone.replace(/\s/g, '')}`}>
         {phone}
       </Button>
-    </div>
+    </nav>
   ) : (
-    <ul data-mobile-nav class="menu p-4 w-72 min-h-full bg-base-200 text-base-content gap-3">
+    <nav aria-label="Основная навигация">
+    <ul class="menu p-4 w-72 bg-base-200 text-base-content gap-3">
       {items.map((item) => (
         <li><a href={item.href}>{item.label}</a></li>
       ))}
@@ -33,14 +34,6 @@ const { items, variant, phone } = Astro.props;
         </Button>
       </li>
     </ul>
+    </nav>
   )
 }
-
-<script>
-  document.querySelectorAll<HTMLAnchorElement>('[data-mobile-nav] a').forEach((link) => {
-    link.addEventListener('click', () => {
-      const drawer = document.querySelector<HTMLInputElement>('#mobile-drawer');
-      if (drawer) drawer.checked = false;
-    });
-  });
-</script>
