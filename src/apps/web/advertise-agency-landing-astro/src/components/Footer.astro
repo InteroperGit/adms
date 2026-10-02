@@ -7,16 +7,16 @@ import ContactInfo from '@/components/ui/ContactInfo.astro';
 ---
 
 <footer class="bg-gradient-to-b from-base-200 to-base-300 pt-16 pb-8 [overflow-wrap:anywhere]">
-  <div class="container mx-auto px-4">
+  <div class="site-container">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
       <div class="flex flex-col items-center md:items-start text-center md:text-left">
-        <h3 class="text-3xl font-bold text-primary">{site.logoText}</h3>
-        <p class="text-sm text-base-content/70 max-w-xs mt-2">
+        <h3 class="text-3xl font-bold text-brand">{site.logoText}</h3>
+        <p class="text-sm text-muted max-w-xs mt-2">
           {site.footer.description}
         </p>
       </div>
       <div class="flex flex-col items-center md:items-start">
-        <h4 class="text-sm font-semibold uppercase tracking-wider text-base-content/60 mb-3">
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-muted mb-3">
           Информация
         </h4>
         <ul class="space-y-2">
@@ -28,7 +28,7 @@ import ContactInfo from '@/components/ui/ContactInfo.astro';
         </ul>
       </div>
       <div class="flex flex-col items-center md:items-start">
-        <h4 class="text-sm font-semibold uppercase tracking-wider text-base-content/60 mb-3">
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-muted mb-3">
           Контакты
         </h4>
         <ContactInfo
@@ -41,10 +41,10 @@ import ContactInfo from '@/components/ui/ContactInfo.astro';
         />
       </div>
     </div>
-    <div class="border-t border-base-content/20 mt-12 pt-6 text-center text-sm text-base-content/50">
+    <div class="border-t border-base-content/20 mt-12 pt-6 text-center text-sm text-muted">
       <p>
         © {new Date().getFullYear()} {site.logoText}. {site.footer.copyright}.
-        <i class={`fas ${icons.butterfly} ml-1 text-primary`}></i>
+        <i class={`fas ${icons.butterfly} ml-1 text-brand`}></i>
       </p>
     </div>
   </div>

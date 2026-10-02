@@ -1,0 +1,76 @@
+# Design system
+
+[Documentation index](../../README.md)
+
+## Direction
+
+Use the workshop's signage vocabulary: precise alignment, measured spaces, clear lettering, restrained orange, and quiet framing around genuine work. Keep existing Russian content and the visually hidden homepage h1. No replacement oversized heading or invented proof is introduced.
+
+| Opening concept | Shape | Assessment |
+| --- | --- | --- |
+| Service-led (selected) | Existing service copy and contact actions, followed by portfolio | Explains the offer without depending on unavailable approved photography. The first visible section heading remains the opening anchor. |
+| Work-led (deferred) | Large installed-sign photograph beside brief service copy | Strong when approved installed-work photography exists. Current Picsum images and Pravatar portraits provide no evidence of agency work; they must not lead the page. |
+
+The supplied content and map settings remain unchanged. Tasks 013–015 will refine the actual opening, work, reviews and legal composition. Foundations reduce shadows and unify containers without changing route architecture or interaction scripts.
+
+## Tokens and primitives
+
+The source of truth is `src/styles/global.css`; Tailwind 4 registers reusable utilities through `@theme`, DaisyUI consumes the semantic color variables, and scoped components compose the shared classes.
+
+| Role | Light | Dark |
+| --- | --- | --- |
+| Paper / base-100 | #FFFFFF | #18212B |
+| Pale surface / base-200 | #F3F5F7 | #202C38 |
+| Divider surface / base-300 | #DCE2E8 | #354555 |
+| Ink / base-content | #18222D | #EDF2F7 |
+| Muted text / muted | #526170 | #BDC8D4 |
+| Action / primary | #B2380A | #FFA04D |
+| Action content | #FFFFFF | #18222D |
+| Accent | #9A3412 | #FDBA74 |
+| Control boundary | #687787 | #8798AA |
+
+Use `text-muted` rather than hardcoded gray or translucent body text. `base-300` is a quiet panel divider; use `border-control-border` when a boundary is essential to identify a control. Theme colors do not recolor photographs or the external Yandex iframe.
+
+Per the user's preference, `brand` is the same darker orange `#EA580C` in both themes for the logo, contact/decorative icons, and About highlights. Action text, buttons, and keyboard-focus outlines retain theme-specific `primary` colors. The contrast table below describes semantic primary colors, not this brand override.
+
+| Foundation | Value and use |
+| --- | --- |
+| Spacing | Tailwind's 4px unit; prefer 4/8/12/16/24/32/48/64/80px according to content hierarchy |
+| Container | `site-container`: 75rem maximum, centered, gutter clamp(1rem, 3vw, 2rem) shared by header, sections, footer, cookie and detail/legal layouts |
+| Section rhythm | `site-section`: block spacing clamp(3rem, 6vw, 5rem); section scroll margin 5rem |
+| Section heading | clamp(1.75rem, 2.8vw, 2.5rem), weight 700, line-height 1.2 |
+| Body | 1rem base, line-height 1.6, smaller metadata 0.875rem; reading measure 68ch |
+| Controls | `site-button`: weight 600, 0.5rem radius; existing DaisyUI sizes preserved |
+| Panels | `rounded-panel`: 1rem; smaller fields/selectors 0.5rem; portraits remain circular |
+| Shadows | `shadow-panel`: 0 4px 16px / 8%; `shadow-elevated`: 0 8px 28px / 12%; dark 18% / 24% black |
+| Focus/motion | 2px primary outline with 4px offset; reduced-motion removes smooth scrolling and minimizes transitions/animations |
+
+### Typeface assessment
+
+Manrope is a suitable engineered sans-serif candidate: [Google Fonts metadata](https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/METADATA.pb) lists Cyrillic/Cyrillic-ext and a variable 200–800 weight axis. Its [SIL OFL 1.1 license](https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt) permits embedding with retained notices. No local font asset exists in the project, so this task retains a dependable locally installed `Segoe UI, Arial, sans-serif` stack without adding font requests or claiming Manrope is hosted.
+
+If adopting Manrope later, supply a verified local WOFF2 with Cyrillic glyphs plus its license under `public/fonts/`, use `@font-face` with `font-display: swap`, retain the system fallback, and verify Russian glyphs, selected weights and layout before deployment. Do not include a Latin-only subset or preload a missing file.
+
+## Contrast measurements
+
+Measured from Chrome's computed theme variables using sRGB relative luminance and the WCAG contrast formula. Columns are base-100 / base-200 / base-300. Targets: 4.5:1 normal text, 3:1 large text and essential control boundaries.
+
+| Pair | Light ratios | Dark ratios |
+| --- | --- | --- |
+| Body text / surfaces | 16.09 / 14.72 / 12.32 | 14.44 / 12.61 / 8.74 |
+| Muted text / surfaces | 6.36 / 5.82 / 4.87 | 9.58 / 8.37 / 5.80 |
+| Primary / surfaces | 6.06 / 5.55 / 4.65 | 8.04 / 7.02 / 4.87 |
+| Control boundary / surfaces | 4.59 / 4.20 / 3.51 | 5.50 / 4.80 / 3.33 |
+| Primary button text / fill | 6.06 | 7.96 |
+
+Primary meets normal-text contrast on all three tested surfaces. Existing footer branding and contact icons also meet their respective large-text and non-text targets. Bright orange with white text is replaced by darker light-theme orange; dark buttons use dark ink. Measurements validate the palette and actual default button colors, not every possible hover, opacity blend or third-party asset. Task 016 must audit the finished component states.
+
+## Browser evidence and limitations
+
+Task 011 captured all six routes before edits at 375×1000 and 1440×1000: `/`, `/projects/1`, `/projects/2`, `/projects/3`, `/privacy-policy`, `/terms-of-use`. Local evidence is in `output/playwright/task-011/before/` (12 full-page screenshots). Matching after captures cover both themes in `after/` (24 screenshots). Generated artifacts are ignored by Git; they remain available locally for review. Shared scripts `baseline.js`, `verify.js`, and `measure.js` record capture/measurement methodology.
+
+Chrome mobile home before/after images were inspected: narrower duplicated section gutters were removed, shadows made quieter, muted text and dark surfaces made readable. Six routes have no horizontal overflow at 375px in either theme. Dark screenshots set `data-theme` directly only for verification. The layout continues to start in Light; accessible persisted Light/Dark/System selection is task 012.
+
+`pnpm check` passed for 40 files with zero errors/warnings/hints; `pnpm build` generated six pages. Build failures from an intermediate Windows batch edit were corrected before the successful checks. Remote demonstration images can fail to load (one Pravatar request reset); no claim is made about approved-media crops or map availability. The dev toolbar appears in captures. Some baseline cookie overlays and narrow desktop breakpoint behavior still need their planned component/behavior tasks. Full 320/768px, zoom, screen-reader, hover-state and interaction verification belong to task 016; this task does not claim them complete.
+
+Implementation references: [Astro styles](https://docs.astro.build/en/guides/styling/), [Astro components](https://docs.astro.build/en/basics/astro-components/), [DaisyUI themes](https://daisyui.com/docs/themes/).

@@ -15,9 +15,9 @@ import Section from '@/components/ui/Section.astro';
 >
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <div class="lg:col-span-1 min-w-0">
-      <div class="p-[24px] rounded-3xl bg-base-100 shadow-lg border border-base-300 min-h-64 lg:min-h-80 flex flex-col justify-center">
+      <div class="p-[24px] rounded-panel bg-base-100 shadow-panel border border-base-300 min-h-64 lg:min-h-80 flex flex-col justify-center">
         <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-          <i class={`fas ${icons.mail} text-primary shrink-0`} aria-hidden="true"></i> {site.sections.contacts.panelTitle}
+          <i class={`fas ${icons.mail} text-brand shrink-0`} aria-hidden="true"></i> {site.sections.contacts.panelTitle}
         </h3>
         <ContactInfo
           address={site.address}
@@ -30,7 +30,7 @@ import Section from '@/components/ui/Section.astro';
       </div>
     </div>
     <div class="lg:col-span-2 min-w-0">
-      <div class="w-full h-64 lg:h-80 rounded-3xl overflow-hidden shadow-lg border border-base-300">
+      <div class="w-full h-64 lg:h-80 rounded-panel overflow-hidden shadow-panel border border-base-300">
         {site.mapEnabled ? <iframe
           src={site.mapSrc}
           title={`Карта расположения ${site.logoText}: ${site.address}`}
@@ -52,9 +52,3 @@ import Section from '@/components/ui/Section.astro';
     </div>
   </div>
 </Section>
-
-<style>
-  :global(#contacts > .container) {
-    padding-inline: 24px;
-  }
-</style>
