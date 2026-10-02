@@ -23,13 +23,20 @@ export interface SiteConfig {
   workHours: string;
   workHoursWeekend: string;
   mapSrc: string;
+  mapEnabled: boolean;
+  mapFallback: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
   menu: MenuItem[];
   legal: LegalItem[];
   sections: {
     about: SectionContent;
     projects: SectionContent;
     reviews: SectionContent;
-    contacts: SectionContent;
+    contacts: SectionContent & { panelTitle: string };
   };
   footer: {
     description: string;
