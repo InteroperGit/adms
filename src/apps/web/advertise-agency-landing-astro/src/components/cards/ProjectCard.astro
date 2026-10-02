@@ -15,9 +15,12 @@ const { project } = Astro.props;
   <figure>
     <img
       src={project.image}
-      alt={project.title}
+      alt={project.imageAlt}
+      width={project.imageWidth}
+      height={project.imageHeight}
       class="w-full h-48 object-cover rounded-t-3xl"
       loading="lazy"
+      decoding="async"
     />
   </figure>
   <div class="card-body">

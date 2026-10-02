@@ -6,4 +6,6 @@
 
 The map loads from Yandex, icons load from the Font Awesome CDN, and project/review media currently include remote placeholders. Network availability affects those resources. Replace placeholder media with approved agency assets under task 009. The SVG favicon still contains Astro starter branding; no approved agency favicon is available, so the existing favicon files and layout reference are retained until one is supplied. Unreferenced starter illustrations `src/assets/astro.svg` and `src/assets/background.svg` were removed.
 
+The [project and review media guide](media.md) lists the six missing approved photographs/portraits and documents replacement and image verification. Remote placeholders remain until the agency supplies these assets.
+
 See [Astro documentation](https://docs.astro.build), the task-specific guides in [AGENTS.md](../../AGENTS.md), and the [documentation index](../../README.md).
