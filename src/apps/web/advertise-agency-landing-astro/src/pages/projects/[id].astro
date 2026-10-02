@@ -33,7 +33,15 @@ const { project } = Astro.props as { project: Project };
 
     <!-- Основное изображение -->
     <figure class="mb-8">
-      <img src={project.image} alt={project.title} class="w-full max-h-[500px] object-cover rounded-xl shadow-lg" />
+      <img
+        src={project.image}
+        alt={project.imageAlt}
+        width={project.imageWidth}
+        height={project.imageHeight}
+        class="w-full h-auto max-h-[500px] object-cover rounded-xl shadow-lg"
+        fetchpriority="high"
+        decoding="async"
+      />
     </figure>
 
     <!-- Описание -->

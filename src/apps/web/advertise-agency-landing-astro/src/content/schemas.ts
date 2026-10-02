@@ -19,6 +19,9 @@ export const projectSchema = z.object({
   shortDescription: text,
   fullDescription: text,
   image: mediaSource,
+  imageAlt: text,
+  imageWidth: z.number().int().positive(),
+  imageHeight: z.number().int().positive(),
   result: text,
 }).strict();
 
@@ -29,6 +32,9 @@ export const reviewSchema = z.object({
   company: text,
   text,
   avatar: mediaSource,
+  avatarAlt: text,
+  avatarWidth: z.number().int().positive(),
+  avatarHeight: z.number().int().positive(),
 }).strict();
 
 function uniqueIds<T extends { id: number }>(items: T[], context: z.RefinementCtx) {
