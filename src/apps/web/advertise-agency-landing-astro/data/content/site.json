@@ -7,6 +7,13 @@
   "address": "г. Череповец, ул. Металлургов, д. 9",
   "workHours": "Пн–Пт: 09:00 – 18:00",
   "workHoursWeekend": "Сб–Вс: выходной",
+  "mapEnabled": false,
+  "mapFallback": {
+    "src": "/images/map-placeholder.png",
+    "alt": "",
+    "width": 1200,
+    "height": 600
+  },
   "mapSrc": "https://yandex.ru/map-widget/v1/?um=constructor%3A8e9d4dd92e269a69df84774136ae2871466aa55b34f941cb126cfc03efab1fb8&source=constructorLink",
   "menu": [
     { "label": "О нас", "href": "/#about" },
@@ -35,6 +42,7 @@
       "subtitle": "Что говорят о нас наши партнёры и клиенты"
     },
     "contacts": {
+      "panelTitle": "Свяжитесь с нами",
       "title": "Как нас найти",
       "subtitle": "Свяжитесь с нами удобным для вас способом"
     }

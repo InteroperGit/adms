@@ -11,12 +11,13 @@ import Section from '@/components/ui/Section.astro';
   title={site.sections.contacts.title}
   subtitle={site.sections.contacts.subtitle}
   background="gradient"
+  class="[overflow-wrap:anywhere]"
 >
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <div class="lg:col-span-1">
-      <div class="p-6 rounded-3xl bg-base-100 shadow-lg border border-base-300 h-64 lg:h-80 flex flex-col justify-center">
+    <div class="lg:col-span-1 min-w-0">
+      <div class="p-[24px] rounded-3xl bg-base-100 shadow-lg border border-base-300 min-h-64 lg:min-h-80 flex flex-col justify-center">
         <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-          <i class={`fas ${icons.mail} text-primary`} aria-hidden="true"></i> Свяжитесь с нами
+          <i class={`fas ${icons.mail} text-primary shrink-0`} aria-hidden="true"></i> {site.sections.contacts.panelTitle}
         </h3>
         <ContactInfo
           address={site.address}
@@ -28,9 +29,9 @@ import Section from '@/components/ui/Section.astro';
         />
       </div>
     </div>
-    <div class="lg:col-span-2">
+    <div class="lg:col-span-2 min-w-0">
       <div class="w-full h-64 lg:h-80 rounded-3xl overflow-hidden shadow-lg border border-base-300">
-        <iframe
+        {site.mapEnabled ? <iframe
           src={site.mapSrc}
           title={`Карта расположения ${site.logoText}: ${site.address}`}
           width="100%"
@@ -38,8 +39,22 @@ import Section from '@/components/ui/Section.astro';
           class="border-0"
           allowfullscreen
           loading="lazy"
-        ></iframe>
+        ></iframe> : <img
+          src={site.mapFallback.src}
+          alt={site.mapFallback.alt}
+          width={site.mapFallback.width}
+          height={site.mapFallback.height}
+          class="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />}
       </div>
     </div>
   </div>
 </Section>
+
+<style>
+  :global(#contacts > .container) {
+    padding-inline: 24px;
+  }
+</style>
