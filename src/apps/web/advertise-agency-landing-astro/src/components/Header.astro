@@ -6,10 +6,10 @@ import NavLinks from '@/components/ui/NavLinks.astro';
 import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
 ---
 
-<header class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-lg">
-  <div class="navbar container mx-auto px-4">
+<header data-auto-hide-header class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-panel">
+  <div class="navbar site-container">
     <div class="flex-1">
-      <a href="/" class="text-2xl font-bold text-primary">{site.logoText}</a>
+      <a href="/" class="text-2xl font-bold text-brand">{site.logoText}</a>
     </div>
     <NavLinks items={site.menu} variant="desktop" phone={site.phone} />
     <div class="md:hidden">
@@ -20,3 +20,63 @@ import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
   </div>
   <MobileMenuDialog items={site.menu} phone={site.phone} />
 </header>
+
+<style>
+  header { transition: transform 180ms ease; }
+  header[data-hidden='true'] { transform: translateY(-100%); }
+  header:focus-within, header:has(dialog[open]) { transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    header { transition: none; }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-auto-hide-header]');
+  if (header) {
+    let previousY = Math.max(0, window.scrollY);
+    let distance = 0;
+    let direction = 0;
+    let scheduled = false;
+
+    const reveal = () => {
+      header.dataset.hidden = 'false';
+      distance = 0;
+    };
+
+    const update = () => {
+      scheduled = false;
+      const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const y = Math.min(maxY, Math.max(0, window.scrollY));
+      const delta = y - previousY;
+      previousY = y;
+
+      if (y <= header.offsetHeight || header.contains(document.activeElement) || header.querySelector('dialog[open]')) {
+        reveal();
+        return;
+      }
+
+      const nextDirection = Math.sign(delta);
+      if (!nextDirection) return;
+      if (nextDirection !== direction) distance = 0;
+      direction = nextDirection;
+      distance += Math.abs(delta);
+      if (distance >= 12) {
+        header.dataset.hidden = delta > 0 ? 'true' : 'false';
+        distance = 0;
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!scheduled) {
+        scheduled = true;
+        requestAnimationFrame(update);
+      }
+    }, { passive: true });
+    header.addEventListener('focusin', reveal);
+    window.addEventListener('hashchange', reveal);
+    window.addEventListener('pageshow', reveal);
+    new MutationObserver(() => {
+      if (header.querySelector('dialog[open]')) reveal();
+    }).observe(header, { attributes: true, attributeFilter: ['open'], subtree: true });
+  }
+</script>

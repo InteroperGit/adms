@@ -11,14 +11,14 @@ export interface Props {
 const { project } = Astro.props;
 ---
 
-<div class="card bg-base-100 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] transition-all rounded-3xl overflow-hidden">
+<div class="card bg-base-100 shadow-panel hover:shadow-elevated transition-shadow rounded-panel overflow-hidden">
   <figure>
     <img
       src={project.image}
       alt={project.imageAlt}
       width={project.imageWidth}
       height={project.imageHeight}
-      class="w-full h-48 object-cover rounded-t-3xl"
+      class="w-full h-48 object-cover rounded-t-panel"
       loading="lazy"
       decoding="async"
     />
@@ -26,10 +26,10 @@ const { project } = Astro.props;
   <div class="card-body">
     <div class="flex items-center gap-2 mb-2">
       <span class="badge badge-ghost text-xs">Клиент</span>
-      <span class="text-sm text-gray-500">{project.client}</span>
+      <span class="text-sm text-muted">{project.client}</span>
     </div>
     <h3 class="card-title text-xl font-bold">{project.title}</h3>
-    <p class="text-sm text-gray-600 leading-relaxed">{project.shortDescription}</p>
+    <p class="text-sm text-muted leading-relaxed">{project.shortDescription}</p>
     <div class="card-actions justify-end mt-4">
       <Button variant="primary" size="sm" href={`/projects/${project.id}`}>
         Подробнее

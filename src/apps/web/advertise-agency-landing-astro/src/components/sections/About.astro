@@ -14,14 +14,14 @@ import { icons } from '@/content/icons';
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
         {about.stats.map((stat) => (
           <div class="stat">
-            <div class="stat-value text-primary">{stat.value}</div>
+            <div class="stat-value text-brand">{stat.value}</div>
             <div class="stat-title">{stat.label}</div>
           </div>
         ))}
       </div>
     </div>
     <div class="flex justify-center">
-      <div class="w-full max-w-sm aspect-square bg-primary/10 rounded-2xl flex items-center justify-center text-6xl text-primary">
+      <div class="w-full max-w-sm aspect-square bg-primary/10 rounded-2xl flex items-center justify-center text-6xl text-brand">
         <i class={`fas ${icons.sparkles}`}></i>
       </div>
     </div>

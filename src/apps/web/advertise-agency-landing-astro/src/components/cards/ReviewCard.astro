@@ -9,11 +9,11 @@ export interface Props {
 const { review } = Astro.props;
 ---
 
-<div class="card bg-base-100 shadow-2xl hover:shadow-2xl transition-shadow rounded-3xl border border-base-200/50">
+<div class="card bg-base-100 shadow-panel rounded-panel border border-base-200/50">
   <div class="card-body">
     <div class="flex items-center gap-4 mb-3">
       <div class="avatar">
-        <div class="w-12 rounded-full ring-2 ring-primary ring-offset-2">
+        <div class="w-12 rounded-full ring-2 ring-primary ring-offset-2 ring-offset-base-100">
           <img
             src={review.avatar}
             alt={review.avatarAlt}
@@ -27,7 +27,7 @@ const { review } = Astro.props;
       </div>
       <div>
         <div class="font-semibold text-base">{review.name}</div>
-        <div class="text-sm text-gray-500">
+        <div class="text-sm text-muted">
           {review.position}, {review.company}
         </div>
       </div>
@@ -36,7 +36,7 @@ const { review } = Astro.props;
       <svg class="w-8 h-8 text-primary/20 absolute -top-1 -left-1" fill="currentColor" viewBox="0 0 32 32">
         <path d="M10 8h-4v6h4v8h-8v-14h8zM24 8h-4v6h4v8h-8v-14h8z" />
       </svg>
-      <p class="text-base leading-relaxed pl-6 italic text-gray-700">
+      <p class="text-base leading-relaxed pl-6 italic text-base-content">
         {review.text}
       </p>
     </div>
