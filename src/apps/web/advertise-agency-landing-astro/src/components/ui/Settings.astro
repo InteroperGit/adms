@@ -1,0 +1,83 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+---
+<div class="theme-settings" hidden data-theme-control data-theme-settings>
+  <button type="button" class="settings-trigger" aria-label="Настройки" title="Настройки" aria-expanded="false" aria-controls="theme-settings-panel" data-settings-trigger>
+    <span class="settings-surface btn btn-sm site-button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m9 3-.5 2.5-2 1.2L4 6l-2 3.5 2 1.7v2.3l-2 1.8L4 19l2.5-.7 2 1.2L9 22h4l.5-2.5 2-1.2 2.5.7 2-3.7-2-1.8v-2.3l2-1.7L18 6l-2.5.7-2-1.2L13 3Z" transform="translate(1 -0.5) scale(.95)" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    </span>
+  </button>
+  <div id="theme-settings-panel" class="settings-panel" hidden data-settings-panel>
+    <ThemeToggle />
+  </div>
+</div>
+<style>
+  .theme-settings { flex: none; margin-inline: 0.5rem; }
+  .settings-trigger { display: grid; place-items: center; width: max(2.75rem, 44px); height: max(2.75rem, 44px); padding: 0; border: 0; background: transparent; cursor: pointer; }
+  .settings-surface { display: grid; place-items: center; width: var(--size); min-width: 0; padding: 0; border: 1px solid var(--site-control-border); color: var(--color-base-content); background: var(--color-base-100); box-shadow: none; pointer-events: none; }
+  .settings-trigger svg { width: 1.25rem; height: 1.25rem; }
+  .settings-trigger:hover .settings-surface, .settings-trigger[aria-expanded='true'] .settings-surface { background: var(--color-base-200); }
+  .settings-trigger:hover .settings-surface { background: var(--color-primary); color: var(--color-primary-content); border-color: var(--color-primary); }
+  :global([data-theme='light']) .settings-trigger:hover .settings-surface { background: #000; color: #fff; border-color: #000; }
+  .settings-trigger:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; border-radius: var(--radius-field); }
+  .settings-panel { position: fixed; z-index: 50; width: max-content; max-width: calc(100vw - 32px); padding: clamp(12px, 0.75rem, 16px); overflow: auto; border: 1px solid var(--site-control-border); border-radius: var(--radius-field); background: var(--color-base-100); color: var(--color-base-content); box-shadow: var(--shadow-elevated); }
+  @media (max-width: 374px) { .theme-settings { margin-inline: 0.25rem; } }
+</style>
+<script>
+  const settings = document.querySelector<HTMLElement>('[data-theme-settings]');
+  const trigger = settings?.querySelector<HTMLButtonElement>('[data-settings-trigger]');
+  const panel = settings?.querySelector<HTMLElement>('[data-settings-panel]');
+  if (settings && trigger && panel) {
+    const place = () => {
+      if (panel.hidden) return;
+      const viewport = window.visualViewport;
+      const width = viewport?.width ?? window.innerWidth;
+      const height = viewport?.height ?? window.innerHeight;
+      const originX = viewport?.offsetLeft ?? 0;
+      const originY = viewport?.offsetTop ?? 0;
+      // The header's backdrop filter is a fixed-position containing block.
+      const headerBounds = settings.closest('header')?.getBoundingClientRect();
+      const anchor = trigger.getBoundingClientRect();
+      panel.style.maxWidth = `${Math.max(0, width - 32)}px`;
+      const panelWidth = Math.min(panel.getBoundingClientRect().width, width - 32);
+      const top = Math.min(anchor.bottom + 8, originY + height - 60);
+      const left = Math.max(originX + 16, Math.min(anchor.right - panelWidth, originX + width - panelWidth - 16));
+      panel.style.left = `${left - (headerBounds?.left ?? 0)}px`;
+      panel.style.top = `${top - (headerBounds?.top ?? 0)}px`;
+      panel.style.maxHeight = `${Math.max(44, originY + height - top - 16)}px`;
+    };
+    const close = (restoreFocus = false) => {
+      panel.hidden = true;
+      settings.removeAttribute('data-settings-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) trigger.focus({ preventScroll: true });
+    };
+    trigger.addEventListener('click', event => {
+      if (!panel.hidden) { close(); return; }
+      panel.hidden = false;
+      settings.setAttribute('data-settings-open', '');
+      trigger.setAttribute('aria-expanded', 'true');
+      place();
+      if (event.detail === 0) panel.querySelector<HTMLInputElement>('input:checked')?.focus({ preventScroll: true });
+    });
+    settings.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !panel.hidden) { event.preventDefault(); event.stopPropagation(); close(true); }
+    });
+    settings.addEventListener('focusout', () => {
+      // Wait for native label/gear focus transitions before judging the boundary.
+      setTimeout(() => { if (!settings.contains(document.activeElement)) close(); }, 0);
+    });
+    document.addEventListener('pointerdown', event => {
+      if (event.target instanceof Node && !settings.contains(event.target)) close();
+    });
+    document.querySelector('#mobile-menu-open')?.addEventListener('click', () => close());
+    window.addEventListener('resize', place);
+    window.visualViewport?.addEventListener('resize', place);
+    window.visualViewport?.addEventListener('scroll', place);
+    // Font enlargement can change the anchor without resizing the viewport.
+    new ResizeObserver(place).observe(trigger);
+  }
+</script>
