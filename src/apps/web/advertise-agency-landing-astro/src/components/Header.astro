@@ -9,13 +9,13 @@ import Logo from '@/components/ui/Logo.astro';
 ---
 
 <header data-auto-hide-header class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-panel">
-  <div class="navbar site-container">
-    <div class="header-brand-wrap flex-1">
+  <div class="header-layout site-container">
+    <div class="header-brand-wrap">
       <a href="/" class="header-brand text-2xl font-bold text-brand"><Logo /><span>{site.logoText}</span></a>
     </div>
     <NavLinks items={site.menu} variant="desktop" phone={site.phone} />
     <Settings />
-    <div class="md:hidden">
+    <div class="header-menu-wrap">
       <button type="button" id="mobile-menu-open" class="btn btn-ghost btn-circle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false" aria-haspopup="dialog">
         <i class={`fas ${icons.menu.open} text-2xl`} aria-hidden="true"></i>
       </button>
@@ -25,14 +25,18 @@ import Logo from '@/components/ui/Logo.astro';
 </header>
 
 <style>
+  .header-layout { display: flex; align-items: center; flex-wrap: wrap; gap: 0.25rem 1rem; padding-block: 0.5rem; }
+  .header-brand-wrap { flex: 1 1 12rem; min-width: 0; }
+  .header-menu-wrap { flex: none; }
   .header-brand { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 100%; }
   .header-brand span { min-width: 0; }
   @media (max-width: 374px) { .header-brand { font-size: 1.125rem; } }
-  @media (max-width: 767px) {
-    .navbar { flex-wrap: wrap; justify-content: flex-end; }
+  @media (max-width: 63.999rem) {
+    .header-layout { justify-content: flex-end; gap: 0.25rem 0.5rem; }
     .header-brand-wrap { flex: 1 1 8rem; min-width: 0; }
     .header-brand { overflow-wrap: anywhere; }
   }
+  @media (min-width: 64rem) { .header-menu-wrap { display: none; } }
   header { transition: transform 180ms ease; }
   header[data-hidden='true'] { transform: translateY(-100%); }
   header:focus-within, header:has(dialog[open]), header:has([data-settings-open]) { transform: translateY(0); }
@@ -44,6 +48,26 @@ import Logo from '@/components/ui/Logo.astro';
 <script>
   const header = document.querySelector<HTMLElement>('[data-auto-hide-header]');
   if (header) {
+    const setClearance = () => {
+      document.documentElement.style.setProperty('--site-header-clearance', `${header.offsetHeight + 16}px`);
+    };
+    setClearance();
+    new ResizeObserver(setClearance).observe(header);
+    // Correct the initial anchor as soon as layout exists, without waiting for remote images.
+    const initialHash = location.hash;
+    if (initialHash) {
+      let interrupted = false;
+      const interrupt = () => { interrupted = true; };
+      const events = ['pointerdown', 'wheel', 'touchstart', 'keydown'];
+      events.forEach(event => window.addEventListener(event, interrupt, { passive: true }));
+      requestAnimationFrame(() => {
+        if (!interrupted && location.hash === initialHash) {
+          try { document.getElementById(decodeURIComponent(initialHash.slice(1)))?.scrollIntoView(); }
+          catch { /* A malformed hash has no matching section. */ }
+        }
+        events.forEach(event => window.removeEventListener(event, interrupt));
+      });
+    }
     let previousY = Math.max(0, window.scrollY);
     let distance = 0;
     let direction = 0;

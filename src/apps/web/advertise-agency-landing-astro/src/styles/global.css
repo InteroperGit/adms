@@ -90,7 +90,7 @@
 }
 @layer components {
   .site-container { width: 100%; max-width: var(--site-container); margin-inline: auto; padding-inline: var(--site-gutter); }
-  .site-section { padding-block: var(--site-section-space); scroll-margin-top: 5rem; }
+  .site-section { padding-block: var(--site-section-space); scroll-margin-top: var(--site-header-clearance, 5rem); }
   .site-section-title { font-size: var(--site-heading-size); font-weight: 700; text-align: center; margin-bottom: 1rem; }
   .site-section-subtitle { color: var(--site-muted); text-align: center; max-width: var(--site-reading-width); margin: 0 auto 3rem; }
   .site-button { border-radius: var(--radius-field); font-weight: 600; }
