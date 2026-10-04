@@ -5,12 +5,13 @@ import { icons } from '@/content/icons';
 import NavLinks from '@/components/ui/NavLinks.astro';
 import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
 import Settings from '@/components/ui/Settings.astro';
+import Logo from '@/components/ui/Logo.astro';
 ---
 
 <header data-auto-hide-header class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-panel">
   <div class="navbar site-container">
     <div class="header-brand-wrap flex-1">
-      <a href="/" class="header-brand text-2xl font-bold text-brand">{site.logoText}</a>
+      <a href="/" class="header-brand text-2xl font-bold text-brand"><Logo /><span>{site.logoText}</span></a>
     </div>
     <NavLinks items={site.menu} variant="desktop" phone={site.phone} />
     <Settings />
@@ -24,6 +25,8 @@ import Settings from '@/components/ui/Settings.astro';
 </header>
 
 <style>
+  .header-brand { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 100%; }
+  .header-brand span { min-width: 0; }
   @media (max-width: 374px) { .header-brand { font-size: 1.125rem; } }
   @media (max-width: 767px) {
     .navbar { flex-wrap: wrap; justify-content: flex-end; }
