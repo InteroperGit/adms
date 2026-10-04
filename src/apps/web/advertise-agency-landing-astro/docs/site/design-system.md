@@ -11,7 +11,7 @@ Use the workshop's signage vocabulary: precise alignment, measured spaces, clear
 | Service-led (selected) | Existing service copy and contact actions, followed by portfolio | Explains the offer without depending on unavailable approved photography. The first visible section heading remains the opening anchor. |
 | Work-led (deferred) | Large installed-sign photograph beside brief service copy | Strong when approved installed-work photography exists. Current Picsum images and Pravatar portraits provide no evidence of agency work; they must not lead the page. |
 
-The supplied content and map settings remain unchanged. Tasks 013–015 will refine the actual opening, work, reviews and legal composition. Foundations reduce shadows and unify containers without changing route architecture or interaction scripts.
+The supplied content and map settings remain unchanged. Task 013 implements the service-led opening; tasks 014–015 refine work, reviews and legal composition. Foundations reduce shadows and unify containers without changing route architecture.
 
 ## Tokens and primitives
 
@@ -39,7 +39,7 @@ Per the user's preference, `brand` is the same darker orange `#EA580C` in both t
 | --- | --- |
 | Spacing | Tailwind's 4px unit; prefer 4/8/12/16/24/32/48/64/80px according to content hierarchy |
 | Container | `site-container`: 75rem maximum, centered, gutter clamp(1rem, 3vw, 2rem) shared by header, sections, footer, cookie and detail/legal layouts |
-| Section rhythm | `site-section`: block spacing clamp(3rem, 6vw, 5rem); section scroll margin 5rem |
+| Section rhythm | `site-section`: block spacing clamp(3rem, 6vw, 5rem); scroll margin measured header height + 16px, with 5rem fallback |
 | Section heading | clamp(1.75rem, 2.8vw, 2.5rem), weight 700, line-height 1.2 |
 | Body | 1rem base, line-height 1.6, smaller metadata 0.875rem; reading measure 68ch |
 | Controls | `site-button`: weight 600, 0.5rem radius; existing DaisyUI sizes preserved |
@@ -77,6 +77,20 @@ Chrome mobile home before/after images were inspected: narrower duplicated secti
 
 ### Appearance settings
 
-The header's appearance settings use a quiet, solid base-100 panel with shared field/panel radii, control boundaries and elevated shadow. A single gear opens three native radio tiles with local sun/moon/monitor SVGs, visible Russian labels and a border/check selection indicator. Functional icons use semantic ink/primary tokens rather than decorative brand orange. The panel retains 16px viewport clearance and internal scrolling; enlarged mobile text wraps the header brand above its controls. See [theme behavior and measured contrast](themes.md) for keyboard boundaries, persistence and browser evidence.
+The header's appearance settings use a quiet, solid base-100 panel with shared field/panel radii, control boundaries and elevated shadow. A single gear opens a compact joined native radio control with local sun/moon/monitor SVGs, a left «Тема» label, Russian accessible names/tooltips and a border/surface selection indicator. Functional icons use semantic ink/primary tokens rather than decorative brand orange. The panel retains 16px viewport clearance and internal scrolling; enlarged mobile text wraps the header brand above its controls. See [theme behavior and measured contrast](themes.md) for keyboard boundaries, persistence and browser evidence.
 
 Implementation references: [Astro styles](https://docs.astro.build/en/guides/styling/), [Astro components](https://docs.astro.build/en/basics/astro-components/), [DaisyUI themes](https://daisyui.com/docs/themes/).
+
+## Header and service opening (task 013)
+
+The opening is left aligned, led by the existing «О нас» heading and service paragraphs rather than the generic oversized sparkle. Lead copy has a 48ch maximum measure and responsive 1.25–1.875rem size. The contact action reuses `sections.contacts.panelTitle` and the contacts menu URL; its secondary action reuses the projects title and URL. Editable copy remains in JSON. Three unchanged statistics use a quiet divider and description-list semantics, changing to stacked value/label rows on narrow screens. Brand orange is retained for the large statistics; muted labels remain readable.
+
+The header retains the decorative butterfly and approved appearance settings. Navigation switches to the native mobile dialog below 64rem, avoiding the previous crowded 768px desktop row; desktop links and the brand can wrap deliberately. Section links have 44px minimum height. Mobile navigation fills its actual dialog width, wraps long labels and keeps Escape, focus containment, destination focus and desktop-resize dismissal. Settings and phone surfaces both measured 32px high at default text size; their existing interaction design remains intact.
+
+A ResizeObserver measures header height for shared section anchor clearance. Initial hash correction happens on the next animation frame and is cancelled by user input; it does not wait for remote-image load. Existing auto-hide stays visible with settings, navigation or keyboard focus and respects reduced motion.
+
+Chrome verification covered 320/375/768/1440px in both themes, each with separate 16px and 32px root-text sizes (16 combinations). Header/opening content bounds, logo loading, visually hidden h1, measured anchor clearance, settings and mobile-menu/Escape flows passed. Additional checks passed for keyboard settings focus, both dialog Tab boundaries, mobile destination focus, opening actions, root-relative links from all five other routes, all four direct homepage hashes, scroll-direction hide/reveal, settings/dialog visibility, reduced motion and breakpoint-resize dismissal. Temporary longer Russian brand/stat labels at 320px with 32px text fit and were restored by navigation. Long-word overflow found in enlarged service paragraphs was fixed with wrapping.
+
+Evidence: `output/playwright/task-013/` contains four before and four after screenshots (375/1440px, both themes), `baseline.js`, `verify.js`, `final-checks.js` and `measure.js`; artifacts are ignored. Desktop Light and mobile Dark screenshots were visually inspected. Before images include the cookie banner; after images use a saved accepted cookie choice to inspect the opening unobscured.
+
+Computed contrast on the opening base surface (Light / Dark): lead text 16.09 / 14.44, detail/labels 6.36 / 9.58, orange 32px bold statistics 3.56 / 4.57, primary action 6.06 / 7.96, secondary action 6.06 / 8.04. Large statistic text exceeds 3:1; body/actions exceed 4.5:1. Native browser zoom was attempted with Control+plus but neither viewport width nor DPR changed in automated Chrome, so actual 200% browser zoom remains unverified. Root-text enlargement is a separate check. External placeholder image failures, final whole-site overflow (reviews/cookie/footer), screen-reader and full hover-state review remain tasks 014–016; these checks do not claim whole-site completion.
