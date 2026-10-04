@@ -1,0 +1,12 @@
+---
+interface Props {
+  size?: 'header' | 'footer';
+}
+const { size = 'header' } = Astro.props;
+---
+<img class:list={['brand-logo', size]} src="/images/butterfly-logo.svg" alt="" width="64" height="64" aria-hidden="true" />
+<style>
+  .brand-logo { display: block; flex: none; width: 2.25rem; height: 2.25rem; }
+  .footer { width: 2.75rem; height: 2.75rem; }
+  @media (max-width: 374px) { .header { width: 1.75rem; height: 1.75rem; } }
+</style>
