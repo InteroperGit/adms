@@ -58,6 +58,28 @@
   --shadow-panel: 0 4px 16px rgb(0 0 0 / 18%);
   --shadow-elevated: 0 8px 28px rgb(0 0 0 / 24%);
 }
+/* Without JavaScript, follow the operating system using the same dark tokens. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+  color-scheme: dark;
+  --color-primary: #ffa04d;
+  --color-primary-content: #18222d;
+  --color-secondary: #bdc8d4;
+  --color-secondary-content: #18222d;
+  --color-accent: #fdba74;
+  --color-accent-content: #18222d;
+  --color-neutral: #dce2e8;
+  --color-neutral-content: #18222d;
+  --color-base-100: #18212b;
+  --color-base-200: #202c38;
+  --color-base-300: #354555;
+  --color-base-content: #edf2f7;
+  --site-muted: #bdc8d4;
+  --site-control-border: #8798aa;
+  --shadow-panel: 0 4px 16px rgb(0 0 0 / 18%);
+  --shadow-elevated: 0 8px 28px rgb(0 0 0 / 24%);
+  }
+}
 @layer base {
   body { font-family: var(--font-sans); line-height: 1.6; color: var(--color-base-content); }
   h1, h2, h3, h4 { line-height: 1.2; }

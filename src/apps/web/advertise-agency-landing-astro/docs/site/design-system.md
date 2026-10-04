@@ -15,6 +15,8 @@ The supplied content and map settings remain unchanged. Tasks 013–015 will ref
 
 ## Tokens and primitives
 
+Header settings use a compact gear surface with the shared DaisyUI `btn-sm` sizing and `site-button` radius, matching the desktop phone button (32px at default text size). A separate centered target remains at least 44×44px. `Settings.astro` contains the panel and interaction boundary; `ThemeToggle.astro` renders only sun/moon/monitor radios with hidden Russian names. Selected double borders and outer keyboard outlines have distinct shapes. Bounded icon/gap/padding growth keeps the row compact at enlarged text sizes; see [theme verification](themes.md) for current measurements and limitations.
+
 The source of truth is `src/styles/global.css`; Tailwind 4 registers reusable utilities through `@theme`, DaisyUI consumes the semantic color variables, and scoped components compose the shared classes.
 
 | Role | Light | Dark |
@@ -69,8 +71,12 @@ Primary meets normal-text contrast on all three tested surfaces. Existing footer
 
 Task 011 captured all six routes before edits at 375×1000 and 1440×1000: `/`, `/projects/1`, `/projects/2`, `/projects/3`, `/privacy-policy`, `/terms-of-use`. Local evidence is in `output/playwright/task-011/before/` (12 full-page screenshots). Matching after captures cover both themes in `after/` (24 screenshots). Generated artifacts are ignored by Git; they remain available locally for review. Shared scripts `baseline.js`, `verify.js`, and `measure.js` record capture/measurement methodology.
 
-Chrome mobile home before/after images were inspected: narrower duplicated section gutters were removed, shadows made quieter, muted text and dark surfaces made readable. Six routes have no horizontal overflow at 375px in either theme. Dark screenshots set `data-theme` directly only for verification. The layout continues to start in Light; accessible persisted Light/Dark/System selection is task 012.
+Chrome mobile home before/after images were inspected: narrower duplicated section gutters were removed, shadows made quieter, muted text and dark surfaces made readable. Six routes have no horizontal overflow at 375px in either theme. Dark screenshots set `data-theme` directly only for task 011 verification. The current shared layout defaults to System and supports persisted Light/Dark/System selection; see [color themes](themes.md).
 
 `pnpm check` passed for 40 files with zero errors/warnings/hints; `pnpm build` generated six pages. Build failures from an intermediate Windows batch edit were corrected before the successful checks. Remote demonstration images can fail to load (one Pravatar request reset); no claim is made about approved-media crops or map availability. The dev toolbar appears in captures. Some baseline cookie overlays and narrow desktop breakpoint behavior still need their planned component/behavior tasks. Full 320/768px, zoom, screen-reader, hover-state and interaction verification belong to task 016; this task does not claim them complete.
+
+### Appearance settings
+
+The header's appearance settings use a quiet, solid base-100 panel with shared field/panel radii, control boundaries and elevated shadow. A single gear opens three native radio tiles with local sun/moon/monitor SVGs, visible Russian labels and a border/check selection indicator. Functional icons use semantic ink/primary tokens rather than decorative brand orange. The panel retains 16px viewport clearance and internal scrolling; enlarged mobile text wraps the header brand above its controls. See [theme behavior and measured contrast](themes.md) for keyboard boundaries, persistence and browser evidence.
 
 Implementation references: [Astro styles](https://docs.astro.build/en/guides/styling/), [Astro components](https://docs.astro.build/en/basics/astro-components/), [DaisyUI themes](https://daisyui.com/docs/themes/).

@@ -1,0 +1,43 @@
+---
+const themes = [
+  { value: 'light', label: 'Светлая', path: 'M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M5.6 18.4 7 17m10-10 1.4-1.4' },
+  { value: 'dark', label: 'Тёмная', path: 'M20 13a8 8 0 1 1-9-9 6 6 0 0 0 9 9Z' },
+  { value: 'system', label: 'Системная', path: 'M4 4h16v12H4ZM8 20h8m-4-4v4' },
+];
+---
+<fieldset>
+  <legend class="sr-only">Тема оформления</legend>
+  <span class="theme-label" aria-hidden="true">Тема</span>
+  <div class="theme-options">
+    {themes.map(theme => (
+      <label class="theme-option" title={theme.label}>
+        <input type="radio" name="site-theme" value={theme.value} checked={theme.value === 'system'} data-theme-radio />
+        <span class="theme-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d={theme.path} />
+            {theme.value === 'light' && <circle cx="12" cy="12" r="4" />}
+          </svg>
+          <span class="sr-only">{theme.label}</span>
+        </span>
+      </label>
+    ))}
+  </div>
+</fieldset>
+<style>
+  fieldset { display: flex; align-items: center; gap: 0.75rem; padding: 0; margin: 0; border: 0; min-width: 0; }
+  .theme-label { font-size: 0.875rem; font-weight: 600; }
+  .theme-options { display: flex; }
+  .theme-option { position: relative; display: grid; align-items: center; flex: none; min-height: 44px; cursor: pointer; }
+  input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .theme-icon { display: grid; place-items: center; width: 44px; height: 32px; border: 1px solid var(--site-control-border); color: var(--color-base-content); background: var(--color-base-100); }
+  .theme-option + .theme-option .theme-icon { border-left-width: 0; }
+  .theme-option:first-child .theme-icon { border-radius: var(--radius-field) 0 0 var(--radius-field); }
+  .theme-option:last-child .theme-icon { border-radius: 0 var(--radius-field) var(--radius-field) 0; }
+  svg { width: 1.125rem; height: 1.125rem; }
+  input:checked + .theme-icon { border-color: var(--color-primary); box-shadow: inset 0 0 0 1px var(--color-primary); color: var(--color-primary); background: var(--color-base-200); }
+  input:not(:checked):hover + .theme-icon { background: var(--color-primary); color: var(--color-primary-content); border-color: var(--color-primary); }
+  :global([data-theme='light']) input:not(:checked):hover + .theme-icon { background: #000; color: #fff; border-color: #000; }
+  input:checked, .theme-option:has(input:checked) { cursor: default; }
+  input:focus-visible + .theme-icon { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+  .theme-option:focus-within { z-index: 1; }
+</style>

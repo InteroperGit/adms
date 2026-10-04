@@ -4,14 +4,16 @@ import { site } from '@/content/site';
 import { icons } from '@/content/icons';
 import NavLinks from '@/components/ui/NavLinks.astro';
 import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
+import Settings from '@/components/ui/Settings.astro';
 ---
 
 <header data-auto-hide-header class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-panel">
   <div class="navbar site-container">
-    <div class="flex-1">
-      <a href="/" class="text-2xl font-bold text-brand">{site.logoText}</a>
+    <div class="header-brand-wrap flex-1">
+      <a href="/" class="header-brand text-2xl font-bold text-brand">{site.logoText}</a>
     </div>
     <NavLinks items={site.menu} variant="desktop" phone={site.phone} />
+    <Settings />
     <div class="md:hidden">
       <button type="button" id="mobile-menu-open" class="btn btn-ghost btn-circle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false" aria-haspopup="dialog">
         <i class={`fas ${icons.menu.open} text-2xl`} aria-hidden="true"></i>
@@ -22,9 +24,15 @@ import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
 </header>
 
 <style>
+  @media (max-width: 374px) { .header-brand { font-size: 1.125rem; } }
+  @media (max-width: 767px) {
+    .navbar { flex-wrap: wrap; justify-content: flex-end; }
+    .header-brand-wrap { flex: 1 1 8rem; min-width: 0; }
+    .header-brand { overflow-wrap: anywhere; }
+  }
   header { transition: transform 180ms ease; }
   header[data-hidden='true'] { transform: translateY(-100%); }
-  header:focus-within, header:has(dialog[open]) { transform: translateY(0); }
+  header:focus-within, header:has(dialog[open]), header:has([data-settings-open]) { transform: translateY(0); }
   @media (prefers-reduced-motion: reduce) {
     header { transition: none; }
   }
@@ -50,7 +58,7 @@ import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
       const delta = y - previousY;
       previousY = y;
 
-      if (y <= header.offsetHeight || header.contains(document.activeElement) || header.querySelector('dialog[open]')) {
+      if (y <= header.offsetHeight || header.contains(document.activeElement) || header.querySelector('dialog[open], [data-settings-open]')) {
         reveal();
         return;
       }
@@ -76,7 +84,7 @@ import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
     window.addEventListener('hashchange', reveal);
     window.addEventListener('pageshow', reveal);
     new MutationObserver(() => {
-      if (header.querySelector('dialog[open]')) reveal();
-    }).observe(header, { attributes: true, attributeFilter: ['open'], subtree: true });
+      if (header.querySelector('dialog[open], [data-settings-open]')) reveal();
+    }).observe(header, { attributes: true, attributeFilter: ['open', 'data-settings-open'], subtree: true });
   }
 </script>

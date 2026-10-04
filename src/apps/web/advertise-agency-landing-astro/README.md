@@ -12,6 +12,7 @@ Russian-language website for Рекламастер, built with Astro, TypeScrip
 | [Content editing](docs/site/content.md) | JSON sources, validation, and stable project IDs |
 | [Project and review media](docs/site/media.md) | Missing approved photographs, image metadata, and replacement workflow |
 | [Design system](docs/site/design-system.md) | Visual direction, shared tokens, typography, contrast and browser baseline |
+| [Color themes](docs/site/themes.md) | Light/dark/system selection, persistence, no-JS fallback and map limitations |
 | [Page metadata](docs/site/metadata.md) | Titles, descriptions, social metadata, and production URL |
 | [Cookie preferences](docs/site/cookie-preferences.md) | Persistence, storage failures, and resource-loading behavior |
 | [Deployment and assets](docs/site/deployment-and-assets.md) | Static hosting, external resources, and pending agency assets |

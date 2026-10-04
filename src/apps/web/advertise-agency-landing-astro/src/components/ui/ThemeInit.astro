@@ -1,0 +1,39 @@
+<!-- Blocking head script: apply the preference before styles/content can paint. -->
+<script is:inline>
+  (() => {
+    const key = 'site-theme';
+    const valid = value => ['light', 'dark', 'system'].includes(value);
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    let preference = 'system';
+    try {
+      const stored = localStorage.getItem(key);
+      if (valid(stored)) preference = stored;
+    } catch { /* Storage can be disabled; keep an in-memory preference. */ }
+    const apply = () => {
+      const effective = preference === 'system' ? (media.matches ? 'dark' : 'light') : preference;
+      document.documentElement.dataset.theme = effective;
+      document.documentElement.style.colorScheme = effective;
+      document.querySelectorAll('[data-theme-radio]').forEach(control => { control.checked = control.value === preference; });
+    };
+    apply();
+    media.addEventListener('change', () => { if (preference === 'system') apply(); });
+    window.addEventListener('storage', event => {
+      try { if (event.storageArea !== localStorage) return; } catch { return; }
+      if (event.key !== key && event.key !== null) return;
+      preference = valid(event.newValue) ? event.newValue : 'system';
+      apply();
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      apply();
+      document.querySelectorAll('[data-theme-control]').forEach(control => { control.hidden = false; });
+      document.querySelectorAll('[data-theme-radio]').forEach(control => {
+        control.addEventListener('change', () => {
+          if (!valid(control.value)) return;
+          preference = control.value;
+          apply();
+          try { localStorage.setItem(key, preference); } catch { /* The current page remains usable. */ }
+        });
+      });
+    });
+  })();
+</script>
