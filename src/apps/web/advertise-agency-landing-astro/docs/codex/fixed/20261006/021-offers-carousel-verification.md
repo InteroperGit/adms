@@ -1,15 +1,15 @@
 # Offers integrated verification and handoff
 
-**Status:** Pending
+**Status:** Completed 2026-10-06
 
 **Priority:** Medium
 
 **Dependency:** 017, 017a, 018, 018a, 018b, 019, 019a, 020 and 020a.
 
-Read the [carousel plan](../plan/20261005_044149_plan.md),
-[task guide](../task-management.md), [README](../../../README.md),
-[offers guide](../../site/offers-carousel.md) and
-[project instructions](../../../AGENTS.md). Apply relevant
+Read the [carousel plan](../../plan/20261005_044149_plan.md),
+[task guide](../../task-management.md), [README](../../../../README.md),
+[offers guide](../../../site/offers-carousel.md) and
+[project instructions](../../../../AGENTS.md). Apply relevant
 astro-best-practices/frontend-design guidance and Playwright for browser work;
 consult required Astro guides. Tasks 020 and 020a are fixed; task 020a's
 settings-controlled autoplay supersedes the original pause/play behavior.
@@ -136,3 +136,39 @@ status. This task remains pending until its integrated review is performed.
 Browser evidence belongs under ignored `output/playwright/task-021/`. Record
 changed files, checks and limits; archive by actual completion date and update
 the plan after verification. No commit or deployment is implied.
+
+## Completion record — 2026-10-06
+
+Integrated production review passed against `dist/` served locally at
+`127.0.0.1:4322`. Durable outcomes and exact limits are recorded in the
+[offers guide](../../../site/offers-carousel.md#integrated-production-verification-task-021-2026-10-06).
+
+Changed the carousel's description glyph edge and marker edge to retain
+contrast over bright/dark imagery while preserving requested 25% description
+backing and standalone circles. Clarified the validator's solid palette
+reference; it does not validate composite photographs. Updated the current
+editing/behavior/performance handoff, reconciled historical descriptions and
+completed the plan. Original offer JSON bytes/publication settings restored.
+
+Production checks: 16 theme/width/root-text layouts, 144 copy positions,
+landscape/resizing, long copy/CTA, wrapping indicators, pointer/focus/keyboard/
+touch/manual navigation, autoplay timing/wrap/holds/resume/single timer,
+inactive accessibility exclusion, remote/slow/failed images, no-JS/failed-init/
+storage, eight rebuilt JSON fixtures, 156 schema/parser/wrapper assertions,
+header/settings/theme/menu/cookie and all project/legal routes. Native stock
+Chrome tab switching closed the carried visibility gap without simulated
+document state; separate controlled-clock visibility tests are labeled.
+
+`pnpm check`: zero errors/warnings and one preexisting ignored task-018 hint.
+`pnpm build`: six routes. Changed source obeys 80-column/multiline CSS purpose
+comments; diff checks pass. Measured homepage inline JS 8317 bytes, offer script
+1906 bytes, referenced CSS 117550 bytes; home CSS includes other sections and
+is not an isolated offer delta. Settled 15s rotation sample had no recorded
+layout shifts; initial and stress samples remain separately reported.
+
+Evidence: ignored `output/playwright/task-021/` contains scripts/results and
+loaded theme/narrow/wide, mouse-hidden/shown, focus, touch, enlarged/minimum
+text, empty, wrapped, failed-image, no-JS and contrast screenshots. Native zoom,
+screen-reader speech, other engines and deployed-host performance were not
+tested. Approved promotions/artwork/publication remain agency inputs. No
+commit or deployment.

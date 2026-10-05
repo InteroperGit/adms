@@ -33,7 +33,8 @@ export const offerFocalPointSchema = z.object({
   y: z.number().min(0).max(100).default(50),
 }).strict();
 
-// Compare text with black/white backing, independently of the image.
+// Validate palette contrast against a solid black/white reference.
+// The translucent rendered backing still needs image-specific review.
 function linear(channel: number): number {
   return channel <= 0.04045
     ? channel / 12.92
@@ -77,10 +78,10 @@ export const offerPresentationSchema = z.object({
     context.addIssue({
       code: 'custom',
       path: ['textColor'],
-      message: 'Text color must meet 4.5:1 contrast with the ' +
+      message: 'Text color must meet 4.5:1 contrast with the solid ' +
         `${value.overlay} ` +
-        'description background; choose a lighter color for dark or darker ' +
-        'color for light',
+        'palette reference; choose a lighter color for dark or darker ' +
+        'color for light. Review contrast over the actual image separately',
     });
   }
 });

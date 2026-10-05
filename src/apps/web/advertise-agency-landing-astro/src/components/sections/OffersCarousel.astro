@@ -350,7 +350,11 @@ import { offers, enabledOffers } from '@/content/offers';
     height: 0.75rem;
     border: 2px solid currentColor;
     border-radius: 50%;
-    filter: drop-shadow(0 0 1px #000) drop-shadow(0 0 1px #000);
+    filter:
+      drop-shadow(-1px 0 0 #000)
+      drop-shadow(1px 0 0 #000)
+      drop-shadow(0 -1px 0 #000)
+      drop-shadow(0 1px 0 #000);
   }
 
   /* Fill the current marker without changing any circle's radius. */
@@ -397,12 +401,14 @@ import { offers, enabledOffers } from '@/content/offers';
     min-height: clamp(23rem, 36vw, 34rem);
     background: #000;
     --description-backing: rgb(0 0 0 / 25%);
+    --description-edge: #000;
   }
 
   /* Use a light fallback and description backing for light presentation. */
   .offer[data-overlay='light'] {
     background: #fff;
     --description-backing: rgb(255 255 255 / 25%);
+    --description-edge: #fff;
   }
 
   /* Cover the slide with the configured image crop. */
@@ -484,7 +490,7 @@ import { offers, enabledOffers } from '@/content/offers';
     text-align: right;
   }
 
-  /* Back nonempty descriptions with a 25% opaque rectangle. */
+  /* Preserve translucent backing with an image-independent glyph edge. */
   .offer-copy p {
     margin: 0;
     padding: 1rem 1.25rem;
@@ -492,6 +498,13 @@ import { offers, enabledOffers } from '@/content/offers';
     color: var(--description-color);
     font-size: var(--description-size);
     line-height: 1.55;
+    -webkit-text-stroke: 1px var(--description-edge);
+    paint-order: stroke fill;
+    text-shadow:
+      -1px -1px 0 var(--description-edge),
+      1px -1px 0 var(--description-edge),
+      -1px 1px 0 var(--description-edge),
+      1px 1px 0 var(--description-edge);
   }
 
   /* Keep the CTA readable and allow long labels to wrap. */
