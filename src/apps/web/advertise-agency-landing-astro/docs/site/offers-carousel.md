@@ -8,8 +8,9 @@ Edit `data/content/offers.json`. The retained enabled baseline contains two
 explicitly identified test offers with factual service copy; stock photographs
 do not show agency work. Replace demos with agency-approved content before
 production publication. No prices, discounts, deadlines or results are inferred.
-Tasks 019–020 own navigation/autoplay; the current component remains static with
-ordered stacked offers and native links, including without JavaScript.
+Task 019 adds manual navigation with native links. Without JavaScript, offers
+remain an ordered stacked list. Task 020 owns autoplay; the saved autoplay
+settings do not start rotation yet.
 
 `src/content/offers.ts` validates the entire document, exports `offers`, and
 filters `enabledOffers` once in editorial order. Consumers respect global
@@ -85,7 +86,7 @@ The homepage component starts immediately below the header and preserves its
 single visually hidden h1. The region has Russian accessible name «Предложения»;
 articles have «Предложение N из M», stable `offer-ID` anchors and
 `data-offer-id`. There are no visible replacement headings, credits,
-placeholders or carousel semantics before navigation exists. Visible slide
+placeholders. Carousel semantics are added only after initialization. Slide
 content is description plus CTA only, over a full-width `object-fit: cover`
 image. Copy wrappers are transparent. Only a nonempty description receives a
 padded rectangular black/white background, with no rounded corners. The CTA sits
@@ -96,11 +97,11 @@ Inner copy uses site gutters and a 36rem maximum width; below 47rem it fills
 inner width and keeps requested text alignment. All nine positions remain
 supported. Minimum slide height is `clamp(23rem, 36vw, 34rem)`, 25rem below
 47rem, and 20rem for wider short landscape screens. Long/enlarged copy expands
-slides. Bottom spacing reserves 4.5–5.5rem for future controls without
+slides. Bottom spacing provides 4.5–5.5rem of breathing room without
 placeholders. First image eager, later images lazy; explicit dimensions and
 asynchronous decoding preserve geometry independent of loading. Failed images
 retain neutral black/white fallback, text and native CTAs. No styling JavaScript
-is added.
+is required to measure heights.
 
 Description text uses an opaque black rectangle for `overlay: dark` or white for
 `light`. `offerTextContrast` rejects colors below 4.5:1 against that rectangle,
@@ -165,9 +166,98 @@ paragraphs/backgrounds with two images and CTAs; original demo JSON restored.
 hint; `pnpm build` generated six pages. Evidence: ignored
 `output/playwright/description-background/`.
 
-Background image opacity is 25% (`.offer-background`); description rectangles
-and CTA remain fully opaque. Component CSS uses documented multiline
-declarations and purpose comments for each rule.
+Description rectangles use 25% black/white backing; images and CTAs remain
+fully opaque. Component CSS uses documented multiline declarations and
+purpose comments for each rule.
+
+## Manual navigation (task 019, historical placement)
+
+With multiple items, a small Astro browser script initializes one current-slide
+index. Previous/next native buttons wrap through editorial order; circular dot
+buttons select directly and expose `aria-current="true"`. The current dot has
+a filled center and extra outline. A quiet numeric counter provides position.
+Local inline SVG arrows have Russian accessible names. All targets are at least
+44×44px at the default text size and have visible theme-aware focus outlines.
+Tab, Enter and Space use native browser behavior; no global keys are captured.
+Manual changes update the polite Russian status; initialization stays silent.
+Focus stays on the activating button. CTAs remain separate native anchors.
+
+Controls appear only after initialization and only for multiple items. One item
+is static; disabled/empty lists omit the region. A script failure leaves the
+stacked fallback and hides controls. Inactive slides use `aria-hidden`, `inert`
+and `visibility: hidden`, so links and content are absent from the accessibility
+tree and keyboard order. Their grid geometry remains in the shared track,
+reserving the tallest slide without measuring or clipping text. Layout adapts
+automatically to resizing and enlarged/long copy. The separate control row
+wraps and stays clear of descriptions and CTAs. Active slides fade for 160ms
+only when reduced motion is off. No autoplay, swipe or pause/play is added yet.
+
+Task 019 verification: Chrome passed 16 light/dark × 320/375/768/1440px ×
+normal/200% root-text combinations, both-theme 844×390 landscape and resizing.
+Arrows wrap, dots/counter agree, manual status is polite, native CTA targets
+work, Enter/Space retain focus, and Tab skips inactive CTAs. Controls have
+44px minimum targets, visible focus and no overlap with copy. Rotation height
+stays stable with no horizontal overflow. Reduced motion removes animation.
+Both-theme no-JS and blocked-image fallbacks preserve content/links; both remote
+images also loaded successfully. Four maximum-size, long/unbroken copy/CTA
+checks with 200% text expanded without clipping and preserved rotation height.
+Actual JSON fixtures passed zero/global-disabled/all-disabled/one/filtered and
+restored-multiple cases. Original JSON bytes, including `enabled: true`,
+`autoplay: true` and `intervalMs: 7000`, were restored.
+
+`pnpm check` reports zero errors/warnings and one preexisting ignored-script
+hint; `pnpm build` generates six pages. Browser evidence is under ignored
+`output/playwright/task-019/`. Checks use development output; native browser
+zoom, screen-reader speech and integrated production performance remain outside
+this scoped check. Task 021 owns integrated production verification. No commit
+or deployment.
+
+## Overlay navigation (task 019a)
+
+Navigation now sits inside the image area. Circular previous/next buttons are
+vertically centered at its left/right edges. On fine-pointer hover devices,
+arrows fade in/out over 180ms as the pointer enters/leaves the carousel. Hidden
+arrows do not intercept clicks. Keyboard focus within the carousel reveals
+arrows and preserves focus visibility; touch/non-hover devices keep them visible.
+Reduced motion removes meaningful reveal animation. Arrow backgrounds use
+solid theme tokens so icons stay readable independently of the photograph.
+
+Standalone equal-radius circles sit at the bottom horizontal center. The
+selected circle is filled; others are empty outlines. There is no visible group
+container, pill, button background, hover background or selected highlight area.
+White markers have a small dark shadow for bright-image legibility. Invisible
+button targets remain at least 44px; keyboard focus adds a white/black outline.
+The visible numeric counter and its updates are removed. Accessible slide/dot
+labels and concise polite manual status remain.
+
+Control size is bounded at 44–56px to preserve reading space when text grows.
+The content stage reserves responsive side padding for arrow targets, focus
+outlines and a gap, and bottom padding for the indicators. Padding remains when
+arrows hide, so hover/focus causes no text movement. A small ResizeObserver
+updates bottom clearance when the indicator group wraps or resizes. Slide
+height still comes from the shared tallest grid track; content is never clipped.
+One/zero/no-JS behavior and native CTA links remain as described above.
+Autoplay/pause/play still belong to task 020.
+
+Verification: Chrome passed 16 light/dark × 320/375/768/1440px × normal/200%
+root-text cases, including 144 copy-position combinations, circular button/icon
+centering, bottom dot centering, fill-only selection, transparent dot controls,
+44px targets, no overlap/overflow and stable rotation height. Pointer entry/exit,
+rapid re-entry, control-entry stability, hidden hit testing, unchanged hover
+geometry, Tab/Enter/Space, focus reveal, native CTA navigation and reduced motion
+passed. Both-theme touch and no-JS cases passed, as did short 844×390 landscape,
+resizing and four long/unbroken description/CTA cases at maximum 3rem with 200%
+text. Artificially wrapped indicators retained clearance. Bright/black image
+fallback screenshots and loaded images were checked; desktop/mobile loaded
+screenshots were visually reviewed. Six actual JSON fixtures passed and original
+bytes/publication settings were restored (`enabled: true`, `autoplay: true`,
+`intervalMs: 7000`, two demo items).
+
+`pnpm check`: zero errors/warnings, one preexisting ignored task-018 script hint.
+`pnpm build`: six pages. Diff and 80-column component code checks pass. Evidence:
+ignored `output/playwright/task-019a/`. Checks use development output; native
+browser zoom, screen-reader speech and integrated production performance remain
+unverified. Task 021 owns integrated production review. No commit or deployment.
 
 
 [source-1]:
