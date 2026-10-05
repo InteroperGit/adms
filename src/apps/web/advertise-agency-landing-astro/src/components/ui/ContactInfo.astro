@@ -14,7 +14,7 @@ export interface Props {
 const { phone, email, address, workHours, workHoursWeekend, class: className = '' } = Astro.props;
 ---
 
-<div class={`space-y-3 ${className}`}>
+<div class={`contact-info space-y-3 ${className}`}>
   {address && (
     <div class="flex items-center gap-3">
       <i class={`fas ${icons.address} text-2xl text-brand w-6 shrink-0 text-center`} aria-hidden="true"></i>
@@ -24,13 +24,13 @@ const { phone, email, address, workHours, workHoursWeekend, class: className = '
   {phone && (
     <div class="flex items-center gap-3">
       <i class={`fas ${icons.phone} text-2xl text-brand w-6 shrink-0 text-center`} aria-hidden="true"></i>
-      <a href={`tel:${phone.replace(/\s/g, '')}`} class="contact-action link link-hover">{phone}</a>
+      <a href={`tel:${phone.replace(/\s/g, '')}`} class="contact-action">{phone}</a>
     </div>
   )}
   {email && (
     <div class="flex items-center gap-3">
       <i class={`fas ${icons.email} text-2xl text-brand w-6 shrink-0 text-center`} aria-hidden="true"></i>
-      <a href={`mailto:${email}`} class="contact-action link link-hover">{email}</a>
+      <a href={`mailto:${email}`} class="contact-action">{email}</a>
     </div>
   )}
   {workHours && (
@@ -38,7 +38,7 @@ const { phone, email, address, workHours, workHoursWeekend, class: className = '
       <i class={`far ${icons.clock} text-2xl text-brand w-6 shrink-0 text-center`} aria-hidden="true"></i>
       <div class="min-w-0 [overflow-wrap:anywhere]">
         <p>{workHours}</p>
-        {workHoursWeekend && <p>{workHoursWeekend}</p>}
+        {workHoursWeekend && <p class="text-muted">{workHoursWeekend}</p>}
       </div>
     </div>
   )}
@@ -51,7 +51,12 @@ const { phone, email, address, workHours, workHoursWeekend, class: className = '
     min-width: 0;
     min-height: 44px;
     overflow-wrap: anywhere;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
+
+  .contact-action:hover { text-decoration-thickness: 2px; }
 
   .contact-action:focus-visible {
     outline: 2px solid currentColor;
