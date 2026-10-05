@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import About from '@/components/sections/About.astro';
+import OffersCarousel from '@/components/sections/OffersCarousel.astro';
 import Projects from '@/components/sections/Projects.astro';
 import Reviews from '@/components/sections/Reviews.astro';
 import Contacts from '@/components/sections/Contacts.astro';
@@ -9,6 +10,7 @@ import { site } from '@/content/site';
 
 <Layout title="Главная">
   <h1 class="sr-only">{site.title}</h1>
+  <OffersCarousel />
   <About />
   <Projects />
   <Reviews />

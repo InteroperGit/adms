@@ -1,7 +1,63 @@
 {
-  "enabled": false,
+  "enabled": true,
   "autoplay": true,
   "intervalMs": 7000,
-  "title": "Горячие предложения",
-  "items": []
+  "items": [
+    {
+      "id": 1,
+      "enabled": true,
+      "description":
+      "Тестовое предложение: дизайн, изготовление световых букв и объёмных конструкций, монтаж под ключ. Фото из библиотеки — не работа агентства.",
+      "presentation": {
+        "fontSizeRem": 1.125,
+        "textColor": "#ffffff",
+        "horizontal": "left",
+        "vertical": "bottom",
+        "overlay": "dark",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 42,
+          "y": 50
+        }
+      },
+      "image":
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Office_interior_2022_queue.jpg/1280px-Office_interior_2022_queue.jpg",
+      "imageAlt": "",
+      "imageWidth": 1280,
+      "imageHeight": 960,
+      "linkLabel": "Посмотреть проекты",
+      "href": "/#projects"
+    },
+    {
+      "id": 2,
+      "enabled": true,
+      "description":
+      "Тестовое предложение: обсудим вашу вывеску. Работаем с акрилом, неоном, светодиодами и металлокаркасами. Фото из библиотеки — не работа агентства.",
+      "presentation": {
+        "fontSizeRem": 1.25,
+        "textColor": "#18222d",
+        "horizontal": "right",
+        "vertical": "center",
+        "overlay": "light",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 65,
+          "y": 50
+        }
+      },
+      "image":
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg/1280px-IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg",
+      "imageAlt": "",
+      "imageWidth": 1280,
+      "imageHeight": 961,
+      "linkLabel": "Связаться с нами",
+      "href": "/#contacts"
+    }
+  ]
 }
