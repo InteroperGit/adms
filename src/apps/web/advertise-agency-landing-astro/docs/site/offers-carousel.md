@@ -45,9 +45,10 @@ together. Parser errors identify the source and field path.
 - `presentation.fontSizeRem`; Rule / default: Number 1–3 inclusive; default
   1.125. Description size in rem.
 - `presentation.textColor`; Rule / default: Opaque six-digit hex; default
-  `#ffffff`. Must pass contrast for the selected description rectangle.
+  `#ffffff`. Must pass the 4.5:1 solid glyph-edge palette check; review the
+  actual image and rendered text before publication.
 - `presentation.overlay`; Rule / default: `dark` (default) or `light`;
-  retained field name now selects the opaque black or white rectangle behind
+  retained field name selects the 25% black or white rectangle behind
   description text only. No image-wide overlay.
 - `presentation.horizontal`; Rule / default: `left` (default), `center`,
   `right`. Places and aligns description/CTA.
@@ -102,11 +103,15 @@ asynchronous decoding preserve geometry independent of loading. Failed images
 retain neutral black/white fallback, text and native CTAs. No styling JavaScript
 is required to measure heights.
 
-Description text uses an opaque black rectangle for `overlay: dark` or white for
-`light`. `offerTextContrast` rejects colors below 4.5:1 against that rectangle,
-independently of image brightness. Empty and whitespace-only descriptions render
-no rectangle. CTA white on orange `#b2380a` remains 6.06:1; a white focus
-outline with a black outer ring remains visible on bright and dark imagery.
+Description backing stays 25% black for `overlay: dark` or white for `light`.
+This alone cannot guarantee contrast over a photograph: white text against
+white imagery with 25% black backing is only about 1.83:1. A 1px solid glyph
+edge and hard shadows now follow the selected black/white presentation, while
+the rectangle stays translucent. `offerTextContrast` checks that solid edge
+palette, not the composite photograph. Review replacement artwork at every
+crop and minimum text size; schema success is not rendered contrast proof.
+Empty descriptions render no rectangle or edge. CTA white on orange
+`#b2380a` remains 6.06:1; white/black focus rings support both image extremes.
 
 ## Remote demo rights
 
@@ -211,7 +216,7 @@ zoom, screen-reader speech and integrated production performance remain outside
 this scoped check. Task 021 owns integrated production verification. No commit
 or deployment.
 
-## Overlay navigation (task 019a)
+## Overlay navigation (task 019a; current placement)
 
 Navigation now sits inside the image area. Circular previous/next buttons are
 vertically centered at its left/right edges. On fine-pointer hover devices,
@@ -224,7 +229,7 @@ solid theme tokens so icons stay readable independently of the photograph.
 Standalone equal-radius circles sit at the bottom horizontal center. The
 selected circle is filled; others are empty outlines. There is no visible group
 container, pill, button background, hover background or selected highlight area.
-White markers have a small dark shadow for bright-image legibility. Invisible
+White markers have a solid dark edge for bright-image legibility. Invisible
 button targets remain at least 44px; keyboard focus adds a white/black outline.
 The visible numeric counter and its updates are removed. Accessible slide/dot
 labels and concise polite manual status remain.
@@ -236,7 +241,7 @@ arrows hide, so hover/focus causes no text movement. A small ResizeObserver
 updates bottom clearance when the indicator group wraps or resizes. Slide
 height still comes from the shared tallest grid track; content is never clipped.
 One/zero/no-JS behavior and native CTA links remain as described above.
-Autoplay/pause/play are described in the task 020 section below.
+Current autoplay follows task 020a below; task 020 is historical.
 
 Verification: Chrome passed 16 light/dark × 320/375/768/1440px × normal/200%
 root-text cases, including 144 copy-position combinations, circular button/icon
@@ -348,6 +353,80 @@ timeout before scheduling, preventing duplicate timers and catch-up changes.
 
 Zero/one offers remain omitted/static; no-JS offers are stacked native links
 with controls hidden. No content/schema/storage changes are required.
+
+## Integrated production verification (task 021, 2026-10-06)
+
+Checked actual `dist/` over a local static HTTP server in Chrome. Earlier
+development-output checks above remain historical. No critical carousel
+regression remained in this review; optional swipe stays deferred.
+
+- Both themes at 320/375/768/1440px and normal/200% root text passed 16
+  layouts and 144 copy-position cases. Short 844×390 landscape, resizing,
+  3rem long/unbroken descriptions and enlarged CTA labels retained clearance,
+  no horizontal overflow and stable rotation height. Twenty actual offers
+  wrapped dots without clipping copy. Root text resizing is separate from
+  native browser zoom, which was not tested.
+- Circular arrow/icon centering, equal standalone dots, fill-only selection,
+  transparent dot targets, at least 44px targets, mouse entry/exit/rapid
+  re-entry, hidden-arrow hit testing, focus reveal/retention, native
+  Enter/Space/Tab, touch/non-hover and both CTA fragment destinations passed.
+  Accessibility snapshots excluded inactive slides and CTAs. No screen-reader
+  speech test was performed; accessible-tree evidence does not prove speech.
+- Real approximately 7s rotation and wrap stayed silent. Controlled-clock
+  tests covered manual reset/resume, focus/hover/offscreen holds, reduced
+  motion, suspension and duplicate-timer prevention. Native stock Chrome
+  separately transitioned visible → hidden → visible using direct CDP tab
+  activation, with no hidden-property override or synthetic visibility event:
+  index 0 held for 8500ms hidden, remained 0 on return, then became 1 after
+  7600ms visible. Status stayed empty. This closes task 020's native tab gap;
+  synthetic visibility tests remain separately identified in their evidence.
+- Eight real JSON fixtures were rebuilt: zero, global-disabled, all-disabled,
+  one, filtered, autoplay-off, empty/whitespace descriptions and 20-item dots.
+  Original JSON bytes were restored, then production rebuilt: `enabled: true`,
+  `autoplay: true`, `intervalMs: 7000`, two explicitly labeled test offers.
+  Both-theme no-JS, failed initialization, failed images, 2s delayed image
+  failures and unavailable storage retained usable links/geometry.
+- 156 parser/schema/wrapper assertions passed; compile-time bidirectional
+  contracts passed `pnpm check`. Browser inline scripts exclude validator
+  signatures; plain types → validation → content wrappers remain server-only.
+  Header/settings/theme/menu/cookie interactions and all five project/legal
+  routes passed. Offers remain homepage-only below header and above About,
+  with one hidden h1 and Russian names.
+
+Both retained remote backgrounds loaded at 1280×960 and 1280×961. Desktop
+focal points are 50%/50%; mobile overrides rendered 42%/50% and 65%/50%.
+First image is eager, second lazy, but Chrome requested both on initial load
+in this sample; lazy is a hint, not guaranteed deferral. No priority or LCP
+claim follows from these observations.
+
+Contrast screenshots cover retained imagery and white/black/checkerboard
+extremes. Reviewed loaded 320px and white-background text visually; 1rem
+minimum text evidence is also saved. Rendered solid glyph/edge colors are
+white/black (21:1) and `#18222d`/white (16.1:1); CTA is 6.06:1. White markers
+have a black edge (21:1), and focus uses the same dual colors. These ratios
+describe the solid interiors/edges, not every antialiased pixel or all possible
+future image/color combinations. Arrow solid theme surfaces isolate icons
+from images; replacement palettes and actual artwork still need review.
+
+Production homepage scripts total 8317 raw bytes; the offer inline script is
+1906 bytes (903 gzip). Two referenced CSS files total 117550 bytes; the home
+sheet containing offers is 10098 bytes (2373 gzip), including other homepage
+sections, so it is not an offer-only delta. Shared CSS is 107452 bytes.
+Gzip measurements are offline sizes, not proof of host compression. In one
+1440px production run with remote requests blocked, the initial layout-shift
+sample was 0.1349 (sources About and desktop navigation); after settling,
+15 seconds of automatic rotation produced no recorded shifts. Stress resize
+and root-text changes caused shifts and are excluded from that steady sample.
+This is not a Lighthouse/Core Web Vitals certification or a zero-CLS claim.
+
+`pnpm check`: zero errors/warnings, one preexisting ignored task-018 hint.
+`pnpm build`: six routes. Diff and changed-code 80-column/CSS rule checks pass.
+Scripts, results and representative loaded/hidden/shown/focused/touch/theme/
+enlarged/empty/failed/no-JS screenshots live under ignored
+`output/playwright/task-021/`. Native zoom, screen-reader speech, other browser
+engines and deployed-host performance remain explicit limits. Approved
+promotions, artwork and publication permission remain agency inputs; the demo
+stock is not agency work. No commit or deployment was made.
 
 [source-1]:
   https://commons.wikimedia.org/wiki/File:Office_interior_2022_queue.jpg
