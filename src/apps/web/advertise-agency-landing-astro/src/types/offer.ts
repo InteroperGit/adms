@@ -1,5 +1,21 @@
-import type { z } from 'astro/zod';
-import type { offerSchema, offersSchema } from '@/content/schemas';
+export interface Offer {
+  id: number;
+  enabled: boolean;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  imageWidth: number;
+  imageHeight: number;
+  linkLabel: string;
+  href: string;
+}
 
-export type Offer = z.infer<typeof offerSchema>;
-export type Offers = z.infer<typeof offersSchema>;
+/** Validated settings: intervalMs is always present after the default is applied. */
+export interface Offers {
+  enabled: boolean;
+  autoplay: boolean;
+  intervalMs: number;
+  title: string;
+  items: Offer[];
+}
