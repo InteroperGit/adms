@@ -1,4 +1,5 @@
 ﻿import data from '@/data/content/reviews.json';
-import { parseContent, reviewsSchema } from './schemas';
+import { reviewsSchema } from '../validation/reviews';
+import { parseContent } from '../validation/parse-content';
 
 export const reviews = parseContent(reviewsSchema, data, 'data/content/reviews.json');

@@ -1,5 +1,6 @@
 import data from '@/data/content/offers.json';
-import { offersSchema, parseContent } from './schemas';
+import { offersSchema } from '../validation/offers';
+import { parseContent } from '../validation/parse-content';
 
 export const offers = parseContent(offersSchema, data, 'data/content/offers.json');
 
