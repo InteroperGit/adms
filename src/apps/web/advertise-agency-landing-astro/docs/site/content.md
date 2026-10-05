@@ -6,6 +6,8 @@ Edit content in `data/content/*.json` (legal documents are in `data/content/lega
 
 Projects and reviews use direct JSON imports because each dataset is small and their existing synchronous API and array order are sufficient. Astro content collections are unnecessary here; consider them if the site grows to need collection queries or Markdown entries. See the [Astro content collections guide](https://docs.astro.build/en/guides/content-collections/).
 
+Offers use the same validated JSON-wrapper convention. See [hot offers carousel](offers-carousel.md) for `data/content/offers.json`, publication switches, ordered enabled items, stable IDs, image metadata and safe CTA links. The initial configuration is disabled and empty pending approved promotional copy/artwork. Task 018 will connect its wrapper to a page; until then, verify offers with the targeted schema/import check because page builds do not import it yet.
+
 `src/content/schemas.ts` validates project and review arrays when their exports are imported, including during `pnpm build`. Their `Project` and `Review` types are inferred from these schemas instead of maintained as separate interfaces. Validation rejects missing, unknown, incorrectly typed, or blank fields, invalid media sources, and non-positive, fractional, or duplicate IDs. Errors name the source JSON file and field path (for example, `0.title`). Media sources can be HTTP(S) URLs or root-relative paths to public assets; validation does not check whether those resources exist.
 
 Keep project IDs stable: each numeric ID defines `/projects/<id>`, including the existing `/projects/1`, `/projects/2`, and `/projects/3` routes. Array order determines card order. After editing JSON, run `pnpm build` to validate the content and generate the pages.
