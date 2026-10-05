@@ -51,7 +51,7 @@ Per the user's preference, `brand` is the same darker orange `#EA580C` in both t
 
 ## Contacts, footer and legal documents (task 015)
 
-Contacts pair a quiet base-200 information panel with the existing map variant, using 8px field corners, a 24px grid gap and no decorative shadow. The contact heading leads the address, underlined phone/email actions and opening hours. Icons remain centered beside wrapping text; phone/email targets retain 44px minimum height. The map frame has a reserved 18rem minimum height; it remains a decorative local image when disabled and a titled lazy iframe when enabled. Third-party map colors and availability are independent of site themes and cookie choices.
+Contacts use the same base-200 section background as Projects and pair a quiet base-100 information panel with the existing map variant, using 8px field corners, a 24px grid gap and no decorative shadow. The contact heading leads the address, underlined phone/email actions and opening hours. Icons remain centered beside wrapping text; phone/email targets retain 44px minimum height. The map frame has a reserved 18rem minimum height; it remains a decorative local image when disabled and a titled lazy iframe when enabled. Third-party map colors and availability are independent of site themes and cookie choices.
 
 The footer is left aligned on base-200, stacking until 64rem before forming three columns. Its orange-and-blue butterfly stays left of the wrapping agency name, now a home link. Underlined legal actions have 44px minimum height; section labels use normal sentence case and copyright has a quiet divider. Text and contact destinations still come from the existing JSON.
 
@@ -122,3 +122,7 @@ Chrome verification covered 320/375/768/1440px in both themes, each with separat
 Evidence: `output/playwright/task-013/` contains four before and four after screenshots (375/1440px, both themes), `baseline.js`, `verify.js`, `final-checks.js` and `measure.js`; artifacts are ignored. Desktop Light and mobile Dark screenshots were visually inspected. Before images include the cookie banner; after images use a saved accepted cookie choice to inspect the opening unobscured.
 
 Computed contrast on the opening base surface (Light / Dark): lead text 16.09 / 14.44, detail/labels 6.36 / 9.58, orange 32px bold statistics 3.56 / 4.57, primary action 6.06 / 7.96, secondary action 6.06 / 8.04. Large statistic text exceeds 3:1; body/actions exceed 4.5:1. Native browser zoom was attempted with Control+plus but neither viewport width nor DPR changed in automated Chrome, so actual 200% browser zoom remains unverified. Root-text enlargement is a separate check. External placeholder image failures, final whole-site overflow (reviews/cookie/footer), screen-reader and full hover-state review remain tasks 014–016; these checks do not claim whole-site completion.
+
+## Final integrated review
+
+See [integrated design verification](design-verification.md) for the final six-route light/dark matrix, enlarged-text checks, production behavior/contrast/assets and explicit native-zoom/browser limits. The mobile menu opener now uses a local SVG to preserve essential navigation when external icon CSS fails.
