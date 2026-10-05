@@ -1,48 +1,180 @@
-# Hot offers carousel content
+﻿# Offers carousel content
 
 [Documentation index](../../README.md)
 
-## Publication and source
+## Publication and ownership
 
-Edit `data/content/offers.json`. The checked-in document has `enabled: false` and an empty `items` array because approved promotional copy and artwork have not been supplied. No offer, discount, deadline or stock artwork is invented. Task 017 provides configuration only; homepage rendering, controls and autoplay are implemented in tasks 018–020.
+Edit `data/content/offers.json`. The retained enabled baseline contains two
+explicitly identified test offers with factual service copy; stock photographs
+do not show agency work. Replace demos with agency-approved content before
+production publication. No prices, discounts, deadlines or results are inferred.
+Tasks 019–020 own navigation/autoplay; the current component remains static with
+ordered stacked offers and native links, including without JavaScript.
 
-`src/content/offers.ts` validates the entire document through `offersSchema` and exports `offers` and `enabledOffers`. The latter preserves array order and filters per-item `enabled` exactly once. Consumers must also respect the separate global `offers.enabled` flag; an enabled item alone does not publish the section. `Offer` and `Offers` are plain domain interfaces in `src/types/offer.ts`, exported through `@/types`. Runtime schemas belong to `src/validation/offers.ts` and parsing to `src/validation/parse-content.ts`. Validators import contracts only as types and check item/aggregate output compatibility in both directions, including keys and requiredness. Change a domain field and its validation together; see [content ownership](content.md#changing-a-domain-field).
+`src/content/offers.ts` validates the entire document, exports `offers`, and
+filters `enabledOffers` once in editorial order. Consumers respect global
+`enabled`; zero enabled items omit the region and one renders statically.
+Disabled items are validated. Plain interfaces `Offer`, `Offers`,
+`OfferPresentation`, `OfferFocalPoint` live in `src/types/offer.ts`; strict
+runtime schemas and bidirectional output compatibility checks live in
+`src/validation/offers.ts`. Change contracts, schemas, JSON and consumers
+together. Parser errors identify the source and field path.
 
-Validation runs whenever this wrapper is imported. Until task 018 connects it to a page, a successful page build alone does not exercise the offers JSON at runtime; use the targeted schema/import verification described below. Do not duplicate JSON copy, sorting or filtering in components. Disabled items are validated too, so unfinished drafts should stay outside this configuration.
+## Settings
 
-## Settings and fields
+- `enabled`, `autoplay`; Rule / default: Required booleans; autoplay
+  configures later behavior.
+- `intervalMs`; Rule / default: Integer ≥5000; omitted input defaults to 7000.
+- `items`; Rule / default: Required ordered array; zero/one/multiple valid.
+- Item `id`, `enabled`; Rule / default: Unique positive integer (including
+  disabled items), required boolean. Keep stable IDs.
+- `description`; Rule / default: Required string; empty or whitespace-only text
+  hides the description and its rectangle. The CTA remains visible.
+- `linkLabel`; Rule / default: Required nonblank string naming the CTA
+  destination.
+- `image`; Rule / default: Safe root-relative public path or absolute HTTP(S)
+  URL; retained demos use direct HTTPS URLs, no local assets/downloads.
+- `imageAlt`; Rule / default: Meaningful text for informative artwork or
+  exactly empty for decorative artwork; no whitespace-only value.
+- `imageWidth`, `imageHeight`; Rule / default: Positive integer intrinsic
+  dimensions matching the actual remote image.
+- `href`; Rule / default: Safe root-relative path, nonempty local fragment or
+  absolute HTTP(S) URL.
+- `presentation`; Rule / default: Optional strict object; missing keys default
+  below.
+- `presentation.fontSizeRem`; Rule / default: Number 1–3 inclusive; default
+  1.125. Description size in rem.
+- `presentation.textColor`; Rule / default: Opaque six-digit hex; default
+  `#ffffff`. Must pass contrast for the selected description rectangle.
+- `presentation.overlay`; Rule / default: `dark` (default) or `light`;
+  retained field name now selects the opaque black or white rectangle behind
+  description text only. No image-wide overlay.
+- `presentation.horizontal`; Rule / default: `left` (default), `center`,
+  `right`. Places and aligns description/CTA.
+- `presentation.vertical`; Rule / default: `top`, `center`, `bottom`
+  (default). Requires spare height to show alignment.
+- `presentation.focalPoint`; Rule / default: Optional strict `{x,y}` object,
+  numeric percentages 0–100 inclusive; omitted axes default 50.
+- `presentation.mobileFocalPoint`; Rule / default: Optional strict `{x,y}`
+  override below 47rem; omitted override uses desktop focal point, omitted axes
+  default 50.
 
-| Field | Editing rule |
-| --- | --- |
-| `enabled` | Required boolean. Publish only after the agency approves copy, artwork and destinations. |
-| `autoplay` | Required boolean; configures later rotation behavior, not a timer by itself. |
-| `intervalMs` | Integer of at least 5000 milliseconds; defaults to 7000 when omitted. Checked-in value is 7000. |
-| `title` | Required nonblank section heading; currently «Горячие предложения». |
-| `items` | Required array; zero, one and multiple items are valid. Array order is display order. |
-| Item `id` | Unique positive integer, including disabled items. Keep stable when reordering or editing; do not reuse IDs for different offers. |
-| Item `enabled` | Required boolean; enables an individual approved item. |
-| Item `title`, `description`, `linkLabel` | Required nonblank strings. Use concise factual Russian copy and a CTA that names its destination/action. |
-| Item `image` | Root-relative public asset path or absolute HTTP(S) URL. Prefer `/images/offers/<approved-file>`. |
-| Item `imageAlt` | Meaningful alternative text for informative artwork; exactly `""` for purely decorative artwork whose information is already in visible copy. Whitespace-only text is invalid. |
-| Item `imageWidth`, `imageHeight` | Positive integer intrinsic pixel dimensions of the real image, not its rendered size. |
-| Item `href` | Root-relative path (including `/#contacts`), nonempty local `#fragment`, or absolute HTTP(S) URL. |
+Titles and `imageCredit` have been removed from item/aggregate contracts and are
+rejected as unknown fields. All objects reject unknown fields, null and
+arbitrary CSS. URLs reject credentials, protocol-relative URLs, unsafe schemes,
+whitespace/control characters and backslashes. Validation checks syntax, not
+source availability, destination existence or publication approval.
 
-Unknown/missing fields, wrong types, duplicate IDs, blank text, invalid dimensions and short intervals produce actionable errors naming `data/content/offers.json` and the field path, such as `items.1.id`. `intervalMs` is the only optional raw JSON field, with its documented default; it is required in the validated `Offers` object. Links and image sources reject protocol-relative URLs, unsafe schemes such as `javascript:` and `data:`, spaces/control characters, backslashes and HTTP(S) credentials. Use URL-encoded spaces where needed. Schema validation verifies syntax, not local file existence, remote availability, route/fragment existence or approval of a destination.
+Example presentation:
 
-## Approved content handoff
+```json
+{
+  "fontSizeRem": 1.25,
+  "textColor": "#18222d",
+  "overlay": "light",
+  "horizontal": "right",
+  "vertical": "center",
+  "focalPoint": { "x": 50, "y": 50 },
+  "mobileFocalPoint": { "x": 65, "y": 50 }
+}
+```
 
-For every offer, obtain approved title, description, link label, actual destination, artwork and alternative-text intent. Obtain prices, discounts, eligibility and dates only if supplied and approved; never infer them. Put optimized local artwork under `public/images/offers/`, record actual dimensions, and confirm rights to publish it. This folder need not exist until artwork is supplied. Check that each destination and image resolves before publishing.
+## Layout and accessibility
 
-Add complete items with stable IDs; leave global publication disabled while reviewing. Existing service text may be used in temporary preview fixtures only if clearly identified as preview content, with approved/demo artwork identified accurately. Restore `enabled: false` and remove temporary fixtures after checks. Once agency approval and tasks 018–021 verification are complete, enable selected items and the global flag, rebuild and deploy the static output. This flag is a build setting, not a cookie or visitor preference.
+The homepage component starts immediately below the header and preserves its
+single visually hidden h1. The region has Russian accessible name «Предложения»;
+articles have «Предложение N из M», stable `offer-ID` anchors and
+`data-offer-id`. There are no visible replacement headings, credits,
+placeholders or carousel semantics before navigation exists. Visible slide
+content is description plus CTA only, over a full-width `object-fit: cover`
+image. Copy wrappers are transparent. Only a nonempty description receives a
+padded rectangular black/white background, with no rounded corners. The CTA sits
+outside this rectangle; an empty description creates no paragraph or background
+and no extra gap before the CTA. Images have no dimming overlay.
 
-The component handoff is: omit disabled or empty sections; render a single enabled item statically; enhance multiple items progressively while retaining readable offers and real CTA links without JavaScript. Later tasks implement arrow/dot navigation, pauses, visibility rules and reduced-motion behavior using these exports. This task makes no browser, image-loading or autoplay claims.
+Inner copy uses site gutters and a 36rem maximum width; below 47rem it fills
+inner width and keeps requested text alignment. All nine positions remain
+supported. Minimum slide height is `clamp(23rem, 36vw, 34rem)`, 25rem below
+47rem, and 20rem for wider short landscape screens. Long/enlarged copy expands
+slides. Bottom spacing reserves 4.5–5.5rem for future controls without
+placeholders. First image eager, later images lazy; explicit dimensions and
+asynchronous decoding preserve geometry independent of loading. Failed images
+retain neutral black/white fallback, text and native CTAs. No styling JavaScript
+is added.
 
-## Task 017 verification
+Description text uses an opaque black rectangle for `overlay: dark` or white for
+`light`. `offerTextContrast` rejects colors below 4.5:1 against that rectangle,
+independently of image brightness. Empty and whitespace-only descriptions render
+no rectangle. CTA white on orange `#b2380a` remains 6.06:1; a white focus
+outline with a black outer ring remains visible on bright and dark imagery.
 
-Targeted Node verification exercises the actual schema and wrapper: valid empty/one/multiple items, disabled publication, stable filtering/order, defaults, duplicate enabled/disabled IDs, unsafe links/media, blank text, invalid/fractional dimensions, short/fractional intervals, wrong flags, unknown fields, and source/field paths in errors. Local evidence is saved under ignored `output/playwright/task-017/`; it is schema verification, not browser evidence. `pnpm check` and `pnpm build` remain required for integration/type checking. Task 021 owns integrated browser verification and approved-asset review.
+## Remote demo rights
 
-Task 017 results: `node output/playwright/task-017/verify.mjs` passed 66 assertions on Node 25.7.0. The harness resolves the JSON alias and schema import for native Node while running the wrapper's parse/export/filter body unchanged. `pnpm check` passed with 77 files and zero errors, warnings or hints; `pnpm build` generated all six existing pages. Native Node TypeScript loading is used by this local harness; no test-runner dependency or production script was added. No browser/server was started, and no artwork availability or publication approval was verified.
+Both source pages and CC0 terms were reviewed 2026-10-05, and both direct URLs
+loaded in Chrome at matching dimensions. These library images are test
+backgrounds, not agency projects or endorsements. No visible credit is required
+under their public-domain dedication; source/creator records remain here
+voluntarily. Recheck availability and terms when replacing images;
+attribution-required imagery needs another suitable source while this UI has no
+credit.
 
-## Task 017a verification
+- 1; Creator / source: Rakoon, [Office interior 2022 queue][source-1]; Direct
+  background and dimensions: [HTTPS image][source-2], 1280 × 960; Terms:
+  [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/), permits
+  copying/modification/commercial use without permission or displayed credit.
+- 2; Creator / source: Parpeliupant, [IS Real Estate Office Interior Torrevieja
+  2024-10-23][source-3]; Direct background and dimensions: [HTTPS
+  image][source-4], 1280 × 961; Terms:
+  [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). Replaces the
+  attribution-required Shixart1985 image.
 
-The modular validation refactor preserves publication, JSON and field policies. `node output/playwright/task-017a/verify.mjs` passed 143 schema/parser/actual-wrapper assertions across projects, reviews and offers, including empty/one/multiple offers, interval defaults and enabled-item order. `verify-contracts.mjs` rejects missing, extra optional and optional schema fields, optional interval output, and extra optional domain fields before restoring originals. The task-017 local helper was migrated to the new module paths. These ignored native Node helpers are verification evidence, not application APIs; no browser/server coverage is claimed.
+## Task 018b verification (historical layout)
+
+160 schema/parser/wrapper assertions cover defaults, all positions, focal
+bounds, contrast, unsafe URLs, removed/unknown fields, IDs, dimensions,
+intervals and ordered exports. Chrome passed 16 Light/Dark × 320/375/768/1440px
+× normal/200% root-text combinations, short 844×390 landscape, all nine
+positions, keyboard focus, source loading and target existence, absent
+headings/credits/panel, full-width coverage, focal overrides and no overflow.
+Four long/unbroken description/CTA checks at maximum 3rem and 200% root text
+expanded without clipping. Bright/dark/checkerboard backgrounds passed 4.5:1;
+retained demos have conservative 9.23:1/8.07:1 minima. Slow/failure and
+both-theme no-JavaScript checks preserve copy/links and geometry. Actual server
+fixtures cover zero/global-disabled/all-disabled/one/filtered items and restore
+enabled demo bytes.
+
+`pnpm check`, `pnpm build` and diff checks pass. Evidence
+scripts/results/screenshots are under ignored `output/playwright/task-018b/`.
+Checks use development output; native browser zoom was not tested (200% root
+text is separate). Historical task evidence remains historical; task 021 owns
+integrated production review. No commit or deployment.
+
+
+## Description background follow-up
+
+Removed the whole-image wash and placed an opaque square-corner rectangle behind
+the description only. Empty/whitespace text is valid JSON and omits both text
+and rectangle; CTA and background image remain. Historical task-018b results
+above describe its earlier implementation.
+
+Follow-up verification: 162 schema/parser/wrapper assertions passed. Chrome at
+320/1440px confirmed no image overlay, square-corner description rectangles and
+no overflow. Actual empty/whitespace JSON fixtures rendered zero
+paragraphs/backgrounds with two images and CTAs; original demo JSON restored.
+`pnpm check` passed with zero errors/warnings and one preexisting ignored-script
+hint; `pnpm build` generated six pages. Evidence: ignored
+`output/playwright/description-background/`.
+
+Background image opacity is 25% (`.offer-background`); description rectangles
+and CTA remain fully opaque. Component CSS uses documented multiline
+declarations and purpose comments for each rule.
+
+
+[source-1]:
+  https://commons.wikimedia.org/wiki/File:Office_interior_2022_queue.jpg
+[source-2]:
+  https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Office_interior_2022_queue.jpg/1280px-Office_interior_2022_queue.jpg
+[source-3]:
+  https://commons.wikimedia.org/wiki/File:IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg
+[source-4]:
+  https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg/1280px-IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg

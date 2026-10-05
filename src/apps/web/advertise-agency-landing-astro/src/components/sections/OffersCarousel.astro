@@ -1,0 +1,211 @@
+﻿---
+import Button from '@/components/ui/Button.astro';
+import { offers, enabledOffers } from '@/content/offers';
+---
+
+{offers.enabled && enabledOffers.length > 0 && (
+  <section id="offers" class="offers-section" aria-label="Предложения">
+    <div class="offers-list">
+      {enabledOffers.map((offer, index) => {
+        const { presentation } = offer;
+        const { focalPoint } = presentation;
+        const mobile = presentation.mobileFocalPoint ?? presentation.focalPoint;
+        return (
+          <article
+            id={`offer-${offer.id}`}
+            class="offer"
+            aria-label={`Предложение ${index + 1} из ${enabledOffers.length}`}
+            data-offer-id={offer.id}
+            data-overlay={presentation.overlay}
+            style={{
+              '--description-size': `${presentation.fontSizeRem}rem`,
+              '--description-color': presentation.textColor,
+              '--focal-point': `${focalPoint.x}% ${focalPoint.y}%`,
+              '--mobile-focal-point': `${mobile.x}% ${mobile.y}%`,
+            }}
+          >
+            <img
+              class="offer-background"
+              src={offer.image}
+              alt={offer.imageAlt}
+              width={offer.imageWidth}
+              height={offer.imageHeight}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+            <div
+              class="site-container offer-stage"
+              data-horizontal={presentation.horizontal}
+              data-vertical={presentation.vertical}
+            >
+              <div class="offer-copy">
+                {offer.description.trim() && <p>{offer.description}</p>}
+                <Button href={offer.href} class="offer-link">
+                  {offer.linkLabel}
+                </Button>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+)}
+
+<style>
+  /* Stack enabled offers in editorial order. */
+  .offers-list {
+    display: grid;
+  }
+
+  /* Reserve slide geometry and provide the dark image fallback. */
+  .offer {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    min-height: clamp(23rem, 36vw, 34rem);
+    background: #000;
+    --description-backing: rgb(0 0 0 / 25%);
+  }
+
+  /* Use a light fallback and description backing for light presentation. */
+  .offer[data-overlay='light'] {
+    background: #fff;
+    --description-backing: rgb(255 255 255 / 25%);
+  }
+
+  /* Cover the slide with the configured image crop. */
+  .offer-background {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--focal-point);
+  }
+
+  /* Align content to site gutters and reserve space for future controls. */
+  .offer-stage {
+    display: grid;
+    min-width: 0;
+    min-height: inherit;
+    padding-top: clamp(2rem, 4vw, 3rem);
+    padding-bottom: clamp(4.5rem, 6vw, 5.5rem);
+  }
+
+  /* Place the copy at the left edge of the content area. */
+  .offer-stage[data-horizontal='left'] {
+    justify-items: start;
+  }
+
+  /* Center the copy within the content area. */
+  .offer-stage[data-horizontal='center'] {
+    justify-items: center;
+  }
+
+  /* Place the copy at the right edge of the content area. */
+  .offer-stage[data-horizontal='right'] {
+    justify-items: end;
+  }
+
+  /* Position copy near the top when there is spare slide height. */
+  .offer-stage[data-vertical='top'] {
+    align-items: start;
+  }
+
+  /* Center copy vertically when there is spare slide height. */
+  .offer-stage[data-vertical='center'] {
+    align-items: center;
+  }
+
+  /* Position copy near the bottom when there is spare slide height. */
+  .offer-stage[data-vertical='bottom'] {
+    align-items: end;
+  }
+
+  /* Limit reading width and wrap long text without a surrounding panel. */
+  .offer-copy {
+    width: min(100%, 36rem);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Center text for the centered presentation. */
+  .offer-stage[data-horizontal='center'] .offer-copy {
+    text-align: center;
+  }
+
+  /* Right-align text for the right presentation. */
+  .offer-stage[data-horizontal='right'] .offer-copy {
+    text-align: right;
+  }
+
+  /* Back nonempty descriptions with a 25% opaque rectangle. */
+  .offer-copy p {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    background: var(--description-backing);
+    color: var(--description-color);
+    font-size: var(--description-size);
+    line-height: 1.55;
+  }
+
+  /* Keep the CTA readable and allow long labels to wrap. */
+  .offer-copy :global(.offer-link) {
+    max-width: 100%;
+    min-height: 3rem;
+    height: auto;
+    padding-block: 0.75rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+    background: #b2380a;
+    color: #fff;
+    border-color: #b2380a;
+  }
+
+  /* Separate the CTA from a rendered description; empty text adds no gap. */
+  .offer-copy p + :global(.offer-link) {
+    margin-top: 1.25rem;
+  }
+
+  /* Darken the CTA to indicate pointer hover. */
+  .offer-copy :global(.offer-link:hover) {
+    background: #8f2d08;
+    border-color: #8f2d08;
+  }
+
+  /* Keep keyboard focus visible over both bright and dark photographs. */
+  .offer-copy :global(.offer-link:focus-visible) {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 8px #000;
+  }
+
+  /* Adapt image cropping and reading width for mobile screens. */
+  @media (max-width: 47rem) {
+    /* Keep enough image height for narrow screens. */
+    .offer {
+      min-height: 25rem;
+    }
+
+    /* Apply the mobile focal-point override to the image. */
+    .offer-background {
+      object-position: var(--mobile-focal-point);
+    }
+
+    /* Use the available content width on mobile. */
+    .offer-copy {
+      width: 100%;
+    }
+  }
+
+  /* Keep wide, short screens from reserving excessive vertical space. */
+  @media (max-height: 30rem) and (min-width: 47.01rem) {
+    /* Reduce reserved height in short landscape viewports. */
+    .offer {
+      min-height: 20rem;
+    }
+  }
+</style>
