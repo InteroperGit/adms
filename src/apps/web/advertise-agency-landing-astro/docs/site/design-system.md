@@ -11,7 +11,21 @@ Use the workshop's signage vocabulary: precise alignment, measured spaces, clear
 | Service-led (selected) | Existing service copy and contact actions, followed by portfolio | Explains the offer without depending on unavailable approved photography. The first visible section heading remains the opening anchor. |
 | Work-led (deferred) | Large installed-sign photograph beside brief service copy | Strong when approved installed-work photography exists. Current Picsum images and Pravatar portraits provide no evidence of agency work; they must not lead the page. |
 
-The supplied content and map settings remain unchanged. Task 013 implements the service-led opening; tasks 014–015 refine work, reviews and legal composition. Foundations reduce shadows and unify containers without changing route architecture.
+The supplied content and map settings remain unchanged. Task 013 implements the service-led opening; task 014 refines work/reviews and task 015 covers legal/contact composition. Foundations reduce shadows and unify containers without changing route architecture.
+
+## Portfolio and reviews (task 014)
+
+Portfolio cards use a quiet base-100 surface with a base-300 border and field radius, without decorative shadows or movement. A reserved 3:2 photograph frame precedes the project title, client, unchanged summary and one underlined detail action. Its visually hidden suffix includes the project title, distinguishing repeated «Подробнее» links. Each link has a 44px minimum height; hover thickens its underline and global keyboard focus remains independent. The project section uses solid base-200; both grids use 24px gaps and 1/2/3 columns at mobile/768px/desktop.
+
+Reviews use native `figure`, `blockquote` and `figcaption` semantics. Full quotes lead; a quiet divider separates the author and nonshrinking 48px portrait below. Text columns have minimum width zero and wrap long unbroken names, company labels and project copy. Cards use content-driven heights; no ratings, decorative quote icons or truncation are added.
+
+Project details have wrapping breadcrumbs, responsive h1, readable 68ch task/result text, and clear return/contact paths from the existing menu and contact title. Result copy is retained as ordinary text, removing the previous green success alert and checkmark endorsement. Detail images retain the full placeholder crop with contain inside a reserved 3:2 frame; approved media remains pending.
+
+Chrome verification checked scoped portfolio/review/detail bounds on `/` and all three project routes at 320/375/768/1440px in both themes, separately at 16px and 32px root text (64 combinations). Temporary unbroken title/client/author/company/detail fixtures at 320px with 32px root text fit; fixtures were restored by navigation. Unique link names/destinations, keyboard focus outlines and Tab order, actual Enter-to-detail/return/contact navigation, native quote markup, 48px portraits, 768px grid columns and delayed/failed image frame stability passed. No assertion covers unrelated cookie/footer/legal overflow or native 200% browser zoom.
+
+Computed contrast (Light / Dark) on actual card surfaces: body/quote 16.09 / 14.44, client/company metadata 6.36 / 9.58, underlined detail link 6.06 / 8.04. All exceed 4.5:1. Default controls reuse previously measured primary tokens; final whole-site hover/screen-reader review remains task 016.
+
+Evidence under ignored `output/playwright/task-014/`: 12 before and 12 matching after captures, plus final unobscured captures after cookie dismissal and bounded image waits, and baseline/verification/contrast/grid/capture scripts. Remote demonstration media can be blank while requests are pending or failed; screenshots do not establish approved work. Final `pnpm check` reported 60 files with zero diagnostics and `pnpm build` generated six routes. Actual browser zoom, approved-photo crop review and whole-site verification remain pending.
 
 ## Tokens and primitives
 

@@ -1,12 +1,12 @@
 # Projects and reviews design
 
-**Status:** Pending
+**Status:** Completed — 2026-10-05
 
 **Priority:** Medium
 
 **Dependency:** Task 011 completed; use completed theme/settings behavior from 012–012b. Keep changes scoped to portfolio and reviews; coordinate with 013 if shared tokens/layout need changes.
 
-Read the [design plan](../plan/20261002_134818_plan.md), [task-management guide](../task-management.md), and [project instructions](../../../AGENTS.md). Follow the dependencies and constraints in the plan. Apply frontend-design and astro-best-practices; consult required Astro guides.
+Read the [design plan](../../plan/20261002_134818_plan.md), [task-management guide](../../task-management.md), and [project instructions](../../../../AGENTS.md). Follow the dependencies and constraints in the plan. Apply frontend-design and astro-best-practices; consult required Astro guides.
 
 ## Scope and acceptance
 
@@ -16,7 +16,7 @@ Refine project cards, image framing, titles, metadata and detail-page reading hi
 
 - Work in `sections/Projects.astro`, `sections/Reviews.astro`, `cards/ProjectCard.astro`, `cards/ReviewCard.astro` and `pages/projects/[id].astro`. Keep content editing in existing JSON/schema sources and URLs/record IDs stable.
 - Set a consistent portfolio hierarchy: image, title, concise client/context information, summary and clear detail action. Avoid small decorative badges taking priority over the work title. Give repeated «Подробнее» links distinguishable accessible names that include the project title. Use one coherent link strategy without nested links or click-only card handlers.
-- Keep card image aspect ratios predictable, preserve truthful alternative text and intrinsic dimensions, and reserve image space before remote assets load. Check crops without stretching images. Do not download/generated-replace approved-media gaps as part of a styling task; follow the [media guide](../../site/media.md).
+- Keep card image aspect ratios predictable, preserve truthful alternative text and intrinsic dimensions, and reserve image space before remote assets load. Check crops without stretching images. Do not download/generated-replace approved-media gaps as part of a styling task; follow the [media guide](../../../site/media.md).
 - On project details, provide readable text width, sensible heading/list spacing, a clear return-to-projects link and a contact path using existing sources. Retain document metadata and image loading appropriate to its position. No new performance/result claims.
 - Use semantic quote markup for reviews; align avatars and author details without shrinking avatars or forcing long names/company strings outside the card. Mark ornamental quote SVGs decorative. Keep full testimonial text available; do not introduce truncation, carousels or invented ratings.
 - Ensure grid children/text containers can shrink and wrap at 320px and 200% text. Use content-driven heights, consistent padding and semantic surfaces. Keep keyboard focus visible independently of hover; avoid motion that conflicts with reduced-motion preferences.
@@ -26,3 +26,13 @@ Refine project cards, image framing, titles, metadata and detail-page reading hi
 Review homepage plus all three project routes in both themes at narrow/desktop widths, including the 768px grid breakpoint. Check 320px, separate 200% text and long name/title/company fixtures in the browser without committing fixture text. Verify keyboard link names/order, contact/return destinations, image dimensions/crops and stable layout with delayed or failed remote images. Save representative card/review/detail before/after screenshots; measure contrast for changed text/controls. Record external-image failures separately from code failures. Run check/build; reserve the complete viewport/route matrix for 016.
 
 Record changed files, checks, browser evidence and limitations. Archive only after completing verification; update the plan link and status. No deployment is authorized by this task.
+
+## Completion evidence
+
+Implemented by subagent task_014 and reviewed by the primary agent. Updated ProjectCard, ReviewCard, sections/Projects, sections/Reviews, pages/projects/[id], and design-system/media guides. Portfolio cards use reserved 3:2 frames, title-first hierarchy and uniquely named detail links; reviews use full semantic quotes with fixed 48px portraits and wrapping author text. Detail pages have wrapping breadcrumbs, readable task/result sections and existing-source return/contact actions. Routes, JSON content, schemas, media metadata and completed header/theme behavior are preserved.
+
+Final `pnpm check` passed for 60 files including ignored local helpers, with zero diagnostics; build generated six pages and diff check passed. Chrome passed 64 scoped route/viewport/theme/root-text combinations plus temporary long fixtures, keyboard names/order/focus, detail/return/contact navigation, grid breakpoints and stable delayed/failed image frames. Light/Dark contrast: body 16.09/14.44, muted 6.36/9.58, links 6.06/8.04. See the [design guide](../../../site/design-system.md) for detailed evidence.
+
+Ignored `output/playwright/task-014/` contains baseline, after and final screenshots and scripts. Primary reviewed the final 375px Light portfolio screenshot. Picsum placeholders remained pending/failed, so loaded-photo crop inspection was unavailable; reserved geometry was verified. Pravatar loaded in final captures. Native browser zoom, screen-reader and whole-site footer/cookie/legal checks remain outside this completed scope and recorded for 015–016.
+
+Owned browser closed; existing background preview PID 5792 left running. No commit or deployment made.

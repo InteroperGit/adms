@@ -9,36 +9,32 @@ export interface Props {
 const { review } = Astro.props;
 ---
 
-<div class="card bg-base-100 shadow-panel rounded-panel border border-base-200/50">
-  <div class="card-body">
-    <div class="flex items-center gap-4 mb-3">
-      <div class="avatar">
-        <div class="w-12 rounded-full ring-2 ring-primary ring-offset-2 ring-offset-base-100">
+<figure class="review-card">
+  <blockquote><p>{review.text}</p></blockquote>
+  <figcaption>
           <img
             src={review.avatar}
             alt={review.avatarAlt}
             width={review.avatarWidth}
             height={review.avatarHeight}
-            class="w-full h-full object-cover"
             loading="lazy"
             decoding="async"
           />
-        </div>
-      </div>
-      <div>
-        <div class="font-semibold text-base">{review.name}</div>
-        <div class="text-sm text-muted">
+      <div class="review-author">
+        <p class="review-name">{review.name}</p>
+        <p class="review-company">
           {review.position}, {review.company}
-        </div>
+        </p>
       </div>
-    </div>
-    <div class="relative">
-      <svg class="w-8 h-8 text-primary/20 absolute -top-1 -left-1" fill="currentColor" viewBox="0 0 32 32">
-        <path d="M10 8h-4v6h4v8h-8v-14h8zM24 8h-4v6h4v8h-8v-14h8z" />
-      </svg>
-      <p class="text-base leading-relaxed pl-6 italic text-base-content">
-        {review.text}
-      </p>
-    </div>
-  </div>
-</div>
+  </figcaption>
+</figure>
+
+<style>
+  .review-card { margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 1.5rem; padding: clamp(1rem, 2vw, 1.5rem); border: 1px solid var(--color-base-300); border-radius: var(--radius-field); background: var(--color-base-100); overflow-wrap: anywhere; }
+  blockquote { margin: 0; line-height: 1.7; }
+  figcaption { display: flex; align-items: center; gap: 1rem; margin-top: auto; padding-top: 1.25rem; border-top: 1px solid var(--color-base-300); }
+  figcaption img { width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; object-fit: cover; background: var(--color-base-200); }
+  .review-author { min-width: 0; }
+  .review-name { font-weight: 600; line-height: 1.4; }
+  .review-company { margin-top: .25rem; font-size: .875rem; color: var(--color-muted); line-height: 1.5; }
+</style>

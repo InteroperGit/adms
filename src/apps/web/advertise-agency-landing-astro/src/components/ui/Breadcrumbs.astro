@@ -1,0 +1,29 @@
+---
+interface Item {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items: Item[];
+  current: string;
+}
+
+const { items, current } = Astro.props;
+---
+
+<nav aria-label="Хлебные крошки" class="breadcrumb-trail">
+  <ol>
+    {items.map(item => <li><a href={item.href}>{item.label}</a></li>)}
+    <li aria-current="page">{current}</li>
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb-trail { margin-bottom: 2rem; font-size: .875rem; color: var(--color-muted); overflow-wrap: anywhere; }
+  ol { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
+  li { min-width: 0; max-width: 100%; }
+  li[aria-current='page'] { padding-block: .5rem; }
+  li + li::before { content: '/'; margin-right: 1rem; }
+  a { display: inline-block; padding-block: .5rem; text-decoration: underline; text-underline-offset: .25em; }
+</style>
