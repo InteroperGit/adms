@@ -1,0 +1,19 @@
+# Allow the requested Playwright CLI prefix for this trusted project.
+prefix_rule(
+    pattern = [
+        "npx.cmd",
+        "--yes",
+        "--package",
+        "@playwright/cli",
+        "playwright-cli",
+    ],
+    decision = "allow",
+    match = [
+        "npx.cmd --yes --package @playwright/cli playwright-cli --help",
+        "npx.cmd --yes --package @playwright/cli playwright-cli -s=test close",
+    ],
+    not_match = [
+        "npx.cmd --yes --package other-package playwright-cli --help",
+        "npx.cmd --yes --package @playwright/cli other-command",
+    ],
+)

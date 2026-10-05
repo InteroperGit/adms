@@ -1,10 +1,53 @@
-﻿---
+---
 import Button from '@/components/ui/Button.astro';
 import { offers, enabledOffers } from '@/content/offers';
 ---
 
 {offers.enabled && enabledOffers.length > 0 && (
-  <section id="offers" class="offers-section" aria-label="Предложения">
+  <section
+    id="offers"
+    class="offers-section"
+    aria-label="Предложения"
+    data-autoplay={offers.autoplay}
+    data-interval={offers.intervalMs}
+  >
+    {enabledOffers.length > 1 && (
+      <div class="offer-controls" hidden>
+        <button
+          type="button"
+          class="offer-arrow"
+          data-direction="-1"
+          aria-label="Предыдущее предложение"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m14 6-6 6 6 6" />
+          </svg>
+        </button>
+        <div class="offer-dots" role="group" aria-label="Выбор предложения">
+          {enabledOffers.map((offer, index) => (
+            <button
+              type="button"
+              class="offer-dot"
+              data-index={index}
+              aria-label={`Показать предложение ${index + 1}`}
+              aria-controls={`offer-${offer.id}`}
+            >
+              <span aria-hidden="true"></span>
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          class="offer-arrow"
+          data-direction="1"
+          aria-label="Следующее предложение"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m10 6 6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+    )}
     <div class="offers-list">
       {enabledOffers.map((offer, index) => {
         const { presentation } = offer;
@@ -49,43 +92,6 @@ import { offers, enabledOffers } from '@/content/offers';
         );
       })}
     </div>
-    {enabledOffers.length > 1 && (
-      <div class="offer-controls" hidden>
-        <button
-          type="button"
-          class="offer-arrow"
-          data-direction="-1"
-          aria-label="Предыдущее предложение"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="m14 6-6 6 6 6" />
-          </svg>
-        </button>
-        <div class="offer-dots" role="group" aria-label="Выбор предложения">
-          {enabledOffers.map((offer, index) => (
-            <button
-              type="button"
-              class="offer-dot"
-              data-index={index}
-              aria-label={`Показать предложение ${index + 1}`}
-              aria-controls={`offer-${offer.id}`}
-            >
-              <span aria-hidden="true"></span>
-            </button>
-          ))}
-        </div>
-        <button
-          type="button"
-          class="offer-arrow"
-          data-direction="1"
-          aria-label="Следующее предложение"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="m10 6 6 6-6 6" />
-          </svg>
-        </button>
-      </div>
-    )}
     <span class="sr-only" role="status" aria-atomic="true"></span>
   </section>
 )}
@@ -107,6 +113,30 @@ import { offers, enabledOffers } from '@/content/offers';
       || dots.length !== slides.length || arrows.length !== 2) continue;
 
     let currentSlide = 0;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const interval = Number(carousel.dataset.interval);
+    const autoplay = carousel.dataset.autoplay === 'true';
+    let hovered = window.matchMedia('(hover: hover)').matches
+      && carousel.matches(':hover');
+    let inViewport = false;
+    let suspended = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const canRotate = () => autoplay && !motion.matches && !hovered
+      && !document.hidden && inViewport && !suspended
+      && !carousel.contains(document.activeElement);
+
+    // Clear before scheduling: every resume gets one fresh full interval.
+    const reconcileRotation = () => {
+      clearTimeout(timer);
+      timer = undefined;
+      if (!canRotate()) return;
+      timer = setTimeout(() => {
+        timer = undefined;
+        if (canRotate()) selectSlide(currentSlide + 1);
+        reconcileRotation();
+      }, interval);
+    };
 
     const selectSlide = (index: number, announce = false) => {
       currentSlide = (index + slides.length) % slides.length;
@@ -129,16 +159,49 @@ import { offers, enabledOffers } from '@/content/offers';
     arrows.forEach((arrow) => {
       arrow.addEventListener('click', () => {
         selectSlide(currentSlide + Number(arrow.dataset.direction), true);
+        reconcileRotation();
       });
     });
     dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => selectSlide(index, true));
+      dot.addEventListener('click', () => {
+        selectSlide(index, true);
+        reconcileRotation();
+      });
+    });
+
+    carousel.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'touch') return;
+      hovered = true;
+      reconcileRotation();
+    });
+    carousel.addEventListener('pointerleave', () => {
+      hovered = false;
+      reconcileRotation();
+    });
+    carousel.addEventListener('focusin', reconcileRotation);
+    carousel.addEventListener('focusout', () => {
+      queueMicrotask(reconcileRotation);
+    });
+    document.addEventListener('visibilitychange', reconcileRotation);
+    motion.addEventListener('change', reconcileRotation);
+    new IntersectionObserver(([entry]) => {
+      inViewport = entry.isIntersecting;
+      reconcileRotation();
+    }).observe(carousel);
+    window.addEventListener('pagehide', () => {
+      suspended = true;
+      reconcileRotation();
+    });
+    window.addEventListener('pageshow', () => {
+      suspended = false;
+      reconcileRotation();
     });
 
     selectSlide(0);
     carousel.dataset.ready = 'true';
     carousel.setAttribute('aria-roledescription', 'карусель');
     controls.hidden = false;
+    reconcileRotation();
 
     // Reserve bottom clearance even when indicators wrap or text is enlarged.
     const reserveIndicators = () => {

@@ -4,15 +4,17 @@
 
 **Priority:** Medium
 
-**Dependency:** 017, 017a, 018, 018a, 018b, 019, 019a and 020.
+**Dependency:** 017, 017a, 018, 018a, 018b, 019, 019a, 020 and 020a.
 
 Read the [carousel plan](../plan/20261005_044149_plan.md),
 [task guide](../task-management.md), [README](../../../README.md),
 [offers guide](../../site/offers-carousel.md) and
 [project instructions](../../../AGENTS.md). Apply relevant
 astro-best-practices/frontend-design guidance and Playwright for browser work;
-consult required Astro guides. Task 020 is still pending; complete its autoplay
-implementation before performing the final integrated verification.
+consult required Astro guides. Tasks 020 and 020a are fixed; task 020a's
+settings-controlled autoplay supersedes the original pause/play behavior.
+Close the native hidden-tab visibility gap carried from task 020 during final
+integrated verification.
 
 ## Scope
 
@@ -83,13 +85,15 @@ Optional swipe remains deferred to a separate future task.
   defaults, bounds, strict removed/unknown fields, invalid URLs/IDs/dimensions,
   enabled ordering, empty descriptions and source/field errors. Confirm the
   plain type/validator/wrapper import direction and browser bundle boundary.
-- After task 020, verify configured timing/wrap and one timer only. Rotation
-  requires multiple items, viewport/document visibility and no reduced motion.
-  Hover/focus/hidden-tab/offscreen pause; manual/keyboard interaction stops
-  until explicit Play; user pause persists this visit. Play must still respect
-  temporary constraints. Automatic changes stay silent and never replace a
-  focused CTA or move focus. Verify pause/play placement/accessibility alongside
-  overlay arrows/dots without restoring a counter or visible dot container.
+- After task 020a, verify configured timing/wrap and one timer only. Rotation
+  requires autoplay true, multiple items, viewport/document visibility and no
+  reduced motion. Hover/focus/hidden-tab/offscreen holds resume automatically
+  when cleared. Manual/keyboard interaction never permanently stops autoplay;
+  selection resets its interval. Autoplay false stays off. Automatic changes
+  stay silent and never replace a focused CTA or move focus. Verify the autoplay
+  button is absent and overlay arrows/dots retain layout and accessibility
+  without a counter or visible dot container. Distinguish genuine native tab
+  visibility tests from simulations when closing task 020's verification gap.
 - Retest homepage placement below header/above About, one hidden h1, Russian
   region/slide labels and inactive accessibility exclusion. Check existing
   header/settings/theme/menu/cookie interactions and project/legal routes.
