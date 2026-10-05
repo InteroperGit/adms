@@ -1,7 +1,9 @@
 ---
 // src/pages/projects/[id].astro
 import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
 import { projects } from '@/content/projects';
+import { site } from '@/content/site';
 import type { Project } from '@/types';
 
 // Генерируем все статические пути (SSG)
@@ -14,48 +16,68 @@ export async function getStaticPaths() {
 
 // Получаем проект из пропсов
 const { project } = Astro.props as { project: Project };
+const projectsHref = site.menu.find((item) => item.href === '/#projects')?.href ?? '/#projects';
+const contactsHref = site.menu.find((item) => item.href === '/#contacts')?.href ?? '/#contacts';
 ---
 
 <Layout title={project.title} description={project.shortDescription}>
-  <div class="site-container py-12">
+  <article class="site-container project-detail">
     <!-- Хлебные крошки -->
-    <nav class="text-sm breadcrumbs mb-6">
-      <ul>
-        <li><a href="/" class="link link-hover">Главная</a></li>
-        <li><a href="/#projects" class="link link-hover">Проекты</a></li>
-        <li>{project.title}</li>
-      </ul>
-    </nav>
+    <Breadcrumbs
+      items={[{ label: 'Главная', href: '/' }, { label: site.sections.projects.title, href: projectsHref }]}
+      current={project.title}
+    />
 
     <!-- Заголовок -->
-    <h1 class="text-4xl font-bold mb-4">{project.title}</h1>
-    <p class="text-xl text-muted mb-2">Клиент: {project.client}</p>
+    <header class="project-heading">
+      <h1>{project.title}</h1>
+      <p>Клиент: {project.client}</p>
+    </header>
 
     <!-- Основное изображение -->
-    <figure class="mb-8">
+    <figure class="project-visual">
       <img
         src={project.image}
         alt={project.imageAlt}
         width={project.imageWidth}
         height={project.imageHeight}
-        class="w-full h-auto max-h-[500px] object-cover rounded-xl shadow-lg"
         fetchpriority="high"
         decoding="async"
       />
     </figure>
 
     <!-- Описание -->
-    <div class="prose max-w-none mb-8">
-      <h2>Задача</h2>
-      <p>{project.fullDescription}</p>
-      
-      <h2>Результат</h2>
-      <div class="alert alert-success">
-        <span>✅ {project.result}</span>
-      </div>
+    <div class="project-reading">
+      <section aria-labelledby="project-task">
+        <h2 id="project-task">Задача</h2>
+        <p>{project.fullDescription}</p>
+      </section>
+      <section aria-labelledby="project-result">
+        <h2 id="project-result">Результат</h2>
+        <p>{project.result}</p>
+      </section>
+      <nav aria-label="Действия проекта" class="project-actions">
+        <a class="project-return" href={projectsHref}>Вернуться к проектам</a>
+        <a class="btn btn-primary site-button" href={contactsHref}>{site.sections.contacts.panelTitle}</a>
+      </nav>
     </div>
 
-    <!-- Кнопка назад -->
-    <a href="/#projects" class="btn btn-outline">← Вернуться к проектам</a>
-  </div>
+  </article>
 </Layout>
+
+<style>
+  .project-detail { padding-block: clamp(2rem, 5vw, 4rem); overflow-wrap: anywhere; }
+  .project-return { text-decoration: underline; text-underline-offset: .25em; }
+  .project-heading { max-width: 50rem; margin-bottom: 2rem; }
+  h1 { font-size: clamp(1.75rem, 4vw, 3rem); line-height: 1.2; font-weight: 700; }
+  .project-heading p { margin-top: 1rem; color: var(--color-muted); }
+  .project-visual { margin: 0 0 clamp(2rem, 5vw, 3rem); aspect-ratio: 3 / 2; max-width: 56rem; background: var(--color-base-200); border-radius: var(--radius-field); overflow: hidden; }
+  .project-visual img { width: 100%; height: 100%; object-fit: contain; }
+  .project-reading { max-width: 68ch; }
+  .project-reading section + section { margin-top: 2rem; }
+  h2 { margin-bottom: .75rem; font-size: 1.5rem; line-height: 1.3; font-weight: 700; }
+  .project-reading p { line-height: 1.7; }
+  .project-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-base-300); }
+  .project-return { display: flex; align-items: center; min-height: 44px; padding-block: .5rem; color: var(--color-primary); font-weight: 600; }
+  .project-actions .btn { height: auto; min-height: 44px; max-width: 100%; white-space: normal; padding-block: .75rem; }
+</style>
