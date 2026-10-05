@@ -1,37 +1,36 @@
 ---
 // src/components/Footer.astro
 import { site } from '@/content/site';
-import { icons } from '@/content/icons';
 import type { LegalItem } from '@/types';
 import ContactInfo from '@/components/ui/ContactInfo.astro';
 import Logo from '@/components/ui/Logo.astro';
 ---
 
-<footer class="bg-gradient-to-b from-base-200 to-base-300 pt-16 pb-8 [overflow-wrap:anywhere]">
+<footer class="site-footer bg-base-200 border-t border-base-300 [overflow-wrap:anywhere]">
   <div class="site-container">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-      <div class="flex flex-col items-center md:items-start text-center md:text-left">
-        <h3 class="flex items-center gap-2 text-3xl font-bold text-brand"><Logo size="footer" /><span>{site.logoText}</span></h3>
+    <div class="footer-grid">
+      <div class="min-w-0">
+        <a href="/" class="footer-brand flex items-center gap-2 text-3xl font-bold text-brand"><Logo size="footer" /><span class="min-w-0">{site.logoText}</span></a>
         <p class="text-sm text-muted max-w-xs mt-2">
           {site.footer.description}
         </p>
       </div>
-      <div class="flex flex-col items-center md:items-start">
-        <h4 class="text-sm font-semibold uppercase tracking-wider text-muted mb-3">
+      <nav aria-label="Правовая информация" class="min-w-0">
+        <h2 class="text-base font-semibold mb-3">
           Информация
-        </h4>
-        <ul class="space-y-2">
+        </h2>
+        <ul class="space-y-1">
           {site.legal.map((item: LegalItem) => (
             <li>
-              <a href={item.href} class="link link-hover text-sm">{item.label}</a>
+              <a href={item.href} class="footer-link">{item.label}</a>
             </li>
           ))}
         </ul>
-      </div>
-      <div class="flex flex-col items-center md:items-start">
-        <h4 class="text-sm font-semibold uppercase tracking-wider text-muted mb-3">
+      </nav>
+      <div class="min-w-0">
+        <h2 class="text-base font-semibold mb-3">
           Контакты
-        </h4>
+        </h2>
         <ContactInfo
           phone={site.phone}
           email={site.email}
@@ -42,11 +41,19 @@ import Logo from '@/components/ui/Logo.astro';
         />
       </div>
     </div>
-    <div class="border-t border-base-content/20 mt-12 pt-6 text-center text-sm text-muted">
+    <div class="border-t border-base-300 mt-10 pt-6 text-sm text-muted">
       <p>
         © {new Date().getFullYear()} {site.logoText}. {site.footer.copyright}.
-        <i class={`fas ${icons.butterfly} ml-1 text-brand`}></i>
       </p>
     </div>
   </div>
 </footer>
+
+<style>
+  .site-footer { padding-block: var(--site-section-space) 2rem; }
+  .footer-grid { display: grid; gap: 2rem; }
+  .footer-brand { width: fit-content; max-width: 100%; font-size: clamp(1.5rem, 2.5vw, 1.875rem); }
+  .footer-link { display: flex; align-items: center; min-height: 44px; color: var(--color-primary); text-decoration: underline; text-underline-offset: 0.2em; }
+  .footer-link:hover { text-decoration-thickness: 2px; }
+  @media (min-width: 64rem) { .footer-grid { grid-template-columns: 1fr 1fr 1.2fr; gap: 3rem; } }
+</style>

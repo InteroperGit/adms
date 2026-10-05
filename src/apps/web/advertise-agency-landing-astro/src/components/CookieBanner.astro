@@ -1,12 +1,21 @@
-<div id="cookie-banner" hidden class="fixed bottom-0 left-0 right-0 z-50 bg-base-100 border-t border-base-300 shadow-lg p-4">
-  <div class="site-container flex flex-col sm:flex-row items-center justify-between gap-4">
-    <p class="text-sm text-center sm:text-left">Мы используем файлы cookie. Продолжая, вы соглашаетесь с <a href="/privacy-policy" class="link link-primary">Политикой конфиденциальности</a> и <a href="/terms-of-use" class="link link-primary">Согласием на обработку</a>.</p>
-    <div class="flex gap-2">
-      <button type="button" data-cookie-choice="declined" class="btn btn-ghost btn-sm">Отклонить</button>
-      <button type="button" data-cookie-choice="accepted" class="btn btn-primary btn-sm">Принять</button>
+<aside id="cookie-banner" aria-label="Предпочтения cookie" hidden class="cookie-banner fixed bottom-0 left-0 right-0 z-30 bg-base-100 border-t border-control-border shadow-elevated">
+  <div class="site-container cookie-layout">
+    <p class="text-sm">Мы используем файлы cookie. Продолжая, вы соглашаетесь с <a href="/privacy-policy" class="link link-primary">Политикой конфиденциальности</a> и <a href="/terms-of-use" class="link link-primary">Согласием на обработку</a>.</p>
+    <div class="cookie-actions">
+      <button type="button" data-cookie-choice="declined" class="btn btn-outline btn-primary site-button">Отклонить</button>
+      <button type="button" data-cookie-choice="accepted" class="btn btn-primary site-button">Принять</button>
     </div>
   </div>
-</div>
+</aside>
+
+<style>
+  .cookie-banner { padding-block: 1rem; max-height: 50dvh; overflow-y: auto; overscroll-behavior: contain; }
+  .cookie-layout { display: grid; gap: 1rem; }
+  .cookie-layout p { min-width: 0; overflow-wrap: anywhere; }
+  .cookie-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .cookie-actions button { flex: 1 1 auto; min-height: 44px; height: auto; white-space: normal; padding-block: 0.5rem; }
+  @media (min-width: 64rem) { .cookie-layout { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+</style>
 
 <script>
   const banner = document.querySelector<HTMLElement>('#cookie-banner');
@@ -20,6 +29,15 @@
     }
     banner.hidden = Boolean(consent);
 
+    // Reserve its actual bounded height so the final footer actions can scroll
+    // above the fixed banner. Body padding does not change the banner's width.
+    const reserveSpace = () => {
+      document.body.style.paddingBottom = banner.hidden ? '' : `${Math.ceil(banner.getBoundingClientRect().height)}px`;
+    };
+    reserveSpace();
+    const sizeObserver = new ResizeObserver(reserveSpace);
+    sizeObserver.observe(banner);
+
     banner.querySelectorAll<HTMLButtonElement>('[data-cookie-choice]').forEach((button) => {
       button.addEventListener('click', () => {
         try {
@@ -28,6 +46,7 @@
           // Dismiss for this page even when the choice cannot be persisted.
         }
         banner.hidden = true;
+        reserveSpace();
       });
     });
   }

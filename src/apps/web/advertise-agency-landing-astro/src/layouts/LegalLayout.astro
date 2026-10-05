@@ -13,16 +13,16 @@ const { document, title } = Astro.props;
 ---
 
 <Layout title={title || document.title} description={document.description}>
-  <div class="site-container py-12">
-    <div class="prose max-w-3xl mx-auto">
-      <h1 class="text-2xl md:text-2xl font-bold mb-6 text-primary">{document.title} </h1>
+  <div class="site-container site-section">
+    <article class="legal-document">
+      <h1>{document.title}</h1>
       {document.effectiveDate && (
-        <p><strong>Дата вступления в силу:</strong> {document.effectiveDate}</p>
+        <p class="legal-date"><strong>Дата вступления в силу:</strong> {document.effectiveDate}</p>
       )}
 
       {document.sections.map((section) => {
         return (
-          <section class="mt-8">
+          <section>
             <h2>{section.heading}</h2>
             {section.content && <p>{section.content}</p>}
             {section.list && (
@@ -35,6 +35,19 @@ const { document, title } = Astro.props;
           </section>
         );
       })}
-    </div>
+    </article>
   </div>
 </Layout>
+
+<style>
+  .legal-document { max-width: var(--site-reading-width); margin-inline: auto; overflow-wrap: anywhere; }
+  h1 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+  h2 { font-size: clamp(1.25rem, 2vw, 1.5rem); font-weight: 650; line-height: 1.35; margin-bottom: 1rem; }
+  section { margin-top: 2.5rem; }
+  p { line-height: 1.75; }
+  .legal-date { color: var(--site-muted); }
+  ul { list-style: disc; padding-inline-start: 1.5rem; margin-top: 1rem; }
+  li { padding-inline-start: 0.25rem; line-height: 1.75; }
+  li + li { margin-top: 0.75rem; }
+  a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 0.2em; }
+</style>

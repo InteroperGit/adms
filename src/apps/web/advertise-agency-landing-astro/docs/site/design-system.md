@@ -49,6 +49,20 @@ Use `text-muted` rather than hardcoded gray or translucent body text. `base-300`
 
 Per the user's preference, `brand` is the same darker orange `#EA580C` in both themes for the logo, contact/decorative icons, and About highlights. Action text, buttons, and keyboard-focus outlines retain theme-specific `primary` colors. The contrast table below describes semantic primary colors, not this brand override.
 
+## Contacts, footer and legal documents (task 015)
+
+Contacts pair a quiet base-200 information panel with the existing map variant, using 8px field corners, a 24px grid gap and no decorative shadow. The contact heading leads the address, underlined phone/email actions and opening hours. Icons remain centered beside wrapping text; phone/email targets retain 44px minimum height. The map frame has a reserved 18rem minimum height; it remains a decorative local image when disabled and a titled lazy iframe when enabled. Third-party map colors and availability are independent of site themes and cookie choices.
+
+The footer is left aligned on base-200, stacking until 64rem before forming three columns. Its orange-and-blue butterfly stays left of the wrapping agency name, now a home link. Underlined legal actions have 44px minimum height; section labels use normal sentence case and copyright has a quiet divider. Text and contact destinations still come from the existing JSON.
+
+Legal pages use a 68ch article with explicit scoped h1/h2, paragraph and disc-list styles. The previous `prose` class had no typography plugin configured. Heading hierarchy, list spacing, dates and document-specific metadata remain intact. Cookie layout and policy limitations are documented in [cookie preferences](cookie-preferences.md).
+
+Chrome checked contacts/footer and both legal routes at 320/1440px, Light/Dark, 16/32px root text (24 scoped combinations; 32px checks use a 500px-high viewport). 120 layout assertions passed for bounds, 44px cookie targets, bullets, bounded/reserved banner height and scrolling the last footer action above it. Twelve before and twelve matching after screenshots are in ignored `output/playwright/task-015/`; mobile Dark contacts and desktop Light legal screenshots were visually reviewed. Root-text enlargement is not native browser zoom.
+
+Seventeen separate production-build assertions passed for both cookie choices/reload, storage read/write failures and write-only failures, body-space cleanup, no focus trap, footer focus/Enter legal navigation, destinations, and settings hit-testing above the banner at 320×500 with enlarged text. A development-toolbar pointer interception interrupted the combined development script after its layout checks; remaining interaction checks used the static build on port 4322. Map-disabled production DOM/network contained no iframe or Yandex requests. A temporary enabled build rendered one titled iframe, no fallback and emitted the configured Yandex request; it was deliberately aborted, so actual external map visuals/loading are unverified. The original `mapEnabled: false` was restored and rebuilt.
+
+Computed default contrast (Light / Dark): contacts/footer links 5.55 / 7.02, muted hours 5.82 / 8.37, footer brand 3.26 / 3.99 (large bold text), cookie body 16.09 / 14.44, accept 6.06 / 7.96, decline 6.06 / 8.04. These meet their text targets. Legal body/date reuse previously measured base-100 ink/muted tokens. Full hover/focus contrast, native zoom, screen-reader speech and whole-site review remain task 016. Final check covered 67 files without diagnostics; build generated six routes.
+
 | Foundation | Value and use |
 | --- | --- |
 | Spacing | Tailwind's 4px unit; prefer 4/8/12/16/24/32/48/64/80px according to content hierarchy |
