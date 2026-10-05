@@ -1,4 +1,4 @@
-﻿# Offers carousel content
+# Offers carousel content
 
 [Documentation index](../../README.md)
 
@@ -8,9 +8,8 @@ Edit `data/content/offers.json`. The retained enabled baseline contains two
 explicitly identified test offers with factual service copy; stock photographs
 do not show agency work. Replace demos with agency-approved content before
 production publication. No prices, discounts, deadlines or results are inferred.
-Task 019 adds manual navigation with native links. Without JavaScript, offers
-remain an ordered stacked list. Task 020 owns autoplay; the saved autoplay
-settings do not start rotation yet.
+Without JavaScript, offers remain an ordered stacked list with native links.
+Configured autoplay follows the JSON setting with temporary safety holds.
 
 `src/content/offers.ts` validates the entire document, exports `offers`, and
 filters `enabledOffers` once in editorial order. Consumers respect global
@@ -23,8 +22,8 @@ together. Parser errors identify the source and field path.
 
 ## Settings
 
-- `enabled`, `autoplay`; Rule / default: Required booleans; autoplay
-  configures later behavior.
+- `enabled`, `autoplay`; Rule / default: Required booleans; autoplay requests
+  rotation on initialization, subject to the constraints below.
 - `intervalMs`; Rule / default: Integer ≥5000; omitted input defaults to 7000.
 - `items`; Rule / default: Required ordered array; zero/one/multiple valid.
 - Item `id`, `enabled`; Rule / default: Unique positive integer (including
@@ -237,7 +236,7 @@ arrows hide, so hover/focus causes no text movement. A small ResizeObserver
 updates bottom clearance when the indicator group wraps or resizes. Slide
 height still comes from the shared tallest grid track; content is never clipped.
 One/zero/no-JS behavior and native CTA links remain as described above.
-Autoplay/pause/play still belong to task 020.
+Autoplay/pause/play are described in the task 020 section below.
 
 Verification: Chrome passed 16 light/dark × 320/375/768/1440px × normal/200%
 root-text cases, including 144 copy-position combinations, circular button/icon
@@ -259,6 +258,96 @@ ignored `output/playwright/task-019a/`. Checks use development output; native
 browser zoom, screen-reader speech and integrated production performance remain
 unverified. Task 021 owns integrated production review. No commit or deployment.
 
+
+## Autoplay and explicit pause/play (task 020, historical)
+
+The existing Astro script reads validated `autoplay` and `intervalMs` from the
+region. There is one timeout per initialized carousel. Zero items omit the
+region; one stays static with no controls or timer. Multiple items without
+JavaScript remain stacked with controls hidden. No storage or cookies are used.
+
+An always-visible circular rotation button sits at the bottom right, separate
+from the centered dots. Its solid theme background, Russian accessible action
+name, local pause/play SVG, 44–56px target and white/black focus outline match
+the existing controls. The dots reserve horizontal room for this button and
+wrap within that space; shared bottom clearance keeps both controls below copy.
+Controls precede slides in keyboard order, with rotation first.
+
+Rotation has a requested state and temporary constraints:
+
+- Initial request: `autoplay: true`, multiple items and reduced motion off.
+  `autoplay: false` starts paused but still allows explicit Play.
+- Temporary holds: pointer hover (excluding touch), focus anywhere within the
+  carousel, hidden document, no viewport intersection or page suspension.
+  Rotation resumes only if its request remains active and every hold is gone.
+- Persistent stops: Pause, arrow/dot selection, focus entering a CTA or another
+  navigation control, and keyboard interaction within the carousel. Leaving
+  focus/hover does not clear these stops; explicit Play is required.
+- Play toggles the request but does not override any temporary hold or reduced
+  motion. Pause remains the button action while a requested rotation is held.
+  To resume with the keyboard, activate Play then Shift+Tab outside the region.
+  Tab toward other carousel controls stops the request again. Modifier keys
+  alone do not stop it. Focus remains on the activating button.
+- Reduced motion starts paused and removes slide animation. Enabling reduced
+  motion during a visit cancels the request. Explicit Play while reduced motion
+  is on waits until that preference and all other holds are cleared.
+- Every state change clears the outstanding timeout before scheduling a fresh
+  full interval. There are no accumulated ticks or catch-up changes. Pagehide
+  clears the timer; pageshow restores the same request subject to all holds.
+
+Automatic selection updates slides, inert state and selected dots silently.
+It never moves focus or changes the polite manual-navigation status. The focus
+gate prevents a focused CTA from being replaced automatically.
+
+Production Chrome verification on 2026-10-06 passed a real approximately 7s
+interval and wrap, plus controlled-clock checks for interval boundaries,
+hover/resume, persistent Pause, Play, manual arrow/dot stops, keyboard restart,
+focused CTA safety, offscreen/resume and reduced-motion changes. Rapid repeated
+visibility events did not create duplicate timers; Play and combined hover
+constraints respected simulated hidden-document state. Sixteen light/dark ×
+320/375/768/1440px × normal/200% root-text layouts passed target, clearance and
+overflow checks. Short 844×390 landscape and no-JavaScript stacked links passed.
+Desktop/mobile screenshots were captured and the mobile image reviewed.
+
+Actual JSON fixtures were built and checked in Chrome for zero, one and
+autoplay-off items, including explicit Play with autoplay off. Original JSON
+bytes were restored (`enabled: true`, `autoplay: true`, `intervalMs: 7000`, two
+items), and production output rebuilt. `pnpm check` reports zero errors/warnings
+and one preexisting ignored task-018 script hint; `pnpm build` generates six
+pages. Evidence is under ignored `output/playwright/task-020/`.
+
+Native hidden-tab verification remains pending: tab switching and minimizing
+headed automated Chrome, including disabling focus emulation, did not change
+`document.hidden`. Hidden/visible event tests therefore override that getter
+explicitly; they verify the production state handling, not a native tab
+transition. Task 020 was archived as fixed at the user's request on 2026-10-06;
+task 021 carries this native visibility verification gap.
+Native zoom, screen-reader speech and integrated performance remain task 021
+work. No commit or deployment.
+
+## Settings-controlled autoplay (task 020a)
+
+Task 020a supersedes task 020's pause/play button and persistent manual stops.
+The autoplay button, icons, labels, event handlers and styles are removed.
+Dots remain centered and use the full available bottom width without reserving
+space for a deleted button; copy still reserves arrow and indicator clearance.
+
+`autoplay: true` enables rotation for multiple offers using the validated
+`intervalMs`. `autoplay: false` keeps automatic rotation off for the page visit.
+There is no user-requested state or visitor override. Manual arrows/dots reset
+its interval and preserve polite manual position status.
+
+Hover (excluding touch), focus anywhere within the carousel, hidden document,
+no viewport intersection, page suspension and reduced motion are temporary
+holds. Clearing all holds automatically schedules one fresh full interval when
+autoplay is enabled. Focused CTA content stays active; automatic changes never
+move focus or update the live status. Reduced motion removes slide animation
+and suppresses rotation, including on initial load. Clearing that preference
+allows configured autoplay to resume. Every reconciliation clears the previous
+timeout before scheduling, preventing duplicate timers and catch-up changes.
+
+Zero/one offers remain omitted/static; no-JS offers are stacked native links
+with controls hidden. No content/schema/storage changes are required.
 
 [source-1]:
   https://commons.wikimedia.org/wiki/File:Office_interior_2022_queue.jpg
