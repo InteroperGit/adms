@@ -5,3 +5,5 @@ Read and follow the applicable rules before making changes:
 - [Code style](docs/development/rules/code-style.md): all code changes.
 - [Development server](docs/development/rules/dev-server.md): server commands.
 - [Astro guides](docs/development/rules/astro-guides.md): related Astro tasks.
+- [Sound notifications](docs/development/rules/sound-notifications.md):
+  confirmation requests and task completion.

@@ -40,10 +40,13 @@ Purpose: immediately explain what the agency sells and where it works.
 Execution tasks (in order):
 
 - [024: Prepare introduction content and photo][intro-content] — content
-  contract implemented; pending agency copy confirmation and real photo.
+  contract implemented and archived at user request; copy/photo inputs open.
 - [025: Implement the introductory section][intro-section] — layout
-  implemented; pending approved copy/photo and final browser review.
-- [026: Verify the introductory section][intro-verification] — pending.
+  implemented and archived at user request; copy/photo and final review open.
+- [026: Verify the introductory section][intro-verification] — responsive,
+  keyboard, and no-JavaScript checks performed; archived at user request.
+  Acceptance remains pending approved
+  copy, a real project photo, and successful remote image loading.
 
 ### Priority 1: Services
 
@@ -218,6 +221,6 @@ than relying only on visits.
 
 [seo-guide]: https://developers.google.com/search/docs/fundamentals/seo-starter-guide
 [faq-guidance]: https://developers.google.com/search/blog/2023/08/howto-faq-changes
-[intro-content]: ../todo/024-introduction-content-and-photo.md
-[intro-section]: ../todo/025-introduction-section.md
-[intro-verification]: ../todo/026-introduction-verification.md
+[intro-content]: ../fixed/20261006/024-introduction-content-and-photo.md
+[intro-section]: ../fixed/20261006/025-introduction-section.md
+[intro-verification]: ../fixed/20261006/026-introduction-verification.md
