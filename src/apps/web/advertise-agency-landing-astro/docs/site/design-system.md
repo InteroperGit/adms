@@ -62,7 +62,28 @@ Per the user's preference, `brand` is the same darker orange `#EA580C` in both t
 
 Contacts use the same base-200 section background as Projects and pair a quiet base-100 information panel with the existing map variant, using 8px field corners, a 24px grid gap and no decorative shadow. The contact heading leads the address, underlined phone/email actions and opening hours. Icons remain centered beside wrapping text; phone/email targets retain 44px minimum height. The map frame has a reserved 18rem minimum height; it remains a decorative local image when disabled and a titled lazy iframe when enabled. Third-party map colors and availability are independent of site themes and cookie choices.
 
-The footer is left aligned on base-200, stacking until 64rem before forming three columns. Its orange-and-blue butterfly stays left of the wrapping agency name, now a home link. Underlined legal actions have 44px minimum height; section labels use normal sentence case and copyright has a quiet divider. Text and contact destinations still come from the existing JSON.
+The footer is left aligned, stacking until 64rem before forming three
+columns. Task 030 replaces light mode's pale surface with brand slate
+`#18222D`; dark mode retains base-200 (`#202C38`). Footer-scoped tokens use
+`#EDF2F7` body text, `#BDC8D4` muted text, `#FFA04D` links/focus, and
+`#354555` dividers. The orange-and-blue butterfly and `#EA580C` brand name
+and contact icons remain unchanged. Global theme colors are unaffected;
+scoped descendant rules cover shared ContactInfo links and muted hours.
+Explicit themes take priority over the CSS system fallback, including
+without JavaScript. Underlined legal/contact actions retain 44px targets,
+keyboard outlines use 2px orange with 4px offset, and content/destinations
+still come from the existing JSON.
+
+Task 030 contrast (Light / Dark): body 14.28 / 12.61, muted 9.48 / 8.37,
+links/focus 7.96 / 7.02, brand/icons 4.52 / 3.99. Normal text exceeds
+4.5:1; large branding and icons exceed 3:1. Chrome verification covers
+`/` and `/services/neon` at 320/768/1440px in both themes with 16/32px
+root text, keyboard focus, hover, native link destinations, legal/home
+navigation, theme switching/reload/navigation and no-JavaScript system
+fallback. Evidence: `output/playwright/task-030/` (ignored local files).
+Text enlargement is not native browser zoom; external telephone/mail
+applications and screen-reader speech were not exercised. Historical
+task 015 measurements below describe its earlier footer treatment.
 
 Legal pages use a 68ch article with explicit scoped h1/h2, paragraph and disc-list styles. The previous `prose` class had no typography plugin configured. Heading hierarchy, list spacing, dates and document-specific metadata remain intact. Cookie layout and policy limitations are documented in [cookie preferences](cookie-preferences.md).
 

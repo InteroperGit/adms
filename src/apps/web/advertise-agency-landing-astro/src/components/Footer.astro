@@ -6,11 +6,17 @@ import ContactInfo from '@/components/ui/ContactInfo.astro';
 import Logo from '@/components/ui/Logo.astro';
 ---
 
-<footer class="site-footer bg-base-200 border-t border-base-300 [overflow-wrap:anywhere]">
+<footer class="site-footer border-t [overflow-wrap:anywhere]">
   <div class="site-container">
     <div class="footer-grid">
       <div class="min-w-0">
-        <a href="/" class="footer-brand flex items-center gap-2 text-3xl font-bold text-brand"><Logo size="footer" /><span class="min-w-0">{site.logoText}</span></a>
+        <a
+          href="/"
+          class="footer-brand flex items-center gap-2 font-bold text-brand"
+        >
+          <Logo size="footer" />
+          <span class="min-w-0">{site.logoText}</span>
+        </a>
         <p class="text-sm text-muted max-w-xs mt-2">
           {site.footer.description}
         </p>
@@ -41,7 +47,7 @@ import Logo from '@/components/ui/Logo.astro';
         />
       </div>
     </div>
-    <div class="border-t border-base-300 mt-10 pt-6 text-sm text-muted">
+    <div class="footer-copyright border-t mt-10 pt-6 text-sm text-muted">
       <p>
         © {new Date().getFullYear()} {site.logoText}. {site.footer.copyright}.
       </p>
@@ -50,10 +56,89 @@ import Logo from '@/components/ui/Logo.astro';
 </footer>
 
 <style>
-  .site-footer { padding-block: var(--site-section-space) 2rem; }
-  .footer-grid { display: grid; gap: 2rem; }
-  .footer-brand { width: fit-content; max-width: 100%; font-size: clamp(1.5rem, 2.5vw, 1.875rem); }
-  .footer-link { display: flex; align-items: center; min-height: 44px; color: var(--color-primary); text-decoration: underline; text-underline-offset: 0.2em; }
-  .footer-link:hover { text-decoration-thickness: 2px; }
-  @media (min-width: 64rem) { .footer-grid { grid-template-columns: 1fr 1fr 1.2fr; gap: 3rem; } }
+  /* End light pages with brand slate and readable local foregrounds. */
+  .site-footer {
+    --footer-background: #18222d;
+    --footer-text: #edf2f7;
+    --footer-muted: #bdc8d4;
+    --footer-link: #ffa04d;
+    --footer-divider: #354555;
+    --footer-focus: var(--footer-link);
+    padding-block: var(--site-section-space) 2rem;
+    background: var(--footer-background);
+    color: var(--footer-text);
+    border-color: var(--footer-divider);
+  }
+
+  /* Retain the existing dark theme surface and divider. */
+  :global([data-theme='dark']) .site-footer {
+    --footer-background: var(--color-base-200);
+    --footer-divider: var(--color-base-300);
+  }
+
+  /* Follow system dark mode before scripts run and with JavaScript off. */
+  @media (prefers-color-scheme: dark) {
+    /* An explicit light preference takes priority over the system. */
+    :global(:root:not([data-theme])) .site-footer {
+      --footer-background: var(--color-base-200);
+      --footer-divider: var(--color-base-300);
+    }
+  }
+
+  /* Stack the existing content columns on smaller screens. */
+  .footer-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  /* Keep the home link and butterfly within the available width. */
+  .footer-brand {
+    width: fit-content;
+    max-width: 100%;
+    font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+  }
+
+  /* Cover muted utilities inside the shared contact component too. */
+  .site-footer :global(.text-muted) {
+    color: var(--footer-muted);
+  }
+
+  /* Override inherited light-theme contact actions on the dark surface. */
+  .site-footer :global(a:not(.footer-brand)) {
+    color: var(--footer-link);
+  }
+
+  /* Make keyboard focus visible independently of link and brand colors. */
+  .site-footer :global(a:focus-visible) {
+    outline: 2px solid var(--footer-focus);
+    outline-offset: 4px;
+  }
+
+  /* Separate the copyright without introducing a light-theme border. */
+  .footer-copyright {
+    border-color: var(--footer-divider);
+  }
+
+  /* Retain the legal links' generous targets and underline affordance. */
+  .footer-link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Reinforce hover without changing the readable foreground. */
+  .footer-link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Restore the original three-column composition on wide screens. */
+  @media (min-width: 64rem) {
+    /* Give contact details their original wider column. */
+    .footer-grid {
+      grid-template-columns: 1fr 1fr 1.2fr;
+      gap: 3rem;
+    }
+  }
 </style>
