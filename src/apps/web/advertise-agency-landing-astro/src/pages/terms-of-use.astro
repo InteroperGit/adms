@@ -1,7 +1,10 @@
 ---
-// src/pages/terms-of-use.astro
+// Publish the supplied terms document through the shared legal layout.
+// The route owns no browser state or duplicate document presentation.
+
 import LegalLayout from '@/layouts/LegalLayout.astro';
 import { termsOfUse } from '@/content/legal';
 ---
 
+{/* The route owns no browser state or duplicate document presentation. */}
 <LegalLayout document={termsOfUse} />

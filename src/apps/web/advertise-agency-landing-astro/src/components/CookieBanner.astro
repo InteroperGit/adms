@@ -1,26 +1,104 @@
-<aside id="cookie-banner" aria-label="Предпочтения cookie" hidden class="cookie-banner fixed bottom-0 left-0 right-0 z-30 bg-base-100 border-t border-control-border shadow-elevated">
+---
+// Offer a dismissible cookie choice and remember it when storage permits.
+// Reserve space only while the fixed banner is visible.
+// Native policy links remain available beside the two local choices.
+---
+
+{/* Native policy links remain available beside the two local choices. */}
+<aside
+  id="cookie-banner"
+  aria-label="Предпочтения cookie"
+  hidden
+  class:list={[
+    'cookie-banner fixed bottom-0 left-0 right-0 z-30',
+    'bg-base-100 border-t border-control-border',
+    'shadow-elevated',
+  ]}
+>
   <div class="site-container cookie-layout">
-    <p class="text-sm">Мы используем файлы cookie. Продолжая, вы соглашаетесь с <a href="/privacy-policy" class="link link-primary">Политикой конфиденциальности</a> и <a href="/terms-of-use" class="link link-primary">Согласием на обработку</a>.</p>
+    <p class="text-sm">
+      Мы используем файлы cookie. Продолжая, вы соглашаетесь с{' '}
+      <a href="/privacy-policy" class="link link-primary">
+        Политикой конфиденциальности
+      </a>{' '}
+      и{' '}
+      <a href="/terms-of-use" class="link link-primary">
+        Согласием на обработку
+      </a>
+      .
+    </p>
+    {/* Both choices dismiss locally; persistence is best effort. */}
     <div class="cookie-actions">
-      <button type="button" data-cookie-choice="declined" class="btn btn-outline btn-primary site-button">Отклонить</button>
-      <button type="button" data-cookie-choice="accepted" class="btn btn-primary site-button">Принять</button>
+      <button
+        type="button"
+        data-cookie-choice="declined"
+        class="btn btn-outline btn-primary site-button"
+      >
+        Отклонить
+      </button>
+      <button
+        type="button"
+        data-cookie-choice="accepted"
+        class="btn btn-primary site-button"
+      >
+        Принять
+      </button>
     </div>
   </div>
 </aside>
 
 <style>
-  .cookie-banner { padding-block: 1rem; max-height: 50dvh; overflow-y: auto; overscroll-behavior: contain; }
-  .cookie-layout { display: grid; gap: 1rem; }
-  .cookie-layout p { min-width: 0; overflow-wrap: anywhere; }
-  .cookie-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .cookie-actions button { flex: 1 1 auto; min-height: 44px; height: auto; white-space: normal; padding-block: 0.5rem; }
-  @media (min-width: 64rem) { .cookie-layout { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+  /* Keep a fixed banner bounded and independently scrollable. */
+  .cookie-banner {
+    padding-block: 1rem;
+    max-height: 50dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Arrange policy text and actions for the available width. */
+  .cookie-layout {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* Wrap long policy text within the banner container. */
+  .cookie-layout p {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Let both cookie choices wrap without losing reachability. */
+  .cookie-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* Keep cookie action labels and targets unclipped. */
+  .cookie-actions button {
+    flex: 1 1 auto;
+    min-height: 44px;
+    height: auto;
+    white-space: normal;
+    padding-block: 0.5rem;
+  }
+
+  /* Place cookie actions beside policy text when the desktop width permits. */
+  @media (min-width: 64rem) {
+    /* Reserve a flexible copy column alongside naturally sized actions. */
+    .cookie-layout {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+  }
 </style>
 
 <script>
   const banner = document.querySelector<HTMLElement>('#cookie-banner');
 
   if (banner) {
+    // Any remembered choice suppresses this banner on subsequent loads.
     let consent: string | null = null;
     try {
       consent = localStorage.getItem('cookieConsent');
@@ -32,22 +110,30 @@
     // Reserve its actual bounded height so the final footer actions can scroll
     // above the fixed banner. Body padding does not change the banner's width.
     const reserveSpace = () => {
-      document.body.style.paddingBottom = banner.hidden ? '' : `${Math.ceil(banner.getBoundingClientRect().height)}px`;
+      document.body.style.paddingBottom = banner.hidden
+        ? ''
+        : `${Math.ceil(banner.getBoundingClientRect().height)}px`;
     };
     reserveSpace();
     const sizeObserver = new ResizeObserver(reserveSpace);
     sizeObserver.observe(banner);
 
-    banner.querySelectorAll<HTMLButtonElement>('[data-cookie-choice]').forEach((button) => {
-      button.addEventListener('click', () => {
-        try {
-          localStorage.setItem('cookieConsent', button.dataset.cookieChoice!);
-        } catch {
-          // Dismiss for this page even when the choice cannot be persisted.
-        }
-        banner.hidden = true;
-        reserveSpace();
+    // Keep dismissal usable even when writing the preference is blocked.
+    banner
+      .querySelectorAll<HTMLButtonElement>('[data-cookie-choice]')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          try {
+            localStorage.setItem(
+              'cookieConsent',
+              button.dataset.cookieChoice!,
+            );
+          } catch {
+            // Dismiss for this page even when the choice cannot be persisted.
+          }
+          banner.hidden = true;
+          reserveSpace();
+        });
       });
-    });
   }
 </script>

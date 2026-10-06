@@ -1,6 +1,9 @@
 ---
-// src/components/ui/Button.astro
+// Share action styling while preserving native link or button semantics.
+// An href selects an anchor; otherwise type defaults to button.
+// Variant/size default to primary/md; rest attributes and slot pass through.
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
   size?: 'sm' | 'md' | 'lg';
@@ -33,28 +36,33 @@ const sizeClasses = {
   lg: 'btn-lg',
 };
 
-// Для outline гарантируем primary-цвет через явные классы
-const outlineClasses = variant === 'outline'
-  ? 'border-primary text-primary hover:bg-primary hover:text-primary-content'
-  : '';
+// Explicit utilities keep outline actions on the semantic primary palette.
+const outlineClasses =
+  variant === 'outline'
+    ? 'border-primary text-primary hover:bg-primary hover:text-primary-content'
+    : '';
 
+// Compose variant, size and caller classes without overriding attributes.
 const combinedClasses = [
   baseClasses,
   variantClasses[variant],
   sizeClasses[size],
   outlineClasses,
   className,
-].filter(Boolean).join(' ');
+]
+  .filter(Boolean)
+  .join(' ');
 ---
 
-{
-  href ? (
-    <a href={href} class={combinedClasses} {...rest}>
-      <slot />
-    </a>
-  ) : (
-    <button type={type} class={combinedClasses} {...rest}>
-      <slot />
-    </button>
-  )
-}
+{/*
+  Variant/size default to primary/md; rest attributes and slot pass through.
+*/}
+{href ? (
+  <a href={href} class={combinedClasses} {...rest}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class={combinedClasses} {...rest}>
+    <slot />
+  </button>
+)}

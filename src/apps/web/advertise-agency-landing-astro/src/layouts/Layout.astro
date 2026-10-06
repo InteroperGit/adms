@@ -1,5 +1,8 @@
 ---
-// src/layouts/Layout.astro
+// Provide the shared document, metadata, theme setup and page landmarks.
+// Optional metadata overrides site defaults; noindex defaults to false.
+// The default slot belongs inside main; ThemeInit must stay in the head.
+
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import CookieBanner from '@/components/CookieBanner.astro';
@@ -7,6 +10,7 @@ import ThemeInit from '@/components/ui/ThemeInit.astro';
 import { site } from '@/content/site';
 import '/src/styles/global.css';
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   title?: string;
   description?: string;
@@ -31,11 +35,16 @@ const canonicalURL = Astro.site
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
+    {/* Apply the preference before subsequent styles or content can paint. */}
     <ThemeInit />
+    {/* Use caller metadata with validated site defaults. */}
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, follow" />}
     {canonicalURL && <link rel="canonical" href={canonicalURL.href} />}
+    {/*
+      Share document metadata without inventing a production canonical URL.
+    */}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
     <meta property="og:site_name" content={site.logoText} />
@@ -51,24 +60,23 @@ const canonicalURL = Astro.site
       href="/favicon.ico"
       sizes="16x16 32x32 48x48"
     />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/favicon.svg"
-      sizes="any"
-    />
-    <!-- Font Awesome 6 (free) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
+    {/* Font Awesome 6 (free) */}
     <link
       rel="stylesheet"
-      href={'https://cdnjs.cloudflare.com/ajax/libs/'
-        + 'font-awesome/6.7.2/css/all.min.css'}
+      href={
+        'https://cdnjs.cloudflare.com/ajax/libs/' +
+        'font-awesome/6.7.2/css/all.min.css'
+      }
     />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 scroll-smooth">
+    {/* Shared navigation precedes the page-owned main slot. */}
     <Header />
     <main class="flex-1">
       <slot />
     </main>
+    {/* Shared legal/contact content follows every page. */}
     <Footer />
     <CookieBanner />
   </body>

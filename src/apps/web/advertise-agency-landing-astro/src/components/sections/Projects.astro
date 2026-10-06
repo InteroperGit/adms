@@ -1,11 +1,15 @@
 ---
-// src/components/sections/Projects.astro
+// Render the supplied project collection in the shared responsive section.
+// Each card retains a uniquely named native link to its static detail page.
+// Section titles and descriptions come from the site configuration.
+
 import ProjectCard from '@/components/cards/ProjectCard.astro';
 import Section from '@/components/ui/Section.astro';
 import { site } from '@/content/site';
 import { projects } from '@/content/projects';
 ---
 
+{/* Section titles and descriptions come from the site configuration. */}
 <Section
   id="projects"
   title={site.sections.projects.title}

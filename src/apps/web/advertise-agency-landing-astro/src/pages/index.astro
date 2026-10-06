@@ -1,4 +1,8 @@
 ---
+// Compose the homepage in editorial order inside the shared site layout.
+// Alternate surfaces by rendered section order, including optional offers.
+// Each section owns its content and any narrowly scoped browser behavior.
+
 import Layout from '@/layouts/Layout.astro';
 import About from '@/components/sections/About.astro';
 import Services from '@/components/sections/Services.astro';
@@ -10,14 +14,18 @@ import Contacts from '@/components/sections/Contacts.astro';
 import OrderInquiry from '@/components/sections/OrderInquiry.astro';
 ---
 
+{/* Each section owns its content and any narrowly scoped browser behavior. */}
 <Layout title="Главная">
   <div class="homepage-sections">
+    {/* Optional offers precede the primary service heading. */}
     <OffersCarousel />
     <Introduction />
+    {/* Follow the opening with agency, services and supplied proof. */}
     <About />
     <Services />
     <Projects />
     <Reviews />
+    {/* End page content with contact paths and the inquiry form. */}
     <Contacts />
     <OrderInquiry />
   </div>

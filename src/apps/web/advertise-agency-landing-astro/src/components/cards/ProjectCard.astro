@@ -1,7 +1,11 @@
 ---
-// src/components/cards/ProjectCard.astro
+// Render one supplied project with reserved image space and a detail link.
+// Project metadata supplies image alternatives, dimensions and destination.
+// The hidden title suffix distinguishes repeated detail-action labels.
+
 import type { Project } from '@/types';
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   project: Project;
 }
@@ -9,6 +13,7 @@ export interface Props {
 const { project } = Astro.props;
 ---
 
+{/* The hidden title suffix distinguishes repeated detail-action labels. */}
 <article class="project-card">
   <figure class="project-image">
     <img
@@ -20,26 +25,107 @@ const { project } = Astro.props;
       decoding="async"
     />
   </figure>
+  {/* Keep attribution and summary beside the uniquely named detail link. */}
   <div class="project-copy">
     <h3>{project.title}</h3>
     <p class="project-client">Клиент: {project.client}</p>
     <p class="project-summary">{project.shortDescription}</p>
     <a class="project-link" href={`/projects/${project.id}`}>
       Подробнее<span class="sr-only">: {project.title}</span>
-      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 5 7 7-7 7" /></svg>
+      <svg
+        aria-hidden="true"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+      >
+        <path d="m9 5 7 7-7 7" />
+      </svg>
     </a>
   </div>
 </article>
 
 <style>
-  .project-card { min-width: 0; display: flex; flex-direction: column; background: var(--color-base-100); border: 1px solid var(--color-base-300); border-radius: var(--radius-field); }
-  .project-image { margin: 0; aspect-ratio: 3 / 2; background: var(--color-base-200); overflow: hidden; border-radius: var(--radius-field) var(--radius-field) 0 0; }
-  .project-image img { width: 100%; height: 100%; object-fit: cover; }
-  .project-copy { min-width: 0; display: flex; flex: 1; flex-direction: column; gap: .75rem; padding: clamp(1rem, 2vw, 1.5rem); overflow-wrap: anywhere; }
-  h3 { font-size: 1.25rem; line-height: 1.35; font-weight: 700; }
-  .project-client { font-size: .875rem; color: var(--color-muted); }
-  .project-summary { line-height: 1.6; color: var(--color-base-content); }
-  .project-link { display: flex; align-items: center; gap: .5rem; width: fit-content; min-height: 44px; margin-top: auto; padding-block: .5rem; color: var(--color-primary); font-weight: 600; text-decoration: underline; text-underline-offset: .25em; }
-  .project-link svg { flex-shrink: 0; }
-  .project-link:hover { text-decoration-thickness: 2px; }
+  /* Keep each project in a shrinkable framed column. */
+  .project-card {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-base-100);
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-field);
+  }
+
+  /* Reserve stable image space with matching top corners. */
+  .project-image {
+    margin: 0;
+    aspect-ratio: 3 / 2;
+    background: var(--color-base-200);
+    overflow: hidden;
+    border-radius: var(--radius-field) var(--radius-field) 0 0;
+  }
+
+  /* Fill the reserved project frame with its existing crop. */
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Let project copy grow while keeping its action at the end. */
+  .project-copy {
+    min-width: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    overflow-wrap: anywhere;
+  }
+
+  /* Maintain the card heading hierarchy without oversized lettering. */
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  /* Distinguish client metadata with readable muted text. */
+  .project-client {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  /* Keep summary copy at the shared body reading rhythm. */
+  .project-summary {
+    line-height: 1.6;
+    color: var(--color-base-content);
+  }
+
+  /* Anchor the underlined detail action at the card bottom. */
+  .project-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    min-height: 44px;
+    margin-top: auto;
+    padding-block: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  /* Keep the directional symbol from shrinking with text. */
+  .project-link svg {
+    flex-shrink: 0;
+  }
+
+  /* Provide pointer feedback while retaining the themed foreground. */
+  .project-link:hover {
+    text-decoration-thickness: 2px;
+  }
 </style>

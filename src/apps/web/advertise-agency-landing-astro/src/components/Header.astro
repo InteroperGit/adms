@@ -1,5 +1,8 @@
 ---
-// src/components/Header.astro
+// Render shared navigation, brand and settings with a scroll-aware header.
+// Site content supplies links; the mobile dialog owns its focus handling.
+// Keep focused or expanded controls visible while scrolling.
+
 import { site } from '@/content/site';
 import NavLinks from '@/components/ui/NavLinks.astro';
 import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
@@ -7,16 +10,44 @@ import Settings from '@/components/ui/Settings.astro';
 import Logo from '@/components/ui/Logo.astro';
 ---
 
-<header data-auto-hide-header class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-panel">
+{/* Keep focused or expanded controls visible while scrolling. */}
+<header
+  data-auto-hide-header
+  class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-panel"
+>
   <div class="header-layout site-container">
     <div class="header-brand-wrap">
-      <a href="/" class="header-brand text-2xl font-bold text-brand"><Logo /><span>{site.logoText}</span></a>
+      <a href="/" class="header-brand text-2xl font-bold text-brand">
+        <Logo />
+        <span>{site.logoText}</span>
+      </a>
     </div>
+    {/* Show wide navigation beside independently sized controls. */}
     <NavLinks items={site.menu} variant="desktop" phone={site.phone} />
     <Settings />
+    {/* The opener names the native modal drawer rendered below. */}
     <div class="header-menu-wrap">
-      <button type="button" id="mobile-menu-open" class="btn btn-ghost btn-circle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false" aria-haspopup="dialog">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+      <button
+        type="button"
+        id="mobile-menu-open"
+        class="btn btn-ghost btn-circle"
+        aria-label="Открыть меню"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
       </button>
     </div>
   </div>
@@ -24,67 +55,170 @@ import Logo from '@/components/ui/Logo.astro';
 </header>
 
 <style>
-  .header-layout { display: flex; align-items: center; flex-wrap: wrap; gap: 0.25rem 1rem; padding-block: 0.5rem; }
-  .header-brand-wrap { flex: 1 1 12rem; min-width: 0; }
-  .header-menu-wrap { flex: none; }
-  .header-brand { display: inline-flex; align-items: center; gap: 0.5rem; max-width: 100%; }
-  .header-brand span { min-width: 0; }
-  @media (max-width: 374px) { .header-brand { font-size: 1.125rem; } }
-  @media (max-width: 63.999rem) {
-    .header-layout { justify-content: flex-end; gap: 0.25rem 0.5rem; }
-    .header-brand-wrap { flex: 1 1 8rem; min-width: 0; }
-    .header-brand { overflow-wrap: anywhere; }
+  /* Wrap navigation within the shared header container. */
+  .header-layout {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    padding-block: 0.5rem;
   }
-  @media (min-width: 64rem) { .header-menu-wrap { display: none; } }
-  header { transition: transform 180ms ease; }
-  header[data-hidden='true'] { transform: translateY(-100%); }
-  header:focus-within, header:has(dialog[open]), header:has([data-settings-open]) { transform: translateY(0); }
+
+  /* Let brand text shrink beside header controls. */
+  .header-brand-wrap {
+    flex: 1 1 12rem;
+    min-width: 0;
+  }
+
+  /* Reserve the mobile opener without flex shrink. */
+  .header-menu-wrap {
+    flex: none;
+  }
+
+  /* Keep the butterfly aligned with the wrapping brand label. */
+  .header-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+  }
+
+  /* Allow the brand label to shrink inside its link. */
+  .header-brand span {
+    min-width: 0;
+  }
+
+  /* Fit the brand beside settings and the opener on the smallest screens. */
+  @media (max-width: 374px) {
+    /* Reduce brand lettering without shrinking its native home link. */
+    .header-brand {
+      font-size: 1.125rem;
+    }
+  }
+
+  /* Reserve room for settings and the mobile opener below desktop width. */
+  @media (max-width: 63.999rem) {
+    /* Keep compact controls at the end of the wrapping header row. */
+    .header-layout {
+      justify-content: flex-end;
+      gap: 0.25rem 0.5rem;
+    }
+
+    /* Allow the brand column to contract beside the mobile controls. */
+    .header-brand-wrap {
+      flex: 1 1 8rem;
+      min-width: 0;
+    }
+
+    /* Break long brand labels instead of forcing horizontal overflow. */
+    .header-brand {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  /* Replace the drawer opener with wide navigation at desktop width. */
+  @media (min-width: 64rem) {
+    /* Hide the opener while desktop navigation is available. */
+    .header-menu-wrap {
+      display: none;
+    }
+  }
+
+  /* Animate scroll-driven visibility without changing document flow. */
+  header {
+    transition: transform 180ms ease;
+  }
+
+  /* Slide the header away on downward scrolling. */
+  header[data-hidden='true'] {
+    transform: translateY(-100%);
+  }
+
+  /* Keep keyboard focus visible above adjacent controls and surfaces. */
+  header:focus-within,
+  header:has(dialog[open]),
+  header:has([data-settings-open]) {
+    transform: translateY(0);
+  }
+
+  /* Respect the visitor preference for reduced interface motion. */
   @media (prefers-reduced-motion: reduce) {
-    header { transition: none; }
+    /* Switch header visibility immediately for reduced-motion visitors. */
+    header {
+      transition: none;
+    }
   }
 </style>
 
 <script>
-  const header = document.querySelector<HTMLElement>('[data-auto-hide-header]');
+  const header = document.querySelector<HTMLElement>(
+    '[data-auto-hide-header]',
+  );
   if (header) {
+    // Measure the rendered header so anchor targets clear it at any text size.
     const setClearance = () => {
-      document.documentElement.style.setProperty('--site-header-clearance', `${header.offsetHeight + 16}px`);
+      document.documentElement.style.setProperty(
+        '--site-header-clearance',
+        `${header.offsetHeight + 16}px`,
+      );
     };
     setClearance();
     new ResizeObserver(setClearance).observe(header);
-    // Correct the initial anchor as soon as layout exists, without waiting for remote images.
+    // Correct the initial anchor as soon as layout exists, without waiting for
+    // remote images.
     const initialHash = location.hash;
     if (initialHash) {
       let interrupted = false;
-      const interrupt = () => { interrupted = true; };
+      const interrupt = () => {
+        interrupted = true;
+      };
       const events = ['pointerdown', 'wheel', 'touchstart', 'keydown'];
-      events.forEach(event => window.addEventListener(event, interrupt, { passive: true }));
+      events.forEach((event) =>
+        window.addEventListener(event, interrupt, { passive: true }),
+      );
       requestAnimationFrame(() => {
         if (!interrupted && location.hash === initialHash) {
-          try { document.getElementById(decodeURIComponent(initialHash.slice(1)))?.scrollIntoView(); }
-          catch { /* A malformed hash has no matching section. */ }
+          try {
+            document
+              .getElementById(decodeURIComponent(initialHash.slice(1)))
+              ?.scrollIntoView();
+          } catch {
+            /* A malformed hash has no matching section. */
+          }
         }
-        events.forEach(event => window.removeEventListener(event, interrupt));
+        events.forEach((event) =>
+          window.removeEventListener(event, interrupt),
+        );
       });
     }
+    // Track accumulated direction changes to avoid jitter on tiny scrolls.
     let previousY = Math.max(0, window.scrollY);
     let distance = 0;
     let direction = 0;
     let scheduled = false;
 
+    // Reset the travel threshold whenever an interaction needs the header.
     const reveal = () => {
       header.dataset.hidden = 'false';
       distance = 0;
     };
 
+    // Clamp overscroll and keep active header interactions on screen.
     const update = () => {
       scheduled = false;
-      const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const maxY = Math.max(
+        0,
+        document.documentElement.scrollHeight - window.innerHeight,
+      );
       const y = Math.min(maxY, Math.max(0, window.scrollY));
       const delta = y - previousY;
       previousY = y;
 
-      if (y <= header.offsetHeight || header.contains(document.activeElement) || header.querySelector('dialog[open], [data-settings-open]')) {
+      if (
+        y <= header.offsetHeight ||
+        header.contains(document.activeElement) ||
+        header.querySelector('dialog[open], [data-settings-open]')
+      ) {
         reveal();
         return;
       }
@@ -100,17 +234,28 @@ import Logo from '@/components/ui/Logo.astro';
       }
     };
 
-    window.addEventListener('scroll', () => {
-      if (!scheduled) {
-        scheduled = true;
-        requestAnimationFrame(update);
-      }
-    }, { passive: true });
+    // Coalesce passive scroll events into one layout update per frame.
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!scheduled) {
+          scheduled = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true },
+    );
     header.addEventListener('focusin', reveal);
     window.addEventListener('hashchange', reveal);
     window.addEventListener('pageshow', reveal);
+    // Opening a drawer or settings panel overrides scroll-driven hiding.
     new MutationObserver(() => {
-      if (header.querySelector('dialog[open], [data-settings-open]')) reveal();
-    }).observe(header, { attributes: true, attributeFilter: ['open', 'data-settings-open'], subtree: true });
+      if (header.querySelector('dialog[open], [data-settings-open]'))
+        reveal();
+    }).observe(header, {
+      attributes: true,
+      attributeFilter: ['open', 'data-settings-open'],
+      subtree: true,
+    });
   }
 </script>

@@ -1,8 +1,13 @@
 ---
+// Render enabled offers statically, then enhance multiple offers in place.
+// Validated content supplies order, presentation and autoplay configuration.
+// Without scripts all offers remain readable; controls start hidden.
+
 import Button from '@/components/ui/Button.astro';
 import { offers, enabledOffers } from '@/content/offers';
 ---
 
+{/* Without scripts all offers remain readable; controls start hidden. */}
 {offers.enabled && enabledOffers.length > 0 && (
   <section
     id="offers"
@@ -12,6 +17,7 @@ import { offers, enabledOffers } from '@/content/offers';
     data-interval={offers.intervalMs}
   >
     {enabledOffers.length > 1 && (
+      /* Hidden navigation is revealed only after multiple slides initialize. */
       <div class="offer-controls" hidden>
         <button
           type="button"
@@ -48,11 +54,15 @@ import { offers, enabledOffers } from '@/content/offers';
         </button>
       </div>
     )}
+    {/*
+      All enabled offers remain static readable articles without JavaScript.
+    */}
     <div class="offers-list">
       {enabledOffers.map((offer, index) => {
         const { presentation } = offer;
         const { focalPoint } = presentation;
-        const mobile = presentation.mobileFocalPoint ?? presentation.focalPoint;
+        const mobile =
+          presentation.mobileFocalPoint ?? presentation.focalPoint;
         return (
           <article
             id={`offer-${offer.id}`}
@@ -92,12 +102,14 @@ import { offers, enabledOffers } from '@/content/offers';
         );
       })}
     </div>
+    {/* Announce manual changes without announcing automatic rotation. */}
     <span class="sr-only" role="status" aria-atomic="true"></span>
   </section>
 )}
 
 <script>
-  const carousels = document.querySelectorAll<HTMLElement>('.offers-section');
+  const carousels =
+    document.querySelectorAll<HTMLElement>('.offers-section');
 
   for (const carousel of carousels) {
     const slides = [...carousel.querySelectorAll<HTMLElement>('.offer')];
@@ -107,24 +119,41 @@ import { offers, enabledOffers } from '@/content/offers';
     const dots = [
       ...carousel.querySelectorAll<HTMLButtonElement>('.offer-dot'),
     ];
-    const arrows = carousel.querySelectorAll<HTMLButtonElement>('.offer-arrow');
+    const arrows =
+      carousel.querySelectorAll<HTMLButtonElement>('.offer-arrow');
 
-    if (slides.length < 2 || !controls || !indicators || !status
-      || dots.length !== slides.length || arrows.length !== 2) continue;
+    if (
+      slides.length < 2 ||
+      !controls ||
+      !indicators ||
+      !status ||
+      dots.length !== slides.length ||
+      arrows.length !== 2
+    )
+      continue;
 
+    // Keep slide state local; interaction and visibility determine rotation.
     let currentSlide = 0;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const interval = Number(carousel.dataset.interval);
     const autoplay = carousel.dataset.autoplay === 'true';
-    let hovered = window.matchMedia('(hover: hover)').matches
-      && carousel.matches(':hover');
+    let hovered =
+      window.matchMedia('(hover: hover)').matches &&
+      carousel.matches(':hover');
     let inViewport = false;
     let suspended = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
 
-    const canRotate = () => autoplay && !motion.matches && !hovered
-      && !document.hidden && inViewport && !suspended
-      && !carousel.contains(document.activeElement);
+    // Pause for reduced motion, hover, focus, hidden pages and offscreen
+    // content.
+    const canRotate = () =>
+      autoplay &&
+      !motion.matches &&
+      !hovered &&
+      !document.hidden &&
+      inViewport &&
+      !suspended &&
+      !carousel.contains(document.activeElement);
 
     // Clear before scheduling: every resume gets one fresh full interval.
     const reconcileRotation = () => {
@@ -138,6 +167,7 @@ import { offers, enabledOffers } from '@/content/offers';
       }, interval);
     };
 
+    // Wrap indices and remove inactive slides from focus and accessibility.
     const selectSlide = (index: number, announce = false) => {
       currentSlide = (index + slides.length) % slides.length;
       slides.forEach((slide, position) => {
@@ -147,7 +177,8 @@ import { offers, enabledOffers } from '@/content/offers';
         slide.inert = inactive;
       });
       dots.forEach((dot, position) => {
-        if (position === currentSlide) dot.setAttribute('aria-current', 'true');
+        if (position === currentSlide)
+          dot.setAttribute('aria-current', 'true');
         else dot.removeAttribute('aria-current');
       });
       if (announce) {
@@ -156,6 +187,7 @@ import { offers, enabledOffers } from '@/content/offers';
       }
     };
 
+    // Manual navigation announces the position and restarts a full interval.
     arrows.forEach((arrow) => {
       arrow.addEventListener('click', () => {
         selectSlide(currentSlide + Number(arrow.dataset.direction), true);
@@ -169,6 +201,7 @@ import { offers, enabledOffers } from '@/content/offers';
       });
     });
 
+    // Touch does not latch hover; keyboard focus pauses independently.
     carousel.addEventListener('pointerenter', (event) => {
       if (event.pointerType === 'touch') return;
       hovered = true;
@@ -184,10 +217,13 @@ import { offers, enabledOffers } from '@/content/offers';
     });
     document.addEventListener('visibilitychange', reconcileRotation);
     motion.addEventListener('change', reconcileRotation);
+    // Do not rotate offscreen content; resuming starts a fresh full interval.
     new IntersectionObserver(([entry]) => {
       inViewport = entry.isIntersecting;
       reconcileRotation();
     }).observe(carousel);
+    // Clear rotation while leaving the page, including back-forward cache
+    // entry.
     window.addEventListener('pagehide', () => {
       suspended = true;
       reconcileRotation();
@@ -197,6 +233,7 @@ import { offers, enabledOffers } from '@/content/offers';
       reconcileRotation();
     });
 
+    // Reveal enhanced controls only after inactive slides become inert.
     selectSlide(0);
     carousel.dataset.ready = 'true';
     carousel.setAttribute('aria-roledescription', 'карусель');
@@ -206,7 +243,8 @@ import { offers, enabledOffers } from '@/content/offers';
     // Reserve bottom clearance even when indicators wrap or text is enlarged.
     const reserveIndicators = () => {
       carousel.style.setProperty(
-        '--indicator-height', `${indicators.getBoundingClientRect().height}px`,
+        '--indicator-height',
+        `${indicators.getBoundingClientRect().height}px`,
       );
     };
     reserveIndicators();
@@ -350,11 +388,8 @@ import { offers, enabledOffers } from '@/content/offers';
     height: 0.75rem;
     border: 2px solid currentColor;
     border-radius: 50%;
-    filter:
-      drop-shadow(-1px 0 0 #000)
-      drop-shadow(1px 0 0 #000)
-      drop-shadow(0 -1px 0 #000)
-      drop-shadow(0 1px 0 #000);
+    filter: drop-shadow(-1px 0 0 #000) drop-shadow(1px 0 0 #000)
+      drop-shadow(0 -1px 0 #000) drop-shadow(0 1px 0 #000);
   }
 
   /* Fill the current marker without changing any circle's radius. */
@@ -383,11 +418,14 @@ import { offers, enabledOffers } from '@/content/offers';
     }
   }
 
+  /* Reveal offer content without reflow. */
   @keyframes offer-reveal {
+    /* Start the reveal with transparent content. */
     from {
       opacity: 0;
     }
 
+    /* Finish the reveal at the normal opacity. */
     to {
       opacity: 1;
     }
@@ -439,7 +477,9 @@ import { offers, enabledOffers } from '@/content/offers';
     );
     padding-bottom: max(
       4.5rem,
-      calc(var(--indicator-height) + var(--control-inset) + var(--control-gap))
+      calc(
+        var(--indicator-height) + var(--control-inset) + var(--control-gap)
+      )
     );
   }
 

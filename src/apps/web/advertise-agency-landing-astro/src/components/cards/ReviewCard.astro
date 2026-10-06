@@ -1,7 +1,11 @@
 ---
-// src/components/cards/ReviewCard.astro
+// Render one supplied review as a quotation and its author caption.
+// Review metadata supplies text, attribution and portrait alternatives.
+// A fixed portrait frame avoids shifting the attribution during loading.
+
 import type { Review } from '@/types';
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   review: Review;
 }
@@ -9,32 +13,87 @@ export interface Props {
 const { review } = Astro.props;
 ---
 
+{/* A fixed portrait frame avoids shifting the attribution during loading. */}
 <figure class="review-card">
-  <blockquote><p>{review.text}</p></blockquote>
+  <blockquote>
+    <p>{review.text}</p>
+  </blockquote>
+  {/* Attribute the quotation with supplied portrait and names. */}
   <figcaption>
-          <img
-            src={review.avatar}
-            alt={review.avatarAlt}
-            width={review.avatarWidth}
-            height={review.avatarHeight}
-            loading="lazy"
-            decoding="async"
-          />
-      <div class="review-author">
-        <p class="review-name">{review.name}</p>
-        <p class="review-company">
-          {review.position}, {review.company}
-        </p>
-      </div>
+    <img
+      src={review.avatar}
+      alt={review.avatarAlt}
+      width={review.avatarWidth}
+      height={review.avatarHeight}
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="review-author">
+      <p class="review-name">{review.name}</p>
+      <p class="review-company">
+        {review.position}, {review.company}
+      </p>
+    </div>
   </figcaption>
 </figure>
 
 <style>
-  .review-card { margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 1.5rem; padding: clamp(1rem, 2vw, 1.5rem); border: 1px solid var(--color-base-300); border-radius: var(--radius-field); background: var(--color-base-100); overflow-wrap: anywhere; }
-  blockquote { margin: 0; line-height: 1.7; }
-  figcaption { display: flex; align-items: center; gap: 1rem; margin-top: auto; padding-top: 1.25rem; border-top: 1px solid var(--color-base-300); }
-  figcaption img { width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; object-fit: cover; background: var(--color-base-200); }
-  .review-author { min-width: 0; }
-  .review-name { font-weight: 600; line-height: 1.4; }
-  .review-company { margin-top: .25rem; font-size: .875rem; color: var(--color-muted); line-height: 1.5; }
+  /* Frame the quotation and attribution without fixed height. */
+  .review-card {
+    margin: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep the quotation readable without extra default margins. */
+  blockquote {
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* Separate attribution and align it with the reserved portrait. */
+  figcaption {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Reserve a circular portrait without shrinking its frame. */
+  figcaption img {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--color-base-200);
+  }
+
+  /* Allow long author details to shrink within the caption. */
+  .review-author {
+    min-width: 0;
+  }
+
+  /* Give author identification a clear readable emphasis. */
+  .review-name {
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* Separate supporting attribution with muted text. */
+  .review-company {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
 </style>

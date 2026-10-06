@@ -43,6 +43,25 @@ Every line of code must be at most 80 characters, including indentation.
 This applies to Astro markup, scripts, styles, configuration and code examples.
 Wrap long lines using valid syntax when adding or editing code.
 
+## Astro component readability
+
+Use `astro-best-practices` when creating, changing or reviewing any Astro
+component, layout or page. Explain the file's responsibility and meaningful
+props, defaults and slots near their definitions. Add source-only comments
+for logical markup sections and explain nontrivial browser initialization,
+state changes, focus handling, storage fallbacks and cleanup.
+
+Keep metadata/content preparation in frontmatter and narrowly scoped browser
+behavior in scripts. ThemeInit is deliberately an inline head script: its
+first application must run before content can paint. The inquiry form starts
+protected until its submission handler is installed. Static page wrappers
+should retain their route/content ownership without adding client state.
+
+Use descriptive names and expanded markup, scripts and styles. Comments
+explain purpose and reasoning rather than narrating every obvious line.
+Task 031 reviews all 37 existing Astro files against these conventions;
+follow the [readability rules](rules/code-style.md) for subsequent changes.
+
 ## Astro component CSS
 
 Use readable multiline rules in component `<style>` sections. Write every

@@ -1,25 +1,32 @@
 ---
-// src/layouts/LegalLayout.astro
+// Render a validated legal document inside the shared site layout.
+// The optional title overrides metadata only, not the visible heading.
+// Document sections retain their supplied order, dates and list content.
+
 import Layout from '@/layouts/Layout.astro';
 import type { LegalDocument } from '@/types';
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   document: LegalDocument;
   title?: string;
 }
 
 const { document, title } = Astro.props;
-
 ---
 
+{/* Document sections retain their supplied order, dates and list content. */}
 <Layout title={title || document.title} description={document.description}>
   <div class="site-container site-section">
     <article class="legal-document">
       <h1>{document.title}</h1>
       {document.effectiveDate && (
-        <p class="legal-date"><strong>Дата вступления в силу:</strong> {document.effectiveDate}</p>
+        <p class="legal-date">
+          <strong>Дата вступления в силу:</strong> {document.effectiveDate}
+        </p>
       )}
 
+      {/* Keep supplied legal topics and optional lists in document order. */}
       {document.sections.map((section) => {
         return (
           <section>
@@ -40,14 +47,66 @@ const { document, title } = Astro.props;
 </Layout>
 
 <style>
-  .legal-document { max-width: var(--site-reading-width); margin-inline: auto; overflow-wrap: anywhere; }
-  h1 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
-  h2 { font-size: clamp(1.25rem, 2vw, 1.5rem); font-weight: 650; line-height: 1.35; margin-bottom: 1rem; }
-  section { margin-top: 2.5rem; }
-  p { line-height: 1.75; }
-  .legal-date { color: var(--site-muted); }
-  ul { list-style: disc; padding-inline-start: 1.5rem; margin-top: 1rem; }
-  li { padding-inline-start: 0.25rem; line-height: 1.75; }
-  li + li { margin-top: 0.75rem; }
-  a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 0.2em; }
+  /* Constrain legal copy to the shared reading measure. */
+  .legal-document {
+    max-width: var(--site-reading-width);
+    margin-inline: auto;
+    overflow-wrap: anywhere;
+  }
+
+  /* Maintain the primary document heading and readable responsive scale. */
+  h1 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  /* Separate document sections with a clear secondary heading hierarchy. */
+  h2 {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 650;
+    line-height: 1.35;
+    margin-bottom: 1rem;
+  }
+
+  /* Separate document topics with a consistent reading rhythm. */
+  section {
+    margin-top: 2.5rem;
+  }
+
+  /* Give longer document paragraphs comfortable reading line spacing. */
+  p {
+    line-height: 1.75;
+  }
+
+  /* Distinguish the effective date without reducing readability. */
+  .legal-date {
+    color: var(--site-muted);
+  }
+
+  /* Preserve visible list markers and indentation for parallel points. */
+  ul {
+    list-style: disc;
+    padding-inline-start: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  /* Indent legal list items without crowding their readable line spacing. */
+  li {
+    padding-inline-start: 0.25rem;
+    line-height: 1.75;
+  }
+
+  /* Separate list entries for easier scanning of legal copy. */
+  li + li {
+    margin-top: 0.75rem;
+  }
+
+  /* Retain a persistent underline and room to target native links. */
+  a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 </style>

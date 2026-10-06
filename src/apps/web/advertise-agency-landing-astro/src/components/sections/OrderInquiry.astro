@@ -1,16 +1,24 @@
 ---
+// Render the configured inquiry form and accessible validation feedback.
+// Fields start disabled until the protective submit handler is installed.
+// Delivery stays disabled when no backend is configured; copy stays visible.
+
 import Section from '@/components/ui/Section.astro';
 import { orderInquiry as content } from '@/content/order-inquiry';
 import { site } from '@/content/site';
 
+// Keep input identity and native autocomplete stable across field copy.
 const inputs = [
   { key: 'name', type: 'text', autocomplete: 'name' },
   { key: 'email', type: 'email', autocomplete: 'email' },
   { key: 'phone', type: 'tel', autocomplete: 'tel' },
 ] as const;
-const privacy = site.legal.find(item => item.href === '/privacy-policy');
+const privacy = site.legal.find((item) => item.href === '/privacy-policy');
 ---
 
+{/*
+  Delivery stays disabled when no backend is configured; copy stays visible.
+*/}
 <Section
   id="order-inquiry"
   title={content.title}
@@ -30,6 +38,9 @@ const privacy = site.legal.find(item => item.href === '/privacy-policy');
       <p id="inquiry-required" class="inquiry-note">
         {content.requiredNote}
       </p>
+      {/*
+        Start protected; register submission before enabling input.
+      */}
       <fieldset class="inquiry-fields" disabled>
         {inputs.map(({ key, type, autocomplete }) => {
           const field = content.fields[key];
@@ -51,10 +62,15 @@ const privacy = site.legal.find(item => item.href === '/privacy-policy');
               <p id={`inquiry-${key}-hint`} class="inquiry-note">
                 {field.hint} (≤ {field.maxLength})
               </p>
-              <p id={`inquiry-${key}-error`} class="inquiry-error" hidden></p>
+              <p
+                id={`inquiry-${key}-error`}
+                class="inquiry-error"
+                hidden
+              ></p>
             </div>
           );
         })}
+        {/* Associate the longer message with its hint and validation error. */}
         <div class="inquiry-field inquiry-message">
           <label for="inquiry-message">
             {content.fields.message.label} <span aria-hidden="true">*</span>
@@ -68,34 +84,36 @@ const privacy = site.legal.find(item => item.href === '/privacy-policy');
             aria-describedby="inquiry-message-hint inquiry-message-error"
           ></textarea>
           <p id="inquiry-message-hint" class="inquiry-note">
-            {content.fields.message.hint}{' '}
-            (≤ {content.fields.message.maxLength})
+            {content.fields.message.hint} (≤{' '}
+            {content.fields.message.maxLength})
           </p>
           <p id="inquiry-message-error" class="inquiry-error" hidden></p>
         </div>
+        {/*
+          Keep the required native agreement and policy destination together.
+        */}
         <div class="inquiry-consent">
-            <label for="inquiry-consent" class="inquiry-consent-label">
-              <input
-                id="inquiry-consent"
-                name="consent"
-                type="checkbox"
-                required
-                aria-describedby="inquiry-consent-error"
-              />
-              <span>
-                {content.consent.label}{' '}
-                <span aria-hidden="true">*</span>
-              </span>
-            </label>
-            <a
-              class="inquiry-link"
-              href={privacy?.href ?? '/privacy-policy'}
-            >
-              {content.privacyLabel}
-            </a>
-            <p id="inquiry-consent-error" class="inquiry-error" hidden></p>
+          <label for="inquiry-consent" class="inquiry-consent-label">
+            <input
+              id="inquiry-consent"
+              name="consent"
+              type="checkbox"
+              required
+              aria-describedby="inquiry-consent-error"
+            />
+            <span>
+              {content.consent.label} <span aria-hidden="true">*</span>
+            </span>
+          </label>
+          <a class="inquiry-link" href={privacy?.href ?? '/privacy-policy'}>
+            {content.privacyLabel}
+          </a>
+          <p id="inquiry-consent-error" class="inquiry-error" hidden></p>
         </div>
       </fieldset>
+      {/*
+        Delivery remains disabled unless configured and safely initialized.
+      */}
       <button
         class="btn btn-primary site-button inquiry-submit"
         type="submit"
@@ -104,6 +122,9 @@ const privacy = site.legal.find(item => item.href === '/privacy-policy');
       >
         {content.submitLabel}
       </button>
+      {/*
+        Polite feedback reports validation or delivery without replacing labels.
+      */}
       <p
         id="inquiry-status"
         class="inquiry-status"
@@ -123,7 +144,9 @@ const privacy = site.legal.find(item => item.href === '/privacy-policy');
 <script>
   import { initializeInquiry } from './order-inquiry';
 
-  document.querySelectorAll<HTMLFormElement>('[data-inquiry]')
+  // Initialize only inquiry forms; delivery and validation stay in the helper.
+  document
+    .querySelectorAll<HTMLFormElement>('[data-inquiry]')
     .forEach(initializeInquiry);
 </script>
 

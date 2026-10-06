@@ -1,11 +1,15 @@
 ---
-// src/components/Footer.astro
+// Render shared legal navigation, contact details and the home brand link.
+// Footer-local colors support a slate light footer and the dark theme.
+// Content and destinations come from the validated site configuration.
+
 import { site } from '@/content/site';
 import type { LegalItem } from '@/types';
 import ContactInfo from '@/components/ui/ContactInfo.astro';
 import Logo from '@/components/ui/Logo.astro';
 ---
 
+{/* Content and destinations come from the validated site configuration. */}
 <footer class="site-footer border-t [overflow-wrap:anywhere]">
   <div class="site-container">
     <div class="footer-grid">
@@ -21,22 +25,22 @@ import Logo from '@/components/ui/Logo.astro';
           {site.footer.description}
         </p>
       </div>
+      {/* Legal navigation keeps the same native document links. */}
       <nav aria-label="Правовая информация" class="min-w-0">
-        <h2 class="text-base font-semibold mb-3">
-          Информация
-        </h2>
+        <h2 class="text-base font-semibold mb-3">Информация</h2>
         <ul class="space-y-1">
           {site.legal.map((item: LegalItem) => (
             <li>
-              <a href={item.href} class="footer-link">{item.label}</a>
+              <a href={item.href} class="footer-link">
+                {item.label}
+              </a>
             </li>
           ))}
         </ul>
       </nav>
       <div class="min-w-0">
-        <h2 class="text-base font-semibold mb-3">
-          Контакты
-        </h2>
+        <h2 class="text-base font-semibold mb-3">Контакты</h2>
+        {/* Use shared contact markup with the footer-local readable colors. */}
         <ContactInfo
           phone={site.phone}
           email={site.email}
@@ -47,9 +51,11 @@ import Logo from '@/components/ui/Logo.astro';
         />
       </div>
     </div>
+    {/* End the shared footer with supplied copyright and the build year. */}
     <div class="footer-copyright border-t mt-10 pt-6 text-sm text-muted">
       <p>
-        © {new Date().getFullYear()} {site.logoText}. {site.footer.copyright}.
+        © {new Date().getFullYear()} {site.logoText}.{' '}
+        {site.footer.copyright}.
       </p>
     </div>
   </div>

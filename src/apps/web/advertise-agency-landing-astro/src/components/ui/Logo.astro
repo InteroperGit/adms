@@ -1,12 +1,45 @@
 ---
+// Render the decorative butterfly beside an independently named brand link.
+// Size defaults to header; footer uses the larger existing dimensions.
+// Empty alt and aria-hidden prevent repeating the adjacent brand text.
+
+// Caller-supplied data and presentation options for this component.
 interface Props {
   size?: 'header' | 'footer';
 }
 const { size = 'header' } = Astro.props;
 ---
-<img class:list={['brand-logo', size]} src="/images/butterfly-logo.svg" alt="" width="64" height="64" aria-hidden="true" />
+
+{/* Empty alt and aria-hidden prevent repeating the adjacent brand text. */}
+<img
+  class:list={['brand-logo', size]}
+  src="/images/butterfly-logo.svg"
+  alt=""
+  width="64"
+  height="64"
+  aria-hidden="true"
+/>
 <style>
-  .brand-logo { display: block; flex: none; width: 2.25rem; height: 2.25rem; }
-  .footer { width: 2.75rem; height: 2.75rem; }
-  @media (max-width: 374px) { .header { width: 1.75rem; height: 1.75rem; } }
+  /* Reserve a nonshrinking inline butterfly beside brand text. */
+  .brand-logo {
+    display: block;
+    flex: none;
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  /* Use the larger butterfly in the footer brand link. */
+  .footer {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  /* Adapt the existing composition to narrower viewports. */
+  @media (max-width: 374px) {
+    /* Keep the header butterfly compact on the narrowest screens. */
+    .header {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  }
 </style>

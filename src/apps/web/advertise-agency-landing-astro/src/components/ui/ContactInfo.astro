@@ -1,7 +1,11 @@
 ---
-// src/components/ui/ContactInfo.astro
+// Render supplied contact fields with native telephone and email links.
+// All fields are optional; absent details render no empty rows.
+// The class prop adds caller styling; icons are decorative, not labels.
+
 import { icons } from '@/content/icons';
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   phone?: string;
   email?: string;
@@ -11,31 +15,75 @@ export interface Props {
   class?: string;
 }
 
-const { phone, email, address, workHours, workHoursWeekend, class: className = '' } = Astro.props;
+const {
+  phone,
+  email,
+  address,
+  workHours,
+  workHoursWeekend,
+  class: className = '',
+} = Astro.props;
 ---
 
+{/* The class prop adds caller styling; icons are decorative, not labels. */}
 <div class={`contact-info space-y-3 ${className}`}>
+  {/* Omit the location row when no address is supplied. */}
   {address && (
     <div class="flex items-center gap-3">
-      <i class={`fas ${icons.address} text-2xl text-brand w-6 shrink-0 text-center`} aria-hidden="true"></i>
+      <i
+        class:list={[
+          'fas',
+          icons.address,
+          'text-2xl text-brand w-6 shrink-0 text-center',
+        ]}
+        aria-hidden="true"
+      ></i>
       <span class="min-w-0 [overflow-wrap:anywhere]">{address}</span>
     </div>
   )}
+  {/* Strip display spaces only; preserve the telephone destination. */}
   {phone && (
     <div class="flex items-center gap-3">
-      <i class={`fas ${icons.phone} text-2xl text-brand w-6 shrink-0 text-center`} aria-hidden="true"></i>
-      <a href={`tel:${phone.replace(/\s/g, '')}`} class="contact-action">{phone}</a>
+      <i
+        class:list={[
+          'fas',
+          icons.phone,
+          'text-2xl text-brand w-6 shrink-0 text-center',
+        ]}
+        aria-hidden="true"
+      ></i>
+      <a href={`tel:${phone.replace(/\s/g, '')}`} class="contact-action">
+        {phone}
+      </a>
     </div>
   )}
+  {/* Use a native mail link without intercepting its behavior. */}
   {email && (
     <div class="flex items-center gap-3">
-      <i class={`fas ${icons.email} text-2xl text-brand w-6 shrink-0 text-center`} aria-hidden="true"></i>
-      <a href={`mailto:${email}`} class="contact-action">{email}</a>
+      <i
+        class:list={[
+          'fas',
+          icons.email,
+          'text-2xl text-brand w-6 shrink-0 text-center',
+        ]}
+        aria-hidden="true"
+      ></i>
+      <a href={`mailto:${email}`} class="contact-action">
+        {email}
+      </a>
     </div>
   )}
+  {/* Keep weekend details subordinate to the supplied opening hours. */}
   {workHours && (
     <div class="flex items-center gap-3">
-      <i class={`far ${icons.clock} text-2xl text-brand w-6 shrink-0 text-center`} aria-hidden="true"></i>
+      <i
+        class:list={[
+          'far',
+          icons.clock,
+          'text-2xl text-brand w-6 shrink-0 text-center',
+        ]}
+        aria-hidden="true"
+      ></i>
       <div class="min-w-0 [overflow-wrap:anywhere]">
         <p>{workHours}</p>
         {workHoursWeekend && <p class="text-muted">{workHoursWeekend}</p>}
@@ -45,6 +93,7 @@ const { phone, email, address, workHours, workHoursWeekend, class: className = '
 </div>
 
 <style>
+  /* Keep native contact links readable and easy to target. */
   .contact-action {
     display: flex;
     align-items: center;
@@ -56,8 +105,12 @@ const { phone, email, address, workHours, workHoursWeekend, class: className = '
     text-underline-offset: 0.2em;
   }
 
-  .contact-action:hover { text-decoration-thickness: 2px; }
+  /* Provide pointer feedback while retaining the themed foreground. */
+  .contact-action:hover {
+    text-decoration-thickness: 2px;
+  }
 
+  /* Keep keyboard focus visible above adjacent controls and surfaces. */
   .contact-action:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 4px;

@@ -1,6 +1,9 @@
 ---
-// src/components/ui/Section.astro
+// Provide consistent section spacing, container and optional heading copy.
+// Background defaults to default; id/class pass through to the section.
+// The default slot follows optional h2/subtitle content inside the container.
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   id?: string;
   title?: string;
@@ -9,8 +12,15 @@ export interface Props {
   class?: string;
 }
 
-const { id, title, subtitle, background = 'default', class: className = '' } = Astro.props;
+const {
+  id,
+  title,
+  subtitle,
+  background = 'default',
+  class: className = '',
+} = Astro.props;
 
+// Map the public background variants to existing shared theme utilities.
 const bgClasses = {
   default: 'bg-base-100',
   gradient: 'bg-gradient-to-b from-base-100 to-base-200/50',
@@ -18,21 +28,19 @@ const bgClasses = {
   none: '',
 };
 
-const sectionClasses = [
-  'site-section',
-  bgClasses[background],
-  className,
-].filter(Boolean).join(' ');
+const sectionClasses = ['site-section', bgClasses[background], className]
+  .filter(Boolean)
+  .join(' ');
 ---
 
+{/*
+  The default slot follows optional h2/subtitle content inside the container.
+*/}
 <section id={id} class={sectionClasses}>
   <div class="site-container">
-    {title && (
-      <h2 class="site-section-title">{title}</h2>
-    )}
-    {subtitle && (
-      <p class="site-section-subtitle">{subtitle}</p>
-    )}
+    {title && <h2 class="site-section-title">{title}</h2>}
+    {subtitle && <p class="site-section-subtitle">{subtitle}</p>}
+    {/* Page content follows the optional section heading and subtitle. */}
     <slot />
   </div>
 </section>

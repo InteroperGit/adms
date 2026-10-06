@@ -1,10 +1,16 @@
 ---
-// src/components/sections/Contacts.astro
+// Pair supplied contact details with the configured map or fallback image.
+// The map flag alone selects third-party iframe versus local static media.
+// Reserve map space while lazy content loads and keep iframe naming intact.
+
 import { site } from '@/content/site';
 import ContactInfo from '@/components/ui/ContactInfo.astro';
 import Section from '@/components/ui/Section.astro';
 ---
 
+{/*
+  Reserve map space while lazy content loads and keep iframe naming intact.
+*/}
 <Section
   id="contacts"
   title={site.sections.contacts.title}
@@ -14,8 +20,15 @@ import Section from '@/components/ui/Section.astro';
 >
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
     <div class="lg:col-span-1 min-w-0">
-      <div class="contact-panel rounded-[var(--radius-field)] bg-base-100 border border-base-300 h-full">
-        <h3 class="text-xl font-semibold mb-6">{site.sections.contacts.panelTitle}</h3>
+      <div
+        class:list={[
+          'contact-panel rounded-[var(--radius-field)] bg-base-100',
+          'border border-base-300 h-full',
+        ]}
+      >
+        <h3 class="text-xl font-semibold mb-6">
+          {site.sections.contacts.panelTitle}
+        </h3>
         <ContactInfo
           address={site.address}
           phone={site.phone}
@@ -25,32 +38,60 @@ import Section from '@/components/ui/Section.astro';
         />
       </div>
     </div>
+    {/*
+      Keep the configured map variant and its lazy-loading boundary intact.
+    */}
     <div class="lg:col-span-2 min-w-0">
-      <div class="contact-map w-full rounded-[var(--radius-field)] overflow-hidden border border-base-300 bg-base-200">
-        {site.mapEnabled ? <iframe
-          src={site.mapSrc}
-          title={`Карта расположения ${site.logoText}: ${site.address}`}
-          width="100%"
-          height="100%"
-          class="border-0"
-          allowfullscreen
-          loading="lazy"
-        ></iframe> : <img
-          src={site.mapFallback.src}
-          alt={site.mapFallback.alt}
-          width={site.mapFallback.width}
-          height={site.mapFallback.height}
-          class="w-full h-full object-cover"
-          loading="lazy"
-          decoding="async"
-        />}
+      <div
+        class:list={[
+          'contact-map w-full rounded-[var(--radius-field)]',
+          'overflow-hidden border border-base-300 bg-base-200',
+        ]}
+      >
+        {site.mapEnabled ? (
+          <iframe
+            src={site.mapSrc}
+            title={`Карта расположения ${site.logoText}: ${site.address}`}
+            width="100%"
+            height="100%"
+            class="border-0"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        ) : (
+          <img
+            src={site.mapFallback.src}
+            alt={site.mapFallback.alt}
+            width={site.mapFallback.width}
+            height={site.mapFallback.height}
+            class="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
       </div>
     </div>
   </div>
 </Section>
 
 <style>
-  .contact-panel { padding: clamp(1rem, 2vw, 1.5rem); }
-  .contact-map { min-height: 18rem; height: 100%; }
-  .contact-map iframe, .contact-map img { display: block; width: 100%; height: 100%; min-height: 18rem; }
+  /* Pad contact details consistently within their panel. */
+  .contact-panel {
+    padding: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  /* Reserve map height independently of third-party loading. */
+  .contact-map {
+    min-height: 18rem;
+    height: 100%;
+  }
+
+  /* Fill the reserved map frame for either configured media variant. */
+  .contact-map iframe,
+  .contact-map img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 18rem;
+  }
 </style>
