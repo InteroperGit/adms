@@ -1,0 +1,274 @@
+---
+import Section from '@/components/ui/Section.astro';
+import { orderInquiry as content } from '@/content/order-inquiry';
+import { site } from '@/content/site';
+
+const inputs = [
+  { key: 'name', type: 'text', autocomplete: 'name' },
+  { key: 'email', type: 'email', autocomplete: 'email' },
+  { key: 'phone', type: 'tel', autocomplete: 'tel' },
+] as const;
+const privacy = site.legal.find(item => item.href === '/privacy-policy');
+---
+
+<Section
+  id="order-inquiry"
+  title={content.title}
+  subtitle={content.subtitle}
+>
+  <div class="inquiry">
+    <form
+      class="inquiry-form"
+      method="post"
+      data-inquiry
+      data-enabled={String(content.submission.enabled)}
+      data-endpoint={content.submission.endpoint}
+      data-timeout={content.submission.timeoutMs}
+      data-feedback={JSON.stringify(content.feedback)}
+      aria-describedby="inquiry-required inquiry-status"
+    >
+      <p id="inquiry-required" class="inquiry-note">
+        {content.requiredNote}
+      </p>
+      <fieldset class="inquiry-fields" disabled>
+        {inputs.map(({ key, type, autocomplete }) => {
+          const field = content.fields[key];
+          return (
+            <div class="inquiry-field">
+              <label for={`inquiry-${key}`}>
+                {field.label}{' '}
+                {field.required && <span aria-hidden="true">*</span>}
+              </label>
+              <input
+                id={`inquiry-${key}`}
+                name={key}
+                type={type}
+                autocomplete={autocomplete}
+                required={field.required}
+                maxlength={field.maxLength}
+                aria-describedby={`inquiry-${key}-hint inquiry-${key}-error`}
+              />
+              <p id={`inquiry-${key}-hint`} class="inquiry-note">
+                {field.hint} (≤ {field.maxLength})
+              </p>
+              <p id={`inquiry-${key}-error`} class="inquiry-error" hidden></p>
+            </div>
+          );
+        })}
+        <div class="inquiry-field inquiry-message">
+          <label for="inquiry-message">
+            {content.fields.message.label} <span aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="inquiry-message"
+            name="message"
+            rows="6"
+            required
+            maxlength={content.fields.message.maxLength}
+            aria-describedby="inquiry-message-hint inquiry-message-error"
+          ></textarea>
+          <p id="inquiry-message-hint" class="inquiry-note">
+            {content.fields.message.hint}{' '}
+            (≤ {content.fields.message.maxLength})
+          </p>
+          <p id="inquiry-message-error" class="inquiry-error" hidden></p>
+        </div>
+        <div class="inquiry-consent">
+            <label for="inquiry-consent" class="inquiry-consent-label">
+              <input
+                id="inquiry-consent"
+                name="consent"
+                type="checkbox"
+                required
+                aria-describedby="inquiry-consent-error"
+              />
+              <span>
+                {content.consent.label}{' '}
+                <span aria-hidden="true">*</span>
+              </span>
+            </label>
+            <a
+              class="inquiry-link"
+              href={privacy?.href ?? '/privacy-policy'}
+            >
+              {content.privacyLabel}
+            </a>
+            <p id="inquiry-consent-error" class="inquiry-error" hidden></p>
+        </div>
+      </fieldset>
+      <button
+        class="btn btn-primary site-button inquiry-submit"
+        type="submit"
+        disabled
+        aria-describedby="inquiry-status"
+      >
+        {content.submitLabel}
+      </button>
+      <p
+        id="inquiry-status"
+        class="inquiry-status"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {content.submission.enabled ? '' : content.feedback.unavailable}
+      </p>
+      <noscript>
+        <p class="inquiry-note">{content.feedback.noJavaScript}</p>
+      </noscript>
+    </form>
+  </div>
+</Section>
+
+<script>
+  import { initializeInquiry } from './order-inquiry';
+
+  document.querySelectorAll<HTMLFormElement>('[data-inquiry]')
+    .forEach(initializeInquiry);
+</script>
+
+<style>
+  /* Let the writing area fill the section and wrap long content. */
+  .inquiry {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep form content within its column with no decorative panel. */
+  .inquiry-form {
+    min-width: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* Group inputs without a competing fieldset frame. */
+  .inquiry-fields {
+    min-width: 0;
+    display: grid;
+    gap: 1.5rem;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Keep every label, hint and associated error beside its control. */
+  .inquiry-field {
+    min-width: 0;
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+  }
+
+  /* Visible labels lead each writing area. */
+  .inquiry-field label {
+    font-weight: 600;
+  }
+
+  /* Theme-aware boundaries make writable fields recognizable. */
+  .inquiry-field input,
+  .inquiry-field textarea {
+    min-width: 0;
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.75rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    color: var(--color-base-content);
+    font: inherit;
+  }
+
+  /* Permit longer descriptions to grow vertically without widening. */
+  .inquiry-field textarea {
+    resize: vertical;
+  }
+
+  /* Reinforce errors with text and a thicker boundary. */
+  .inquiry-field [aria-invalid='true'] {
+    border: 2px solid var(--color-primary);
+  }
+
+  /* Instructions use the existing accessible muted color. */
+  .inquiry-note {
+    color: var(--site-muted);
+    font-size: 0.875rem;
+  }
+
+  /* Error text remains readable in both themes. */
+  .inquiry-error {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  /* Delivery feedback keeps a stable place below the action. */
+  .inquiry-status {
+    min-height: 1.6em;
+  }
+
+  /* Policy agreement spans the writing area in every delivery state. */
+  .inquiry-consent {
+    grid-column: 1 / -1;
+  }
+
+  /* Keep the native checkbox and wrapping consent text easy to target. */
+  .inquiry-consent-label {
+    display: flex;
+    gap: 0.75rem;
+    align-items: start;
+    min-height: 2.75rem;
+  }
+
+  /* A generous checkbox aligns with the first line of consent. */
+  .inquiry-consent-label input {
+    flex: 0 0 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.125rem;
+    accent-color: var(--color-primary);
+  }
+
+  /* Allow long action copy to wrap instead of overflowing. */
+  .inquiry-submit {
+    width: fit-content;
+    max-width: 100%;
+    height: auto;
+    min-height: 2.75rem;
+    padding-block: 0.75rem;
+    white-space: normal;
+  }
+
+  /* Disabled delivery stays legible rather than fading the message. */
+  .inquiry-submit:disabled {
+    background: var(--color-base-200);
+    color: var(--site-muted);
+    border-color: var(--site-control-border);
+    opacity: 1;
+  }
+
+  /* Underlines and generous targets identify the policy link. */
+  .inquiry-link {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    min-height: 2.75rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Wider layouts pair name/email while keeping the message full-width. */
+  @media (min-width: 48rem) {
+    /* Pair short fields without fixing their intrinsic width. */
+    .inquiry-fields {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* A description needs the full form width. */
+    .inquiry-message {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

@@ -52,6 +52,11 @@ asset inventory and replacement workflow.
 
 ## Contacts and map settings
 
+Order inquiry labels, feedback and disabled submission configuration live in
+`data/content/order-inquiry.json`, with domain types and runtime validation
+following the JSON-wrapper convention. See [order inquiries](order-inquiry.md)
+for the delivery contract, consent gate and remaining agency dependencies.
+
 In `data/content/site.json`, `sections.contacts.panelTitle` controls the
 contact-panel heading. Phone, email, address, and opening hours use the existing
 top-level fields shared with the footer.
