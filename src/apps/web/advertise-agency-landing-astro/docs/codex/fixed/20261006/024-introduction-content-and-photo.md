@@ -1,6 +1,8 @@
 # Introduction content and project photo
 
-**Status:** Pending agency input; content contract implemented
+**Status:** Archived at user request; content contract implemented
+
+**Archived:** 2026-10-06
 
 **Priority:** High
 
@@ -10,10 +12,10 @@
 
 Prepare truthful Russian copy and a real completed-project photo for
 “Priority 1: Clear introductory section” in the
-[sales and SEO plan](../plan/sales-and-seo-plan.md).
+[sales and SEO plan](../../plan/sales-and-seo-plan.md).
 
-Read [project instructions](../../../AGENTS.md) and
-[task management](../task-management.md) before implementation.
+Read [project instructions](../../../../AGENTS.md) and
+[task management](../../task-management.md) before implementation.
 
 ## Scope
 
@@ -72,8 +74,8 @@ Archive only after acceptance passes, following the task-management guide.
   record, actual dimensions, descriptive alt text and separate bounded
   desktop/mobile focal points. No fake photo dimensions, permission or
   crop were assigned while the real photo is unavailable.
-- Updated [content editing](../../site/content.md#introduction-content)
-  and [media handoff](../../site/media.md) with the exact editing workflow.
+- Updated [content editing](../../../site/content.md#introduction-content)
+  and [media handoff](../../../site/media.md) with the exact editing workflow.
 
 ## Handoff to task 025
 
@@ -114,4 +116,5 @@ Archive only after acceptance passes, following the task-management guide.
 2. A genuine completed-project photo with recorded source and permission.
 3. Actual dimensions, alt text and inspected desktop/mobile crops.
 
-Retained in `todo/`: real-photo and final-copy acceptance has not passed.
+Archived at the user's explicit request. Real-photo and final-copy
+acceptance remain unresolved; archiving does not confirm agency approval.

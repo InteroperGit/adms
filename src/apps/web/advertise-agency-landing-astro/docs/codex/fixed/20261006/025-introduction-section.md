@@ -1,6 +1,8 @@
 # Implement the clear introductory section
 
-**Status:** Layout implemented; pending approved copy/photo and final review
+**Status:** Archived at user request; layout implemented
+
+**Archived:** 2026-10-06
 
 **Priority:** High
 
@@ -12,10 +14,10 @@
 
 Make the agency's services, location, and next action clear immediately
 on the homepage, implementing the introductory section from the
-[sales and SEO plan](../plan/sales-and-seo-plan.md).
+[sales and SEO plan](../../plan/sales-and-seo-plan.md).
 
-Read [project instructions](../../../AGENTS.md),
-[task management](../task-management.md), and applicable code-style,
+Read [project instructions](../../../../AGENTS.md),
+[task management](../../task-management.md), and applicable code-style,
 Astro, and development-server rules. Apply frontend-design and
 astro-best-practices during implementation.
 
@@ -100,6 +102,6 @@ provenance, publication approval, and crop acceptance remain unresolved.
   interactions, long-copy fixtures, visual screenshot review and genuine
   photo optimization/crops remain for task 026. Root-text enlargement is
   distinct from native browser zoom.
-- Remains in `todo/`: task 024's approved service wording and real-photo
-  acceptance are unresolved; task 026 remains pending. Submission stays
+- Archived at the user's explicit request: approved wording and real-photo
+  acceptance remain unresolved; task 026 remains pending. Submission stays
   disabled with existing unavailable feedback and contacts above the form.
