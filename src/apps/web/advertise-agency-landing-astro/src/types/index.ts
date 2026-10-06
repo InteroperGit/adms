@@ -18,3 +18,9 @@ export type {
   IntroductionPhoto,
   IntroductionFocalPoint,
 } from "./introduction";
+export type {
+  Service,
+  ServiceImage,
+  ServiceFocalPoint,
+  ServicesContent,
+} from "./services";

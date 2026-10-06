@@ -1,0 +1,85 @@
+---
+import ServiceCard from '@/components/cards/ServiceCard.astro';
+import { services, visibleServices } from '@/content/services';
+import type { Service } from '@/types/services';
+
+export interface Props {
+  items?: Service[];
+}
+
+const { items = visibleServices } = Astro.props;
+---
+
+{items.length > 0 && (
+  <section
+    id="services"
+    class="site-section services"
+    aria-labelledby="services-heading"
+  >
+    <div class="site-container">
+      <div class="services-introduction">
+        <h2 id="services-heading" class="site-section-title">
+          {services.heading}
+        </h2>
+        <p class="services-summary">{services.introduction}</p>
+        {services.demoMode && (
+          <p class="services-demo">{services.demoNotice}</p>
+        )}
+      </div>
+      <div class="services-grid">
+        {items.map((service) => <ServiceCard service={service} />)}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  /* Give the agency's service catalog a clear left-aligned introduction. */
+  .services-introduction {
+    max-width: var(--site-reading-width);
+    margin-bottom: 2.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Align the heading with the photos and service names below it. */
+  .services .site-section-title {
+    text-align: left;
+  }
+
+  /* Explain the catalog without competing with its individual categories. */
+  .services-summary {
+    color: var(--site-muted);
+    font-size: 1.125rem;
+  }
+
+  /* Identify the sample catalog without claiming real agency work. */
+  .services-demo {
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-primary);
+    color: var(--site-muted);
+  }
+
+  /* Keep each service fully readable in a narrow single-column layout. */
+  .services-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem 2rem;
+  }
+
+  /* Pair photos once there is room for two useful reading columns. */
+  @media (min-width: 42rem) {
+    /* Let long service names wrap within their own grid cell. */
+    .services-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Present the catalog compactly on wide desktop screens. */
+  @media (min-width: 68rem) {
+    /* Three columns preserve readable text within the shared container. */
+    .services-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

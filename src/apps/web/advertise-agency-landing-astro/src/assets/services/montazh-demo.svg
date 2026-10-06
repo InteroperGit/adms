@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    width="1200" height="900" viewBox="0 0 1200 900">
+    <rect width="1200" height="900" fill="#f3f5f7"/>
+    <rect x="155" y="160" width="890" height="520" fill="#dce2e8"/>
+  <rect x="260" y="245" width="670" height="130" rx="8" fill="#ea580c"/>
+  <text x="595" y="332" text-anchor="middle" font-size="60"
+    font-family="Segoe UI" font-weight="700" fill="white">ВЫВЕСКА</text>
+  <g fill="none" stroke="#354555" stroke-width="12">
+    <path d="M320 390L205 750M395 390L280 750
+      M304 440H379M288 490H363M272 540H347M256 590H331M240 640H315"/>
+    <path d="M700 395V725M850 395V725M680 725H870M715 485H835"/>
+  </g>
+  <circle cx="770" cy="435" r="34" fill="#ffa04d"/>
+  <path d="M750 475V590H805V475M750 500L670 365M805 500L895 365"
+    fill="none" stroke="#b2380a" stroke-width="28"/>
+    </svg>
