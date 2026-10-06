@@ -1,8 +1,13 @@
 ---
+// Render the service catalog only when at least one item is available.
+// Optional items default to the validated visibleServices collection.
+// Demo disclosure uses shared content and does not claim approved work.
+
 import ServiceCard from '@/components/cards/ServiceCard.astro';
 import { services, visibleServices } from '@/content/services';
 import type { Service } from '@/types/services';
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   items?: Service[];
 }
@@ -10,6 +15,7 @@ export interface Props {
 const { items = visibleServices } = Astro.props;
 ---
 
+{/* Demo disclosure uses shared content and does not claim approved work. */}
 {items.length > 0 && (
   <section
     id="services"
@@ -26,8 +32,13 @@ const { items = visibleServices } = Astro.props;
           <p class="services-demo">{services.demoNotice}</p>
         )}
       </div>
+      {/*
+        Cards share the filtered catalog order without client-side rendering.
+      */}
       <div class="services-grid">
-        {items.map((service) => <ServiceCard service={service} />)}
+        {items.map((service) => (
+          <ServiceCard service={service} />
+        ))}
       </div>
     </div>
   </section>

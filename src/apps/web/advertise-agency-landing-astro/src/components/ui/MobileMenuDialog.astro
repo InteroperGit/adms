@@ -1,7 +1,12 @@
 ---
+// Render and enhance the native modal navigation drawer on small screens.
+// Callers supply menu items and phone; Header supplies the opener element.
+// Preserve modal focus, Escape dismissal and same-page anchor navigation.
+
 import NavLinks from '@/components/ui/NavLinks.astro';
 import type { MenuItem } from '@/types';
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   items: MenuItem[];
   phone: string;
@@ -10,16 +15,30 @@ export interface Props {
 const { items, phone } = Astro.props;
 ---
 
-<dialog id="mobile-menu" aria-label="Меню сайта" class="bg-base-200 text-base-content">
+{/* Preserve modal focus, Escape dismissal and same-page anchor navigation. */}
+<dialog
+  id="mobile-menu"
+  aria-label="Меню сайта"
+  class="bg-base-200 text-base-content"
+>
   <div class="flex justify-end p-4 pb-0">
-    <button type="button" data-menu-close class="btn btn-ghost btn-circle" aria-label="Закрыть меню" autofocus>
-      <span aria-hidden="true" class="text-2xl">×</span>
+    <button
+      type="button"
+      data-menu-close
+      class="btn btn-ghost btn-circle"
+      aria-label="Закрыть меню"
+      autofocus
+    >
+      <span aria-hidden="true" class="text-2xl">
+        ×
+      </span>
     </button>
   </div>
   <NavLinks items={items} variant="mobile" phone={phone} />
 </dialog>
 
 <style>
+  /* Bound the modal drawer to the viewport with scrollable content. */
   dialog {
     position: fixed;
     inset: 0 auto 0 0;
@@ -32,22 +51,36 @@ const { items, phone } = Astro.props;
     max-height: 100dvh;
     overflow-y: auto;
   }
-  dialog::backdrop { background: rgb(0 0 0 / 40%); }
-  :global(body:has(#mobile-menu[open])) { overflow: hidden; }
+
+  /* Dim background content while modal navigation is open. */
+  dialog::backdrop {
+    background: rgb(0 0 0 / 40%);
+  }
+
+  /* Prevent background scrolling while the modal drawer is active. */
+  :global(body:has(#mobile-menu[open])) {
+    overflow: hidden;
+  }
 </style>
 
 <script>
-  const opener = document.querySelector<HTMLButtonElement>('#mobile-menu-open');
+  const opener =
+    document.querySelector<HTMLButtonElement>('#mobile-menu-open');
   const menu = document.querySelector<HTMLDialogElement>('#mobile-menu');
+  // Enhance only when the shared header and native dialog are both present.
   if (opener && menu) {
     opener.addEventListener('click', () => {
       menu.showModal();
       opener.setAttribute('aria-expanded', 'true');
     });
-    menu.addEventListener('close', () => opener.setAttribute('aria-expanded', 'false'));
+    menu.addEventListener('close', () =>
+      opener.setAttribute('aria-expanded', 'false'),
+    );
+    // Wrap Tab at the modal boundaries while leaving native Escape intact.
     menu.addEventListener('keydown', (event) => {
       if (event.key !== 'Tab') return;
-      const controls = menu.querySelectorAll<HTMLElement>('button, a[href]');
+      const controls =
+        menu.querySelectorAll<HTMLElement>('button, a[href]');
       const first = controls[0];
       const last = controls[controls.length - 1];
       if (event.shiftKey && document.activeElement === first) {
@@ -58,28 +91,56 @@ const { items, phone } = Astro.props;
         first?.focus();
       }
     });
-    menu.querySelector('[data-menu-close]')?.addEventListener('click', () => menu.close());
+    menu
+      .querySelector('[data-menu-close]')
+      ?.addEventListener('click', () => menu.close());
+    // Dismiss backdrop clicks without treating clicks inside as dismissal.
     menu.addEventListener('click', (event) => {
       const bounds = menu.getBoundingClientRect();
-      if (event.target === menu && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) menu.close();
+      if (
+        event.target === menu &&
+        (event.clientX < bounds.left ||
+          event.clientX > bounds.right ||
+          event.clientY < bounds.top ||
+          event.clientY > bounds.bottom)
+      )
+        menu.close();
     });
+    // Preserve modified navigation; same-page links focus their section.
     menu.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
       link.addEventListener('click', (event) => {
-        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        if (
+          event.ctrlKey ||
+          event.metaKey ||
+          event.shiftKey ||
+          event.altKey
+        )
+          return;
         menu.close();
         const destination = new URL(link.href);
-        if (destination.pathname === location.pathname && destination.hash) {
-          const section = document.getElementById(decodeURIComponent(destination.hash.slice(1)));
+        if (
+          destination.pathname === location.pathname &&
+          destination.hash
+        ) {
+          const section = document.getElementById(
+            decodeURIComponent(destination.hash.slice(1)),
+          );
           if (section) {
             if (!section.hasAttribute('tabindex')) {
               section.setAttribute('tabindex', '-1');
-              section.addEventListener('blur', () => section.removeAttribute('tabindex'), { once: true });
+              // Remove the temporary focus target when the visitor leaves it.
+              section.addEventListener(
+                'blur',
+                () => section.removeAttribute('tabindex'),
+                { once: true },
+              );
             }
             section.focus({ preventScroll: true });
           }
         }
       });
     });
+    // Close the drawer when the desktop layout removes its opener.
     window.addEventListener('resize', () => {
       if (menu.open && opener.getClientRects().length === 0) menu.close();
     });

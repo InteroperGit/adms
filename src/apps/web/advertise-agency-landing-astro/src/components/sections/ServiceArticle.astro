@@ -1,48 +1,81 @@
 ---
+// Render the static article for a required, validated service identifier.
+// Unknown IDs fail the build; unapproved demo content remains noindex.
+// Keep image, inquiry checklist and return/contact actions in reading order.
+
 import Layout from '@/layouts/Layout.astro';
 import ServiceVisual from '@/components/ui/ServiceVisual.astro';
 import Button from '@/components/ui/Button.astro';
 import { services } from '@/content/services';
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   serviceId: string;
 }
 
-const service = services.items.find(item => item.id === Astro.props.serviceId);
+const service = services.items.find(
+  (item) => item.id === Astro.props.serviceId,
+);
 if (!service) throw new Error(`Unknown service: ${Astro.props.serviceId}`);
 const { article } = service;
-const demo = services.demoMode || !article.approved || !service.confirmed
-  || !service.copyApproved || !service.image?.approved;
+// Index only when category, copy, image and article approvals all permit it.
+const demo =
+  services.demoMode ||
+  !article.approved ||
+  !service.confirmed ||
+  !service.copyApproved ||
+  !service.image?.approved;
 ---
 
-<Layout title={article.title} description={article.description} noindex={demo}>
+{/*
+  Keep image, inquiry checklist and return/contact actions in reading order.
+*/}
+<Layout
+  title={article.title}
+  description={article.description}
+  noindex={demo}
+>
   <article class="site-container service-article">
-    <a class="service-back" href="/#services">Все услуги</a>
+    <a class="service-back" href="/#services">
+      Все услуги
+    </a>
     <div class="service-heading">
       <h1>{service.name}</h1>
       <p class="service-lead">{article.lead}</p>
       {demo && <p class="service-demo">{services.demoNotice}</p>}
     </div>
+    {/* Keep demo disclosure beside the eagerly loaded article image. */}
     {service.image && (
       <figure class="service-visual">
         <ServiceVisual image={service.image} eager />
         {demo && <figcaption>Тестовая иллюстрация категории.</figcaption>}
       </figure>
     )}
+    {/*
+      Preserve supplied article sections, inquiry guidance and native actions.
+    */}
     <div class="service-reading">
       {article.sections.map((section, index) => (
         <section aria-labelledby={`article-section-${index}`}>
           <h2 id={`article-section-${index}`}>{section.heading}</h2>
-          {section.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+          {section.paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
         </section>
       ))}
       <section aria-labelledby="service-inquiry-heading">
         <h2 id="service-inquiry-heading">Что указать в запросе</h2>
-        <ul>{article.inquiry.map(item => <li>{item}</li>)}</ul>
+        <ul>
+          {article.inquiry.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
       </section>
       <nav class="service-actions" aria-label="Действия по услуге">
         <Button href="/#order-inquiry">Обсудить проект</Button>
-        <a class="service-back" href="/#services">Вернуться к услугам</a>
+        <a class="service-back" href="/#services">
+          Вернуться к услугам
+        </a>
       </nav>
     </div>
   </article>

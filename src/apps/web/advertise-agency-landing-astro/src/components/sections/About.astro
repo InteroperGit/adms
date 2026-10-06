@@ -1,38 +1,147 @@
 ---
-// src/components/sections/About.astro
+// Render agency introduction, configured section actions and supplied stats.
+// Resolve actions from the menu so unavailable destinations stay omitted.
+// Description and statistics remain static content, not browser state.
+
 import Section from '@/components/ui/Section.astro';
 import { site } from '@/content/site';
 import { about } from '@/content/about';
 import Button from '@/components/ui/Button.astro';
-const projects = site.menu.find(item => item.href === '/#projects');
-const contacts = site.menu.find(item => item.href === '/#contacts');
+const projects = site.menu.find((item) => item.href === '/#projects');
+const contacts = site.menu.find((item) => item.href === '/#contacts');
 ---
 
+{/* Description and statistics remain static content, not browser state. */}
 <Section id="about" background="default" class="opening">
   <div class="opening-introduction">
     <h2 class="site-section-title">{site.sections.about.title}</h2>
     <p class="opening-lead">{about.description1}</p>
     <p class="opening-detail">{about.description2}</p>
     <div class="opening-actions">
-      {contacts && <Button href={contacts.href}>{site.sections.contacts.panelTitle}</Button>}
-      {projects && <Button variant="outline" href={projects.href}>{site.sections.projects.title}</Button>}
+      {contacts && (
+        <Button href={contacts.href}>
+          {site.sections.contacts.panelTitle}
+        </Button>
+      )}
+      {projects && (
+        <Button variant="outline" href={projects.href}>
+          {site.sections.projects.title}
+        </Button>
+      )}
     </div>
   </div>
+  {/*
+    Use definition-list semantics for the supplied values and their labels.
+  */}
   <dl class="opening-stats">
-    {about.stats.map(stat => <div><dt>{stat.label}</dt><dd>{stat.value}</dd></div>)}
+    {about.stats.map((stat) => (
+      <div>
+        <dt>{stat.label}</dt>
+        <dd>{stat.value}</dd>
+      </div>
+    ))}
   </dl>
 </Section>
 
 <style>
-  .opening-introduction { max-width: 56rem; overflow-wrap: anywhere; }
-  .site-section-title { text-align: left; margin-bottom: 1.5rem; }
-  .opening-lead { font-size: clamp(1.25rem, 2.4vw, 1.875rem); line-height: 1.45; max-width: 48ch; }
-  .opening-detail { max-width: 64ch; margin-top: 1.25rem; color: var(--site-muted); font-size: 1.125rem; }
-  .opening-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
-  .opening-actions :global(a) { height: auto; min-height: 3rem; padding-block: 0.75rem; white-space: normal; max-width: 100%; }
-  .opening-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-base-300); max-width: 56rem; }
-  .opening-stats div { display: flex; flex-direction: column; min-width: 0; }
-  .opening-stats dt { color: var(--site-muted); overflow-wrap: anywhere; }
-  .opening-stats dd { order: -1; font-size: 2rem; line-height: 1.2; font-weight: 700; color: var(--color-brand); margin-bottom: 0.5rem; overflow-wrap: anywhere; }
-  @media (max-width: 35rem) { .opening-stats { grid-template-columns: 1fr; gap: 1rem; } .opening-stats div { flex-direction: row; align-items: baseline; gap: 1rem; } .opening-stats dd { margin-bottom: 0; min-width: 5ch; } }
+  /* Limit introduction copy to a readable measure. */
+  .opening-introduction {
+    max-width: 56rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Align the agency heading with its introduction copy. */
+  .site-section-title {
+    text-align: left;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Give the lead paragraph a stronger readable type scale. */
+  .opening-lead {
+    font-size: clamp(1.25rem, 2.4vw, 1.875rem);
+    line-height: 1.45;
+    max-width: 48ch;
+  }
+
+  /* Separate supporting copy with muted, readable text. */
+  .opening-detail {
+    max-width: 64ch;
+    margin-top: 1.25rem;
+    color: var(--site-muted);
+    font-size: 1.125rem;
+  }
+
+  /* Let native introduction actions wrap at narrow widths. */
+  .opening-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  /* Allow action labels to grow without clipping. */
+  .opening-actions :global(a) {
+    height: auto;
+    min-height: 3rem;
+    padding-block: 0.75rem;
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  /* Separate supplied statistics in a responsive grid. */
+  .opening-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-base-300);
+    max-width: 56rem;
+  }
+
+  /* Keep each statistic and its label together. */
+  .opening-stats div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* Wrap long statistic labels using muted text. */
+  .opening-stats dt {
+    color: var(--site-muted);
+    overflow-wrap: anywhere;
+  }
+
+  /* Lead each statistic with its supplied brand-colored value. */
+  .opening-stats dd {
+    order: -1;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--color-brand);
+    margin-bottom: 0.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Stack statistics when three readable columns no longer fit. */
+  @media (max-width: 35rem) {
+    /* Give each statistic the complete narrow-screen width. */
+    .opening-stats {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    /* Pair each value and label on one wrapping row. */
+    .opening-stats div {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    /* Align values with a shared minimum measure rather than bottom gaps. */
+    .opening-stats dd {
+      margin-bottom: 0;
+      min-width: 5ch;
+    }
+  }
 </style>

@@ -1,9 +1,14 @@
 ---
+// Render ancestor links followed by the nonlinked current page label.
+// Callers supply ordered items and current text; destinations stay native.
+// The current item exposes aria-current without becoming another link.
+
 interface Item {
   label: string;
   href: string;
 }
 
+// Caller-supplied data and presentation options for this component.
 interface Props {
   items: Item[];
   current: string;
@@ -12,18 +17,57 @@ interface Props {
 const { items, current } = Astro.props;
 ---
 
+{/* The current item exposes aria-current without becoming another link. */}
 <nav aria-label="Хлебные крошки" class="breadcrumb-trail">
   <ol>
-    {items.map(item => <li><a href={item.href}>{item.label}</a></li>)}
+    {items.map((item) => (
+      <li>
+        <a href={item.href}>{item.label}</a>
+      </li>
+    ))}
+    {/* The current page is a label, not a redundant link. */}
     <li aria-current="page">{current}</li>
   </ol>
 </nav>
 
 <style>
-  .breadcrumb-trail { margin-bottom: 2rem; font-size: .875rem; color: var(--color-muted); overflow-wrap: anywhere; }
-  ol { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
-  li { min-width: 0; max-width: 100%; }
-  li[aria-current='page'] { padding-block: .5rem; }
-  li + li::before { content: '/'; margin-right: 1rem; }
-  a { display: inline-block; padding-block: .5rem; text-decoration: underline; text-underline-offset: .25em; }
+  /* Keep the ancestor trail readable above page content. */
+  .breadcrumb-trail {
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    overflow-wrap: anywhere;
+  }
+
+  /* Let ancestor links wrap rather than overflow narrow screens. */
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  /* Allow each trail item to shrink and wrap within its available width. */
+  li {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Align the current label with padded links. */
+  li[aria-current='page'] {
+    padding-block: 0.5rem;
+  }
+
+  /* Separate ancestors visually without adding another link. */
+  li + li::before {
+    content: '/';
+    margin-right: 1rem;
+  }
+
+  /* Retain a persistent underline and room to target native links. */
+  a {
+    display: inline-block;
+    padding-block: 0.5rem;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
 </style>

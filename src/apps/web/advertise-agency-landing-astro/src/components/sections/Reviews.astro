@@ -1,11 +1,15 @@
 ---
-// src/components/sections/Reviews.astro
+// Render supplied reviews as semantic quotations with author attribution.
+// Cards stay static and use the shared one/two/three-column grid.
+// Section titles and descriptions come from the site configuration.
+
 import ReviewCard from '@/components/cards/ReviewCard.astro';
 import Section from '@/components/ui/Section.astro';
 import { site } from '@/content/site';
 import { reviews } from '@/content/reviews';
 ---
 
+{/* Section titles and descriptions come from the site configuration. */}
 <Section
   id="reviews"
   title={site.sections.reviews.title}

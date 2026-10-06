@@ -1,8 +1,12 @@
 ---
-// src/components/ui/NavLinks.astro
+// Render supplied navigation items and a native telephone action.
+// The required variant selects desktop links or the mobile list.
+// Layout breakpoints hide desktop navigation until there is enough room.
+
 import type { MenuItem } from '@/types';
 import Button from '@/components/ui/Button.astro';
 
+// Caller-supplied data and presentation options for this component.
 export interface Props {
   items: MenuItem[];
   variant: 'desktop' | 'mobile';
@@ -12,39 +16,91 @@ export interface Props {
 const { items, variant, phone } = Astro.props;
 ---
 
-{
-  variant === 'desktop' ? (
-    <nav aria-label="Основная навигация" class="desktop-nav">
-      {items.map((item) => (
-        <a href={item.href} class="section-link link link-hover">{item.label}</a>
-      ))}
-      <Button variant="outline" size="sm" href={`tel:${phone.replace(/\s/g, '')}`} class="header-phone">
-        {phone}
-      </Button>
-    </nav>
-  ) : (
-    <nav aria-label="Основная навигация">
+{/* Layout breakpoints hide desktop navigation until there is enough room. */}
+{variant === 'desktop' ? (
+  <nav aria-label="Основная навигация" class="desktop-nav">
+    {items.map((item) => (
+      <a href={item.href} class="section-link link link-hover">
+        {item.label}
+      </a>
+    ))}
+    <Button
+      variant="outline"
+      size="sm"
+      href={`tel:${phone.replace(/\s/g, '')}`}
+      class="header-phone"
+    >
+      {phone}
+    </Button>
+  </nav>
+) : (
+  <nav aria-label="Основная навигация">
     <ul class="mobile-links menu p-4 bg-base-200 text-base-content gap-3">
       {items.map((item) => (
-        <li><a href={item.href}>{item.label}</a></li>
+        <li>
+          <a href={item.href}>{item.label}</a>
+        </li>
       ))}
       <li>
-        <Button variant="primary" size="md" href={`tel:${phone.replace(/\s/g, '')}`} class="btn-block mt-4">
+        {/* The telephone action uses its native protocol destination. */}
+        <Button
+          variant="primary"
+          size="md"
+          href={`tel:${phone.replace(/\s/g, '')}`}
+          class="btn-block mt-4"
+        >
           Позвонить
         </Button>
       </li>
     </ul>
-    </nav>
-  )
-}
+  </nav>
+)}
 
 <style>
-  .desktop-nav { display: none; }
-  @media (min-width: 64rem) {
-    .desktop-nav { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem 1.25rem; flex: 0 1 auto; max-width: 100%; }
+  /* Show the wide navigation only when its breakpoint permits. */
+  .desktop-nav {
+    display: none;
   }
-  .section-link { display: inline-flex; align-items: center; min-height: 2.75rem; overflow-wrap: anywhere; }
-  .desktop-nav :global(.header-phone) { white-space: normal; height: auto; min-height: var(--size); padding-block: 0.25rem; }
-  .mobile-links { width: 100%; }
-  .mobile-links a { white-space: normal; overflow-wrap: anywhere; min-height: 2.75rem; }
+
+  /* Show wide navigation when header space can accommodate its links. */
+  @media (min-width: 64rem) {
+    /* Wrap wide links and align the contact action at the row end. */
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.5rem 1.25rem;
+      flex: 0 1 auto;
+      max-width: 100%;
+    }
+  }
+
+  /* Keep section links wrappable with generous native targets. */
+  .section-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Allow the telephone button label to wrap without clipping. */
+  .desktop-nav :global(.header-phone) {
+    white-space: normal;
+    height: auto;
+    min-height: var(--size);
+    padding-block: 0.25rem;
+  }
+
+  /* Fill the drawer width with the supplied navigation list. */
+  .mobile-links {
+    width: 100%;
+  }
+
+  /* Wrap long mobile labels while preserving target height. */
+  .mobile-links a {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    min-height: 2.75rem;
+  }
 </style>

@@ -1,5 +1,10 @@
 ---
+// Publish the montazh service route through the shared article component.
+// The fixed serviceId resolves validated content at build time.
+// Article layout, demo disclosure and actions remain centrally owned.
+
 import ServiceArticle from '@/components/sections/ServiceArticle.astro';
 ---
 
+{/* Article layout, demo disclosure and actions remain centrally owned. */}
 <ServiceArticle serviceId="montazh" />
