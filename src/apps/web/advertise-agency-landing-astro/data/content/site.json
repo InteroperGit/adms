@@ -17,6 +17,7 @@
   "mapSrc": "https://yandex.ru/map-widget/v1/?um=constructor%3A8e9d4dd92e269a69df84774136ae2871466aa55b34f941cb126cfc03efab1fb8&source=constructorLink",
   "menu": [
     { "label": "О нас", "href": "/#about" },
+    { "label": "Услуги", "href": "/#services" },
     { "label": "Проекты", "href": "/#projects" },
     { "label": "Отзывы", "href": "/#reviews" },
     { "label": "Контакты", "href": "/#contacts" }

@@ -58,6 +58,25 @@ Execution tasks (in order):
 Purpose: help visitors choose a service and provide clear navigation to
 more detailed information.
 
+Execution tasks (in order):
+
+- [027: Prepare services content and images][services-content] — content
+  layer implemented; archived at user request 2026-10-07. Agency inputs open.
+- [028: Implement the homepage services section][services-section] — layout
+  implemented after About; archived at user request 2026-10-07. Agency
+  production acceptance remains open; task 028a enabled the requested demo.
+- [028a: Enable Services with test images and articles][services-demo] —
+  completed 2026-10-07; five visible demo cards and five test article pages.
+- [029: Verify the homepage services section][services-verification] — technical
+  checks performed; archived at user request 2026-10-07. Final agency content
+  and photo acceptance remain open.
+
+These tasks cover the homepage catalog and service links. Task 028a adds
+explicit demonstration content and test article pages at the user's request.
+Production service content and SEO acceptance remain in Phase 3. Confirmed
+service claims and approved relevant photos remain required for production
+acceptance; the demo does not establish agency approval.
+
 ### Priority 1: Pricing and examples
 
 - Publish real examples with dimensions, materials, and included work.
@@ -224,3 +243,7 @@ than relying only on visits.
 [intro-content]: ../fixed/20261006/024-introduction-content-and-photo.md
 [intro-section]: ../fixed/20261006/025-introduction-section.md
 [intro-verification]: ../fixed/20261006/026-introduction-verification.md
+[services-content]: ../fixed/20261007/027-services-content-and-images.md
+[services-section]: ../fixed/20261007/028-services-section.md
+[services-demo]: ../fixed/20261007/028a-services-demo-content-and-pages.md
+[services-verification]: ../fixed/20261007/029-services-verification.md

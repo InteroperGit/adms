@@ -10,12 +10,19 @@ import '/src/styles/global.css';
 export interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title, description = site.description } = Astro.props;
+const {
+  title,
+  description = site.description,
+  noindex = false,
+} = Astro.props;
 const pageTitle = title ? `${title} | ${site.logoText}` : site.title;
 // Astro.site is undefined until a verified production URL is configured.
-const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+const canonicalURL = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site)
+  : undefined;
 ---
 
 <!DOCTYPE html>
@@ -27,6 +34,7 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : unde
     <ThemeInit />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     {canonicalURL && <link rel="canonical" href={canonicalURL.href} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
@@ -50,7 +58,11 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : unde
       sizes="any"
     />
     <!-- Font Awesome 6 (free) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href={'https://cdnjs.cloudflare.com/ajax/libs/'
+        + 'font-awesome/6.7.2/css/all.min.css'}
+    />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 scroll-smooth">
     <Header />

@@ -1,0 +1,152 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ServiceVisual from '@/components/ui/ServiceVisual.astro';
+import Button from '@/components/ui/Button.astro';
+import { services } from '@/content/services';
+
+export interface Props {
+  serviceId: string;
+}
+
+const service = services.items.find(item => item.id === Astro.props.serviceId);
+if (!service) throw new Error(`Unknown service: ${Astro.props.serviceId}`);
+const { article } = service;
+const demo = services.demoMode || !article.approved || !service.confirmed
+  || !service.copyApproved || !service.image?.approved;
+---
+
+<Layout title={article.title} description={article.description} noindex={demo}>
+  <article class="site-container service-article">
+    <a class="service-back" href="/#services">Все услуги</a>
+    <div class="service-heading">
+      <h1>{service.name}</h1>
+      <p class="service-lead">{article.lead}</p>
+      {demo && <p class="service-demo">{services.demoNotice}</p>}
+    </div>
+    {service.image && (
+      <figure class="service-visual">
+        <ServiceVisual image={service.image} eager />
+        {demo && <figcaption>Тестовая иллюстрация категории.</figcaption>}
+      </figure>
+    )}
+    <div class="service-reading">
+      {article.sections.map((section, index) => (
+        <section aria-labelledby={`article-section-${index}`}>
+          <h2 id={`article-section-${index}`}>{section.heading}</h2>
+          {section.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+        </section>
+      ))}
+      <section aria-labelledby="service-inquiry-heading">
+        <h2 id="service-inquiry-heading">Что указать в запросе</h2>
+        <ul>{article.inquiry.map(item => <li>{item}</li>)}</ul>
+      </section>
+      <nav class="service-actions" aria-label="Действия по услуге">
+        <Button href="/#order-inquiry">Обсудить проект</Button>
+        <a class="service-back" href="/#services">Вернуться к услугам</a>
+      </nav>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  /* Align article content with the shared page container. */
+  .service-article {
+    padding-block: clamp(2rem, 5vw, 4rem);
+    overflow-wrap: anywhere;
+  }
+
+  /* Make return navigation recognizable and easy to activate. */
+  .service-back {
+    display: inline-block;
+    min-height: 2.75rem;
+    padding-block: 0.5rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Keep the introductory text narrower than the page container. */
+  .service-heading {
+    max-width: 56rem;
+    margin-block: 1.5rem 2rem;
+  }
+
+  /* Lead with clear category lettering. */
+  .service-heading h1 {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.15;
+    font-weight: 700;
+  }
+
+  /* Introduce the category with a concise readable sentence. */
+  .service-lead {
+    margin-top: 1.25rem;
+    font-size: 1.25rem;
+  }
+
+  /* Identify sample content without mimicking an action button. */
+  .service-demo {
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-primary);
+    color: var(--site-muted);
+  }
+
+  /* Preserve a useful illustration size without stretching the reading area. */
+  .service-visual {
+    max-width: 56rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Identify the fictional visual below its image frame. */
+  .service-visual figcaption {
+    margin-top: 0.75rem;
+    color: var(--site-muted);
+  }
+
+  /* Constrain prose to a comfortable line length. */
+  .service-reading {
+    max-width: var(--site-reading-width);
+  }
+
+  /* Separate reader questions with space rather than decorative panels. */
+  .service-reading section + section {
+    margin-top: 2rem;
+  }
+
+  /* Maintain a clear hierarchy under the article heading. */
+  .service-reading h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  /* Maintain a readable rhythm between explanatory paragraphs. */
+  .service-reading p + p {
+    margin-top: 0.75rem;
+  }
+
+  /* Make parallel inquiry inputs easy to scan. */
+  .service-reading ul {
+    padding-left: 1.5rem;
+    list-style: disc;
+  }
+
+  /* Allow native navigation actions to wrap at enlarged text sizes. */
+  .service-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  /* Keep the inquiry button readable when its label wraps. */
+  .service-actions :global(.btn) {
+    height: auto;
+    max-width: 100%;
+    min-height: 2.75rem;
+    padding-block: 0.75rem;
+    white-space: normal;
+  }
+</style>

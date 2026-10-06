@@ -1,0 +1,290 @@
+{
+  "heading": "Наши услуги",
+  "introduction": "Выберите направление наружной рекламы для вашего проекта.",
+  "copyApproved": false,
+  "items": [
+    {
+      "id": "svetovye-bukvy",
+      "name": "Световые буквы",
+      "description": "Буквы с подсветкой для оформления названия на фасаде.",
+      "claimSource": "site.json description; about.json description1",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/src/assets/services/svetovye-bukvy-demo.png",
+        "alt": "Тестовая иллюстрация световых букв на фасаде.",
+        "width": 1200,
+        "height": 900,
+        "source": "svetovye-bukvy-demo.svg; original site illustration",
+        "projectContext": "Fictional category illustration; not agency work",
+        "publicationPermission": "Original site demo artwork",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/svetovye-bukvy/",
+      "article": {
+        "title": "Световые буквы: как выбрать оформление",
+        "description": "Виды подсветки букв и подготовка запроса на вывеску.",
+        "lead":
+          "Световые буквы выделяют название отдельными объёмными элементами.",
+        "sections": [
+          {
+            "heading": "Как работает подсветка",
+            "paragraphs": [
+              "Свет может выходить через лицевую часть буквы.",
+              "При контражуре свет направлен на поверхность за буквой.",
+              "Эти варианты дают разный эффект на светлом и тёмном фасаде."
+            ]
+          },
+          {
+            "heading": "Что учитывать на фасаде",
+            "paragraphs": [
+              "Размер букв зависит от расстояния, с которого читают название.",
+              "Важны фон, свободное место и расположение соседних вывесок.",
+              "До выбора решения стоит обсудить доступ к электропитанию."
+            ]
+          }
+        ],
+        "inquiry": [
+          "Название и макет логотипа.",
+          "Фото и примерные размеры фасада.",
+          "Желаемый эффект подсветки и расстояние обзора."
+        ],
+        "approved": false
+      }
+    },
+    {
+      "id": "vyveski",
+      "name": "Вывески",
+      "description": "Вывески с названием и информацией о вашей организации.",
+      "claimSource": "site.json description; introduction.json summary",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/src/assets/services/vyveski-demo.png",
+        "alt": "Тестовая иллюстрация вывески над входом.",
+        "width": 1200,
+        "height": 900,
+        "source": "vyveski-demo.svg; original site illustration",
+        "projectContext": "Fictional category illustration; not agency work",
+        "publicationPermission": "Original site demo artwork",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/vyveski/",
+      "article": {
+        "title": "Вывески: название, формат и читаемость",
+        "description": "Форматы вывесок и данные для обсуждения оформления.",
+        "lead": "Вывеска помогает найти вход и понять, что находится внутри.",
+        "sections": [
+          {
+            "heading": "Выбрать формат",
+            "paragraphs": [
+  "Плоская панель подходит для текста и графики на одной плоскости.",
+              "Световой короб подсвечивает изображение изнутри.",
+              "Отдельные буквы позволяют оставить фон фасада открытым."
+            ]
+          },
+          {
+            "heading": "Оставить главное",
+            "paragraphs": [
+              "Название должно читаться быстрее дополнительных сведений.",
+              "Контраст и крупный шрифт помогают распознать вывеску издалека.",
+              "Для обсуждения полезны дневное и вечернее фото места установки."
+            ]
+          }
+        ],
+        "inquiry": [
+          "Название и сведения, которые нужно разместить.",
+          "Размер доступного места и фото входа.",
+          "Нужна ли подсветка и откуда будут смотреть на вывеску."
+        ],
+        "approved": false
+      }
+    },
+    {
+      "id": "neon",
+      "name": "Неон",
+      "description": "Неоновые надписи и элементы оформления.",
+      "claimSource": "site.json description; about.json description2",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/src/assets/services/neon-demo.png",
+        "alt": "Тестовая иллюстрация светящейся контурной надписи.",
+        "width": 1200,
+        "height": 900,
+        "source": "neon-demo.svg; original site illustration",
+        "projectContext": "Fictional category illustration; not agency work",
+        "publicationPermission": "Original site demo artwork",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/neon/",
+      "article": {
+        "title": "Неон: надписи и световые акценты",
+        "description": "Идеи неонового оформления и подготовка эскиза надписи.",
+        "lead": "Неоновая линия повторяет контур букв или рисунка.",
+        "sections": [
+          {
+            "heading": "От надписи к контуру",
+            "paragraphs": [
+  "Короткая фраза, знак или простой рисунок дают ясный световой образ.",
+  "Тонкие детали и тесные изгибы нужно обсудить при подготовке эскиза.",
+              "Цвет света стоит оценить на фоне будущего места установки."
+            ]
+          },
+          {
+            "heading": "Обсудить исполнение",
+            "paragraphs": [
+  "Стеклянный неон и гибкий световой контур отличаются конструкцией.",
+              "Подходящий вариант зависит от рисунка и условий размещения.",
+              "Конкретную технологию и доступные цвета уточняют в запросе."
+            ]
+          }
+        ],
+        "inquiry": [
+          "Текст или эскиз рисунка.",
+          "Желаемые размеры и цвет света.",
+          "Фото места и указание: помещение или улица."
+        ],
+        "approved": false
+      }
+    },
+    {
+      "id": "obyomnye-konstruktsii",
+      "name": "Объёмные конструкции",
+      "description": "Объёмные элементы для оформления наружной рекламы.",
+      "claimSource": "about.json description1",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/src/assets/services/obyomnye-konstruktsii-demo.png",
+        "alt": "Тестовая иллюстрация объёмного рекламного знака.",
+        "width": 1200,
+        "height": 900,
+        "source": "obyomnye-konstruktsii-demo.svg; original site illustration",
+        "projectContext": "Fictional category illustration; not agency work",
+        "publicationPermission": "Original site demo artwork",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/obyomnye-konstruktsii/",
+      "article": {
+        "title": "Объёмные конструкции: форма и место",
+        "description": "Объёмные элементы рекламы и вводные для эскиза.",
+        "lead": "Объёмная форма делает знак заметным с нескольких направлений.",
+        "sections": [
+          {
+            "heading": "Определить задачу формы",
+            "paragraphs": [
+  "Это может быть объёмный логотип, символ или отдельная композиция.",
+  "Установку на фасаде и свободно стоящий объект обсуждают отдельно.",
+              "Эскиз помогает сравнить силуэт, пропорции и вид с разных сторон."
+            ]
+          },
+          {
+            "heading": "Учесть место размещения",
+            "paragraphs": [
+              "Для обсуждения нужны размеры пространства и точки обзора.",
+              "Важно знать, будет ли объект в помещении или на улице.",
+              "Основание и способ крепления выбирают для конкретного объекта."
+            ]
+          }
+        ],
+        "inquiry": [
+          "Эскиз или примеры желаемой формы.",
+          "Размеры объекта и фотографии места.",
+          "Требуется ли подсветка и откуда видна конструкция."
+        ],
+        "approved": false
+      }
+    },
+    {
+      "id": "montazh",
+      "name": "Монтаж",
+      "description": "Установка рекламных конструкций на объекте.",
+      "claimSource": "about.json description1; introduction.json summary",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/src/assets/services/montazh-demo.png",
+        "alt": "Тестовая иллюстрация установки вывески.",
+        "width": 1200,
+        "height": 900,
+        "source": "montazh-demo.svg; original site illustration",
+        "projectContext": "Fictional category illustration; not agency work",
+        "publicationPermission": "Original site demo artwork",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/montazh/",
+      "article": {
+        "title": "Монтаж: подготовить место установки",
+        "description": "Какие данные нужны для обсуждения монтажа рекламы.",
+        "lead": "Установку начинают с изучения конструкции и места крепления.",
+        "sections": [
+          {
+            "heading": "Собрать сведения об объекте",
+            "paragraphs": [
+              "Размер, вес и крепления конструкции влияют на способ установки.",
+              "Фото поверхности помогает заранее понять условия доступа.",
+              "Высоту и возможность подъезда оборудования обсуждают отдельно."
+            ]
+          },
+          {
+            "heading": "Согласовать организацию работ",
+            "paragraphs": [
+  "Полезно заранее уточнить доступ на объект и допустимое время работ.",
+              "Для световой рекламы обсуждают подключение к электропитанию.",
+              "Необходимые согласования и ответственность уточняют до монтажа."
+            ]
+          }
+        ],
+        "inquiry": [
+          "Фото конструкции и её размеры.",
+          "Адрес, высота и фотографии места установки.",
+          "Условия доступа и контакт ответственного на объекте."
+        ],
+        "approved": false
+      }
+    }
+  ],
+  "demoMode": true,
+  "demoNotice": "Тестовые тексты и иллюстрации. Это не работы агентства."
+}
