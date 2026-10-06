@@ -50,7 +50,46 @@ review portrait metadata requires `avatarAlt`, `avatarWidth`, and
 positive integers. See [project and review media](media.md) for the outstanding
 asset inventory and replacement workflow.
 
-## Contacts and map settings
+## Introduction content
+
+`data/content/introduction.json` keeps the heading, short service summary,
+known location, inquiry action and photo metadata together. Import
+`introduction` from `@/content/introduction` in the introductory section.
+It follows the same domain type, strict schema and source-aware parser
+conventions as other validated content. The homepage renders this content
+directly after offers, with its single visible H1 and native inquiry link.
+
+The supplied copy is a draft based on existing site/About content.
+`copyApproved: false` records that the agency has not confirmed it. Limit
+coverage to Череповец; do not add unsupported deadlines or guarantees.
+The action is an inquiry link, not an automatic price calculator; its
+destination is validated as `/#order-inquiry`.
+
+`photo: null` explicitly records missing approved agency photography.
+Do not replace it with a Picsum, library or generated image presented as
+agency work. A non-null photo requires `src`, nonblank `alt`, positive
+integer `width`/`height`, `source`, `projectContext`, a recorded
+`publicationPermission` and `desktopFocalPoint`/`mobileFocalPoint`.
+Focal points are `{ x, y }` percentages from 0 to 100, intended for CSS
+`object-position` when the layout crops with `object-fit: cover`.
+Choose them by inspecting the actual photo at both viewport sizes.
+
+Record the original supplier/file reference in `source`, the actual
+completed installation in `projectContext`, and who approved publication,
+when and where that permission was recorded in `publicationPermission`.
+For optimized responsive variants, use an approved original under
+`src/assets/` and set `src` to `/src/assets/<filename>`. The component's
+explicit import map passes local metadata to Astro Image. Supported raster
+extensions are avif, jpeg, jpg, png and webp. Missing mapped assets fail
+the build. Public paths and HTTP(S) sources use supplied image files;
+resize/compress these before publication. With `photo: null`, the section
+uses a text-only layout without a placeholder. See [media handoff](media.md).
+Schema validation checks
+metadata shape, not asset existence, dimensions or truth of permissions.
+Confirm these manually before treating the content as publication-ready.
+Task 024 remains pending until copy approval and real photo acceptance.
+
+## Inquiry and contacts settings
 
 Order inquiry labels, feedback and disabled submission configuration live in
 `data/content/order-inquiry.json`, with domain types and runtime validation

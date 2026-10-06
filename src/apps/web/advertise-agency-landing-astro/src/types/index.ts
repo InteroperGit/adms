@@ -13,3 +13,8 @@ export { type LegalSection, type LegalDocument } from "./legal";
 export type { Stat, AboutContent } from "./about";
 export type { Icons } from "./icons";
 export type { OrderInquiryContent, InquiryField } from "./order-inquiry";
+export type {
+  IntroductionContent,
+  IntroductionPhoto,
+  IntroductionFocalPoint,
+} from "./introduction";

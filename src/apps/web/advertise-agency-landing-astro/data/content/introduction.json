@@ -1,0 +1,21 @@
+{
+  "heading": "Изготовление вывесок и наружной рекламы в Череповце",
+  "summary": "Световые буквы, вывески и неон. Дизайн, изготовление и монтаж.",
+  "location": "Череповец",
+  "copyApproved": false,
+  "action": {
+    "label": "Рассчитать стоимость",
+    "href": "/#order-inquiry"
+  },
+  "photo": {
+    "src": "https://picsum.photos/seed/outdoor2/1200/900",
+    "alt": "Демонстрационное фото; не работа агентства Рекламастер.",
+    "width": 1200,
+    "height": 900,
+    "source": "Lorem Picsum, remote demonstration image",
+    "projectContext": "Layout demonstration; not an agency project",
+    "publicationPermission": "Agency photo approval remains pending",
+    "desktopFocalPoint": { "x": 50, "y": 50 },
+    "mobileFocalPoint": { "x": 50, "y": 50 }
+  }
+}

@@ -4,7 +4,16 @@
 
 ## Direction
 
-Use the workshop's signage vocabulary: precise alignment, measured spaces, clear lettering, restrained orange, and quiet framing around genuine work. Keep existing Russian content and the visually hidden homepage h1. No replacement oversized heading or invented proof is introduced.
+Use the workshop's signage vocabulary: precise alignment, measured spaces,
+clear lettering, restrained orange, and quiet framing around genuine work.
+Task 025 adds the visible service H1 directly below the offers carousel. Its
+text-led layout uses existing type, surfaces and action tokens; an optional
+approved photo can occupy a second desktop column. No invented proof is
+introduced. Earlier task 013 evidence below describes the previous opening.
+
+The homepage alternates base-100 and base-200 section backgrounds by
+rendered order, using the current theme palette. This remains consistent
+when sections are reordered or offers are disabled.
 
 | Opening concept | Shape | Assessment |
 | --- | --- | --- |
