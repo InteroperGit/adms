@@ -1,0 +1,161 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Button from '@/components/ui/Button.astro';
+import { introduction as content } from '@/content/introduction';
+
+const originals = import.meta.glob<ImageMetadata>(
+  '/src/assets/**/*.{avif,jpeg,jpg,png,webp}',
+  { eager: true, import: 'default' },
+);
+const { photo } = content;
+const original = photo ? originals[photo.src] : undefined;
+if (photo?.src.startsWith('/src/assets/') && !original) {
+  throw new Error(`Introduction photo not found: ${photo.src}`);
+}
+const focalPoint = (point: { x: number; y: number }) =>
+  `${point.x}% ${point.y}%`;
+---
+
+<section
+  id="introduction"
+  class="site-section introduction"
+  aria-labelledby="introduction-heading"
+>
+  <div
+    class:list={[
+      'site-container introduction-layout',
+      { 'has-photo': photo },
+    ]}
+  >
+    <div class="introduction-copy">
+      <h1 id="introduction-heading" class="introduction-heading">
+        {content.heading}
+      </h1>
+      <p class="introduction-summary">{content.summary}</p>
+      <p class="introduction-location">{content.location}</p>
+      <Button href={content.action.href} class="introduction-action">
+        {content.action.label}
+      </Button>
+    </div>
+    {photo && (
+      <div
+        class="introduction-photo"
+        style={{
+          '--desktop-focal-point': focalPoint(photo.desktopFocalPoint),
+          '--mobile-focal-point': focalPoint(photo.mobileFocalPoint),
+        }}
+      >
+        {original ? <Image
+          src={original}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
+          widths={[480, 768, 1200]}
+          sizes="(min-width: 64rem) 46vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="introduction-image"
+        /> : <img
+          src={photo.src}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="introduction-image"
+        />}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  /* Lead with service lettering on the existing solid brand surface. */
+  .introduction {
+    background: var(--color-base-100);
+  }
+
+  /* Share header alignment and let text determine section height. */
+  .introduction-layout {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3rem);
+    align-items: center;
+  }
+
+  /* Keep draft copy readable without reserving a missing photograph. */
+  .introduction-copy {
+    min-width: 0;
+    max-width: 60rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Use the full service heading as one strong typographic anchor. */
+  .introduction-heading {
+    max-width: 26ch;
+    font-size: clamp(2rem, 3.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  /* Separate the concise service explanation from the display heading. */
+  .introduction-summary {
+    max-width: 48ch;
+    margin-top: 1.5rem;
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  }
+
+  /* State the supplied service area without inventing wider coverage. */
+  .introduction-location {
+    margin-top: 0.75rem;
+    color: var(--site-muted);
+  }
+
+  /* Allow the native inquiry action to wrap at enlarged text sizes. */
+  .introduction-action {
+    max-width: 100%;
+    height: auto;
+    min-height: 3rem;
+    margin-top: 2rem;
+    padding-block: 0.75rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* Reserve a stable frame only when an actual photo is configured. */
+  .introduction-photo {
+    min-width: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-field);
+    background: var(--color-base-200);
+  }
+
+  /* Preserve the approved desktop subject within the reserved frame. */
+  .introduction-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--desktop-focal-point);
+  }
+
+  /* Put supplied work alongside service lettering on larger screens. */
+  @media (min-width: 64rem) {
+    /* Both columns can shrink without forcing long copy off-screen. */
+    .introduction-layout.has-photo {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+  }
+
+  /* Stack the photo below copy and use its inspected narrow crop. */
+  @media (max-width: 63.999rem) {
+    /* Use the separately editable mobile subject position. */
+    .introduction-image {
+      object-position: var(--mobile-focal-point);
+    }
+  }
+</style>

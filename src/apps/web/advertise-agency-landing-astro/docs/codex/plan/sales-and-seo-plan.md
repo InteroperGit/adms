@@ -37,6 +37,14 @@ Before directing more traffic to the site:
 
 Purpose: immediately explain what the agency sells and where it works.
 
+Execution tasks (in order):
+
+- [024: Prepare introduction content and photo][intro-content] — content
+  contract implemented; pending agency copy confirmation and real photo.
+- [025: Implement the introductory section][intro-section] — layout
+  implemented; pending approved copy/photo and final browser review.
+- [026: Verify the introductory section][intro-verification] — pending.
+
 ### Priority 1: Services
 
 - Create cards for световые буквы, вывески, неон, объёмные конструкции,
@@ -115,6 +123,9 @@ for customers; do not assume it will generate Google FAQ rich results.
 Purpose: help customers recognize a solution for their own business.
 
 ## Suggested homepage order
+
+Current user adjustment: keep the offers carousel first, followed by
+Introduction. Alternate section backgrounds by rendered odd/even order.
 
 1. Introduction.
 2. Services.
@@ -207,3 +218,6 @@ than relying only on visits.
 
 [seo-guide]: https://developers.google.com/search/docs/fundamentals/seo-starter-guide
 [faq-guidance]: https://developers.google.com/search/blog/2023/08/howto-faq-changes
+[intro-content]: ../todo/024-introduction-content-and-photo.md
+[intro-section]: ../todo/025-introduction-section.md
+[intro-verification]: ../todo/026-introduction-verification.md

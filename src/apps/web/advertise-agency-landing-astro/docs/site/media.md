@@ -6,6 +6,15 @@ No approved project photographs or review portraits are present in this applicat
 
 ## Assets the agency must supply
 
+Task 024 also needs a real completed-project photo for the introduction.
+The repository has no suitable approved photo: all current project URLs
+are Picsum fixtures, and the local map illustration is not project work.
+Provide the original image, installation context, source and permission
+to publish. Set its actual dimensions, accurate alt text and inspected
+desktop/mobile focal points in `data/content/introduction.json`; see
+[introduction content](content.md#introduction-content). The checked-in
+`photo: null` intentionally reserves no fake photo or crop.
+
 | Content record | Required approved asset |
 | --- | --- |
 | Project 1 — Световой короб для торгового центра / ООО «Гранд Плаза» | Photograph of the actual installed lightbox, suitable for a wide card crop and a project detail page |

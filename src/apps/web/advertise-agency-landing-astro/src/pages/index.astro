@@ -1,20 +1,34 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import About from '@/components/sections/About.astro';
+import Introduction from '@/components/sections/Introduction.astro';
 import OffersCarousel from '@/components/sections/OffersCarousel.astro';
 import Projects from '@/components/sections/Projects.astro';
 import Reviews from '@/components/sections/Reviews.astro';
 import Contacts from '@/components/sections/Contacts.astro';
 import OrderInquiry from '@/components/sections/OrderInquiry.astro';
-import { site } from '@/content/site';
 ---
 
 <Layout title="Главная">
-  <h1 class="sr-only">{site.title}</h1>
-  <OffersCarousel />
-  <About />
-  <Projects />
-  <Reviews />
-  <Contacts />
-  <OrderInquiry />
+  <div class="homepage-sections">
+    <OffersCarousel />
+    <Introduction />
+    <About />
+    <Projects />
+    <Reviews />
+    <Contacts />
+    <OrderInquiry />
+  </div>
 </Layout>
+
+<style>
+  /* Alternate rendered section surfaces with the active theme palette. */
+  .homepage-sections > :global(section:nth-of-type(odd)) {
+    background: var(--color-base-100);
+  }
+
+  /* Give every second section a distinct surface after any reordering. */
+  .homepage-sections > :global(section:nth-of-type(even)) {
+    background: var(--color-base-200);
+  }
+</style>
