@@ -6,13 +6,15 @@
 
 **Created:** 2026-10-06
 
+**Archived:** 2026-10-06, at the user's request
+
 ## Goal
 
 Add a homepage section where visitors can describe the advertising product
 they need and send the agency a message to discuss an order.
 
-Read [project instructions](../../../AGENTS.md),
-[task management](../task-management.md), and the applicable development rules.
+Read [project instructions](../../../../AGENTS.md),
+[task management](../../task-management.md), and applicable development rules.
 Apply frontend-design and astro-best-practices when implementing the section.
 
 ## Scope
@@ -65,8 +67,8 @@ there. Record missing configuration as a dependency of working delivery.
 - Run `pnpm check`, `pnpm build`, and diff checks. Document configuration,
   delivery behavior, test evidence, and remaining dependencies.
 
-Archive this task only after its acceptance checks pass, following the
-task-management guide.
+Archived at the user's explicit request; unresolved delivery dependencies
+and verification limits remain documented below.
 
 ## Implementation and verification — 2026-10-06
 
@@ -86,6 +88,7 @@ The test fixture was removed and disabled configuration restored.
 `pnpm check` and `pnpm build` passed; check reports one pre-existing hint in
 ignored task-018 evidence. See [configuration and evidence][inquiry-guide].
 Native zoom, screen-reader speech and real service/receipt verification remain
-open. This task stays in todo because delivery acceptance has not passed.
+open. The user requested moving this task to fixed despite the unresolved
+delivery acceptance; archiving does not confirm working inquiry delivery.
 
-[inquiry-guide]: ../../site/order-inquiry.md
+[inquiry-guide]: ../../../site/order-inquiry.md
