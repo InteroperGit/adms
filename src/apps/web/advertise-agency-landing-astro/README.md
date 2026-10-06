@@ -10,6 +10,7 @@ Russian-language website for Рекламастер, built with Astro, TypeScrip
 | [Project structure](docs/development/project-structure.md) | Application folders and shared configuration |
 | [Verification and CI](docs/development/verification-and-ci.md) | Type checking, builds, and remaining CI integration |
 | [Content editing](docs/site/content.md) | JSON sources, validation, and stable project IDs |
+| [Order inquiries](docs/site/order-inquiry.md) | Form configuration and delivery dependencies |
 | [Hot offers carousel](docs/site/offers-carousel.md) | Offer settings, validation, approved assets and implementation handoff |
 | [Project and review media](docs/site/media.md) | Missing approved photographs, image metadata, and replacement workflow |
 | [Design system](docs/site/design-system.md) | Visual direction, shared tokens, typography, contrast and browser baseline |
