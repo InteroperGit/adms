@@ -24,3 +24,10 @@ export type {
   ServiceFocalPoint,
   ServicesContent,
 } from "./services";
+export type {
+  PricingAmount,
+  PricingPrice,
+  PricingApproval,
+  PricingExample,
+  PricingContent,
+} from "./pricing";

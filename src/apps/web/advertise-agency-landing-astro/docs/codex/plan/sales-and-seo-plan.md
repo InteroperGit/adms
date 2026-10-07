@@ -86,6 +86,21 @@ acceptance; the demo does not establish agency approval.
 
 Purpose: help buyers assess their budget and request a relevant quote.
 
+Execution tasks (in order):
+
+- [032: Prepare demo pricing content and photos][pricing-content] — completed
+  2026-10-07; three fictional examples and reused local test illustrations.
+- [033: Implement the homepage pricing examples section][pricing-section] —
+  completed 2026-10-07; enabled demo after Projects with inquiry links.
+- [034: Verify the homepage pricing examples][pricing-verification] — completed
+  2026-10-07; demo content, contrast, responsive links and regressions pass.
+
+Current delivery uses fictional examples and test photos with visible demo
+notices and fictional-price labels. Missing real material does not block demo
+acceptance. Agency-verified prices, specifications, copy, and real photos
+remain required for later production acceptance. Inquiry delivery remains a
+separate dependency; these tasks verify access to the existing form.
+
 ### Priority 1: Expanded case studies
 
 Upgrade existing projects with:
@@ -247,3 +262,6 @@ than relying only on visits.
 [services-section]: ../fixed/20261007/028-services-section.md
 [services-demo]: ../fixed/20261007/028a-services-demo-content-and-pages.md
 [services-verification]: ../fixed/20261007/029-services-verification.md
+[pricing-content]: ../fixed/20261007/032-pricing-content-and-examples.md
+[pricing-section]: ../fixed/20261007/033-pricing-examples-section.md
+[pricing-verification]: ../fixed/20261007/034-pricing-examples-verification.md

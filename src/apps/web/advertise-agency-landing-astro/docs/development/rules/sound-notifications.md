@@ -3,8 +3,17 @@
 The user requires audible notifications when their attention is needed
 and when the current task is finished.
 
-- Play an alert sound immediately before requesting user confirmation,
-  approval, or required input.
+- Play an alert sound immediately before every request that needs an action
+  from the user: approval, confirmation, required input, or a manual step.
+  This includes tool-generated approval prompts, sandbox escalation,
+  permission retries, and requests made through user-input tools or chat.
+- Play a separate alert for each request, including repeated approvals and
+  follow-up confirmations in the same task. An earlier alert does not cover
+  a later request. Task-completion sounds do not replace attention alerts.
+- Finish synchronous alert playback before invoking the tool or sending
+  the message that asks for the user's action. For tool approval requests,
+  play the sound in a separate preceding tool call; do not place playback
+  inside the command awaiting approval, where it would run only afterward.
 - Play a completion sound once when the current task finishes, immediately
   before the final response.
 - Use `Alarm01.wav` for attention and the generic notification sound for

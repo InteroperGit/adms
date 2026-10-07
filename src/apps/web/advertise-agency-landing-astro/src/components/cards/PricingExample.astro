@@ -1,0 +1,305 @@
+---
+// Present one validated scope with image, price context and native actions.
+// The section supplies disclosure/action text; approval filtering happens
+// in the content loader. Local image keys resolve through Astro assets.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Button from '@/components/ui/Button.astro';
+import { formatPricingPrice } from '@/content/pricing';
+import type { PricingExample } from '@/types/pricing';
+
+export interface Props {
+  example: PricingExample;
+  demoPriceLabel: string;
+  inquiryLabel: string;
+}
+
+const { example, demoPriceLabel, inquiryLabel } = Astro.props;
+const { image, price } = example;
+const headingId = `pricing-${example.id}`;
+const originals = import.meta.glob<ImageMetadata>(
+  '/src/assets/**/*.{avif,jpeg,jpg,png,webp}',
+  { eager: true, import: 'default' },
+);
+const original = image ? originals[image.src] : undefined;
+if (image?.src.startsWith('/src/assets/') && !original) {
+  throw new Error(`Pricing image missing (${example.id}): ${image.src}`);
+}
+const focalPoint = (point: { x: number; y: number }) =>
+  `${point.x}% ${point.y}%`;
+// The desktop image occupies one third of the shared container.
+const sizes = '(min-width: 64rem) 360px, (min-width: 42rem) 40vw, 94vw';
+// Genuine prices keep their reference date and context next to the amount.
+const priceContext = price.context === 'historical'
+  ? 'Стоимость выполненного проекта'
+  : 'Ориентировочная стоимость';
+const referenceDate = price.asOf
+  ? new Intl.DateTimeFormat('ru-RU', { timeZone: 'UTC' })
+    .format(new Date(`${price.asOf}T00:00:00Z`))
+  : null;
+---
+
+<article class="pricing-example" aria-labelledby={headingId}>
+  {/* Keep the image and concrete specification together for comparison. */}
+  <div class="pricing-overview">
+    {image && (
+      <div
+        class="pricing-photo"
+        style={{
+          '--desktop-focal-point': focalPoint(image.desktopFocalPoint),
+          '--mobile-focal-point': focalPoint(image.mobileFocalPoint),
+        }}
+      >
+        {original ? (
+          <Image
+            src={original}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            widths={[320, 480, 768]}
+            sizes={sizes}
+            loading="lazy"
+            decoding="async"
+            class="pricing-image"
+          />
+        ) : (
+          <img
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            loading="lazy"
+            decoding="async"
+            class="pricing-image"
+          />
+        )}
+      </div>
+    )}
+    <h3 id={headingId} class="pricing-title">{example.title}</h3>
+    <p class="pricing-description">{example.description}</p>
+    <dl class="pricing-specifications">
+      <div>
+        <dt>Размеры</dt>
+        <dd>{example.dimensions}</dd>
+      </div>
+      <div>
+        <dt>Материалы</dt>
+        <dd>{example.materials.join(', ')}</dd>
+      </div>
+    </dl>
+  </div>
+  {/* Price and included/excluded work remain visible without interaction. */}
+  <div class="pricing-details">
+    <div class="pricing-quote">
+      <p class="pricing-amount">{formatPricingPrice(price)}</p>
+      {price.context === 'demo' ? (
+        <p class="pricing-context">{demoPriceLabel}</p>
+      ) : (
+        <p class="pricing-context">
+          {priceContext}
+          {referenceDate && (
+            <time datetime={price.asOf!}> на {referenceDate}</time>
+          )}
+        </p>
+      )}
+      <p class="pricing-conditions">{price.conditions}</p>
+    </div>
+    <div class="pricing-scope">
+      <div>
+        <h4 class="pricing-scope-heading">Включено в пример</h4>
+        <ul class="pricing-list">
+          {example.includedWork.map((work) => <li>{work}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h4 class="pricing-scope-heading">Не включено</h4>
+        <ul class="pricing-list">
+          {example.exclusions.map((work) => <li>{work}</li>)}
+        </ul>
+      </div>
+    </div>
+    {/* Distinct native links avoid nesting project and inquiry actions. */}
+    <div class="pricing-actions">
+      <Button
+        href="/#order-inquiry"
+        class="pricing-inquiry"
+        aria-label={`${inquiryLabel}: ${example.title}`}
+      >
+        {inquiryLabel}
+      </Button>
+      {example.href && (
+        <a class="pricing-project" href={example.href}>
+          Подробнее о проекте
+        </a>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  /* Divide complete scopes rather than enclosing them in decorated cards. */
+  .pricing-example {
+    display: grid;
+    gap: 2rem;
+    padding-block: 2.5rem;
+    border-top: 1px solid var(--site-control-border);
+    overflow-wrap: anywhere;
+  }
+
+  /* Allow specifications and images to shrink within the grid. */
+  .pricing-overview {
+    min-width: 0;
+  }
+
+  /* Reserve image geometry even when a supplied asset cannot load. */
+  .pricing-photo {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    border-radius: var(--radius-field);
+    background: var(--color-base-300);
+  }
+
+  /* Preserve the configured subject while filling the stable frame. */
+  .pricing-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--desktop-focal-point);
+  }
+
+  /* Name the scope before its dimensions and materials. */
+  .pricing-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* Give the short scenario separation from technical specifications. */
+  .pricing-description {
+    margin-top: 0.75rem;
+    color: var(--site-muted);
+  }
+
+  /* Stack labelled specifications so units and long text wrap naturally. */
+  .pricing-specifications {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  /* Keep specification labels stronger than the supporting description. */
+  .pricing-specifications dt {
+    font-weight: 600;
+  }
+
+  /* Retain readable secondary text in both semantic theme palettes. */
+  .pricing-specifications dd {
+    color: var(--site-muted);
+  }
+
+  /* Let the price and work scope occupy the remaining reading space. */
+  .pricing-details {
+    min-width: 0;
+  }
+
+  /* Give budget comparison prominence without an extra promotional badge. */
+  .pricing-amount {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Keep demo or dated price context adjacent to its numeric amount. */
+  .pricing-context {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  /* Explain conditions before visitors compare the included work. */
+  .pricing-conditions {
+    margin-top: 0.5rem;
+    color: var(--site-muted);
+  }
+
+  /* Group included and excluded work without concealing either list. */
+  .pricing-scope {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+
+  /* Make the difference between included and optional work explicit. */
+  .pricing-scope-heading {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  /* Native bullets keep each line of scope easy to scan. */
+  .pricing-list {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+    color: var(--site-muted);
+  }
+
+  /* Wrap the quote action and optional detail link at enlarged text sizes. */
+  .pricing-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  /* Allow long inquiry copy to wrap within even the narrowest viewport. */
+  .pricing-inquiry {
+    max-width: 100%;
+    height: auto;
+    min-height: 3rem;
+    padding-block: 0.75rem;
+    white-space: normal;
+  }
+
+  /* Give genuine project destinations a persistent native link cue. */
+  .pricing-project {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Put the illustrated scope alongside the quote once both remain readable. */
+  @media (min-width: 42rem) {
+    /* Use a smaller image column to leave room for the work specification. */
+    .pricing-example {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    }
+  }
+
+  /* Use wider screens for side-by-side included and excluded work. */
+  @media (min-width: 64rem) {
+    /* Align all three examples with the shared desktop container. */
+    .pricing-example {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      gap: 3rem;
+    }
+
+    /* Make scope comparisons compact without shortening their copy. */
+    .pricing-scope {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  /* Preserve the independently configured crop when the example stacks. */
+  @media (max-width: 41.999rem) {
+    /* Keep the relevant mobile image subject inside its reserved frame. */
+    .pricing-image {
+      object-position: var(--mobile-focal-point);
+    }
+  }
+</style>
