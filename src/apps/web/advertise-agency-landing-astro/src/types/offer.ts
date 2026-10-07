@@ -1,19 +1,9 @@
-/** Safe image crop coordinates in percentages. */
-export interface OfferFocalPoint {
-  x: number;
-  y: number;
-}
-
-/** Validated presentation; omitted JSON settings receive defaults. */
-export interface OfferPresentation {
-  fontSizeRem: number;
-  textColor: string;
-  overlay: 'dark' | 'light';
-  horizontal: 'left' | 'center' | 'right';
-  vertical: 'top' | 'center' | 'bottom';
-  focalPoint: OfferFocalPoint;
-  mobileFocalPoint?: OfferFocalPoint;
-}
+// Offers keep their content contract while sharing carousel presentation.
+import type {
+  CarouselFocalPoint, CarouselPresentation,
+} from './image-carousel';
+export type OfferFocalPoint = CarouselFocalPoint;
+export type OfferPresentation = CarouselPresentation;
 
 export interface Offer {
   id: number;

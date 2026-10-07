@@ -45,3 +45,12 @@ not been verified. Current project records use generic demo descriptions and
 withhold unsupported results/specifications. The historical task 014 checks
 describe the previous placeholder layout. Use [case study publication rules](case-studies.md) for all new project photo/evidence handoffs. No photo or
 customer approval has been obtained as part of task 035.
+
+## About carousel illustrations (task 038)
+
+About currently uses the existing local service demo PNGs for light
+letters, neon, and signs. These are illustrations, not approved photos of
+agency work. Alt text retains that distinction; no caption is displayed.
+Image sources/options are editable in `data/content/about-carousel.json`;
+see [shared carousel editing](image-carousel.md). Bundled originals use
+responsive Astro variants, full-image framing, and lazy loading.

@@ -7,28 +7,45 @@ import Section from '@/components/ui/Section.astro';
 import { site } from '@/content/site';
 import { about } from '@/content/about';
 import Button from '@/components/ui/Button.astro';
+import ImageCarousel from '@/components/ui/ImageCarousel.astro';
+import { aboutCarousel } from '@/content/about-carousel';
+const hasImages = aboutCarousel.options.enabled &&
+  aboutCarousel.items.some(item => item.enabled);
 const projects = site.menu.find((item) => item.href === '/#projects');
 const contacts = site.menu.find((item) => item.href === '/#contacts');
 ---
 
 {/* Description and statistics remain static content, not browser state. */}
 <Section id="about" background="default" class="opening">
-  <div class="opening-introduction">
-    <h2 class="site-section-title">{site.sections.about.title}</h2>
-    <p class="opening-lead">{about.description1}</p>
-    <p class="opening-detail">{about.description2}</p>
-    <div class="opening-actions">
-      {contacts && (
-        <Button href={contacts.href}>
-          {site.sections.contacts.panelTitle}
-        </Button>
-      )}
-      {projects && (
-        <Button variant="outline" href={projects.href}>
-          {site.sections.projects.title}
-        </Button>
-      )}
+  {/* Copy and images share a desktop row, then stack in reading order. */}
+  <div class:list={['opening-row', { 'opening-with-images': hasImages }]}>
+    <div class="opening-introduction">
+      <h2 class="site-section-title">{site.sections.about.title}</h2>
+      <p class="opening-lead">{about.description1}</p>
+      <p class="opening-detail">{about.description2}</p>
+      <div class="opening-actions">
+        {contacts && (
+          <Button href={contacts.href}>
+            {site.sections.contacts.panelTitle}
+          </Button>
+        )}
+        {projects && (
+          <Button variant="outline" href={projects.href}>
+            {site.sections.projects.title}
+          </Button>
+        )}
+      </div>
     </div>
+    {hasImages && (
+      <figure class="opening-media">
+        <ImageCarousel
+          id="about-carousel"
+          label="Иллюстрации наружной рекламы"
+          items={aboutCarousel.items}
+          options={aboutCarousel.options}
+        />
+      </figure>
+    )}
   </div>
   {/*
     Use definition-list semantics for the supplied values and their labels.
@@ -44,6 +61,34 @@ const contacts = site.menu.find((item) => item.href === '/#contacts');
 </Section>
 
 <style>
+  /* Keep copy and media in one responsive introduction area. */
+  .opening-row {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  /* Prevent the image column from pushing narrow-screen copy outward. */
+  .opening-media {
+    min-width: 0;
+    margin: 0;
+  }
+
+  /* A quiet frame contains the local artwork without cropping its subject. */
+  .opening-media :global(.image-carousel) {
+    overflow: hidden;
+    border-radius: var(--radius-field);
+  }
+
+  /* Introduce a right-hand image only when readable columns both fit. */
+  @media (min-width: 64rem) {
+    /* The text keeps slightly more width than the supporting artwork. */
+    .opening-with-images {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 3rem;
+    }
+  }
+
   /* Limit introduction copy to a readable measure. */
   .opening-introduction {
     max-width: 56rem;
