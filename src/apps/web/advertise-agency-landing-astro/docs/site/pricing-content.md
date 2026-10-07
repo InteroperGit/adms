@@ -11,7 +11,7 @@ included work, exclusions, and ruble amounts are invented for demonstration.
 They are not completed agency projects or verified market/agency prices.
 
 `src/content/pricing.ts` uses the existing shared `parseContent` helper,
-strict schema, and generated project IDs. It exports:
+strict schema, and generated published project IDs. It exports:
 
 - `pricing`: the validated full editorial configuration.
 - `visiblePricingExamples`: demo entries when demo mode is enabled;
@@ -67,8 +67,9 @@ Every item records `source` and `approval` with independent `specifications`,
 `approvalSource`. A boolean records an editorial decision, not independent
 verification. Demo examples reject true agency flags or a project `href`.
 
-Optional `href` values must exactly match an existing `/projects/id` route,
-derived from the project records used by the existing dynamic page. Do not
+Optional `href` values must exactly match a generated `/projects/id` route
+with status published, derived from the same catalog as the dynamic page.
+Demo and draft destinations cannot substantiate genuine prices. Do not
 link fictional examples to unrelated records or add placeholder anchors.
 
 ## Local test images

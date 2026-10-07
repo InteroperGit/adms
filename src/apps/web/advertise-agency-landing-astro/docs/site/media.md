@@ -2,13 +2,13 @@
 
 [Documentation index](../../README.md)
 
-No approved project photographs or review portraits are present in this application or the repository's tracked image inventory. Project images remain Picsum placeholders; review portraits remain Pravatar placeholders. These images do not establish what the agency produced or who wrote a review. Their alternative text explicitly identifies them as demonstration media.
+No approved project photographs or review portraits are present in this application or the repository's tracked image inventory. Task 035 removed unrelated Picsum project placeholders; the three project previews are now text-only demos. Review portraits remain Pravatar placeholders. These images do not establish what the agency produced or who wrote a review. Their alternative text explicitly identifies them as demonstration media.
 
 ## Assets the agency must supply
 
 Task 024 also needs a real completed-project photo for the introduction.
-The repository has no suitable approved photo: all current project URLs
-are Picsum fixtures, and the local map illustration is not project work.
+The repository has no suitable approved photo: the three project previews
+have no approved photos, and the local map illustration is not project work.
 Provide the original image, installation context, source and permission
 to publish. Set its actual dimensions, accurate alt text and inspected
 desktop/mobile focal points in `data/content/introduction.json`; see
@@ -28,12 +28,20 @@ The names above identify existing JSON records, not verified customer identities
 
 ## Replacing the placeholders
 
-Keep record IDs stable. Update `image`, `imageAlt`, `imageWidth`, and `imageHeight` in `data/content/projects.json`; update `avatar`, `avatarAlt`, `avatarWidth`, and `avatarHeight` in `data/content/reviews.json`. Dimensions must be positive integers matching the supplied file. Replace demonstration alternative text with a concise, accurate description of the photograph; do not repeat marketing claims. Root-relative public paths and HTTP(S) URLs are supported.
+Keep record IDs stable. Populate `photos` in `data/content/projects.json` using the [case study contract](case-studies.md); update `avatar`, `avatarAlt`, `avatarWidth`, and `avatarHeight` in `data/content/reviews.json`. Dimensions must be positive integers matching the supplied file. Replace demonstration alternative text with a concise, accurate description of the photograph; do not repeat marketing claims. Root-relative public paths and HTTP(S) URLs are supported.
 
 For a simple local handoff, place approved files under `public/images/projects/` and `public/images/reviews/` and reference them as `/images/...`. Public files are served as supplied: compress and resize them before publishing. Prefer project originals at least 1200 pixels wide and square portrait crops at least 150 pixels wide; these are delivery recommendations, not validation requirements. Check framing on desktop and mobile: project cards reserve a 3:2 frame and crop with `object-fit: cover`; detail images use `object-fit: contain` inside a 3:2 frame up to 56rem wide so the full photograph remains visible. Portraits retain a nonshrinking 48 × 48 pixel circle. Review future image ratios before replacing the current 600 × 400 placeholders.
 
-The current remote placeholders use plain `<img>` elements with explicit intrinsic dimensions, responsive CSS, lazy loading on cards, and eager loading on project detail pages. Astro optimization and responsive `srcset` variants are deferred until approved source media is available, avoiding build-time downloads of disposable placeholders. For durable local originals, consider `src/assets/` and Astro `<Image>`/`<Picture>` with an explicit mapping from JSON records to imported assets. See the [Astro images guide](https://docs.astro.build/en/guides/images/).
+The remaining remote review placeholders use plain `<img>` elements with explicit intrinsic dimensions, responsive CSS, lazy loading on cards, and eager loading on project detail pages. Astro optimization and responsive `srcset` variants are deferred until approved source media is available, avoiding build-time downloads of disposable placeholders. For durable local originals, consider `src/assets/` and Astro `<Image>`/`<Picture>` with an explicit mapping from JSON records to imported assets. See the [Astro images guide](https://docs.astro.build/en/guides/images/).
 
 Run `pnpm check` and `pnpm build` after replacing images. Verify the local files or remote URLs load, confirm alternative text and dimensions, and review card/detail crops at mobile and desktop widths. Builds validate metadata but do not confirm image existence or publication approval. The agency favicon is tracked separately in [deployment and assets](deployment-and-assets.md).
 
 Task 014 held remote image requests and then aborted them in Chrome: project card frames, detail frame and portrait dimensions remained unchanged. This verifies reserved layout space, not service availability or approval of the demonstration content. Pravatar had an unrelated connection reset during baseline capture; remaining image failures during the controlled failure check were intentional. Current client identities, result claims and testimonial copy were preserved without adding validation badges, ratings or success indicators.
+
+## Task 035 audit update
+
+The project customer names and claims in the historical inventory above have
+not been verified. Current project records use generic demo descriptions and
+withhold unsupported results/specifications. The historical task 014 checks
+describe the previous placeholder layout. Use [case study publication rules](case-studies.md) for all new project photo/evidence handoffs. No photo or
+customer approval has been obtained as part of task 035.

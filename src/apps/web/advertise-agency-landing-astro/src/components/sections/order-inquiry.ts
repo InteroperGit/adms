@@ -1,6 +1,6 @@
 import type { OrderInquiryContent } from '@/types/order-inquiry';
 
-type Control = HTMLInputElement | HTMLTextAreaElement;
+type Control = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
 export function initializeInquiry(form: HTMLFormElement): void {
   const fields = form.querySelector<HTMLFieldSetElement>('fieldset');
@@ -12,7 +12,9 @@ export function initializeInquiry(form: HTMLFormElement): void {
     form.dataset.feedback ?? '{}',
   );
   const enabled = form.dataset.enabled === 'true';
-  const controls = [...fields.querySelectorAll<Control>('input, textarea')];
+  const controls = [...fields.querySelectorAll<Control>(
+    'input:not([type="hidden"]), textarea, select',
+  )];
   let sending = false;
   let previousPayload = '';
   let requestId = '';
@@ -24,11 +26,23 @@ export function initializeInquiry(form: HTMLFormElement): void {
       if (control.required && !control.checked) message = feedback.required;
     } else if (control.required && !control.value.trim()) {
       message = feedback.required;
-    } else if (control.maxLength > 0 &&
+    } else if ('maxLength' in control && control.maxLength > 0 &&
       control.value.length > control.maxLength) {
       message = feedback.tooLong;
     } else if (control.validity.typeMismatch) {
-      message = feedback.email;
+      message = control instanceof HTMLInputElement && control.type === 'email'
+        ? feedback.email : control.validationMessage;
+    } else if (control instanceof HTMLInputElement
+      && control.type === 'tel' && control.value.trim()
+      && !/^\+?[\d\s().-]+$/.test(control.value.trim())) {
+      message = 'Укажите корректный номер телефона.';
+    } else if (control instanceof HTMLInputElement
+      && control.type === 'tel' && control.value.trim()
+      && !/^\d{7,15}$/.test(control.value.replace(/\D/g, ''))) {
+      message = 'Укажите номер телефона: от 7 до 15 цифр.';
+    } else if (!control.validity.valid) {
+      // Numeric ranges, steps and other native constraints remain enforced.
+      message = control.validationMessage;
     }
     control.setAttribute('aria-invalid', String(Boolean(message)));
     if (error) {

@@ -16,6 +16,8 @@ import { projects } from '@/content/projects';
   subtitle={site.sections.projects.subtitle}
   background="dark"
 >
+  {/* Keep the section anchor useful when no cases are visible. */}
+  {projects.length === 0 && <p>Кейсы пока не опубликованы.</p>}
   <div class="grid min-w-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {projects.map((project) => (
       <ProjectCard project={project} />

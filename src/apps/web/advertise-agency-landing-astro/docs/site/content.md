@@ -39,16 +39,17 @@ source JSON file and field path (for example, `0.title` ). Media sources can be
 HTTP(S) URLs or root-relative paths to public assets; validation does not check
 whether those resources exist.
 
-Keep project IDs stable: each numeric ID defines `/projects/<id>`, including
-the existing `/projects/1`, `/projects/2`, and `/projects/3` routes. Array
-order determines card order. After editing JSON, run `pnpm build` to validate
-the content and generate the pages.
+Keep project IDs stable. Visible demo and published records generate
+`/projects/<id>`; drafts do not generate cards or routes. Array order determines
+card order. The [case study guide](case-studies.md) defines structured details,
+evidence, photos, publication requirements and unresolved agency inputs.
+The existing IDs 1-3 remain visible as explicitly labelled, text-only demos.
+Unsupported claims and unrelated Picsum placeholders have been removed.
 
-Project image metadata requires `imageAlt`, `imageWidth`, and `imageHeight`;
-review portrait metadata requires `avatarAlt`, `avatarWidth`, and
-`avatarHeight`. Alternative text must be nonblank, and dimensions must be
-positive integers. See [project and review media](media.md) for the outstanding
-asset inventory and replacement workflow.
+Project photos use src/alt/width/height plus source, rights, approval and crop
+metadata. Review portrait metadata still uses avatarAlt/avatarWidth/avatarHeight.
+Alternative text must be nonblank and dimensions must be positive integers.
+See [project and review media](media.md) for the handoff inventory.
 
 ## Introduction content
 

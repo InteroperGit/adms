@@ -114,7 +114,7 @@ const example = z.object({
   }
 });
 
-/** Validate destinations against actual records generating project routes. */
+/** Callers supply only generated, approved agency project destinations. */
 export function createPricingSchema(projectPaths: readonly string[]) {
   return z.object({
     demoMode: z.boolean(),
@@ -147,7 +147,7 @@ export function createPricingSchema(projectPaths: readonly string[]) {
       if (seen.has(item.id)) report('id', `Duplicate id: ${item.id}`);
       seen.add(item.id);
       if (item.href && !projectPaths.includes(item.href)) {
-        report('href', 'Project does not exist; omit href until published');
+        report('href', 'Requires a generated approved agency project route');
       }
       if (content.demoMode && item.price.context === 'demo') {
         if (!item.image) {

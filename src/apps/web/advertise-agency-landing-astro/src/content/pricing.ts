@@ -7,9 +7,12 @@ import {
   getVisiblePricingExamples,
 } from './pricing-publication';
 
-// Project records supply the IDs used by the existing dynamic project route.
+// Genuine prices may link only to generated, approved agency case routes.
+// Demo destinations exist for previews but cannot substantiate real prices.
 export const pricing = parseContent(
-  createPricingSchema(projects.map((project) => `/projects/${project.id}`)),
+  createPricingSchema(projects
+    .filter((project) => project.status === 'published')
+    .map((project) => `/projects/${project.id}`)),
   data,
   'data/content/pricing.json',
 );

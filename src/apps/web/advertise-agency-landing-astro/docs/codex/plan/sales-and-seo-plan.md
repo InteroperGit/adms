@@ -114,6 +114,28 @@ Upgrade existing projects with:
 
 Purpose: demonstrate that the agency can handle the visitor's project.
 
+Execution tasks (in order):
+
+- [035: Prepare case study content and evidence][case-study-content] — technical
+  layer verified; archived at user request 2026-10-07. Agency inputs pending.
+- [036: Implement expanded case study pages][case-study-pages] — implemented
+  and checked; archived at user request 2026-10-07. Agency acceptance pending.
+- [036a: Add Manufacturing and Installation][case-study-process] — completed
+  2026-10-07; optional text/image sections and full development preview content.
+- [036b: Implement service-specific order forms][service-order-forms] —
+  LedLettersForm implemented; archived at user request 2026-10-07.
+  Live delivery configuration pending.
+- [037: Verify expanded case studies][case-study-verification] — completed
+  technical verification 2026-10-07; production evidence/delivery remain open.
+
+Existing project URLs show proposed solutions with planned details, process
+and result diagrams, and the restored remote preview images. Unsupported
+growth/client claims remain absent. Only the lettering case shows its matching
+form. Local layouts/controls pass verification; restored Picsum images failed
+to decode in the verification environment. Genuine cases require approved
+details, outcomes, attribution, and photographs with rights. These inputs and
+inquiry delivery remain separate production dependencies.
+
 ### Priority 2: How ordering works
 
 Explain the sequence:
@@ -265,3 +287,8 @@ than relying only on visits.
 [pricing-content]: ../fixed/20261007/032-pricing-content-and-examples.md
 [pricing-section]: ../fixed/20261007/033-pricing-examples-section.md
 [pricing-verification]: ../fixed/20261007/034-pricing-examples-verification.md
+[case-study-content]: ../fixed/20261007/035-case-study-content-and-evidence.md
+[case-study-pages]: ../fixed/20261007/036-expanded-case-study-pages.md
+[case-study-process]: ../fixed/20261007/036a-case-study-manufacturing-and-installation.md
+[service-order-forms]: ../fixed/20261007/036b-service-specific-order-forms.md
+[case-study-verification]: ../fixed/20261007/037-case-study-verification.md

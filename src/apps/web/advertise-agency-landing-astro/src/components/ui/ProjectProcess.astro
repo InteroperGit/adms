@@ -1,0 +1,103 @@
+---
+// Render optional process text and photos without empty headings or columns.
+// All media uses the same geometry and provenance contract as case photos.
+import ProjectPhoto from './ProjectPhoto.astro';
+import type { ProjectProcess } from '@/types/project';
+
+interface Props {
+  id: 'manufacturing' | 'installation';
+  title: string;
+  content?: ProjectProcess | null;
+}
+
+const { id, title, content } = Astro.props;
+const paragraphs = content?.paragraphs ?? [];
+const photos = content?.photos ?? [];
+const hasContent = paragraphs.length > 0 || photos.length > 0;
+const headingId = `project-${id}`;
+---
+
+{/* Omit the entire section when neither text nor media is supplied. */}
+{hasContent && (
+  <section
+    class:list={['project-process', {
+      'has-both': paragraphs.length > 0 && photos.length > 0,
+    }]}
+    aria-labelledby={headingId}
+  >
+    <h2 id={headingId}>{title}</h2>
+    <div class="process-content">
+      {/* Native lists make individual production decisions easy to scan. */}
+      {paragraphs.length > 0 && (
+        <ul class="process-copy">
+          {paragraphs.map((paragraph) => <li>{paragraph}</li>)}
+        </ul>
+      )}
+      {/* Later process images load lazily and retain full framing. */}
+      {photos.length > 0 && (
+        <div class="process-photos">
+          {photos.map((photo) => <ProjectPhoto photo={photo} />)}
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  /* Separate fabrication and installation from the project overview. */
+  .project-process {
+    margin-top: clamp(2rem, 5vw, 4rem);
+    padding-top: clamp(1.5rem, 3vw, 2.5rem);
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Process headings use the existing case study hierarchy. */
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  /* Keep copy before images in the mobile reading order. */
+  .process-content {
+    display: grid;
+    gap: 1.5rem 2.5rem;
+    align-items: start;
+  }
+
+  /* Prevent long copy from forcing the grid beyond the page gutters. */
+  .process-copy {
+    min-width: 0;
+    max-width: var(--site-reading-width);
+    margin: 0;
+    padding-inline-start: 1.25rem;
+    list-style: disc;
+    line-height: 1.7;
+  }
+
+  /* Space each point enough to follow wrapped text on small screens. */
+  .process-copy li + li {
+    margin-top: 0.75rem;
+  }
+
+  /* A restrained accent separates list markers from the readable copy. */
+  .process-copy li::marker {
+    color: var(--color-primary);
+  }
+
+  /* Stack the optional gallery without an empty image placeholder. */
+  .process-photos {
+    display: grid;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+
+  /* Wide screens pair the construction narrative with its visual context. */
+  @media (min-width: 64rem) {
+    /* Only create two columns when both content types are present. */
+    .has-both .process-content {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+</style>
