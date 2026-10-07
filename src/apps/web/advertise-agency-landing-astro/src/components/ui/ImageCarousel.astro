@@ -1,0 +1,310 @@
+---
+// Shared image carousel: static HTML first, instance-local enhancement later.
+// Callers own content/section layout; options only control optional features.
+import ImageCarouselSlide from './ImageCarouselSlide.astro';
+import type {
+  CarouselItem,
+  CarouselOptions,
+  CarouselPresentation,
+} from '@/types/image-carousel';
+import {
+  carouselItemsSchema, carouselOptionsSchema,
+} from '@/validation/image-carousel';
+
+interface Props {
+  // IDs must be unique on the page; they namespace slides and controls.
+  id: string;
+  label: string;
+  itemLabel?: string;
+  slideIdPrefix?: string;
+  items: Array<Omit<CarouselItem, 'enabled' | 'presentation'> & {
+    enabled?: boolean;
+    presentation?: Partial<CarouselPresentation>;
+  }>;
+  options?: Partial<CarouselOptions>;
+}
+
+const {
+  id,
+  label,
+  itemLabel = 'Изображение',
+  slideIdPrefix = `${id}-slide`,
+  items: suppliedItems,
+  options: suppliedOptions = {},
+} = Astro.props;
+if (!/^[a-zA-Z][\w-]*$/.test(id) || !label.trim()) {
+  throw new Error('ImageCarousel needs a unique HTML id and a label');
+}
+const options = carouselOptionsSchema.parse(suppliedOptions);
+const items = carouselItemsSchema.parse(suppliedItems)
+  .filter(item => item.enabled);
+const multiple = items.length > 1;
+const arrows = multiple && options.manualNavigation && options.arrows;
+const circles = multiple && options.circles;
+---
+
+{/* Static slides survive missing scripts; optional controls start hidden. */}
+{options.enabled && items.length > 0 && (
+  <image-carousel
+    id={id}
+    class="image-carousel"
+    role="region"
+    aria-label={label}
+    data-item-label={itemLabel}
+    data-autoplay={options.autoplay}
+    data-interval={options.intervalMs}
+    data-manual={options.manualNavigation}
+    data-layout={options.layout}
+    data-arrows={arrows}
+    data-circles={circles}
+    data-animation={options.animation}
+    style={{
+      '--panel-ratio': options.aspectRatio,
+      '--image-fit': options.imageFit,
+    }}
+  >
+    {/* Arrows and interactive/passive circles are independently optional. */}
+    {(arrows || circles) && (
+      <div class="carousel-controls" hidden>
+        {arrows && (
+          <button
+            type="button"
+            class="carousel-arrow"
+            data-direction="-1"
+            aria-label={`Предыдущее: ${itemLabel.toLowerCase()}`}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m14 6-6 6 6 6" />
+            </svg>
+          </button>
+        )}
+        {circles && (
+          <div
+            class="carousel-dots"
+            role={options.manualNavigation ? 'group' : undefined}
+            aria-label={options.manualNavigation ? 'Выбор изображения' : null}
+            aria-hidden={options.manualNavigation ? undefined : 'true'}
+          >
+            {items.map((item, index) => options.manualNavigation ? (
+              <button
+                type="button"
+                class="carousel-dot"
+                data-index={index}
+                aria-label={`Показать: ${itemLabel.toLowerCase()} ${index + 1}`}
+                aria-controls={`${slideIdPrefix}-${item.id}`}
+              >
+                <span aria-hidden="true"></span>
+              </button>
+            ) : (
+              <span class="carousel-dot" data-index={index}>
+                <span></span>
+              </span>
+            ))}
+          </div>
+        )}
+        {arrows && (
+          <button
+            type="button"
+            class="carousel-arrow"
+            data-direction="1"
+            aria-label={`Следующее: ${itemLabel.toLowerCase()}`}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m10 6 6 6-6 6" />
+            </svg>
+          </button>
+        )}
+      </div>
+    )}
+    {/* All slides remain in editorial order in the static fallback. */}
+    <div class="carousel-list">
+      {items.map((item, index) => (
+        <ImageCarouselSlide
+          id={`${slideIdPrefix}-${item.id}`}
+          item={item}
+          index={index}
+          total={items.length}
+          itemLabel={itemLabel}
+          options={options}
+        />
+      ))}
+    </div>
+    {/* Only manual changes need a polite announcement. */}
+    {options.manualNavigation && (arrows || circles) && (
+      <span class="sr-only" role="status" aria-atomic="true"></span>
+    )}
+  </image-carousel>
+)}
+
+<script>
+  // Astro bundles this browser-only module once for all carousel instances.
+  import './image-carousel';
+</script>
+
+<style>
+  /* Anchor overlaid controls and share their spacing with slide content. */
+  .image-carousel {
+    display: block;
+    min-width: 0;
+    position: relative;
+    --arrow-size: clamp(44px, 4vw, 56px);
+    --control-inset: clamp(0.5rem, 2vw, 1.5rem);
+    --control-gap: clamp(12px, 1rem, 20px);
+  }
+
+  /* Stack enabled slides in editorial order. */
+  .carousel-list {
+    display: grid;
+  }
+
+  /* Overlay navigation without blocking pointer access to the slide. */
+  .carousel-controls {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    color: var(--color-base-content);
+  }
+
+  /* Reveal navigation only when the script has initialized all slides. */
+  .carousel-controls[hidden] {
+    display: none;
+  }
+
+  /* Wrap item circles while preserving generous dot targets. */
+  .carousel-dots {
+    position: absolute;
+    bottom: var(--control-inset);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: max-content;
+    max-width: calc(100% - 2 * var(--control-inset));
+    pointer-events: auto;
+  }
+
+  /* Make arrows and dots comfortably reachable with pointer or touch. */
+  .carousel-arrow,
+  .carousel-dot {
+    display: grid;
+    place-items: center;
+    width: var(--arrow-size);
+    height: var(--arrow-size);
+    flex: 0 0 auto;
+    padding: 0;
+    border-radius: 50%;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  /* Center circular arrows at the edges with a solid image-independent base. */
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-base-100);
+    border: 1px solid var(--site-control-border);
+    pointer-events: auto;
+  }
+
+  /* Leave only the marker visible within each generous indicator target. */
+  .carousel-dot {
+    background: transparent;
+    border: 0;
+    color: #fff;
+  }
+
+  /* Place previous navigation inside the left image edge. */
+  .carousel-arrow[data-direction='-1'] {
+    left: var(--control-inset);
+  }
+
+  /* Place next navigation inside the right image edge. */
+  .carousel-arrow[data-direction='1'] {
+    right: var(--control-inset);
+  }
+
+  /* Hide mouse arrows without removing their keyboard destinations. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Fade hidden arrows while preventing invisible pointer activation. */
+    .carousel-arrow {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+
+    /* Reveal controls for pointer presence and native keyboard focus. */
+    .image-carousel:hover .carousel-arrow,
+    .image-carousel:focus-within .carousel-arrow {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  /* Remove hover reveal motion when the visitor requests reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Switch arrow visibility immediately while preserving navigation. */
+    .carousel-arrow {
+      transition: none;
+    }
+  }
+
+  /* Draw local directional icons with strong contrast. */
+  .carousel-arrow svg {
+    width: min(1.5rem, 28px);
+    height: min(1.5rem, 28px);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Draw a circular position marker inside each generous target. */
+  .carousel-dot span {
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    filter: drop-shadow(-1px 0 0 #000) drop-shadow(1px 0 0 #000)
+      drop-shadow(0 -1px 0 #000) drop-shadow(0 1px 0 #000);
+  }
+
+  /* Fill the current marker without changing any circle's radius. */
+  .carousel-dot[aria-current] span {
+    background: currentColor;
+  }
+
+  /* Give pointer feedback without moving controls. */
+  .carousel-arrow:hover {
+    background: var(--color-base-200);
+  }
+
+  /* Keep focus readable over bright and dark image areas. */
+  .carousel-arrow:focus-visible,
+  .carousel-dot:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 8px #000;
+  }
+
+  /* Passive circles show position without implying a click target. */
+  span.carousel-dot {
+    cursor: default;
+    pointer-events: none;
+    width: 1.75rem;
+    height: 2rem;
+  }
+
+  /* Static galleries separate images when no navigation is available. */
+  .image-carousel[data-layout='panel']:not([data-ready]) .carousel-list {
+    gap: 1rem;
+  }
+
+  /* Disabled animation also disables hover fades without hiding controls. */
+  .image-carousel[data-animation='false'] .carousel-arrow {
+    transition: none;
+  }
+</style>

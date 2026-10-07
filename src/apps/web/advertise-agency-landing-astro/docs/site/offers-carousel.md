@@ -436,3 +436,17 @@ stock is not agency work. No commit or deployment was made.
   https://commons.wikimedia.org/wiki/File:IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg
 [source-4]:
   https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg/1280px-IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg
+
+## Shared component extraction (task 038)
+
+OffersCarousel now supplies its existing data and configuration to
+[ImageCarousel](image-carousel.md). The outer `offers` section anchor and
+`offer-ID` slide anchors remain. Implementation classes/data selectors
+are now `image-carousel`, `carousel-*`, and `data-item-id` inside
+`#offers-carousel`; older verification helpers using `offer-*` selectors
+need this mapping. The JSON content contract is unchanged.
+
+The same component powers About with passive circles and image-only
+slides. Optional features are controlled per instance; reduced motion
+and no-navigation fallbacks expose static content rather than stranding
+images. Current behavior and verification are recorded in task 038.

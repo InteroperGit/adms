@@ -1,0 +1,44 @@
+{
+  "options": {
+    "enabled": true,
+    "autoplay": true,
+    "intervalMs": 7000,
+    "manualNavigation": false,
+    "arrows": false,
+    "circles": true,
+    "descriptions": false,
+    "buttons": false,
+    "animation": true,
+    "layout": "panel",
+    "imageFit": "contain",
+    "aspectRatio": 1.3333333333333333,
+    "eagerFirst": false
+  },
+  "items": [
+    {
+      "id": 1,
+      "enabled": true,
+      "image": "/src/assets/services/svetovye-bukvy-demo.png",
+      "imageAlt":
+      "Демонстрационная иллюстрация световых букв, не работа агентства",
+      "imageWidth": 1200,
+      "imageHeight": 900
+    },
+    {
+      "id": 2,
+      "enabled": true,
+      "image": "/src/assets/services/neon-demo.png",
+      "imageAlt": "Демонстрационная иллюстрация неона, не работа агентства",
+      "imageWidth": 1200,
+      "imageHeight": 900
+    },
+    {
+      "id": 3,
+      "enabled": true,
+      "image": "/src/assets/services/vyveski-demo.png",
+      "imageAlt": "Демонстрационная иллюстрация вывески, не работа агентства",
+      "imageWidth": 1200,
+      "imageHeight": 900
+    }
+  ]
+}

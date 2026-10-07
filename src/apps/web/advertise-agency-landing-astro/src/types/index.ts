@@ -31,3 +31,11 @@ export type {
   PricingExample,
   PricingContent,
 } from "./pricing";
+
+export type {
+  CarouselItem,
+  CarouselOptions,
+  CarouselContent,
+  CarouselPresentation,
+  CarouselFocalPoint,
+} from './image-carousel';
