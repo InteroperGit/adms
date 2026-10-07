@@ -76,3 +76,21 @@ Evidence scripts and screenshots are under ignored
 `output/playwright/task-022/`. Doubled root text is not native browser zoom;
 screen-reader speech, actual deployed service/abuse protection and real mailbox
 receipt remain unverified. Task 022 remains in todo until delivery acceptance.
+
+
+## Form presentation update - 2026-10-08
+
+The inquiry now uses a centered panel up to 56rem wide, with a neutral
+border, contrasting input surfaces, larger controls, and explicit focus
+outlines. Consent and privacy are separated from the writing area;
+status feedback has its own readable surface. Name/email share a desktop
+row, while phone/message span the form. Narrow screens stack all fields
+and use a full-width submit action.
+
+Field identities, copy, validation, consent, and submission configuration
+are unchanged. Delivery remains disabled. Type check and production build
+pass. Browser checks pass in both themes at 320/768/1440px with normal and
+doubled text, including keyboard focus, labels/hints, policy navigation,
+no-JavaScript protection, and disabled Enter submission (64 checks).
+Evidence is in output/playwright/inquiry-design/. External demo images
+were isolated from the local form checks; no delivery endpoint was enabled.

@@ -35,7 +35,7 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
       data-feedback={JSON.stringify(content.feedback)}
       aria-describedby="inquiry-required inquiry-status"
     >
-      <p id="inquiry-required" class="inquiry-note">
+      <p id="inquiry-required" class="inquiry-note inquiry-required">
         {content.requiredNote}
       </p>
       {/*
@@ -45,7 +45,12 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
         {inputs.map(({ key, type, autocomplete }) => {
           const field = content.fields[key];
           return (
-            <div class="inquiry-field">
+            <div
+              class:list={[
+                'inquiry-field',
+                { 'inquiry-phone': key === 'phone' },
+              ]}
+            >
               <label for={`inquiry-${key}`}>
                 {field.label}{' '}
                 {field.required && <span aria-hidden="true">*</span>}
@@ -151,22 +156,32 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
 </script>
 
 <style>
-  /* Let the writing area fill the section and wrap long content. */
+  /* A centered measure makes the form read as one focused writing area. */
   .inquiry {
-    display: grid;
-    gap: 2rem;
-    align-items: start;
+    max-width: 56rem;
+    margin-inline: auto;
     overflow-wrap: anywhere;
   }
 
-  /* Keep form content within its column with no decorative panel. */
+  /* Distinguish the form surface from surrounding section content. */
   .inquiry-form {
     min-width: 0;
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-panel);
+    background: var(--color-base-200);
+    box-shadow: var(--shadow-panel);
   }
 
-  /* Group inputs without a competing fieldset frame. */
+  /* Required-field guidance introduces the form without competing labels. */
+  .inquiry-required {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-base-300);
+  }
+
+  /* Keep native protected fieldset behavior within a responsive grid. */
   .inquiry-fields {
     min-width: 0;
     display: grid;
@@ -176,26 +191,32 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
     margin: 0;
   }
 
-  /* Keep every label, hint and associated error beside its control. */
+  /* Keep labels, controls, hints, and errors in a readable vertical rhythm. */
   .inquiry-field {
     min-width: 0;
     display: grid;
-    gap: 0.5rem;
+    gap: 0.625rem;
     align-content: start;
   }
 
-  /* Visible labels lead each writing area. */
+  /* Strong labels help visitors scan the information they need to provide. */
   .inquiry-field label {
     font-weight: 600;
+    color: var(--color-base-content);
   }
 
-  /* Theme-aware boundaries make writable fields recognizable. */
+  /* The brand-colored required marker stays distinct from the field label. */
+  .inquiry-field label span {
+    color: var(--color-primary);
+  }
+
+  /* Contrasting surfaces and ample height identify writable controls. */
   .inquiry-field input,
   .inquiry-field textarea {
     min-width: 0;
     width: 100%;
-    min-height: 2.75rem;
-    padding: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0.875rem 1rem;
     border: 1px solid var(--site-control-border);
     border-radius: var(--radius-field);
     background: var(--color-base-100);
@@ -203,39 +224,46 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
     font: inherit;
   }
 
-  /* Permit longer descriptions to grow vertically without widening. */
+  /* A clear focus outline keeps the active field easy to locate. */
+  .inquiry-field input:focus-visible,
+  .inquiry-field textarea:focus-visible {
+    border-color: var(--color-primary);
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Let visitors enlarge the message vertically without widening the form. */
   .inquiry-field textarea {
+    min-height: 10rem;
     resize: vertical;
   }
 
-  /* Reinforce errors with text and a thicker boundary. */
+  /* Reinforce validation with a boundary and its associated error text. */
   .inquiry-field [aria-invalid='true'] {
     border: 2px solid var(--color-primary);
   }
 
-  /* Instructions use the existing accessible muted color. */
+  /* Hints stay secondary while meeting the shared theme contrast baseline. */
   .inquiry-note {
     color: var(--site-muted);
     font-size: 0.875rem;
+    line-height: 1.6;
   }
 
-  /* Error text remains readable in both themes. */
+  /* Error text remains legible and distinct in both themes. */
   .inquiry-error {
     color: var(--color-primary);
     font-weight: 600;
   }
 
-  /* Delivery feedback keeps a stable place below the action. */
-  .inquiry-status {
-    min-height: 1.6em;
-  }
-
-  /* Policy agreement spans the writing area in every delivery state. */
+  /* A separate agreement area marks the transition from writing to sending. */
   .inquiry-consent {
     grid-column: 1 / -1;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-base-300);
   }
 
-  /* Keep the native checkbox and wrapping consent text easy to target. */
+  /* Keep the checkbox and wrapping agreement text one generous target. */
   .inquiry-consent-label {
     display: flex;
     gap: 0.75rem;
@@ -243,7 +271,7 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
     min-height: 2.75rem;
   }
 
-  /* A generous checkbox aligns with the first line of consent. */
+  /* Align the native checkbox with the first consent line. */
   .inquiry-consent-label input {
     flex: 0 0 auto;
     width: 1.5rem;
@@ -252,46 +280,73 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
     accent-color: var(--color-primary);
   }
 
-  /* Allow long action copy to wrap instead of overflowing. */
-  .inquiry-submit {
-    width: fit-content;
-    max-width: 100%;
-    height: auto;
-    min-height: 2.75rem;
-    padding-block: 0.75rem;
-    white-space: normal;
-  }
-
-  /* Disabled delivery stays legible rather than fading the message. */
-  .inquiry-submit:disabled {
-    background: var(--color-base-200);
-    color: var(--site-muted);
-    border-color: var(--site-control-border);
-    opacity: 1;
-  }
-
-  /* Underlines and generous targets identify the policy link. */
+  /* Align the related privacy link with the consent text. */
   .inquiry-link {
     display: flex;
     align-items: center;
     width: fit-content;
-    max-width: 100%;
+    max-width: calc(100% - 2.25rem);
+    margin-left: 2.25rem;
     min-height: 2.75rem;
     color: var(--color-primary);
     text-decoration: underline;
     text-underline-offset: 0.2em;
   }
 
-  /* Wider layouts pair name/email while keeping the message full-width. */
+  /* A full-width mobile action makes the form's final step unmistakable. */
+  .inquiry-submit {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 3.25rem;
+    padding: 0.875rem 1.5rem;
+    white-space: normal;
+    font-size: 1rem;
+  }
+
+  /* Disabled sending stays readable and visibly unavailable. */
+  .inquiry-submit:disabled {
+    background: var(--color-base-300);
+    color: var(--color-base-content);
+    border-color: var(--site-control-border);
+    opacity: 1;
+    box-shadow: none;
+  }
+
+  /* Delivery feedback is a distinct, readable part of the form footer. */
+  .inquiry-status {
+    min-height: 1.6em;
+    padding: 1rem;
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    color: var(--site-muted);
+  }
+
+  /* Empty live feedback reserves room without showing an empty panel. */
+  .inquiry-status:empty {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  /* Pair short contact fields only when their labels fit comfortably. */
   @media (min-width: 48rem) {
-    /* Pair short fields without fixing their intrinsic width. */
+    /* Name and email share a row in the bounded form panel. */
     .inquiry-fields {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    /* A description needs the full form width. */
+    /* Phone and project description avoid an unfinished half-width row. */
+    .inquiry-phone,
     .inquiry-message {
       grid-column: 1 / -1;
+    }
+
+    /* Keep the desktop submission action aligned to the form's left edge. */
+    .inquiry-submit {
+      width: fit-content;
+      min-width: 14rem;
     }
   }
 </style>
