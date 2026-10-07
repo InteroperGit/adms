@@ -1,0 +1,418 @@
+---
+// A single service request form with common contacts and lettering details.
+// Reuse the configured receipt-based delivery handler; no fake success state.
+import { orderInquiry } from '@/content/order-inquiry';
+
+interface Props {
+  projectId: number;
+}
+
+const { projectId } = Astro.props;
+const prefix = 'led-letters';
+const { submission, feedback } = orderInquiry;
+const fields = [
+  { name: 'name', label: 'Ваше имя', type: 'text', required: true,
+    autocomplete: 'name', limit: 120 },
+  { name: 'phone', label: 'Телефон', type: 'tel', required: true,
+    autocomplete: 'tel', limit: 40 },
+  { name: 'email', label: 'Email', type: 'email', required: false,
+    autocomplete: 'email', limit: 254 },
+  { name: 'company', label: 'Компания', type: 'text', required: false,
+    autocomplete: 'organization', limit: 120 },
+  { name: 'signText', label: 'Текст вывески', type: 'text', required: false,
+    autocomplete: 'off', limit: 300 },
+  { name: 'widthCm', label: 'Общая ширина, см', type: 'number',
+    required: false, autocomplete: 'off', limit: undefined },
+  { name: 'letterHeightCm', label: 'Высота букв, см', type: 'number',
+    required: false, autocomplete: 'off', limit: undefined },
+  { name: 'address', label: 'Адрес установки', type: 'text', required: false,
+    autocomplete: 'street-address', limit: 300 },
+  { name: 'facade', label: 'Материал и цвет фасада', type: 'text',
+    required: false, autocomplete: 'off', limit: 300 },
+  { name: 'deadline', label: 'Желаемый срок', type: 'date', required: false,
+    autocomplete: 'off', limit: undefined },
+  { name: 'budget', label: 'Ориентир по бюджету, ₽', type: 'number',
+    required: false, autocomplete: 'off', limit: undefined },
+  { name: 'fileLink', label: 'Ссылка на логотип или фото фасада', type: 'url',
+    required: false, autocomplete: 'url', limit: 2000 },
+] as const;
+const choices = [
+  { name: 'lighting', label: 'Подсветка', options: [
+    ['advice', 'Нужна помощь с выбором'], ['front', 'Лицевая подсветка'],
+    ['halo', 'Контражур'], ['combined', 'Комбинированная'],
+  ] },
+  { name: 'installation', label: 'Нужен ли монтаж?', options: [
+    ['advice', 'Нужно обсудить'], ['yes', 'Да'], ['no', 'Нет'],
+  ] },
+  { name: 'power', label: 'Питание рядом с вывеской', options: [
+    ['unknown', 'Нужно проверить на замере'],
+    ['available', 'Есть'], ['needed', 'Нужно подвести'],
+  ] },
+  { name: 'contactMethod', label: 'Как с вами связаться?', options: [
+    ['phone', 'По телефону'], ['email', 'По email'],
+  ] },
+];
+const statusId = `${prefix}-status`;
+// Group by the customer's decisions while preserving field names/payloads.
+const groups = [
+  {
+    title: 'Контакты',
+    hint: 'Кому и каким способом ответить на заявку.',
+    fields: ['name', 'phone', 'email', 'company'],
+    choices: ['contactMethod'],
+    message: false,
+  },
+  {
+    title: 'Параметры вывески',
+    hint: 'Укажите известные размеры или оставьте их для замера.',
+    fields: ['signText', 'widthCm', 'letterHeightCm', 'fileLink'],
+    choices: ['lighting'],
+    message: false,
+  },
+  {
+    title: 'Установка и пожелания',
+    hint: 'Где разместить вывеску, когда она нужна и что важно учесть.',
+    fields: ['address', 'facade', 'deadline', 'budget'],
+    choices: ['installation', 'power'],
+    message: true,
+  },
+];
+---
+
+{/* Keep the lettering service explicit even on a different project page. */}
+<section id={prefix} class="letter-order" aria-labelledby={`${prefix}-title`}>
+  <h2 id={`${prefix}-title`}>Заказать световые буквы</h2>
+  <p class="form-intro">
+    Расскажите о будущей вывеске. Размеры и технические детали можно
+    уточнить на замере. Обязательны только имя, телефон и согласие.
+  </p>
+  <form
+    method="post"
+    data-led-letters
+    data-enabled={String(submission.enabled)}
+    data-endpoint={submission.endpoint}
+    data-timeout={submission.timeoutMs}
+    data-feedback={JSON.stringify({
+      ...feedback,
+      unavailable: 'Отправка пока недоступна. Свяжитесь с нами через контакты.',
+    })}
+    aria-describedby={statusId}
+  >
+    {/* Service and case context are submitted with the customer's fields. */}
+    <input type="hidden" name="serviceId" value="svetovye-bukvy" />
+    <input type="hidden" name="projectId" value={projectId} />
+    <fieldset class="letter-fields">
+      <legend class="sr-only">Контакты и параметры световых букв</legend>
+      {/* Native group legends explain each step to all form users. */}
+      {groups.map((group) => (
+        <fieldset class="letter-group">
+          <legend>{group.title}</legend>
+          <p class="group-hint">{group.hint}</p>
+          <div class="group-fields">
+            {fields.filter((field) => group.fields.includes(field.name))
+              .map((field) => (
+                <div class="letter-field">
+                  <label for={`${prefix}-${field.name}`}>
+                    {field.label}
+                    <span data-requirement={field.name}>
+                      {field.required ? ' *' : ' (необязательно)'}
+                    </span>
+                  </label>
+                  <input
+                    id={`${prefix}-${field.name}`}
+                    name={field.name}
+                    type={field.type}
+                    required={field.required}
+                    autocomplete={field.autocomplete}
+                    maxlength={field.limit}
+                    min={field.type === 'number' ? 1 : undefined}
+                    step={field.type === 'number' ? 'any' : undefined}
+                    aria-describedby={`${prefix}-${field.name}-error`}
+                  />
+                  <p
+                    id={`${prefix}-${field.name}-error`}
+                    class="field-error"
+                    hidden
+                  />
+                </div>
+              ))}
+            {/* Advice options cover unknown specifications. */}
+            {choices.filter((field) => group.choices.includes(field.name))
+              .map((field) => (
+                <div class="letter-field">
+                  <label for={`${prefix}-${field.name}`}>{field.label}</label>
+                  <select
+                    id={`${prefix}-${field.name}`}
+                    name={field.name}
+                    aria-describedby={`${prefix}-${field.name}-error`}
+                  >
+                    {field.options.map(([value, label]) => (
+                      <option value={value}>{label}</option>
+                    ))}
+                  </select>
+                  <p
+                    id={`${prefix}-${field.name}-error`}
+                    class="field-error"
+                    hidden
+                  />
+                </div>
+              ))}
+            {group.message && <div class="letter-field full-width">
+              <label for={`${prefix}-message`}>Пожелания (необязательно)</label>
+              <textarea
+                id={`${prefix}-message`}
+                name="message"
+                rows="4"
+                maxlength="5000"
+                aria-describedby={`${prefix}-message-error`}
+              />
+              <p id={`${prefix}-message-error`} class="field-error" hidden />
+            </div>}
+          </div>
+        </fieldset>
+      ))}
+      {/* Consent stays explicit and is never checked automatically. */}
+      <div class="full-width">
+        <label class="letter-consent" for={`${prefix}-consent`}>
+          <input
+            id={`${prefix}-consent`}
+            name="consent"
+            type="checkbox"
+            required
+            aria-describedby={`${prefix}-consent-error`}
+          />
+          <span>Согласен на обработку персональных данных *</span>
+        </label>
+        <p class="legal-links">
+          <a href="/privacy-policy">Политика конфиденциальности</a>
+          <a href="/terms-of-use">Согласие на обработку</a>
+        </p>
+        <p id={`${prefix}-consent-error`} class="field-error" hidden />
+      </div>
+    </fieldset>
+    {/* Initialization enables delivery only when a real endpoint is set. */}
+    <button class="btn btn-primary site-button" type="submit" disabled>
+      Отправить заявку на световые буквы
+    </button>
+    <p id={statusId} role="status" aria-live="polite" aria-atomic="true">
+      {submission.enabled ? '' : 'Отправка пока недоступна.'}
+    </p>
+    <a href="/#contacts">Связаться с агентством</a>
+    <noscript>
+      Для отправки включите JavaScript или свяжитесь с агентством.
+    </noscript>
+  </form>
+</section>
+
+<script>
+  import { initializeInquiry } from '../sections/order-inquiry';
+
+  // Install validation before enabling configured submission.
+  document.querySelectorAll<HTMLFormElement>('[data-led-letters]')
+    .forEach(form => {
+      // Require an email only when it is the chosen contact channel.
+      const method = form.elements.namedItem('contactMethod');
+      const email = form.elements.namedItem('email');
+      if (method instanceof HTMLSelectElement
+        && email instanceof HTMLInputElement) {
+        const updateContact = () => {
+          email.required = method.value === 'email';
+          const requirement = form.querySelector('[data-requirement="email"]');
+          if (requirement) {
+            requirement.textContent = email.required
+              ? ' *' : ' (необязательно)';
+          }
+        };
+        method.addEventListener('change', updateContact);
+        // Reset events fire before native field values return to defaults.
+        form.addEventListener('reset', () => queueMicrotask(updateContact));
+        updateContact();
+      }
+      initializeInquiry(form);
+    });
+</script>
+
+<style>
+  /* Separate the request from finished-work photos using the case rhythm. */
+  .letter-order {
+    margin-top: clamp(2rem, 5vw, 4rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-base-300);
+    scroll-margin-top: 6rem;
+  }
+
+  /* Match every other case section heading. */
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  /* Explain the short required path before asking technical questions. */
+  .form-intro {
+    max-width: var(--site-reading-width);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  /* A themed panel clearly identifies the writable request area. */
+  form {
+    display: grid;
+    min-width: 0;
+    gap: 1.5rem;
+    padding: clamp(1rem, 3vw, 2rem);
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-field);
+    background: var(--color-base-200);
+  }
+
+  /* Keep the three field groups distinct from consent and submission. */
+  .letter-fields {
+    display: grid;
+    gap: 2rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  /* Each native group uses a quiet divider rather than another card. */
+  .letter-group {
+    min-width: 0;
+    margin: 0;
+    padding: 1rem 0 0;
+    border: 0;
+    border-top: 1px solid var(--site-control-border);
+  }
+
+  /* Prominent legends make the form's topics easy to recognize. */
+  .letter-group legend {
+    padding-inline-end: 1rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  /* One short instruction introduces each topic before its controls. */
+  .group-hint {
+    margin-bottom: 1rem;
+    color: var(--site-muted);
+    line-height: 1.5;
+  }
+
+  /* Mobile fields follow their group heading in a single reading column. */
+  .group-fields {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  /* Labels and associated errors stay close to each control. */
+  .letter-field {
+    display: grid;
+    gap: 0.5rem;
+    min-width: 0;
+    align-content: start;
+  }
+
+  /* Give input labels the site's factual emphasis. */
+  .letter-field label {
+    font-weight: 600;
+  }
+
+  /* Shared themed inputs retain a comfortable keyboard and touch target. */
+  .letter-field input,
+  .letter-field select,
+  .letter-field textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 0.75rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    color: var(--color-base-content);
+    font: inherit;
+  }
+
+  /* Text can grow vertically without widening the page. */
+  textarea {
+    resize: vertical;
+  }
+
+  /* Explicit errors complement color with readable text. */
+  .field-error {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  /* Keyboard focus remains visible on all form controls. */
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Consent wraps alongside a stable checkbox target. */
+  .letter-consent {
+    display: flex;
+    align-items: start;
+    gap: 0.75rem;
+    line-height: 1.5;
+  }
+
+  /* Preserve the checkbox size when its label wraps. */
+  .letter-consent input {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    accent-color: var(--color-primary);
+  }
+
+  /* Legal links wrap rather than stretching narrow screens. */
+  .legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 0.75rem;
+  }
+
+  /* Underlines identify native destinations without JavaScript. */
+  a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* A long action label stays legible at mobile widths. */
+  button {
+    width: fit-content;
+    max-width: 100%;
+    height: auto;
+    min-height: 44px;
+    padding-block: 0.75rem;
+    white-space: normal;
+  }
+
+  /* Unavailable sending stays readable without suggesting an active action. */
+  button:disabled {
+    background: var(--color-base-200);
+    color: var(--site-muted);
+    border-color: var(--site-control-border);
+    opacity: 1;
+  }
+
+  /* Pair short fields when the page has room for two readable columns. */
+  @media (min-width: 48rem) {
+    /* Avoid fixed field widths and allow enlarged text to wrap. */
+    .group-fields {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Message and consent need the full reading area. */
+    .full-width {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

@@ -1,5 +1,57 @@
 # Current work
 
+- Tasks 035-037, including 036a/036b, are in fixed/20261007.
+- Archived at user request; plan and task links updated.
+- Production evidence, photo approvals, and live delivery remain pending.
+
+- Task 037 technically verified and archived on 2026-10-07.
+- Archive: docs/codex/fixed/20261007/037-case-study-verification.md.
+- 133 fixture/schema, 383 main-browser and 90 fixture-browser checks pass.
+- 29 surrounding regressions, grouped form tests and 224 links pass.
+- Fixed conditional email requirement label; reset verified.
+- Final Astro check/build and source/diff checks pass.
+- Evidence: output/playwright/task-037/; text contrast >= 5.55:1.
+- Picsum failed to decode; local diagrams loaded. URLs retained by request.
+- Genuine case approvals and live delivery remain separate dependencies.
+
+
+- Task 036b created 2026-10-07: service-specific order forms.
+- Task: docs/codex/fixed/20261007/036b-service-specific-order-forms.md.
+- User scope: LedLetters only, after final results on case study pages.
+- LedLetters implemented with contact/service fields and case context.
+- Astro check/build and 18 responsive/theme browser cases passed.
+- Simulated validation, failure, duplicate prevention and retry passed.
+- Live delivery remains disabled: endpoint/approved consent not configured.
+- Task 036b archived at user request; evidence: output/playwright/task-036b/.
+
+
+- Task 036a completed and archived on 2026-10-07.
+- Archive: docs/codex/fixed/20261007/036a-case-study-manufacturing-and-installation.md.
+- Optional process text/images and empty-section omission implemented.
+- Full copy and local diagrams supplied for all three development projects.
+- 14 schema checks, 80 rendering checks, 18 browser cases passed.
+- Astro check/build, source style and encoding checks passed.
+- Evidence: output/playwright/task-036a/; no-JavaScript navigation passed.
+- Task 037 technical verification complete; genuine agency acceptance open.
+
+
+- Tasks 035-037 archived in fixed/20261007 at user request.
+- Task 035: docs/codex/fixed/20261007/035-case-study-content-and-evidence.md.
+- Task 036: docs/codex/fixed/20261007/036-expanded-case-study-pages.md.
+- Task 037: docs/codex/fixed/20261007/037-case-study-verification.md.
+- Task 035 technical implementation verified in a subagent on 2026-10-07.
+- Preserved IDs 1-3 as labelled text-only demos; unsupported claims removed.
+- Structured evidence/photos/details and shared publication rules implemented.
+- 34 fixtures, Astro check/build and generated HTML/link checks passed.
+- Evidence: output/task-035/verify.mjs; handoff: docs/site/case-studies.md.
+- Task 035 archived; real records, approvals and photo rights still needed.
+- Task 036 implemented and technically checked on 2026-10-07.
+- Expanded details, static captioned photos and inquiry actions implemented.
+- 32 generated fixture checks and focused responsive/navigation checks pass.
+- Evidence: output/playwright/task-036/; source data unchanged.
+- Task 036 archived; agency acceptance remains open; task 037 verified.
+- Changes for tasks 035-036 remain uncommitted.
+
 - Task 034 completed and archived on 2026-10-07.
 - Archive: docs/codex/fixed/20261007/034-pricing-examples-verification.md.
 - Pricing demo passed six light/dark viewport cases and enlarged-text checks.

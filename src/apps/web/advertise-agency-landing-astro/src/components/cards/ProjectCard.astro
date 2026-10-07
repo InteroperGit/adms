@@ -4,6 +4,7 @@
 // The hidden title suffix distinguishes repeated detail-action labels.
 
 import type { Project } from '@/types';
+import ProjectPhoto from '@/components/ui/ProjectPhoto.astro';
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -11,24 +12,24 @@ export interface Props {
 }
 
 const { project } = Astro.props;
+const photo = project.photos[0];
 ---
 
 {/* The hidden title suffix distinguishes repeated detail-action labels. */}
 <article class="project-card">
-  <figure class="project-image">
-    <img
-      src={project.image}
-      alt={project.imageAlt}
-      width={project.imageWidth}
-      height={project.imageHeight}
-      loading="lazy"
-      decoding="async"
-    />
-  </figure>
+  {/* Missing photos produce text-only cards; demos retain their notice. */}
+  {photo && (
+    <ProjectPhoto photo={photo} thumbnail />
+  )}
   {/* Keep attribution and summary beside the uniquely named detail link. */}
   <div class="project-copy">
     <h3>{project.title}</h3>
-    <p class="project-client">Клиент: {project.client}</p>
+    {/* Demo status remains visible beside the copy it qualifies. */}
+    {project.notice && <p>{project.notice}</p>}
+    <p class="project-client">
+      {project.status === 'demo' ? 'Для бизнеса' : 'Клиент'}:
+      {project.client}
+    </p>
     <p class="project-summary">{project.shortDescription}</p>
     <a class="project-link" href={`/projects/${project.id}`}>
       Подробнее<span class="sr-only">: {project.title}</span>
@@ -56,22 +57,6 @@ const { project } = Astro.props;
     background: var(--color-base-100);
     border: 1px solid var(--color-base-300);
     border-radius: var(--radius-field);
-  }
-
-  /* Reserve stable image space with matching top corners. */
-  .project-image {
-    margin: 0;
-    aspect-ratio: 3 / 2;
-    background: var(--color-base-200);
-    overflow: hidden;
-    border-radius: var(--radius-field) var(--radius-field) 0 0;
-  }
-
-  /* Fill the reserved project frame with its existing crop. */
-  .project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 
   /* Let project copy grow while keeping its action at the end. */
