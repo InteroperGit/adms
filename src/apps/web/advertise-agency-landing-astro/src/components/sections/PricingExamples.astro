@@ -1,0 +1,124 @@
+---
+// Render eligible pricing scopes and shared estimate guidance as static HTML.
+// Empty collections omit the section. The loader owns demo/approval gates;
+// this section owns visible demo disclosure and the section heading.
+import PricingExample from '@/components/cards/PricingExample.astro';
+import { pricing, visiblePricingExamples } from '@/content/pricing';
+---
+
+{visiblePricingExamples.length > 0 && (
+  <section
+    id="pricing"
+    class="site-section pricing"
+    aria-labelledby="pricing-heading"
+  >
+    <div class="site-container">
+      {/* Explain the examples and disclose their demonstration status. */}
+      <div class="pricing-introduction">
+        <h2 id="pricing-heading" class="site-section-title">
+          {pricing.heading}
+        </h2>
+        <p class="pricing-summary">{pricing.introduction}</p>
+        {pricing.demoMode && (
+          <p class="pricing-demo">{pricing.demoNotice}</p>
+        )}
+      </div>
+      {/* Every complete scope includes its own adjacent inquiry link. */}
+      <div class="pricing-examples">
+        {visiblePricingExamples.map((example) => (
+          <PricingExample
+            example={example}
+            demoPriceLabel={pricing.demoPriceLabel}
+            inquiryLabel={pricing.inquiryLabel}
+          />
+        ))}
+      </div>
+      {/* Answer cost questions immediately after the example comparisons. */}
+      <div class="pricing-guidance">
+        <div>
+          <h3 class="pricing-guidance-heading">
+            {pricing.costFactors.heading}
+          </h3>
+          <ul class="pricing-factors">
+            {pricing.costFactors.items.map((factor) => <li>{factor}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h3 class="pricing-guidance-heading">
+            {pricing.estimateGuidance.heading}
+          </h3>
+          <p class="pricing-estimate">{pricing.estimateGuidance.text}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  /* Align the section introduction with example photos and specifications. */
+  .pricing-introduction {
+    max-width: var(--site-reading-width);
+    margin-bottom: 2rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep this comparison section's title on the common left reading edge. */
+  .pricing .site-section-title {
+    text-align: left;
+  }
+
+  /* Introduce the dataset without competing with individual prices. */
+  .pricing-summary {
+    color: var(--site-muted);
+    font-size: 1.125rem;
+  }
+
+  /* Keep the fictional-content notice prominent above all example amounts. */
+  .pricing-demo {
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-primary);
+    font-weight: 600;
+  }
+
+  /* Separate shared estimate guidance from the final example. */
+  .pricing-guidance {
+    display: grid;
+    gap: 2rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--site-control-border);
+    overflow-wrap: anywhere;
+  }
+
+  /* Make the two practical buyer questions easy to locate. */
+  .pricing-guidance-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* Present each cost factor as a readable native list item. */
+  .pricing-factors {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+    color: var(--site-muted);
+  }
+
+  /* Keep the custom-estimate explanation close to its heading. */
+  .pricing-estimate {
+    margin-top: 1rem;
+    color: var(--site-muted);
+    max-width: 48ch;
+  }
+
+  /* Pair the questions only when each has a useful reading width. */
+  @media (min-width: 64rem) {
+    /* Share space equally between cost factors and next-step guidance. */
+    .pricing-guidance {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3rem;
+    }
+  }
+</style>

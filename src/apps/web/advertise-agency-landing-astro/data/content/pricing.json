@@ -1,0 +1,156 @@
+{
+  "demoMode": true,
+  "demoNotice":
+    "Демо: примеры, цены и изображения вымышлены. Это не работы агентства.",
+  "demoPriceLabel": "Вымышленная цена для демонстрации",
+  "heading": "Примеры стоимости",
+  "introduction":
+    "Сравните состав трёх условных заказов. Реальная цена требует расчёта.",
+  "copyApproved": false,
+  "approvalSource": null,
+  "costFactors": {
+    "heading": "Что может влиять на расчёт",
+    "items": [
+      "Размер конструкции и количество отдельных элементов.",
+      "Материалы, вид подсветки и сложность макета.",
+      "Условия крепления, высота и доступ к месту установки.",
+      "Подготовка электропитания и дополнительные работы на объекте."
+    ]
+  },
+  "estimateGuidance": {
+    "heading": "Когда нужен индивидуальный расчёт",
+    "text":
+      "Для расчёта опишите размеры, материалы и место установки."
+  },
+  "inquiryLabel": "Обсудить похожий заказ",
+  "items": [
+    {
+      "id": "letters-demo",
+      "title": "Световые буквы на фасаде",
+      "description": "Условная вывеска из шести букв на монтажной раме.",
+      "dimensions": "Общая ширина 2,4 м; высота букв 0,4 м; глубина 0,08 м.",
+      "materials": ["Акриловая лицевая часть", "ПВХ", "Светодиодные модули"],
+      "includedWork": [
+        "Подготовка макета по готовому названию.",
+        "Изготовление шести букв и монтажной рамы.",
+        "Установка на доступном фасаде и проверка подсветки."
+      ],
+      "exclusions": [
+        "Подвод электропитания к месту вывески.",
+        "Подъёмная техника и согласование размещения."
+      ],
+      "source": "Original fictional demo brief for task 032; no agency input",
+      "price": {
+        "type": "range",
+        "min": 65000,
+        "max": 85000,
+        "currency": "RUB",
+        "context": "demo",
+        "asOf": null,
+        "conditions": "Условные суммы для указанного состава, не предложение."
+      },
+      "approval": {
+        "specifications": false,
+        "copy": false,
+        "price": false,
+        "reference": null,
+        "verifiedAt": null
+      },
+      "image": {
+        "src": "/src/assets/services/svetovye-bukvy-demo.png",
+        "alt": "Демо-иллюстрация световых букв; не фото работы агентства.",
+        "width": 1200,
+        "height": 900,
+        "source": "svetovye-bukvy-demo.svg; original site demo artwork",
+        "projectContext": "Category illustration; not the specified project",
+        "publicationPermission": "Original site demo artwork; reused for demo",
+        "approved": false,
+        "desktopFocalPoint": { "x": 50, "y": 50 },
+        "mobileFocalPoint": { "x": 50, "y": 50 }
+      }
+    },
+    {
+      "id": "panel-demo",
+      "title": "Плоская вывеска над входом",
+      "description": "Условная панель с названием магазина без подсветки.",
+      "dimensions": "Ширина 2 м; высота 0,6 м.",
+      "materials": ["Композитная панель", "Плёнка с печатью", "Крепёж"],
+      "includedWork": [
+        "Подготовка макета по готовому логотипу.",
+        "Изготовление панели и нанесение изображения.",
+        "Крепление на подготовленную поверхность над входом."
+      ],
+      "exclusions": ["Демонтаж старой вывески.", "Ремонт фасада и подсветка."],
+      "source": "Original fictional demo brief for task 032; no agency input",
+      "price": {
+        "type": "exact",
+        "amount": 18000,
+        "currency": "RUB",
+        "context": "demo",
+        "asOf": null,
+        "conditions": "Условная сумма для указанного состава, не предложение."
+      },
+      "approval": {
+        "specifications": false,
+        "copy": false,
+        "price": false,
+        "reference": null,
+        "verifiedAt": null
+      },
+      "image": {
+        "src": "/src/assets/services/vyveski-demo.png",
+        "alt": "Демо-иллюстрация вывески над входом; не работа агентства.",
+        "width": 1200,
+        "height": 900,
+        "source": "vyveski-demo.svg; original site demo artwork",
+        "projectContext": "Category illustration; not the specified project",
+        "publicationPermission": "Original site demo artwork; reused for demo",
+        "approved": false,
+        "desktopFocalPoint": { "x": 50, "y": 50 },
+        "mobileFocalPoint": { "x": 50, "y": 50 }
+      }
+    },
+    {
+      "id": "neon-demo",
+      "title": "Неоновая надпись для интерьера",
+      "description": "Условная декоративная надпись на прозрачной подложке.",
+      "dimensions": "Ширина 0,9 м; высота 0,35 м.",
+      "materials": ["Гибкий светодиодный неон", "Акрил", "Блок питания"],
+      "includedWork": [
+        "Подготовка простого текстового макета.",
+        "Сборка надписи и подложки.",
+        "Блок питания и проверка свечения перед выдачей."
+      ],
+      "exclusions": ["Доставка и монтаж.", "Розетка и скрытая проводка."],
+      "source": "Original fictional demo brief for task 032; no agency input",
+      "price": {
+        "type": "range",
+        "min": 22000,
+        "max": 30000,
+        "currency": "RUB",
+        "context": "demo",
+        "asOf": null,
+        "conditions": "Условные суммы для указанного состава, не предложение."
+      },
+      "approval": {
+        "specifications": false,
+        "copy": false,
+        "price": false,
+        "reference": null,
+        "verifiedAt": null
+      },
+      "image": {
+        "src": "/src/assets/services/neon-demo.png",
+        "alt": "Демо-иллюстрация неоновой надписи; не фото работы агентства.",
+        "width": 1200,
+        "height": 900,
+        "source": "neon-demo.svg; original site demo artwork",
+        "projectContext": "Category illustration; not the specified project",
+        "publicationPermission": "Original site demo artwork; reused for demo",
+        "approved": false,
+        "desktopFocalPoint": { "x": 50, "y": 50 },
+        "mobileFocalPoint": { "x": 50, "y": 50 }
+      }
+    }
+  ]
+}
