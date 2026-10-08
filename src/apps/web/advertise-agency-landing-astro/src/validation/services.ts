@@ -5,7 +5,7 @@ import type {
   ServiceImage,
   ServicesContent,
 } from '../types/services';
-import { mediaSource, text } from './shared';
+import { mediaSource, text, uniqueValues } from './shared';
 import type { AssertContract, SameContract } from './shared';
 
 const focalPoint = z.object({
@@ -60,16 +60,8 @@ export function createServicesSchema(publishedPaths: readonly string[]) {
     introduction: text,
     copyApproved: z.boolean(),
     items: z.array(service).superRefine((items, context) => {
-      const seen = new Set<string>();
+      uniqueValues(items, item => item.id, context, 'id');
       items.forEach((item, index) => {
-        if (seen.has(item.id)) {
-          context.addIssue({
-            code: 'custom',
-            path: [index, 'id'],
-            message: `Duplicate id: ${item.id}`,
-          });
-        }
-        seen.add(item.id);
         if (item.href && !publishedPaths.includes(item.href)) {
           context.addIssue({
             code: 'custom',

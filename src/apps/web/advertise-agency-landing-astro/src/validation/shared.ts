@@ -1,6 +1,9 @@
 import { z } from 'astro/zod';
 
-export const text = z.string().refine((value) => value.trim().length > 0, 'Must not be blank');
+export const text = z.string().refine(
+  (value) => value.trim().length > 0,
+  'Must not be blank',
+);
 export const id = z.number().int().positive();
 export const mediaSource = text.refine((value) => {
   if (value.startsWith('/') && !value.startsWith('//')) return true;
@@ -12,17 +15,34 @@ export const mediaSource = text.refine((value) => {
   }
 }, 'Must be an HTTP(S) URL or a root-relative asset path');
 
-export function uniqueIds<T extends { id: number }>(items: T[], context: z.RefinementCtx) {
-  const seen = new Set<number>();
+export function uniqueValues<T, V>(
+  items: T[],
+  valueOf: (item: T) => V,
+  context: z.RefinementCtx,
+  label = 'value',
+) {
+  const seen = new Set<V>();
   items.forEach((item, index) => {
-    if (seen.has(item.id)) {
-      context.addIssue({ code: 'custom', path: [index, 'id'], message: `Duplicate id: ${item.id}` });
+    const value = valueOf(item);
+    if (seen.has(value)) {
+      context.addIssue({
+        code: 'custom',
+        path: [index, label],
+        message: `Duplicate ${label}: ${String(value)}`,
+      });
     }
-    seen.add(item.id);
+    seen.add(value);
   });
 }
 
-/** Check both assignability directions and keys (including extra optional fields). */
+export function uniqueIds<T extends { id: number }>(
+  items: T[],
+  context: z.RefinementCtx,
+) {
+  uniqueValues(items, item => item.id, context, 'id');
+}
+
+/** Check assignability in both directions, including optional keys. */
 export type SameContract<Output, Domain> =
   [Output] extends [Domain]
     ? [Domain] extends [Output]

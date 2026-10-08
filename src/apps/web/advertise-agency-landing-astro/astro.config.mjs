@@ -1,8 +1,11 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
+const productionUrl = process.env.PUBLIC_SITE_URL?.trim();
+
 export default defineConfig({
-  // Add `site` only after the agency's production URL is confirmed (see README).
+  // Set the confirmed production origin in PUBLIC_SITE_URL at release time.
+  site: productionUrl || undefined,
   output: 'static',
   vite: {
     plugins: [tailwindcss()],
