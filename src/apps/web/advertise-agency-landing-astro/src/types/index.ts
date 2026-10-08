@@ -14,6 +14,10 @@ export type { Stat, AboutContent } from "./about";
 export type { Icons } from "./icons";
 export type { OrderInquiryContent, InquiryField } from "./order-inquiry";
 export type {
+  OrderingProcessContent,
+  OrderingProcessStep,
+} from "./ordering-process";
+export type {
   IntroductionContent,
   IntroductionPhoto,
   IntroductionFocalPoint,
