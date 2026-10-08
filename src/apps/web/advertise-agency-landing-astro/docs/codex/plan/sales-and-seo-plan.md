@@ -150,6 +150,16 @@ Clarify what the customer supplies and what the agency handles.
 
 Purpose: reduce uncertainty about starting an order.
 
+Execution tasks (in order):
+
+- [038: Prepare ordering process content][ordering-content] — content and
+  agency-input preparation.
+- [039: Implement the ordering process section][ordering-section] — homepage
+  implementation after pricing examples.
+- [040: Verify the ordering process section][ordering-verification] — technical
+  verification completed 2026-10-09; agency copy and inquiry delivery remain
+  production dependencies.
+
 ### Priority 2: Production and guarantees
 
 - Show real workshop and team photos.
@@ -292,3 +302,6 @@ than relying only on visits.
 [case-study-process]: ../fixed/20261007/036a-case-study-manufacturing-and-installation.md
 [service-order-forms]: ../fixed/20261007/036b-service-specific-order-forms.md
 [case-study-verification]: ../fixed/20261007/037-case-study-verification.md
+[ordering-content]: ../fixed/20261009/038-ordering-process-content.md
+[ordering-section]: ../fixed/20261009/039-ordering-process-section.md
+[ordering-verification]: ../fixed/20261009/040-ordering-process-verification.md

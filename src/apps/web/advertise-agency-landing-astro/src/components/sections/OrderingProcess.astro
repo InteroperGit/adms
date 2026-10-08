@@ -1,0 +1,202 @@
+---
+// Explain the draft customer journey as a static, accessible sequence.
+// The content contract keeps agency approval and open inputs explicit.
+// The section has no browser behavior, so it remains available without JS.
+
+import Button from '@/components/ui/Button.astro';
+import { orderingProcess } from '@/content/ordering-process';
+---
+
+<section
+  id="ordering-process"
+  class="site-section ordering-process"
+  aria-labelledby="ordering-process-heading"
+>
+  <div class="site-container">
+    {/* Keep the sequence introduction separate from its ordered list. */}
+    <div class="ordering-introduction">
+      <h2 id="ordering-process-heading" class="site-section-title">
+        {orderingProcess.heading}
+      </h2>
+      <p class="ordering-summary">{orderingProcess.introduction}</p>
+      {orderingProcess.demoMode && (
+        <p class="ordering-notice" role="note">
+          {orderingProcess.demoNotice}
+        </p>
+      )}
+    </div>
+
+    {/* Native list semantics preserve the customer's five-step sequence. */}
+    <ol class="ordering-steps">
+      {orderingProcess.steps.map((step) => (
+        <li class="ordering-step">
+          <article class="ordering-card" aria-labelledby={`${step.id}-heading`}>
+            {/* Content selects each mark; copy remains the label. */}
+            <span
+              class="ordering-icon"
+              style={{ '--ordering-icon': `url(${step.icon})` }}
+              aria-hidden="true"
+            ></span>
+            <p class="ordering-step-number" aria-hidden="true">
+              {String(orderingProcess.steps.indexOf(step) + 1).padStart(2, '0')}
+            </p>
+            <h3 id={`${step.id}-heading`}>{step.title}</h3>
+            <p class="ordering-description">{step.description}</p>
+            <div class="ordering-responsibilities">
+              <div>
+                <h4>Что нужно от клиента</h4>
+                <ul>
+                  {step.customerProvides.map((item) => <li>{item}</li>)}
+                </ul>
+              </div>
+              <div>
+                <h4>Что делает агентство</h4>
+                <ul>
+                  {step.agencyHandles.map((item) => <li>{item}</li>)}
+                </ul>
+              </div>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ol>
+
+    {/* Keep the next action adjacent to the final process explanation. */}
+    <div class="ordering-action">
+      <Button href="/#order-inquiry" size="lg">
+        Обсудить задачу
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Keep the heading and draft notice readable above the five cards. */
+  .ordering-introduction {
+    max-width: var(--site-reading-width);
+    margin-inline: auto;
+    margin-bottom: 2rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  /* Explain the draft state without presenting it as approved business copy. */
+  .ordering-summary {
+    color: var(--site-muted);
+    font-size: 1.125rem;
+  }
+
+  /* Give the approval state a strong visual boundary without extra controls. */
+  .ordering-notice {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-inline-start: 3px solid var(--color-primary);
+    color: var(--site-muted);
+    text-align: left;
+  }
+
+  /* Use a native ordered list while laying cards out responsively. */
+  .ordering-steps {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: ordering-step;
+  }
+
+  /* Keep each step's number, title and responsibilities in one reading unit. */
+  .ordering-step {
+    min-width: 0;
+    counter-increment: ordering-step;
+  }
+
+  /* Separate cards from the background while preserving theme tokens. */
+  .ordering-card {
+    height: 100%;
+    padding: 1.25rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-panel);
+    background: var(--color-base-100);
+    box-shadow: var(--shadow-panel);
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep the marker visible without replacing ordered-list semantics. */
+  .ordering-step-number {
+    margin: 0 0 0.5rem;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  /* Keep each step mark crisp and aligned with the card's heading. */
+  .ordering-icon {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.75rem;
+    background: var(--color-primary);
+    -webkit-mask: var(--ordering-icon) center / contain no-repeat;
+    mask: var(--ordering-icon) center / contain no-repeat;
+  }
+
+  /* Give every step a clear heading that anchors its article. */
+  .ordering-card h3 {
+    font-size: 1.375rem;
+    font-weight: 700;
+  }
+
+  /* Keep the short explanation distinct from responsibility lists. */
+  .ordering-description {
+    margin-top: 0.75rem;
+    color: var(--site-muted);
+  }
+
+  /* Stack responsibility groups on narrow screens in source order. */
+  .ordering-responsibilities {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Make responsibility labels subordinate to the step heading. */
+  .ordering-responsibilities h4 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  /* Keep native lists readable and visibly associated with their labels. */
+  .ordering-responsibilities ul {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+    color: var(--site-muted);
+  }
+
+  /* Keep the inquiry action aligned with the section's reading container. */
+  .ordering-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  /* Fit two cards per row once each card has enough reading width. */
+  @media (min-width: 48rem) {
+    .ordering-steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Use three columns on wide screens while keeping the final row balanced. */
+  @media (min-width: 75rem) {
+    .ordering-steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
