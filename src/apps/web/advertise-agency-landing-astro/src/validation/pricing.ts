@@ -1,6 +1,6 @@
 import { z } from 'astro/zod';
 import type { PricingContent, PricingExample } from '../types/pricing';
-import { mediaSource, text } from './shared';
+import { mediaSource, text, uniqueValues } from './shared';
 import type { AssertContract, SameContract } from './shared';
 
 // Reject impossible calendar dates as well as malformed date strings.
@@ -138,14 +138,12 @@ export function createPricingSchema(projectPaths: readonly string[]) {
         message: 'Approved section copy requires an evidence reference',
       });
     }
-    const seen = new Set<string>();
+    uniqueValues(content.items, item => item.id, context, 'id');
     content.items.forEach((item, index) => {
       const report = (field: string, message: string) =>
         context.addIssue({
           code: 'custom', path: ['items', index, field], message,
         });
-      if (seen.has(item.id)) report('id', `Duplicate id: ${item.id}`);
-      seen.add(item.id);
       if (item.href && !projectPaths.includes(item.href)) {
         report('href', 'Requires a generated approved agency project route');
       }

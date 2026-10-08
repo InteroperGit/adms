@@ -19,8 +19,12 @@ Russian-language website for Рекламастер, built with Astro, TypeScrip
 | [Integrated design verification](docs/site/design-verification.md) | Final route matrix, production interactions, contrast, assets and remaining checks |
 | [Color themes](docs/site/themes.md) | Light/dark/system selection, persistence, no-JS fallback and map limitations |
 | [Page metadata](docs/site/metadata.md) | Titles, descriptions, social metadata, and production URL |
+| [Code style checks](docs/development/code-style.md) | Changed-file 80-column and Astro readability checks |
+| [Content contract checks](docs/development/content-contracts.md) | Fast JSON invariant checks before the typed build |
+| [Performance and accessibility gates](docs/development/quality-gates.md) | Generated HTML semantics and layout-stability checks |
 | [Cookie preferences](docs/site/cookie-preferences.md) | Persistence, storage failures, and resource-loading behavior |
 | [Deployment and assets](docs/site/deployment-and-assets.md) | Static hosting, external resources, and pending agency assets |
+| [External asset verification](docs/development/external-assets.md) | Pre-deployment remote media and CSS checks |
 | [Agent task management](docs/codex/task-management.md) | Task folders, naming rules, and dated completion archives |
 
 ## Agent references

@@ -8,4 +8,11 @@ The map loads from Yandex, icons load from the Font Awesome CDN, and review medi
 
 The [project and review media guide](media.md) lists the six missing approved photographs/portraits and documents replacement and image verification. Remote placeholders remain until the agency supplies these assets.
 
+Run `pnpm build` followed by `pnpm verify:external` before deployment. The
+verifier checks every remote URL found in configured content and generated
+output for HTTPS response health and an expected image, HTML, or CSS content
+type. It cannot verify publication rights, provider terms, or long-term
+availability. Current demonstration Picsum URLs return HTTP 403 in the
+deployment check and must be replaced or approved before release.
+
 See [Astro documentation](https://docs.astro.build), the task-specific guides in [AGENTS.md](../../AGENTS.md), and the [documentation index](../../README.md).

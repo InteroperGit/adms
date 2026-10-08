@@ -7,8 +7,13 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "check": "astro check",
+    "check": "astro check && node scripts/check-code-style.mjs",
+    "check:style": "node scripts/check-code-style.mjs",
+    "verify:content": "node scripts/verify-content-invariants.mjs",
+    "verify:quality": "node scripts/verify-built-quality.mjs",
     "build": "astro build",
+    "verify:external": "node scripts/verify-external-assets.mjs",
+    "verify:release": "node scripts/verify-release-metadata.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
