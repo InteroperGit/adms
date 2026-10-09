@@ -326,7 +326,9 @@ access remain dependencies rather than inferred approvals.
 - [052: Replace test offers with real agency content][real-offers] — evergreen
   service copy and local Sharp-optimized CC0 stock imagery verified 2026-10-10;
   archived at user request 2026-10-10; agency approval remains pending.
-- [053: Publish approved introduction and services content][approved-catalog].
+- [053: Publish approved introduction and services content][approved-catalog]
+  — readiness implemented; archived at user request 2026-10-10;
+  agency copy/catalog/photo acceptance still pending.
 - [054: Publish verified cases and real project photos][real-cases].
 - [055: Publish agency-verified pricing examples][real-pricing].
 - [056: Approve buyer guidance and trust content][approved-guidance] covers
@@ -427,7 +429,7 @@ than relying only on visits.
 [production-inputs]: ../fixed/20261009/050-confirm-production-business-and-legal-inputs.md
 [live-delivery]: ../fixed/20261009/051-enable-and-verify-inquiry-delivery.md
 [real-offers]: ../fixed/20261010/052-replace-test-offers-with-agency-content.md
-[approved-catalog]: ../todo/053-publish-approved-introduction-and-services.md
+[approved-catalog]: ../fixed/20261010/053-publish-approved-introduction-and-services.md
 [real-cases]: ../todo/054-publish-verified-case-studies.md
 [real-pricing]: ../todo/055-publish-verified-pricing-examples.md
 [approved-guidance]: ../todo/056-approve-buyer-guidance-and-trust-content.md

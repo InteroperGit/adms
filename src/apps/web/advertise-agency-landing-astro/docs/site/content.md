@@ -66,11 +66,21 @@ coverage to Череповец; do not add unsupported deadlines or guarantees.
 The action is an inquiry link, not an automatic price calculator; its
 destination is validated as `/#order-inquiry`.
 
-`photo: null` explicitly records missing approved agency photography.
+At user request, the introduction now uses its own local CC0 photograph of
+dimensional lettering, distinct from the offers carousel. The asset is
+`src/assets/introduction/storefront-sign.webp`, based on [this storefront
+photo by PiperMcCorkle][intro-photo-source] under CC0 1.0. It illustrates signage
+and is not an agency project, client endorsement or evidence of the Череповец
+location. The 4032 × 3024 source was cropped at x1200/y730 to 1440 × 1080,
+then resized to 1200 × 900 and converted with Sharp at WebP quality 85.
+The crop centers the sign and entrance; embedded metadata was removed.
+Introduction `demoMode: true` explicitly displays this stock photo
+while its approval remains false. Set `demoMode: false` for approved-only
+media; its default is false. `photo: null` renders a text-only section.
 Do not replace it with a Picsum, library or generated image presented as
 agency work. A non-null photo requires `src`, nonblank `alt`, positive
 integer `width`/`height`, `source`, `projectContext`, a recorded
-`publicationPermission` and `desktopFocalPoint`/`mobileFocalPoint`.
+`publicationPermission`, `approved` and desktop/mobile focal points.
 Focal points are `{ x, y }` percentages from 0 to 100, intended for CSS
 `object-position` when the layout crops with `object-fit: cover`.
 Choose them by inspecting the actual photo at both viewport sizes.
@@ -78,6 +88,11 @@ Choose them by inspecting the actual photo at both viewport sizes.
 Record the original supplier/file reference in `source`, the actual
 completed installation in `projectContext`, and who approved publication,
 when and where that permission was recorded in `publicationPermission`.
+Set `approved: true` only after reviewing the actual installation and rights.
+Outside demo mode, both `copyApproved` and `photo.approved` must be true;
+merely adding a photo does not publish it. Approved copy without an approved
+photo retains the text-only layout. Current draft copy remains visible, with
+its approval flag false; this is not production acceptance of the service area.
 For optimized responsive variants, use an approved original under
 `src/assets/` and set `src` to `/src/assets/<filename>`. The component's
 explicit import map passes local metadata to Astro Image. Supported raster
@@ -88,7 +103,9 @@ uses a text-only layout without a placeholder. See [media handoff](media.md).
 Schema validation checks
 metadata shape, not asset existence, dimensions or truth of permissions.
 Confirm these manually before treating the content as publication-ready.
-Task 024 remains pending until copy approval and real photo acceptance.
+Task 024 was archived at user request. [Task 053][catalog-acceptance] tracks
+its remaining copy approval and genuine-photo acceptance. Its inquiry action
+now says «Обсудить проект» instead of implying an automatic price calculation.
 
 ## Inquiry and contacts settings
 
@@ -149,3 +166,5 @@ helpers are evidence rather than application APIs.
 
 
 [source-1]: https://docs.astro.build/en/guides/content-collections/
+[catalog-acceptance]: ../codex/fixed/20261010/053-publish-approved-introduction-and-services.md
+[intro-photo-source]: https://commons.wikimedia.org/wiki/File:Storefront_of_Rack_Room_Shoes_store_at_Brenham_Crossing.jpg

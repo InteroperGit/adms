@@ -1,18 +1,16 @@
-// Generate the static route map from the same published route sources.
+// Generate the route map; service paths require article publication approval.
 // The sitemap is empty-safe and omitted from indexing until a site is set.
 import type { APIRoute } from 'astro';
 import { projectRecords } from '@/content/projects';
+import { services } from '@/content/services';
+import { getPublishedServicePaths } from '@/content/service-publication';
 
 const paths = [
   '/',
   '/privacy-policy/',
   '/terms-of-use/',
   ...projectRecords.map(project => `/projects/${project.id}/`),
-  '/services/vyveski/',
-  '/services/svetovye-bukvy/',
-  '/services/obyomnye-konstruktsii/',
-  '/services/neon/',
-  '/services/montazh/',
+  ...getPublishedServicePaths(services),
 ];
 
 function escapeXml(value: string): string {

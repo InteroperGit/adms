@@ -1,5 +1,45 @@
 # Current work
 
+- Task 053 archived at user request 2026-10-10 in fixed/20261010/.
+- Plan/content links updated; production approval dependencies preserved.
+
+
+- Latest Introduction image: distinct CC0 photograph of dimensional lettering
+  by PiperMcCorkle, cropped/optimized to 1200x900 WebP in
+  src/assets/introduction/storefront-sign.webp. No offer image duplication.
+- Source/license/crop recorded in docs/site/content.md; check/build pass.
+- AI generation was not performed: API key missing, dependency install failed;
+  latest user request fulfilled using a licensed photograph instead.
+
+
+- Introduction image updated at user request: local CC0 storefront with
+  illuminated lettering replaces Picsum; real dimensions/alt/source updated.
+- Reuses licensed Sharp-optimized offer asset with responsive Astro variants.
+- Demo mode remains explicit; stock is not presented as actual agency work.
+- pnpm check/build pass; task053 and content handoff updated.
+
+
+- Task 053 follow-up: original Introduction Picsum photo restored at user
+  request using explicit demoMode:true; photo.approved remains false.
+- Normal publication gates apply outside demo mode. Three fixture tests,
+  pnpm check/build and restored-image generated HTML verification pass.
+- Previous text-only browser evidence describes the pre-restoration state.
+
+
+- Task 053 implementation prepared 2026-10-10 by implement_053 and reviewed
+  independently by review_053; two findings fixed, second review clean.
+- Removed Picsum hero; introduction photo now requires copy/photo approvals.
+- Refreshed draft catalog copy; shared publication gates cover cards, nav,
+  article noindex and sitemap. Hidden catalog gets native homepage return.
+- Three independent fixture tests, content invariants, pnpm check/build pass.
+- Synthetic-origin sitemap excludes draft services; normal build restored.
+- Browser: 320/1440px, light/dark, local image decode, draft metadata and no-JS
+  pass. Evidence: output/task-053/. Unrelated remote assets outside scope.
+- Task archived at user request; agency confirmations, approved copy/area and
+  genuine project photos/publication rights remain missing; flags stay false.
+- No commit or deployment performed.
+
+
 - Task 052 archived at user request 2026-10-10; plan and task links updated.
 - Implementation verified; agency publication approval remains pending.
 

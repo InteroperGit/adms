@@ -11,6 +11,7 @@ export interface IntroductionPhoto {
   source: string;
   projectContext: string;
   publicationPermission: string;
+  approved: boolean;
   desktopFocalPoint: IntroductionFocalPoint;
   mobileFocalPoint: IntroductionFocalPoint;
 }
@@ -20,6 +21,7 @@ export interface IntroductionContent {
   summary: string;
   location: string;
   copyApproved: boolean;
+  demoMode: boolean;
   action: {
     label: string;
     href: '/#order-inquiry';

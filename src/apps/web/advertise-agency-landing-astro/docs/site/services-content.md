@@ -24,6 +24,9 @@ entries render with distinct local illustrations and dedicated test articles.
 The visible `demoNotice` identifies these as test materials, not agency work.
 All agency confirmation, copy, image and article approval flags remain false.
 Turning demo mode off hides the current homepage section/menu entry.
+Task 053 refreshed the five draft card descriptions to explain customer
+benefits and the next project discussion. No prices, deadlines or delivery
+guarantees were added; the copy still needs agency review.
 
 Task 028 implemented this behavior: `Services.astro` follows About, and the
 shared site loader filters the configured `/#services` menu entry when the
@@ -43,8 +46,9 @@ assets keep their supplied dimensions and require prior optimization.
 
 Draft descriptions explain categories without promising prices, materials,
 timelines, warranties, or results. Confirm the catalog and descriptions,
-remove unsupported entries, and replace `claimSource` with the actual
-confirmation reference (for example, an agency-approved brief and date).
+withhold unsupported entries as described below, and replace `claimSource`
+with the actual confirmation reference (for example, an agency-approved brief
+and date).
 
 ## Images
 
@@ -95,8 +99,13 @@ The article reuses the card's local illustration, shows a demo notice, and
 offers native links to `/#services` and `/#order-inquiry`.
 
 Article robots metadata stays `noindex, follow` while demo mode is enabled
-or article/service/image approvals are missing. Other routes retain their
+or section/article/service/image approvals are missing. The same publication
+predicate filters service routes from the sitemap, preventing demo articles
+from being advertised as indexable pages. Other routes retain their
 existing indexing behavior. No delivery endpoint was added.
+If the catalog is withheld, article return links lead to the homepage instead
+of its absent services anchor. Dedicated draft routes remain accessible and
+labelled as demonstrations; a service approval does not approve its article.
 
 To replace the demo, confirm the catalog and card copy, supply genuine
 approved project photos, and approve the distinct article copy. Update
@@ -115,3 +124,33 @@ Content/schema verification is recorded in task 027. Agency confirmation,
 approved section/card wording, real photos, rights, and crop guidance remain
 open. Tasks 027–029 were archived at the user's request on 2026-10-07;
 archiving does not establish agency approval or production readiness.
+
+## Task 053 acceptance handoff
+
+Agency evidence is still missing for all five services and the introduction.
+Supply the approved heading, summary and actual service area; confirm each
+catalog category. To withhold an unavailable category, retain its stable
+record with `confirmed: false` and switch `demoMode` off when the accepted
+catalog is ready. This removes its card/menu visibility without breaking the
+existing static article route. If deleting a record, also remove its matching
+`src/pages/services/*.astro` route; otherwise `ServiceArticle.astro` fails the
+build for the missing service ID. For each accepted photo,
+provide the real installation context, original supplier/file, publication
+permission reference and reviewed crops. Record the approver, role, date,
+approved version and any usage restrictions in the relevant source fields
+and the [production input register](production-inputs.md).
+
+The hero requires `photo.approved` and introduction `copyApproved`. Catalog
+visibility, article indexing and sitemap service paths share the helpers in
+`src/content/service-publication.ts`. Do not set approval flags just to make
+draft material visible. Leave `demoMode` enabled until the accepted catalog
+is ready; only then switch it off and review the resulting navigation.
+
+Run `node scripts/test-service-publication.mjs`, `pnpm check`, and `pnpm build`.
+The synthetic tests cover independent approvals, demo mode, missing media,
+missing article links and text-only hero behavior without editing live JSON.
+For sitemap acceptance, build with a confirmed `PUBLIC_SITE_URL` and check
+that only approved service article paths appear. For each real supplied
+photo, verify decoding, dimensions, mobile/desktop crops, enlarged text,
+light/dark presentation, keyboard links and no-JavaScript navigation.
+Current local demonstration media checks cannot accept absent agency photos.

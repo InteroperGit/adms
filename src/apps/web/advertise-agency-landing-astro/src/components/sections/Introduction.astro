@@ -7,13 +7,18 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Button from '@/components/ui/Button.astro';
 import { introduction as content } from '@/content/introduction';
+import {
+  getVisibleIntroductionPhoto,
+} from '@/content/introduction-publication';
 
 // Resolve optional bundled media at build time and reject missing assets.
 const originals = import.meta.glob<ImageMetadata>(
   '/src/assets/**/*.{avif,jpeg,jpg,png,webp}',
   { eager: true, import: 'default' },
 );
-const { photo } = content;
+// Explicit demo mode restores the configured illustration at user request.
+// Otherwise, display media only after copy and photo rights are approved.
+const photo = getVisibleIntroductionPhoto(content);
 const original = photo ? originals[photo.src] : undefined;
 if (photo?.src.startsWith('/src/assets/') && !original) {
   throw new Error(`Introduction photo not found: ${photo.src}`);
