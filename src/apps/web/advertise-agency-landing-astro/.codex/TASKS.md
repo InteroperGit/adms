@@ -1,5 +1,24 @@
 # Current work
 
+- Task 052 archived at user request 2026-10-10; plan and task links updated.
+- Implementation verified; agency publication approval remains pending.
+
+
+- Task 052 follow-up 2026-10-10: four enabled offers now include stands
+  and city architecture sign approval, with specific contacts CTAs.
+- Original stand SVG added; approval offer reuses licensed storefront photo.
+- pnpm check/build and generated-slide/link checks pass.
+
+
+- Task 052 updated and technically verified 2026-10-10.
+- Two evergreen service offers replace test copy; service-specific contact CTAs.
+- Local CC0 sign/neon stock photos converted with Sharp and Astro srcsets.
+- Sources/licenses documented in docs/site/offers-carousel.md.
+- pnpm check/build, eight responsive/theme browser cases and no-JS pass.
+- Evidence: output/task-052/; agency publication approval remains pending.
+- Task archived at user request 2026-10-10 in fixed/20261010/.
+
+
 - Task 051 progressed 2026-10-09 via separate implementation/review agents.
 - Added src/server/inquiry-payload.ts and scripts/test-inquiry-payload.mjs;
   both-form validation is a backend prerequisite, not a live endpoint.

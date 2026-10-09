@@ -7,56 +7,96 @@
       "id": 1,
       "enabled": true,
       "description":
-      "Тестовое предложение: дизайн, изготовление световых букв и объёмных конструкций, монтаж под ключ. Фото из библиотеки — не работа агентства.",
+        "Помогите клиентам найти вас. Световые буквы и вывески для бизнеса.",
       "presentation": {
-        "fontSizeRem": 1.125,
+        "fontSizeRem": 1.25,
         "textColor": "#ffffff",
         "horizontal": "left",
         "vertical": "bottom",
         "overlay": "dark",
         "focalPoint": {
           "x": 50,
-          "y": 50
+          "y": 55
         },
         "mobileFocalPoint": {
-          "x": 42,
-          "y": 50
+          "x": 50,
+          "y": 55
         }
       },
-      "image":
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Office_interior_2022_queue.jpg/1280px-Office_interior_2022_queue.jpg",
+      "image": "/src/assets/offers/storefront.webp",
       "imageAlt": "",
-      "imageWidth": 1280,
-      "imageHeight": 960,
-      "linkLabel": "Посмотреть проекты",
-      "href": "/#projects"
+      "imageWidth": 1081,
+      "imageHeight": 646,
+      "linkLabel": "Обсудить вывеску",
+      "href": "/#contacts"
     },
     {
       "id": 2,
       "enabled": true,
       "description":
-      "Тестовое предложение: обсудим вашу вывеску. Работаем с акрилом, неоном, светодиодами и металлокаркасами. Фото из библиотеки — не работа агентства.",
+        "Неон для кафе, салона или офиса. Обсудим надпись, цвет и размер.",
       "presentation": {
         "fontSizeRem": 1.25,
-        "textColor": "#18222d",
-        "horizontal": "right",
-        "vertical": "center",
-        "overlay": "light",
+        "textColor": "#ffffff",
+        "horizontal": "left",
+        "vertical": "bottom",
+        "overlay": "dark",
         "focalPoint": {
-          "x": 50,
-          "y": 50
+          "x": 65,
+          "y": 45
         },
         "mobileFocalPoint": {
-          "x": 65,
-          "y": 50
+          "x": 70,
+          "y": 35
         }
       },
-      "image":
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg/1280px-IS_Real_Estate_Office_Interior_Torrevieja_2024-10-23.jpg",
+      "image": "/src/assets/offers/neon-sign.webp",
       "imageAlt": "",
-      "imageWidth": 1280,
-      "imageHeight": 961,
-      "linkLabel": "Связаться с нами",
+      "imageWidth": 1100,
+      "imageHeight": 733,
+      "linkLabel": "Обсудить неоновую надпись",
+      "href": "/#contacts"
+    },
+    {
+      "id": 3,
+      "enabled": true,
+      "description":
+        "Стенды для офиса, магазина и школы. Информация на виду.",
+      "presentation": {
+        "fontSizeRem": 1.25,
+        "textColor": "#ffffff",
+        "horizontal": "left",
+        "vertical": "bottom",
+        "overlay": "dark",
+        "focalPoint": { "x": 65, "y": 50 },
+        "mobileFocalPoint": { "x": 75, "y": 50 }
+      },
+      "image": "/images/offers/information-stand.svg",
+      "imageAlt": "",
+      "imageWidth": 1600,
+      "imageHeight": 900,
+      "linkLabel": "Обсудить стенд",
+      "href": "/#contacts"
+    },
+    {
+      "id": 4,
+      "enabled": true,
+      "description":
+        "Согласование вывесок в архитектуре города. Обсудим адрес и макет.",
+      "presentation": {
+        "fontSizeRem": 1.25,
+        "textColor": "#ffffff",
+        "horizontal": "left",
+        "vertical": "bottom",
+        "overlay": "dark",
+        "focalPoint": { "x": 50, "y": 55 },
+        "mobileFocalPoint": { "x": 50, "y": 55 }
+      },
+      "image": "/src/assets/offers/storefront.webp",
+      "imageAlt": "",
+      "imageWidth": 1081,
+      "imageHeight": 646,
+      "linkLabel": "Обсудить согласование",
       "href": "/#contacts"
     }
   ]

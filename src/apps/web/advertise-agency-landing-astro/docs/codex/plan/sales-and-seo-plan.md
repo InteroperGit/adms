@@ -323,7 +323,9 @@ access remain dependencies rather than inferred approvals.
   validation implemented and independently reviewed 2026-10-09 after one
   fix cycle; archived at user request 2026-10-09. Live backend integration
   and real receipt remain pending.
-- [052: Replace test offers with real agency content][real-offers].
+- [052: Replace test offers with real agency content][real-offers] — evergreen
+  service copy and local Sharp-optimized CC0 stock imagery verified 2026-10-10;
+  archived at user request 2026-10-10; agency approval remains pending.
 - [053: Publish approved introduction and services content][approved-catalog].
 - [054: Publish verified cases and real project photos][real-cases].
 - [055: Publish agency-verified pricing examples][real-pricing].
@@ -424,7 +426,7 @@ than relying only on visits.
 [business-solutions-verification]: ../fixed/20261009/049-business-type-solutions-verification.md
 [production-inputs]: ../fixed/20261009/050-confirm-production-business-and-legal-inputs.md
 [live-delivery]: ../fixed/20261009/051-enable-and-verify-inquiry-delivery.md
-[real-offers]: ../todo/052-replace-test-offers-with-agency-content.md
+[real-offers]: ../fixed/20261010/052-replace-test-offers-with-agency-content.md
 [approved-catalog]: ../todo/053-publish-approved-introduction-and-services.md
 [real-cases]: ../todo/054-publish-verified-case-studies.md
 [real-pricing]: ../todo/055-publish-verified-pricing-examples.md
