@@ -5,6 +5,7 @@
 
 import type { MenuItem } from '@/types';
 import Button from '@/components/ui/Button.astro';
+import MaxLogo from '@/components/ui/MaxLogo.astro';
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -32,6 +33,17 @@ const { items, variant, phone } = Astro.props;
     >
       {phone}
     </Button>
+    {/* Keep the Макс contact action directly beside the phone action. */}
+    <a
+      href="https://max.ru/"
+      class="max-contact btn btn-sm"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Написать в Макс"
+    >
+      <MaxLogo />
+      <span>Написать в Макс</span>
+    </a>
   </nav>
 ) : (
   <nav aria-label="Основная навигация">
@@ -51,6 +63,18 @@ const { items, variant, phone } = Astro.props;
         >
           Позвонить
         </Button>
+      </li>
+      <li>
+        {/* Keep messenger contact available in the mobile drawer. */}
+        <a
+          href="https://max.ru/"
+          class="max-contact btn btn-secondary btn-block mt-2"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <MaxLogo />
+          <span>Написать в Макс</span>
+        </a>
       </li>
     </ul>
   </nav>
@@ -86,6 +110,17 @@ const { items, variant, phone } = Astro.props;
 
   /* Allow the telephone button label to wrap without clipping. */
   .desktop-nav :global(.header-phone) {
+    white-space: normal;
+    height: auto;
+    min-height: var(--size);
+    padding-block: 0.25rem;
+  }
+
+  /* Align the Макс mark and label as a single compact contact action. */
+  .max-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     white-space: normal;
     height: auto;
     min-height: var(--size);
