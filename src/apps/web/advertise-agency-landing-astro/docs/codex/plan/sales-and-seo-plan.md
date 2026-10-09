@@ -325,9 +325,9 @@ access remain dependencies rather than inferred approvals.
   and real receipt remain pending.
 - [052: Replace test offers with real agency content][real-offers] — evergreen
   service copy and local Sharp-optimized CC0 stock imagery verified 2026-10-10;
-  archived at user request 2026-10-10; agency approval remains pending.
+  moved to backlog at user request 2026-10-10; agency approval pending.
 - [053: Publish approved introduction and services content][approved-catalog]
-  — readiness implemented; archived at user request 2026-10-10;
+  — readiness implemented; moved to backlog at user request 2026-10-10;
   agency copy/catalog/photo acceptance still pending.
 - [054: Publish verified cases and real project photos][real-cases].
 - [055: Publish agency-verified pricing examples][real-pricing].
@@ -428,18 +428,18 @@ than relying only on visits.
 [business-solutions-verification]: ../fixed/20261009/049-business-type-solutions-verification.md
 [production-inputs]: ../fixed/20261009/050-confirm-production-business-and-legal-inputs.md
 [live-delivery]: ../fixed/20261009/051-enable-and-verify-inquiry-delivery.md
-[real-offers]: ../fixed/20261010/052-replace-test-offers-with-agency-content.md
-[approved-catalog]: ../fixed/20261010/053-publish-approved-introduction-and-services.md
-[real-cases]: ../todo/054-publish-verified-case-studies.md
-[real-pricing]: ../todo/055-publish-verified-pricing-examples.md
-[approved-guidance]: ../todo/056-approve-buyer-guidance-and-trust-content.md
-[service-research]: ../todo/057-research-and-prioritize-service-seo.md
-[service-copy]: ../todo/058-prepare-production-service-page-content.md
-[production-services]: ../todo/059-publish-production-service-pages.md
-[production-metadata]: ../todo/060-configure-and-verify-production-seo-metadata.md
-[search-indexing]: ../todo/061-verify-search-console-and-yandex-indexing.md
-[local-listings]: ../todo/062-align-local-business-details-and-listings.md
-[conversion-tracking]: ../todo/063-track-delivered-inquiries-and-phone-clicks.md
-[lead-sales-workflow]: ../todo/064-record-qualified-leads-and-sales.md
-[ongoing-review]: ../todo/065-review-organic-results-and-expand-content.md
-[production-readiness]: ../todo/066-verify-sales-and-seo-production-readiness.md
+[real-offers]: ../backlog/052-replace-test-offers-with-agency-content.md
+[approved-catalog]: ../backlog/053-publish-approved-introduction-and-services.md
+[real-cases]: ../backlog/054-publish-verified-case-studies.md
+[real-pricing]: ../backlog/055-publish-verified-pricing-examples.md
+[approved-guidance]: ../backlog/056-approve-buyer-guidance-and-trust-content.md
+[service-research]: ../backlog/057-research-and-prioritize-service-seo.md
+[service-copy]: ../backlog/058-prepare-production-service-page-content.md
+[production-services]: ../backlog/059-publish-production-service-pages.md
+[production-metadata]: ../backlog/060-configure-and-verify-production-seo-metadata.md
+[search-indexing]: ../backlog/061-verify-search-console-and-yandex-indexing.md
+[local-listings]: ../backlog/062-align-local-business-details-and-listings.md
+[conversion-tracking]: ../backlog/063-track-delivered-inquiries-and-phone-clicks.md
+[lead-sales-workflow]: ../backlog/064-record-qualified-leads-and-sales.md
+[ongoing-review]: ../backlog/065-review-organic-results-and-expand-content.md
+[production-readiness]: ../backlog/066-verify-sales-and-seo-production-readiness.md

@@ -34,6 +34,7 @@ Russian-language website for Рекламастер, built with Astro, TypeScrip
 - [Improvement plan](docs/codex/plan/20261001_222426_plan.md)
 - [Hot offers carousel plan](docs/codex/plan/20261005_044149_plan.md)
 - [Pending tasks](docs/codex/todo/)
+- [Backlog tasks](docs/codex/backlog/)
 - [Completed tasks](docs/codex/fixed/)
 
 Agents should read the project instructions and task-management guide before working on tasks.
