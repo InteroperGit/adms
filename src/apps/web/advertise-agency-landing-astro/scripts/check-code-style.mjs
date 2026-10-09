@@ -2,6 +2,7 @@
 // Existing legacy files can be cleaned up incrementally without hiding new
 // violations behind a repository-wide baseline exception.
 import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 
 const extensions = new Set([
@@ -17,6 +18,7 @@ const untracked = execFileSync('git', [
 ], { encoding: 'utf8' });
 const files = [...new Set(`${changed}\n${untracked}`.split(/\r?\n/))]
   .map(path => path.replace(/^.*advertise-agency-landing-astro[\\/]/, ''))
+  .filter(path => existsSync(path))
   .filter(path => path && extensions.has(path.slice(path.lastIndexOf('.'))));
 const violations = [];
 
