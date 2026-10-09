@@ -4,10 +4,12 @@
 
 ## Publication and ownership
 
-Edit `data/content/offers.json`. The retained enabled baseline contains two
-explicitly identified test offers with factual service copy; stock photographs
-do not show agency work. Replace demos with agency-approved content before
-production publication. No prices, discounts, deadlines or results are inferred.
+Edit `data/content/offers.json`. The enabled baseline contains four evergreen
+service offers: illuminated signs, neon lettering, information stands and
+city architecture sign approval. All CTAs lead to contacts. The copy describes a
+case and invites discussion, without price, discount, deadline or result claims.
+Agency approval remains a release input. Stock photographs illustrate the
+services and do not show agency work.
 Without JavaScript, offers remain an ordered stacked list with native links.
 Configured autoplay follows the JSON setting with temporary safety holds.
 
@@ -19,6 +21,34 @@ Disabled items are validated. Plain interfaces `Offer`, `Offers`,
 runtime schemas and bidirectional output compatibility checks live in
 `src/validation/offers.ts`. Change contracts, schemas, JSON and consumers
 together. Parser errors identify the source and field path.
+
+## Current image sources
+
+The 2026-10-09 stock selection is illustrative, not a portfolio or an
+endorsement by the depicted business. Backgrounds are decorative (`alt=""`);
+the adjacent copy supplies the service information. No remote photo host is
+needed at runtime or build time.
+
+| Asset | Source and author | License | Dimensions |
+| --- | --- | --- | --- |
+| `storefront.webp` | [Houston storefront][storefront-source], Restoration Hardware | CC0 1.0 | 1081 × 646 |
+| `neon-sign.webp` | [Neon Sign][neon-source], Alex Knight; originally [ShotStash][shotstash-photo] | CC0 1.0 | 1100 × 733 |
+
+The sign-approval offer reuses the storefront photograph. The stands offer
+uses an original decorative SVG at `public/images/offers/information-stand.svg`
+(1600 × 900), illustrating document pockets rather than an agency project.
+Approval copy invites discussion of the address and design; it promises no
+permit, official endorsement or approval deadline.
+
+Downloaded from Wikimedia Commons and converted using Sharp 0.35.5 at WebP
+quality 85, without upscaling or embedded metadata. Retained widths allow Astro
+to generate 320, 640, 960 and original-width responsive variants. Keep photo
+credits and licensing provenance here when replacing an asset. Sharp is the
+image-processing library, not the stock-photo provider.
+
+[storefront-source]: https://commons.wikimedia.org/wiki/File:Houston_Storefront_PR828_2011_-_Restoration_Hardware.jpg
+[neon-source]: https://commons.wikimedia.org/wiki/File:Neon_Sign.jpg
+[shotstash-photo]: https://shotstash.com/photo/neon-sign/
 
 ## Settings
 
@@ -33,11 +63,12 @@ together. Parser errors identify the source and field path.
 - `linkLabel`; Rule / default: Required nonblank string naming the CTA
   destination.
 - `image`; Rule / default: Safe root-relative public path or absolute HTTP(S)
-  URL; retained demos use direct HTTPS URLs, no local assets/downloads.
+  URL; current offers use bundled `/src/assets/offers/` images. Astro generates
+  responsive variants with its default Sharp service during the build.
 - `imageAlt`; Rule / default: Meaningful text for informative artwork or
   exactly empty for decorative artwork; no whitespace-only value.
 - `imageWidth`, `imageHeight`; Rule / default: Positive integer intrinsic
-  dimensions matching the actual remote image.
+  dimensions matching the actual source image.
 - `href`; Rule / default: Safe root-relative path, nonempty local fragment or
   absolute HTTP(S) URL.
 - `presentation`; Rule / default: Optional strict object; missing keys default
