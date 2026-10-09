@@ -1,6 +1,7 @@
 // src/types/index.ts
 
 export { type Review } from "./review";
+export type { FaqApproval, FaqItem, FaqContent } from './faq';
 export { type Project } from "./project";
 export type {
   Offer,

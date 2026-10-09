@@ -204,6 +204,20 @@ Answer common questions about:
 Purpose: answer objections before visitors contact the agency. Build this
 for customers; do not assume it will generate Google FAQ rich results.
 
+Execution tasks (in order):
+
+- [044: Prepare FAQ content][faq-content] — implemented 2026-10-09 with nine
+  reusable draft answers, strict validation and publication approval gates.
+  Agency approval remains pending; no answers are currently publishable.
+- [045: Implement the FAQ section][faq-section] — implemented 2026-10-09
+  after Reviews and before Contacts/inquiry with native disclosures and
+  approval gating. User-requested demo shows nine preliminary answers;
+  disabling demo omits all current drafts. Agency approval remains pending.
+- [046: Verify the FAQ section][faq-verification] — completed 2026-10-09:
+  119 browser assertions, 16 layout/theme/text cases, no-JavaScript and
+  content/publication checks pass. Named FAQ landmark added. Existing
+  neighboring CTA overflow at 320px/200% remains; delivery unverified.
+
 ### Priority 3: Solutions by business type
 
 - Show relevant examples for shops, cafés, salons, and offices.
@@ -330,3 +344,6 @@ than relying only on visits.
 [production-section]: ../fixed/20261009/042-production-and-guarantees-section.md
 [guarantees-presentation]: ../fixed/20261009/042a-customer-guarantees-presentation.md
 [production-verification]: ../fixed/20261009/043-production-and-guarantees-verification.md
+[faq-content]: ../fixed/20261009/044-faq-content.md
+[faq-section]: ../fixed/20261009/045-faq-section.md
+[faq-verification]: ../fixed/20261009/046-faq-verification.md
