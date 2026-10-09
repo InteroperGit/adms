@@ -35,6 +35,14 @@ export type {
   PricingExample,
   PricingContent,
 } from "./pricing";
+export type {
+  ProductionApproval,
+  ProductionPhoto,
+  ProductionItem,
+  WarrantyTerm,
+  MaintenanceContent,
+  ProductionAndGuaranteesContent,
+} from './production-and-guarantees';
 
 export type {
   CarouselItem,

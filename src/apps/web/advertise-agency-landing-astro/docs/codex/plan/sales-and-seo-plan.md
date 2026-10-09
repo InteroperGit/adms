@@ -169,6 +169,27 @@ Execution tasks (in order):
 
 Purpose: establish trust through concrete information.
 
+Execution tasks (in order):
+
+- [041: Prepare production and guarantees content][production-content] —
+  implemented; archived at user request 2026-10-09. Detailed agency evidence
+  and real workshop/team photos remain pending.
+- [042: Implement the production and guarantees section][production-section] —
+  implemented after OrderingProcess and before Reviews, with hover/focus
+  feedback; archived at user request 2026-10-09.
+- [042a: Upgrade the customer guarantees presentation][guarantees-presentation] —
+  six brief customer cards implemented; archived at user request 2026-10-09.
+  Detailed coverage, conditions, claims, and maintenance remain pending.
+- [043: Verify production and guarantees][production-verification] — content,
+  media, responsive, accessibility, and regression checks. Technical review
+  completed 2026-10-09: 75 browser and 24 schema/content/build assertions.
+  Six brief cards verified; detailed agency terms and photo rights stay open.
+
+Production acceptance requires agency-confirmed claims, actual warranty and
+maintenance terms, and approved real photos with publication rights. Draft
+preparation and technical verification do not establish those approvals.
+Inquiry delivery remains a separate production dependency.
+
 ### Priority 2: FAQ
 
 Answer common questions about:
@@ -305,3 +326,7 @@ than relying only on visits.
 [ordering-content]: ../fixed/20261009/038-ordering-process-content.md
 [ordering-section]: ../fixed/20261009/039-ordering-process-section.md
 [ordering-verification]: ../fixed/20261009/040-ordering-process-verification.md
+[production-content]: ../fixed/20261009/041-production-and-guarantees-content.md
+[production-section]: ../fixed/20261009/042-production-and-guarantees-section.md
+[guarantees-presentation]: ../fixed/20261009/042a-customer-guarantees-presentation.md
+[production-verification]: ../fixed/20261009/043-production-and-guarantees-verification.md
