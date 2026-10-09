@@ -6,7 +6,8 @@
     {
       "id": "svetovye-bukvy",
       "name": "Световые буквы",
-      "description": "Буквы с подсветкой для оформления названия на фасаде.",
+      "description":
+        "Сделайте название заметным. Обсудим размер букв и подсветку фасада.",
       "claimSource": "site.json description; about.json description1",
       "confirmed": false,
       "copyApproved": false,
@@ -63,7 +64,8 @@
     {
       "id": "vyveski",
       "name": "Вывески",
-      "description": "Вывески с названием и информацией о вашей организации.",
+      "description":
+        "Помогите клиентам найти вход. Подберём формат и расположение вывески.",
       "claimSource": "site.json description; introduction.json summary",
       "confirmed": false,
       "copyApproved": false,
@@ -119,7 +121,8 @@
     {
       "id": "neon",
       "name": "Неон",
-      "description": "Неоновые надписи и элементы оформления.",
+      "description":
+        "Световой акцент для интерьера. Обсудим надпись, цвет и размер неона.",
       "claimSource": "site.json description; about.json description2",
       "confirmed": false,
       "copyApproved": false,
@@ -175,7 +178,8 @@
     {
       "id": "obyomnye-konstruktsii",
       "name": "Объёмные конструкции",
-      "description": "Объёмные элементы для оформления наружной рекламы.",
+      "description":
+        "Добавьте объём вашему знаку. Обсудим форму, размер и размещение.",
       "claimSource": "about.json description1",
       "confirmed": false,
       "copyApproved": false,
@@ -231,7 +235,8 @@
     {
       "id": "montazh",
       "name": "Монтаж",
-      "description": "Установка рекламных конструкций на объекте.",
+      "description":
+        "Подготовьте вывеску к монтажу. Обсудим крепления и доступ на объект.",
       "claimSource": "about.json description1; introduction.json summary",
       "confirmed": false,
       "copyApproved": false,

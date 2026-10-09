@@ -6,7 +6,8 @@
 import Layout from '@/layouts/Layout.astro';
 import ServiceVisual from '@/components/ui/ServiceVisual.astro';
 import Button from '@/components/ui/Button.astro';
-import { services } from '@/content/services';
+import { services, visibleServices } from '@/content/services';
+import { isServiceArticlePublished } from '@/content/service-publication';
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -19,12 +20,10 @@ const service = services.items.find(
 if (!service) throw new Error(`Unknown service: ${Astro.props.serviceId}`);
 const { article } = service;
 // Index only when category, copy, image and article approvals all permit it.
-const demo =
-  services.demoMode ||
-  !article.approved ||
-  !service.confirmed ||
-  !service.copyApproved ||
-  !service.image?.approved;
+const demo = !isServiceArticlePublished(services, service);
+// A withheld catalog has no homepage anchor, so return to the homepage.
+const catalogHref = visibleServices.length ? '/#services' : '/';
+const catalogLabel = visibleServices.length ? 'Все услуги' : 'На главную';
 ---
 
 {/*
@@ -36,8 +35,8 @@ const demo =
   noindex={demo}
 >
   <article class="site-container service-article">
-    <a class="service-back" href="/#services">
-      Все услуги
+    <a class="service-back" href={catalogHref}>
+      {catalogLabel}
     </a>
     <div class="service-heading">
       <h1>{service.name}</h1>
@@ -73,8 +72,8 @@ const demo =
       </section>
       <nav class="service-actions" aria-label="Действия по услуге">
         <Button href="/#order-inquiry">Обсудить проект</Button>
-        <a class="service-back" href="/#services">
-          Вернуться к услугам
+        <a class="service-back" href={catalogHref}>
+          {catalogLabel}
         </a>
       </nav>
     </div>

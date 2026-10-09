@@ -20,6 +20,7 @@ const photo = z.object({
   source: text,
   projectContext: text,
   publicationPermission: text,
+  approved: z.boolean(),
   desktopFocalPoint: focalPoint,
   mobileFocalPoint: focalPoint,
 }).strict();
@@ -29,6 +30,7 @@ export const introductionSchema = z.object({
   summary: text,
   location: text,
   copyApproved: z.boolean(),
+  demoMode: z.boolean().default(false),
   action: z.object({
     label: text,
     href: z.literal('/#order-inquiry'),

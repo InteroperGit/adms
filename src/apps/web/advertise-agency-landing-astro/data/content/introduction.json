@@ -3,18 +3,20 @@
   "summary": "Световые буквы, вывески и неон. Дизайн, изготовление и монтаж.",
   "location": "Череповец",
   "copyApproved": false,
+  "demoMode": true,
   "action": {
-    "label": "Рассчитать стоимость",
+    "label": "Обсудить проект",
     "href": "/#order-inquiry"
   },
   "photo": {
-    "src": "https://picsum.photos/seed/outdoor2/1200/900",
-    "alt": "Демонстрационное фото; не работа агентства Рекламастер.",
+    "src": "/src/assets/introduction/storefront-sign.webp",
+    "alt": "Объёмные буквы на фасаде магазина; стоковое фото.",
     "width": 1200,
     "height": 900,
-    "source": "Lorem Picsum, remote demonstration image",
-    "projectContext": "Layout demonstration; not an agency project",
-    "publicationPermission": "Agency photo approval remains pending",
+    "source": "Wikimedia Commons; Brenham Crossing; PiperMcCorkle",
+    "projectContext": "Stock illustration of signage; not an agency project",
+    "publicationPermission": "CC0 1.0; source in docs/site/content.md",
+    "approved": false,
     "desktopFocalPoint": { "x": 50, "y": 50 },
     "mobileFocalPoint": { "x": 50, "y": 50 }
   }
