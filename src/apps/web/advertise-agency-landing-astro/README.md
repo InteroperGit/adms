@@ -11,6 +11,7 @@ Russian-language website for Рекламастер, built with Astro, TypeScrip
 | [Verification and CI](docs/development/verification-and-ci.md) | Type checking, builds, and remaining CI integration |
 | [Content editing](docs/site/content.md) | JSON sources, validation, and stable project IDs |
 | [Order inquiries](docs/site/order-inquiry.md) | Form configuration and delivery dependencies |
+| [Production inputs](docs/site/production-inputs.md) | Internal business/legal evidence register and delivery approval handoff |
 | [Hot offers carousel](docs/site/offers-carousel.md) | Offer settings, validation, approved assets and implementation handoff |
 | [Shared image carousel](docs/site/image-carousel.md) | Reusable features and About configuration |
 | [Case studies](docs/site/case-studies.md) | Evidence, structured details and publication rules |

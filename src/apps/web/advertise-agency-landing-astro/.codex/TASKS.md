@@ -1,5 +1,24 @@
 # Current work
 
+- Task 050 prepared 2026-10-09 by an implementation subagent and reviewed
+  independently by a second subagent; no actionable defects found.
+- Register: docs/site/production-inputs.md; task 051 handoff linked.
+- 94 reviewed local documentation links resolve; diff whitespace checks pass.
+- Task 050 archived at user request on 2026-10-09 in fixed/20261009/.
+- Agency business/legal approval, mailbox purposes, recipient, hosting/provider,
+  retention and consent decisions remain pending.
+- No legal JSON, application code or delivery activation was changed.
+
+
+- Sales/SEO backlog audited 2026-10-09; pending tasks 050-066 created in
+  docs/codex/todo/ and linked from docs/codex/plan/sales-and-seo-plan.md.
+- Covers production inputs/content, live delivery, service SEO, metadata,
+  indexing/listings, lead/sales measurement, and final acceptance.
+- Existing sitemap/robots and service routes are reused by follow-ups.
+- Task 066 tracks task-049 browser limits and task-046 CTA overflow.
+- Archived demo/technical work does not establish production approval.
+
+
 - Tasks 035-037, including 036a/036b, are in fixed/20261007.
 - Archived at user request; plan and task links updated.
 - Production evidence, photo approvals, and live delivery remain pending.
