@@ -131,7 +131,7 @@ business/legal agreement with approved sources remain pending. Task 051 can
 use this list to obtain missing inputs; no live delivery is authorized here.
 
 [task-050]: ../codex/fixed/20261009/050-confirm-production-business-and-legal-inputs.md
-[task-051]: ../codex/todo/051-enable-and-verify-inquiry-delivery.md
+[task-051]: ../codex/fixed/20261009/051-enable-and-verify-inquiry-delivery.md
 [task-022]: ../codex/fixed/20261006/022-order-inquiry-form-section.md
 [site]: ../../data/content/site.json
 [introduction]: ../../data/content/introduction.json

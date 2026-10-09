@@ -1,5 +1,19 @@
 # Current work
 
+- Task 051 progressed 2026-10-09 via separate implementation/review agents.
+- Added src/server/inquiry-payload.ts and scripts/test-inquiry-payload.mjs;
+  both-form validation is a backend prerequisite, not a live endpoint.
+- One fix/review cycle corrected email label lengths and numeric syntax;
+  final review found no actionable defects. Five synthetic test groups,
+  pnpm check (one existing hint), code style, build and diff checks pass.
+- Integration/rollback and legacy service incompatibilities documented in
+  docs/site/order-inquiry.md; task and sales/SEO plan updated.
+- Task 051 archived at user request 2026-10-09 in fixed/20261009/.
+- Provider/recipient/consent decisions, backend
+  integration, abuse protection, durable deduplication and real receipt open.
+- Delivery remains disabled; no external submission or deployment performed.
+
+
 - Task 050 prepared 2026-10-09 by an implementation subagent and reviewed
   independently by a second subagent; no actionable defects found.
 - Register: docs/site/production-inputs.md; task 051 handoff linked.

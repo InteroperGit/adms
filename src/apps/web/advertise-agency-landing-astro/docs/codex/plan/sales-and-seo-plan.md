@@ -319,7 +319,10 @@ access remain dependencies rather than inferred approvals.
   internal evidence register and task-051 handoff prepared 2026-10-09;
   archived at user request 2026-10-09; agency confirmation and business/legal
   acceptance remain pending.
-- [051: Enable and verify live inquiry delivery][live-delivery].
+- [051: Enable and verify live inquiry delivery][live-delivery] — server
+  validation implemented and independently reviewed 2026-10-09 after one
+  fix cycle; archived at user request 2026-10-09. Live backend integration
+  and real receipt remain pending.
 - [052: Replace test offers with real agency content][real-offers].
 - [053: Publish approved introduction and services content][approved-catalog].
 - [054: Publish verified cases and real project photos][real-cases].
@@ -420,7 +423,7 @@ than relying only on visits.
 [business-solutions-section]: ../fixed/20261009/048-business-type-solutions-section.md
 [business-solutions-verification]: ../fixed/20261009/049-business-type-solutions-verification.md
 [production-inputs]: ../fixed/20261009/050-confirm-production-business-and-legal-inputs.md
-[live-delivery]: ../todo/051-enable-and-verify-inquiry-delivery.md
+[live-delivery]: ../fixed/20261009/051-enable-and-verify-inquiry-delivery.md
 [real-offers]: ../todo/052-replace-test-offers-with-agency-content.md
 [approved-catalog]: ../todo/053-publish-approved-introduction-and-services.md
 [real-cases]: ../todo/054-publish-verified-case-studies.md
