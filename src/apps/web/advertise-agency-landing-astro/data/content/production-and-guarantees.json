@@ -1,0 +1,105 @@
+{
+  "demoMode": true,
+  "demoNotice": "Раздел ожидает подтверждения агентства и не публикуется.",
+  "heading": "Наши гарантии",
+  "introduction": "Как мы сопровождаем заказ от идеи до монтажа.",
+  "guidance": [
+    {
+      "title": "Согласуем детали",
+      "description": "Фиксируем размеры, материалы и монтаж до запуска работ.",
+      "icon": "/images/guarantees/measurements.svg"
+    },
+    {
+      "title": "Проверим результат",
+      "description": "Сверяем готовую конструкцию с согласованным макетом.",
+      "icon": "/images/guarantees/design-approval.svg"
+    },
+    {
+      "title": "Прозрачные условия",
+      "description": "Условия гарантии и обслуживания указываем в смете.",
+      "icon": "/images/guarantees/inquiry.svg"
+    },
+    {
+      "title": "Поможем после монтажа",
+      "description": "Подскажем, как ухаживать за вывеской и куда обратиться.",
+      "icon": "/images/guarantees/installation.svg"
+    },
+    {
+      "title": "Заключаем договор",
+      "description": "Фиксируем в договоре весь согласованный объём работ.",
+      "icon": "/images/guarantees/inquiry.svg"
+    },
+    {
+      "title": "Гарантия от 1 года",
+      "description": "Предоставляем гарантию от одного года на всю вывеску.",
+      "icon": "/images/guarantees/production.svg"
+    }
+  ],
+  "copyApproved": false,
+  "approvalSource": null,
+  "pendingInputs": [
+    "Ожидается подтверждение агентства.",
+    "Ожидается подтверждение агентства.",
+    "Ожидается подтверждение агентства.",
+    "Ожидается подтверждение агентства."
+  ],
+  "productionOperations": [
+    {
+      "id": "operations-pending",
+      "title": "Операции производства",
+      "description": "Ожидается подтверждение агентства.",
+      "evidence": "Ожидается письменное подтверждение агентства.",
+      "approval": "draft"
+    }
+  ],
+  "materials": [
+    {
+      "id": "materials-pending",
+      "title": "Материалы",
+      "description": "Ожидается подтверждение агентства.",
+      "evidence": "Ожидается перечень фактически используемых материалов.",
+      "approval": "draft"
+    }
+  ],
+  "qualityChecks": [
+    {
+      "id": "quality-checks-pending",
+      "title": "Проверки качества",
+      "description": "Ожидается подтверждение агентства.",
+      "evidence": "Ожидается описание проверок и подтверждающих материалов.",
+      "approval": "draft"
+    }
+  ],
+  "photos": [],
+  "warrantyTerms": [
+    {
+      "id": "warranty-pending",
+      "title": "Гарантийные условия",
+      "coverage": "Условия покрытия ещё не подтверждены агентством.",
+      "duration": "Не указано до утверждения условий агентством.",
+      "starts": "Не указано до утверждения условий агентством.",
+      "conditions": [
+        "Ожидается подтверждение агентства."
+      ],
+      "exclusions": [
+        "Ожидается подтверждение агентства."
+      ],
+      "claimRoute": "Ожидается подтверждение агентства.",
+      "sourceType": "pending",
+      "source": "Ожидается агентское подтверждение.",
+      "approval": "draft"
+    }
+  ],
+  "maintenance": {
+    "scope": [
+      "Объём обслуживания ещё не подтверждён агентством."
+    ],
+    "customerResponsibilities": [
+      "Ожидается подтверждение агентства."
+    ],
+    "pricing": "Ожидается подтверждение агентства.",
+    "requestRoute": "Ожидается подтверждение агентства.",
+    "approval": "draft"
+  },
+  "inquiryHref": "/#order-inquiry"
+}

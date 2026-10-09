@@ -1,0 +1,337 @@
+---
+// Present approved production evidence, warranty terms and service options.
+// Customer guidance stays visible while agency-specific evidence is pending.
+
+import Button from '@/components/ui/Button.astro';
+import Section from '@/components/ui/Section.astro';
+import { productionAndGuarantees } from '@/content/production-and-guarantees';
+import type { ProductionItem } from '@/types/production-and-guarantees';
+
+const content = productionAndGuarantees;
+const agencyCopyReady = content.copyApproved && !content.demoMode;
+const approvedItems = (items: typeof content.productionOperations) =>
+  agencyCopyReady ? items.filter((item) => item.approval === 'approved') : [];
+const operations = approvedItems(content.productionOperations);
+const materials = approvedItems(content.materials);
+const checks = approvedItems(content.qualityChecks);
+const groups: Array<{ title: string; items: ProductionItem[] }> = [
+  { title: 'Производство', items: operations },
+  { title: 'Материалы', items: materials },
+  { title: 'Проверки качества', items: checks },
+];
+const warranties = content.warrantyTerms.filter(
+  (term) => agencyCopyReady && term.approval === 'approved',
+);
+const photos = content.photos.filter(
+  (photo) => agencyCopyReady && photo.approval === 'approved',
+);
+---
+
+  <Section
+    id="production-and-guarantees"
+    title={content.heading}
+    subtitle={content.introduction}
+    background="none"
+    ariaLabel="Гарантии и сопровождение заказа"
+  >
+    {/* Brief guarantees introduce the service before detailed terms. */}
+    <div class="production-guidance">
+      {content.guidance.map((item) => (
+        <article class="production-card" tabindex="0">
+          <span
+            class="production-card-icon"
+            style={{ '--production-icon': `url(${item.icon})` }}
+            aria-hidden="true"
+          ></span>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </article>
+      ))}
+    </div>
+    {/* Keep approved evidence adjacent to the section introduction. */}
+    {photos.length > 0 && (
+      <div class="production-photos">
+        {photos.map((photo) => (
+          <figure class="production-photo">
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              width={photo.width}
+              height={photo.height}
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>{photo.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    )}
+
+    {/* Use cards so each approved evidence item stays scannable. */}
+    <div class="production-groups">
+      {groups.map(({ title, items: groupItems }) => (
+        groupItems.length > 0 && (
+          <section
+            class="production-group"
+            aria-labelledby={`${title}-heading`}
+          >
+            <h3 id={`${title}-heading`}>{title}</h3>
+            <div class="production-cards">
+              {groupItems.map((item: ProductionItem) => (
+                <article class="production-card" tabindex="0">
+                  <h4>{item.title}</h4>
+                  <p>{item.description}</p>
+                  <p class="production-evidence">{item.evidence}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        )
+      ))}
+    </div>
+
+    {/* Keep warranty scope and claim paths separate from component terms. */}
+    {warranties.length > 0 && (
+      <section class="warranty-group" aria-labelledby="warranty-heading">
+        <h3 id="warranty-heading">Гарантия</h3>
+        <div class="warranty-cards">
+          {warranties.map((term) => (
+            <article class="warranty-card" tabindex="0">
+              <h4>{term.title}</h4>
+              <dl>
+                <div><dt>Покрытие</dt><dd>{term.coverage}</dd></div>
+                <div><dt>Срок</dt><dd>{term.duration}</dd></div>
+                <div><dt>Начало</dt><dd>{term.starts}</dd></div>
+              </dl>
+              <h5>Условия</h5>
+              <ul>{term.conditions.map((item) => <li>{item}</li>)}</ul>
+              <h5>Исключения</h5>
+              <ul>{term.exclusions.map((item) => <li>{item}</li>)}</ul>
+              <p class="warranty-claim">{term.claimRoute}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* Explain the approved maintenance scope and how a request is started. */}
+    {agencyCopyReady && content.maintenance.approval === 'approved' && (
+      <section class="maintenance-group" aria-labelledby="maintenance-heading">
+        <h3 id="maintenance-heading">Обслуживание</h3>
+        <ul>
+          {content.maintenance.scope.map((item) => <li>{item}</li>)}
+        </ul>
+        <h4>Что требуется от заказчика</h4>
+        <ul>
+          {content.maintenance.customerResponsibilities.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+        <p>{content.maintenance.pricing}</p>
+        <p>{content.maintenance.requestRoute}</p>
+      </section>
+    )}
+
+    {/* Link to the native inquiry form for questions about approved terms. */}
+    <div class="production-action">
+      <Button href={content.inquiryHref} size="lg">
+        Задать вопрос
+      </Button>
+    </div>
+  </Section>
+
+<style>
+  /* Keep approved workshop images in a stable responsive grid. */
+  .production-photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Keep captions tied to their documentary image. */
+  .production-photo {
+    margin: 0;
+  }
+
+  /* Prevent approved images from exceeding their layout column. */
+  .production-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-panel);
+  }
+
+  /* Make image context available to every reader. */
+  .production-photo figcaption {
+    margin-top: 0.5rem;
+    color: var(--site-muted);
+  }
+
+  /* Separate production evidence groups while preserving source order. */
+  .production-groups,
+  .warranty-group,
+  .maintenance-group {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  /* Give each evidence group a clear heading anchor. */
+  .production-group h3,
+  .warranty-group h3,
+  .maintenance-group h3 {
+    font-size: 1.5rem;
+  }
+
+  /* Lay out approved evidence cards without fixed heights. */
+  .production-guidance,
+  .production-cards,
+  .warranty-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+  }
+
+  /* Keep every friendly guarantee card aligned across its grid row. */
+  .production-guidance .production-card {
+    height: 100%;
+  }
+
+  /* Contain each evidence statement in a readable panel. */
+  .production-card,
+  .warranty-card {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    padding: 1.25rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-panel);
+    background: var(--color-base-100);
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  /* Focus selects readable cards for keyboard and touch exploration. */
+  .production-card:focus,
+  .warranty-card:focus {
+    border-color: var(--color-primary);
+    background: color-mix(
+      in srgb, var(--color-primary) 8%, var(--color-base-100)
+    );
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+
+  /* Keep keyboard location distinct from the selected surface. */
+  .production-card:focus-visible,
+  .warranty-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  /* Limit pointer selection to devices with reliable hover support. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Highlight the explored item without moving surrounding content. */
+    .production-card:hover,
+    .warranty-card:hover {
+      border-color: var(--color-primary);
+      background: color-mix(
+        in srgb, var(--color-primary) 8%, var(--color-base-100)
+      );
+      box-shadow: inset 0 0 0 1px var(--color-primary);
+    }
+  }
+
+  /* Respect motion preferences while preserving immediate selection. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Card feedback remains visible without animated colour changes. */
+    .production-card,
+    .warranty-card {
+      transition: none;
+    }
+  }
+
+  /* Keep card titles visually subordinate to group headings. */
+  .production-card h4,
+  .production-card h3,
+  .warranty-card h4 {
+    font-size: 1.125rem;
+  }
+
+  /* Give each brief guarantee a recognizable contextual visual cue. */
+  .production-card-icon {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.75rem;
+    background: var(--color-primary);
+    -webkit-mask: var(--production-icon) center / contain no-repeat;
+    mask: var(--production-icon) center / contain no-repeat;
+  }
+
+
+  /* Distinguish evidence references from the primary description. */
+  .production-evidence {
+    margin-top: 0.75rem;
+    color: var(--site-muted);
+  }
+
+  /* Keep warranty facts aligned as labelled pairs. */
+  .warranty-card dl {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  /* Pair warranty labels and values without relying on colour. */
+  .warranty-card dl div {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  /* Mark warranty labels as supporting metadata. */
+  .warranty-card dt,
+  .warranty-card h5 {
+    color: var(--site-muted);
+    font-weight: 700;
+  }
+
+  /* Keep warranty lists readable and visibly associated with headings. */
+  .warranty-card ul,
+  .maintenance-group ul {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  /* Separate warranty subgroups from the preceding facts. */
+  .warranty-card h5 {
+    margin-top: 1rem;
+  }
+
+  /* Keep the claim route visible after conditions and exclusions. */
+  .warranty-claim {
+    margin-top: 1rem;
+  }
+
+  /* Keep maintenance paragraphs and lists in a readable measure. */
+  .maintenance-group p {
+    max-width: 65ch;
+  }
+
+  /* Align the final inquiry action with the section reading flow. */
+  .production-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  /* Let the inquiry command wrap within enlarged narrow layouts. */
+  .production-action :global(.site-button) {
+    max-width: 100%;
+    white-space: normal;
+  }
+</style>
