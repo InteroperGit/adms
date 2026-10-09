@@ -1,0 +1,288 @@
+{
+  "heading": "Решения для бизнеса",
+  "introduction": [
+    "Оформление помогает заметить вход и узнать бренд."
+  ],
+  "items": [
+    {
+      "id": "shops",
+      "title": "Магазины",
+      "summary": [
+        "Вывеска и витрина для понятного входа."
+      ],
+      "customerTask": [
+        "Покупателю нужно найти вход."
+      ],
+      "solution": [
+        "Световые буквы и указатели."
+      ],
+      "example": {
+        "title": "Вывеска магазина",
+        "text": [
+          "Название над входом."
+        ]
+      },
+      "inquiryLabel": "Обсудить оформление магазина",
+      "inquiryHref": "/#order-inquiry",
+      "carousel": {
+        "itemLabel": "Примеры оформления магазина",
+        "mediaSource": "Иллюстрация из каталога услуг.",
+        "mediaRights": "Материал используется с разрешением владельца.",
+        "options": {
+          "enabled": true,
+          "autoplay": true,
+          "intervalMs": 7000,
+          "manualNavigation": true,
+          "arrows": true,
+          "circles": true,
+          "descriptions": true,
+          "buttons": false,
+          "animation": true,
+          "layout": "panel",
+          "imageFit": "cover",
+          "aspectRatio": 1.3333,
+          "eagerFirst": true
+        },
+        "items": [
+          {
+            "id": 1,
+            "enabled": true,
+            "image": "/src/assets/services/svetovye-bukvy-demo.png",
+            "imageAlt": "Контекстный пример оформления магазина",
+            "imageWidth": 1200,
+            "imageHeight": 900,
+            "description": "Контекстный пример оформления магазина",
+            "presentation": {
+              "fontSizeRem": 1.125,
+              "textColor": "#ffffff",
+              "overlay": "dark",
+              "horizontal": "left",
+              "vertical": "bottom",
+              "focalPoint": {
+                "x": 50,
+                "y": 50
+              }
+            }
+          }
+        ]
+      },
+      "attribution": {
+        "customerName": null,
+        "projectId": null,
+        "href": null,
+        "evidence": null,
+        "media": []
+      }
+    },
+    {
+      "id": "cafes",
+      "title": "Кафе и рестораны",
+      "summary": [
+        "Вывеска и интерьерный акцент заведения."
+      ],
+      "customerTask": [
+        "Гостю нужно узнать кафе и найти вход."
+      ],
+      "solution": [
+        "Световые буквы и акцентная надпись."
+      ],
+      "example": {
+        "title": "Оформление кафе",
+        "text": [
+          "Название с подсветкой."
+        ]
+      },
+      "inquiryLabel": "Обсудить оформление кафе",
+      "inquiryHref": "/#order-inquiry",
+      "carousel": {
+        "itemLabel": "Примеры оформления кафе",
+        "mediaSource": "Иллюстрация из каталога услуг.",
+        "mediaRights": "Материал используется с разрешением владельца.",
+        "options": {
+          "enabled": true,
+          "autoplay": true,
+          "intervalMs": 7000,
+          "manualNavigation": true,
+          "arrows": true,
+          "circles": true,
+          "descriptions": true,
+          "buttons": false,
+          "animation": true,
+          "layout": "panel",
+          "imageFit": "cover",
+          "aspectRatio": 1.3333,
+          "eagerFirst": true
+        },
+        "items": [
+          {
+            "id": 1,
+            "enabled": true,
+            "image": "/src/assets/services/neon-demo.png",
+            "imageAlt": "Контекстный пример оформления кафе",
+            "imageWidth": 1200,
+            "imageHeight": 900,
+            "description": "Контекстный пример оформления кафе",
+            "presentation": {
+              "fontSizeRem": 1.125,
+              "textColor": "#ffffff",
+              "overlay": "dark",
+              "horizontal": "left",
+              "vertical": "bottom",
+              "focalPoint": {
+                "x": 50,
+                "y": 50
+              }
+            }
+          }
+        ]
+      },
+      "attribution": {
+        "customerName": null,
+        "projectId": null,
+        "href": null,
+        "evidence": null,
+        "media": []
+      }
+    },
+    {
+      "id": "salons",
+      "title": "Салоны красоты",
+      "summary": [
+        "Название на фасаде и логотип в зоне встречи."
+      ],
+      "customerTask": [
+        "Клиенту нужно найти салон."
+      ],
+      "solution": [
+        "Объёмные буквы, услуги и часы работы."
+      ],
+      "example": {
+        "title": "Оформление салона",
+        "text": [
+          "Логотип повторяет стиль вывески."
+        ]
+      },
+      "inquiryLabel": "Обсудить оформление салона",
+      "inquiryHref": "/#order-inquiry",
+      "carousel": {
+        "itemLabel": "Примеры оформления салона",
+        "mediaSource": "Иллюстрация из каталога услуг.",
+        "mediaRights": "Материал используется с разрешением владельца.",
+        "options": {
+          "enabled": true,
+          "autoplay": true,
+          "intervalMs": 7000,
+          "manualNavigation": true,
+          "arrows": true,
+          "circles": true,
+          "descriptions": true,
+          "buttons": false,
+          "animation": true,
+          "layout": "panel",
+          "imageFit": "cover",
+          "aspectRatio": 1.3333,
+          "eagerFirst": true
+        },
+        "items": [
+          {
+            "id": 1,
+            "enabled": true,
+            "image": "/src/assets/services/vyveski-demo.png",
+            "imageAlt": "Контекстный пример оформления салона",
+            "imageWidth": 1200,
+            "imageHeight": 900,
+            "description": "Контекстный пример оформления салона",
+            "presentation": {
+              "fontSizeRem": 1.125,
+              "textColor": "#ffffff",
+              "overlay": "dark",
+              "horizontal": "left",
+              "vertical": "bottom",
+              "focalPoint": {
+                "x": 50,
+                "y": 50
+              }
+            }
+          }
+        ]
+      },
+      "attribution": {
+        "customerName": null,
+        "projectId": null,
+        "href": null,
+        "evidence": null,
+        "media": []
+      }
+    },
+    {
+      "id": "offices",
+      "title": "Офисы",
+      "summary": [
+        "Вывеска у входа, логотип и навигация."
+      ],
+      "customerTask": [
+        "Посетителю нужно найти компанию и кабинет."
+      ],
+      "solution": [
+        "Вывеска и указатели учитывают правила здания."
+      ],
+      "example": {
+        "title": "Оформление офиса",
+        "text": [
+          "Указатели ведут к кабинетам."
+        ]
+      },
+      "inquiryLabel": "Обсудить оформление офиса",
+      "inquiryHref": "/#order-inquiry",
+      "carousel": {
+        "itemLabel": "Примеры оформления офиса",
+        "mediaSource": "Иллюстрация из каталога услуг.",
+        "mediaRights": "Материал используется с разрешением владельца.",
+        "options": {
+          "enabled": true,
+          "autoplay": true,
+          "intervalMs": 7000,
+          "manualNavigation": true,
+          "arrows": true,
+          "circles": true,
+          "descriptions": true,
+          "buttons": false,
+          "animation": true,
+          "layout": "panel",
+          "imageFit": "cover",
+          "aspectRatio": 1.3333,
+          "eagerFirst": true
+        },
+        "items": [
+          {
+            "id": 1,
+            "enabled": true,
+            "image": "/src/assets/services/svetovye-bukvy-demo.png",
+            "imageAlt": "Контекстный пример оформления офиса",
+            "imageWidth": 1200,
+            "imageHeight": 900,
+            "description": "Контекстный пример оформления офиса",
+            "presentation": {
+              "fontSizeRem": 1.125,
+              "textColor": "#ffffff",
+              "overlay": "dark",
+              "horizontal": "left",
+              "vertical": "bottom",
+              "focalPoint": {
+                "x": 50,
+                "y": 50
+              }
+            }
+          }
+        ]
+      },
+      "attribution": {
+        "customerName": null,
+        "projectId": null,
+        "href": null,
+        "evidence": null,
+        "media": []
+      }
+    }
+  ]
+}

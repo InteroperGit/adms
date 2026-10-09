@@ -15,6 +15,7 @@ import ProductionAndGuarantees
   from '@/components/sections/ProductionAndGuarantees.astro';
 import Reviews from '@/components/sections/Reviews.astro';
 import Faq from '@/components/sections/Faq.astro';
+import BusinessSolutions from '@/components/sections/BusinessSolutions.astro';
 import Contacts from '@/components/sections/Contacts.astro';
 import OrderInquiry from '@/components/sections/OrderInquiry.astro';
 ---
@@ -38,6 +39,8 @@ import OrderInquiry from '@/components/sections/OrderInquiry.astro';
     <Reviews />
     {/* FAQ answers precede contact paths and project inquiries. */}
     <Faq />
+    {/* Match visitors with a relevant business solution before contacts. */}
+    <BusinessSolutions />
     {/* End page content with contact paths and the inquiry form. */}
     <Contacts />
     <OrderInquiry />

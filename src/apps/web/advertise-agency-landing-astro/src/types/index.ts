@@ -52,3 +52,9 @@ export type {
   CarouselPresentation,
   CarouselFocalPoint,
 } from './image-carousel';
+export type {
+  BusinessSolutionMedia,
+  BusinessSolutionAttribution,
+  BusinessSolutionItem,
+  BusinessSolutionsContent,
+} from './business-solutions';

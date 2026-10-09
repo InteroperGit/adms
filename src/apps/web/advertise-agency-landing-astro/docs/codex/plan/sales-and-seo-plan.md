@@ -1,4 +1,4 @@
-# Sales and SEO improvement plan
+﻿# Sales and SEO improvement plan
 
 Date: 2026-10-06
 Business: Рекламастер, Череповец
@@ -225,6 +225,21 @@ Execution tasks (in order):
 - Support the recommendations with actual projects.
 
 Purpose: help customers recognize a solution for their own business.
+Execution tasks (in order):
+
+- [047: Prepare business-type solutions content][business-solutions-content]
+  completed 2026-10-09 with complete reusable Russian examples for all four
+  business types.
+- [048: Implement the business-type solutions section][business-solutions-section]
+  after FAQ and before Contacts, with relevant media and inquiry links.
+- [049: Verify business-type solutions][business-solutions-verification]
+  for copy, attribution, media, accessibility, and responsive behavior.
+
+Customer-facing examples use finished solution descriptions without draft or
+ demo labels. Real customer names can be attached to matching projects later;
+ completed-work claims and photographs must correspond to actual records.
+
+Generic solution copy does not depend on having a named customer project.
 
 ## Suggested homepage order
 
@@ -239,8 +254,9 @@ Introduction. Alternate section backgrounds by rendered odd/even order.
 6. Production and guarantees.
 7. Reviews.
 8. FAQ.
-9. Inquiry form.
+9. Solutions by business type.
 10. Contacts.
+11. Inquiry form.
 
 Keep promotional offers as a secondary section when there is a real offer
 to promote.
@@ -347,3 +363,6 @@ than relying only on visits.
 [faq-content]: ../fixed/20261009/044-faq-content.md
 [faq-section]: ../fixed/20261009/045-faq-section.md
 [faq-verification]: ../fixed/20261009/046-faq-verification.md
+[business-solutions-content]: ../fixed/20261009/047-business-type-solutions-content.md
+[business-solutions-section]: ../fixed/20261009/048-business-type-solutions-section.md
+[business-solutions-verification]: ../fixed/20261009/049-business-type-solutions-verification.md\n
