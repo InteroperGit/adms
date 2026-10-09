@@ -1,5 +1,13 @@
 # Current work
 
+- User moved tasks 052-053 from fixed and all 13 todo tasks into
+  docs/codex/backlog/ on 2026-10-10: 15 tasks, numbered 052-066.
+- Backlog statuses and relative links updated; plan/content/README and
+  task-management guide now describe the new deferred-task folder.
+- Implementation/review evidence and outstanding agency inputs preserved.
+- Todo is empty; task052/task053 are no longer in fixed. No commit created.
+
+
 - Task 053 archived at user request 2026-10-10 in fixed/20261010/.
 - Plan/content links updated; production approval dependencies preserved.
 

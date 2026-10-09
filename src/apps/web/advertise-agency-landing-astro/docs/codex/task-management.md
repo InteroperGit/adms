@@ -26,6 +26,7 @@ project-root/
 ├── docs/codex/              # For structured Plan-Todo-Learn protocol
 │   ├── plan/                # Plans and goals
 │   ├── todo/                # Active tasks
+│   ├── backlog/             # Deferred tasks and pending acceptance
 │   ├── fixed/               # Completed tasks grouped by completion date
 │   │   └── yyyyMMdd/        # e.g., 20261001/; tasks and verification results
 │   └── learn/               # Postmortems and lessons learned
@@ -124,6 +125,14 @@ The file name must match the agent name in the TOML file:
 7. After completing and verifying a task, mark it completed, record its changes and verification results, and move it from `docs/codex/todo/` to `docs/codex/fixed/yyyyMMdd/`. Use the completion date in the project's local timezone (for example, `20261001`), creating the date folder if needed. Preserve its numbered filename and update relative links in the moved task and links and status in the corresponding plan. Pending tasks remain in `todo/`.
 
 ---
+
+## Backlog handling
+
+Tasks explicitly deferred by the user belong in `docs/codex/backlog/`.
+Keep their numbered filenames, implementation evidence and outstanding
+acceptance inputs. Update plan/status links when moving between backlog,
+todo and fixed. On 2026-10-10 the user moved tasks 052–066 to backlog,
+including the previously archived tasks 052–053.
 
 ## 4. Prohibited
 

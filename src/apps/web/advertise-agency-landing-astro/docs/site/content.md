@@ -166,5 +166,5 @@ helpers are evidence rather than application APIs.
 
 
 [source-1]: https://docs.astro.build/en/guides/content-collections/
-[catalog-acceptance]: ../codex/fixed/20261010/053-publish-approved-introduction-and-services.md
+[catalog-acceptance]: ../codex/backlog/053-publish-approved-introduction-and-services.md
 [intro-photo-source]: https://commons.wikimedia.org/wiki/File:Storefront_of_Rack_Room_Shoes_store_at_Brenham_Crossing.jpg

@@ -1,6 +1,8 @@
 # Replace test offers with real agency content
 
-**Status:** Completed implementation; archived at user request
+**Status:** Backlog — implementation verified; agency approval pending
+
+**Moved to backlog:** 2026-10-10, at user request
 
 **Archived:** 2026-10-10
 
@@ -8,7 +10,7 @@
 
 **Created:** 2026-10-09
 
-**Plan:** [Sales and SEO improvement plan](../../plan/sales-and-seo-plan.md).
+**Plan:** [Sales and SEO improvement plan](../plan/sales-and-seo-plan.md).
 
 **Depends on:** Task 050; archived offers tasks 017-021.
 
@@ -47,10 +49,11 @@ photography before bringing more visitors in.
   storefront lettering and neon. Sharp creates WebP originals; the existing
   Astro carousel generates responsive variants without remote dependencies.
 - Image sources, authors, licenses and processing are recorded in
-  [Offers carousel documentation](../../../site/offers-carousel.md).
+  [Offers carousel documentation](../../site/offers-carousel.md).
 - Stock imagery is illustrative; it is not evidence of agency projects.
   Prices, discounts, schedules and performance results were not invented.
 - Archived at user request on 2026-10-10 after implementation and verification.
+  Subsequently moved from fixed to backlog at user request on the same date.
   Agency copy/publication approval remains a release dependency; archival
   does not establish the original production acceptance.
 

@@ -1,6 +1,8 @@
 # Publish approved introduction and services content
 
-**Status:** Completed implementation; archived at user request
+**Status:** Backlog — implementation verified; agency acceptance pending
+
+**Moved to backlog:** 2026-10-10, at user request
 
 **Archived:** 2026-10-10
 
@@ -8,7 +10,7 @@
 
 **Created:** 2026-10-09
 
-**Plan:** [Sales and SEO improvement plan](../../plan/sales-and-seo-plan.md).
+**Plan:** [Sales and SEO improvement plan](../plan/sales-and-seo-plan.md).
 
 **Depends on:** Tasks 050 and 052; archived tasks 024-029.
 
@@ -109,7 +111,7 @@ license and Sharp processing are recorded in `docs/site/content.md`.
 It no longer shares a photograph with OfferCarousel. This is a licensed
 photograph, not an AI-generated image or an agency portfolio record.
 
-The [production input register](../../../site/production-inputs.md) contains no
+The [production input register](../../site/production-inputs.md) contains no
 agency approval records. Archived dependencies do not supply that evidence.
 The existing heading, summary and Череповец service area are still drafts.
 All five service confirmations, section/card copy approvals, image approvals
@@ -126,6 +128,7 @@ and crop acceptance cannot be completed against unavailable originals.
 Archived at user request on 2026-10-10. Agency approvals and genuine project
 photo acceptance remain release dependencies; archival does not establish
 production acceptance.
+Subsequently moved from fixed to backlog at user request on the same date.
 
 Unavailable service records can stay with `confirmed: false` after demo mode
 is disabled; their cards/menu disappear while draft routes stay noindex.
