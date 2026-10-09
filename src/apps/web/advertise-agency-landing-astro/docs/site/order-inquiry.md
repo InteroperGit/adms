@@ -15,6 +15,11 @@ itself. The separate direct-contact sidebar was removed at the user's request.
 Unavailable-delivery and no-JavaScript feedback refer to Contacts immediately
 above the form; that section retains the existing email and phone.
 
+The internal [production input register](production-inputs.md) records current
+business/legal sources, missing agency decisions, and both forms' task-051
+handoff. No recipient, provider, consent, or business approval is inferred
+from existing content.
+
 Existing privacy/consent documents mention `info@reklamaster.ru`, a different
 address, and need agency review for the message field, actual processor,
 retention and approved consent wording. The form links the existing policy
@@ -75,7 +80,9 @@ was removed and disabled configuration restored.
 Evidence scripts and screenshots are under ignored
 `output/playwright/task-022/`. Doubled root text is not native browser zoom;
 screen-reader speech, actual deployed service/abuse protection and real mailbox
-receipt remain unverified. Task 022 remains in todo until delivery acceptance.
+receipt remain unverified. Task 022 was archived at the user's request on
+2026-10-06 despite unresolved delivery acceptance. Tasks 050 and 051 track
+agency input confirmation and live delivery respectively.
 
 
 ## Form presentation update - 2026-10-08

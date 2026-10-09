@@ -1,4 +1,4 @@
-﻿# Sales and SEO improvement plan
+# Sales and SEO improvement plan
 
 Date: 2026-10-06
 Business: Рекламастер, Череповец
@@ -231,9 +231,11 @@ Execution tasks (in order):
   completed 2026-10-09 with complete reusable Russian examples for all four
   business types.
 - [048: Implement the business-type solutions section][business-solutions-section]
-  after FAQ and before Contacts, with relevant media and inquiry links.
+  completed and archived 2026-10-09 after FAQ and before Contacts, with
+  relevant media and inquiry links.
 - [049: Verify business-type solutions][business-solutions-verification]
-  for copy, attribution, media, accessibility, and responsive behavior.
+  archived 2026-10-09 after static verification. Browser checks remain open
+  because the Playwright CLI could not be fetched; task 066 tracks them.
 
 Customer-facing examples use finished solution descriptions without draft or
  demo labels. Real customer names can be attached to matching projects later;
@@ -292,14 +294,61 @@ descriptive internal links:
 ## Technical SEO and implementation tasks
 
 - Confirm and configure the production domain in Astro. Canonical URLs
-  currently depend on the missing `site` configuration.
-- Add a sitemap.
+  already use `PUBLIC_SITE_URL`; the confirmed production value and deployed
+  output still require acceptance.
+- Verify the existing sitemap and robots routes against approved indexable
+  pages. The current sitemap inventory also includes demo service routes.
 - Verify indexing through Google Search Console and Yandex Webmaster.
 - Give each service page a specific title, description, and visible H1.
 - Keep business details consistent across the website and business listings.
 - Build new sections as mostly static Astro components to preserve speed.
 - Follow the existing content structure, validation patterns, and applicable
   project rules when implementing the plan.
+
+## Remaining execution tasks
+
+Backlog audit: 2026-10-09. Archived tasks above cover delivered layouts,
+content contracts, demonstrations, and recorded technical checks. The tasks
+below cover remaining production acceptance and plan items that previously
+had no execution files. All remain pending; agency inputs and external account
+access remain dependencies rather than inferred approvals.
+
+### Conversion foundations and production content
+
+- [050: Confirm production business and legal inputs][production-inputs] —
+  internal evidence register and task-051 handoff prepared 2026-10-09;
+  archived at user request 2026-10-09; agency confirmation and business/legal
+  acceptance remain pending.
+- [051: Enable and verify live inquiry delivery][live-delivery].
+- [052: Replace test offers with real agency content][real-offers].
+- [053: Publish approved introduction and services content][approved-catalog].
+- [054: Publish verified cases and real project photos][real-cases].
+- [055: Publish agency-verified pricing examples][real-pricing].
+- [056: Approve buyer guidance and trust content][approved-guidance] covers
+  ordering, workshop/team evidence, guarantees, FAQ, and business solutions.
+
+### Organic acquisition
+
+- [057: Research and prioritize service SEO][service-research].
+- [058: Prepare production service-page content][service-copy].
+- [059: Publish prioritized production service pages][production-services].
+- [060: Configure and verify production SEO metadata][production-metadata]
+  reuses the existing domain configuration, sitemap, and robots routes.
+- [061: Verify Search Console and Yandex indexing][search-indexing].
+- [062: Align local business details and listings][local-listings].
+
+### Measurement and production verification
+
+- [063: Track delivered inquiries and phone clicks][conversion-tracking].
+- [064: Record qualified leads and resulting sales][lead-sales-workflow].
+- [065: Review organic results and expand useful content][ongoing-review].
+- [066: Verify sales and SEO production readiness][production-readiness]
+  closes deferred agency, media, browser, and launch acceptance.
+
+Task numbers identify the backlog; dependencies determine execution order.
+Prepare domain/metadata configuration in 060 alongside service work, then
+verify approved pages in 059. Run 066 before increasing traffic. Indexing in
+061 and ongoing measurement in 064-065 require publication and observed data.
 
 ## Delivery sequence
 
@@ -324,6 +373,10 @@ descriptive internal links:
 - Link service pages to relevant projects and homepage sections.
 - Expand the pages with useful case studies over time.
 - Add business-type solutions when enough relevant evidence is available.
+
+The business-type section is already implemented. Generic solution copy does
+not require named customer projects; task 056 reviews production accuracy and
+media, and task 065 adds relevant real cases as evidence becomes available.
 
 ## Measurement
 
@@ -365,4 +418,21 @@ than relying only on visits.
 [faq-verification]: ../fixed/20261009/046-faq-verification.md
 [business-solutions-content]: ../fixed/20261009/047-business-type-solutions-content.md
 [business-solutions-section]: ../fixed/20261009/048-business-type-solutions-section.md
-[business-solutions-verification]: ../fixed/20261009/049-business-type-solutions-verification.md\n
+[business-solutions-verification]: ../fixed/20261009/049-business-type-solutions-verification.md
+[production-inputs]: ../fixed/20261009/050-confirm-production-business-and-legal-inputs.md
+[live-delivery]: ../todo/051-enable-and-verify-inquiry-delivery.md
+[real-offers]: ../todo/052-replace-test-offers-with-agency-content.md
+[approved-catalog]: ../todo/053-publish-approved-introduction-and-services.md
+[real-cases]: ../todo/054-publish-verified-case-studies.md
+[real-pricing]: ../todo/055-publish-verified-pricing-examples.md
+[approved-guidance]: ../todo/056-approve-buyer-guidance-and-trust-content.md
+[service-research]: ../todo/057-research-and-prioritize-service-seo.md
+[service-copy]: ../todo/058-prepare-production-service-page-content.md
+[production-services]: ../todo/059-publish-production-service-pages.md
+[production-metadata]: ../todo/060-configure-and-verify-production-seo-metadata.md
+[search-indexing]: ../todo/061-verify-search-console-and-yandex-indexing.md
+[local-listings]: ../todo/062-align-local-business-details-and-listings.md
+[conversion-tracking]: ../todo/063-track-delivered-inquiries-and-phone-clicks.md
+[lead-sales-workflow]: ../todo/064-record-qualified-leads-and-sales.md
+[ongoing-review]: ../todo/065-review-organic-results-and-expand-content.md
+[production-readiness]: ../todo/066-verify-sales-and-seo-production-readiness.md
