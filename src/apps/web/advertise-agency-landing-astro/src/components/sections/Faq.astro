@@ -1,0 +1,116 @@
+---
+// Show FAQ copy using native, independent disclosure controls.
+// Keep complete answers in document order without client-side JavaScript.
+// Explicit demo mode exposes drafts without changing agency approvals.
+
+import Section from '@/components/ui/Section.astro';
+import { faq } from '@/content/faq';
+import { getVisibleFaqItems } from '@/content/faq-publication';
+
+// Outside demo mode, only approved section copy and answers are displayed.
+const items = getVisibleFaqItems(faq);
+---
+
+{/* Omit empty sections; identify preliminary copy in explicit demo mode. */}
+{items.length > 0 && (
+  <Section id="faq" title={faq.heading} ariaLabel={faq.heading}>
+    <div class="faq-content">
+      {/* Explain that these answers remain subject to order-specific terms. */}
+      {faq.demoMode && <p class="faq-notice">{faq.demoNotice}</p>}
+      {/* Native disclosures keep every full answer after its question. */}
+      <div class="faq-list">
+        {items.map((item) => (
+          <details class="faq-item" id={`faq-${item.id}`}>
+            <summary class="faq-question">
+              {item.question}
+            </summary>
+            <p class="faq-answer">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+      {/* A native inquiry link offers a project-specific conversation. */}
+      <a class="faq-inquiry" href={faq.inquiryHref}>
+        {faq.inquiryLabel}
+      </a>
+    </div>
+  </Section>
+)}
+
+<style>
+  /* Bound the reading measure while allowing long copy to wrap on mobile. */
+  .faq-content {
+    min-width: 0;
+    max-width: var(--site-reading-width);
+    margin-inline: auto;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep preliminary-answer context readable in either theme. */
+  .faq-notice {
+    color: var(--site-muted);
+    line-height: 1.6;
+  }
+
+  /* Separate questions without fixed heights or multi-column reading order. */
+  .faq-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  /* Theme tokens distinguish each disclosure from the section surface. */
+  .faq-item {
+    min-width: 0;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    color: var(--color-base-content);
+  }
+
+  /* Retain the native marker and a generous wrapping activation target. */
+  .faq-question {
+    padding: clamp(1rem, 3vw, 1.5rem);
+    min-height: 2.75rem;
+    font-weight: 600;
+    line-height: 1.6;
+    cursor: pointer;
+  }
+
+  /* An inset ring keeps keyboard focus visible within the rounded panel. */
+  .faq-question:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -4px;
+    border-radius: var(--radius-field);
+  }
+
+  /* Opening a disclosure separates its question from the complete answer. */
+  .faq-item[open] > .faq-question {
+    border-bottom: 1px solid var(--color-base-300);
+  }
+
+  /* Content-driven answers expand without clipping text or adding motion. */
+  .faq-answer {
+    padding: clamp(1rem, 3vw, 1.5rem);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* A wrapping native link remains distinct and usable at enlarged sizes. */
+  .faq-inquiry {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    max-width: 100%;
+    margin-top: 1.5rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Keep the inquiry destination apparent during keyboard navigation. */
+  .faq-inquiry:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+</style>
