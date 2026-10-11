@@ -34,6 +34,14 @@ records, including drafts. Nested contract assertions guard schema/type drift.
 `src/content/projects.ts` exports `projectRecords` for the complete validated
 catalog and `projects` for visible records. Avoid another detail-page catalog.
 
+Project category labels and badge colors are configured only in
+`data/content/project-categories.json`. Each entry has a stable English
+`slug`, a Russian `label`, and six-digit hexadecimal `color` and `textColor`
+values. The loader validates strict fields and unique slugs before exposing
+the registry to cards and catalogue controls. Add a category by adding one
+entry there; then use its slug in project data. Missing or unknown categories
+are valid for editorial records and render without a badge.
+
 Each record requires title, generic or named client description, summary,
 status, nullable notice, structured details, photos and evidence.
 Full description, narrative, benefits, and result are optional. Detail fields
@@ -47,11 +55,11 @@ constraints array explicitly means no recorded special constraints, whereas
 
 ## Lettering request form
 
-Optional `projectType` uses English values: `led-letters`, `signs`, `neon`,
-`dimensional-structures`, and `installation`. Omit it or
+Optional `category` uses English values: `led-letters`, `signs`, `neon`,
+`dimensional-structures`, `light-boxes`, `stands`, and `other`. Omit it or
 use null when the service is unknown. Unknown strings fail validation.
 `LedLettersForm.astro` renders after the final result only for cases with
-`projectType: "led-letters"`. Other or missing/null types render no form or
+`category: "led-letters"`. Other or missing/null categories render no form or
 form-specific link. Return/contact navigation remains available.
 Submission includes the originating `projectId`, contacts,
 lettering parameters, and the shared handler's retry-stable `requestId`.
@@ -169,7 +177,7 @@ route; remove its optional href until a genuine approved route exists.
 Fictional pricing examples already reject project links. No checked-in pricing
 example currently includes href. Rebuilds reject stale pricing destinations.
 
-The current `projectType` determines the case form. Only `led-letters` has an
+The current `category` determines the case form. Only `led-letters` has an
 implemented form and local action; do not create links to absent forms.
 Form delivery is an independent dependency.
 

@@ -1,0 +1,311 @@
+---
+// Render the complete public project catalogue and progressively enhance it
+// with client-side search and category filtering.
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+import ProjectCatalogControls
+  from '@/components/projects/ProjectCatalogControls.astro';
+import ProjectCatalogCount
+  from '@/components/projects/ProjectCatalogCount.astro';
+import ProjectCatalogGrid from '@/components/projects/ProjectCatalogGrid.astro';
+import ProjectCatalogEmpty
+  from '@/components/projects/ProjectCatalogEmpty.astro';
+import ProjectCatalogPagination
+  from '@/components/projects/ProjectCatalogPagination.astro';
+import { availableProjectCategories, projects } from '@/content/projects';
+import { projectCatalogSettings } from '@/content/project-catalog';
+const catalogProjects = projects;
+const pageSize = projectCatalogSettings.pageSize;
+const staticPageCount = Math.ceil(catalogProjects.length / pageSize);
+const routePage = Astro.url.pathname
+  .match(/^\/projects\/page\/(\d+)\/?$/)?.[1];
+const requestedStaticPage = Number(routePage ?? Astro.url.searchParams.get('page'));
+const staticCurrentPage = Number.isInteger(requestedStaticPage) &&
+  requestedStaticPage > 0
+  ? Math.min(requestedStaticPage, Math.max(staticPageCount, 1))
+  : 1;
+
+type PaginationItem = number | 'ellipsis';
+const paginationSiblings = 1;
+const paginationBoundaries = 1;
+function getPaginationItems(total: number, current: number): PaginationItem[] {
+  if (total <= 1) return [];
+  const totalPageNumbers = paginationBoundaries * 2 +
+    paginationSiblings * 2 + 3;
+  if (total <= totalPageNumbers) {
+    return Array.from({ length: total }, (_, index) => index + 1);
+  }
+  const leftDots = current > paginationSiblings + paginationBoundaries + 2;
+  const rightDots = current < total - paginationSiblings -
+    paginationBoundaries - 1;
+  if (!leftDots && rightDots) {
+    return [
+      ...Array.from({ length: totalPageNumbers - 2 }, (_, index) => index + 1),
+      'ellipsis', total,
+    ];
+  }
+  if (leftDots && !rightDots) {
+    return [
+      1, 'ellipsis',
+      ...Array.from({ length: totalPageNumbers - 2 },
+        (_, index) => total - totalPageNumbers + 3 + index),
+    ];
+  }
+  return [
+    1, 'ellipsis',
+    ...Array.from({ length: paginationSiblings * 2 + 1 },
+      (_, index) => current - paginationSiblings + index),
+    'ellipsis', total,
+  ];
+}
+function pageHref(page: number): string {
+  const params = new URLSearchParams(Astro.url.searchParams);
+  params.delete('page');
+  const path = page > 1 ? `/projects/page/${page}/` : '/projects/';
+  const query = params.toString();
+  return `${path}${query ? `?${query}` : ''}${Astro.url.hash}`;
+}
+const staticPaginationItems = getPaginationItems(
+  staticPageCount, staticCurrentPage,
+);
+---
+
+<Layout
+  title="Проекты"
+  description="Каталог проектов наружной рекламы и световых конструкций."
+>
+  <div class="catalog-page">
+    <div class="site-container">
+      <Breadcrumbs
+        items={[{ label: 'Главная', href: '/' }]}
+        current="Проекты"
+      />
+
+      <ProjectCatalogControls categories={availableProjectCategories} />
+      <ProjectCatalogCount count={catalogProjects.length} />
+
+      {catalogProjects.length > 0 ? (
+        <ProjectCatalogGrid
+          projects={catalogProjects}
+          page={staticCurrentPage}
+          pageSize={pageSize}
+        />
+      ) : (
+        <ProjectCatalogEmpty type="catalog" />
+      )}
+
+      <ProjectCatalogEmpty type="search" hidden={staticPageCount <= 1} />
+
+      <ProjectCatalogPagination
+        items={staticPaginationItems}
+        currentPage={staticCurrentPage}
+        pageCount={staticPageCount}
+        pageHref={pageHref}
+        pageSize={pageSize}
+      />
+    </div>
+  </div>
+</Layout>
+
+<script src="../../scripts/project-catalog.ts"></script>
+
+<style>
+  /* Keep the catalogue content aligned with the shared page container. */
+  .catalog-page {
+    padding-block: clamp(2rem, 5vw, 4rem);
+    overflow-wrap: anywhere;
+  }
+
+  /* Stack the search field and category group into a compact toolbar. */
+  :global(.catalog-controls) {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    background: var(--color-base-200);
+    border-radius: var(--radius-field);
+  }
+
+  /* Keep form labels visible and aligned with their controls. */
+  :global(.catalog-controls label),
+  :global(.catalog-controls legend) {
+    font-weight: 600;
+  }
+
+  /* Provide a large, keyboard-friendly search target. */
+  :global(.catalog-controls input) {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    color: var(--color-base-content);
+    background: var(--color-base-100);
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-field);
+  }
+
+  /* Remove the browser fieldset frame while preserving its semantics. */
+  :global(.catalog-controls fieldset) {
+    min-width: 0;
+    border: 0;
+  }
+
+  /* Keep the native select easy to operate on touch screens. */
+  :global(.catalog-controls select) {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 0.75rem;
+    padding: 0.625rem 1rem;
+    color: var(--color-base-content);
+    background: var(--color-base-100);
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-field);
+  }
+
+  /* Use the same one/two/three column rhythm as the homepage cards. */
+  :global(.catalog-grid) {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Let filtered cards participate in the same responsive grid. */
+  :global([data-project-card][hidden]) {
+    display: none;
+  }
+
+  /* Give the no-match action a keyboard-sized target. */
+  :global(.catalog-search-empty) button {
+    min-height: 44px;
+    margin-top: 1rem;
+    padding: 0.625rem 1rem;
+    color: var(--color-primary-content);
+    background: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-field);
+    cursor: pointer;
+  }
+
+  /* Explain an entirely empty catalogue without implying a failed search. */
+  :global(.catalog-empty) {
+    padding: clamp(2rem, 6vw, 4rem) 1rem;
+    text-align: center;
+    background: var(--color-base-200);
+    border-radius: var(--radius-field);
+  }
+
+  /* Keep the empty state heading distinct from the page heading. */
+  :global(.catalog-empty) h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* Separate pagination from the cards with a quiet, structured panel. */
+  :global(.catalog-pagination) {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Keep the control group aligned with the catalogue grid. */
+  :global(.catalog-pagination__panel) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  /* Keep controls together and prevent accidental wrapping on wide screens. */
+  :global(.catalog-pagination__pages) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.375rem;
+  }
+
+  /* Give every link the same touch-friendly dimensions and baseline. */
+  :global(.catalog-pagination__link) {
+    display: inline-grid;
+    min-width: 44px;
+    min-height: 44px;
+    place-items: center;
+    padding: 0.5rem;
+    color: var(--color-base-content);
+    background: var(--color-base-100);
+    border: 1px solid var(--color-base-300);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 160ms ease, background-color 160ms ease,
+      color 160ms ease, transform 160ms ease;
+  }
+
+  :global(.catalog-pagination__direction) {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  /* Make pointer feedback distinct while retaining the site focus treatment. */
+  :global(.catalog-pagination__link:hover) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+
+  /* Keep the keyboard position visible against either site theme. */
+  :global(.catalog-pagination__link:focus-visible) {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Make the active page clear to sighted and assistive technology users. */
+  :global(.catalog-pagination__link[aria-current='page']) {
+    color: var(--color-primary-content);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  /* Explain unavailable edge-page controls without removing their context. */
+  :global(.catalog-pagination__link[aria-disabled='true']) {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+    transform: none;
+  }
+
+  /* Reserve a stable slot for skipped page ranges without adding a control. */
+  :global(.catalog-pagination__ellipsis) {
+    display: inline-grid;
+    min-width: 1.5rem;
+    min-height: 44px;
+    place-items: center;
+    color: var(--color-muted);
+  }
+
+  /* Add columns only after cards have enough room to remain readable. */
+  @media (min-width: 48rem) {
+    :global(.catalog-grid) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Use three columns on wide screens while preserving stable card widths. */
+  @media (min-width: 64rem) {
+    :global(.catalog-grid) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* Stack the label and controls when narrow screens cannot share one row. */
+  @media (max-width: 30rem) {
+    :global(.catalog-pagination__panel) {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    :global(.catalog-pagination__pages) {
+      justify-content: center;
+    }
+  }
+</style>

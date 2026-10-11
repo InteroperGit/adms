@@ -25,7 +25,7 @@ const details = project.details ?? {};
 const projectsHref = '/#projects';
 const contactsHref = '/#contacts';
 // Only lettering has a dedicated form; other types retain contact access.
-const hasLedLettersForm = project.projectType === 'led-letters';
+const hasLedLettersForm = project.category === 'led-letters';
 const number = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 20 });
 const units = { mm: 'мм', cm: 'см', m: 'м' };
 const production = details.timing?.production;

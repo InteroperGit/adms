@@ -1,0 +1,42 @@
+---
+import ProjectCard from '@/components/cards/ProjectCard.astro';
+import { getProjectCategory } from '@/content/project-categories';
+import type { Project } from '@/types/project';
+
+interface Props {
+  projects: Project[];
+  page: number;
+  pageSize: number;
+}
+
+const { projects, page, pageSize } = Astro.props;
+---
+
+<div
+  class="catalog-grid"
+  data-catalog-results
+  tabindex="-1"
+  aria-label="Результаты проектов"
+>
+  {projects.map((project, index) => {
+    const category = getProjectCategory(project.category);
+    const searchText = [
+      project.title,
+      project.client,
+      project.shortDescription,
+      category?.label,
+    ].filter(Boolean).join(' ');
+    return (
+      <div
+        data-project-card
+        data-category={project.category ?? ''}
+        data-search={searchText}
+        hidden={
+          index < (page - 1) * pageSize || index >= page * pageSize
+        }
+      >
+        <ProjectCard project={project} />
+      </div>
+    );
+  })}
+</div>

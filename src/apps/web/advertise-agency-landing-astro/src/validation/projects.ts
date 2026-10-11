@@ -1,5 +1,8 @@
 import { z } from 'astro/zod';
-import { projectTypes } from '../types/project';
+import {
+  projectCategories,
+  type ProjectCategory,
+} from '../types/project';
 import type {
   Project, ProjectDetails, ProjectEvidence, ProjectPhoto,
 } from '../types/project';
@@ -73,9 +76,15 @@ const details = z.object({
   }).strict().partial().nullable(),
 }).strict().partial();
 
+// Zod needs a tuple at runtime; keep it derived from the shared registry.
+const categorySlugs = projectCategories.map(({ slug }) => slug) as [
+  ProjectCategory,
+  ...ProjectCategory[],
+];
+
 export const projectSchema = z.object({
   id,
-  projectType: z.enum(projectTypes).nullable().optional(),
+  category: z.enum(categorySlugs).nullable().optional(),
   status: z.enum(['draft', 'demo', 'published']),
   notice: text.nullable(),
   title: text,

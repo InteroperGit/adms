@@ -1,0 +1,56 @@
+---
+type PaginationItem = number | 'ellipsis';
+
+interface Props {
+  items: PaginationItem[];
+  currentPage: number;
+  pageCount: number;
+  pageHref: (page: number) => string;
+  pageSize: number;
+}
+
+const { items, currentPage, pageCount, pageHref, pageSize } = Astro.props;
+---
+
+<nav
+  class="catalog-pagination"
+  data-catalog-pagination
+  data-page-size={pageSize}
+  aria-label="Навигация по проектам"
+  hidden={pageCount <= 1}
+>
+  <div class="catalog-pagination__panel">
+    <div class="catalog-pagination__pages" data-catalog-pages>
+      <a
+        class="catalog-pagination__link catalog-pagination__direction"
+        href={currentPage === 1 ? undefined : pageHref(currentPage - 1)}
+        aria-label="Previous page"
+        aria-disabled={currentPage === 1 ? 'true' : undefined}
+        tabindex={currentPage === 1 ? -1 : undefined}
+      >&larr;</a>
+      {items.map((item) => item === 'ellipsis' ? (
+        <span
+          class="catalog-pagination__ellipsis"
+          aria-hidden="true"
+        >&hellip;</span>
+      ) : (
+        <a
+          class="catalog-pagination__link"
+          href={pageHref(item)}
+          aria-label={
+            item === 1 ? 'First page' :
+              item === pageCount ? 'Last page' : `Page ${item}`
+          }
+          aria-current={item === currentPage ? 'page' : undefined}
+        >{item}</a>
+      ))}
+      <a
+        class="catalog-pagination__link catalog-pagination__direction"
+        href={currentPage === pageCount ? undefined : pageHref(currentPage + 1)}
+        aria-label="Next page"
+        aria-disabled={currentPage === pageCount ? 'true' : undefined}
+        tabindex={currentPage === pageCount ? -1 : undefined}
+      >&rarr;</a>
+    </div>
+  </div>
+</nav>

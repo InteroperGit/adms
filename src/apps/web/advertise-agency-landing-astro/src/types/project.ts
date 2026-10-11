@@ -1,3 +1,12 @@
+import {
+  getProjectCategory,
+  projectCategories,
+} from '../content/project-categories';
+import type {
+  ProjectCategory,
+  ProjectCategoryConfig,
+} from '../content/project-categories';
+
 /** Traceable agency evidence; a demo switch is never an approval. */
 export interface ProjectEvidence {
   source: string;
@@ -45,16 +54,13 @@ export interface ProjectDetails {
   } | null;
 }
 
-/** English case types determine the relevant service request form. */
-export const projectTypes = [
-  'led-letters', 'signs', 'neon', 'dimensional-structures', 'installation',
-] as const;
-
-export type ProjectType = typeof projectTypes[number];
+export { getProjectCategory, projectCategories };
+export type { ProjectCategory, ProjectCategoryConfig };
 
 export interface Project {
   id: number;
-  projectType?: ProjectType | null;
+  /** Missing or null means the project has not been classified yet. */
+  category?: ProjectCategory | null;
   status: 'draft' | 'demo' | 'published';
   notice: string | null;
   title: string;
