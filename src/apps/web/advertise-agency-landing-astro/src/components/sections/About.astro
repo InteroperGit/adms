@@ -11,7 +11,7 @@ import ImageCarousel from '@/components/ui/ImageCarousel.astro';
 import { aboutCarousel } from '@/content/about-carousel';
 const hasImages = aboutCarousel.options.enabled &&
   aboutCarousel.items.some(item => item.enabled);
-const projects = site.menu.find((item) => item.href === '/#projects');
+const projects = site.menu.find((item) => item.href === '/projects/');
 const contacts = site.menu.find((item) => item.href === '/#contacts');
 ---
 

@@ -22,7 +22,14 @@ const { items, current } = Astro.props;
   <ol>
     {items.map((item) => (
       <li>
-        <a href={item.href}>{item.label}</a>
+        <a
+          href={item.href}
+          data-project-catalog-return={item.href === '/projects/'
+            ? true
+            : undefined}
+        >
+          {item.label}
+        </a>
       </li>
     ))}
     {/* The current page is a label, not a redundant link. */}

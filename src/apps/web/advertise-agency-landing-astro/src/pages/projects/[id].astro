@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 // The loader validates approval/visibility before generating these props.
 const { project } = Astro.props as { project: Project };
 const details = project.details ?? {};
-const projectsHref = '/#projects';
+const projectsHref = '/projects/';
 const contactsHref = '/#contacts';
 // Only lettering has a dedicated form; other types retain contact access.
 const hasLedLettersForm = project.category === 'led-letters';
@@ -270,7 +270,13 @@ const hasFacts = hasSpecifications || hasTiming;
           Заказать световые буквы
         </Button>
       )}
-      <a class="project-link" href={projectsHref}>Вернуться к проектам</a>
+      <a
+        class="project-link"
+        href="/projects/"
+        data-project-catalog-return
+      >
+        Вернуться к проектам
+      </a>
       <a class="project-link" href={contactsHref}>
         {site.sections.contacts.panelTitle}
       </a>
@@ -481,3 +487,21 @@ const hasFacts = hasSpecifications || hasTiming;
     }
   }
 </style>
+
+<script>
+  // Restore the prior filtered tab when storage is available and trustworthy.
+  const returnLinks = document.querySelectorAll<HTMLAnchorElement>(
+    '[data-project-catalog-return]',
+  );
+  if (returnLinks.length) {
+    try {
+      const stored = sessionStorage.getItem('project-catalog-return');
+      const storedURL = stored && new URL(stored, location.origin);
+      if (storedURL?.origin === location.origin) {
+        returnLinks.forEach((link) => { link.href = stored; });
+      }
+    } catch {
+      // Blocked storage leaves the direct catalogue link fully functional.
+    }
+  }
+</script>

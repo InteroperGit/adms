@@ -35,7 +35,11 @@ const category = getProjectCategory(project.category);
       {project.client}{project.year !== undefined && `, ${project.year}`}
     </p>
     <p class="project-summary">{project.shortDescription}</p>
-    <a class="project-link" href={`/projects/${project.id}`}>
+    <a
+      class="project-link"
+      href={`/projects/${project.id}/`}
+      data-project-link
+    >
       Подробнее<span class="sr-only">: {project.title}</span>
       <svg
         aria-hidden="true"

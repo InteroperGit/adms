@@ -5,8 +5,12 @@
 
 import ProjectCard from '@/components/cards/ProjectCard.astro';
 import Section from '@/components/ui/Section.astro';
+import Button from '@/components/ui/Button.astro';
 import { site } from '@/content/site';
 import { projects } from '@/content/projects';
+
+// Keep the homepage concise while the catalogue remains the complete source.
+const featuredProjects = projects.slice(0, 3);
 ---
 
 {/* Section titles and descriptions come from the site configuration. */}
@@ -19,8 +23,21 @@ import { projects } from '@/content/projects';
   {/* Keep the section anchor useful when no cases are visible. */}
   {projects.length === 0 && <p>Кейсы пока не опубликованы.</p>}
   <div class="grid min-w-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {projects.map((project) => (
+    {featuredProjects.map((project) => (
       <ProjectCard project={project} />
     ))}
   </div>
+  {/* Keep the complete catalogue reachable, including when no cards exist. */}
+  <div class="projects-catalog-link">
+    <Button href="/projects/" variant="outline">
+      Все проекты
+    </Button>
+  </div>
 </Section>
+
+<style>
+  /* Separate the complete catalogue action from the featured cards. */
+  .projects-catalog-link {
+    margin-top: 1.5rem;
+  }
+</style>

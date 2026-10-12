@@ -6,6 +6,9 @@ import { visibleServices } from './services';
 // Экспортируем типизированный объект конфигурации
 export const site: SiteConfig = {
   ...siteData,
-  menu: siteData.menu.filter((item) =>
-    item.href !== '/#services' || visibleServices.length > 0),
+  menu: siteData.menu
+    .filter((item) => item.href !== '/#services' || visibleServices.length > 0)
+    .map((item) => item.href === '/#projects'
+      ? { ...item, href: '/projects/' }
+      : item),
 };

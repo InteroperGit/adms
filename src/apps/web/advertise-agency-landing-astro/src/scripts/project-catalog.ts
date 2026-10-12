@@ -85,7 +85,10 @@ function getElements(): CatalogElements | undefined {
 
 function readState(): { query: string; category: string; page: number } {
   const params = new URLSearchParams(window.location.search);
-  const rawPage = params.get('page') ?? '';
+  // Static pagination uses a route segment; enhanced links may use a query.
+  const routePage = window.location.pathname
+    .match(/^\/projects\/page\/(\d+)\/?$/)?.[1];
+  const rawPage = routePage ?? params.get('page') ?? '';
   const parsedPage = /^\d+$/.test(rawPage) ? Number(rawPage) : 1;
   return { query: params.get('q') ?? '', category: params.get('category') ?? '',
     page: Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1 };
@@ -100,10 +103,10 @@ function writeState(elements: CatalogElements, page: number,
   const query = elements.input.value.trim();
   if (query) params.set('q', query);
   if (elements.category.value) params.set('category', elements.category.value);
-  if (page > 1) params.set('page', String(page));
+  const path = page > 1 ? `/projects/page/${page}/` : '/projects/';
   const suffix = params.toString();
   const hash = window.location.hash;
-  const url = `${window.location.pathname}${suffix ? `?${suffix}` : ''}${hash}`;
+  const url = `${path}${suffix ? `?${suffix}` : ''}${hash}`;
   const current = `${window.location.pathname}${window.location.search}${hash}`;
   if (url === current) return;
   if (mode === 'push') window.history.pushState(null, '', url);
@@ -171,8 +174,10 @@ function renderPagination(elements: CatalogElements, current: number,
       elements.pages.append(ellipsis);
       continue;
     }
-    add(String(page), page, false,
-      page === 1 ? 'First page' : page === total ? 'Last page' : `Page ${page}`);
+    const pageLabel = page === 1
+      ? 'First page'
+      : page === total ? 'Last page' : `Page ${page}`;
+    add(String(page), page, false, pageLabel);
   }
   add('→', Math.min(total, current + 1), current === total, 'Next page');
 }
@@ -185,9 +190,9 @@ function pageUrl(elements: CatalogElements, page: number): string {
   const query = elements.input.value.trim();
   if (query) params.set('q', query);
   if (elements.category.value) params.set('category', elements.category.value);
-  if (page > 1) params.set('page', String(page));
+  const path = page > 1 ? `/projects/page/${page}/` : '/projects/';
   const suffix = params.toString();
-  return `${window.location.pathname}${suffix ? `?${suffix}` : ''}`
+  return `${path}${suffix ? `?${suffix}` : ''}`
     + window.location.hash;
 }
 
@@ -235,6 +240,20 @@ function initializeCatalog(): void {
   const elements = getElements();
   if (!elements) return;
   elements.form.hidden = false;
+  // Preserve the filtered result tab when a visitor opens a project card.
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest<HTMLAnchorElement>('[data-project-link]');
+    if (!link) return;
+    try {
+      sessionStorage.setItem(
+        'project-catalog-return',
+        `${window.location.pathname}${window.location.search}#catalog-results`,
+      );
+    } catch {
+      // Private browsing may block storage; the static fallback remains valid.
+    }
+  });
   const state = readState();
   elements.input.value = state.query;
   elements.category.value = state.category;
