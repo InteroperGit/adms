@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button.astro';
 import ProjectPhoto from '@/components/ui/ProjectPhoto.astro';
 import ProjectProcess from '@/components/ui/ProjectProcess.astro';
 import LedLettersForm from '@/components/forms/LedLettersForm.astro';
+import { getOrderFormRegistration } from '@/content/order-form-registry';
 import ProjectDetailHeader
   from '@/components/projects/ProjectDetailHeader.astro';
 import ProjectDetailOverview
@@ -24,10 +25,13 @@ export async function getStaticPaths() {
 const { project } = Astro.props as { project: Project };
 const projectsHref = '/projects/';
 const contactsHref = '/#contacts';
-const hasLedLettersForm = project.category === 'led-letters';
+const specializedForm = getOrderFormRegistration(
+  'project',
+  project.status === 'published' ? project.category : undefined,
+);
 ---
 
-<Layout title={project.title} description={project.shortDescription}>
+<Layout title={project.title} description={project.description}>
   <article class="site-container project-detail">
     {/* Breadcrumbs retain the project catalogue return destination. */}
     <Breadcrumbs
@@ -80,11 +84,13 @@ const hasLedLettersForm = project.category === 'led-letters';
       </section>
     )}
 
-    {hasLedLettersForm && <LedLettersForm projectId={project.id} />}
+    {specializedForm?.formId === 'led-letters' && (
+      <LedLettersForm projectId={project.id} />
+    )}
 
     {/* Keep native links available when client storage is unavailable. */}
     <nav aria-label="Действия проекта" class="project-actions">
-      {hasLedLettersForm && (
+      {specializedForm?.formId === 'led-letters' && (
         <Button href="#led-letters" class="project-inquiry">
           Заказать световые буквы
         </Button>

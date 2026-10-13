@@ -32,9 +32,9 @@ const category = getProjectCategory(project.category);
     )}
     <h3>{project.title}</h3>
     <p class="project-client">
-      {project.client}{project.year !== undefined && `, ${project.year}`}
+      {project.client}{project.date !== undefined && `, ${project.date}`}
     </p>
-    <p class="project-summary">{project.shortDescription}</p>
+    <p class="project-summary">{project.description}</p>
     <a
       class="project-link"
       href={`/projects/${project.id}/`}

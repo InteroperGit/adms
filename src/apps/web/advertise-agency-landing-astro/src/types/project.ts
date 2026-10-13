@@ -1,4 +1,4 @@
-import {
+﻿import {
   getProjectCategory,
   projectCategories,
 } from '../content/project-categories';
@@ -6,84 +6,25 @@ import type {
   ProjectCategory,
   ProjectCategoryConfig,
 } from '../content/project-categories';
-
-/** Traceable agency evidence; a demo switch is never an approval. */
-export interface ProjectEvidence {
-  source: string;
-  approvedBy: string;
-  approvedAt: string;
-}
-
-export interface ProjectPhoto {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  kind: 'demo' | 'installation';
-  source: string;
-  rights: string | null;
-  approval: ProjectEvidence | null;
-  caption: string;
-  cropGuidance: string;
-  focalPoint: { x: number; y: number };
-}
-
-/** Optional process copy and media; an empty object renders no section. */
-export interface ProjectProcess {
-  paragraphs?: string[];
-  photos?: ProjectPhoto[];
-}
-
-/** Null means unknown; production is distinct from total delivery. */
-export interface ProjectDetails {
-  customerTask?: string | null;
-  installationContext?: string | null;
-  constraints?: string[] | null;
-  materials?: string[] | null;
-  dimensions?: {
-    label: string;
-    value: number;
-    unit: 'mm' | 'cm' | 'm';
-  }[] | null;
-  includedWork?: string[] | null;
-  timing?: {
-    production?: { value: number; unit: 'hours' | 'days'; basis: string };
-    design?: string | null;
-    installation?: string | null;
-    totalDelivery?: string | null;
-  } | null;
-}
+import type { ContentBlock } from './content-blocks';
 
 export { getProjectCategory, projectCategories };
 export type { ProjectCategory, ProjectCategoryConfig };
 
+/**
+ * Catalog and SEO metadata for a project article.
+ * Article material belongs in content blocks.
+ */
 export interface Project {
   id: number;
-  /** Missing or null means the project has not been classified yet. */
   category?: ProjectCategory | null;
   status: 'draft' | 'demo' | 'published';
   notice: string | null;
   title: string;
   client: string;
-  /** Calendar year supplied by the agency; omit when it is unknown. */
-  year?: number;
+  /** ISO calendar date for the project milestone, when known. */
+  date?: string;
   attribution: 'named' | 'generic';
-  shortDescription: string;
-  fullDescription?: string | null;
-  /** Proposed narrative and benefits never count as verified outcomes. */
-  story?: string[] | null;
-  expectedBenefits?: string[] | null;
-  manufacturing?: ProjectProcess | null;
-  installation?: ProjectProcess | null;
-  result?: string | null;
-  resultPhotos?: ProjectPhoto[] | null;
-  details?: ProjectDetails | null;
-  photos: ProjectPhoto[];
-  evidence: {
-    copy: ProjectEvidence | null;
-    specifications: ProjectEvidence | null;
-    timing: ProjectEvidence | null;
-    outcome: ProjectEvidence | null;
-    attribution: ProjectEvidence | null;
-  };
+  description: string;
+  content: ContentBlock[];
 }

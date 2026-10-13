@@ -99,7 +99,7 @@ export function validateInquiryPayload(
   }
   if (kind === 'lettering') {
     if (fields.serviceId !== 'svetovye-bukvy') errors.add('serviceId');
-    if (!fields.projectId || !options.projectIds.includes(fields.projectId)) {
+    if (fields.projectId && !options.projectIds.includes(fields.projectId)) {
       errors.add('projectId');
     }
     const choices = {

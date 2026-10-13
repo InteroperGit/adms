@@ -19,8 +19,8 @@ const { project } = Astro.props;
     <div>
       <dt>Год</dt>
       <dd>
-        {project.year
-          ? <time datetime={String(project.year)}>{project.year}</time>
+        {project.date
+          ? <time datetime={project.date}>{project.date}</time>
           : 'Уточняется'}
       </dd>
     </div>

@@ -6,8 +6,10 @@
 import Layout from '@/layouts/Layout.astro';
 import ServiceVisual from '@/components/ui/ServiceVisual.astro';
 import Button from '@/components/ui/Button.astro';
+import LedLettersForm from '@/components/forms/LedLettersForm.astro';
 import { services, visibleServices } from '@/content/services';
 import { isServiceArticlePublished } from '@/content/service-publication';
+import { getOrderFormRegistration } from '@/content/order-form-registry';
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -21,6 +23,10 @@ if (!service) throw new Error(`Unknown service: ${Astro.props.serviceId}`);
 const { article } = service;
 // Index only when category, copy, image and article approvals all permit it.
 const demo = !isServiceArticlePublished(services, service);
+const specializedForm = getOrderFormRegistration(
+  'service',
+  service.id,
+);
 // A withheld catalog has no homepage anchor, so return to the homepage.
 const catalogHref = visibleServices.length ? '/#services' : '/';
 const catalogLabel = visibleServices.length ? 'Все услуги' : 'На главную';
@@ -70,6 +76,9 @@ const catalogLabel = visibleServices.length ? 'Все услуги' : 'На гл
           ))}
         </ul>
       </section>
+      {specializedForm?.formId === 'led-letters' && !demo && (
+        <LedLettersForm serviceId={service.id} />
+      )}
       <nav class="service-actions" aria-label="Действия по услуге">
         <Button href="/#order-inquiry">Обсудить проект</Button>
         <a class="service-back" href={catalogHref}>

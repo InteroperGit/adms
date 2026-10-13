@@ -2,12 +2,14 @@
 // A single service request form with common contacts and lettering details.
 // Reuse the configured receipt-based delivery handler; no fake success state.
 import { orderInquiry } from '@/content/order-inquiry';
+import OrderFormContainer from '@/components/content/OrderFormContainer.astro';
 
 interface Props {
-  projectId: number;
+  projectId?: number;
+  serviceId?: string;
 }
 
-const { projectId } = Astro.props;
+const { projectId, serviceId = 'svetovye-bukvy' } = Astro.props;
 const prefix = 'led-letters';
 const { submission, feedback } = orderInquiry;
 const fields = [
@@ -80,8 +82,12 @@ const groups = [
 ---
 
 {/* Keep the lettering service explicit even on a different project page. */}
-<section id={prefix} class="letter-order" aria-labelledby={`${prefix}-title`}>
-  <h2 id={`${prefix}-title`}>Заказать световые буквы</h2>
+<OrderFormContainer
+  id={prefix}
+  className="letter-order"
+  title="Заказать световые буквы"
+>
+  <Fragment slot="default">
   <p class="form-intro">
     Расскажите о будущей вывеске. Размеры и технические детали можно
     уточнить на замере. Обязательны только имя, телефон и согласие.
@@ -99,8 +105,10 @@ const groups = [
     aria-describedby={statusId}
   >
     {/* Service and case context are submitted with the customer's fields. */}
-    <input type="hidden" name="serviceId" value="svetovye-bukvy" />
-    <input type="hidden" name="projectId" value={projectId} />
+    <input type="hidden" name="serviceId" value={serviceId} />
+    {projectId !== undefined && (
+      <input type="hidden" name="projectId" value={projectId} />
+    )}
     <fieldset class="letter-fields">
       <legend class="sr-only">Контакты и параметры световых букв</legend>
       {/* Native group legends explain each step to all form users. */}
@@ -202,7 +210,8 @@ const groups = [
       Для отправки включите JavaScript или свяжитесь с агентством.
     </noscript>
   </form>
-</section>
+  </Fragment>
+</OrderFormContainer>
 
 <script>
   import { initializeInquiry } from './order-inquiry';

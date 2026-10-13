@@ -1,0 +1,12 @@
+---
+import type { QuoteBlock as Quote } from '@/types/content-blocks';
+interface Props { block: Quote }
+const { block } = Astro.props as Props;
+---
+
+<figure class="content-quote">
+  <blockquote>{block.text}</blockquote>
+  {(block.author || block.source) && <figcaption>
+    {block.author}{block.author && block.source && ', '}{block.source}
+  </figcaption>}
+</figure>

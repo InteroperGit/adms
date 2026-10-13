@@ -1,0 +1,475 @@
+---
+// Render a progressive-enhancement gallery for an image-stack block.
+import type { ImageStackBlock as ImageStack } from '@/types/content-blocks';
+
+interface Props {
+  block: ImageStack;
+}
+
+type GalleryImage = ImageStack['images'][number];
+
+const { block } = Astro.props as Props;
+const images: GalleryImage[] = block.images;
+const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
+---
+
+{images.length > 0 && (
+  <figure class="content-gallery" id={galleryId} data-gallery>
+    {/* Links retain a useful image view when JavaScript is unavailable. */}
+    <div class="gallery-stage">
+      {images.map((image: GalleryImage, index: number) => (
+        <a
+          class="gallery-thumbnail"
+          href={image.src}
+          data-gallery-open={index}
+        >
+          <img
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            loading={index === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+            data-caption={image.caption}
+          />
+          {image.caption && (
+            <span class="gallery-thumbnail-caption">{image.caption}</span>
+          )}
+        </a>
+      ))}
+    </div>
+
+    {/* Native modal dialog provides browser focus containment. */}
+    <dialog
+      class="gallery-lightbox"
+      data-gallery-dialog
+      aria-label="Image gallery"
+    >
+      <button
+        class="gallery-close"
+        type="button"
+        aria-label="Close image gallery"
+        data-gallery-close
+      >
+        <span aria-hidden="true">&#215;</span>
+      </button>
+
+      <button
+        class="gallery-navigation gallery-previous"
+        type="button"
+        aria-label="Previous image"
+        data-gallery-previous
+      >
+        <span aria-hidden="true">&#8249;</span>
+      </button>
+
+      <figure class="gallery-view">
+        <img class="gallery-image" data-gallery-image alt="" />
+        <figcaption class="gallery-caption" data-gallery-caption></figcaption>
+      </figure>
+
+      <button
+        class="gallery-navigation gallery-next"
+        type="button"
+        aria-label="Next image"
+        data-gallery-next
+      >
+        <span aria-hidden="true">&#8250;</span>
+      </button>
+
+      <div class="gallery-position">
+        <span
+          class="gallery-announcement"
+          data-gallery-announcement
+          aria-live="polite"
+          aria-atomic="true"
+        ></span>
+        <div class="gallery-dots" aria-label="Choose an image">
+          {images.map((_image: GalleryImage, index: number) => (
+            <button
+              class="gallery-dot"
+              type="button"
+              aria-label={`Show image ${index + 1}`}
+              aria-current={index === 0 ? 'true' : undefined}
+              data-gallery-dot={index}
+            />
+          ))}
+        </div>
+      </div>
+    </dialog>
+
+    {block.caption && <figcaption>{block.caption}</figcaption>}
+  </figure>
+)}
+
+<script>
+  interface GalleryItem {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    caption?: string;
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach(
+    (gallery: HTMLElement) => {
+      const thumbnails = Array.from(
+        gallery.querySelectorAll<HTMLAnchorElement>('[data-gallery-open]'),
+      );
+      const dialog = gallery.querySelector<HTMLDialogElement>(
+        '[data-gallery-dialog]',
+      );
+      const image = gallery.querySelector<HTMLImageElement>(
+        '[data-gallery-image]',
+      );
+      const caption = gallery.querySelector<HTMLElement>(
+        '[data-gallery-caption]',
+      );
+      const announcement = gallery.querySelector<HTMLElement>(
+        '[data-gallery-announcement]',
+      );
+      const dots = Array.from(
+        gallery.querySelectorAll<HTMLButtonElement>('[data-gallery-dot]'),
+      );
+      const closeButton = gallery.querySelector<HTMLButtonElement>(
+        '[data-gallery-close]',
+      );
+      const previousButton = gallery.querySelector<HTMLButtonElement>(
+        '[data-gallery-previous]',
+      );
+      const nextButton = gallery.querySelector<HTMLButtonElement>(
+        '[data-gallery-next]',
+      );
+
+      if (
+        !dialog || !image || !caption || !announcement || !closeButton
+        || !previousButton || !nextButton || thumbnails.length === 0
+      ) {
+        return;
+      }
+
+      let currentIndex = 0;
+      let returnFocus: HTMLElement | null = null;
+      let previousOverflow = '';
+
+      const getItem = (index: number): GalleryItem => {
+        const thumbnail = thumbnails[index];
+        const source = thumbnail.querySelector<HTMLImageElement>('img');
+
+        return {
+          src: source?.currentSrc || source?.src || '',
+          alt: source?.alt ?? '',
+          width: Number(source?.width) || 0,
+          height: Number(source?.height) || 0,
+          caption: source?.dataset.caption || undefined,
+        };
+      };
+
+      const showImage = (index: number): void => {
+        currentIndex = (index + thumbnails.length) % thumbnails.length;
+        const item = getItem(currentIndex);
+
+        image.src = item.src;
+        image.alt = item.alt;
+        image.width = item.width;
+        image.height = item.height;
+        caption.textContent = item.caption ?? '';
+        caption.hidden = !item.caption;
+        announcement.textContent =
+          `Image ${currentIndex + 1} of ${thumbnails.length}`;
+        dots.forEach((dot: HTMLButtonElement, dotIndex: number) => {
+          if (dotIndex === currentIndex) {
+            dot.setAttribute('aria-current', 'true');
+          } else {
+            dot.removeAttribute('aria-current');
+          }
+        });
+        previousButton.hidden = thumbnails.length < 2;
+        nextButton.hidden = thumbnails.length < 2;
+      };
+
+      const openGallery = (index: number): void => {
+        returnFocus = document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null;
+        showImage(index);
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        dialog.showModal();
+        closeButton.focus();
+      };
+
+      const closeGallery = (): void => {
+        if (dialog.open) {
+          dialog.close();
+        }
+      };
+
+      thumbnails.forEach((thumbnail: HTMLAnchorElement, index: number) => {
+        thumbnail.addEventListener('click', (event: MouseEvent) => {
+          event.preventDefault();
+          openGallery(index);
+        });
+      });
+
+      closeButton.addEventListener('click', closeGallery);
+      previousButton.addEventListener('click', () => {
+        showImage(currentIndex - 1);
+      });
+      nextButton.addEventListener('click', () => {
+        showImage(currentIndex + 1);
+      });
+      dots.forEach((dot: HTMLButtonElement, index: number) => {
+        dot.addEventListener('click', () => showImage(index));
+      });
+
+      dialog.addEventListener('click', (event: MouseEvent) => {
+        if (event.target === dialog) {
+          closeGallery();
+        }
+      });
+
+      dialog.addEventListener('cancel', (event: Event) => {
+        event.preventDefault();
+        closeGallery();
+      });
+
+      dialog.addEventListener('close', () => {
+        document.body.style.overflow = previousOverflow;
+        returnFocus?.focus();
+        returnFocus = null;
+      });
+
+      dialog.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          showImage(currentIndex - 1);
+        }
+
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          showImage(currentIndex + 1);
+        }
+      });
+    },
+  );
+</script>
+
+<style>
+  /* Keep gallery thumbnails in a responsive, stable grid. */
+  .gallery-stage
+  {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 0.75rem;
+  }
+
+  /* Make each image a clear pointer and keyboard target. */
+  .gallery-thumbnail
+  {
+    overflow: hidden;
+    color: inherit;
+    cursor: zoom-in;
+    text-decoration: none;
+  }
+
+  /* Preserve image proportions to avoid shifting the article layout. */
+  .gallery-thumbnail img
+  {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Keep the caption visible when the gallery script is unavailable. */
+  .gallery-thumbnail-caption
+  {
+    display: block;
+    padding-top: 0.35rem;
+  }
+
+  /* Cover the viewport while the selected image is being inspected. */
+  .gallery-lightbox
+  {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 4fr) 1fr;
+    grid-template-rows: 1fr auto;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    padding: 3.5rem 1rem 2rem;
+    border: 0;
+    color: white;
+    background: rgb(0 0 0 / 90%);
+  }
+
+  /* Hide the native dialog until the user opens the gallery. */
+  .gallery-lightbox:not([open])
+  {
+    display: none;
+  }
+
+  /* Dim the document beneath the native modal dialog. */
+  .gallery-lightbox::backdrop
+  {
+    background: rgb(0 0 0 / 90%);
+  }
+
+  /* Keep the selected image within the visible viewport. */
+  .gallery-view
+  {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* Show the image without cropping its source content. */
+  .gallery-image
+  {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 9rem);
+    margin: 0 auto;
+    object-fit: contain;
+  }
+
+  /* Center the selected image caption below the image. */
+  .gallery-caption
+  {
+    margin-top: 0.75rem;
+    color: white;
+  }
+
+  /* Keep close and image navigation controls easy to locate. */
+  .gallery-close,
+  .gallery-navigation
+  {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    border: 0;
+    border-radius: 50%;
+    color: white;
+    background: rgb(0 0 0 / 50%);
+    cursor: pointer;
+    font-size: 2rem;
+  }
+
+  /* Place the close action in the upper-right corner. */
+  .gallery-close
+  {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  /* Hide side navigation until hover or keyboard focus reveals it. */
+  .gallery-navigation
+  {
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+
+  /* Align the previous control beside the selected image. */
+  .gallery-previous
+  {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+  }
+
+  /* Keep the next control opposite the previous control. */
+  .gallery-next
+  {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: center;
+  }
+
+  /* Keep navigation visible while the pointer or keyboard engages it. */
+  .gallery-lightbox:hover .gallery-navigation,
+  .gallery-lightbox:focus-within .gallery-navigation
+  {
+    opacity: 1;
+  }
+
+  /* Keep the live image count and position controls centered. */
+  .gallery-position
+  {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+  }
+
+  /* Keep the current image announcement readable. */
+  .gallery-announcement
+  {
+    text-align: center;
+  }
+
+  /* Represent each image position with a round button. */
+  .gallery-dots
+  {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  /* Keep position controls visible against the dark overlay. */
+  .gallery-dot
+  {
+    width: 0.65rem;
+    height: 0.65rem;
+    padding: 0;
+    border: 1px solid white;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  /* Distinguish the currently selected image position. */
+  .gallery-dot[aria-current="true"]
+  {
+    background: white;
+  }
+
+  /* Keep side controls visible on touch screens without hover. */
+  @media (hover: none)
+  {
+    .gallery-navigation
+    {
+      opacity: 1;
+    }
+  }
+
+  /* Remove fades for people who request reduced motion. */
+  @media (prefers-reduced-motion: reduce)
+  {
+    .gallery-navigation
+    {
+      transition: none;
+    }
+  }
+
+  /* Keep controls beside the image on narrow screens. */
+  @media (max-width: 40rem)
+  {
+    .gallery-lightbox
+    {
+      grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+      padding-right: 0.25rem;
+      padding-left: 0.25rem;
+    }
+  }
+</style>

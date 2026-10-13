@@ -1,0 +1,14 @@
+[
+  {
+    "type": "unknown",
+    "paragraphs": ["This must be rejected"]
+  },
+  {
+    "type": "ordered-list",
+    "items": []
+  },
+  {
+    "type": "unordered-list",
+    "items": [""]
+  }
+]

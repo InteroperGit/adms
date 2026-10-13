@@ -1,0 +1,41 @@
+---
+import type { ContentBlock } from '@/types/content-blocks';
+import ChartBlock from './ChartBlock.astro';
+import FootnoteBlock from './FootnoteBlock.astro';
+import ImageBlock from './ImageBlock.astro';
+import ImageStackBlock from './ImageStackBlock.astro';
+import ListBlock from './ListBlock.astro';
+import OrderFormBlock from './OrderFormBlock.astro';
+import ParagraphBlock from './ParagraphBlock.astro';
+import QuoteBlock from './QuoteBlock.astro';
+import TableBlock from './TableBlock.astro';
+
+interface Props {
+  blocks: ContentBlock[];
+  /** Specialized production forms require explicit publication approval. */
+  allowSpecializedForms?: boolean;
+}
+const { blocks, allowSpecializedForms = false } = Astro.props as Props;
+---
+
+<div class="content-blocks">
+  {blocks.map((block: ContentBlock) => (
+    <div class="content-block" data-block-type={block.type}>
+      {block.type === 'paragraph' && <ParagraphBlock block={block} />}
+      {(block.type === 'ordered-list' ||
+        block.type === 'unordered-list') && <ListBlock block={block} />}
+      {block.type === 'table' && <TableBlock block={block} />}
+      {block.type === 'chart' && <ChartBlock block={block} />}
+      {block.type === 'image' && <ImageBlock block={block} />}
+      {block.type === 'image-stack' && <ImageStackBlock block={block} />}
+      {block.type === 'order-form' && (
+        <OrderFormBlock
+          block={block}
+          allowSpecialized={allowSpecializedForms}
+        />
+      )}
+      {block.type === 'quote' && <QuoteBlock block={block} />}
+      {block.type === 'footnote' && <FootnoteBlock block={block} />}
+    </div>
+  ))}
+</div>

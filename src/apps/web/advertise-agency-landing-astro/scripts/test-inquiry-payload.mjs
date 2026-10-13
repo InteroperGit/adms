@@ -35,6 +35,8 @@ function rejected(payload, field, config = options) {
 test('both form contracts accept their own required fields', () => {
   assert.equal(validate(homepage, options).kind, 'homepage');
   assert.equal(validate(lettering, options).kind, 'lettering');
+  const { projectId: _projectId, ...serviceRequest } = lettering;
+  assert.equal(validate(serviceRequest, options).valid, true);
   rejected({ ...homepage, email: '' }, 'email');
   rejected({ ...homepage, message: '' }, 'message');
   rejected({ ...lettering, phone: '' }, 'phone');
@@ -81,7 +83,8 @@ test('field lengths and contact syntax are enforced', () => {
 test('service context and every select use server allowlists', () => {
   rejected({ ...lettering, serviceId: 'unapproved' }, 'serviceId');
   rejected({ ...lettering, projectId: '2' }, 'projectId');
-  rejected(lettering, 'projectId', { projectIds: [] });
+  const { projectId: _projectId, ...serviceRequest } = lettering;
+  assert.equal(validate(serviceRequest, { projectIds: [] }).valid, true);
   for (const field of ['lighting', 'installation', 'power', 'contactMethod']) {
     rejected({ ...lettering, [field]: 'injected' }, field);
     const missing = { ...lettering };

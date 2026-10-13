@@ -1,0 +1,29 @@
+---
+// Render authored list blocks with the matching native list semantics.
+import type {
+  OrderedListBlock,
+  UnorderedListBlock,
+} from '@/types/content-blocks';
+
+interface Props {
+  block: OrderedListBlock | UnorderedListBlock;
+}
+
+type ListItem = Props['block']['items'][number];
+
+const { block } = Astro.props as Props;
+const ListTag = block.type === 'ordered-list' ? 'ol' : 'ul';
+---
+
+<section
+  class="content-list"
+  aria-labelledby={block.heading && block.id ? block.id : undefined}
+>
+  {/* A heading labels this list when authored with a stable block id. */}
+  {block.heading && <h2 id={block.id}>{block.heading}</h2>}
+
+  {/* Native list elements preserve numbering and screen-reader semantics. */}
+  <ListTag>
+    {block.items.map((item: ListItem) => <li>{item}</li>)}
+  </ListTag>
+</section>

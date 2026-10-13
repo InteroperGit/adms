@@ -32,6 +32,7 @@ export interface Service {
     sections: { heading: string; paragraphs: string[] }[];
     inquiry: string[];
     approved: boolean;
+    content?: ContentBlock[] | null;
   };
 }
 
@@ -43,3 +44,4 @@ export interface ServicesContent {
   copyApproved: boolean;
   items: Service[];
 }
+import type { ContentBlock } from './content-blocks';

@@ -23,7 +23,7 @@ const { projects, page, pageSize } = Astro.props;
     const searchText = [
       project.title,
       project.client,
-      project.shortDescription,
+      project.description,
       category?.label,
     ].filter(Boolean).join(' ');
     return (

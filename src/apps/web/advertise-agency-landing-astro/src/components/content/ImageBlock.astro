@@ -1,0 +1,11 @@
+---
+import type { ImageBlock as ImageContent } from '@/types/content-blocks';
+interface Props { block: ImageContent }
+const { block } = Astro.props as Props;
+---
+
+<figure class="content-image">
+  <img src={block.src} alt={block.alt} width={block.width}
+    height={block.height} loading="lazy" />
+  {block.caption && <figcaption>{block.caption}</figcaption>}
+</figure>

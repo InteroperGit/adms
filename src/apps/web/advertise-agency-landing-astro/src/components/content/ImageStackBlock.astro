@@ -1,0 +1,13 @@
+---
+// Pass typed image-stack content to its interactive, reusable gallery.
+import type { ImageStackBlock as ImageStack } from '@/types/content-blocks';
+import ImageStackGallery from './ImageStackGallery.astro';
+
+interface Props {
+  block: ImageStack;
+}
+
+const { block } = Astro.props as Props;
+---
+
+<ImageStackGallery block={block} />

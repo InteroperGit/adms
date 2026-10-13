@@ -1,0 +1,29 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  description?: string;
+  describedBy?: string;
+  className?: string;
+}
+
+const {
+  id,
+  title,
+  description,
+  describedBy,
+  className = 'content-order-form',
+} = Astro.props;
+const titleId = `${id}-title`;
+---
+
+<section
+  class={className}
+  id={id}
+  aria-labelledby={titleId}
+  aria-describedby={describedBy}
+>
+  <h2 id={titleId}>{title}</h2>
+  {description && <p>{description}</p>}
+  <slot />
+</section>

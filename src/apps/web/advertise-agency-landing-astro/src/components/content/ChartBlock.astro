@@ -1,0 +1,170 @@
+﻿---
+import type { ChartBlock as ChartBlockType } from '../../types/content-blocks';
+
+interface Props {
+  block: ChartBlockType;
+}
+
+type ChartSeries = ChartBlockType['series'][number];
+type ChartPoint = ChartSeries['points'][number];
+
+const { block } = Astro.props as Props;
+const chartId = `chart-${block.id ?? crypto.randomUUID()}`;
+const labels = [...new Set(block.series.flatMap((series: ChartSeries) =>
+  series.points.map((point: ChartPoint) => point.label),
+))];
+---
+
+<figure class="content-chart" data-chart-figure={chartId}>
+  {block.title && <h2>{block.title}</h2>}
+  <div
+    class="content-chart__canvas"
+    id={chartId}
+    data-chart={JSON.stringify({
+      chartType: block.chartType,
+      unit: block.unit,
+      series: block.series,
+    })}
+    aria-hidden="true"
+  ></div>
+  <table class="content-chart__table">
+    <caption>{block.caption ?? block.title ?? 'Chart data'}</caption>
+    <thead>
+      <tr>
+        <th scope="col">Label</th>
+        {block.series.map((series: ChartSeries) => (
+          <th scope="col">{series.name}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {labels.map((label: string) => (
+        <tr>
+          <th scope="row">{label}</th>
+          {block.series.map((series: ChartSeries) => {
+            const point = series.points.find(
+              (item: ChartPoint) => item.label === label,
+            );
+            return (
+              <td>
+                {point
+                  ? `${point.value}${block.unit ? ` ${block.unit}` : ''}`
+                  : '—'}
+              </td>
+            );
+          })}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  {block.caption && <figcaption>{block.caption}</figcaption>}
+</figure>
+
+<style>
+  .content-chart { margin: 2rem 0; }
+  .content-chart__canvas { min-height: 18rem; width: 100%; }
+  .content-chart__table { border-collapse: collapse; width: 100%; }
+  /* Distinguish each row and column in the data table. */
+  .content-chart__table th,
+  .content-chart__table td {
+    border-bottom: 1px solid var(--color-border, #d4d4d4);
+    padding: .5rem;
+    text-align: left;
+  }
+  .content-chart__table caption { margin-bottom: .5rem; text-align: left; }
+  /* Avoid motion for visitors who request less animation. */
+  @media (prefers-reduced-motion: reduce) {
+    .content-chart__canvas { scroll-behavior: auto; }
+  }
+</style>
+
+<script>
+  import { BarChart, LineChart, PieChart } from 'echarts/charts';
+  import {
+    GridComponent,
+    LegendComponent,
+    TooltipComponent,
+  } from 'echarts/components';
+  import { LabelLayout, UniversalTransition } from 'echarts/features';
+  import { CanvasRenderer } from 'echarts/renderers';
+  import * as echarts from 'echarts/core';
+
+  interface ChartPointData {
+    label: string;
+    value: number;
+  }
+
+  interface ChartSeriesData {
+    name: string;
+    points: ChartPointData[];
+  }
+
+  interface ChartData {
+    chartType: 'bar' | 'line' | 'pie';
+    unit?: string;
+    series: ChartSeriesData[];
+  }
+
+  echarts.use([
+    BarChart,
+    LineChart,
+    PieChart,
+    GridComponent,
+    LegendComponent,
+    TooltipComponent,
+    LabelLayout,
+    UniversalTransition,
+    CanvasRenderer,
+  ]);
+
+  document.querySelectorAll<HTMLElement>('[data-chart]').forEach(
+    (element: HTMLElement) => {
+    const raw = element.dataset.chart;
+    if (!raw) return;
+
+    const data: ChartData = JSON.parse(raw);
+    const chart = echarts.init(
+      element,
+      undefined,
+      { renderer: 'canvas' },
+    );
+    const labels = [...new Set(data.series.flatMap((series: ChartSeriesData) =>
+      series.points.map((point: ChartPointData) => point.label),
+    ))];
+    const isPie = data.chartType === 'pie';
+    chart.setOption({
+      animation: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      aria: { enabled: true },
+      tooltip: { trigger: isPie ? 'item' : 'axis' },
+      legend: data.series.length > 1 ? { type: 'scroll' } : undefined,
+      grid: isPie ? undefined : { containLabel: true, left: 12, right: 12 },
+      xAxis: isPie ? undefined : { type: 'category', data: labels },
+      yAxis: isPie ? undefined : { type: 'value', name: data.unit },
+      series: isPie
+        ? [{
+            type: 'pie',
+            radius: ['35%', '70%'],
+            data: data.series[0]?.points.map((point: ChartPointData) => ({
+              name: point.label,
+              value: point.value,
+            })) ?? [],
+          }]
+        : data.series.map((series: ChartSeriesData) => ({
+            name: series.name,
+            type: data.chartType,
+            data: labels.map((label: string) => {
+              const point = series.points.find(
+                (item: ChartPointData) => item.label === label,
+              );
+              return point?.value ?? null;
+            }),
+          })),
+    });
+
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(() => chart.resize());
+      observer.observe(element);
+    }
+    },
+  );
+</script>

@@ -10,6 +10,7 @@
     "check": "astro check && node scripts/check-code-style.mjs",
     "check:style": "node scripts/check-code-style.mjs",
     "verify:content": "node scripts/verify-content-invariants.mjs",
+    "test:content-blocks": "node scripts/test-content-block-fixtures.mjs",
     "verify:quality": "node scripts/verify-built-quality.mjs",
     "build": "astro build",
     "verify:external": "node scripts/verify-external-assets.mjs",
@@ -18,7 +19,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^8.0.3",
     "astro": "^7.3.5",
+    "echarts": "^6.1.0",
     "sharp": "^0.35.5",
     "typescript": "^6.0.3"
   },

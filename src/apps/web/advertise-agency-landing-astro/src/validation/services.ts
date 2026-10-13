@@ -6,6 +6,7 @@ import type {
   ServicesContent,
 } from '../types/services';
 import { mediaSource, text, uniqueValues } from './shared';
+import { contentBlocksSchema } from './content-blocks';
 import type { AssertContract, SameContract } from './shared';
 
 const focalPoint = z.object({
@@ -48,6 +49,7 @@ const service = z.object({
     }).strict()).min(1),
     inquiry: z.array(text).min(1),
     approved: z.boolean(),
+    content: contentBlocksSchema.nullable().optional(),
   }).strict(),
 }).strict();
 

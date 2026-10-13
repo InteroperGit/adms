@@ -1,0 +1,31 @@
+---
+import type { OrderFormBlock as OrderForm } from '@/types/content-blocks';
+import { getOrderFormRegistration } from '@/content/order-form-registry';
+import OrderFormContainer from './OrderFormContainer.astro';
+interface Props {
+  block: OrderForm;
+  allowSpecialized?: boolean;
+}
+const { block, allowSpecialized = false } = Astro.props as Props;
+const registration = getOrderFormRegistration(
+  block.context,
+  block.category,
+  block.formId,
+);
+const activeRegistration = allowSpecialized ? registration : undefined;
+const href = activeRegistration?.href ?? '/#order-inquiry';
+const description = activeRegistration
+  ? `Tell us about your ${activeRegistration.category} request.`
+  : 'Tell us what you need and we will direct your request.';
+const sectionId = block.id ?? `order-form-${block.formId}`;
+---
+
+<OrderFormContainer
+  id={sectionId}
+  title="Order request"
+  description={description}
+>
+  <a class="button" href={href}>
+    {activeRegistration?.label ?? 'Open general request form'}
+  </a>
+</OrderFormContainer>

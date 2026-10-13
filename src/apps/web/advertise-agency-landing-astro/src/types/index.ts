@@ -62,3 +62,19 @@ export type {
   BusinessSolutionItem,
   BusinessSolutionsContent,
 } from './business-solutions';
+export type {
+  ChartBlock,
+  ContentBlock,
+  ContentBlockMeta,
+  ContentBlockProvenance,
+  ContentImage,
+  FootnoteBlock,
+  ImageBlock,
+  ImageStackBlock,
+  OrderedListBlock,
+  OrderFormBlock,
+  ParagraphBlock,
+  QuoteBlock,
+  TableBlock,
+  UnorderedListBlock,
+} from './content-blocks';

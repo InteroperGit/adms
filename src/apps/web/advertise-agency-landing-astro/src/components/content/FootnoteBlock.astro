@@ -1,0 +1,9 @@
+---
+import type { FootnoteBlock as Footnote } from '@/types/content-blocks';
+interface Props { block: Footnote }
+const { block } = Astro.props as Props;
+---
+
+<aside class="content-footnote" id={block.id} role="note">
+  {block.reference && <strong>{block.reference} </strong>}{block.text}
+</aside>
