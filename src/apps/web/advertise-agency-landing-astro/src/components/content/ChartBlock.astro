@@ -1,4 +1,4 @@
----
+﻿---
 // Keep chart data readable without JS; load the canvas runtime on visibility.
 import type { ChartBlock as ChartBlockType } from '@/types/content-blocks';
 
@@ -8,13 +8,14 @@ interface Props {
 
 const { block } = Astro.props as Props;
 const chartId = `chart-${block.id ?? crypto.randomUUID()}`;
-// Use a common label order so missing series values remain explicit in rows.
-const labels = [...new Set(block.series.flatMap((series) =>
-  series.points.map((point) => point.label),
-))];
+const primarySeries = block.series[0];
+const maximum = Math.max(
+  ...(primarySeries?.points.map((point) => point.value) ?? [1]),
+  1,
+);
 ---
 
-{/* The native table remains available when enhancement fails or is blocked. */}
+{/* Keep the chart visible while optional client enhancement is loading. */}
 <figure class="content-chart" data-chart-figure={chartId}>
   {block.title && <h2>{block.title}</h2>}
   <div
@@ -27,33 +28,21 @@ const labels = [...new Set(block.series.flatMap((series) =>
     })}
     aria-hidden="true"
   ></div>
-  <div class="table-scroll">
-    <table class="content-chart__table">
-      <caption>{block.caption ?? block.title ?? 'Данные графика'}</caption>
-      <thead>
-        <tr>
-          <th scope="col">Показатель</th>
-          {block.series.map((series) => <th scope="col">{series.name}</th>)}
-        </tr>
-      </thead>
-      <tbody>
-        {labels.map((label) => (
-          <tr>
-            <th scope="row">{label}</th>
-            {block.series.map((series) => {
-              const point = series.points.find((item) => item.label === label);
-              return (
-                <td>
-                  {point
-                    ? `${point.value}${block.unit ? ` ${block.unit}` : ''}`
-                    : '—'}
-                </td>
-              );
-            })}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+  <div class="content-chart__bars" aria-label={block.title}>
+    {primarySeries?.points.map((point) => (
+      <div class="content-chart__bar-row">
+        <span class="content-chart__bar-label">{point.label}</span>
+        <span class="content-chart__bar-track">
+          <span
+            class="content-chart__bar-value"
+            style={`width: ${(point.value / maximum) * 100}%`}
+          ></span>
+        </span>
+        <strong class="content-chart__bar-number">
+          {point.value}{block.unit ? ` ${block.unit}` : ''}
+        </strong>
+      </div>
+    ))}
   </div>
   {block.caption && <figcaption>{block.caption}</figcaption>}
 </figure>
@@ -70,24 +59,63 @@ const labels = [...new Set(block.series.flatMap((series) =>
     width: 100%;
   }
 
-  /* The fallback spans the same column as the chart it describes. */
-  .content-chart__table {
-    border-collapse: collapse;
-    width: 100%;
+  /* Keep a readable chart visible before optional ECharts enhancement. */
+  .content-chart__bars {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
   }
 
-  /* Distinguish values and headings in both themes. */
-  .content-chart__table th,
-  .content-chart__table td {
-    border-bottom: 1px solid var(--color-base-300);
-    padding: 0.5rem;
-    text-align: left;
+  /* Let the interactive canvas replace the static version after loading. */
+  .content-chart[data-chart-enhanced] .content-chart__bars {
+    display: none;
   }
 
-  /* A visible caption names the data independently of the canvas. */
-  .content-chart__table caption {
-    margin-bottom: 0.5rem;
-    text-align: left;
+  /* Align each label, bar and value into a compact data row. */
+  .content-chart__bar-row {
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.8fr) 2fr auto;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Keep long stage names readable without widening the page. */
+  .content-chart__bar-label {
+    overflow-wrap: anywhere;
+  }
+
+  /* Provide a neutral track so zero and small values remain visible. */
+  .content-chart__bar-track {
+    display: block;
+    height: 1rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--color-base-300);
+  }
+
+  /* Use the site accent for the proportional data value. */
+  .content-chart__bar-value {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--color-primary);
+  }
+
+  /* Keep numeric values aligned at the end of every row. */
+  .content-chart__bar-number {
+    white-space: nowrap;
+  }
+
+  /* Stack chart rows when labels and tracks no longer fit side by side. */
+  @media (max-width: 42rem) {
+    .content-chart__bar-row {
+      grid-template-columns: 1fr auto;
+    }
+
+    .content-chart__bar-track {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
   }
 </style>
 
@@ -98,8 +126,11 @@ const labels = [...new Set(block.series.flatMap((series) =>
     try {
       const { renderChart } = await import('@/scripts/chart-runtime');
       renderChart(element);
+      element.closest<HTMLElement>('[data-chart-figure]')?.setAttribute(
+        'data-chart-enhanced', 'true',
+      );
     } catch {
-      // Network/canvas failures retain the complete server-rendered table.
+      // Network/canvas failures retain the complete server-rendered chart.
       element.hidden = true;
     }
   };

@@ -65,7 +65,8 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
       {block.type === 'order-form' && (
         <OrderFormBlock
           block={block}
-          context={formContext}
+          context={block.status === 'published' && context
+            ? { ...context, published: true } : formContext}
         />
       )}
       {block.type === 'quote' && <QuoteBlock block={block} />}
