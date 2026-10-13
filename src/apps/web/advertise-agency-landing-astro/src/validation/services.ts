@@ -11,6 +11,8 @@ import {
   serviceArticleSourceSchema,
 } from './service-articles';
 import type { AssertContract, SameContract } from './shared';
+import { getPublicationIssues } from '../content/block-publication';
+import { isServicePublished } from '../content/service-publication';
 
 const focalPoint = z.object({
   x: z.number().min(0).max(100),
@@ -50,6 +52,14 @@ export function createServicesSchema(publishedPaths: readonly string[]) {
   return createCatalogSchema(publishedPaths, service).superRefine(
     (catalog, context) => {
       catalog.items.forEach((item, itemIndex) => {
+        const status = !catalog.demoMode && isServicePublished(catalog, item)
+          && item.article.approved ? 'published' : 'demo';
+        getPublicationIssues(item.article.content, status)
+          .forEach(({ block, message }) => context.addIssue({
+            code: 'custom',
+            path: ['items', itemIndex, 'article', 'content', block],
+            message,
+          }));
         item.article.content.forEach((block, blockIndex) => {
           if (block.type !== 'order-form') return;
           if (block.context !== 'service'

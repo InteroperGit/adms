@@ -1,5 +1,5 @@
 ---
-// Pass typed image-gallery content to its interactive, reusable gallery.
+// Center the article gallery at three quarters of the content column width.
 import type { ImageGalleryBlock as GalleryBlock } from '@/types/content-blocks';
 import ImageGallery from './ImageGallery.astro';
 
@@ -12,4 +12,15 @@ const { block, priority = false } = Astro.props as Props;
 ---
 
 {/* The gallery keeps link fallbacks and enhances them with a modal view. */}
-<ImageGallery block={block} priority={priority} />
+<div class="image-gallery-block">
+  <ImageGallery block={block} priority={priority} />
+</div>
+
+<style>
+  /* Reduce inline image height proportionally without cropping its subject. */
+  .image-gallery-block {
+    width: 75%;
+    min-width: 0;
+    margin-inline: auto;
+  }
+</style>

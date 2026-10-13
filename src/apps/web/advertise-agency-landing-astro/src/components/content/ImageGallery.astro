@@ -34,7 +34,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
     </a>
 
     {/* Native links keep every image reachable when JavaScript is disabled. */}
-    <div class="gallery-thumbnails" aria-label="Choose an image">
+    <div class="gallery-thumbnails" aria-label="Выбрать изображение">
       {images.map((image: GalleryImage, index: number) => (
         <a
           class="gallery-thumbnail"
@@ -45,7 +45,6 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
           <ContentImage
             image={image}
             thumbnail
-            priority={priority && index === 0}
           />
         </a>
       ))}
@@ -55,12 +54,12 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
     <dialog
       class="gallery-lightbox"
       data-gallery-dialog
-      aria-label="Image gallery"
+      aria-label="Галерея изображений"
     >
       <CarouselControl
         className="gallery-close"
         variant="close"
-        label="Close image gallery"
+        label="Закрыть галерею"
         dataGallery="close"
       />
 
@@ -68,7 +67,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
         <CarouselControl
           className="gallery-navigation gallery-previous"
           direction="previous"
-          label="Previous image"
+          label="Предыдущее изображение"
           dataGallery="previous"
         />
         <img
@@ -84,7 +83,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
         <CarouselControl
           className="gallery-navigation gallery-next"
           direction="next"
-          label="Next image"
+          label="Следующее изображение"
           dataGallery="next"
         />
       </figure>
@@ -101,7 +100,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
             <button
               class="gallery-lightbox-thumbnail"
               type="button"
-              aria-label={`Show image ${index + 1}`}
+              aria-label={`Показать изображение ${index + 1}`}
               aria-current={index === 0 ? 'true' : undefined}
               data-gallery-lightbox-thumb={index}
             >
@@ -171,7 +170,6 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
       if (
         !dialog || !image || !caption || !announcement || !closeButton
         || !previousButton || !nextButton || !mainLink || !mainImage
-        || !announcement
         || thumbnails.length === 0
       ) {
         return;
@@ -189,8 +187,9 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
           // Open the full gallery resource, independent of thumbnail srcset.
           src: thumbnail.href,
           alt: source?.alt ?? '',
-          width: Number(source?.width) || 0,
-          height: Number(source?.height) || 0,
+          // Read intrinsic attributes, never the thumbnail's rendered size.
+          width: Number(source?.getAttribute('width')) || 0,
+          height: Number(source?.getAttribute('height')) || 0,
           caption: source?.dataset.caption || undefined,
         };
       };
@@ -213,10 +212,12 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
         mainImage.alt = item.alt;
         mainImage.width = item.width;
         mainImage.height = item.height;
+        // Keep the complete new subject within the existing stable frame.
+        // Its aspect ratio stays fixed to avoid moving following content.
         caption.textContent = item.caption ?? '';
         caption.hidden = !item.caption;
         announcement.textContent =
-          `Image ${currentIndex + 1} of ${thumbnails.length}`;
+          `Изображение ${currentIndex + 1} из ${thumbnails.length}`;
         thumbnails.forEach((thumbnail, thumbnailIndex) => {
           if (thumbnailIndex === currentIndex) {
             thumbnail.setAttribute('aria-current', 'true');
@@ -270,15 +271,12 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
       });
       closeButton.addEventListener('click', () => {
         closeGallery();
-        closeButton.blur();
       });
       previousButton.addEventListener('click', () => {
         showImage(currentIndex - 1);
-        previousButton.blur();
       });
       nextButton.addEventListener('click', () => {
         showImage(currentIndex + 1);
-        nextButton.blur();
       });
       // Touch activation should not leave a sticky focus highlight behind.
       [closeButton, previousButton, nextButton].forEach((button) => {

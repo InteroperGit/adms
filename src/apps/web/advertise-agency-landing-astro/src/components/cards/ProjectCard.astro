@@ -5,6 +5,7 @@
 import type { Project } from '@/types';
 import ContentImage from '@/components/content/ContentImage.astro';
 import { getProjectCategory } from '@/content/project-categories';
+import { getVisibleBlocks } from '@/content/block-publication';
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -12,7 +13,7 @@ export interface Props {
 }
 
 const { project } = Astro.props;
-const photo = project.content.find(
+const photo = getVisibleBlocks(project.content).find(
   (block) => block.type === 'image' || block.type === 'image-gallery',
 );
 const thumbnail = photo?.type === 'image' ? photo : photo?.images[0];

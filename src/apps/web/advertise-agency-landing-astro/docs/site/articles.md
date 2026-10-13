@@ -87,14 +87,76 @@ mobile/desktop layout, themes, form identity/consent, gallery navigation and nat
 fallbacks. ECharts session IDs/canvas are normalized for DOM comparison; its
 server-side data table remains compared.
 
-Detailed touch/zoom, accessibility speech, chart interactions, media-rights
-publication policy and layout-shift measurements remain tasks 081/082.
+Task 081 adds production publication fixtures, generated SEO/link/resource
+checks and the browser script `scripts/verify-block-browser.js`. Detailed
+touch/zoom and assistive-technology speech review remain task 082.
 
 ## Block publication review
 
-Every block may carry `status: draft`, `demo` or `published`. A published
-article rejects draft blocks. A block explicitly marked `published` and
-containing media must include provenance `rights`, `approvedBy` and
-`approvedAt` (`YYYY-MM-DD`). Unclassified legacy blocks remain valid while
-they are migrated through editorial review. JSON fallback uses the same
-contract and policy as MDX.
+Every block and gallery image may carry `status: draft`, `demo` or `published`.
+Omitted status inherits editorial requirements from the owning article.
+Production approvals must come from the actual reviewer, never fixture data.
+
+- Draft blocks and draft gallery images are omitted from public HTML. Empty
+  galleries and footnotes targeting hidden blocks are omitted too. An approved
+  article containing draft blocks or images fails validation; editors must
+  remove the drafts or move the owning article back to review.
+- Demo blocks are visible with a Russian disclosure. A visible demo block,
+  demo gallery image or image with `kind: demo` makes a project/service article
+  noindex and excludes it from the sitemap. Production forms remain disabled.
+- Every explicitly published block requires provenance `source`, `approvedBy`
+  and `approvedAt` (`YYYY-MM-DD`), even on a demo/draft page. Unclassified
+  blocks in an approved article require the same approval.
+- Media explicitly marked demo or published, and media in a demo/published
+  gallery or approved article, requires nonblank provenance `rights`.
+  Gallery approval does not replace individual media approval. A published
+  gallery requires approval for every visible image. Draft gallery images are
+  hidden and do not authorize publication of an approved article.
+- Existing unclassified media on demo owners remains compatible while reviewed.
+  This permits existing demo previews without inventing approval. It is not an
+  exception for approved articles or explicitly classified media.
+
+Project page status, all block approvals, rights and the absence of draft/demo
+content must permit publication together. Service pages additionally require
+the existing catalog/category/article approvals and `demoMode: false`.
+Changing a page status alone cannot bypass block review. JSON fallback uses
+the same contract and policy as normalized MDX.
+
+## Editing and adding blocks
+
+Prefer MDX for articles. Edit catalog metadata in `projects.json` or
+`services.json`; preserve numeric IDs/slugs, article entry identity, evidence
+and approval flags. Project frontmatter contains only `projectId`; service
+frontmatter contains `title`, `description`, `approved`. Unknown fields fail.
+Paragraphs and lists accept plain Markdown and one h2 before their content.
+Use literal JSON block attributes for tables, charts, media, forms, quotes and
+footnotes. The allowlist consists of ParagraphBlock, OrderedListBlock,
+UnorderedListBlock, TableBlock, ChartBlock, ImageBlock, ImageGalleryBlock,
+OrderFormBlock, QuoteBlock and FootnoteBlock. Imports, executable expressions,
+arbitrary HTML, nested lists, unsupported inline markup and extra h1 fail.
+
+Use a stable kebab-case `id` when linking a footnote or heading. IDs must be
+unique in the article; footnote `targetId` must name an existing block. Tables
+need column labels and matching row widths; charts need named series and finite
+numeric values. Supply meaningful Russian headings, captions and image alt.
+Supply intrinsic image dimensions and bundled `/src/assets/...` keys; the
+renderer emits optimized URLs. External media is subject to a separate rights
+and availability review. Never publish a source asset path as a browser URL.
+
+JSON fallback requires `format: json`, a nonblank review `reason` and the same
+ordered `content` stream. Use it only after a recorded editorial decision when
+MDX is unsuitable; malformed or missing MDX never selects it automatically.
+All authored JSON/MDX, including new examples, stays under `data/content/`.
+
+To add a block type, extend the union in `src/types/content-blocks.ts`, its
+strict schema and compile-time contract in `src/validation/content-blocks.ts`,
+the MDX allowlist in `src/content/mdx-blocks.mjs`, the type labels and the scoped
+Astro renderer. Define publication/media rules in `block-publication.ts`, add
+valid/negative fixtures and update `ContentBlocks.astro`. Check native semantic
+HTML, Russian accessible names, no-JS fallback, MDX/JSON DOM parity, responsive
+overflow and resulting JS size. Load large dependencies only for visible
+blocks that actually need them; keep layout dimensions stable before loading.
+
+Run the schema/compiler tests and normal build before requesting publication
+review. Confirm the real deployment origin separately; the test origin
+`https://task-081.invalid` used in acceptance builds is never production config.

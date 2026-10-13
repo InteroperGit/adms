@@ -55,7 +55,8 @@ export const services = parseContent(
 );
 services.items.forEach((service) => assertPublicationPolicy(
   service.article.content,
-  service.article.approved ? 'published' : 'draft',
+  !services.demoMode && isServicePublished(services, service)
+    && service.article.approved ? 'published' : 'demo',
   `service ${service.id}`,
 ));
 

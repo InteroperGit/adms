@@ -1,12 +1,12 @@
 # Универсальные блоки для статей проектов и услуг
 
-Date: 2026-10-12. Status: planned.
+Date: 2026-10-12. Status: fixed. Completed: 2026-10-13.
 
 Task 079 completed on 2026-10-13:
 [service MDX migration](../fixed/20261013/079-service-content-migration.md).
-Service collections, compiler and strict article contracts are available for
-project migration and shared page composition in task 080. Quality/publication
-and browser acceptance remain in tasks 081 and 082.
+Service/project migrations, shared pages, quality/publication and final browser
+acceptance are complete in tasks 078–082. Reproduction and controlled-test
+limitations are recorded in the linked acceptance report below.
 
 ## Цель
 
@@ -94,7 +94,10 @@ The sequence is `075` -> `076` -> `076a` -> `077` ->
 Task `075a` follows `075` and is a prerequisite for `078` and `080`.
 Tasks 078 and 079 may proceed independently after their earlier prerequisites.
 No task depends on work assigned to a later task.
-Task 082 runs after migration and quality work for final browser acceptance.
+Task 082 completed on 2026-10-13:
+[browser acceptance](../fixed/20261013/082-content-blocks-playwright-acceptance.md).
+All browser scenarios pass; controlled test limits and local artifacts are in
+[the acceptance report](../../site/content-block-acceptance.md).
 
 ## Layout decision: no persistent side information panels
 

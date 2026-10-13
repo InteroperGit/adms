@@ -3,6 +3,11 @@
 // Only the page supplies owner context; authors cannot enable production forms.
 import type { ContentBlock } from '@/types/content-blocks';
 import type { ArticleContext } from '@/content/article-context';
+import {
+  blockDemoNotice,
+  getVisibleBlocks,
+  hasDemoBlocks,
+} from '@/content/block-publication';
 import ChartBlock from './ChartBlock.astro';
 import FootnoteBlock from './FootnoteBlock.astro';
 import ImageBlock from './ImageBlock.astro';
@@ -19,13 +24,21 @@ interface Props {
   context?: ArticleContext;
 }
 const { blocks, context } = Astro.props as Props;
-const firstMediaIndex = blocks.findIndex((block) =>
+// Filter before choosing eager media so hidden drafts never take its priority.
+const visibleBlocks = getVisibleBlocks(blocks);
+const demo = hasDemoBlocks(blocks);
+// A mixed demo stream cannot enable production forms via an approved owner.
+const formContext = context && demo
+  ? { ...context, published: false } : context;
+const firstMediaIndex = visibleBlocks.findIndex((block) =>
   block.type === 'image' || block.type === 'image-gallery');
 ---
 
 {/* Block IDs identify article targets independently of optional headings. */}
 <div class="content-blocks">
-  {blocks.map((block: ContentBlock, index) => (
+  {/* Qualify demo blocks even when an approved page contains mixed content. */}
+  {demo && <p class="block-demo-notice">{blockDemoNotice}</p>}
+  {visibleBlocks.map((block: ContentBlock, index) => (
     <div
       class="content-block"
       data-block-type={block.type}
@@ -52,7 +65,7 @@ const firstMediaIndex = blocks.findIndex((block) =>
       {block.type === 'order-form' && (
         <OrderFormBlock
           block={block}
-          context={context}
+          context={formContext}
         />
       )}
       {block.type === 'quote' && <QuoteBlock block={block} />}
@@ -73,6 +86,13 @@ const firstMediaIndex = blocks.findIndex((block) =>
   /* Allow tables and media to shrink inside the reading column. */
   .content-block {
     min-width: 0;
+  }
+
+  /* Keep demo disclosure distinct from approved narrative and media. */
+  .block-demo-notice {
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-primary);
+    color: var(--color-muted);
   }
 
   /* Keep secondary headings visible beneath the page's primary title. */

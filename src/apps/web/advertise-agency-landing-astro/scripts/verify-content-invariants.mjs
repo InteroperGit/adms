@@ -3,7 +3,20 @@
 import { readFile, readdir } from 'node:fs/promises';
 
 const directory = 'data/content';
-const files = (await readdir(directory)).filter(name => name.endsWith('.json'));
+// Invalid fixtures and historical snapshots have dedicated regression tests.
+// Recursively inspect all authored production JSON, including new subfolders.
+async function productionFiles(path) {
+  const files = [];
+  for (const entry of await readdir(path, { withFileTypes: true })) {
+    if (entry.isDirectory() && entry.name !== 'fixtures') {
+      files.push(...await productionFiles(`${path}/${entry.name}`));
+    } else if (entry.isFile() && entry.name.endsWith('.json')) {
+      files.push(`${path}/${entry.name}`);
+    }
+  }
+  return files;
+}
+const files = await productionFiles(directory);
 const urlFields = new Set([
   'avatar', 'endpoint', 'href', 'image', 'mapSrc', 'src',
 ]);
@@ -58,7 +71,7 @@ function visit(value, path) {
 }
 
 for (const file of files) {
-  const data = JSON.parse(await readFile(`${directory}/${file}`, 'utf8'));
+  const data = JSON.parse(await readFile(file, 'utf8'));
   visit(data, file);
 }
 

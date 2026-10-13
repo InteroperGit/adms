@@ -1,6 +1,7 @@
 // Check generated HTML for stable layout, semantics, and basic accessibility.
 // Browser and assistive-technology behavior still needs real-device review.
-import { readFile, readdir } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
+import { resolve } from 'node:path';
 
 async function htmlFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -19,10 +20,69 @@ function attribute(tag, name) {
 }
 
 const errors = [];
-const files = await htmlFiles('dist');
+const root = process.argv[2] ?? 'dist';
+const origin = process.argv[3];
+const files = await htmlFiles(root);
+const documents = new Map(await Promise.all(files.map(async (file) =>
+  [resolve(file), await readFile(file, 'utf8')],
+)));
+const sitemap = await readFile(`${root}/sitemap.xml`, 'utf8');
+if (origin ? !sitemap.includes(new URL('/', origin).href)
+  : /<loc>/.test(sitemap)) {
+  errors.push('sitemap: configured/unconfigured origin policy failed');
+}
+if (sitemap.includes('/__article-check/')) {
+  errors.push('sitemap: test fixture route leaked');
+}
 for (const file of files) {
   const html = await readFile(file, 'utf8');
   const route = file.replace(/^dist[\\/]/, '');
+  if (html.includes('/src/assets/')) {
+    errors.push(`${route}: unresolved source asset URL`);
+  }
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)"/);
+  const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
+  if (new Set(ids).size !== ids.length) {
+    errors.push(`${route}: duplicate rendered id`);
+  }
+  const noindex = /name="robots" content="noindex, follow"/.test(html);
+  if (noindex && canonical && sitemap.includes(`<loc>${canonical[1]}</loc>`)) {
+    errors.push(`${route}: noindex page included in sitemap`);
+  }
+  if (/DRAFT_(?:BLOCK|IMAGE)_MUST_NOT_RENDER/.test(html)) {
+    errors.push(`${route}: draft fixture content leaked into HTML`);
+  }
+  if (origin) {
+    const path = file.replace(root, '').replaceAll('\\', '/')
+      .replace(/index\.html$/, '');
+    if (canonical?.[1] !== new URL(path, origin).href) {
+      errors.push(`${route}: canonical does not match configured origin`);
+    }
+  } else if (canonical) {
+    errors.push(`${route}: canonical invented without configured origin`);
+  }
+  // Only source-bearing images are fetched; closed lightbox placeholders are
+  // deliberately empty. Check local resources and native fragment targets.
+  for (const [, attributeName, raw] of html.matchAll(
+    /\b(href|src)="([^"<>]+)"/g,
+  )) {
+    const url = new URL(raw.replaceAll('&amp;', '&'), 'https://local.invalid');
+    if (url.origin !== 'https://local.invalid') continue;
+    const target = raw.startsWith('#') ? resolve(file)
+      : resolve(root, `.${url.pathname}`,
+        url.pathname.endsWith('/') ? 'index.html' : '');
+    try {
+      await access(target);
+      if (attributeName === 'href' && url.hash && documents.has(target)) {
+        const id = decodeURIComponent(url.hash.slice(1));
+        if (!documents.get(target).includes(`id="${id}"`)) {
+          errors.push(`${route}: broken fragment ${raw}`);
+        }
+      }
+    } catch {
+      errors.push(`${route}: missing local resource ${raw}`);
+    }
+  }
   if (!/<html\b[^>]*\blang="[^"]+"/.test(html)) {
     errors.push(`${route}: html lang is missing`);
   }
@@ -64,6 +124,24 @@ for (const file of files) {
     if (!/class="[^"]*\bbrand-logo\b/.test(image) &&
       !attribute(image, 'loading')) {
       errors.push(`${route}: non-brand image is missing loading policy`);
+    }
+    const srcset = attribute(image, 'srcset');
+    if (srcset) {
+      for (const candidate of srcset.split(',')) {
+        const url = candidate.trim().split(/\s+/)[0];
+        if (!url.startsWith('/_astro/')) continue;
+        try {
+          await access(resolve(root, `.${url}`));
+        } catch {
+          errors.push(`${route}: optimized variant missing ${url}`);
+        }
+      }
+    }
+  }
+  if (/[/\\](?:projects[/\\]\d+|services[/\\][a-z-]+)[/\\]/.test(file)) {
+    const eager = [...html.matchAll(/<img\b[^>]*loading="eager"[^>]*>/g)];
+    if (eager.length !== 1 || !eager[0][0].includes('fetchpriority="high"')) {
+      errors.push(`${route}: expected one high-priority eager lead image`);
     }
   }
   if (/\btabindex=["'][1-9]/.test(html)) {

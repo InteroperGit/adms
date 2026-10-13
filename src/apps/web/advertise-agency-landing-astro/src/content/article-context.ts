@@ -19,7 +19,8 @@ export function getArticleFormRegistration(
   block: OrderFormBlock,
   owner?: ArticleContext,
 ) {
-  if (!owner?.published || block.context !== owner.kind
+  if (!owner?.published || block.status === 'draft' || block.status === 'demo'
+    || block.context !== owner.kind
     || block.category !== owner.category) return undefined;
   return getOrderFormRegistration(owner.kind, owner.category, block.formId);
 }

@@ -113,6 +113,9 @@ validation.projectsSchema.parse(projects);
 assert.deepEqual(publication.getPublishedProjectPaths(projects), []);
 const first = structuredClone(projects[0]);
 first.status = 'published';
+// A demo photograph must continue to exclude an otherwise published case.
+assert.deepEqual(publication.getPublishedProjectPaths([first]), []);
+first.content = [{ type: 'paragraph', paragraphs: ['Fixture approved copy'] }];
 assert.deepEqual(
   publication.getPublishedProjectPaths([first]), ['/projects/1/'],
 );

@@ -1,4 +1,5 @@
 import type { Service, ServicesContent } from '../types/services';
+import { getVisibleBlocks, hasDemoBlocks } from './block-publication';
 
 /** Share the agency publication decision across cards and article metadata. */
 export function isServicePublished(
@@ -15,7 +16,9 @@ export function isServiceArticlePublished(
   service: Service,
 ) {
   return !content.demoMode && isServicePublished(content, service)
-    && service.article.approved && service.article.content.length > 0;
+    && service.article.approved
+    && getVisibleBlocks(service.article.content).length > 0
+    && !hasDemoBlocks(service.article.content);
 }
 
 /** Advertise only existing, approved article routes to search engines. */

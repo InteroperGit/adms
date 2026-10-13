@@ -17,6 +17,7 @@ import type {
 import { mediaSource, text } from './shared';
 import type { AssertContract, SameContract } from './shared';
 import { isValidOrderFormTuple } from '../content/order-form-registry';
+import { getPublicationIssues } from '../content/block-publication';
 
 const blockId = z.string().regex(
   /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
@@ -194,6 +195,10 @@ export const contentBlockSchema = z.discriminatedUnion('type', [
 
 export const contentBlocksSchema = z.array(contentBlockSchema)
   .superRefine((blocks, context) => {
+    // Explicit approvals apply to MDX and JSON even on a demo owner page.
+    getPublicationIssues(blocks, 'demo').forEach(({ block, message }) => {
+      context.addIssue({ code: 'custom', path: [block], message });
+    });
     const ids = new Set<string>();
     const knownIds = new Set<string>();
     blocks.forEach((block, index) => {

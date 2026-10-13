@@ -1,0 +1,17 @@
+---
+// Test-only MDX adapter; apply the same isolation as the JSON fixture path.
+import ContentBlocks from '@/components/content/ContentBlocks.astro';
+import type { ContentBlock } from '@/types/content-blocks';
+import type { ArticleContext } from '@/content/article-context';
+import { acceptanceBlocks } from '../lib/acceptance-blocks';
+
+interface Props {
+  blocks: ContentBlock[];
+  context: { fixtureId: string; owner?: ArticleContext };
+}
+const { blocks, context } = Astro.props as Props;
+const prepared = acceptanceBlocks(blocks, context.fixtureId);
+---
+
+{/* Production renderer receives only owner data, never test-only flags. */}
+<ContentBlocks blocks={prepared} context={context.owner} />

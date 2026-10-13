@@ -4,10 +4,11 @@
 import { getEntry, render } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import ContentBlocks from '@/components/content/ContentBlocks.astro';
-import { mdxContentComponents } from '@/components/content/mdx-components';
-import { contentBlocksSchema } from '@/validation/content-blocks';
+import AcceptanceBlocks from './AcceptanceBlocks.astro';
+import { acceptanceBlocks } from '../lib/acceptance-blocks';
 import type { ArticleContext } from '@/content/article-context';
 import cases from '@/data/content/fixtures/article-cases.json';
+import { hasDemoBlocks } from '@/content/block-publication';
 
 export function getStaticPaths() {
   return cases.flatMap((fixture) => ['mdx', 'json'].map((format) => ({
@@ -20,16 +21,20 @@ const { fixture, format } = Astro.props;
 const entry = await getEntry('articleFixtures', fixture.entry);
 if (!entry) throw new Error(`Missing article fixture: ${fixture.entry}`);
 const { Content, remarkPluginFrontmatter } = await render(entry);
-const blocks = contentBlocksSchema.parse(remarkPluginFrontmatter.content);
+const blocks = acceptanceBlocks(remarkPluginFrontmatter.content, fixture.id);
 const context = fixture.context as ArticleContext | undefined;
+const noindex = !context?.published || hasDemoBlocks(blocks);
 ---
 
-<Layout title="Article acceptance fixture" noindex>
+<Layout title="Проверка контентных блоков" noindex={noindex}>
   <article class="site-container" data-article-fixture>
-    <h1>Article acceptance fixture</h1>
+    <h1>Проверка контентных блоков</h1>
     {/* Both paths receive identical normalized content and owner data. */}
     {format === 'mdx'
-      ? <Content components={mdxContentComponents} context={context} />
+      ? <Content
+          components={{ ContentBlocks: AcceptanceBlocks }}
+          context={{ fixtureId: fixture.id, owner: context }}
+        />
       : <ContentBlocks blocks={blocks} context={context} />}
   </article>
 </Layout>

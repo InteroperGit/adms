@@ -40,7 +40,7 @@ Dependencies: 075, 076, 077.
 для проектов и услуг и полная rendered MDX/JSON parity принадлежат
 [080](080-universal-article-pages.md). Block-level publication policy
 принадлежит [081](../../todo/081-content-block-quality-seo.md), browser/visual
-acceptance — [082](../../todo/082-content-blocks-playwright-acceptance.md).
+acceptance — [082](082-content-blocks-playwright-acceptance.md).
 
 Основной MDX формат поддерживает plain paragraphs, H2, flat lists и
 allowlisted JSON-valued components. Rich inline markup, nested/task lists и

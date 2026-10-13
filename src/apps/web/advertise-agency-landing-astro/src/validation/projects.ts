@@ -4,6 +4,10 @@ import type { Project } from '../types/project';
 import { contentBlocksSchema } from './content-blocks';
 import { text, id, uniqueIds } from './shared';
 import type { AssertContract, SameContract } from './shared';
+import {
+  getPublicationIssues,
+  getVisibleBlocks,
+} from '../content/block-publication';
 
 const categorySlugs = projectCategories.map(({ slug }) => slug) as [
   ProjectCategory,
@@ -39,7 +43,11 @@ export const projectMetadataSchema = z.object({
 export const projectSchema = projectMetadataSchema.extend({
   content: contentBlocksSchema,
 }).strict().superRefine((project, context) => {
-  if (project.status !== 'draft' && !project.content.length) {
+  getPublicationIssues(project.content, project.status)
+    .forEach(({ block, message }) => context.addIssue({
+      code: 'custom', path: ['content', block], message,
+    }));
+  if (project.status !== 'draft' && !getVisibleBlocks(project.content).length) {
     context.addIssue({
       code: 'custom', path: ['content'],
       message: 'Visible projects need article content',

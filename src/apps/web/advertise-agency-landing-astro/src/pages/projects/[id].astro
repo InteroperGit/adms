@@ -10,6 +10,8 @@ import ProjectArticleActions
 import { projects } from '@/content/projects';
 import { site } from '@/content/site';
 import type { Project } from '@/types/project';
+import { isProjectPublished } from '@/content/project-publication';
+import { blockDemoNotice } from '@/content/block-publication';
 
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -20,12 +22,14 @@ export function getStaticPaths() {
 
 const { project } = Astro.props as { project: Project };
 const projectsHref = '/projects/';
+const published = isProjectPublished(project);
+const notice = project.notice ?? (!published ? blockDemoNotice : undefined);
 ---
 
 <Layout
   title={project.title}
   description={project.description}
-  noindex={project.status !== 'published'}
+  noindex={!published}
 >
   <article class="site-container project-detail">
     <Breadcrumbs
@@ -37,13 +41,13 @@ const projectsHref = '/projects/';
     />
     <ProjectDetailHeader project={project} />
     {/* Qualify demo claims before readers encounter the article or media. */}
-    {project.notice && <p class="project-notice">{project.notice}</p>}
+    {notice && <p class="project-notice">{notice}</p>}
     {/* The page owns category/approval; blocks own reading order. */}
     <ContentBlocks
       blocks={project.content}
       context={{
         kind: 'project', projectId: project.id, category: project.category,
-        published: project.status === 'published',
+        published,
       }}
     />
     <ProjectArticleActions contactLabel={site.sections.contacts.panelTitle} />
@@ -55,6 +59,12 @@ const projectsHref = '/projects/';
   .project-detail {
     padding-block: clamp(2rem, 5vw, 4rem);
     overflow-wrap: anywhere;
+  }
+
+  /* Let project blocks use the full page area after the sidebar removal. */
+  .project-detail :global(.content-blocks) {
+    width: 100%;
+    max-width: none;
   }
 
   /* Make the editorial qualification visible beside the project content. */
