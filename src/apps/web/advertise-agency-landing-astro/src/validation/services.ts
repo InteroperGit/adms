@@ -6,7 +6,10 @@ import type {
   ServicesContent,
 } from '../types/services';
 import { mediaSource, text, uniqueValues } from './shared';
-import { contentBlocksSchema } from './content-blocks';
+import {
+  serviceArticleSchema,
+  serviceArticleSourceSchema,
+} from './service-articles';
 import type { AssertContract, SameContract } from './shared';
 
 const focalPoint = z.object({
@@ -39,29 +42,52 @@ const service = z.object({
     /^\/services\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/,
     'Must be a dedicated /services/slug/ route without query or fragment',
   ).optional(),
-  article: z.object({
-    title: text,
-    description: text,
-    lead: text,
-    sections: z.array(z.object({
-      heading: text,
-      paragraphs: z.array(text).min(1),
-    }).strict()).min(1),
-    inquiry: z.array(text).min(1),
-    approved: z.boolean(),
-    content: contentBlocksSchema.nullable().optional(),
-  }).strict(),
+  article: serviceArticleSchema,
 }).strict();
 
 /** Only allow links to static service pages discovered by the loader. */
 export function createServicesSchema(publishedPaths: readonly string[]) {
+  return createCatalogSchema(publishedPaths, service).superRefine(
+    (catalog, context) => {
+      catalog.items.forEach((item, itemIndex) => {
+        item.article.content.forEach((block, blockIndex) => {
+          if (block.type !== 'order-form') return;
+          if (block.context !== 'service'
+            || (block.category && block.category !== item.id)) {
+            context.addIssue({
+              code: 'custom',
+              path: ['items', itemIndex, 'article', 'content', blockIndex],
+              message: 'Service form context/category must match its article',
+            });
+          }
+        });
+      });
+    },
+  );
+}
+
+/** Validate source references before resolving MDX; reject legacy fields. */
+export function createServiceRecordsSchema(paths: readonly string[]) {
+  return createCatalogSchema(paths, service.extend({
+    article: serviceArticleSourceSchema,
+  }));
+}
+
+function createCatalogSchema<Shape extends z.ZodType<{
+  id: string;
+  href?: string;
+  image: unknown;
+}>>(
+  publishedPaths: readonly string[],
+  itemSchema: Shape,
+) {
   return z.object({
     demoMode: z.boolean(),
     demoNotice: text,
     heading: text,
     introduction: text,
     copyApproved: z.boolean(),
-    items: z.array(service).superRefine((items, context) => {
+    items: z.array(itemSchema).superRefine((items, context) => {
       uniqueValues(items, item => item.id, context, 'id');
       items.forEach((item, index) => {
         if (item.href && !publishedPaths.includes(item.href)) {

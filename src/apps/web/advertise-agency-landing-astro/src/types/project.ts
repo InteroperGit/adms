@@ -8,6 +8,20 @@ import type {
 } from '../content/project-categories';
 import type { ContentBlock } from './content-blocks';
 
+export interface ProjectApproval {
+  source: string;
+  approvedBy: string;
+  approvedAt: string;
+}
+
+export interface ProjectEvidence {
+  copy: ProjectApproval | null;
+  specifications: ProjectApproval | null;
+  timing: ProjectApproval | null;
+  outcome: ProjectApproval | null;
+  attribution: ProjectApproval | null;
+}
+
 export { getProjectCategory, projectCategories };
 export type { ProjectCategory, ProjectCategoryConfig };
 
@@ -26,5 +40,7 @@ export interface Project {
   date?: string;
   attribution: 'named' | 'generic';
   description: string;
+  /** Keep editorial approval references separate from visitor-facing copy. */
+  evidence?: ProjectEvidence;
   content: ContentBlock[];
 }

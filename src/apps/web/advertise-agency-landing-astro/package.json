@@ -11,6 +11,9 @@
     "check:style": "node scripts/check-code-style.mjs",
     "verify:content": "node scripts/verify-content-invariants.mjs",
     "test:content-blocks": "node scripts/test-content-block-fixtures.mjs",
+    "test:service-articles": "node scripts/test-service-articles.mjs",
+    "test:project-articles": "node scripts/test-project-articles.mjs",
+    "test:publication-policy": "node scripts/test-publication-policy.mjs",
     "verify:quality": "node scripts/verify-built-quality.mjs",
     "build": "astro build",
     "verify:external": "node scripts/verify-external-assets.mjs",
@@ -19,6 +22,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.0",
     "@astrojs/mdx": "^8.0.3",
     "astro": "^7.3.5",
     "echarts": "^6.1.0",

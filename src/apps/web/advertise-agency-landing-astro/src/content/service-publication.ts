@@ -15,7 +15,7 @@ export function isServiceArticlePublished(
   service: Service,
 ) {
   return !content.demoMode && isServicePublished(content, service)
-    && service.article.approved;
+    && service.article.approved && service.article.content.length > 0;
 }
 
 /** Advertise only existing, approved article routes to search engines. */

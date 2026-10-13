@@ -2,6 +2,12 @@
 
 Date: 2026-10-12. Status: planned.
 
+Task 079 completed on 2026-10-13:
+[service MDX migration](../fixed/20261013/079-service-content-migration.md).
+Service collections, compiler and strict article contracts are available for
+project migration and shared page composition in task 080. Quality/publication
+and browser acceptance remain in tasks 081 and 082.
+
 ## Цель
 
 Перевести страницы проектов и услуг на единый поток типизированных
@@ -19,7 +25,7 @@ Markdown и вставлять разрешённые Astro-компоненты
 - `table` — подпись, колонки и типизированные строки;
 - `chart` — заголовок, подпись, единицы и статические серии данных;
 - `image` — одно изображение с alt, подписью и provenance;
-- `image-stack` — упорядоченный набор изображений с общей подписью и
+- `image-gallery` — упорядоченный набор изображений с общей подписью и
   открытием полноэкранной галереи;
 - `order-form` — форма, выбранная по категории и контексту страницы;
 - `quote` — цитата, автор и источник;
@@ -59,7 +65,7 @@ Astro island только для `chart` блока. Данные остаютс
 1. Зафиксировать block union, ограничения размеров, provenance и правила
    публикации в типах и Zod-схемах.
 2. Создать независимые Astro-рендереры блоков и единый `ContentBlocks`.
-3. Создать галерею для `image-stack`: затемнённый lightbox, боковые кнопки,
+3. Создать галерею для `image-gallery`: затемнённый lightbox, боковые кнопки,
    появляющиеся при наведении и фокусе, кружки позиции и закрытие по Escape.
 4. Создать реестр форм, общий контейнер и адаптеры существующих форм.
 5. Переписать страницу проекта на блоковую композицию, сохранив URL,
@@ -77,6 +83,11 @@ Astro island только для `chart` блока. Данные остаютс
 Задача `082` зависит от всех предыдущих и закрывает приёмку.
 
 ## Dependencies and order
+
+Task 080 completed on 2026-10-13:
+[shared article pages](../fixed/20261013/080-universal-article-pages.md).
+All 27 projects now use MDX; projects and services share ContentBlocks/media/forms.
+The gallery block is named `image-gallery` following the user's instruction.
 
 The sequence is `075` -> `076` -> `076a` -> `077` ->
 (`078`, `079`) -> `080` -> `081` -> `082`.
@@ -101,5 +112,6 @@ Task 075a is the required contract boundary after the universal block
 foundation. It removes legacy article fields and makes `Project.content`
 required. Tasks 078 and 080 must not complete before 075a; all article text,
 media, process, result, specifications, and provenance must be represented by
-`ContentBlock[]`. The final project schema rejects legacy fields and removes
-top-level evidence.
+`ContentBlock[]`. The final project schema rejects legacy article fields.
+Task 080 retains editorial evidence references in catalog metadata so existing
+approval records are not discarded; they are never rendered as visitor copy.

@@ -1,14 +1,14 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
-const validPath = 'data/fixtures/content-blocks.valid.json';
-const invalidPath = 'data/fixtures/content-blocks.invalid.json';
+const validPath = 'data/content/fixtures/content-blocks.valid.json';
+const invalidPath = 'data/content/fixtures/content-blocks.invalid.json';
 const valid = JSON.parse(await readFile(validPath, 'utf8'));
 const invalid = JSON.parse(await readFile(invalidPath, 'utf8'));
 const types = new Set(valid.map((block) => block.type));
 const expected = new Set([
   'paragraph', 'ordered-list', 'unordered-list', 'table', 'chart', 'image',
-  'image-stack',
+  'image-gallery',
   'order-form', 'quote', 'footnote',
 ]);
 

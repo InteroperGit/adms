@@ -1,31 +1,48 @@
 ---
+// Render an allowed production form or a native general-inquiry fallback.
 import type { OrderFormBlock as OrderForm } from '@/types/content-blocks';
-import { getOrderFormRegistration } from '@/content/order-form-registry';
+import {
+  getArticleFormRegistration,
+  type ArticleContext,
+} from '@/content/article-context';
+import LedLettersForm from '@/components/forms/LedLettersForm.astro';
 import OrderFormContainer from './OrderFormContainer.astro';
+
 interface Props {
   block: OrderForm;
-  allowSpecialized?: boolean;
+  context?: ArticleContext;
 }
-const { block, allowSpecialized = false } = Astro.props as Props;
-const registration = getOrderFormRegistration(
-  block.context,
-  block.category,
-  block.formId,
-);
-const activeRegistration = allowSpecialized ? registration : undefined;
-const href = activeRegistration?.href ?? '/#order-inquiry';
-const description = activeRegistration
-  ? `Tell us about your ${activeRegistration.category} request.`
-  : 'Tell us what you need and we will direct your request.';
+const { block, context } = Astro.props as Props;
+const registration = getArticleFormRegistration(block, context);
 const sectionId = block.id ?? `order-form-${block.formId}`;
 ---
 
-<OrderFormContainer
-  id={sectionId}
-  title="Order request"
-  description={description}
->
-  <a class="button" href={href}>
-    {activeRegistration?.label ?? 'Open general request form'}
-  </a>
-</OrderFormContainer>
+{/* Preserve local anchors and form payloads only for approved pages. */}
+{registration?.formId === 'led-letters' && context ? (
+  <div id={sectionId === 'led-letters' ? undefined : sectionId}>
+    <LedLettersForm
+      projectId={context.kind === 'project' ? context.projectId : undefined}
+      serviceId={context.kind === 'service' ? context.serviceId : undefined}
+    />
+  </div>
+) : (
+  <OrderFormContainer
+    id={sectionId}
+    title="Обсудить проект"
+    description="Расскажите о задаче, и мы поможем подготовить запрос."
+  >
+    <a class="inquiry-link" href="/#order-inquiry">Открыть форму запроса</a>
+  </OrderFormContainer>
+)}
+
+<style>
+  /* Keep the general fallback visible and reachable without JavaScript. */
+  .inquiry-link {
+    display: inline-block;
+    min-height: 44px;
+    padding-block: 0.5rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+</style>

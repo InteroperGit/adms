@@ -1,0 +1,89 @@
+---
+// Share circular SVG controls between the carousel and gallery overlays.
+interface Props {
+  label: string;
+  direction?: 'previous' | 'next';
+  variant?: 'arrow' | 'close';
+  className?: string;
+  dataDirection?: '-1' | '1';
+  dataGallery?: 'close' | 'previous' | 'next';
+}
+
+const {
+  label,
+  direction,
+  variant = 'arrow',
+  className,
+  dataDirection,
+  dataGallery,
+} = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={[
+    'carousel-control',
+    variant === 'close'
+      ? 'carousel-control-close'
+      : 'carousel-control-arrow',
+    className,
+  ]}
+  aria-label={label}
+  data-direction={dataDirection}
+  data-gallery-close={dataGallery === 'close' ? true : undefined}
+  data-gallery-previous={dataGallery === 'previous' ? true : undefined}
+  data-gallery-next={dataGallery === 'next' ? true : undefined}
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    {variant === 'close' ? (
+      <path d="M6 6l12 12M18 6L6 18" />
+    ) : direction === 'previous' ? (
+      <path d="m15 5-7 7 7 7" />
+    ) : (
+      <path d="m9 5 7 7-7 7" />
+    )}
+  </svg>
+</button>
+
+<style>
+  /* Center the vector glyph independently of font metrics. */
+  .carousel-control
+  {
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  /* Touch taps must not retain the mouse hover appearance. */
+  @media (hover: hover) and (pointer: fine)
+  {
+    /* Invert the control colors when a mouse points at the button. */
+    .carousel-control:hover
+    {
+      color: #111827;
+      background: #fff;
+    }
+  }
+
+  /* Keep keyboard focus as visible as mouse hover. */
+  .carousel-control:focus-visible
+  {
+    outline: 3px solid white;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 8px rgb(0 0 0 / 80%);
+  }
+
+  /* Keep every direction and close icon optically balanced. */
+  .carousel-control svg
+  {
+    display: block;
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+</style>

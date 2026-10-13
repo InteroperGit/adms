@@ -1,0 +1,103 @@
+---
+// Shared responsive media for article figures, galleries and catalogue cards.
+// Detail media contains the whole image; thumbnail/service crops use authored
+// focal points. Captions belong to the enclosing figure or gallery link.
+import { Image } from 'astro:assets';
+import type { ContentImage } from '@/types/content-blocks';
+import { getContentImageMetadata } from './resolve-image';
+
+interface Props {
+  image: ContentImage;
+  thumbnail?: boolean;
+  serviceCrop?: boolean;
+  /** Only the first article image is eager; catalogue media remains lazy. */
+  priority?: boolean;
+}
+
+const {
+  image, thumbnail = false, serviceCrop = false, priority = false,
+} = Astro.props;
+const original = getContentImageMetadata(image.src);
+const sourceWidth = original?.width ?? image.width;
+const widths = [...new Set([
+  ...[320, 640, 960, 1280].filter((width) => width < sourceWidth),
+  Math.min(sourceWidth, 1440),
+])].sort((a, b) => a - b);
+const sizes = thumbnail
+  ? '(min-width: 80rem) 368px, (min-width: 48rem) 45vw, 92vw'
+  : '(min-width: 64rem) 896px, 94vw';
+const focalPoint = image.focalPoint ?? { x: 50, y: 50 };
+const mobilePoint = image.mobileFocalPoint ?? focalPoint;
+const attributes = {
+  alt: image.alt, width: image.width, height: image.height,
+  sizes,
+  loading: priority ? 'eager' as const : 'lazy' as const,
+  fetchpriority: priority ? 'high' as const : 'auto' as const,
+  decoding: 'async' as const,
+  class: 'content-media-image',
+  'data-caption': image.caption,
+};
+---
+
+{/* Reserve geometry and protect the subject when the image needs a crop. */}
+<div
+  class:list={['content-media-frame', {
+    'content-media-thumbnail': thumbnail,
+    'content-media-service': serviceCrop,
+  }]}
+  style={{
+    '--media-ratio': `${image.width} / ${image.height}`,
+    '--media-position': `${focalPoint.x}% ${focalPoint.y}%`,
+    '--mobile-media-position': `${mobilePoint.x}% ${mobilePoint.y}%`,
+  }}
+>
+  {original
+    ? <Image src={original} widths={widths} {...attributes} />
+    : <img src={image.src} {...attributes} />}
+</div>
+
+<style>
+  /* Intrinsic space keeps article media stable while the resource loads. */
+  .content-media-frame {
+    min-width: 0;
+    aspect-ratio: var(--media-ratio);
+    overflow: hidden;
+    background: var(--color-base-200);
+    border-radius: var(--radius-field);
+  }
+
+  /* Preserve the complete subject on article and gallery views. */
+  .content-media-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Catalogue thumbnails retain the established three-to-two framing. */
+  .content-media-thumbnail {
+    aspect-ratio: 3 / 2;
+    border-radius: var(--radius-field) var(--radius-field) 0 0;
+  }
+
+  /* Service illustrations retain their established four-to-three crop. */
+  .content-media-service {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Cropped media uses the editorially supplied subject coordinates. */
+  .content-media-thumbnail .content-media-image,
+  .content-media-service .content-media-image {
+    object-fit: cover;
+    object-position: var(--media-position);
+  }
+
+  /* Narrow layouts use the separately authored crop where supplied. */
+  @media (max-width: 41.999rem) {
+    /* Keep the mobile subject visible in both cropped media modes. */
+    .content-media-thumbnail .content-media-image,
+    .content-media-service .content-media-image {
+      object-position: var(--mobile-media-position);
+    }
+  }
+</style>

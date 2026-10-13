@@ -4,6 +4,13 @@
 
 ## Source and current audit
 
+Task 080 supersedes the historical shape described below. All 27 projects now
+use metadata/article references in `data/content/projects.json` and MDX under
+`data/content/articles/projects/`. Evidence and media provenance/crop data are
+preserved. See [current article contract and verification](articles.md).
+The archived source remains `data/content/fixtures/projects-before-blocks.json`.
+`ProjectPhoto.astro` has been replaced by the shared `ContentImage.astro`.
+
 `data/content/projects.json` is the single ordered catalog. Numeric IDs 1-3
 remain stable and their demo routes remain `/projects/1` through `/projects/3`.
 The three records describe proposed project solutions with planned details.

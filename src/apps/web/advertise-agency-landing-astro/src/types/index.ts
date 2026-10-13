@@ -70,7 +70,7 @@ export type {
   ContentImage,
   FootnoteBlock,
   ImageBlock,
-  ImageStackBlock,
+  ImageGalleryBlock,
   OrderedListBlock,
   OrderFormBlock,
   ParagraphBlock,

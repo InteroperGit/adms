@@ -28,11 +28,9 @@ export interface Service {
   article: {
     title: string;
     description: string;
-    lead: string;
-    sections: { heading: string; paragraphs: string[] }[];
-    inquiry: string[];
     approved: boolean;
-    content?: ContentBlock[] | null;
+    /** Ordered article material, normalized from MDX or approved fallback. */
+    content: ContentBlock[];
   };
 }
 

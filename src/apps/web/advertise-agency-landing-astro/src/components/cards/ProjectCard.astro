@@ -3,7 +3,7 @@
 // Project metadata supplies image alternatives, dimensions and destination.
 
 import type { Project } from '@/types';
-import ProjectPhoto from '@/components/ui/ProjectPhoto.astro';
+import ContentImage from '@/components/content/ContentImage.astro';
 import { getProjectCategory } from '@/content/project-categories';
 
 // Caller-supplied data and presentation options for this component.
@@ -12,13 +12,16 @@ export interface Props {
 }
 
 const { project } = Astro.props;
-const photo = project.photos[0];
+const photo = project.content.find(
+  (block) => block.type === 'image' || block.type === 'image-gallery',
+);
+const thumbnail = photo?.type === 'image' ? photo : photo?.images[0];
 const category = getProjectCategory(project.category);
 ---
 
 <article class="project-card">
   {/* Missing photos produce text-only cards without changing copy. */}
-  {photo && <ProjectPhoto photo={photo} thumbnail />}
+  {thumbnail && <ContentImage image={thumbnail} thumbnail />}
   {/* Keep only the title, metadata, summary and detail action in the copy. */}
   <div class="project-copy">
     {category && (

@@ -6,7 +6,7 @@ import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 
 const extensions = new Set([
-  '.astro', '.css', '.js', '.json', '.mjs', '.ts', '.tsx',
+  '.astro', '.css', '.js', '.json', '.mdx', '.mjs', '.ts', '.tsx',
 ]);
 const changed = execFileSync('git', [
   '-c', 'safe.directory=D:/Projects/adms',

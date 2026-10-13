@@ -4,12 +4,10 @@
 // Keep image, inquiry checklist and return/contact actions in reading order.
 
 import Layout from '@/layouts/Layout.astro';
-import ServiceVisual from '@/components/ui/ServiceVisual.astro';
+import ContentBlocks from '@/components/content/ContentBlocks.astro';
 import Button from '@/components/ui/Button.astro';
-import LedLettersForm from '@/components/forms/LedLettersForm.astro';
 import { services, visibleServices } from '@/content/services';
 import { isServiceArticlePublished } from '@/content/service-publication';
-import { getOrderFormRegistration } from '@/content/order-form-registry';
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -23,10 +21,6 @@ if (!service) throw new Error(`Unknown service: ${Astro.props.serviceId}`);
 const { article } = service;
 // Index only when category, copy, image and article approvals all permit it.
 const demo = !isServiceArticlePublished(services, service);
-const specializedForm = getOrderFormRegistration(
-  'service',
-  service.id,
-);
 // A withheld catalog has no homepage anchor, so return to the homepage.
 const catalogHref = visibleServices.length ? '/#services' : '/';
 const catalogLabel = visibleServices.length ? 'Все услуги' : 'На главную';
@@ -46,39 +40,18 @@ const catalogLabel = visibleServices.length ? 'Все услуги' : 'На гл
     </a>
     <div class="service-heading">
       <h1>{service.name}</h1>
-      <p class="service-lead">{article.lead}</p>
+
       {demo && <p class="service-demo">{services.demoNotice}</p>}
     </div>
-    {/* Keep demo disclosure beside the eagerly loaded article image. */}
-    {service.image && (
-      <figure class="service-visual">
-        <ServiceVisual image={service.image} eager />
-        {demo && <figcaption>Тестовая иллюстрация категории.</figcaption>}
-      </figure>
-    )}
-    {/*
-      Preserve supplied article sections, inquiry guidance and native actions.
-    */}
+    {/* Pass page approval and identity to the same renderer as projects. */}
     <div class="service-reading">
-      {article.sections.map((section, index) => (
-        <section aria-labelledby={`article-section-${index}`}>
-          <h2 id={`article-section-${index}`}>{section.heading}</h2>
-          {section.paragraphs.map((paragraph) => (
-            <p>{paragraph}</p>
-          ))}
-        </section>
-      ))}
-      <section aria-labelledby="service-inquiry-heading">
-        <h2 id="service-inquiry-heading">Что указать в запросе</h2>
-        <ul>
-          {article.inquiry.map((item) => (
-            <li>{item}</li>
-          ))}
-        </ul>
-      </section>
-      {specializedForm?.formId === 'led-letters' && !demo && (
-        <LedLettersForm serviceId={service.id} />
-      )}
+      <ContentBlocks
+        blocks={article.content}
+        context={{
+          kind: 'service', serviceId: service.id,
+          category: service.id, published: !demo,
+        }}
+      />
       <nav class="service-actions" aria-label="Действия по услуге">
         <Button href="/#order-inquiry">Обсудить проект</Button>
         <a class="service-back" href={catalogHref}>
@@ -119,8 +92,8 @@ const catalogLabel = visibleServices.length ? 'Все услуги' : 'На гл
     font-weight: 700;
   }
 
-  /* Introduce the category with a concise readable sentence. */
-  .service-lead {
+  /* Introduce the category with the first authored paragraph block. */
+  .service-reading :global(.content-block:first-child p) {
     margin-top: 1.25rem;
     font-size: 1.25rem;
   }
@@ -133,44 +106,9 @@ const catalogLabel = visibleServices.length ? 'Все услуги' : 'На гл
     color: var(--site-muted);
   }
 
-  /* Preserve a useful illustration size without stretching the reading area. */
-  .service-visual {
-    max-width: 56rem;
-    margin-bottom: 2.5rem;
-  }
-
-  /* Identify the fictional visual below its image frame. */
-  .service-visual figcaption {
-    margin-top: 0.75rem;
-    color: var(--site-muted);
-  }
-
   /* Constrain prose to a comfortable line length. */
   .service-reading {
     max-width: var(--site-reading-width);
-  }
-
-  /* Separate reader questions with space rather than decorative panels. */
-  .service-reading section + section {
-    margin-top: 2rem;
-  }
-
-  /* Maintain a clear hierarchy under the article heading. */
-  .service-reading h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
-
-  /* Maintain a readable rhythm between explanatory paragraphs. */
-  .service-reading p + p {
-    margin-top: 0.75rem;
-  }
-
-  /* Make parallel inquiry inputs easy to scan. */
-  .service-reading ul {
-    padding-left: 1.5rem;
-    list-style: disc;
   }
 
   /* Allow native navigation actions to wrap at enlarged text sizes. */

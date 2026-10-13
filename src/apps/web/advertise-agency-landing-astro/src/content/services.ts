@@ -1,10 +1,16 @@
 import data from '@/data/content/services.json';
-import { createServicesSchema } from '../validation/services';
+import { getCollection, render } from 'astro:content';
+import {
+  createServiceRecordsSchema,
+  createServicesSchema,
+} from '../validation/services';
+import { serviceArticleSchema } from '../validation/service-articles';
 import { parseContent } from '../validation/parse-content';
 import {
   getVisibleServices,
   isServicePublished,
 } from './service-publication';
+import { assertPublicationPolicy } from './block-publication';
 
 const pages = import.meta.glob('/src/pages/services/**/*.astro');
 const publishedPaths = Object.keys(pages)
@@ -14,11 +20,44 @@ const publishedPaths = Object.keys(pages)
     .replace(/\/index\.astro$/, '/')
     .replace(/\.astro$/, '/'));
 
-export const services = parseContent(
-  createServicesSchema(publishedPaths),
+const records = parseContent(
+  createServiceRecordsSchema(publishedPaths),
   data,
   'data/content/services.json',
 );
+const entries = await getCollection('serviceArticles');
+const articleById = new Map(entries.map((entry) => [entry.id, entry]));
+
+// Compile MDX once and share its validated normalized blocks with all readers.
+// Invalid or missing MDX is an error, never an implicit JSON fallback.
+const items = await Promise.all(records.items.map(async (record) => {
+  if (record.article.format === 'json') {
+    const { format: _format, reason: _reason, ...article } = record.article;
+    return { ...record, article };
+  }
+  if (record.article.entry !== record.id) {
+    throw new Error(`Service article id mismatch: ${record.id}`);
+  }
+  const entry = articleById.get(record.article.entry);
+  if (!entry) throw new Error(`Missing service article: ${record.id}`);
+  const { remarkPluginFrontmatter } = await render(entry);
+  const article = parseContent(serviceArticleSchema, {
+    ...entry.data,
+    content: remarkPluginFrontmatter.content,
+  }, entry.filePath ?? entry.id);
+  return { ...record, article };
+}));
+
+export const services = parseContent(
+  createServicesSchema(publishedPaths),
+  { ...records, items },
+  'data/content/services.json',
+);
+services.items.forEach((service) => assertPublicationPolicy(
+  service.article.content,
+  service.article.approved ? 'published' : 'draft',
+  `service ${service.id}`,
+));
 
 /** Public cards require confirmed claims, copy and genuine approved media. */
 export const publishedServices = services.items.filter((item) =>

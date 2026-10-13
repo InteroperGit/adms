@@ -1,25 +1,40 @@
 ---
+// Preserve authored column/row order in an accessible native data table.
 import type { TableBlock as Table } from '@/types/content-blocks';
-interface Props { block: Table }
+interface Props {
+  block: Table;
+}
 type TableColumn = Table['columns'][number];
 type TableRow = Table['rows'][number];
 type TableCell = TableRow['cells'][number];
 
 const { block } = Astro.props as Props;
+const headingId = block.id ? `${block.id}-title` : undefined;
 ---
 
-<section class="content-table"
-  aria-labelledby={block.title ? block.id : undefined}>
-  {block.title && <h2 id={block.id}>{block.title}</h2>}
+{/* The renderer owns horizontal scrolling and the authored block anchor. */}
+<section
+  class="content-table"
+  aria-labelledby={block.title ? headingId : undefined}
+>
+  {block.title && <h2 id={headingId}>{block.title}</h2>}
   <div class="table-scroll">
     <table>
       {block.caption && <caption>{block.caption}</caption>}
-      <thead><tr>{block.columns.map((column: TableColumn) => <th scope="col">
-        {column.label}
-      </th>)}</tr></thead>
-      <tbody>{block.rows.map((row: TableRow) => <tr>
-        {row.cells.map((cell: TableCell) => <td>{cell}</td>)}
-      </tr>)}</tbody>
+      <thead>
+        <tr>
+          {block.columns.map((column: TableColumn) => (
+            <th scope="col">{column.label}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {block.rows.map((row: TableRow) => (
+          <tr>
+            {row.cells.map((cell: TableCell) => <td>{cell}</td>)}
+          </tr>
+        ))}
+      </tbody>
     </table>
   </div>
 </section>

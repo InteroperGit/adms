@@ -4,13 +4,14 @@ import type { APIRoute } from 'astro';
 import { projects } from '@/content/projects';
 import { services } from '@/content/services';
 import { getPublishedServicePaths } from '@/content/service-publication';
+import { getPublishedProjectPaths } from '@/content/project-publication';
 
 const paths = [
   '/',
   '/projects/',
   '/privacy-policy/',
   '/terms-of-use/',
-  ...projects.map(project => `/projects/${project.id}/`),
+  ...getPublishedProjectPaths(projects),
   ...getPublishedServicePaths(services),
 ];
 

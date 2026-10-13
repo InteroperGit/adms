@@ -2,6 +2,7 @@
 // Shared image carousel: static HTML first, instance-local enhancement later.
 // Callers own content/section layout; options only control optional features.
 import ImageCarouselSlide from './ImageCarouselSlide.astro';
+import CarouselControl from './CarouselControl.astro';
 import type {
   CarouselItem,
   CarouselOptions,
@@ -67,16 +68,12 @@ const circles = multiple && options.circles;
     {(arrows || circles) && (
       <div class="carousel-controls" hidden>
         {arrows && (
-          <button
-            type="button"
-            class="carousel-arrow"
-            data-direction="-1"
-            aria-label={`Предыдущее: ${itemLabel.toLowerCase()}`}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m14 6-6 6 6 6" />
-            </svg>
-          </button>
+          <CarouselControl
+            direction="previous"
+            className="carousel-arrow"
+            dataDirection="-1"
+            label={`Предыдущее: ${itemLabel.toLowerCase()}`}
+          />
         )}
         {circles && (
           <div
@@ -103,16 +100,12 @@ const circles = multiple && options.circles;
           </div>
         )}
         {arrows && (
-          <button
-            type="button"
-            class="carousel-arrow"
-            data-direction="1"
-            aria-label={`Следующее: ${itemLabel.toLowerCase()}`}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m10 6 6 6-6 6" />
-            </svg>
-          </button>
+          <CarouselControl
+            direction="next"
+            className="carousel-arrow"
+            dataDirection="1"
+            label={`Следующее: ${itemLabel.toLowerCase()}`}
+          />
         )}
       </div>
     )}
@@ -186,7 +179,7 @@ const circles = multiple && options.circles;
   }
 
   /* Make arrows and dots comfortably reachable with pointer or touch. */
-  .carousel-arrow,
+  :global(.carousel-arrow),
   .carousel-dot {
     display: grid;
     place-items: center;
@@ -200,11 +193,12 @@ const circles = multiple && options.circles;
   }
 
   /* Center circular arrows at the edges with a solid image-independent base. */
-  .carousel-arrow {
+  :global(.carousel-arrow) {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--color-base-100);
+    color: #fff;
+    background: rgb(20 20 24 / 84%);
     border: 1px solid var(--site-control-border);
     pointer-events: auto;
   }
@@ -217,27 +211,27 @@ const circles = multiple && options.circles;
   }
 
   /* Place previous navigation inside the left image edge. */
-  .carousel-arrow[data-direction='-1'] {
+  :global(.carousel-arrow)[data-direction='-1'] {
     left: var(--control-inset);
   }
 
   /* Place next navigation inside the right image edge. */
-  .carousel-arrow[data-direction='1'] {
+  :global(.carousel-arrow)[data-direction='1'] {
     right: var(--control-inset);
   }
 
   /* Hide mouse arrows without removing their keyboard destinations. */
   @media (hover: hover) and (pointer: fine) {
     /* Fade hidden arrows while preventing invisible pointer activation. */
-    .carousel-arrow {
+    :global(.carousel-arrow) {
       opacity: 0;
       pointer-events: none;
-      transition: opacity 180ms ease;
+      transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     /* Reveal controls for pointer presence and native keyboard focus. */
-    .image-carousel:hover .carousel-arrow,
-    .image-carousel:focus-within .carousel-arrow {
+    .image-carousel:hover :global(.carousel-arrow),
+    .image-carousel:focus-within :global(.carousel-arrow) {
       opacity: 1;
       pointer-events: auto;
     }
@@ -246,13 +240,13 @@ const circles = multiple && options.circles;
   /* Remove hover reveal motion when the visitor requests reduced motion. */
   @media (prefers-reduced-motion: reduce) {
     /* Switch arrow visibility immediately while preserving navigation. */
-    .carousel-arrow {
+    :global(.carousel-arrow) {
       transition: none;
     }
   }
 
   /* Draw local directional icons with strong contrast. */
-  .carousel-arrow svg {
+  :global(.carousel-arrow) svg {
     width: min(1.5rem, 28px);
     height: min(1.5rem, 28px);
     fill: none;
@@ -277,13 +271,17 @@ const circles = multiple && options.circles;
     background: currentColor;
   }
 
-  /* Give pointer feedback without moving controls. */
-  .carousel-arrow:hover {
-    background: var(--color-base-200);
+  /* Avoid retaining mouse hover colors after tapping on touch screens. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Give pointer feedback without moving controls. */
+    :global(.carousel-arrow):hover {
+      color: #111827;
+      background: #fff;
+    }
   }
 
   /* Keep focus readable over bright and dark image areas. */
-  .carousel-arrow:focus-visible,
+  :global(.carousel-arrow):focus-visible,
   .carousel-dot:focus-visible {
     outline: 3px solid #fff;
     outline-offset: 3px;
@@ -304,7 +302,7 @@ const circles = multiple && options.circles;
   }
 
   /* Disabled animation also disables hover fades without hiding controls. */
-  .image-carousel[data-animation='false'] .carousel-arrow {
+  .image-carousel[data-animation='false'] :global(.carousel-arrow) {
     transition: none;
   }
 </style>

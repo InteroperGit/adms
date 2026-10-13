@@ -1,0 +1,697 @@
+---
+// Render a progressive-enhancement gallery for an image-gallery block.
+import type { ImageGalleryBlock as ImageGallery } from '@/types/content-blocks';
+import { resolveContentImage } from './resolve-image';
+import ContentImage from './ContentImage.astro';
+import CarouselControl from '@/components/ui/CarouselControl.astro';
+
+interface Props {
+  block: ImageGallery;
+  priority?: boolean;
+}
+
+type GalleryImage = ImageGallery['images'][number];
+
+const { block, priority = false } = Astro.props as Props;
+// Share emitted asset URLs between no-JS links and the enhanced lightbox.
+const images: GalleryImage[] = block.images;
+const links = await Promise.all(
+  block.images.map(resolveContentImage),
+);
+const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
+---
+
+{images.length > 0 && (
+  <figure class="content-gallery" id={galleryId} data-gallery>
+    {/* Show one large image before the selectable thumbnail strip. */}
+    <a
+      class="gallery-main"
+      href={links[0].src}
+      data-gallery-main
+      data-gallery-open="0"
+    >
+      <ContentImage image={images[0]} priority={priority} />
+    </a>
+
+    {/* Native links keep every image reachable when JavaScript is disabled. */}
+    <div class="gallery-thumbnails" aria-label="Choose an image">
+      {images.map((image: GalleryImage, index: number) => (
+        <a
+          class="gallery-thumbnail"
+          href={links[index].src}
+          data-gallery-open={index}
+          aria-current={index === 0 ? 'true' : undefined}
+        >
+          <ContentImage
+            image={image}
+            thumbnail
+            priority={priority && index === 0}
+          />
+        </a>
+      ))}
+    </div>
+
+    {/* Native modal dialog provides browser focus containment. */}
+    <dialog
+      class="gallery-lightbox"
+      data-gallery-dialog
+      aria-label="Image gallery"
+    >
+      <CarouselControl
+        className="gallery-close"
+        variant="close"
+        label="Close image gallery"
+        dataGallery="close"
+      />
+
+      <figure class="gallery-view">
+        <CarouselControl
+          className="gallery-navigation gallery-previous"
+          direction="previous"
+          label="Previous image"
+          dataGallery="previous"
+        />
+        <img
+          class="gallery-image"
+          data-gallery-image
+          alt={images[0]?.alt ?? ''}
+          width={images[0]?.width}
+          height={images[0]?.height}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption class="gallery-caption" data-gallery-caption></figcaption>
+        <CarouselControl
+          className="gallery-navigation gallery-next"
+          direction="next"
+          label="Next image"
+          dataGallery="next"
+        />
+      </figure>
+
+      <div class="gallery-position">
+        {/* Keep the selected image visible in the modal thumbnail strip. */}
+        <span
+          class="gallery-announcement sr-only"
+          data-gallery-announcement
+          aria-live="polite"
+        ></span>
+        <div class="gallery-lightbox-thumbnails">
+          {images.map((image: GalleryImage, index: number) => (
+            <button
+              class="gallery-lightbox-thumbnail"
+              type="button"
+              aria-label={`Show image ${index + 1}`}
+              aria-current={index === 0 ? 'true' : undefined}
+              data-gallery-lightbox-thumb={index}
+            >
+              <img
+                src={links[index].src}
+                alt=""
+                width={image.width}
+                height={image.height}
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+    </dialog>
+
+    {block.caption && <figcaption>{block.caption}</figcaption>}
+  </figure>
+)}
+
+<script>
+  interface GalleryItem {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    caption?: string;
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach(
+    (gallery: HTMLElement) => {
+      const thumbnails = Array.from(
+        gallery.querySelectorAll<HTMLAnchorElement>('[data-gallery-open]'),
+      ).filter((thumbnail) => !thumbnail.hasAttribute('data-gallery-main'));
+      const mainLink = gallery.querySelector<HTMLAnchorElement>(
+        '[data-gallery-main]',
+      );
+      const mainImage = mainLink?.querySelector<HTMLImageElement>('img');
+      const dialog = gallery.querySelector<HTMLDialogElement>(
+        '[data-gallery-dialog]',
+      );
+      const image = gallery.querySelector<HTMLImageElement>(
+        '[data-gallery-image]',
+      );
+      const caption = gallery.querySelector<HTMLElement>(
+        '[data-gallery-caption]',
+      );
+      const announcement = gallery.querySelector<HTMLElement>(
+        '[data-gallery-announcement]',
+      );
+      const lightboxThumbnails = Array.from(
+        gallery.querySelectorAll<HTMLButtonElement>(
+          '[data-gallery-lightbox-thumb]',
+        ),
+      );
+      const closeButton = gallery.querySelector<HTMLButtonElement>(
+        '[data-gallery-close]',
+      );
+      const previousButton = gallery.querySelector<HTMLButtonElement>(
+        '[data-gallery-previous]',
+      );
+      const nextButton = gallery.querySelector<HTMLButtonElement>(
+        '[data-gallery-next]',
+      );
+
+      if (
+        !dialog || !image || !caption || !announcement || !closeButton
+        || !previousButton || !nextButton || !mainLink || !mainImage
+        || !announcement
+        || thumbnails.length === 0
+      ) {
+        return;
+      }
+
+      let currentIndex = 0;
+      let returnFocus: HTMLElement | null = null;
+      let previousOverflow = '';
+
+      const getItem = (index: number): GalleryItem => {
+        const thumbnail = thumbnails[index];
+        const source = thumbnail.querySelector<HTMLImageElement>('img');
+
+        return {
+          // Open the full gallery resource, independent of thumbnail srcset.
+          src: thumbnail.href,
+          alt: source?.alt ?? '',
+          width: Number(source?.width) || 0,
+          height: Number(source?.height) || 0,
+          caption: source?.dataset.caption || undefined,
+        };
+      };
+
+      const showImage = (index: number): void => {
+        const previousIndex = currentIndex;
+        currentIndex = (index + thumbnails.length) % thumbnails.length;
+        const item = getItem(currentIndex);
+        const animationClass = currentIndex >= previousIndex
+          ? 'gallery-image-slide-left'
+          : 'gallery-image-slide-right';
+
+        image.src = item.src;
+        image.alt = item.alt;
+        image.width = item.width;
+        image.height = item.height;
+        mainLink.href = item.src;
+        mainImage.removeAttribute('srcset');
+        mainImage.src = item.src;
+        mainImage.alt = item.alt;
+        mainImage.width = item.width;
+        mainImage.height = item.height;
+        caption.textContent = item.caption ?? '';
+        caption.hidden = !item.caption;
+        announcement.textContent =
+          `Image ${currentIndex + 1} of ${thumbnails.length}`;
+        thumbnails.forEach((thumbnail, thumbnailIndex) => {
+          if (thumbnailIndex === currentIndex) {
+            thumbnail.setAttribute('aria-current', 'true');
+          } else {
+            thumbnail.removeAttribute('aria-current');
+          }
+        });
+        lightboxThumbnails.forEach((thumbnail, thumbnailIndex) => {
+          if (thumbnailIndex === currentIndex) {
+            thumbnail.setAttribute('aria-current', 'true');
+          } else {
+            thumbnail.removeAttribute('aria-current');
+          }
+        });
+        image.classList.remove(
+          'gallery-image-slide-left', 'gallery-image-slide-right',
+        );
+        void image.offsetWidth;
+        image.classList.add(animationClass);
+        previousButton.hidden = thumbnails.length < 2;
+        nextButton.hidden = thumbnails.length < 2;
+      };
+
+      const openGallery = (index: number): void => {
+        returnFocus = document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null;
+        showImage(index);
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        dialog.showModal();
+        closeButton.focus();
+      };
+
+      const closeGallery = (): void => {
+        if (dialog.open) {
+          dialog.close();
+        }
+      };
+
+      thumbnails.forEach((thumbnail: HTMLAnchorElement, index: number) => {
+        thumbnail.addEventListener('click', (event: MouseEvent) => {
+          event.preventDefault();
+          showImage(index);
+        });
+      });
+
+      mainLink.addEventListener('click', (event: MouseEvent) => {
+        event.preventDefault();
+        openGallery(currentIndex);
+      });
+      closeButton.addEventListener('click', () => {
+        closeGallery();
+        closeButton.blur();
+      });
+      previousButton.addEventListener('click', () => {
+        showImage(currentIndex - 1);
+        previousButton.blur();
+      });
+      nextButton.addEventListener('click', () => {
+        showImage(currentIndex + 1);
+        nextButton.blur();
+      });
+      // Touch activation should not leave a sticky focus highlight behind.
+      [closeButton, previousButton, nextButton].forEach((button) => {
+        button.addEventListener('pointerup', () => button.blur());
+      });
+      lightboxThumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', () => showImage(index));
+      });
+
+      dialog.addEventListener('click', (event: MouseEvent) => {
+        if (event.target === dialog) {
+          closeGallery();
+        }
+      });
+
+      dialog.addEventListener('cancel', (event: Event) => {
+        event.preventDefault();
+        closeGallery();
+      });
+
+      dialog.addEventListener('close', () => {
+        document.body.style.overflow = previousOverflow;
+        returnFocus?.focus();
+        returnFocus = null;
+      });
+
+      dialog.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          showImage(currentIndex - 1);
+        }
+
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          showImage(currentIndex + 1);
+        }
+      });
+    },
+  );
+</script>
+
+<style>
+  /* Keep the selected image large and stable while it loads. */
+  .gallery-main
+  {
+    display: block;
+    color: inherit;
+    cursor: zoom-in;
+    text-decoration: none;
+  }
+
+  /* Make the main image fill the reading column without cropping it. */
+  .gallery-main :global(.content-media-frame)
+  {
+    width: 100%;
+  }
+
+  /* Put all choices in one horizontally scrollable thumbnail strip. */
+  .gallery-thumbnails
+  {
+    display: block;
+    margin-top: 0.75rem;
+    padding-bottom: 0.5rem;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Keep each thumbnail compact while preserving its keyboard target. */
+  .gallery-thumbnail
+  {
+    display: inline-block;
+    width: clamp(5rem, 16vw, 8rem);
+    margin-right: 0.5rem;
+    vertical-align: top;
+    border: 2px solid transparent;
+    border-radius: var(--radius-field);
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  /* Mark the image currently shown in the main viewer. */
+  .gallery-thumbnail[aria-current="true"]
+  {
+    border-color: var(--color-primary);
+  }
+
+  /* Let thumbnail images use the full compact tile width. */
+  .gallery-thumbnail :global(.content-media-frame)
+  {
+    width: 100%;
+  }
+
+  /* Cover the viewport while the selected image is being inspected. */
+  .gallery-lightbox
+  {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    overflow: hidden;
+    padding: 3.5rem 0.75rem 2rem;
+    border: 0;
+    color: white;
+    background: transparent;
+  }
+
+  /* Hide the native dialog until the user opens the gallery. */
+  .gallery-lightbox:not([open])
+  {
+    display: none;
+  }
+
+  /* Dim the document beneath the native modal dialog. */
+  .gallery-lightbox::backdrop
+  {
+    background: rgb(0 0 0 / 55%);
+  }
+
+  /* Keep the selected image within the visible viewport. */
+  .gallery-view
+  {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    max-height: calc(100vh - 9rem);
+    max-height: max(0px, calc(100dvh - 9rem));
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* Show the image without cropping its source content. */
+  .gallery-image
+  {
+    display: block;
+    width: 100%;
+    max-width: calc(100vw - 1.5rem);
+    max-height: calc(100vh - 9rem);
+    max-height: max(0px, calc(100dvh - 9rem));
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+
+  /* Slide a newly selected image in from the right. */
+  .gallery-image-slide-left
+  {
+    animation: gallery-slide-left 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Slide back in from the left when moving to the previous image. */
+  .gallery-image-slide-right
+  {
+    animation: gallery-slide-right 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes gallery-slide-left
+  {
+    from
+    {
+      opacity: 0.35;
+      transform: translateX(1.5rem);
+    }
+    to
+    {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes gallery-slide-right
+  {
+    from
+    {
+      opacity: 0.35;
+      transform: translateX(-1.5rem);
+    }
+    to
+    {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Overlay the selected image caption at its lower edge. */
+  .gallery-caption
+  {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 2.5rem 1rem 0.75rem;
+    color: white;
+    text-align: left;
+    background: linear-gradient(transparent, rgb(0 0 0 / 78%));
+    pointer-events: none;
+  }
+
+  /* Keep close and image navigation controls easy to locate. */
+  :global(.gallery-close),
+  :global(.gallery-navigation)
+  {
+    width: 2.75rem;
+    height: 2.75rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / 45%);
+    border-radius: 50%;
+    color: white;
+    background: rgb(20 20 24 / 72%);
+    cursor: pointer;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 25%);
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  /* Give pointer and keyboard users a clear, polished control response. */
+  :global(.gallery-close):focus-visible,
+  :global(.gallery-navigation):focus-visible
+  {
+    background: white;
+    color: #111827;
+  }
+
+  /* Hover feedback belongs to a mouse, avoiding sticky touch highlights. */
+  @media (hover: hover) and (pointer: fine)
+  {
+    /* Invert the control colors without moving their overlay positions. */
+    :global(.gallery-close):hover,
+    :global(.gallery-navigation):hover
+    {
+      background: white;
+      color: #111827;
+    }
+  }
+
+  /* Keep the focus ring visible against both dark and light images. */
+  :global(.gallery-close):focus-visible,
+  :global(.gallery-navigation):focus-visible,
+  .gallery-lightbox-thumbnail:focus-visible
+  {
+    outline: 2px solid white;
+    outline-offset: 3px;
+  }
+
+  /* Place the close action in the upper-right corner. */
+  :global(.gallery-close)
+  {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  /* Hide side navigation until hover or keyboard focus reveals it. */
+  :global(.gallery-navigation)
+  {
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+
+  /* Align the previous control beside the selected image. */
+  :global(.gallery-previous)
+  {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    z-index: 2;
+    transform: translateY(-50%);
+  }
+
+  /* Keep the next control opposite the previous control. */
+  :global(.gallery-next)
+  {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    z-index: 2;
+    transform: translateY(-50%);
+  }
+
+  /* Keep navigation visible while the pointer or keyboard engages it. */
+  .gallery-lightbox:hover :global(.gallery-navigation),
+  .gallery-lightbox:focus-within :global(.gallery-navigation)
+  {
+    opacity: 1;
+  }
+
+  /* Keep the live image count and position controls centered. */
+  .gallery-position
+  {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+  }
+
+  /* Keep the current image announcement readable. */
+  .gallery-announcement
+  {
+    text-align: center;
+  }
+
+  /* Represent each image position with a round button. */
+  .gallery-lightbox-thumbnails
+  {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: min(90vw, 42rem);
+    overflow-x: auto;
+    padding: 0.25rem;
+  }
+
+  /* Make each modal thumbnail a compact, keyboard-friendly choice. */
+  .gallery-lightbox-thumbnail
+  {
+    flex: 0 0 4.5rem;
+    width: 4.5rem;
+    height: 3rem;
+    padding: 0;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 0.4rem;
+    background: rgb(20 20 24 / 72%);
+    cursor: pointer;
+    transition: border-color 160ms ease, opacity 160ms ease;
+  }
+
+  /* Keep modal thumbnails proportional without distorting their subjects. */
+  .gallery-lightbox-thumbnail img
+  {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Highlight the thumbnail that owns the main viewer image. */
+  .gallery-lightbox-thumbnail[aria-current="true"]
+  {
+    border-color: white;
+    opacity: 1;
+  }
+
+  /* Keep inactive thumbnails discoverable without competing with the image. */
+  .gallery-lightbox-thumbnail:not([aria-current="true"])
+  {
+    opacity: 0.72;
+  }
+
+  /* Restore full contrast while a pointer explores a thumbnail. */
+  .gallery-lightbox-thumbnail:hover,
+  .gallery-lightbox-thumbnail:focus-visible
+  {
+    border-color: white;
+    opacity: 1;
+  }
+
+  /* Keep side controls visible on touch screens without hover. */
+  @media (hover: none)
+  {
+    :global(.gallery-navigation)
+    {
+      opacity: 1;
+    }
+  }
+
+  /* Remove fades for people who request reduced motion. */
+  @media (prefers-reduced-motion: reduce)
+  {
+    :global(.gallery-navigation)
+    {
+      transition: none;
+    }
+  }
+
+  /* Keep controls beside the image on narrow screens. */
+  @media (max-width: 40rem)
+  {
+    .gallery-lightbox
+    {
+      padding-right: 0.5rem;
+      padding-left: 0.5rem;
+    }
+
+    :global(.gallery-previous)
+    {
+      left: 0.5rem;
+    }
+
+    :global(.gallery-next)
+    {
+      right: 0.5rem;
+    }
+  }
+</style>

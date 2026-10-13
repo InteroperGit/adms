@@ -1,0 +1,56 @@
+---
+// Keep native return/contact actions and restore the last catalogue location.
+interface Props {
+  contactLabel: string;
+}
+const { contactLabel } = Astro.props;
+---
+
+{/* Native links work for direct entry, disabled JS or blocked storage. */}
+<nav aria-label="Действия проекта" class="project-actions">
+  <a class="project-link" href="/projects/" data-project-catalog-return>
+    Вернуться к проектам
+  </a>
+  <a class="project-link" href="/#contacts">{contactLabel}</a>
+</nav>
+
+<script>
+  // Accept only the catalogue or its static pages on this origin. Preserve
+  // search/category query parameters and the result anchor for Back/Forward.
+  const links = document.querySelectorAll<HTMLAnchorElement>(
+    '[data-project-catalog-return]',
+  );
+  try {
+    const stored = sessionStorage.getItem('project-catalog-return');
+    const target = stored ? new URL(stored, location.origin) : null;
+    if (target?.origin === location.origin
+      && /^\/projects\/(?:page\/[1-9]\d*\/)?$/.test(target.pathname)) {
+      links.forEach((link) => { link.href = target.href; });
+    }
+  } catch {
+    // Corrupt URLs or blocked storage retain the direct catalogue fallback.
+  }
+</script>
+
+<style>
+  /* Keep native actions visible below the linear article stream. */
+  .project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-top: clamp(2rem, 5vw, 4rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Secondary actions remain underlined and keyboard reachable. */
+  .project-link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    font-weight: 600;
+  }
+</style>

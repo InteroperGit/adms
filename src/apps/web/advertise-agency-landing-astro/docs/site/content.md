@@ -2,16 +2,23 @@
 
 [Documentation index](../../README.md)
 
-Edit content in `data/content/*.json` (legal documents are in
-`data/content/legal/` ). These JSON files remain the source of truth; do not
-duplicate their text in components or TypeScript objects. The small settings
+All authored JSON and MDX content belongs under `data/content/`, including
+article collections and fixtures. Service articles use
+`data/content/articles/services/`; content fixtures use
+`data/content/fixtures/`. Keep loaders and validation code in `src/`.
+
+Edit settings and catalog metadata in `data/content/*.json` (legal documents
+are in `data/content/legal/`). Service article text lives in
+`data/content/articles/services/*.mdx`; see [service authoring](service-articles.md).
+Do not duplicate content in components or TypeScript objects. Small settings
 documents keep their typed exports in `src/content/`.
 
-Projects and reviews use direct JSON imports because each dataset is small and
-their existing synchronous API and array order are sufficient. Astro content
-collections are unnecessary here; consider them if the site grows to need
-collection queries or Markdown entries. See the [Astro content collections
-guide][source-1].
+Projects use the `projectArticles` collection and services use `serviceArticles`.
+Both compile MDX to a validated `ContentBlock[]` stream and render through the
+same `ContentBlocks` component. JSON catalogs retain array order and metadata;
+reviews continue to use direct JSON imports. See [article authoring](articles.md)
+and the
+[Astro content collections guide][source-1].
 
 Offers use the same validated JSON-wrapper convention. See
 [hot offers carousel](offers-carousel.md) for `data/content/offers.json`,
@@ -43,8 +50,9 @@ Keep project IDs stable. Visible demo and published records generate
 `/projects/<id>`; drafts do not generate cards or routes. Array order determines
 card order. The [case study guide](case-studies.md) defines structured details,
 evidence, photos, publication requirements and unresolved agency inputs.
-The existing IDs 1-3 remain visible as explicitly labelled, text-only demos.
-Unsupported claims and unrelated Picsum placeholders have been removed.
+All 27 current projects remain labelled demos with noindex and no sitemap entry.
+Original Picsum placeholders are retained as requested, with preview captions
+and unapproved media provenance.
 
 Project photos use src/alt/width/height plus source, rights, approval and crop
 metadata. Review portrait metadata still uses avatarAlt/avatarWidth/avatarHeight.

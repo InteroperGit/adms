@@ -24,7 +24,7 @@ Plan: [Universal content blocks](../../plan/20261012_universal-content-blocks-pl
   [076a](076a-image-stack-lightbox-gallery.md). Browser acceptance remains in
   [082](../../todo/082-content-blocks-playwright-acceptance.md).
 - MDX component mapping, collection integration, and JSON/MDX parity are handled
-  by [078](../../todo/078-project-content-migration.md) and
-  [080](../../todo/080-universal-article-pages.md).
+  by [078](078-project-content-migration.md) and
+  [080](080-universal-article-pages.md).
 - Removal of duplicate project/service gallery and process sections is handled
-  by [078](../../todo/078-project-content-migration.md).
+  by [078](078-project-content-migration.md).

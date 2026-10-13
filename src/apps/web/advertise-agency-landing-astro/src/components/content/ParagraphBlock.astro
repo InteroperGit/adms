@@ -1,14 +1,23 @@
 ---
+// Render plain paragraphs and an optional labelled secondary heading.
 import type { ParagraphBlock as Paragraph } from '@/types/content-blocks';
 
-interface Props { block: Paragraph }
+interface Props {
+  block: Paragraph;
+}
 type ParagraphText = Paragraph['paragraphs'][number];
 
 const { block } = Astro.props as Props;
+const headingId = block.id ? `${block.id}-title` : undefined;
 ---
 
-<section class="content-paragraph"
-  aria-labelledby={block.heading ? block.id : undefined}>
-  {block.heading && <h2 id={block.id}>{block.heading}</h2>}
-  {block.paragraphs.map((paragraph: ParagraphText) => <p>{paragraph}</p>)}
+{/* The outer stream owns the block anchor; headings get separate label IDs. */}
+<section
+  class="content-paragraph"
+  aria-labelledby={block.heading ? headingId : undefined}
+>
+  {block.heading && <h2 id={headingId}>{block.heading}</h2>}
+  {block.paragraphs.map((paragraph: ParagraphText) => (
+    <p>{paragraph}</p>
+  ))}
 </section>

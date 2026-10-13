@@ -6,7 +6,7 @@ import type {
   ContentImage,
   FootnoteBlock,
   ImageBlock,
-  ImageStackBlock,
+  ImageGalleryBlock,
   OrderedListBlock,
   OrderFormBlock,
   ParagraphBlock,
@@ -50,6 +50,7 @@ export const provenance = z.object({
 const meta = {
   id: blockId,
   provenance: provenance.optional(),
+  status: z.enum(['draft', 'demo', 'published']).optional(),
 };
 
 export const paragraphBlock = z.object({
@@ -113,6 +114,11 @@ export const chartBlock = z.object({
   }).strict()).min(1),
 }).strict();
 
+const focalPoint = z.object({
+  x: z.number().min(0).max(100),
+  y: z.number().min(0).max(100),
+}).strict();
+
 export const contentImage = z.object({
   ...meta,
   src: mediaSource,
@@ -120,21 +126,19 @@ export const contentImage = z.object({
   width: z.number().int().positive(),
   height: z.number().int().positive(),
   caption: text.optional(),
+  kind: z.enum(['demo', 'installation']).optional(),
+  cropGuidance: text.optional(),
+  focalPoint: focalPoint.optional(),
+  mobileFocalPoint: focalPoint.optional(),
 }).strict();
 
-export const imageBlock = z.object({
-  ...meta,
+export const imageBlock = contentImage.extend({
   type: z.literal('image'),
-  src: mediaSource,
-  alt: text,
-  width: z.number().int().positive(),
-  height: z.number().int().positive(),
-  caption: text.optional(),
 }).strict();
 
-export const imageStackBlock = z.object({
+export const imageGalleryBlock = z.object({
   ...meta,
-  type: z.literal('image-stack'),
+  type: z.literal('image-gallery'),
   caption: text.optional(),
   images: z.array(contentImage).min(1),
 }).strict();
@@ -182,7 +186,7 @@ export const contentBlockSchema = z.discriminatedUnion('type', [
   tableBlock,
   chartBlock,
   imageBlock,
-  imageStackBlock,
+  imageGalleryBlock,
   orderFormBlock,
   quoteBlock,
   footnoteBlock,
@@ -243,8 +247,8 @@ export type ContentImageContract = AssertContract<
 export type ImageBlockContract = AssertContract<
   SameContract<z.output<typeof imageBlock>, ImageBlock>
 >;
-export type ImageStackBlockContract = AssertContract<
-  SameContract<z.output<typeof imageStackBlock>, ImageStackBlock>
+export type ImageGalleryBlockContract = AssertContract<
+  SameContract<z.output<typeof imageGalleryBlock>, ImageGalleryBlock>
 >;
 export type OrderFormBlockContract = AssertContract<
   SameContract<z.output<typeof orderFormBlock>, OrderFormBlock>

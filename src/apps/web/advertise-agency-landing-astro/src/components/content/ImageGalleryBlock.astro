@@ -1,0 +1,15 @@
+---
+// Pass typed image-gallery content to its interactive, reusable gallery.
+import type { ImageGalleryBlock as GalleryBlock } from '@/types/content-blocks';
+import ImageGallery from './ImageGallery.astro';
+
+interface Props {
+  block: GalleryBlock;
+  priority?: boolean;
+}
+
+const { block, priority = false } = Astro.props as Props;
+---
+
+{/* The gallery keeps link fallbacks and enhances them with a modal view. */}
+<ImageGallery block={block} priority={priority} />

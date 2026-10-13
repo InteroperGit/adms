@@ -1,9 +1,12 @@
 ---
+// One ordered article renderer for normalized MDX and explicit JSON fallback.
+// Only the page supplies owner context; authors cannot enable production forms.
 import type { ContentBlock } from '@/types/content-blocks';
+import type { ArticleContext } from '@/content/article-context';
 import ChartBlock from './ChartBlock.astro';
 import FootnoteBlock from './FootnoteBlock.astro';
 import ImageBlock from './ImageBlock.astro';
-import ImageStackBlock from './ImageStackBlock.astro';
+import ImageGalleryBlock from './ImageGalleryBlock.astro';
 import ListBlock from './ListBlock.astro';
 import OrderFormBlock from './OrderFormBlock.astro';
 import ParagraphBlock from './ParagraphBlock.astro';
@@ -12,26 +15,44 @@ import TableBlock from './TableBlock.astro';
 
 interface Props {
   blocks: ContentBlock[];
-  /** Specialized production forms require explicit publication approval. */
-  allowSpecializedForms?: boolean;
+  /** Omitted context uses general inquiry and full-image framing. */
+  context?: ArticleContext;
 }
-const { blocks, allowSpecializedForms = false } = Astro.props as Props;
+const { blocks, context } = Astro.props as Props;
+const firstMediaIndex = blocks.findIndex((block) =>
+  block.type === 'image' || block.type === 'image-gallery');
 ---
 
+{/* Block IDs identify article targets independently of optional headings. */}
 <div class="content-blocks">
-  {blocks.map((block: ContentBlock) => (
-    <div class="content-block" data-block-type={block.type}>
+  {blocks.map((block: ContentBlock, index) => (
+    <div
+      class="content-block"
+      data-block-type={block.type}
+      id={block.type === 'order-form' ? undefined : block.id}
+    >
       {block.type === 'paragraph' && <ParagraphBlock block={block} />}
       {(block.type === 'ordered-list' ||
         block.type === 'unordered-list') && <ListBlock block={block} />}
       {block.type === 'table' && <TableBlock block={block} />}
       {block.type === 'chart' && <ChartBlock block={block} />}
-      {block.type === 'image' && <ImageBlock block={block} />}
-      {block.type === 'image-stack' && <ImageStackBlock block={block} />}
+      {block.type === 'image' && (
+        <ImageBlock
+          block={block}
+          priority={index === firstMediaIndex}
+          serviceCrop={context?.kind === 'service'}
+        />
+      )}
+      {block.type === 'image-gallery' && (
+        <ImageGalleryBlock
+          block={block}
+          priority={index === firstMediaIndex}
+        />
+      )}
       {block.type === 'order-form' && (
         <OrderFormBlock
           block={block}
-          allowSpecialized={allowSpecializedForms}
+          context={context}
         />
       )}
       {block.type === 'quote' && <QuoteBlock block={block} />}
@@ -39,3 +60,68 @@ const { blocks, allowSpecializedForms = false } = Astro.props as Props;
     </div>
   ))}
 </div>
+
+<style>
+  /* Keep articles in one reading column with consistent section spacing. */
+  .content-blocks {
+    display: grid;
+    gap: 2rem;
+    max-width: var(--site-reading-width);
+    overflow-wrap: anywhere;
+  }
+
+  /* Allow tables and media to shrink inside the reading column. */
+  .content-block {
+    min-width: 0;
+  }
+
+  /* Keep secondary headings visible beneath the page's primary title. */
+  .content-block :global(h2) {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  /* Use a comfortable line height for both narrative and inquiry paragraphs. */
+  .content-block :global(p) {
+    line-height: 1.7;
+  }
+
+  /* Separate consecutive paragraphs within an authored prose block. */
+  .content-block :global(p + p) {
+    margin-top: 0.75rem;
+  }
+
+  /* Make native list semantics visible despite the site's CSS reset. */
+  .content-block :global(ul),
+  .content-block :global(ol) {
+    padding-left: 1.5rem;
+  }
+
+  /* Give unordered content its expected markers. */
+  .content-block :global(ul) {
+    list-style: disc;
+  }
+
+  /* Preserve authored numbering for ordered content. */
+  .content-block :global(ol) {
+    list-style: decimal;
+  }
+
+  /* Keep media qualifications legible beneath their images. */
+  .content-block :global(figcaption) {
+    margin-top: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  /* Keep the lightbox caption legible on its fixed dark backdrop. */
+  .content-block :global(.gallery-caption) {
+    color: white;
+  }
+
+  /* Contain wide tables without causing document-level horizontal overflow. */
+  .content-block :global(.table-scroll) {
+    overflow-x: auto;
+  }
+</style>

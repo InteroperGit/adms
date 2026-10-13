@@ -1,21 +1,17 @@
 ---
-// Generate static case pages and compose independently testable sections.
+// Generate static project pages from validated metadata and content blocks.
 import Layout from '@/layouts/Layout.astro';
 import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
-import Button from '@/components/ui/Button.astro';
-import ProjectPhoto from '@/components/ui/ProjectPhoto.astro';
-import ProjectProcess from '@/components/ui/ProjectProcess.astro';
-import LedLettersForm from '@/components/forms/LedLettersForm.astro';
-import { getOrderFormRegistration } from '@/content/order-form-registry';
 import ProjectDetailHeader
   from '@/components/projects/ProjectDetailHeader.astro';
-import ProjectDetailOverview
-  from '@/components/projects/ProjectDetailOverview.astro';
+import ContentBlocks from '@/components/content/ContentBlocks.astro';
+import ProjectArticleActions
+  from '@/components/projects/ProjectArticleActions.astro';
 import { projects } from '@/content/projects';
 import { site } from '@/content/site';
-import type { Project } from '@/types';
+import type { Project } from '@/types/project';
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
   return projects.map((project) => ({
     params: { id: String(project.id) },
     props: { project },
@@ -24,16 +20,14 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props as { project: Project };
 const projectsHref = '/projects/';
-const contactsHref = '/#contacts';
-const specializedForm = getOrderFormRegistration(
-  'project',
-  project.status === 'published' ? project.category : undefined,
-);
 ---
 
-<Layout title={project.title} description={project.description}>
+<Layout
+  title={project.title}
+  description={project.description}
+  noindex={project.status !== 'published'}
+>
   <article class="site-container project-detail">
-    {/* Breadcrumbs retain the project catalogue return destination. */}
     <Breadcrumbs
       items={[
         { label: 'Главная', href: '/' },
@@ -41,71 +35,18 @@ const specializedForm = getOrderFormRegistration(
       ]}
       current={project.title}
     />
-
     <ProjectDetailHeader project={project} />
-
-    {/* Full photos remain visible in source order with stable geometry. */}
-    {project.photos.length > 0 && (
-      <div class="project-gallery">
-        <div class="project-photo-list">
-          {project.photos.map((photo, index) => (
-            <ProjectPhoto photo={photo} priority={index === 0} />
-          ))}
-        </div>
-      </div>
-    )}
-
-    <ProjectDetailOverview project={project} />
-
-    {/* Optional process sections follow the overview in production order. */}
-    <ProjectProcess
-      id="manufacturing"
-      title="Производство"
-      content={project.manufacturing}
+    {/* Qualify demo claims before readers encounter the article or media. */}
+    {project.notice && <p class="project-notice">{project.notice}</p>}
+    {/* The page owns category/approval; blocks own reading order. */}
+    <ContentBlocks
+      blocks={project.content}
+      context={{
+        kind: 'project', projectId: project.id, category: project.category,
+        published: project.status === 'published',
+      }}
     />
-    <ProjectProcess
-      id="installation"
-      title="Монтаж"
-      content={project.installation}
-    />
-
-    {/* Final imagery closes the case before its inquiry action. */}
-    {(project.result || project.resultPhotos?.length) && (
-      <section class="project-result" aria-labelledby="project-result">
-        <h2 id="project-result">Итоговый результат</h2>
-        {project.result && <p>{project.result}</p>}
-        {project.resultPhotos?.length && (
-          <div class="project-photo-list">
-            {project.resultPhotos.map((photo) => (
-              <ProjectPhoto photo={photo} />
-            ))}
-          </div>
-        )}
-      </section>
-    )}
-
-    {specializedForm?.formId === 'led-letters' && (
-      <LedLettersForm projectId={project.id} />
-    )}
-
-    {/* Keep native links available when client storage is unavailable. */}
-    <nav aria-label="Действия проекта" class="project-actions">
-      {specializedForm?.formId === 'led-letters' && (
-        <Button href="#led-letters" class="project-inquiry">
-          Заказать световые буквы
-        </Button>
-      )}
-      <a
-        class="project-link"
-        href={projectsHref}
-        data-project-catalog-return
-      >
-        Вернуться к проектам
-      </a>
-      <a class="project-link" href={contactsHref}>
-        {site.sections.contacts.panelTitle}
-      </a>
-    </nav>
+    <ProjectArticleActions contactLabel={site.sections.contacts.panelTitle} />
   </article>
 </Layout>
 
@@ -116,85 +57,12 @@ const specializedForm = getOrderFormRegistration(
     overflow-wrap: anywhere;
   }
 
-  /* Separate photo evidence from the following written explanation. */
-  .project-gallery {
-    margin-bottom: clamp(2rem, 5vw, 4rem);
-  }
-
-  /* Static photos retain their full context in source order. */
-  .project-photo-list {
-    display: grid;
-    gap: 2rem;
-    max-width: 71rem;
-  }
-
-  /* Final photographs close the case before the inquiry action. */
-  .project-result {
-    display: block;
-    clear: both;
-    width: 100%;
-    margin-top: clamp(2rem, 5vw, 4rem);
-    padding-top: clamp(1.5rem, 3vw, 2.5rem);
-    border-top: 1px solid var(--color-base-300);
-  }
-
-  /* Outcome copy keeps a readable measure above finished-work photos. */
-  .project-result p {
-    max-width: var(--site-reading-width);
+  /* Make the editorial qualification visible beside the project content. */
+  .project-notice {
     margin-bottom: 1.5rem;
-    line-height: 1.7;
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-primary);
+    color: var(--color-muted);
   }
 
-  /* Wrap actions rather than clipping Russian labels. */
-  .project-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem 1.5rem;
-    margin-top: clamp(2rem, 5vw, 4rem);
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-base-300);
-  }
-
-  /* Inquiry links grow with enlarged text and narrow viewports. */
-  :global(.project-inquiry) {
-    height: auto;
-    min-height: 44px;
-    max-width: 100%;
-    padding-block: 0.75rem;
-    white-space: normal;
-  }
-
-  /* Secondary actions remain underlined and keyboard reachable. */
-  .project-link {
-    display: flex;
-    align-items: center;
-    min-height: 44px;
-    color: var(--color-primary);
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-    font-weight: 600;
-  }
 </style>
-
-<script>
-  // Restore the prior catalogue state with an origin-safe fallback.
-  const returnLinks = document.querySelectorAll<HTMLAnchorElement>(
-    '[data-project-catalog-return]',
-  );
-  if (returnLinks.length) {
-    try {
-      const stored = sessionStorage.getItem('project-catalog-return');
-      const storedURL = stored
-        ? new URL(stored, location.origin)
-        : null;
-      if (storedURL && storedURL.origin === location.origin) {
-        returnLinks.forEach((link) => {
-          link.href = storedURL.href;
-        });
-      }
-    } catch {
-      // Blocked storage leaves the direct catalogue link fully functional.
-    }
-  }
-</script>

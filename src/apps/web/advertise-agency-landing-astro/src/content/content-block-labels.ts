@@ -8,7 +8,7 @@ export const contentBlockTypeLabels: Record<ContentBlock['type'], string> = {
   table: 'Таблица',
   chart: 'График',
   image: 'Изображение',
-  'image-stack': 'Галерея изображений',
+  'image-gallery': 'Галерея изображений',
   'order-form': 'Форма заказа',
   quote: 'Цитата',
   footnote: 'Сноска',

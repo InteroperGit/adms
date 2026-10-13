@@ -6,9 +6,13 @@ export interface ContentBlockProvenance {
   approvedAt?: string | null;
 }
 
+export type ContentBlockStatus = 'draft' | 'demo' | 'published';
+
 export interface ContentBlockMeta {
   id?: string;
   provenance?: ContentBlockProvenance;
+  /** Optional per-block publication state for editorial review. */
+  status?: ContentBlockStatus;
 }
 
 export interface ParagraphBlock extends ContentBlockMeta {
@@ -55,14 +59,19 @@ export interface ContentImage extends ContentBlockMeta {
   width: number;
   height: number;
   caption?: string;
+  /** Distinguish preview media without inventing installation approval. */
+  kind?: 'demo' | 'installation';
+  cropGuidance?: string;
+  focalPoint?: { x: number; y: number };
+  mobileFocalPoint?: { x: number; y: number };
 }
 
 export interface ImageBlock extends ContentImage {
   type: 'image';
 }
 
-export interface ImageStackBlock extends ContentBlockMeta {
-  type: 'image-stack';
+export interface ImageGalleryBlock extends ContentBlockMeta {
+  type: 'image-gallery';
   caption?: string;
   images: ContentImage[];
 }
@@ -95,7 +104,7 @@ export type ContentBlock =
   | TableBlock
   | ChartBlock
   | ImageBlock
-  | ImageStackBlock
+  | ImageGalleryBlock
   | OrderFormBlock
   | QuoteBlock
   | FootnoteBlock;
