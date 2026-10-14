@@ -2,6 +2,7 @@
 // Reject executable JSX/imports rather than silently discarding article data.
 export const blockComponentTypes = Object.freeze({
   ParagraphBlock: 'paragraph',
+  HeadingBlock: 'heading',
   OrderedListBlock: 'ordered-list',
   UnorderedListBlock: 'unordered-list',
   TableBlock: 'table',
@@ -25,24 +26,26 @@ function plainText(node) {
 /** Normalize Markdown and allowlisted JSON components in source order. */
 export function collectMdxBlocks(tree) {
   const blocks = [];
-  let pendingHeading;
   for (const node of tree.children) {
     if (node.type === 'yaml') continue;
     if (node.type === 'heading') {
-      if (node.depth !== 2 || pendingHeading) {
-        throw new Error('Use one level-two heading before a paragraph/list');
+      if (blocks.at(-1)?.type === 'heading') {
+        throw new Error('Headings must be followed by content');
       }
-      pendingHeading = plainText(node);
+      blocks.push({
+        type: 'heading',
+        level: node.depth,
+        text: plainText(node),
+      });
       continue;
     }
-    const heading = pendingHeading ? { heading: pendingHeading } : {};
     if (node.type === 'paragraph') {
       const previous = blocks.at(-1);
-      if (!pendingHeading && previous?.type === 'paragraph') {
+      if (previous?.type === 'paragraph') {
         previous.paragraphs.push(plainText(node));
       } else {
         blocks.push({
-          type: 'paragraph', ...heading, paragraphs: [plainText(node)],
+          type: 'paragraph', paragraphs: [plainText(node)],
         });
       }
     } else if (node.type === 'list') {
@@ -58,7 +61,6 @@ export function collectMdxBlocks(tree) {
       });
       blocks.push({
         type: node.ordered ? 'ordered-list' : 'unordered-list',
-        ...heading,
         items,
       });
     } else if (node.type === 'mdxJsxFlowElement') {
@@ -66,7 +68,7 @@ export function collectMdxBlocks(tree) {
       const attribute = node.attributes[0];
       if (!type || node.children.length || node.attributes.length !== 1
         || attribute.type !== 'mdxJsxAttribute' || attribute.name !== 'block'
-        || typeof attribute.value !== 'string' || pendingHeading) {
+        || typeof attribute.value !== 'string') {
         throw new Error('Use an allowlisted block with one JSON string prop');
       }
       const block = JSON.parse(attribute.value);
@@ -77,10 +79,9 @@ export function collectMdxBlocks(tree) {
     } else {
       throw new Error(`Unsupported article MDX node: ${node.type}`);
     }
-    pendingHeading = undefined;
   }
-  if (pendingHeading) {
-    throw new Error('A heading must have paragraph/list data');
+  if (blocks.at(-1)?.type === 'heading') {
+    throw new Error('A heading must have content');
   }
   return blocks;
 }

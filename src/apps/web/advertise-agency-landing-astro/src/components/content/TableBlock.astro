@@ -9,15 +9,10 @@ type TableRow = Table['rows'][number];
 type TableCell = TableRow['cells'][number];
 
 const { block } = Astro.props as Props;
-const headingId = block.id ? `${block.id}-title` : undefined;
 ---
 
 {/* The renderer owns horizontal scrolling and the authored block anchor. */}
-<section
-  class="content-table"
-  aria-labelledby={block.title ? headingId : undefined}
->
-  {block.title && <h2 id={headingId}>{block.title}</h2>}
+<section class="content-table">
   <div class="table-scroll">
     <table>
       {block.caption && <caption>{block.caption}</caption>}

@@ -40,8 +40,10 @@ for (const record of catalog.items) {
     previous.article.lead,
     ...previous.article.sections.flatMap((section) => section.paragraphs),
   ]);
-  assert.deepEqual(paragraphs.slice(1).map((block) => block.heading),
-    previous.article.sections.map((section) => section.heading));
+  assert.deepEqual(article.content.filter((block) => block.type === 'heading')
+    .slice(0, previous.article.sections.length).map((block) => block.text),
+    previous.article.sections
+    .map((section) => section.heading));
   assert.deepEqual(article.content.find((block) =>
     block.type === 'unordered-list').items, previous.article.inquiry);
   assert.equal(article.title, previous.article.title);
@@ -88,7 +90,6 @@ for (const body of [
   '{alert(1)}',
   '<script>alert(1)</script>',
   '<ImageBlock block={dangerous()} />',
-  '# Another h1\n\nText.',
   '## Empty heading',
   '3. A list starting at three',
   '<ImageStackBlock block=\'{"type":"image-stack","images":[]}\' />',

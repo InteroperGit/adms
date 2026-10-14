@@ -28,10 +28,12 @@ export function migrateProjectContent(
         && value.trim().length > 0,
     );
     if (values.length) {
+      if (heading) {
+        blocks.push({ type: 'heading', level: 2, text: heading });
+      }
       blocks.push({
         type: 'paragraph',
         id,
-        ...(heading ? { heading } : {}),
         paragraphs: values,
       });
     }
@@ -43,7 +45,8 @@ export function migrateProjectContent(
         && value.trim().length > 0,
     );
     if (items.length) {
-      blocks.push({ type: 'unordered-list', id, heading, items });
+      blocks.push({ type: 'heading', level: 2, text: heading });
+      blocks.push({ type: 'unordered-list', id, items });
     }
   };
 
@@ -81,8 +84,9 @@ export function migrateProjectContent(
         }
         return { cells: [item.label, formatMeasure(item)] };
       });
+      blocks.push({ type: 'heading', level: 2, text: 'Размеры' });
       blocks.push({
-        type: 'table', id: 'dimensions', title: 'Размеры',
+        type: 'table', id: 'dimensions',
         columns: [
           { key: 'name', label: 'Параметр' },
           { key: 'value', label: 'Значение' },
@@ -107,10 +111,10 @@ export function migrateProjectContent(
           ? [{ cells: [timingLabel(label), raw] }] : [];
       });
       if (rows.length) {
+        blocks.push({ type: 'heading', level: 2, text: 'Сроки' });
         blocks.push({
           type: 'table',
           id: 'timing',
-          title: 'Сроки',
           columns: [
             { key: 'stage', label: 'Этап' },
             { key: 'duration', label: 'Срок' },
@@ -144,10 +148,10 @@ export function migrateProjectContent(
       rows.push({ cells: [label, String(raw)] });
     }
     if (rows.length) {
+      blocks.push({ type: 'heading', level: 2, text: 'Параметры проекта' });
       blocks.push({
         type: 'table',
         id: 'details',
-        title: 'Параметры проекта',
         columns: [
           { key: 'name', label: 'Параметр' },
           { key: 'value', label: 'Значение' },
@@ -168,10 +172,10 @@ export function migrateProjectContent(
   }
 
   if (typeof input.result === 'string' && input.result.trim()) {
+    blocks.push({ type: 'heading', level: 2, text: 'Результат' });
     blocks.push({
       type: 'paragraph',
       id: 'result',
-      heading: 'Результат',
       paragraphs: [input.result],
     });
   }

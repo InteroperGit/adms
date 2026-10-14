@@ -15,27 +15,31 @@ export interface ContentBlockMeta {
   status?: ContentBlockStatus;
 }
 
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
+export interface HeadingBlock extends ContentBlockMeta {
+  type: 'heading';
+  level: HeadingLevel;
+  text: string;
+}
+
 export interface ParagraphBlock extends ContentBlockMeta {
   type: 'paragraph';
-  heading?: string;
   paragraphs: string[];
 }
 
 export interface OrderedListBlock extends ContentBlockMeta {
   type: 'ordered-list';
-  heading?: string;
   items: string[];
 }
 
 export interface UnorderedListBlock extends ContentBlockMeta {
   type: 'unordered-list';
-  heading?: string;
   items: string[];
 }
 
 export interface TableBlock extends ContentBlockMeta {
   type: 'table';
-  title?: string;
   caption?: string;
   columns: { key: string; label: string }[];
   rows: { cells: string[] }[];
@@ -43,7 +47,6 @@ export interface TableBlock extends ContentBlockMeta {
 
 export interface ChartBlock extends ContentBlockMeta {
   type: 'chart';
-  title?: string;
   caption?: string;
   unit?: string;
   chartType: 'bar' | 'line' | 'pie';
@@ -98,6 +101,7 @@ export interface FootnoteBlock extends ContentBlockMeta {
 }
 
 export type ContentBlock =
+  | HeadingBlock
   | ParagraphBlock
   | OrderedListBlock
   | UnorderedListBlock

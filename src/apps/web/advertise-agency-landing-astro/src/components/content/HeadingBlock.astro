@@ -1,0 +1,40 @@
+---
+// Render an authored semantic heading at its requested HTML level.
+import type { HeadingBlock as Heading } from '@/types/content-blocks';
+
+interface Props {
+  block: Heading;
+}
+
+const { block } = Astro.props as Props;
+const Tag = `h${block.level}` as keyof HTMLElementTagNameMap;
+---
+
+{/* Keep the heading as its own stream item so source order is semantic. */}
+<Tag class="content-heading" id={block.id}>{block.text}</Tag>
+
+<style>
+  /* Keep standalone headings aligned with the article reading column. */
+  .content-heading {
+    margin: 0;
+    text-wrap: balance;
+    line-height: 1.3;
+    font-weight: 700;
+    scroll-margin-top: var(--site-header-clearance, 5rem);
+  }
+
+  /* Give the primary article heading the strongest visual scale. */
+  .content-heading:is(h1) {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  /* Keep section headings prominent without competing with the page title. */
+  .content-heading:is(h2) {
+    font-size: var(--content-block-heading-size);
+  }
+
+  /* Scale nested headings down while retaining a clear hierarchy. */
+  .content-heading:is(h3, h4, h5, h6) {
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+  }
+</style>

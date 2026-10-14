@@ -17,7 +17,6 @@ const maximum = Math.max(
 
 {/* Keep the chart visible while optional client enhancement is loading. */}
 <figure class="content-chart" data-chart-figure={chartId}>
-  {block.title && <h2>{block.title}</h2>}
   <div
     class="content-chart__canvas"
     id={chartId}
@@ -28,7 +27,7 @@ const maximum = Math.max(
     })}
     aria-hidden="true"
   ></div>
-  <div class="content-chart__bars" aria-label={block.title}>
+  <div class="content-chart__bars" aria-label="Диаграмма">
     {primarySeries?.points.map((point) => (
       <div class="content-chart__bar-row">
         <span class="content-chart__bar-label">{point.label}</span>

@@ -135,7 +135,8 @@ UnorderedListBlock, TableBlock, ChartBlock, ImageBlock, ImageGalleryBlock,
 OrderFormBlock, QuoteBlock and FootnoteBlock. Imports, executable expressions,
 arbitrary HTML, nested lists, unsupported inline markup and extra h1 fail.
 
-Use a stable kebab-case `id` when linking a footnote or heading. IDs must be
+Use a stable kebab-case `id` when linking a footnote or standalone heading.
+IDs must be
 unique in the article; footnote `targetId` must name an existing block. Tables
 need column labels and matching row widths; charts need named series and finite
 numeric values. Supply meaningful Russian headings, captions and image alt.

@@ -1,28 +1,18 @@
 ---
-// Render plain paragraphs and an optional labelled secondary heading.
+// Render plain paragraphs without embedding structural headings.
 import type { ParagraphBlock as Paragraph } from '@/types/content-blocks';
 import { paragraphLinks } from '@/content/paragraph-links';
 
 interface Props {
   block: Paragraph;
-  /** The stream supplies a stable ID when authored blocks omit their anchor. */
-  headingId?: string;
 }
 type ParagraphText = Paragraph['paragraphs'][number];
 
-const { block, headingId: suppliedHeadingId } = Astro.props as Props;
-// Standalone use still gets a unique label without requiring an authored ID.
-const headingId = block.heading
-  ? suppliedHeadingId ?? `${block.id ?? crypto.randomUUID()}-title`
-  : undefined;
+const { block } = Astro.props as Props;
 ---
 
-{/* The outer stream owns the block anchor; headings get separate label IDs. */}
-<section
-  class="content-paragraph"
-  aria-labelledby={block.heading ? headingId : undefined}
->
-  {block.heading && <h2 id={headingId}>{block.heading}</h2>}
+{/* The outer stream owns the block anchor; this block contains prose only. */}
+<section class="content-paragraph">
   {block.paragraphs.map((paragraph: ParagraphText) => (
     <p>{paragraphLinks(paragraph).map((segment) => segment.href
       ? <a href={segment.href}>{segment.text}</a>
@@ -37,13 +27,6 @@ const headingId = block.heading
     min-inline-size: 0;
     color: var(--color-base-content);
     overflow-wrap: anywhere;
-  }
-
-  /* Keep the heading close to the prose and with it when printing. */
-  .content-paragraph h2 {
-    margin-block: 0 var(--content-block-heading-gap);
-    text-wrap: balance;
-    break-after: avoid;
   }
 
   /* Comfortable leading remains relative to enlarged user text. */

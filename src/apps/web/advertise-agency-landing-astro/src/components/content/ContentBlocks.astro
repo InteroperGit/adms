@@ -10,6 +10,7 @@ import {
 } from '@/content/block-publication';
 import ChartBlock from './ChartBlock.astro';
 import FootnoteBlock from './FootnoteBlock.astro';
+import HeadingBlock from './HeadingBlock.astro';
 import ImageBlock from './ImageBlock.astro';
 import ImageGalleryBlock from './ImageGalleryBlock.astro';
 import ListBlock from './ListBlock.astro';
@@ -34,7 +35,7 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
   block.type === 'image' || block.type === 'image-gallery');
 ---
 
-{/* Block IDs identify article targets independently of optional headings. */}
+{/* Block IDs identify article targets, including standalone headings. */}
 <div class="content-blocks">
   {/* Qualify demo blocks even when an approved page contains mixed content. */}
   {demo && <p class="block-demo-notice">{blockDemoNotice}</p>}
@@ -44,11 +45,9 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
       data-block-type={block.type}
       id={block.type === 'order-form' ? undefined : block.id}
     >
+      {block.type === 'heading' && <HeadingBlock block={block} />}
       {block.type === 'paragraph' && (
-        <ParagraphBlock
-          block={block}
-          headingId={`${block.id ?? `paragraph-${index}`}-title`}
-        />
+        <ParagraphBlock block={block} />
       )}
       {(block.type === 'ordered-list' ||
         block.type === 'unordered-list') && <ListBlock block={block} />}
@@ -100,14 +99,6 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
     padding-left: 1rem;
     border-left: 3px solid var(--content-block-accent);
     color: var(--content-block-caption);
-  }
-
-  /* Keep secondary headings visible beneath the page's primary title. */
-  .content-block :global(h2) {
-    margin-bottom: var(--content-block-heading-gap);
-    font-size: var(--content-block-heading-size);
-    line-height: 1.3;
-    font-weight: 700;
   }
 
   /* Use a comfortable line height for both narrative and inquiry paragraphs. */

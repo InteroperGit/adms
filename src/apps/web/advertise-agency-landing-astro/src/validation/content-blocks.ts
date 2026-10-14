@@ -5,6 +5,7 @@ import type {
   ContentBlockProvenance,
   ContentImage,
   FootnoteBlock,
+  HeadingBlock,
   ImageBlock,
   ImageGalleryBlock,
   OrderedListBlock,
@@ -54,24 +55,31 @@ const meta = {
   status: z.enum(['draft', 'demo', 'published']).optional(),
 };
 
+export const headingBlock = z.object({
+  ...meta,
+  type: z.literal('heading'),
+  level: z.union([
+    z.literal(1), z.literal(2), z.literal(3),
+    z.literal(4), z.literal(5), z.literal(6),
+  ]),
+  text,
+}).strict();
+
 export const paragraphBlock = z.object({
   ...meta,
   type: z.literal('paragraph'),
-  heading: text.optional(),
   paragraphs: z.array(text).min(1),
 }).strict();
 
 export const orderedListBlock = z.object({
   ...meta,
   type: z.literal('ordered-list'),
-  heading: text.optional(),
   items: z.array(text).min(1),
 }).strict();
 
 export const unorderedListBlock = z.object({
   ...meta,
   type: z.literal('unordered-list'),
-  heading: text.optional(),
   items: z.array(text).min(1),
 }).strict();
 
@@ -80,7 +88,6 @@ const column = z.object({ key: blockId.unwrap(), label: text }).strict();
 export const tableBlock = z.object({
   ...meta,
   type: z.literal('table'),
-  title: text.optional(),
   caption: text.optional(),
   columns: z.array(column).min(1),
   rows: z.array(z.object({ cells: z.array(text).min(1) }).strict()),
@@ -105,7 +112,6 @@ const chartPoint = z.object({
 export const chartBlock = z.object({
   ...meta,
   type: z.literal('chart'),
-  title: text.optional(),
   caption: text.optional(),
   unit: text.optional(),
   chartType: z.enum(['bar', 'line', 'pie']),
@@ -181,6 +187,7 @@ export const footnoteBlock = z.object({
 }).strict();
 
 export const contentBlockSchema = z.discriminatedUnion('type', [
+  headingBlock,
   paragraphBlock,
   orderedListBlock,
   unorderedListBlock,
@@ -227,6 +234,9 @@ export const contentBlocksSchema = z.array(contentBlockSchema)
 
 export type ContentBlockContract = AssertContract<
   SameContract<z.output<typeof contentBlockSchema>, ContentBlock>
+>;
+export type HeadingBlockContract = AssertContract<
+  SameContract<z.output<typeof headingBlock>, HeadingBlock>
 >;
 export type ContentBlockProvenanceContract = AssertContract<
   SameContract<z.output<typeof provenance>, ContentBlockProvenance>

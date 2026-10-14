@@ -2,6 +2,7 @@ import type { ContentBlock } from '../types/content-blocks';
 
 /** Russian names for content block types in authoring interfaces. */
 export const contentBlockTypeLabels: Record<ContentBlock['type'], string> = {
+  heading: 'Заголовок',
   paragraph: 'Текст',
   'ordered-list': 'Нумерованный список',
   'unordered-list': 'Маркированный список',

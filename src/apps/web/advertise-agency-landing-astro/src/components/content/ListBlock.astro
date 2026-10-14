@@ -13,16 +13,9 @@ type ListItem = Props['block']['items'][number];
 
 const { block } = Astro.props as Props;
 const ListTag = block.type === 'ordered-list' ? 'ol' : 'ul';
-const headingId = block.id ? `${block.id}-title` : undefined;
 ---
 
-<section
-  class="content-list"
-  aria-labelledby={block.heading ? headingId : undefined}
->
-  {/* A heading labels this list when authored with a stable block id. */}
-  {block.heading && <h2 id={headingId}>{block.heading}</h2>}
-
+<section class="content-list">
   {/* Native list elements preserve numbering and screen-reader semantics. */}
   <ListTag>
     {block.items.map((item: ListItem) => <li>{item}</li>)}

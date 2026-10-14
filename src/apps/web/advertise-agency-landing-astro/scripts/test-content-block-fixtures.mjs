@@ -11,6 +11,8 @@ const validPath = 'data/content/fixtures/content-blocks.valid.json';
 const invalidPath = 'data/content/fixtures/content-blocks.invalid.json';
 const valid = JSON.parse(await readFile(validPath, 'utf8'));
 const invalid = JSON.parse(await readFile(invalidPath, 'utf8'));
+const validImage = valid.find((block) => block.type === 'image');
+const validGallery = valid.find((block) => block.type === 'image-gallery');
 contentBlocksSchema.parse(valid);
 for (const block of invalid) {
   assert.equal(contentBlocksSchema.safeParse([block]).success, false);
@@ -19,9 +21,9 @@ for (const block of invalid) {
 for (const blocks of [
   [valid[0], valid[0]],
   [{ type: 'footnote', text: 'Missing', targetId: 'missing' }],
-  [{ type: 'image-stack', images: valid[6].images }],
-  [{ ...valid[5], width: 0 }],
-  [{ ...valid[5], alt: ' ' }],
+  [{ type: 'image-stack', images: validGallery.images }],
+  [{ ...validImage, width: 0 }],
+  [{ ...validImage, alt: ' ' }],
   [{ ...valid[0], legacy: true }],
   [{ ...valid[0], provenance: { source: 'Fixture', approvedBy: 'Editor' } }],
   [{ type: 'order-form', context: 'project', category: 'neon-signs',
@@ -36,13 +38,14 @@ for (const name of ['minimal', 'project', 'service']) {
 }
 const types = new Set(valid.map((block) => block.type));
 const expected = new Set([
-  'paragraph', 'ordered-list', 'unordered-list', 'table', 'chart', 'image',
+  'heading', 'paragraph', 'ordered-list', 'unordered-list', 'table', 'chart',
+  'image',
   'image-gallery',
   'order-form', 'quote', 'footnote',
 ]);
 
 assert.deepEqual(types, expected);
-assert.equal(valid.length, expected.size);
+assert.equal(types.size, expected.size);
 assert.ok(valid.every((block) => typeof block.id === 'string'));
 assert.equal(invalid[0].type, 'unknown');
 assert.ok(!expected.has(invalid[0].type));

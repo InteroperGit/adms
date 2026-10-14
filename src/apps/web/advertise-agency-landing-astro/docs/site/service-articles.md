@@ -11,8 +11,9 @@ The `serviceArticles` Astro collection validates strict frontmatter: `title`,
 media approval must never be inferred from migration. All five migrated
 articles remain unapproved demos with their original noindex and sitemap gates.
 
-Write ordinary plain-text paragraphs, level-two headings and flat ordered or
-unordered lists. A heading labels the following paragraph/list block;
+Write ordinary plain-text paragraphs, standalone headings at the required
+HTML level, and flat ordered or unordered lists. A heading is its own ordered
+content block and labels the blocks that follow it;
 consecutive paragraphs belong to the same section. Nested/task lists, inline
 formatting, links, imports, exports, expressions and arbitrary HTML/JSX are
 currently rejected rather than silently stripped. Extend the typed contract
