@@ -1,0 +1,51 @@
+---
+// Private visual matrix: real renderers with validated, local fixture content.
+// The optional variant omits empty text because the schema forbids blanks.
+import Layout from '@/layouts/Layout.astro';
+import ContentBlocks from '@/components/content/ContentBlocks.astro';
+import { contentBlocksSchema } from '@/validation/content-blocks';
+import fixture from '@/data/content/fixtures/visual-blocks.json';
+import paragraphs from '@/data/content/fixtures/paragraph-visual.json';
+import type { ArticleContext } from '@/content/article-context';
+
+export function getStaticPaths() {
+  return ['long', 'optional', 'form', 'demo', 'paragraph'].map((variant) => ({
+    params: { variant }, props: { variant },
+  }));
+}
+
+const { variant } = Astro.props;
+// Join fixture text fragments to keep authored JSON within the line limit.
+const paragraphFixture = paragraphs.map((block) => ({
+  ...block, paragraphs: block.paragraphs.map((parts) => parts.join('')),
+}));
+const input = structuredClone(
+  variant === 'paragraph' ? paragraphFixture : fixture,
+);
+// Keep required data identical while exercising absent optional labels.
+if (variant === 'optional') {
+  for (const block of input) {
+    for (const key of ['heading', 'title', 'caption', 'author', 'source',
+      'reference', 'unit']) {
+      Reflect.deleteProperty(block, key);
+    }
+    if ('images' in block && block.images) {
+      block.images.forEach((image) => Reflect.deleteProperty(image, 'caption'));
+    }
+  }
+}
+const blocks = contentBlocksSchema.parse(input);
+// Synthetic owner enables the existing disabled-delivery form only in tests.
+const context: ArticleContext | undefined = ['form', 'demo'].includes(variant)
+  ? { kind: 'project', projectId: 501, category: 'led-letters',
+      published: variant === 'form' }
+  : undefined;
+---
+
+<Layout title="Визуальная проверка блоков" noindex={true}>
+  {/* Use the production reading flow without adding per-block cards. */}
+  <article class="site-container" data-visual-fixture={variant}>
+    <h1>Визуальная проверка блоков</h1>
+    <ContentBlocks blocks={blocks} context={context} />
+  </article>
+</Layout>

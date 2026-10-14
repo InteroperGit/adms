@@ -18,6 +18,19 @@
   --site-section-space: clamp(3rem, 6vw, 5rem);
   --site-heading-size: clamp(1.75rem, 2.8vw, 2.5rem);
   --site-reading-width: 68ch;
+  /* Reusable primitives for ContentBlock-specific surfaces and rhythm. */
+  --content-block-gap: clamp(1.5rem, 3vw, 2.5rem);
+  --content-block-padding: clamp(1rem, 2.5vw, 1.5rem);
+  --content-block-heading-size: clamp(1.25rem, 2vw, 1.5rem);
+  --content-block-heading-gap: 1rem;
+  --content-block-caption-gap: 0.75rem;
+  --content-block-surface: var(--color-base-100);
+  --content-block-border: var(--color-base-300);
+  --content-block-radius: var(--radius-panel);
+  --content-block-shadow: var(--shadow-panel);
+  --content-block-accent: var(--color-primary);
+  --content-block-caption: var(--color-muted);
+  --content-block-focus-ring: 2px solid var(--color-primary);
   --radius-selector: 0.5rem;
   --radius-field: 0.5rem;
   --radius-box: 1rem;
@@ -58,7 +71,7 @@
   --shadow-panel: 0 4px 16px rgb(0 0 0 / 18%);
   --shadow-elevated: 0 8px 28px rgb(0 0 0 / 24%);
 }
-/* Without JavaScript, follow the operating system using the same dark tokens. */
+/* Follow the operating system when JavaScript cannot set a theme. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
   color-scheme: dark;
@@ -81,17 +94,72 @@
   }
 }
 @layer base {
-  body { font-family: var(--font-sans); line-height: 1.6; color: var(--color-base-content); }
-  h1, h2, h3, h4 { line-height: 1.2; }
-  :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; }
+  /* Set the document's shared type and text color. */
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    color: var(--color-base-content);
+  }
+
+  /* Keep heading line height compact and consistent across themes. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.2;
+  }
+
+  /* Keep keyboard focus visible across native and custom controls. */
+  :focus-visible {
+    outline: var(--content-block-focus-ring);
+    outline-offset: 4px;
+  }
+
+  /* Reduce motion while preserving state changes and content visibility. */
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 @layer components {
-  .site-container { width: 100%; max-width: var(--site-container); margin-inline: auto; padding-inline: var(--site-gutter); }
-  .site-section { padding-block: var(--site-section-space); scroll-margin-top: var(--site-header-clearance, 5rem); }
-  .site-section-title { font-size: var(--site-heading-size); font-weight: 700; text-align: center; margin-bottom: 1rem; }
-  .site-section-subtitle { color: var(--site-muted); text-align: center; max-width: var(--site-reading-width); margin: 0 auto 3rem; }
-  .site-button { border-radius: var(--radius-field); font-weight: 600; }
+  /* Keep section content centered inside the site container. */
+  .site-container {
+    width: 100%;
+    max-width: var(--site-container);
+    margin-inline: auto;
+    padding-inline: var(--site-gutter);
+  }
+
+  /* Reserve vertical space and preserve anchored section headings. */
+  .site-section {
+    padding-block: var(--site-section-space);
+    scroll-margin-top: var(--site-header-clearance, 5rem);
+  }
+
+  /* Establish the shared visual hierarchy for section titles. */
+  .site-section-title {
+    font-size: var(--site-heading-size);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  /* Keep supporting section copy readable and centered. */
+  .site-section-subtitle {
+    color: var(--site-muted);
+    text-align: center;
+    max-width: var(--site-reading-width);
+    margin: 0 auto 3rem;
+  }
+
+  /* Give shared buttons the site's field radius and emphasis. */
+  .site-button {
+    border-radius: var(--radius-field);
+    font-weight: 600;
+  }
 }

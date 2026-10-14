@@ -7,6 +7,13 @@ export default function articleAcceptance() {
     hooks: {
       'astro:config:setup': ({ injectRoute }) => {
         injectRoute({
+          pattern: '/__visual-check/[variant]/',
+          entrypoint: fileURLToPath(new URL(
+            '../fixtures/visual-blocks.astro', import.meta.url,
+          )),
+          prerender: true,
+        });
+        injectRoute({
           pattern: '/__article-check/[case]/[format]/',
           entrypoint: fileURLToPath(new URL(
             '../fixtures/article-acceptance.astro', import.meta.url,

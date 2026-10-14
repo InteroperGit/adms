@@ -44,7 +44,12 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
       data-block-type={block.type}
       id={block.type === 'order-form' ? undefined : block.id}
     >
-      {block.type === 'paragraph' && <ParagraphBlock block={block} />}
+      {block.type === 'paragraph' && (
+        <ParagraphBlock
+          block={block}
+          headingId={`${block.id ?? `paragraph-${index}`}-title`}
+        />
+      )}
       {(block.type === 'ordered-list' ||
         block.type === 'unordered-list') && <ListBlock block={block} />}
       {block.type === 'table' && <TableBlock block={block} />}
@@ -79,27 +84,28 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
   /* Keep articles in one reading column with consistent section spacing. */
   .content-blocks {
     display: grid;
-    gap: 2rem;
+    gap: var(--content-block-gap);
     max-width: var(--site-reading-width);
     overflow-wrap: anywhere;
   }
 
-  /* Allow tables and media to shrink inside the reading column. */
+  /* Keep blocks in one flow while allowing tables and media to shrink. */
   .content-block {
     min-width: 0;
+    scroll-margin-top: var(--site-header-clearance, 5rem);
   }
 
   /* Keep demo disclosure distinct from approved narrative and media. */
   .block-demo-notice {
     padding-left: 1rem;
-    border-left: 3px solid var(--color-primary);
-    color: var(--color-muted);
+    border-left: 3px solid var(--content-block-accent);
+    color: var(--content-block-caption);
   }
 
   /* Keep secondary headings visible beneath the page's primary title. */
   .content-block :global(h2) {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
+    margin-bottom: var(--content-block-heading-gap);
+    font-size: var(--content-block-heading-size);
     line-height: 1.3;
     font-weight: 700;
   }
@@ -132,8 +138,8 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
 
   /* Keep media qualifications legible beneath their images. */
   .content-block :global(figcaption) {
-    margin-top: 0.75rem;
-    color: var(--color-muted);
+    margin-top: var(--content-block-caption-gap);
+    color: var(--content-block-caption);
   }
 
   /* Keep the lightbox caption legible on its fixed dark backdrop. */

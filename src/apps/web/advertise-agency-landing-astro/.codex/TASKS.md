@@ -1,3 +1,20 @@
+﻿# Latest task — VCB-03, 2026-10-14
+
+- Paragraph refinement completed without subagents; archived in fixed/20261014/.
+- Added prose measure/rhythm, safe native URL links and heading label fallback.
+- Four link fixtures and 14 browser cases pass; 12 screenshots in
+  output/playwright/vcb-03/. Repeat steps: content-block-visual-matrix.md.
+- Check, isolated/normal builds and content/publication checks pass.
+- Next task: VCB-04 list block. No commit or deployment performed.
+# Latest task — 2026-10-14
+
+- VCB-02 implemented without subagents and archived in fixed/20261014/.
+- Validated local fixture covers all ten current types and four variants.
+- Browser: 36 matrix cases plus keyboard/reduced-motion checks pass.
+- Evidence: output/playwright/vcb-02/; repeat instructions in
+  docs/site/content-block-visual-matrix.md.
+- Check, isolated/normal builds, block/publication/content checks pass.
+- Next task: VCB-03 paragraph block. No commit or deployment performed.
 # Current work
 
 - User moved tasks 052-053 from fixed and all 13 todo tasks into
