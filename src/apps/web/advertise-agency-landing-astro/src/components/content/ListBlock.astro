@@ -6,6 +6,7 @@ import type {
 } from '@/types/content-blocks';
 
 interface Props {
+  // Validated plain strings remain escaped text in authored item order.
   block: OrderedListBlock | UnorderedListBlock;
 }
 
@@ -13,11 +14,75 @@ type ListItem = Props['block']['items'][number];
 
 const { block } = Astro.props as Props;
 const ListTag = block.type === 'ordered-list' ? 'ol' : 'ul';
+// Reserve at least two digits; larger lists keep native numbers in the gutter.
+const markerDigits = Math.max(2, String(block.items.length).length);
 ---
 
 <section class="content-list">
   {/* Native list elements preserve numbering and screen-reader semantics. */}
-  <ListTag>
-    {block.items.map((item: ListItem) => <li>{item}</li>)}
+  <ListTag style={`--list-marker-digits: ${markerDigits}`}>
+    {block.items.map((item: ListItem) => (
+      <li>{item}</li>
+    ))}
   </ListTag>
 </section>
+
+<style>
+  /* Keep lists in the same reading column and wrap unbroken authored text. */
+  .content-list {
+    max-inline-size: var(--site-reading-width);
+    min-inline-size: 0;
+    color: var(--color-base-content);
+    overflow-wrap: anywhere;
+  }
+
+  /* Outside native markers give wrapped lines a consistent hanging indent. */
+  .content-list ul,
+  .content-list ol {
+    margin: 0;
+    padding-block: 0;
+    padding-inline-end: 0;
+    list-style-position: outside;
+    line-height: 1.7;
+  }
+
+  /* Bullets use a compact gutter for supporting facts rather than steps. */
+  .content-list ul {
+    padding-inline-start: 1.5em;
+    list-style-type: disc;
+  }
+
+  /* A quiet guide connects numbered steps without enclosing the list. */
+  .content-list ol {
+    padding-inline-start: calc(var(--list-marker-digits) * 1ch + 1.5em);
+    border-inline-start: 2px solid var(--content-block-border);
+    list-style-type: decimal;
+  }
+
+  /* Native bullets remain visible in both themes without generated text. */
+  .content-list ul > li::marker {
+    color: var(--content-block-accent);
+  }
+
+  /* Tabular digits align single and multiple digit step numbers at the end. */
+  .content-list ol > li::marker {
+    color: var(--content-block-accent);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Separate marker punctuation from text while keeping every line aligned. */
+  .content-list li {
+    padding-inline-start: 0.375em;
+  }
+
+  /* Relative gaps keep wrapped items distinct even with enlarged text. */
+  .content-list li + li {
+    margin-block-start: clamp(0.5em, 1.5vw, 0.75em);
+  }
+
+  /* Steps receive more breathing room than short supporting bullet points. */
+  .content-list ol > li + li {
+    margin-block-start: clamp(0.75em, 2vw, 1em);
+  }
+</style>
