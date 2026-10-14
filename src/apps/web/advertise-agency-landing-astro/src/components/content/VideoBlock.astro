@@ -1,0 +1,127 @@
+---
+// Render authored video with stable geometry, native controls and a fallback.
+import type { VideoBlock as VideoContent } from '@/types/content-blocks';
+
+interface Props {
+  block: VideoContent;
+}
+
+const { block } = Astro.props as Props;
+const extension = block.src.split('?')[0].split('#')[0].split('.').pop();
+const mime = extension === 'webm'
+  ? 'video/webm'
+  : extension === 'ogg' ? 'video/ogg' : 'video/mp4';
+---
+
+<figure
+  class="content-video"
+  data-video-state="loading"
+  style={`--video-ratio: ${block.width} / ${block.height}`}
+>
+  {/* Native video keeps playback keyboard accessible and works without JS. */}
+  <video
+    controls
+    preload="metadata"
+    poster={block.poster}
+    aria-label={block.alt}
+  >
+    <source src={block.src} type={mime} />
+    <p class="video-native-fallback">
+      Видео недоступно. <a href={block.src}>Открыть видео</a>.
+    </p>
+  </video>
+  {/* Network failures get a readable status with reserved space. */}
+  <p class="video-error" role="status">
+    Видео недоступно. <a href={block.src}>Открыть видео</a>.
+  </p>
+  {block.caption && <figcaption>{block.caption}</figcaption>}
+  {block.transcript && (
+    <details class="video-transcript">
+      <summary>Текстовая расшифровка</summary>
+      <p>{block.transcript}</p>
+    </details>
+  )}
+</figure>
+
+<style>
+  /* Keep video in the article's linear reading flow with reserved space. */
+  .content-video {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Native controls provide keyboard and assistive technology support. */
+  video {
+    display: block;
+    width: 100%;
+    aspect-ratio: var(--video-ratio);
+    background: var(--color-base-200);
+    border-radius: var(--radius-field);
+  }
+
+  /* Keep the unsupported-source fallback visible inside the native element. */
+  .video-native-fallback {
+    padding: 1rem;
+    color: var(--content-block-caption);
+  }
+
+  /* Hide the script-enhanced error until a browser reports a failed source. */
+  .video-error {
+    display: none;
+    margin-block: var(--content-block-caption-gap) 0;
+    color: var(--content-block-caption);
+  }
+
+  /* Expose a useful fallback after a network or decode failure. */
+  [data-video-state='error'] .video-error {
+    display: block;
+  }
+
+  /* Captions and transcripts stay visually secondary to the media. */
+  figcaption,
+  .video-transcript {
+    margin-block-start: var(--content-block-caption-gap);
+    color: var(--content-block-caption);
+    line-height: 1.5;
+  }
+
+  /* Give the transcript text a readable measure below its disclosure. */
+  .video-transcript p {
+    max-inline-size: 70ch;
+    margin-block: 0.5rem 0;
+  }
+
+  /* Avoid wasting ink on the video frame when printing the article. */
+  @media print {
+    video {
+      display: none;
+    }
+
+    .video-native-fallback,
+    .video-error {
+      display: block;
+    }
+  }
+
+  /* Motion settings do not affect native playback or controls. */
+  @media (prefers-reduced-motion: reduce) {
+    video {
+      scroll-behavior: auto;
+    }
+  }
+</style>
+
+<script>
+  // Surface decode and network failures without making playback depend on JS.
+  document
+    .querySelectorAll<HTMLElement>('[data-video-state]')
+    .forEach((figure) => {
+    const video = figure.querySelector('video');
+    if (!video) return;
+    video.addEventListener('error', () => {
+      figure.dataset.videoState = 'error';
+    });
+  });
+</script>

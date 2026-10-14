@@ -77,4 +77,5 @@ export type {
   QuoteBlock,
   TableBlock,
   UnorderedListBlock,
+  VideoBlock,
 } from './content-blocks';

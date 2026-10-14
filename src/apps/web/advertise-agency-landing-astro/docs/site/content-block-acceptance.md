@@ -5,6 +5,14 @@ test routes and use recorded synthetic owners, not approved production data.
 
 ## Reproduce
 
+The visual fixture includes a `video` block with a poster, caption, transcript,
+and intentionally unavailable MP4. Acceptance checks confirm the native
+`controls`/`preload="metadata"` contract, reserved aspect ratio, keyboard
+focus, unsupported and failed-source fallback, print output, reduced motion,
+and no-JavaScript markup at 320, 768, and 1440 pixels in both themes. The
+video source policy accepts root-relative or HTTP(S) MP4, WebM, and Ogg URLs;
+autoplay is never emitted.
+
 Set `CONTENT_ACCEPTANCE=true` for the isolated build only. Run
 `astro build --site https://task-082.invalid`
 `--outDir ./output/playwright/task-082/dist`. Serve that directory on loopback

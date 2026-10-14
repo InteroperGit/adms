@@ -14,6 +14,7 @@ import type {
   QuoteBlock,
   TableBlock,
   UnorderedListBlock,
+  VideoBlock,
 } from '../types/content-blocks';
 import { mediaSource, text } from './shared';
 import type { AssertContract, SameContract } from './shared';
@@ -150,6 +151,30 @@ export const imageGalleryBlock = z.object({
   images: z.array(contentImage).min(1),
 }).strict();
 
+const videoSource = mediaSource.refine((value) => {
+  try {
+    const pathname = value.startsWith('/')
+      ? value.split('?')[0].split('#')[0]
+      : new URL(value).pathname;
+    return /\.(?:mp4|webm|ogg)$/i.test(pathname);
+  } catch {
+    return false;
+  }
+}, 'Video source must use an MP4, WebM or Ogg file');
+
+export const videoBlock = z.object({
+  ...meta,
+  type: z.literal('video'),
+  src: videoSource,
+  poster: mediaSource.optional(),
+  alt: text,
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+  caption: text.optional(),
+  transcript: text.optional(),
+  kind: z.enum(['demo', 'installation']).optional(),
+}).strict();
+
 export const orderFormBlock = z.object({
   ...meta,
   type: z.literal('order-form'),
@@ -195,6 +220,7 @@ export const contentBlockSchema = z.discriminatedUnion('type', [
   chartBlock,
   imageBlock,
   imageGalleryBlock,
+  videoBlock,
   orderFormBlock,
   quoteBlock,
   footnoteBlock,
@@ -264,6 +290,9 @@ export type ImageBlockContract = AssertContract<
 >;
 export type ImageGalleryBlockContract = AssertContract<
   SameContract<z.output<typeof imageGalleryBlock>, ImageGalleryBlock>
+>;
+export type VideoBlockContract = AssertContract<
+  SameContract<z.output<typeof videoBlock>, VideoBlock>
 >;
 export type OrderFormBlockContract = AssertContract<
   SameContract<z.output<typeof orderFormBlock>, OrderFormBlock>

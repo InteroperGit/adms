@@ -7,6 +7,8 @@ export function initializeInquiry(form: HTMLFormElement): void {
   const button = form.querySelector<HTMLButtonElement>('[type="submit"]');
   const status = form.querySelector<HTMLElement>('[role="status"]');
   if (!fields || !button || !status) return;
+  // Status receives focus after async outcomes so keyboard users hear them.
+  status.tabIndex = -1;
 
   const feedback: OrderInquiryContent['feedback'] = JSON.parse(
     form.dataset.feedback ?? '{}',
@@ -18,6 +20,10 @@ export function initializeInquiry(form: HTMLFormElement): void {
   let sending = false;
   let previousPayload = '';
   let requestId = '';
+
+  function focusStatus() {
+    status?.focus({ preventScroll: true });
+  }
 
   function showError(control: Control): boolean {
     const error = form.querySelector<HTMLElement>(`#${control.id}-error`);
@@ -58,6 +64,7 @@ export function initializeInquiry(form: HTMLFormElement): void {
     if (sending) return;
     if (!enabled) {
       status.textContent = feedback.unavailable;
+      focusStatus();
       return;
     }
     const valid = controls.map(showError).every(Boolean);
@@ -107,8 +114,10 @@ export function initializeInquiry(form: HTMLFormElement): void {
       previousPayload = '';
       requestId = '';
       status.textContent = feedback.success;
+      focusStatus();
     } catch {
       status.textContent = feedback.failure;
+      focusStatus();
     } finally {
       window.clearTimeout(timeout);
       sending = false;

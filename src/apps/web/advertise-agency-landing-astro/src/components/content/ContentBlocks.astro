@@ -18,6 +18,7 @@ import OrderFormBlock from './OrderFormBlock.astro';
 import ParagraphBlock from './ParagraphBlock.astro';
 import QuoteBlock from './QuoteBlock.astro';
 import TableBlock from './TableBlock.astro';
+import VideoBlock from './VideoBlock.astro';
 
 interface Props {
   blocks: ContentBlock[];
@@ -66,6 +67,7 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
           priority={index === firstMediaIndex}
         />
       )}
+      {block.type === 'video' && <VideoBlock block={block} />}
       {block.type === 'order-form' && (
         <OrderFormBlock
           block={block}
@@ -118,7 +120,7 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
 
   /* Separate consecutive paragraphs within an authored prose block. */
   .content-block :global(p + p) {
-    margin-top: 0.75rem;
+    margin-top: 0.45rem;
   }
 
   /* Make native list semantics visible despite the site's CSS reset. */

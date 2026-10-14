@@ -10,6 +10,7 @@ export const contentBlockTypeLabels: Record<ContentBlock['type'], string> = {
   chart: 'График',
   image: 'Изображение',
   'image-gallery': 'Галерея изображений',
+  video: 'Видео',
   'order-form': 'Форма заказа',
   quote: 'Цитата',
   footnote: 'Сноска',

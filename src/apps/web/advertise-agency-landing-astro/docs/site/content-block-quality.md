@@ -101,3 +101,9 @@ Three self-review passes checked the diff and repeated affected acceptance:
 - Detailed touch/zoom and assistive-technology speech review remain task 082.
 - Production origin remains unset. Release verification with the confirmed
   deployment domain is separate; no test origin is a production substitute.
+
+Video acceptance is included in the current block fixture: poster, caption,
+transcript, failed source, native controls, keyboard focus, reduced-motion,
+print and no-JavaScript fallback are reviewed at 320, 768 and 1440 pixels in
+both themes. The fixture source is intentionally unavailable so the fallback
+path stays covered.

@@ -9,6 +9,7 @@ export const blockComponentTypes = Object.freeze({
   ChartBlock: 'chart',
   ImageBlock: 'image',
   ImageGalleryBlock: 'image-gallery',
+  VideoBlock: 'video',
   OrderFormBlock: 'order-form',
   QuoteBlock: 'quote',
   FootnoteBlock: 'footnote',

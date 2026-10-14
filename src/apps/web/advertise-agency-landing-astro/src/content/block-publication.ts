@@ -41,6 +41,7 @@ export function getVisibleBlocks(blocks: ContentBlock[]): ContentBlock[] {
 /** Demo media cannot become an indexable claim through its parent article. */
 export function hasDemoBlocks(blocks: ContentBlock[]): boolean {
   return getVisibleBlocks(blocks).some((block) => block.status === 'demo'
+    || (block.type === 'video' && block.kind === 'demo')
     || mediaItems(block).some((image) => image.status === 'demo'
       || image.kind === 'demo'));
 }
@@ -75,6 +76,14 @@ export function getPublicationIssues(
     };
     check(block, 'Block');
     if (block.status === 'draft') return;
+    if (block.type === 'video') {
+      const needsRights = block.status === 'published'
+        || block.status === 'demo' || block.kind === 'demo'
+        || pageStatus === 'published';
+      if (needsRights && !block.provenance?.rights?.trim()) {
+        issue('Video needs rights');
+      }
+    }
     mediaItems(block).forEach((image, imageIndex) => {
       const label = `Media ${imageIndex + 1}`;
       if (block.type === 'image-gallery') check(image, label);

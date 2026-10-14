@@ -161,3 +161,12 @@ blocks that actually need them; keep layout dimensions stable before loading.
 Run the schema/compiler tests and normal build before requesting publication
 review. Confirm the real deployment origin separately; the test origin
 `https://task-081.invalid` used in acceptance builds is never production config.
+
+## Video authoring
+
+Use `VideoBlock` for MP4, WebM, or Ogg media. Supply a root-relative or
+HTTP(S) `src`, meaningful `alt`, positive intrinsic `width` and `height`, and
+an optional image `poster`. Add a `caption` and a complete `transcript` when
+spoken or essential visual information is not otherwise available. Use
+`kind: demo` for unapproved demonstrations; autoplay is never enabled.
+Published or demo videos require provenance rights, just like other media.

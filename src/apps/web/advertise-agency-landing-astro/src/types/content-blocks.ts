@@ -79,6 +79,18 @@ export interface ImageGalleryBlock extends ContentBlockMeta {
   images: ContentImage[];
 }
 
+export interface VideoBlock extends ContentBlockMeta {
+  type: 'video';
+  src: string;
+  poster?: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption?: string;
+  transcript?: string;
+  kind?: 'demo' | 'installation';
+}
+
 export interface OrderFormBlock extends ContentBlockMeta {
   type: 'order-form';
   formId: string;
@@ -109,6 +121,7 @@ export type ContentBlock =
   | ChartBlock
   | ImageBlock
   | ImageGalleryBlock
+  | VideoBlock
   | OrderFormBlock
   | QuoteBlock
   | FootnoteBlock;
