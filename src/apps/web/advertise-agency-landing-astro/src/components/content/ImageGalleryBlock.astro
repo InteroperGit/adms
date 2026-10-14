@@ -1,5 +1,5 @@
 ---
-// Center the article gallery at three quarters of the content column width.
+// Give image galleries the same full-width visual weight as chart surfaces.
 import type { ImageGalleryBlock as GalleryBlock } from '@/types/content-blocks';
 import ImageGallery from './ImageGallery.astro';
 
@@ -11,36 +11,38 @@ interface Props {
 const { block, priority = false } = Astro.props as Props;
 ---
 
-{/* Separate the gallery from neighboring blocks as a thematic group. */}
-<hr class="gallery-divider" />
 <div class="image-gallery-block">
   <ImageGallery block={block} priority={priority} />
 </div>
-<hr class="gallery-divider" />
 
 <style>
-  /* Group gallery media on its permitted local surface. */
+  /* Let the gallery span the complete article reading column. */
   .image-gallery-block {
-    width: min(75%, 100%);
+    width: 100%;
     min-width: 0;
-    margin-block: 1rem;
-    margin-inline: auto;
-    padding: clamp(0.75rem, 2vw, 1.25rem);
-    background: var(--color-base-200);
+    margin-block: 2rem;
+    padding: clamp(0.875rem, 2.5vw, 1.5rem);
+    background: color-mix(
+      in srgb,
+      var(--color-base-200) 28%,
+      transparent
+    );
+    border-block: 1px solid var(--content-block-border);
   }
 
-  /* Mark the gallery boundaries without creating a card-like container. */
-  .gallery-divider {
-    width: 90%;
-    margin-block: 0;
+  /* Keep the gallery itself at its original focused reading width. */
+  .image-gallery-block :global(.content-gallery) {
+    width: min(75%, 100%);
     margin-inline: auto;
-    border: 0;
-    border-block-start: 1px solid var(--content-block-border);
   }
 
-  /* Let the gallery use the full reading width on narrow screens. */
-  @media (max-width: 48rem) {
+  /* Keep the chart-like surface comfortable on narrow screens. */
+  @media (max-width: 42rem) {
     .image-gallery-block {
+      padding-inline: 0.75rem;
+    }
+
+    .image-gallery-block :global(.content-gallery) {
       width: 100%;
     }
   }

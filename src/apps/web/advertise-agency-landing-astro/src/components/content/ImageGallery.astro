@@ -340,8 +340,9 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   .gallery-main
   {
     display: block;
-    padding: clamp(0.5rem, 1.5vw, 1rem);
+    padding: clamp(0.35rem, 1vw, 0.75rem);
     background: var(--color-base-100);
+    border: 1px solid var(--content-block-border);
     color: inherit;
     cursor: zoom-in;
     text-decoration: none;
@@ -350,6 +351,8 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   /* Keep the gallery figure aligned with the enclosing local surface. */
   .content-gallery
   {
+    display: grid;
+    gap: 0.875rem;
     min-width: 0;
     margin: 0;
   }
@@ -365,11 +368,9 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   {
     display: flex;
     gap: 0.5rem;
-    margin-top: 0.75rem;
-    padding: 0.5rem;
-    border: 1px solid var(--content-block-border);
-    border-radius: var(--radius-field);
-    background: var(--color-base-100);
+    padding: 0.375rem 0;
+    border-block: 1px solid var(--content-block-border);
+    background: transparent;
     overflow-x: auto;
     scrollbar-width: thin;
   }
@@ -382,17 +383,44 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
     width: clamp(5rem, 16vw, 8rem);
     vertical-align: top;
     border: 2px solid transparent;
-    border-radius: var(--radius-field);
+    border-radius: 0.2rem;
     color: inherit;
     cursor: pointer;
     text-decoration: none;
+    opacity: 0.62;
+    transition: border-color 160ms ease, opacity 160ms ease;
   }
 
   /* Mark the image currently shown in the main viewer. */
   .gallery-thumbnail[aria-current="true"]
   {
     border-color: var(--color-primary);
-    background: var(--color-base-100);
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+    opacity: 1;
+  }
+
+  /* Restore contrast when a pointer explores an inactive thumbnail. */
+  .gallery-thumbnail:hover,
+  .gallery-thumbnail:focus-visible
+  {
+    border-color: var(--content-block-accent);
+    opacity: 0.9;
+  }
+
+  /* Keep the active thumbnail ring clear for keyboard users. */
+  .gallery-thumbnail:focus-visible
+  {
+    outline: 2px solid var(--content-block-accent);
+    outline-offset: 2px;
+  }
+
+  /* Treat the gallery caption as editorial metadata beneath the surface. */
+  .content-gallery > figcaption
+  {
+    max-width: 65ch;
+    color: var(--content-block-caption);
+    font-size: 0.9375rem;
+    line-height: 1.55;
   }
 
   /* Let thumbnail images use the full compact tile width. */
@@ -650,7 +678,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
     padding: 0;
     overflow: hidden;
     border: 2px solid transparent;
-    border-radius: 0.4rem;
+    border-radius: 0.2rem;
     background: rgb(20 20 24 / 72%);
     cursor: pointer;
     transition: border-color 160ms ease, opacity 160ms ease;
