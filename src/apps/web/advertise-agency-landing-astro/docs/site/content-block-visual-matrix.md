@@ -59,8 +59,8 @@ static chart rows, real full-image resource and general inquiry link.
 External layout assets are stubbed; local fixture images remain real.
 
 This is a baseline for the following renderer tasks, not final visual
-acceptance. The mobile table still uses its current native layout; VCB-05
-owns its key-value redesign. Reduced motion is emulated and gallery behavior
+acceptance. The baseline predates the mobile table redesign; see VCB-05
+below for its key-value acceptance. Reduced motion is emulated and gallery behavior
 checked; animation timing, physical devices and screen-reader speech are not
 asserted. The 200% run enlarges root text rather than browser page scale.
 Form error/delivery interactions remain in the existing task-082 scenarios
@@ -107,3 +107,42 @@ Minimum text contrast: 16.08:1 light, 14.43:1 dark; link contrast: 6.06:1 light,
 8.04:1 dark. Labels resolve uniquely, escaped markup remains text, prose has
 no card surface, and document overflow is absent. Astro check, both builds,
 content-block fixtures, publication policy and content invariants pass.
+
+## Table refinement — VCB-05
+
+Completed 2026-10-14 without subagents. Desktop tables have contrasting theme
+headers, zebra rows, hover/focus highlighting, numeric alignment and native
+keyboard-accessible local scrolling. Mobile uses definition lists with every
+column label and value, tinted label strips, subtle 1 px horizontal rules on
+all records and perimeter borders on unshaded odd records. Label fills mix
+10% theme text color into the base surface, distinct from the row's fill.
+No enclosing table card or client enhancement is introduced. CSS hides the
+inactive tree from both accessibility reading and keyboard navigation.
+
+The private isolated fixture renders the real TableBlock with global CSS and
+the article reading measure. Local authored data, including 2/4/8 columns,
+zero, negatives, decimals, percentages, dates, long values and escaped markup,
+lives in `data/content/fixtures/table-visual.json`. Runtime content is ignored
+by Git; retain that local fixture when reproducing this check.
+
+```powershell
+pnpm build --config scripts/table-acceptance.config.mjs
+node scripts/serve-content-acceptance.mjs
+# In another terminal:
+npx.cmd --yes --package @playwright/cli playwright-cli `
+  open http://127.0.0.1:54382/__table-check/
+npx.cmd --yes --package @playwright/cli playwright-cli `
+  run-code --filename scripts/verify-table-browser.js
+```
+
+All 18 Chromium cases pass: 320/768/1440 px, light/dark, 100%/200% root text
+and no-JavaScript at all widths in both themes. Checks cover exact field/value
+preservation, column header semantics, inactive accessibility-tree exclusion,
+all-row separators, odd-row outlines, distinct label fills, hover, Tab focus,
+native arrow-key scrolling, document containment and the print view. Physical
+screen-reader speech is not asserted. Twelve screenshots and CLI results are
+in `output/playwright/vcb-05/`.
+
+Production and isolated builds and changed-file code style pass. Full Astro
+check has three existing diagnostics from missing `article-cases.json` and
+`publication.json`; content-block tests lack `content-blocks.valid.json`.

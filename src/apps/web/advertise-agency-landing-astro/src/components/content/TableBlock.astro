@@ -1,35 +1,232 @@
 ---
-// Preserve authored column/row order in an accessible native data table.
+// Render comparison data on desktop and labeled row groups on small screens.
 import type { TableBlock as Table } from '@/types/content-blocks';
+
 interface Props {
+  // Callers validate that each row has exactly one cell per column.
   block: Table;
 }
-type TableColumn = Table['columns'][number];
-type TableRow = Table['rows'][number];
-type TableCell = TableRow['cells'][number];
 
 const { block } = Astro.props as Props;
+// Infer only wholly numeric columns, including grouped decimals and percents.
+// Mixed text, dates and units stay left aligned; authored strings never change.
+const numberPattern =
+  /^[+−-]?(?:\d+|\d{1,3}(?:[ \u00a0\u202f]\d{3})+)(?:[.,]\d+)?\s*%?$/;
+const numericColumns = block.columns.map((_, index) =>
+  block.rows.every((row) => numberPattern.test(row.cells[index].trim())));
+const tableLabel = block.caption || block.columns.map((column) =>
+  column.label).join(', ');
 ---
 
-{/* The renderer owns horizontal scrolling and the authored block anchor. */}
 <section class="content-table">
-  <div class="table-scroll">
-    <table>
+  {/* A focusable local scroll area lets keyboard users inspect wide tables. */}
+  <div
+    class="table-scroll"
+    role="region"
+    aria-label={tableLabel}
+    tabindex="0"
+  >
+    <table aria-label={block.caption ? undefined : tableLabel}>
       {block.caption && <caption>{block.caption}</caption>}
+      {/* Native column headers retain comparison-table reading semantics. */}
       <thead>
         <tr>
-          {block.columns.map((column: TableColumn) => (
-            <th scope="col">{column.label}</th>
+          {block.columns.map((column, index) => (
+            <th scope="col" class:list={{ numeric: numericColumns[index] }}>
+              {column.label}
+            </th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {block.rows.map((row: TableRow) => (
-          <tr>
-            {row.cells.map((cell: TableCell) => <td>{cell}</td>)}
+        {block.rows.map((row) => (
+          <tr tabindex="0">
+            {row.cells.map((cell, index) => (
+              <td class:list={{ numeric: numericColumns[index] }}>{cell}</td>
+            ))}
           </tr>
         ))}
       </tbody>
     </table>
   </div>
+
+  {/* Display:none removes the inactive tree from reading and tab order.
+      Native dt/dd labels occur once per value, without generated text. */}
+  <div class="table-stack">
+    {block.caption && <p class="stack-caption">{block.caption}</p>}
+    {block.rows.map((row) => (
+      <dl class="stack-row" tabindex="0">
+        {row.cells.map((cell, index) => (
+          <div class="stack-pair">
+            <dt>{block.columns[index].label}</dt>
+            <dd class:list={{ numeric: numericColumns[index] }}>{cell}</dd>
+          </div>
+        ))}
+      </dl>
+    ))}
+  </div>
 </section>
+
+<style>
+  /* Keep the table within the article flow without an enclosing card. */
+  .content-table {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    color: var(--color-base-content);
+    line-height: 1.6;
+  }
+
+  /* Overflow belongs to this keyboard-accessible region, never the page. */
+  .table-scroll {
+    max-inline-size: 100%;
+    overflow-x: auto;
+  }
+
+  /* Wide comparisons retain usable columns instead of crushing their text. */
+  .content-table table {
+    inline-size: 100%;
+    border-collapse: collapse;
+  }
+
+  /* Captions introduce the data without a separate card surface. */
+  .content-table caption,
+  .stack-caption {
+    margin: 0;
+    padding-block-end: var(--content-block-caption-gap);
+    color: var(--content-block-caption);
+    text-align: start;
+  }
+
+  /* Wrap long values while preserving a readable comparison measure. */
+  .content-table th,
+  .content-table td {
+    min-inline-size: 10rem;
+    padding: 0.75em 1em;
+    border-block-end: 1px solid var(--content-block-border);
+    text-align: start;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+
+  /* Strong theme-aware contrast distinguishes headers from authored values. */
+  .content-table th {
+    background: var(--content-block-accent);
+    color: var(--color-primary-content);
+    font-weight: 700;
+  }
+
+  /* Quiet alternating rows aid scanning without enclosing individual cards. */
+  .content-table tbody tr:nth-child(even),
+  .stack-row:nth-of-type(even) {
+    background: color-mix(in srgb, var(--color-base-content) 4%, transparent);
+  }
+
+  /* Mouse and keyboard inspection highlight the same complete row. */
+  .content-table tbody tr:hover,
+  .content-table tbody tr:focus-within,
+  .stack-row:hover,
+  .stack-row:focus-within {
+    background: color-mix(in srgb, var(--content-block-accent) 12%,
+      var(--color-base-100));
+  }
+
+  /* Inset outlines stay visible inside the horizontal clipping region. */
+  .table-scroll:focus-visible,
+  .content-table tr:focus-visible,
+  .stack-row:focus-visible {
+    outline: var(--content-block-focus-ring);
+    outline-offset: -2px;
+  }
+
+  /* Align numeric values and their headers, including zero and negatives. */
+  .content-table .numeric {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Only the comparison view is exposed at desktop widths. */
+  .table-stack {
+    display: none;
+  }
+
+  /* Mobile exposes every column as labeled text without sideways scrolling. */
+  @media (max-width: 47.99rem) {
+    /* Remove the entire desktop tree from accessibility and keyboard order. */
+    .table-scroll {
+      display: none;
+    }
+
+    /* Definition lists provide a no-JavaScript key-value reading sequence. */
+    .table-stack {
+      display: block;
+    }
+
+    /* Separate records with a rule, keeping the article's continuous flow. */
+    .stack-row {
+      margin: 0;
+      padding: 1em 0.5em;
+      border-block-end: 1px solid var(--content-block-border);
+    }
+
+    /* Outline unshaded records so their boundaries remain clear on mobile. */
+    .stack-row:nth-of-type(odd) {
+      border: 1px solid var(--content-block-border);
+    }
+
+    /* Labels precede values even at enlarged text sizes or with long words. */
+    .stack-pair {
+      display: grid;
+      gap: 0.5em;
+      min-inline-size: 0;
+      padding-block-end: 0.75em;
+      border-block-end: 1px solid var(--content-block-border);
+      overflow-wrap: anywhere;
+    }
+
+    /* Space fields without turning each into a separate card. */
+    .stack-pair + .stack-pair {
+      margin-block-start: 0.75em;
+    }
+
+    /* A tinted label strip and accent rule distinguish field names at once. */
+    .stack-pair dt {
+      padding: 0.25em 0.5em;
+      border-inline-start: 3px solid var(--content-block-accent);
+      background: color-mix(in srgb, var(--color-base-content) 10%,
+        var(--color-base-100));
+      color: var(--content-block-accent);
+      font-weight: 700;
+    }
+
+    /* Remove browser indentation so values use the full mobile measure. */
+    .stack-pair dd {
+      margin: 0;
+      padding-inline: 0.5em;
+    }
+
+    /* Vertical pairs read from the same edge; tabular digits remain useful. */
+    .stack-pair .numeric {
+      text-align: start;
+    }
+  }
+
+  /* Printed comparisons use one native table with no clipped columns. */
+  @media print {
+    /* Printing uses the comparison tree regardless of viewport width. */
+    .table-scroll {
+      display: block;
+      overflow: visible;
+    }
+
+    /* Suppress duplicate key-value content in the printed article. */
+    .table-stack {
+      display: none;
+    }
+
+    /* Let columns shrink onto the page while retaining all authored text. */
+    .content-table th,
+    .content-table td {
+      min-inline-size: 0;
+    }
+  }
+</style>

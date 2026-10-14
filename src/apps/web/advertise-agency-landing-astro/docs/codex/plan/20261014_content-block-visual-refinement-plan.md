@@ -1,6 +1,6 @@
 # План улучшения ContentBlock: визуальная система и адаптивные представления
 
-Дата: 2026-10-14. Статус: in progress (VCB-01–03 completed).
+Дата: 2026-10-14. Статус: in progress (VCB-01–05 completed).
 
 ## Цель
 
@@ -64,7 +64,7 @@ fallback. `order-form` сохраняет различие production, demo и g
 - [VCB-02](../fixed/20261014/20261014-vcb-02-visual-fixture-matrix.md)
 - [VCB-03](../fixed/20261014/20261014-vcb-03-paragraph-block.md)
 - [VCB-04](../fixed/20261014/20261014-vcb-04-list-block.md) — completed
-- [VCB-05](../todo/20261014-vcb-05-table-block.md)
+- [VCB-05](../fixed/20261014/20261014-vcb-05-table-block.md) — completed
 - [VCB-06](../todo/20261014-vcb-06-quote-footnote-blocks.md)
 - [VCB-07](../todo/20261014-vcb-07-image-block-content-image.md)
 - [VCB-08](../todo/20261014-vcb-08-image-gallery-block.md)

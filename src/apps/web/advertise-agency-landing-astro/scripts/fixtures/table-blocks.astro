@@ -1,0 +1,39 @@
+---
+// Private isolated table fixture avoids unrelated article/form data loaders.
+import TableBlock from '@/components/content/TableBlock.astro';
+import { tableBlock } from '@/validation/content-blocks';
+import fixture from '@/data/content/fixtures/table-visual.json';
+import '@/styles/global.css';
+
+// Validate authored table data with the production contract before rendering.
+const blocks = fixture.map((block) => tableBlock.parse(block));
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Table block acceptance</title>
+  </head>
+  <body>
+    {/* Use the same reading measure and block rhythm as the article stream. */}
+    <main class="table-fixture">
+      <h1>Table block acceptance</h1>
+      {blocks.map((block) => <TableBlock block={block} />)}
+    </main>
+  </body>
+</html>
+
+<style>
+  /* Match the production flow while keeping test-only routes independent. */
+  .table-fixture {
+    display: grid;
+    gap: var(--content-block-gap);
+    max-inline-size: var(--site-reading-width);
+    margin-inline: auto;
+    padding: 1rem;
+    overflow-wrap: anywhere;
+  }
+</style>
