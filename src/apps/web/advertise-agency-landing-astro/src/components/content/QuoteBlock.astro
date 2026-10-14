@@ -1,12 +1,75 @@
 ---
+// Render an editorial quotation without turning the article into a card grid.
 import type { QuoteBlock as Quote } from '@/types/content-blocks';
-interface Props { block: Quote }
+
+interface Props {
+  block: Quote;
+}
+
 const { block } = Astro.props as Props;
 ---
 
 <figure class="content-quote">
+  {/* The mark is visual punctuation and must stay out of the spoken quote. */}
+  <span class="quote-mark" aria-hidden="true">“</span>
   <blockquote>{block.text}</blockquote>
-  {(block.author || block.source) && <figcaption>
-    {block.author}{block.author && block.source && ', '}{block.source}
-  </figcaption>}
+  {(block.author || block.source) && (
+    <figcaption>
+      {block.author && <span class="quote-author">{block.author}</span>}
+      {block.author && block.source && <span aria-hidden="true">, </span>}
+      {block.source && <cite>{block.source}</cite>}
+    </figcaption>
+  )}
 </figure>
+
+<style>
+  /* Keep the quote in the article flow with a quiet editorial divider. */
+  .content-quote {
+    position: relative;
+    margin: 0;
+    min-width: 0;
+    padding-inline-start: clamp(1rem, 3vw, 2rem);
+    border-inline-start: 3px solid var(--content-block-accent);
+    overflow-wrap: anywhere;
+  }
+
+  /* Add typographic emphasis without adding an assistive-technology word. */
+  .quote-mark {
+    position: absolute;
+    inset-block-start: -0.35em;
+    inset-inline-start: 0.2rem;
+    color: var(--content-block-accent);
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  /* Let the authored text lead the block at a comfortable reading measure. */
+  blockquote {
+    margin: 0;
+    max-inline-size: 60ch;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    line-height: 1.6;
+  }
+
+  /* Separate attribution from the quote while keeping it visually secondary. */
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-block-start: 0.75rem;
+    color: var(--content-block-caption);
+    line-height: 1.5;
+  }
+
+  /* Keep the named author legible when source text is long or unbroken. */
+  .quote-author,
+  cite {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Give the author a small hierarchy without inventing metadata. */
+  .quote-author {
+    font-weight: 600;
+  }
+</style>

@@ -1,14 +1,56 @@
 ---
-// Display an authored note and its validated native article-target link.
+// Display a secondary note with a native fragment link to its article target.
 import type { FootnoteBlock as Footnote } from '@/types/content-blocks';
+
 interface Props {
   block: Footnote;
 }
+
 const { block } = Astro.props as Props;
 ---
 
-{/* The shared stream owns this note's anchor; target links work without JS. */}
+{/* The shared stream owns this note's anchor; links work without JS. */}
 <aside class="content-footnote" role="note">
-  {block.reference && <strong>{block.reference} </strong>}{block.text}
-  {block.targetId && <a href={`#${block.targetId}`}>К разделу</a>}
+  {block.reference && <strong>{block.reference}</strong>}
+  <span class="footnote-text">{block.text}</span>
+  {block.targetId && (
+    <a
+      class="footnote-backlink"
+      href={`#${block.targetId}`}
+      aria-label="Вернуться к месту в статье"
+    >
+      К разделу
+    </a>
+  )}
 </aside>
+
+<style>
+  /* Keep notes secondary without a surface, border box or card treatment. */
+  .content-footnote {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.6rem;
+    margin: 0;
+    padding-block-start: 0.85rem;
+    border-block-start: 1px solid var(--content-block-border);
+    color: var(--content-block-caption);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  /* Permit long references and prose to shrink inside the note row. */
+  .footnote-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep the native return link discoverable without requiring a script. */
+  .footnote-backlink {
+    flex-shrink: 0;
+    color: var(--content-block-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+</style>

@@ -45,6 +45,7 @@ const attributes = {
     'content-media-thumbnail': thumbnail,
     'content-media-service': serviceCrop,
   }]}
+  data-image-state="loading"
   style={{
     '--media-ratio': `${image.width} / ${image.height}`,
     '--media-position': `${focalPoint.x}% ${focalPoint.y}%`,
@@ -54,16 +55,38 @@ const attributes = {
   {original
     ? <Image src={original} widths={widths} {...attributes} />
     : <img src={image.src} {...attributes} />}
+  <p class="content-media-error" role="status">
+    Изображение недоступно
+  </p>
 </div>
 
 <style>
   /* Intrinsic space keeps article media stable while the resource loads. */
   .content-media-frame {
+    position: relative;
     min-width: 0;
+    width: 100%;
     aspect-ratio: var(--media-ratio);
     overflow: hidden;
     background: var(--color-base-200);
     border-radius: var(--radius-field);
+  }
+
+  /* Keep the failed-resource message hidden until the image emits an error. */
+  .content-media-error {
+    position: absolute;
+    inset: 50% 1rem auto;
+    display: none;
+    margin: 0;
+    transform: translateY(-50%);
+    color: var(--content-block-caption);
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  /* Expose a useful fallback while preserving the frame's intrinsic height. */
+  .content-media-frame[data-image-state='error'] .content-media-error {
+    display: block;
   }
 
   /* Preserve the complete subject on article and gallery views. */
@@ -101,3 +124,21 @@ const attributes = {
     }
   }
 </style>
+
+<script>
+  // Reflect native image events so failed media gets a readable fallback.
+  const frames = document.querySelectorAll<HTMLElement>('[data-image-state]');
+
+  frames.forEach((frame) => {
+    const image = frame.querySelector('img');
+    if (!image) return;
+    const update = () => {
+      frame.dataset.imageState = image.naturalWidth > 0 ? 'loaded' : 'error';
+    };
+    image.addEventListener('load', update, { once: true });
+    image.addEventListener('error', () => {
+      frame.dataset.imageState = 'error';
+    }, { once: true });
+    if (image.complete) update();
+  });
+</script>

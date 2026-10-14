@@ -304,6 +304,23 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
       });
 
       dialog.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (event.key === 'Tab') {
+          const focusable = Array.from(dialog.querySelectorAll<HTMLElement>(
+            'button:not([hidden]), [href], [tabindex]:not([tabindex="-1"])',
+          )).filter((element) => !element.hasAttribute('disabled'));
+          if (focusable.length > 0) {
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault();
+              last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault();
+              first.focus();
+            }
+          }
+        }
+
         if (event.key === 'ArrowLeft') {
           event.preventDefault();
           showImage(currentIndex - 1);
@@ -323,9 +340,18 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   .gallery-main
   {
     display: block;
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    background: var(--color-base-100);
     color: inherit;
     cursor: zoom-in;
     text-decoration: none;
+  }
+
+  /* Keep the gallery figure aligned with the enclosing local surface. */
+  .content-gallery
+  {
+    min-width: 0;
+    margin: 0;
   }
 
   /* Make the main image fill the reading column without cropping it. */
@@ -337,19 +363,23 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   /* Put all choices in one horizontally scrollable thumbnail strip. */
   .gallery-thumbnails
   {
-    display: block;
+    display: flex;
+    gap: 0.5rem;
     margin-top: 0.75rem;
-    padding-bottom: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid var(--content-block-border);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
     overflow-x: auto;
-    white-space: nowrap;
+    scrollbar-width: thin;
   }
 
   /* Keep each thumbnail compact while preserving its keyboard target. */
   .gallery-thumbnail
   {
-    display: inline-block;
+    display: block;
+    flex: 0 0 clamp(5rem, 16vw, 8rem);
     width: clamp(5rem, 16vw, 8rem);
-    margin-right: 0.5rem;
     vertical-align: top;
     border: 2px solid transparent;
     border-radius: var(--radius-field);
@@ -362,6 +392,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   .gallery-thumbnail[aria-current="true"]
   {
     border-color: var(--color-primary);
+    background: var(--color-base-100);
   }
 
   /* Let thumbnail images use the full compact tile width. */
@@ -671,11 +702,28 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
     {
       transition: none;
     }
+
+    .gallery-image-slide-left,
+    .gallery-image-slide-right
+    {
+      animation: none;
+    }
   }
 
   /* Keep controls beside the image on narrow screens. */
   @media (max-width: 40rem)
   {
+    .gallery-thumbnails
+    {
+      scroll-snap-type: x proximity;
+      overscroll-behavior-inline: contain;
+    }
+
+    .gallery-thumbnail
+    {
+      scroll-snap-align: start;
+    }
+
     .gallery-lightbox
     {
       padding-right: 0.5rem;

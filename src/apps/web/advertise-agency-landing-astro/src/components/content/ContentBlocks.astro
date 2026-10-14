@@ -94,6 +94,16 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
     scroll-margin-top: var(--site-header-clearance, 5rem);
   }
 
+  /* Briefly identify a fragment target after returning from a footnote. */
+  .content-block:target {
+    outline: 2px solid color-mix(
+      in srgb,
+      var(--content-block-accent) 55%,
+      transparent
+    );
+    outline-offset: 0.5rem;
+  }
+
   /* Keep demo disclosure distinct from approved narrative and media. */
   .block-demo-notice {
     padding-left: 1rem;

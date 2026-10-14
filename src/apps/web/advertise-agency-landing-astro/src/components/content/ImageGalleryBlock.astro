@@ -11,16 +11,37 @@ interface Props {
 const { block, priority = false } = Astro.props as Props;
 ---
 
-{/* The gallery keeps link fallbacks and enhances them with a modal view. */}
+{/* Separate the gallery from neighboring blocks as a thematic group. */}
+<hr class="gallery-divider" />
 <div class="image-gallery-block">
   <ImageGallery block={block} priority={priority} />
 </div>
+<hr class="gallery-divider" />
 
 <style>
-  /* Reduce inline image height proportionally without cropping its subject. */
+  /* Group gallery media on its permitted local surface. */
   .image-gallery-block {
-    width: 75%;
+    width: min(75%, 100%);
     min-width: 0;
+    margin-block: 1rem;
     margin-inline: auto;
+    padding: clamp(0.75rem, 2vw, 1.25rem);
+    background: var(--color-base-200);
+  }
+
+  /* Mark the gallery boundaries without creating a card-like container. */
+  .gallery-divider {
+    width: 90%;
+    margin-block: 0;
+    margin-inline: auto;
+    border: 0;
+    border-block-start: 1px solid var(--content-block-border);
+  }
+
+  /* Let the gallery use the full reading width on narrow screens. */
+  @media (max-width: 48rem) {
+    .image-gallery-block {
+      width: 100%;
+    }
   }
 </style>

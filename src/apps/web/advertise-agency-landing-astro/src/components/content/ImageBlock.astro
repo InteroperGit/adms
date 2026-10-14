@@ -16,3 +16,20 @@ const { block, priority = false, serviceCrop = false } = Astro.props as Props;
   <ContentImage image={block} priority={priority} serviceCrop={serviceCrop} />
   {block.caption && <figcaption>{block.caption}</figcaption>}
 </figure>
+
+<style>
+  /* Keep a standalone image as one responsive media group in the stream. */
+  .content-image {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep captions readable below the reserved media frame. */
+  figcaption {
+    margin-block-start: var(--content-block-caption-gap);
+    color: var(--content-block-caption);
+    line-height: 1.5;
+  }
+</style>
