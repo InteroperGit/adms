@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "files": [
+    {
+      "path": "articles/projects/1.mdx",
+      "kind": "mdx",
+      "output": "articles/projects/1.mdx"
+    },
+    {
+      "path": "articles/services/starter-service.mdx",
+      "kind": "mdx",
+      "output": "articles/services/starter-service.mdx"
+    },
+    {
+      "path": "json/about-carousel.json",
+      "kind": "json",
+      "output": "about-carousel.json"
+    },
+    {
+      "path": "json/about.json",
+      "kind": "json",
+      "output": "about.json"
+    },
+    {
+      "path": "json/business-solutions.json",
+      "kind": "json",
+      "output": "business-solutions.json"
+    },
+    {
+      "path": "json/faq.json",
+      "kind": "json",
+      "output": "faq.json"
+    },
+    {
+      "path": "json/icons.json",
+      "kind": "json",
+      "output": "icons.json"
+    },
+    {
+      "path": "json/introduction.json",
+      "kind": "json",
+      "output": "introduction.json"
+    },
+    {
+      "path": "json/legal/privacy-policy.json",
+      "kind": "json",
+      "output": "legal/privacy-policy.json"
+    },
+    {
+      "path": "json/legal/terms-of-use.json",
+      "kind": "json",
+      "output": "legal/terms-of-use.json"
+    },
+    {
+      "path": "json/offers.json",
+      "kind": "json",
+      "output": "offers.json"
+    },
+    {
+      "path": "json/order-inquiry.json",
+      "kind": "json",
+      "output": "order-inquiry.json"
+    },
+    {
+      "path": "json/ordering-process.json",
+      "kind": "json",
+      "output": "ordering-process.json"
+    },
+    {
+      "path": "json/pricing.json",
+      "kind": "json",
+      "output": "pricing.json"
+    },
+    {
+      "path": "json/production-and-guarantees.json",
+      "kind": "json",
+      "output": "production-and-guarantees.json"
+    },
+    {
+      "path": "json/project-catalog.json",
+      "kind": "json",
+      "output": "project-catalog.json"
+    },
+    {
+      "path": "json/project-categories.json",
+      "kind": "json",
+      "output": "project-categories.json"
+    },
+    {
+      "path": "json/projects.json",
+      "kind": "json",
+      "output": "projects.json"
+    },
+    {
+      "path": "json/reviews.json",
+      "kind": "json",
+      "output": "reviews.json"
+    },
+    {
+      "path": "json/services.json",
+      "kind": "json",
+      "output": "services.json"
+    },
+    {
+      "path": "json/site.json",
+      "kind": "json",
+      "output": "site.json"
+    }
+  ],
+  "placeholders": {
+    "text": "TEST_REPLACE_WITH_APPROVED_TEXT",
+    "slug": "test-replace-with-slug",
+    "media": "/media/test-approved-file.webp",
+    "source": "TEST_SOURCE_REFERENCE"
+  }
+}

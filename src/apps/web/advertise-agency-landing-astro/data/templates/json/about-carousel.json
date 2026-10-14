@@ -1,0 +1,27 @@
+{
+  "options": {
+    "enabled": false,
+    "autoplay": false,
+    "intervalMs": 1,
+    "manualNavigation": false,
+    "arrows": false,
+    "circles": false,
+    "descriptions": false,
+    "buttons": false,
+    "animation": false,
+    "layout": "TEST_LAYOUT",
+    "imageFit": "TEST_IMAGEFIT",
+    "aspectRatio": 1,
+    "eagerFirst": false
+  },
+  "items": [
+    {
+      "id": 1,
+      "enabled": false,
+      "image": "TEST_IMAGE",
+      "imageAlt": "TEST_IMAGEALT",
+      "imageWidth": 1,
+      "imageHeight": 1
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "heading": "TEST_HEADING",
+  "introduction": "TEST_INTRODUCTION",
+  "copyApproved": false,
+  "items": [
+    {
+      "id": "TEST_ID",
+      "name": "TEST_NAME",
+      "description": "TEST_DESCRIPTION",
+      "claimSource": "TEST_CLAIMSOURCE",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "https://example.test/test-asset",
+        "alt": "TEST_ALT",
+        "width": 1,
+        "height": 1,
+        "source": "TEST_SOURCE",
+        "projectContext": "TEST_PROJECTCONTEXT",
+        "publicationPermission": "TEST_PUBLICATIONPERMISSION",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "mobileFocalPoint": {
+          "x": 1,
+          "y": 1
+        }
+      },
+      "href": "/test-destination",
+      "article": {
+        "format": "json",
+        "entry": "TEST_ENTRY"
+      }
+    }
+  ],
+  "demoMode": false,
+  "demoNotice": "TEST_DEMONOTICE"
+}

@@ -1,0 +1,53 @@
+{
+  "title": "TEST_TITLE",
+  "subtitle": "TEST_SUBTITLE",
+  "requiredNote": "TEST_REQUIREDNOTE",
+  "privacyLabel": "TEST_PRIVACYLABEL",
+  "submitLabel": "TEST_SUBMITLABEL",
+  "consent": {
+    "approved": false,
+    "label": "TEST_LABEL"
+  },
+  "submission": {
+    "enabled": false,
+    "endpoint": "TEST_ENDPOINT",
+    "timeoutMs": 1
+  },
+  "fields": {
+    "name": {
+      "label": "TEST_LABEL",
+      "hint": "TEST_HINT",
+      "required": false,
+      "maxLength": 1
+    },
+    "email": {
+      "label": "TEST_LABEL",
+      "hint": "TEST_HINT",
+      "required": false,
+      "maxLength": 1
+    },
+    "phone": {
+      "label": "TEST_LABEL",
+      "hint": "TEST_HINT",
+      "required": false,
+      "maxLength": 1
+    },
+    "message": {
+      "label": "TEST_LABEL",
+      "hint": "TEST_HINT",
+      "required": false,
+      "maxLength": 1
+    }
+  },
+  "feedback": {
+    "unavailable": "TEST_UNAVAILABLE",
+    "noJavaScript": "TEST_NOJAVASCRIPT",
+    "invalid": "TEST_INVALID",
+    "sending": "TEST_SENDING",
+    "success": "TEST_SUCCESS",
+    "failure": "TEST_FAILURE",
+    "required": "TEST_REQUIRED",
+    "email": "test@example.com",
+    "tooLong": "TEST_TOOLONG"
+  }
+}

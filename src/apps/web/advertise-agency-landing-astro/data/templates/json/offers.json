@@ -1,0 +1,33 @@
+{
+  "enabled": false,
+  "autoplay": false,
+  "intervalMs": 1,
+  "items": [
+    {
+      "id": 1,
+      "enabled": false,
+      "description": "TEST_DESCRIPTION",
+      "presentation": {
+        "fontSizeRem": 1,
+        "textColor": "TEST_TEXTCOLOR",
+        "horizontal": "TEST_HORIZONTAL",
+        "vertical": "TEST_VERTICAL",
+        "overlay": "TEST_OVERLAY",
+        "focalPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "mobileFocalPoint": {
+          "x": 1,
+          "y": 1
+        }
+      },
+      "image": "TEST_IMAGE",
+      "imageAlt": "TEST_IMAGEALT",
+      "imageWidth": 1,
+      "imageHeight": 1,
+      "linkLabel": "TEST_LINKLABEL",
+      "href": "/test-destination"
+    }
+  ]
+}

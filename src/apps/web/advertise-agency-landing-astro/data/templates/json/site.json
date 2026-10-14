@@ -1,0 +1,52 @@
+{
+  "title": "TEST_TITLE",
+  "description": "TEST_DESCRIPTION",
+  "logoText": "TEST_LOGOTEXT",
+  "phone": "TEST_PHONE",
+  "email": "test@example.com",
+  "address": "TEST_ADDRESS",
+  "workHours": "TEST_WORKHOURS",
+  "workHoursWeekend": "TEST_WORKHOURSWEEKEND",
+  "mapEnabled": false,
+  "mapFallback": {
+    "src": "https://example.test/test-asset",
+    "alt": "TEST_ALT",
+    "width": 1,
+    "height": 1
+  },
+  "mapSrc": "https://example.test/test-asset",
+  "menu": [
+    {
+      "label": "TEST_LABEL",
+      "href": "/test-destination"
+    }
+  ],
+  "legal": [
+    {
+      "label": "TEST_LABEL",
+      "href": "/test-destination"
+    }
+  ],
+  "footer": {
+    "description": "TEST_DESCRIPTION",
+    "copyright": "TEST_COPYRIGHT"
+  },
+  "sections": {
+    "about": {
+      "title": "TEST_TITLE"
+    },
+    "projects": {
+      "title": "TEST_TITLE",
+      "subtitle": "TEST_SUBTITLE"
+    },
+    "reviews": {
+      "title": "TEST_TITLE",
+      "subtitle": "TEST_SUBTITLE"
+    },
+    "contacts": {
+      "panelTitle": "TEST_PANELTITLE",
+      "title": "TEST_TITLE",
+      "subtitle": "TEST_SUBTITLE"
+    }
+  }
+}

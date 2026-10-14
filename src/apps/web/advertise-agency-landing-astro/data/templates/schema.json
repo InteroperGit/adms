@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0.0",
+  "name": "base-json-content",
+  "requiredManifestFields": ["schemaVersion", "files"],
+  "supportedKinds": ["json", "mdx"],
+  "mediaRule": "root-relative-or-https",
+  "articles": "one-project-and-one-service-starter"
+}

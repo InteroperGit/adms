@@ -1,0 +1,26 @@
+{
+  "demoMode": false,
+  "demoNotice": "TEST_DEMONOTICE",
+  "heading": "TEST_HEADING",
+  "inquiryLabel": "TEST_INQUIRYLABEL",
+  "inquiryHref": "/test-destination",
+  "approval": {
+    "state": "TEST_STATE",
+    "source": null,
+    "approvedBy": null
+  },
+  "items": [
+    {
+      "id": "TEST_ID",
+      "question": "TEST_QUESTION",
+      "answer": [
+        "TEST_ANSWER"
+      ],
+      "approval": {
+        "state": "TEST_STATE",
+        "source": null,
+        "approvedBy": null
+      }
+    }
+  ]
+}

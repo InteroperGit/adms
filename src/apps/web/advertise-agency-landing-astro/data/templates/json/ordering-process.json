@@ -1,0 +1,25 @@
+{
+  "demoMode": false,
+  "demoNotice": "TEST_DEMONOTICE",
+  "heading": "TEST_HEADING",
+  "introduction": "TEST_INTRODUCTION",
+  "copyApproved": false,
+  "approvalSource": null,
+  "pendingInputs": [
+    "TEST_PENDINGINPUTS"
+  ],
+  "steps": [
+    {
+      "id": "TEST_ID",
+      "icon": "TEST_ICON",
+      "title": "TEST_TITLE",
+      "description": "TEST_DESCRIPTION",
+      "customerProvides": [
+        "TEST_CUSTOMERPROVIDES"
+      ],
+      "agencyHandles": [
+        "TEST_AGENCYHANDLES"
+      ]
+    }
+  ]
+}

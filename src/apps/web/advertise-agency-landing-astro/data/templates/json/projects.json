@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "category": "TEST_CATEGORY",
+    "status": "demo",
+    "notice": "TEST_NOTICE",
+    "title": "TEST_TITLE",
+    "client": "TEST_CLIENT",
+    "attribution": "TEST_ATTRIBUTION",
+    "description": "TEST_DESCRIPTION",
+    "evidence": {
+      "copy": null,
+      "specifications": null,
+      "timing": null,
+      "outcome": null,
+      "attribution": null
+    },
+    "article": {
+      "format": "json",
+      "entry": "TEST_ENTRY"
+    }
+  }
+]

@@ -10,6 +10,8 @@
     "check": "astro check && node scripts/check-code-style.mjs",
     "check:style": "node scripts/check-code-style.mjs",
     "verify:content": "node scripts/verify-content-invariants.mjs",
+    "generate:content": "node scripts/generate-content-catalog.mjs",
+    "test:content-catalog": "node scripts/test-content-catalog.mjs",
     "test:content-blocks": "node scripts/test-content-block-fixtures.mjs",
     "test:service-articles": "node scripts/test-service-articles.mjs",
     "test:project-articles": "node scripts/test-project-articles.mjs",

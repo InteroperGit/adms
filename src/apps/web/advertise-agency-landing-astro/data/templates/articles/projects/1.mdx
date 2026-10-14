@@ -1,0 +1,118 @@
+---
+title: Fixture
+description: Fixture
+approved: false
+---
+
+<ParagraphBlock block='{
+  "type": "paragraph",
+  "id": "intro",
+  "paragraphs": [
+    "TEST_PROJECT_PARAGRAPH"
+  ]
+}' />
+
+<OrderedListBlock block='{
+  "type": "ordered-list",
+  "id": "steps",
+  "heading": "Р­С‚Р°РїС‹",
+  "items": [
+    "РџРѕРґРіРѕС‚РѕРІРєР°",
+    "РџСЂРѕРёР·РІРѕРґСЃС‚РІРѕ"
+  ]
+}' />
+
+<UnorderedListBlock block='{
+  "type": "unordered-list",
+  "id": "materials",
+  "items": [
+    "РђРєСЂРёР»",
+    "РњРµС‚Р°Р»Р»"
+  ]
+}' />
+
+<TableBlock block='{
+  "type": "table",
+  "id": "specs",
+  "columns": [
+    {
+      "key": "name",
+      "label": "TEST_PROJECT_NAME"
+    }
+  ],
+  "rows": [
+    {
+      "cells": [
+        "TEST_PROJECT_VALUE"
+      ]
+    }
+  ]
+}' />
+
+<ChartBlock block='{
+  "type": "chart",
+  "id": "results",
+  "chartType": "bar",
+  "series": [
+    {
+      "name": "TEST_PROJECT_SERIES",
+      "points": [
+        {
+          "label": "A",
+          "value": 1
+        }
+      ]
+    }
+  ]
+}' />
+
+<ImageBlock block='{
+  "type": "image",
+  "id": "hero",
+  "src": "/src/assets/services/svetovye-bukvy-demo.png",
+  "alt": "TEST_PROJECT_IMAGE",
+  "width": 1200,
+  "height": 900
+}' />
+
+<ImageGalleryBlock block='{
+  "type": "image-gallery",
+  "id": "gallery",
+  "images": [
+    {
+      "src": "/src/assets/services/svetovye-bukvy-demo.png",
+      "alt": "TEST_PROJECT_GALLERY_ONE",
+      "width": 1200,
+      "height": 900,
+      "caption": "TEST_PROJECT_CAPTION_ONE"
+    },
+    {
+      "src": "/src/assets/services/montazh-demo.png",
+      "alt": "TEST_PROJECT_GALLERY_TWO",
+      "width": 1200,
+      "height": 900,
+      "caption": "TEST_PROJECT_CAPTION_TWO"
+    }
+  ]
+}' />
+
+<OrderFormBlock block='{
+  "type": "order-form",
+  "id": "contact",
+  "formId": "led-letters",
+  "context": "project",
+  "category": "led-letters"
+}' />
+
+<QuoteBlock block='{
+  "type": "quote",
+  "id": "testimonial",
+  "text": "TEST_PROJECT_QUOTE"
+}' />
+
+<FootnoteBlock block='{
+  "type": "footnote",
+  "id": "source-note",
+  "text": "TEST_PROJECT_NOTE",
+  "targetId": "intro"
+}' />

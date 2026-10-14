@@ -1,0 +1,77 @@
+{
+  "demoMode": false,
+  "demoNotice": "TEST_DEMONOTICE",
+  "heading": "TEST_HEADING",
+  "introduction": "TEST_INTRODUCTION",
+  "guidance": [
+    {
+      "title": "TEST_TITLE",
+      "description": "TEST_DESCRIPTION",
+      "icon": "TEST_ICON"
+    }
+  ],
+  "copyApproved": false,
+  "approvalSource": null,
+  "pendingInputs": [
+    "TEST_PENDINGINPUTS"
+  ],
+  "productionOperations": [
+    {
+      "id": "TEST_ID",
+      "title": "TEST_TITLE",
+      "description": "TEST_DESCRIPTION",
+      "evidence": "TEST_EVIDENCE",
+      "approval": "TEST_APPROVAL"
+    }
+  ],
+  "materials": [
+    {
+      "id": "TEST_ID",
+      "title": "TEST_TITLE",
+      "description": "TEST_DESCRIPTION",
+      "evidence": "TEST_EVIDENCE",
+      "approval": "TEST_APPROVAL"
+    }
+  ],
+  "qualityChecks": [
+    {
+      "id": "TEST_ID",
+      "title": "TEST_TITLE",
+      "description": "TEST_DESCRIPTION",
+      "evidence": "TEST_EVIDENCE",
+      "approval": "TEST_APPROVAL"
+    }
+  ],
+  "photos": [],
+  "warrantyTerms": [
+    {
+      "id": "TEST_ID",
+      "title": "TEST_TITLE",
+      "coverage": "TEST_COVERAGE",
+      "duration": "TEST_DURATION",
+      "starts": "TEST_STARTS",
+      "conditions": [
+        "TEST_CONDITIONS"
+      ],
+      "exclusions": [
+        "TEST_EXCLUSIONS"
+      ],
+      "claimRoute": "TEST_CLAIMROUTE",
+      "sourceType": "TEST_SOURCETYPE",
+      "source": "TEST_SOURCE",
+      "approval": "TEST_APPROVAL"
+    }
+  ],
+  "maintenance": {
+    "scope": [
+      "TEST_SCOPE"
+    ],
+    "customerResponsibilities": [
+      "TEST_CUSTOMERRESPONSIBILITIES"
+    ],
+    "pricing": "TEST_PRICING",
+    "requestRoute": "TEST_REQUESTROUTE",
+    "approval": "TEST_APPROVAL"
+  },
+  "inquiryHref": "/test-destination"
+}
