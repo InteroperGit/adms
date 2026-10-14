@@ -1,0 +1,33 @@
+name: Quality
+
+on:
+  push:
+    paths:
+      - 'src/apps/web/advertise-agency-landing-astro/**'
+  pull_request:
+    paths:
+      - 'src/apps/web/advertise-agency-landing-astro/**'
+
+defaults:
+  run:
+    working-directory: src/apps/web/advertise-agency-landing-astro
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.7.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: pnpm
+          cache-dependency-path: |
+            src/apps/web/advertise-agency-landing-astro/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm verify:boundaries
+      - run: pnpm verify:content
+      - run: pnpm check
+      - run: pnpm build

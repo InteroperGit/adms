@@ -10,6 +10,7 @@
     "check": "astro check && node scripts/check-code-style.mjs",
     "check:style": "node scripts/check-code-style.mjs",
     "verify:content": "node scripts/verify-content-invariants.mjs",
+    "verify:boundaries": "node scripts/verify-content-boundaries.mjs",
     "generate:content": "node scripts/generate-content-catalog.mjs",
     "test:content-catalog": "node scripts/test-content-catalog.mjs",
     "test:content-blocks": "node scripts/test-content-block-fixtures.mjs",

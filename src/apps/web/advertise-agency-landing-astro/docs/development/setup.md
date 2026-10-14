@@ -17,8 +17,17 @@ The second command runs `astro dev --background`, as required by `AGENTS.md`. Th
 | `pnpm astro dev logs` | Read development logs |
 | `pnpm astro dev stop` | Stop the background server |
 | `pnpm check` | Check Astro and TypeScript files |
+| `pnpm verify:boundaries` | Check runtime-content and template boundaries |
+| `pnpm verify:content` | Check structured content invariants |
 | `pnpm build` | Validate imported content and generate `dist/` |
 | `pnpm preview` | Preview the production build locally |
 | `pnpm astro --help` | Show Astro CLI help |
 
 Run `pnpm check` and `pnpm build` after code or content changes. Build success does not verify browser interaction, appearance, accessibility, or the availability of remote media; review those separately when affected.
+
+Runtime content is delivered separately from the repository. For a new site,
+generate a clean catalog with
+`node scripts/generate-content-catalog.mjs --source data/templates --output
+<content-directory>`. The generator refuses a non-empty destination unless
+`--force` is supplied. Keep a file hash manifest before any deliberate
+replacement and run `pnpm verify:boundaries` afterward.

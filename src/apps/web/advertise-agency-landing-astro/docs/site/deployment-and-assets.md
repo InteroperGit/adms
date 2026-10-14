@@ -16,3 +16,12 @@ availability. Current demonstration Picsum URLs return HTTP 403 in the
 deployment check and must be replaced or approved before release.
 
 See [Astro documentation](https://docs.astro.build), the task-specific guides in [AGENTS.md](../../AGENTS.md), and the [documentation index](../../README.md).
+
+## Release rollback
+
+Run `pnpm verify:boundaries`, `pnpm verify:content`, `pnpm check`, and `pnpm
+build` followed by `pnpm verify:external` before deployment. Keep the previous
+generated catalog and its SHA-256 manifest. To roll back, deploy the previous
+`dist/` and catalog together, then rerun the checks. Do not restore runtime
+content by committing it to Git or by using a forced generator run without a
+verified backup.

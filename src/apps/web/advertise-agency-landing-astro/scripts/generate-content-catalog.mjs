@@ -85,6 +85,7 @@ async function readManifest(sourceRoot) {
     fail('manifest.files must contain at least one JSON file');
   }
   const seen = new Set();
+  const outputs = new Set();
   const entries = manifest.files.map((entry, index) => {
     if (!entry || !['json', 'mdx'].includes(entry.kind)) {
       fail(`files[${index}].kind must be json or mdx`);
@@ -94,7 +95,12 @@ async function readManifest(sourceRoot) {
       entry.output ?? entry.path, `files[${index}].output`,
     );
     if (seen.has(path)) fail(`duplicate manifest path: ${path}`);
+    if (outputs.has(output)) fail(`duplicate manifest output: ${output}`);
+    if (output === 'manifest.json') {
+      fail('manifest output may not replace generated manifest.json');
+    }
     seen.add(path);
+    outputs.add(output);
     return { kind: entry.kind, output, path };
   }).sort((left, right) => left.path.localeCompare(right.path));
   return { entries };
@@ -128,6 +134,10 @@ async function readEntry(sourceRoot, entry) {
 export async function generateContentCatalog(source, output, options = {}) {
   const sourceRoot = resolve(source);
   const outputRoot = resolve(output);
+  if (sourceRoot === outputRoot || within(sourceRoot, outputRoot)
+    || within(outputRoot, sourceRoot)) {
+    fail('output must be outside the template source directory');
+  }
   if (!options.force) {
     try {
       const existing = await readdir(outputRoot, { recursive: true });
@@ -166,6 +176,7 @@ export async function generateContentCatalog(source, output, options = {}) {
   }
   const backupRoot = `${outputRoot}.backup-${process.pid}`;
   await rm(backupRoot, { recursive: true, force: true });
+  await mkdir(dirname(outputRoot), { recursive: true });
   let movedExisting = false;
   try {
     await rename(outputRoot, backupRoot);

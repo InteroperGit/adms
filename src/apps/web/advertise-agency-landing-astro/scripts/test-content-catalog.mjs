@@ -59,6 +59,27 @@ try {
   assert.equal(await readFile(join(output, 'manifest.json'), 'utf8'),
     firstManifest);
 
+  await expectFailure(
+    () => generateContentCatalog(complete, complete),
+    'outside the template source directory',
+  );
+
+  const duplicateOutput = join(workspace, 'duplicate-output');
+  const duplicateManifest = {
+    ...manifest,
+    files: manifest.files.map(entry => ({ ...entry, output: 'same.json' })),
+  };
+  await writeFile(join(complete, 'manifest.json'), `${JSON.stringify(
+    duplicateManifest, null, 2,
+  )}\n`);
+  await expectFailure(
+    () => generateContentCatalog(complete, duplicateOutput),
+    'duplicate manifest output',
+  );
+  await writeFile(join(complete, 'manifest.json'), `${JSON.stringify(
+    manifest, null, 2,
+  )}\n`);
+
   const incomplete = join(workspace, 'incomplete');
   await mkdir(incomplete, { recursive: true });
   await writeFile(join(incomplete, 'manifest.json'), JSON.stringify(manifest));
