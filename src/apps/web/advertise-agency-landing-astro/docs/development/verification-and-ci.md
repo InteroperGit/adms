@@ -10,7 +10,10 @@ templates for unsafe values. The check command uses the installed
 TypeScript is kept on version 6 because `@astrojs/check` 0.9.10 does not
 support TypeScript 7. See the [Astro TypeScript guide](https://docs.astro.build/en/guides/typescript/#type-checking).
 
-No repository CI configuration was found in the repository root or in its GitHub, GitLab, Buildkite, Jenkins, or Azure Pipelines configuration locations. CI integration remains to be added at repository level. Configure a job for pull requests and pushes that affect `src/apps/web/advertise-agency-landing-astro/**`, provision Node.js 22.12 or newer and pnpm 10.7.0, and run the following commands with `src/apps/web/advertise-agency-landing-astro` as its working directory:
+The repository workflow at `.github/workflows/quality.yml` runs on pull
+requests and pushes that affect
+`src/apps/web/advertise-agency-landing-astro/**`. It provisions Node.js 22.12
+and pnpm 10.7.0, then runs the following commands from this application:
 
 ```sh
 pnpm install --frozen-lockfile
@@ -20,9 +23,9 @@ pnpm check
 pnpm build
 ```
 
-Each command must fail the job on a nonzero exit status. The workflow is
-`.github/workflows/quality.yml`; its path is included in the application
-trigger so edits to the job itself are verified. Runtime content is supplied
+Each command fails the job on a nonzero exit status. The workflow path is
+included in the application trigger so edits to the job itself are verified.
+Runtime content is supplied
 outside Git and initialized from `data/templates/` with an explicit generator
 command. Never use `--force` against an existing content reserve without a
 backup and a recorded hash manifest.

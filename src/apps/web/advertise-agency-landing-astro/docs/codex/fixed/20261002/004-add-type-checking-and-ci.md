@@ -1,6 +1,6 @@
 # Task 4 — Add type checking and automated verification
 
-**Status:** Completed (CI integration documented; no existing workflow found)
+**Status:** Completed (CI integration available in `.github/workflows/quality.yml`)
 
 Read the [shared implementation instructions and coordination plan](../../plan/20261001_222426_plan.md) before starting.
 
@@ -27,4 +27,8 @@ Add a `check` script using `astro check` and its required dependencies. Inspect 
 - `pnpm check` passed for 35 files with zero errors, warnings, or hints; the primary agent independently confirmed this result.
 - `pnpm build` passed and generated six pages.
 - `git diff --check` passed.
-- No existing repository CI configuration was found. README documents the exact remaining job setup, working directory, runtime requirements, trigger paths, and frozen install/check/build commands. CI automation has not been added.
+- `.github/workflows/quality.yml` runs the boundary, content, check, and build
+  gates on pushes and pull requests affecting this application.
+- Runtime content remains an external build input. A clean checkout without
+  that input cannot run `pnpm check` or `pnpm build`; this is an intentional
+  content-reserve boundary rather than an interactive dependency install.
