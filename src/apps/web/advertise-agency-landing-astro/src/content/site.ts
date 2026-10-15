@@ -7,8 +7,5 @@ import { visibleServices } from './services';
 export const site: SiteConfig = {
   ...siteData,
   menu: siteData.menu
-    .filter((item) => item.href !== '/#services' || visibleServices.length > 0)
-    .map((item) => item.href === '/#projects'
-      ? { ...item, href: '/projects/' }
-      : item),
+    .filter((item) => item.href !== '/#services' || visibleServices.length > 0),
 };

@@ -35,6 +35,12 @@
   --radius-field: 0.5rem;
   --radius-box: 1rem;
 }
+
+/* Animate native anchor navigation on the document scroll container. */
+html {
+  scroll-behavior: smooth;
+}
+
 :root, [data-theme='light'] {
   color-scheme: light;
   --color-primary: #b2380a;
