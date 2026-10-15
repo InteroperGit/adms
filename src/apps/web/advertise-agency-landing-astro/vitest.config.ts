@@ -18,7 +18,11 @@ export default getViteConfig({
     server: { deps: { inline: ['astro'] } },
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
-    include: ['tests/**/*.{test,spec}.{ts,tsx}'],
+    // Discover both legacy suites and tests colocated with source modules.
+    include: [
+      'tests/**/*.{test,spec}.{ts,tsx}',
+      'src/**/*.{test,spec}.{ts,tsx}',
+    ],
     exclude: ['node_modules', 'dist', 'output'],
     coverage: {
       provider: 'v8',
@@ -36,6 +40,8 @@ export default getViteConfig({
         'src/components/forms/order-inquiry.ts',
         'src/components/ui/{Button,Section,Breadcrumbs,ContactInfo}.astro',
         'src/components/cards/*.astro',
+        // Keep every component in coverage as colocated tests are migrated.
+        'src/components/**/*.{astro,ts,tsx}',
       ],
     },
   },
