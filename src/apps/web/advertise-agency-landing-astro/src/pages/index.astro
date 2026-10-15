@@ -48,118 +48,10 @@ import OrderInquiry from '@/components/sections/OrderInquiry.astro';
 </Layout>
 
 <script>
-  // Enhance only this homepage's direct sections after its HTML is parsed.
-  // Server markup stays visible if JavaScript or observation is unavailable.
-  const container = document.querySelector('.homepage-sections');
-  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  import { initializeHomepageReveal } from '../scripts/homepage-reveal';
 
-  if (container && 'IntersectionObserver' in window && !motion.matches) {
-    const sections = [...container.querySelectorAll<HTMLElement>(
-      ':scope > section',
-    )];
-    const pending = new Set<HTMLElement>();
-
-    // Release both observation and navigation hooks when nothing is hidden.
-    const cleanup = () => {
-      observer.disconnect();
-      document.removeEventListener('focusin', onFocus, true);
-      document.removeEventListener('click', onClick, true);
-      window.removeEventListener('hashchange', onHash);
-      window.removeEventListener('pageshow', onPageShow);
-      motion.removeEventListener('change', onMotion);
-    };
-
-    // Navigation and focus bypass the fade so targets are immediately usable.
-    const reveal = (section: HTMLElement, immediate = false) => {
-      if (immediate) {
-        section.removeAttribute('data-reveal-state');
-      }
-      if (!pending.delete(section)) return;
-      if (!immediate) {
-        section.dataset.revealState = 'revealed';
-      }
-      observer.unobserve(section);
-      if (!pending.size) cleanup();
-    };
-
-    // Find the owning top-level section without modifying nested sections.
-    const revealTarget = (target: EventTarget | null) => {
-      if (!(target instanceof Node)) return;
-      const section = sections.find(item => item.contains(target));
-      if (section) reveal(section, true);
-    };
-
-    // Decode IDs rather than treating arbitrary fragments as CSS selectors.
-    const hashTarget = (hash: string) => {
-      try {
-        return document.getElementById(decodeURIComponent(hash.slice(1)));
-      } catch {
-        return null;
-      }
-    };
-    const onHash = () => revealTarget(hashTarget(window.location.hash));
-    const onFocus = (event: FocusEvent) => revealTarget(event.target);
-    const onClick = (event: MouseEvent) => {
-      if (!(event.target instanceof Element)) return;
-      const link = event.target.closest<HTMLAnchorElement>('a[href]');
-      if (!link) return;
-      const url = new URL(link.href, window.location.href);
-      if (
-        url.origin === window.location.origin &&
-        url.pathname === window.location.pathname &&
-        url.search === window.location.search
-      ) {
-        revealTarget(hashTarget(url.hash));
-      }
-    };
-
-    // Checking edges instead of a visible fraction also supports tall bands.
-    const inViewport = (section: HTMLElement) => {
-      const bounds = section.getBoundingClientRect();
-      return bounds.top <= window.innerHeight && bounds.bottom >= 0;
-    };
-    const onPageShow = () => {
-      for (const section of pending) {
-        if (inViewport(section)) reveal(section, true);
-      }
-    };
-    const onMotion = () => {
-      if (!motion.matches) return;
-      for (const section of pending) reveal(section, true);
-    };
-
-    // One observer reveals just before entry, then stops watching each band.
-    // A zero threshold avoids waiting for a large fraction of tall content.
-    const observer = new IntersectionObserver(entries => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) reveal(entry.target as HTMLElement);
-      }
-    }, { threshold: 0, rootMargin: '0px 0px 80px 0px' });
-
-    // Only hide offscreen sections; initial content and direct hash/focus
-    // targets never acquire a hidden state or flash during initialization.
-    const initialTarget = hashTarget(window.location.hash);
-    for (const section of sections) {
-      if (
-        inViewport(section) ||
-        (initialTarget && section.contains(initialTarget)) ||
-        section.contains(document.activeElement)
-      ) continue;
-      pending.add(section);
-      section.dataset.revealState = 'pending';
-      observer.observe(section);
-    }
-
-    if (pending.size) {
-      document.addEventListener('focusin', onFocus, true);
-      document.addEventListener('click', onClick, true);
-      window.addEventListener('hashchange', onHash);
-      window.addEventListener('pageshow', onPageShow);
-      motion.addEventListener('change', onMotion);
-    } else {
-      cleanup();
-    }
-  }
+  // Keep browser-only behavior outside the page composition markup.
+  initializeHomepageReveal();
 </script>
 
 <style>
@@ -171,6 +63,35 @@ import OrderInquiry from '@/components/sections/OrderInquiry.astro';
   /* Give every second section a distinct surface after any reordering. */
   .homepage-sections > :global(section:nth-of-type(even)) {
     background: var(--color-base-200);
+  }
+
+  /* Reserve a stacking context for the decorative transition layer. */
+  .homepage-sections
+    > :global(section:not(.offers-section) + section:not(.offers-section)) {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Draw one sinusoidal crest and lower bend well above the next section. */
+  .homepage-sections
+    > :global(section:not(.offers-section) +
+      section:not(.offers-section))::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: -1rem;
+    left: -5%;
+    width: 110%;
+    height: 2rem;
+    background: inherit;
+    border-radius: 50% / 100% 100% 15% 15%;
+    pointer-events: none;
+  }
+
+  /* Keep section content and focusable controls above the transition layer. */
+  .homepage-sections > :global(section + section:not(.offers-section) > *) {
+    position: relative;
+    z-index: 1;
   }
 
   /* Fade contents only; preserve section backgrounds and layout geometry. */
@@ -197,6 +118,15 @@ import OrderInquiry from '@/components/sections/OrderInquiry.astro';
     .homepage-sections > :global(section[data-reveal-state] > *) {
       opacity: 1;
       transition: none;
+    }
+  }
+
+  /* Remove decorative overlap from printed documents. */
+  @media print {
+    .homepage-sections
+      > :global(section:not(.offers-section) +
+        section:not(.offers-section))::before {
+      display: none;
     }
   }
 </style>

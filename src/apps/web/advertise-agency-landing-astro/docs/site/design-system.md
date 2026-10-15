@@ -15,6 +15,11 @@ The homepage alternates base-100 and base-200 section backgrounds by
 rendered order, using the current theme palette. This remains consistent
 when sections are reordered or offers are disabled.
 
+Adjacent homepage sections use a CSS-only wave cutout on the following
+surface. The transition is decorative, positioned outside the section box,
+and excluded from `OffersCarousel`; it does not affect anchors, content
+geometry, keyboard controls, reduced-motion rendering, or print output.
+
 | Opening concept | Shape | Assessment |
 | --- | --- | --- |
 | Service-led (selected) | Existing service copy and contact actions, followed by portfolio | Explains the offer without depending on unavailable approved photography. The first visible section heading remains the opening anchor. |

@@ -137,6 +137,12 @@ required/type/length РѕРіСЂР°РЅРёС‡РµРЅРёСЏ, РІС‹С�
 count/empty state, СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµС‚ query string Рё РЅРµ Р»РѕРјР°РµС‚ server pagination.
 РџСЂРё back/forward СЃРѕСЃС‚РѕСЏРЅРёРµ РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ РёР· URL.
 
+Homepage section surfaces alternate by rendered order in `pages/index.astro`.
+Adjacent surfaces receive a CSS-only decorative wave on the following section;
+the `OffersCarousel` surface is excluded. The pseudo-element is outside the
+section box, has no pointer target, and is hidden for print without changing
+anchors, content geometry, or keyboard interaction.
+
 ## Р“Р»РѕР±Р°Р»СЊРЅС‹Рµ РєРѕРјРїРѕРЅРµРЅС‚С‹
 
 `CookieBanner.astro` РїРѕРєР°Р·С‹РІР°РµС‚ РґРІР° РІС‹Р±РѕСЂР° (`accepted`/`declined`), policy
