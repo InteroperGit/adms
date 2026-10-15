@@ -1,0 +1,150 @@
+---
+// Render a static, noindex recovery page for unknown routes.
+// Navigation stays available without client-side JavaScript or redirects.
+import Button from '@/components/ui/Button.astro';
+import Layout from '@/layouts/Layout.astro';
+import { visibleServices } from '@/content/services';
+---
+
+<Layout
+  title="Страница не найдена"
+  description="Запрошенная страница не найдена. Вернитесь на главную или
+    выберите другой раздел сайта."
+  noindex
+>
+  {/* Give the error page one named region for assistive technology. */}
+  <section
+    class="not-found-page"
+    aria-labelledby="not-found-title"
+  >
+    <div class="site-container not-found-page__container">
+      {/* Keep the numeric status decorative beside the meaningful heading. */}
+      <p class="not-found-status" aria-hidden="true">404</p>
+      <h1 id="not-found-title" class="not-found-title">
+        Страница не найдена
+      </h1>
+      <p class="not-found-description">
+        Возможно, ссылка устарела или адрес был введён с ошибкой.
+      </p>
+
+      {/* Make the homepage the primary recovery action. */}
+      <div class="not-found-actions">
+        <Button href="/" size="lg">На главную</Button>
+      </div>
+
+      {/* Offer existing routes without introducing a second primary action. */}
+      <nav class="not-found-links" aria-label="Полезные ссылки">
+        <span class="not-found-links__label">Или перейдите в раздел:</span>
+        <ul class="not-found-links__list">
+          {visibleServices.length > 0 && (
+            <li><a href="/#services">Услуги</a></li>
+          )}
+          <li><a href="/projects/">Проекты</a></li>
+          <li><a href="/#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Keep the recovery page spacious and aligned with the site container. */
+  .not-found-page {
+    min-height: clamp(28rem, 62vh, 44rem);
+    display: grid;
+    place-items: center;
+    padding-block: clamp(3rem, 10vw, 7rem);
+    background:
+      radial-gradient(
+        circle at 50% 28%,
+        color-mix(in srgb, var(--color-primary) 14%, transparent),
+        transparent 38%
+      ),
+      var(--color-base-100);
+  }
+
+  /* Keep the page content readable at wide viewport sizes. */
+  .not-found-page__container {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+
+  /* Make the error code a quiet visual anchor without duplicating the h1. */
+  .not-found-status {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: clamp(5rem, 18vw, 11rem);
+    font-weight: 800;
+    letter-spacing: -0.08em;
+    line-height: 0.85;
+  }
+
+  /* Keep the recovery message as the only meaningful page heading. */
+  .not-found-title {
+    max-width: 18ch;
+    margin: 1.5rem 0 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+  }
+
+  /* Limit explanatory text so it stays comfortable to read on wide screens. */
+  .not-found-description {
+    max-width: 42rem;
+    margin: 1rem 0 0;
+    color: var(--color-muted);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+  }
+
+  /* Keep the primary recovery action separated from supporting navigation. */
+  .not-found-actions {
+    margin-top: 2rem;
+  }
+
+  /* Group supporting links as a quiet secondary navigation area. */
+  .not-found-links {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+
+  /* Keep the secondary navigation label visually subordinate. */
+  .not-found-links__label {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+  }
+
+  /* Arrange recovery links in a compact, wrapping row. */
+  .not-found-links__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Preserve the shared focus treatment while keeping links easy to scan. */
+  .not-found-links__list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Keep narrow screens from forcing the supporting links into overflow. */
+  @media (max-width: 30rem) {
+    /* Reduce the minimum height while leaving space for wrapped content. */
+    .not-found-page {
+      min-height: 26rem;
+    }
+
+    /* Scale the decorative code to fit the narrowest supported viewport. */
+    .not-found-status {
+      font-size: clamp(4.5rem, 26vw, 7rem);
+    }
+  }
+</style>
