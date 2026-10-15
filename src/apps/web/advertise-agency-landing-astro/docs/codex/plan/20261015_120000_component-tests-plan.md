@@ -1,6 +1,6 @@
 # РџР»Р°РЅ СЂР°Р·СЂР°Р±РѕС‚РєРё unit-С‚РµСЃС‚РѕРІ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ
 
-Р”Р°С‚Р°: 2026-10-15. РЎС‚Р°С‚СѓСЃ: in progress; 088 and 089 completed.
+Р”Р°С‚Р°: 2026-10-15. РЎС‚Р°С‚СѓСЃ: in progress; 088, 089 and 090 completed.
 
 РСЃС‚РѕС‡РЅРёРє РєРѕРЅС‚СЂР°РєС‚РѕРІ: `docs/development/components.md`.
 
@@ -289,10 +289,15 @@ Playwright-РЅР°Р±РѕСЂ Р·Р°РїСѓСЃРєР°С‚СЊ РїРѕС
 - [088](../fixed/20261015/088-test-infrastructure.md) вЂ” Vitest, jsdom, fixtures Рё scripts.
 - [089](../fixed/20261015/089-unit-validation-and-utilities.md) — completed:
   validation, utilities, inquiry and catalog tests; 115 total tests pass.
-- [090](../todo/090-ui-and-card-components.md) вЂ” UI-РєРѕРјРїРѕРЅРµРЅС‚С‹ Рё РєР°СЂС‚РѕС‡РєРё.
+- [090](../fixed/20261015/090-ui-and-card-components.md) вЂ” UI-РєРѕРјРїРѕРЅРµРЅС‚С‹ Рё РєР°СЂС‚РѕС‡РєРё.
 - [091](../todo/091-content-block-components.md) вЂ” content blocks Рё fallback.
 - [092](../todo/092-client-state-modules.md) вЂ” РєР»РёРµРЅС‚СЃРєРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ Рё cleanup.
 - [093](../todo/093-section-integration-tests.md) вЂ” integration-С‚РµСЃС‚С‹ СЃРµРєС†РёР№.
 - [094](../todo/094-playwright-smoke-and-e2e.md) вЂ” Playwright smoke/E2E.
 - [095](../todo/095-coverage-ci-and-quality-gates.md) вЂ” coverage, CI Рё quality gates.
 
+
+Task 090 completed without subagents: 38 new DOM contract tests;
+153 total tests pass. All eight scoped Astro components report 100%
+mapped render-code coverage. Check/build/content gates pass; existing
+HTML audit findings remain in task 095. Next task: 091.

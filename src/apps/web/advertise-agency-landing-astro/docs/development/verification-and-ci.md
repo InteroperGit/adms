@@ -7,6 +7,15 @@ component tests and writes ignored HTML/LCOV reports under `coverage/`.
 The current coverage baseline covers validation, image resolution,
 publication, pricing/categories, inquiry payload/form and catalog state.
 It is a task-specific baseline, not a project-wide coverage claim.
+Task 090 adds DOM contract tests for Button, Section, Breadcrumbs,
+ContactInfo, ServiceCard, ProjectCard, ReviewCard and PricingExample.
+Run these with `pnpm test:components`. Astro assets stay in Vite's module
+pipeline so bundled-image tests render real responsive image markup.
+The explicit coverage scope includes these eight `.astro` files; the report
+measures their mapped server render code, not CSS or browser interactions.
+Review portraits are required by the current Review type and validator.
+The older component reference's optional-portrait wording does not describe
+an accepted input; tests use valid portraits with alt text and dimensions.
 Tests use versioned synthetic JSON under `tests/fixtures/content/`; the
 Vitest category-registry alias avoids importing deployment content.
 

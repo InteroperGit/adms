@@ -14,6 +14,8 @@ export default getViteConfig({
     },
   },
   test: {
+    // Astro assets import virtual modules that must pass through Vite.
+    server: { deps: { inline: ['astro'] } },
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
     include: ['tests/**/*.{test,spec}.{ts,tsx}'],
@@ -21,7 +23,7 @@ export default getViteConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
-      // Task 089 baseline: explicit scope includes unimported pure modules.
+      // Explicit scopes include unimported pure modules and task 090 cards/UI.
       // Broader component/client thresholds belong to task 095.
       include: [
         'src/validation/**/*.ts',
@@ -32,6 +34,8 @@ export default getViteConfig({
         'src/server/inquiry-payload.ts',
         'src/scripts/project-catalog.ts',
         'src/components/forms/order-inquiry.ts',
+        'src/components/ui/{Button,Section,Breadcrumbs,ContactInfo}.astro',
+        'src/components/cards/*.astro',
       ],
     },
   },

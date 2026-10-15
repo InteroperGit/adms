@@ -1,4 +1,24 @@
-﻿# Latest task — VCB-03, 2026-10-14
+# Latest task — 090, 2026-10-15
+
+- Completed without subagents; archived in fixed/20261015/.
+- Added 38 UI/card DOM tests; 153 total tests pass.
+- Eight scoped Astro components: 100% mapped render-code coverage.
+- Pricing card imports pure formatter; Vite resolves Astro asset modules.
+- Check/build/content gates pass; existing HTML audit findings in task 095.
+- Next task: 091 content block tests. No commit or deployment made.
+
+# Latest task — 089, 2026-10-15
+
+- Completed without subagents; archived in fixed/20261015/.
+- Added 114 unit tests using versioned JSON fixtures, plus existing smoke test.
+- Full suite: 115 pass; task scope coverage: 99.21% lines, 95.34% branches.
+- Fixed Russian search normalization and extracted conditional email wiring.
+- Check, content boundaries/invariants and production build pass.
+- HTML quality audit finds existing project duplicate IDs and homepage image
+  loading-policy omission; recorded in task 095 for follow-up.
+- Next task: 090 UI and card component tests. No commit or deployment made.
+
+# Latest task — VCB-03, 2026-10-14
 
 - Paragraph refinement completed without subagents; archived in fixed/20261014/.
 - Added prose measure/rhythm, safe native URL links and heading label fallback.
