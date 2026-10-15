@@ -27,6 +27,7 @@ pnpm-debug.log*
 .playwright-cli/
 output/playwright/
 output/
+coverage/
 
 # Runtime content is supplied separately and must not return to commits.
 data/content/

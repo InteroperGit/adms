@@ -8,6 +8,7 @@ Russian-language website for Рекламастер, built with Astro, TypeScrip
 | --- | --- |
 | [Setup and development](docs/development/setup.md) | Runtime requirements, installation, background server, and commands |
 | [Project structure](docs/development/project-structure.md) | Application folders and shared configuration |
+| [Component reference](docs/development/components.md) | All component contracts and future unit/integration/e2e test scenarios |
 | [Verification and CI](docs/development/verification-and-ci.md) | Type checking, builds, and remaining CI integration |
 | [Content editing](docs/site/content.md) | JSON sources, validation, and stable project IDs |
 | [Order inquiries](docs/site/order-inquiry.md) | Form configuration and delivery dependencies |

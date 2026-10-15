@@ -9,6 +9,12 @@
     "dev": "astro dev",
     "check": "astro check && node scripts/check-code-style.mjs",
     "check:style": "node scripts/check-code-style.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:unit": "vitest run tests/unit --passWithNoTests",
+    "test:components": "vitest run tests/components",
+    "test:integration": "vitest run tests/integration --passWithNoTests",
+    "test:coverage": "vitest run --coverage",
     "verify:content": "node scripts/verify-content-invariants.mjs",
     "verify:boundaries": "node scripts/verify-content-boundaries.mjs",
     "generate:content": "node scripts/generate-content-catalog.mjs",
@@ -38,8 +44,14 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@types/jsdom": "^30.0.0",
     "@types/node": "^26.4.1",
+    "@vitest/coverage-v8": "4.0.18",
     "daisyui": "^5.7.25",
-    "tailwindcss": "^4.3.3"
+    "jsdom": "^30.1.3",
+    "tailwindcss": "^4.3.3",
+    "vitest": "4.0.18"
   }
 }
