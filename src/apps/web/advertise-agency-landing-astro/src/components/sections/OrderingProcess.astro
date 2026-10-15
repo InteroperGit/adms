@@ -19,18 +19,17 @@ import { orderingProcess } from '@/content/ordering-process';
         {orderingProcess.heading}
       </h2>
       <p class="ordering-summary">{orderingProcess.introduction}</p>
-      {orderingProcess.demoMode && (
-        <p class="ordering-notice" role="note">
-          {orderingProcess.demoNotice}
-        </p>
-      )}
     </div>
 
     {/* Native list semantics preserve the customer's five-step sequence. */}
     <ol class="ordering-steps">
       {orderingProcess.steps.map((step) => (
         <li class="ordering-step">
-          <article class="ordering-card" aria-labelledby={`${step.id}-heading`}>
+          <article
+            class="ordering-card"
+            tabindex="0"
+            aria-labelledby={`${step.id}-heading`}
+          >
             {/* Content selects each mark; copy remains the label. */}
             <span
               class="ordering-icon"
@@ -71,7 +70,7 @@ import { orderingProcess } from '@/content/ordering-process';
 </section>
 
 <style>
-  /* Keep the heading and draft notice readable above the five cards. */
+  /* Keep the heading readable above the five process cards. */
   .ordering-introduction {
     max-width: var(--site-reading-width);
     margin-inline: auto;
@@ -80,19 +79,10 @@ import { orderingProcess } from '@/content/ordering-process';
     overflow-wrap: anywhere;
   }
 
-  /* Explain the draft state without presenting it as approved business copy. */
+  /* Keep the process introduction distinct from the card details. */
   .ordering-summary {
     color: var(--site-muted);
     font-size: 1.125rem;
-  }
-
-  /* Give the approval state a strong visual boundary without extra controls. */
-  .ordering-notice {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    border-inline-start: 3px solid var(--color-primary);
-    color: var(--site-muted);
-    text-align: left;
   }
 
   /* Use a native ordered list while laying cards out responsively. */
@@ -120,6 +110,42 @@ import { orderingProcess } from '@/content/ordering-process';
     background: var(--color-base-100);
     box-shadow: var(--shadow-panel);
     overflow-wrap: anywhere;
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  /* Highlight keyboard focus with the same treatment as guarantee cards. */
+  .ordering-card:focus {
+    border-color: var(--color-primary);
+    background: color-mix(
+      in srgb, var(--color-primary) 8%, var(--color-base-100)
+    );
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+
+  /* Keep keyboard location distinct from the selected process surface. */
+  .ordering-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  /* Highlight the explored step without moving surrounding content. */
+  .ordering-card:hover {
+    border-color: var(--color-primary);
+    background: color-mix(
+      in srgb, var(--color-primary) 8%, var(--color-base-100)
+    );
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+
+  /* Respect motion preferences while preserving immediate selection. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Card feedback remains visible without animated colour changes. */
+    .ordering-card {
+      transition: none;
+    }
   }
 
   /* Keep the marker visible without replacing ordered-list semantics. */
