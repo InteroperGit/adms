@@ -2,7 +2,7 @@
 
 [Documentation index](../../README.md)
 
-Unit contracts run with `pnpm test:unit`; `pnpm test --coverage` also runs
+Unit contracts run with `pnpm test:unit`; `pnpm test:coverage` also runs
 component tests and writes ignored HTML/LCOV reports under `coverage/`.
 The current coverage baseline covers validation, image resolution,
 publication, pricing/categories, inquiry payload/form and catalog state.
@@ -27,6 +27,11 @@ templates for unsafe values. The check command uses the installed
 TypeScript is kept on version 6 because `@astrojs/check` 0.9.10 does not
 support TypeScript 7. See the [Astro TypeScript guide](https://docs.astro.build/en/guides/typescript/#type-checking).
 
+After `pnpm test:coverage`, run `pnpm verify:coverage`. It enforces 90% line
+coverage for validation/content/server logic, 85% for client state, 80% for
+components, and 80% overall. The JSON report is emitted beside the HTML and
+LCOV reports for this gate.
+
 The repository workflow at `.github/workflows/quality.yml` runs on pull
 requests and pushes that affect
 `src/apps/web/advertise-agency-landing-astro/**`. It provisions Node.js 22.12
@@ -37,11 +42,17 @@ pnpm install --frozen-lockfile
 pnpm verify:boundaries
 pnpm verify:content
 pnpm check
+pnpm test
+pnpm test:coverage
+pnpm verify:coverage
 pnpm build
+pnpm verify:quality
 ```
 
 Each command fails the job on a nonzero exit status. The workflow path is
 included in the application trigger so edits to the job itself are verified.
+Pull requests also run focused unit/component commands before the full suite;
+the final build starts the existing Playwright CLI smoke flow.
 Runtime content is supplied
 outside Git and initialized from `data/templates/` with an explicit generator
 command. Never use `--force` against an existing content reserve without a

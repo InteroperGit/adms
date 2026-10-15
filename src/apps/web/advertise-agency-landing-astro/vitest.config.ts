@@ -22,7 +22,7 @@ export default getViteConfig({
     exclude: ['node_modules', 'dist', 'output'],
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html', 'lcov'],
+      reporter: ['text', 'html', 'lcov', 'json'],
       // Explicit scopes include unimported pure modules and task 090 cards/UI.
       // Broader component/client thresholds belong to task 095.
       include: [

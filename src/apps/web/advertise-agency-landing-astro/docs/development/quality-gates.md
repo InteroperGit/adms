@@ -7,6 +7,19 @@ pnpm build
 pnpm verify:quality
 ```
 
+Run the complete local gate in this order:
+
+```powershell
+pnpm verify:boundaries
+pnpm verify:content
+pnpm check
+pnpm test
+pnpm test:coverage
+pnpm verify:coverage
+pnpm build
+pnpm verify:quality
+```
+
 The gate checks every generated HTML route for a document language, title,
 description, one each of `header`, `main`, and `footer`, one `h1` with no
 heading-level jumps, safe links, non-positive `tabindex` values, and image

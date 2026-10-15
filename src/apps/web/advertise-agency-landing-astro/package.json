@@ -15,6 +15,7 @@
     "test:components": "vitest run tests/components",
     "test:integration": "vitest run tests/integration --passWithNoTests",
     "test:coverage": "vitest run --coverage",
+    "verify:coverage": "node scripts/verify-coverage-thresholds.mjs",
     "verify:content": "node scripts/verify-content-invariants.mjs",
     "verify:boundaries": "node scripts/verify-content-boundaries.mjs",
     "generate:content": "node scripts/generate-content-catalog.mjs",

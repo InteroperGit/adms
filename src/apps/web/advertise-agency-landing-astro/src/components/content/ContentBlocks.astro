@@ -34,6 +34,11 @@ const formContext = context && demo
   ? { ...context, published: false } : context;
 const firstMediaIndex = visibleBlocks.findIndex((block) =>
   block.type === 'image' || block.type === 'image-gallery');
+// Renderer-owned IDs already identify headings and media; reserving the
+// wrapper anchor for text-only blocks prevents duplicate fragment targets.
+const wrapperId = (block: ContentBlock) =>
+  ['heading', 'chart', 'image', 'image-gallery', 'order-form']
+    .includes(block.type) ? undefined : block.id;
 ---
 
 {/* Block IDs identify article targets, including standalone headings. */}
@@ -44,7 +49,7 @@ const firstMediaIndex = visibleBlocks.findIndex((block) =>
     <div
       class="content-block"
       data-block-type={block.type}
-      id={block.type === 'order-form' ? undefined : block.id}
+      id={wrapperId(block)}
     >
       {block.type === 'heading' && <HeadingBlock block={block} />}
       {block.type === 'paragraph' && (

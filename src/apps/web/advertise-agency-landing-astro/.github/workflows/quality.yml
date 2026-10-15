@@ -30,4 +30,16 @@ jobs:
       - run: pnpm verify:boundaries
       - run: pnpm verify:content
       - run: pnpm check
+      - run: pnpm test:unit
+        if: github.event_name == 'pull_request'
+      - run: pnpm test:components
+        if: github.event_name == 'pull_request'
+      - run: pnpm test
+      - run: pnpm test:coverage
+      - run: pnpm verify:coverage
       - run: pnpm build
+      - run: pnpm verify:quality
+      - run: pnpm astro dev --background
+      - run: npx --yes --package @playwright/cli playwright-cli open http://localhost:4321/
+      - run: npx --yes --package @playwright/cli playwright-cli run-code --filename docs/development/browser-coverage.js
+      - run: pnpm astro dev stop
