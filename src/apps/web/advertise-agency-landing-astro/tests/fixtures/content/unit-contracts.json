@@ -1,0 +1,770 @@
+{
+  "introduction": {
+    "heading": "TEST_HEADING",
+    "summary": "TEST_SUMMARY",
+    "location": "TEST_LOCATION",
+    "copyApproved": false,
+    "demoMode": false,
+    "action": {
+      "label": "TEST_LABEL",
+      "href": "/#order-inquiry"
+    },
+    "photo": {
+      "src": "https://example.test/test-asset",
+      "alt": "TEST_ALT",
+      "width": 1,
+      "height": 1,
+      "source": "TEST_SOURCE",
+      "projectContext": "TEST_PROJECTCONTEXT",
+      "publicationPermission": "TEST_PUBLICATIONPERMISSION",
+      "approved": false,
+      "desktopFocalPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "mobileFocalPoint": {
+        "x": 1,
+        "y": 1
+      }
+    }
+  },
+  "offers": {
+    "enabled": false,
+    "autoplay": false,
+    "intervalMs": 7000,
+    "items": [
+      {
+        "id": 1,
+        "enabled": false,
+        "description": "TEST_DESCRIPTION",
+        "presentation": {
+          "fontSizeRem": 1,
+          "textColor": "#ffffff",
+          "horizontal": "left",
+          "vertical": "bottom",
+          "overlay": "dark",
+          "focalPoint": {
+            "x": 1,
+            "y": 1
+          },
+          "mobileFocalPoint": {
+            "x": 1,
+            "y": 1
+          }
+        },
+        "image": "/a.png",
+        "imageAlt": "TEST_IMAGEALT",
+        "imageWidth": 1,
+        "imageHeight": 1,
+        "linkLabel": "TEST_LINKLABEL",
+        "href": "/#order-inquiry"
+      }
+    ]
+  },
+  "order-inquiry": {
+    "title": "TEST_TITLE",
+    "subtitle": "TEST_SUBTITLE",
+    "requiredNote": "TEST_REQUIREDNOTE",
+    "privacyLabel": "TEST_PRIVACYLABEL",
+    "submitLabel": "TEST_SUBMITLABEL",
+    "consent": {
+      "approved": false,
+      "label": "TEST_LABEL"
+    },
+    "submission": {
+      "enabled": false,
+      "endpoint": "",
+      "timeoutMs": 1000
+    },
+    "fields": {
+      "name": {
+        "label": "TEST_LABEL",
+        "hint": "TEST_HINT",
+        "required": true,
+        "maxLength": 1
+      },
+      "email": {
+        "label": "TEST_LABEL",
+        "hint": "TEST_HINT",
+        "required": true,
+        "maxLength": 1
+      },
+      "phone": {
+        "label": "TEST_LABEL",
+        "hint": "TEST_HINT",
+        "required": false,
+        "maxLength": 1
+      },
+      "message": {
+        "label": "TEST_LABEL",
+        "hint": "TEST_HINT",
+        "required": true,
+        "maxLength": 1
+      }
+    },
+    "feedback": {
+      "unavailable": "TEST_UNAVAILABLE",
+      "noJavaScript": "TEST_NOJAVASCRIPT",
+      "invalid": "TEST_INVALID",
+      "sending": "TEST_SENDING",
+      "success": "TEST_SUCCESS",
+      "failure": "TEST_FAILURE",
+      "required": "TEST_REQUIRED",
+      "email": "test@example.com",
+      "tooLong": "TEST_TOOLONG"
+    }
+  },
+  "ordering-process": {
+    "demoMode": false,
+    "demoNotice": "TEST_DEMONOTICE",
+    "heading": "TEST_HEADING",
+    "introduction": "TEST_INTRODUCTION",
+    "copyApproved": false,
+    "approvalSource": null,
+    "pendingInputs": [
+      "TEST_PENDINGINPUTS"
+    ],
+    "steps": [
+      {
+        "id": "step-0",
+        "icon": "/images/guarantees/production.svg",
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "customerProvides": [
+          "TEST_CUSTOMERPROVIDES"
+        ],
+        "agencyHandles": [
+          "TEST_AGENCYHANDLES"
+        ]
+      },
+      {
+        "id": "step-1",
+        "icon": "/images/guarantees/production.svg",
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "customerProvides": [
+          "TEST_CUSTOMERPROVIDES"
+        ],
+        "agencyHandles": [
+          "TEST_AGENCYHANDLES"
+        ]
+      },
+      {
+        "id": "step-2",
+        "icon": "/images/guarantees/production.svg",
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "customerProvides": [
+          "TEST_CUSTOMERPROVIDES"
+        ],
+        "agencyHandles": [
+          "TEST_AGENCYHANDLES"
+        ]
+      },
+      {
+        "id": "step-3",
+        "icon": "/images/guarantees/production.svg",
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "customerProvides": [
+          "TEST_CUSTOMERPROVIDES"
+        ],
+        "agencyHandles": [
+          "TEST_AGENCYHANDLES"
+        ]
+      },
+      {
+        "id": "step-4",
+        "icon": "/images/guarantees/production.svg",
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "customerProvides": [
+          "TEST_CUSTOMERPROVIDES"
+        ],
+        "agencyHandles": [
+          "TEST_AGENCYHANDLES"
+        ]
+      }
+    ]
+  },
+  "pricing": {
+    "demoMode": false,
+    "demoNotice": "TEST_DEMONOTICE",
+    "demoPriceLabel": "TEST_DEMOPRICELABEL",
+    "heading": "TEST_HEADING",
+    "introduction": "TEST_INTRODUCTION",
+    "copyApproved": false,
+    "approvalSource": null,
+    "costFactors": {
+      "heading": "TEST_HEADING",
+      "items": [
+        "TEST_ITEMS"
+      ]
+    },
+    "estimateGuidance": {
+      "heading": "TEST_HEADING",
+      "text": "TEST_TEXT"
+    },
+    "inquiryLabel": "TEST_INQUIRYLABEL",
+    "items": [
+      {
+        "id": "sample",
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "dimensions": "TEST_DIMENSIONS",
+        "materials": [
+          "TEST_MATERIALS"
+        ],
+        "includedWork": [
+          "TEST_INCLUDEDWORK"
+        ],
+        "exclusions": [
+          "TEST_EXCLUSIONS"
+        ],
+        "source": "TEST_SOURCE",
+        "price": {
+          "type": "exact",
+          "amount": 1000,
+          "currency": "RUB",
+          "context": "demo",
+          "asOf": null,
+          "conditions": "Synthetic estimate"
+        },
+        "approval": {
+          "specifications": false,
+          "copy": false,
+          "price": false,
+          "reference": null,
+          "verifiedAt": null
+        },
+        "image": {
+          "src": "https://example.test/test-asset",
+          "alt": "TEST_ALT",
+          "width": 1,
+          "height": 1,
+          "source": "TEST_SOURCE",
+          "projectContext": "TEST_PROJECTCONTEXT",
+          "publicationPermission": "TEST_PUBLICATIONPERMISSION",
+          "approved": false,
+          "desktopFocalPoint": {
+            "x": 1,
+            "y": 1
+          },
+          "mobileFocalPoint": {
+            "x": 1,
+            "y": 1
+          }
+        }
+      }
+    ]
+  },
+  "production-and-guarantees": {
+    "demoMode": false,
+    "demoNotice": "TEST_DEMONOTICE",
+    "heading": "TEST_HEADING",
+    "introduction": "TEST_INTRODUCTION",
+    "guidance": [
+      {
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "icon": "/images/guarantees/production.svg"
+      }
+    ],
+    "copyApproved": false,
+    "approvalSource": null,
+    "pendingInputs": [
+      "TEST_PENDINGINPUTS"
+    ],
+    "productionOperations": [
+      {
+        "id": "sample",
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "evidence": "TEST_EVIDENCE",
+        "approval": "draft"
+      }
+    ],
+    "materials": [
+      {
+        "id": "sample",
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "evidence": "TEST_EVIDENCE",
+        "approval": "draft"
+      }
+    ],
+    "qualityChecks": [
+      {
+        "id": "sample",
+        "title": "TEST_TITLE",
+        "description": "TEST_DESCRIPTION",
+        "evidence": "TEST_EVIDENCE",
+        "approval": "draft"
+      }
+    ],
+    "photos": [],
+    "warrantyTerms": [
+      {
+        "id": "sample",
+        "title": "TEST_TITLE",
+        "coverage": "TEST_COVERAGE",
+        "duration": "TEST_DURATION",
+        "starts": "TEST_STARTS",
+        "conditions": [
+          "TEST_CONDITIONS"
+        ],
+        "exclusions": [
+          "TEST_EXCLUSIONS"
+        ],
+        "claimRoute": "TEST_CLAIMROUTE",
+        "sourceType": "pending",
+        "source": "TEST_SOURCE",
+        "approval": "draft"
+      }
+    ],
+    "maintenance": {
+      "scope": [
+        "TEST_SCOPE"
+      ],
+      "customerResponsibilities": [
+        "TEST_CUSTOMERRESPONSIBILITIES"
+      ],
+      "pricing": "TEST_PRICING",
+      "requestRoute": "TEST_REQUESTROUTE",
+      "approval": "draft"
+    },
+    "inquiryHref": "/#order-inquiry"
+  },
+  "business-solutions": {
+    "heading": "TEST_HEADING",
+    "introduction": [
+      "TEST_INTRODUCTION"
+    ],
+    "items": [
+      {
+        "id": "solution-0",
+        "title": "TEST_TITLE",
+        "summary": [
+          "TEST_SUMMARY"
+        ],
+        "customerTask": [
+          "TEST_CUSTOMERTASK"
+        ],
+        "solution": [
+          "TEST_SOLUTION"
+        ],
+        "example": {
+          "title": "TEST_TITLE",
+          "text": [
+            "TEST_TEXT"
+          ]
+        },
+        "inquiryLabel": "TEST_INQUIRYLABEL",
+        "inquiryHref": "/#order-inquiry",
+        "carousel": {
+          "itemLabel": "TEST_ITEMLABEL",
+          "mediaSource": "TEST_MEDIASOURCE",
+          "mediaRights": "TEST_MEDIARIGHTS",
+          "options": {
+            "enabled": false,
+            "autoplay": false,
+            "intervalMs": 7000,
+            "manualNavigation": false,
+            "arrows": false,
+            "circles": false,
+            "descriptions": false,
+            "buttons": false,
+            "animation": false,
+            "layout": "full",
+            "imageFit": "cover",
+            "aspectRatio": 1,
+            "eagerFirst": false
+          },
+          "items": [
+            {
+              "id": 1,
+              "enabled": false,
+              "image": "/a.png",
+              "imageAlt": "TEST_IMAGEALT",
+              "imageWidth": 1,
+              "imageHeight": 1,
+              "description": "TEST_DESCRIPTION",
+              "presentation": {
+                "fontSizeRem": 1,
+                "textColor": "#ffffff",
+                "overlay": "dark",
+                "horizontal": "left",
+                "vertical": "bottom",
+                "focalPoint": {
+                  "x": 1,
+                  "y": 1
+                }
+              }
+            }
+          ]
+        },
+        "attribution": {
+          "customerName": null,
+          "projectId": null,
+          "href": null,
+          "evidence": null,
+          "media": []
+        }
+      },
+      {
+        "id": "solution-1",
+        "title": "TEST_TITLE",
+        "summary": [
+          "TEST_SUMMARY"
+        ],
+        "customerTask": [
+          "TEST_CUSTOMERTASK"
+        ],
+        "solution": [
+          "TEST_SOLUTION"
+        ],
+        "example": {
+          "title": "TEST_TITLE",
+          "text": [
+            "TEST_TEXT"
+          ]
+        },
+        "inquiryLabel": "TEST_INQUIRYLABEL",
+        "inquiryHref": "/#order-inquiry",
+        "carousel": {
+          "itemLabel": "TEST_ITEMLABEL",
+          "mediaSource": "TEST_MEDIASOURCE",
+          "mediaRights": "TEST_MEDIARIGHTS",
+          "options": {
+            "enabled": false,
+            "autoplay": false,
+            "intervalMs": 7000,
+            "manualNavigation": false,
+            "arrows": false,
+            "circles": false,
+            "descriptions": false,
+            "buttons": false,
+            "animation": false,
+            "layout": "full",
+            "imageFit": "cover",
+            "aspectRatio": 1,
+            "eagerFirst": false
+          },
+          "items": [
+            {
+              "id": 1,
+              "enabled": false,
+              "image": "/a.png",
+              "imageAlt": "TEST_IMAGEALT",
+              "imageWidth": 1,
+              "imageHeight": 1,
+              "description": "TEST_DESCRIPTION",
+              "presentation": {
+                "fontSizeRem": 1,
+                "textColor": "#ffffff",
+                "overlay": "dark",
+                "horizontal": "left",
+                "vertical": "bottom",
+                "focalPoint": {
+                  "x": 1,
+                  "y": 1
+                }
+              }
+            }
+          ]
+        },
+        "attribution": {
+          "customerName": null,
+          "projectId": null,
+          "href": null,
+          "evidence": null,
+          "media": []
+        }
+      },
+      {
+        "id": "solution-2",
+        "title": "TEST_TITLE",
+        "summary": [
+          "TEST_SUMMARY"
+        ],
+        "customerTask": [
+          "TEST_CUSTOMERTASK"
+        ],
+        "solution": [
+          "TEST_SOLUTION"
+        ],
+        "example": {
+          "title": "TEST_TITLE",
+          "text": [
+            "TEST_TEXT"
+          ]
+        },
+        "inquiryLabel": "TEST_INQUIRYLABEL",
+        "inquiryHref": "/#order-inquiry",
+        "carousel": {
+          "itemLabel": "TEST_ITEMLABEL",
+          "mediaSource": "TEST_MEDIASOURCE",
+          "mediaRights": "TEST_MEDIARIGHTS",
+          "options": {
+            "enabled": false,
+            "autoplay": false,
+            "intervalMs": 7000,
+            "manualNavigation": false,
+            "arrows": false,
+            "circles": false,
+            "descriptions": false,
+            "buttons": false,
+            "animation": false,
+            "layout": "full",
+            "imageFit": "cover",
+            "aspectRatio": 1,
+            "eagerFirst": false
+          },
+          "items": [
+            {
+              "id": 1,
+              "enabled": false,
+              "image": "/a.png",
+              "imageAlt": "TEST_IMAGEALT",
+              "imageWidth": 1,
+              "imageHeight": 1,
+              "description": "TEST_DESCRIPTION",
+              "presentation": {
+                "fontSizeRem": 1,
+                "textColor": "#ffffff",
+                "overlay": "dark",
+                "horizontal": "left",
+                "vertical": "bottom",
+                "focalPoint": {
+                  "x": 1,
+                  "y": 1
+                }
+              }
+            }
+          ]
+        },
+        "attribution": {
+          "customerName": null,
+          "projectId": null,
+          "href": null,
+          "evidence": null,
+          "media": []
+        }
+      },
+      {
+        "id": "solution-3",
+        "title": "TEST_TITLE",
+        "summary": [
+          "TEST_SUMMARY"
+        ],
+        "customerTask": [
+          "TEST_CUSTOMERTASK"
+        ],
+        "solution": [
+          "TEST_SOLUTION"
+        ],
+        "example": {
+          "title": "TEST_TITLE",
+          "text": [
+            "TEST_TEXT"
+          ]
+        },
+        "inquiryLabel": "TEST_INQUIRYLABEL",
+        "inquiryHref": "/#order-inquiry",
+        "carousel": {
+          "itemLabel": "TEST_ITEMLABEL",
+          "mediaSource": "TEST_MEDIASOURCE",
+          "mediaRights": "TEST_MEDIARIGHTS",
+          "options": {
+            "enabled": false,
+            "autoplay": false,
+            "intervalMs": 7000,
+            "manualNavigation": false,
+            "arrows": false,
+            "circles": false,
+            "descriptions": false,
+            "buttons": false,
+            "animation": false,
+            "layout": "full",
+            "imageFit": "cover",
+            "aspectRatio": 1,
+            "eagerFirst": false
+          },
+          "items": [
+            {
+              "id": 1,
+              "enabled": false,
+              "image": "/a.png",
+              "imageAlt": "TEST_IMAGEALT",
+              "imageWidth": 1,
+              "imageHeight": 1,
+              "description": "TEST_DESCRIPTION",
+              "presentation": {
+                "fontSizeRem": 1,
+                "textColor": "#ffffff",
+                "overlay": "dark",
+                "horizontal": "left",
+                "vertical": "bottom",
+                "focalPoint": {
+                  "x": 1,
+                  "y": 1
+                }
+              }
+            }
+          ]
+        },
+        "attribution": {
+          "customerName": null,
+          "projectId": null,
+          "href": null,
+          "evidence": null,
+          "media": []
+        }
+      }
+    ]
+  },
+  "services": {
+    "heading": "TEST_HEADING",
+    "introduction": "TEST_INTRODUCTION",
+    "copyApproved": false,
+    "items": [
+      {
+        "id": "sample",
+        "name": "TEST_NAME",
+        "description": "TEST_DESCRIPTION",
+        "claimSource": "TEST_CLAIMSOURCE",
+        "confirmed": false,
+        "copyApproved": false,
+        "image": {
+          "src": "https://example.test/test-asset",
+          "alt": "TEST_ALT",
+          "width": 1,
+          "height": 1,
+          "source": "TEST_SOURCE",
+          "projectContext": "TEST_PROJECTCONTEXT",
+          "publicationPermission": "TEST_PUBLICATIONPERMISSION",
+          "approved": false,
+          "desktopFocalPoint": {
+            "x": 1,
+            "y": 1
+          },
+          "mobileFocalPoint": {
+            "x": 1,
+            "y": 1
+          }
+        },
+        "href": "/services/sample/",
+        "article": {
+          "title": "Sample",
+          "description": "Synthetic article",
+          "approved": false,
+          "content": [
+            {
+              "type": "paragraph",
+              "paragraphs": [
+                "Synthetic copy"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "demoMode": false,
+    "demoNotice": "TEST_DEMONOTICE"
+  },
+  "reviews": [
+    {
+      "id": 1,
+      "name": "TEST_NAME",
+      "position": "TEST_POSITION",
+      "company": "TEST_COMPANY",
+      "text": "TEST_TEXT",
+      "avatar": "/review.png",
+      "avatarAlt": "TEST_AVATARALT",
+      "avatarWidth": 1,
+      "avatarHeight": 1
+    }
+  ],
+  "faq": {
+    "demoMode": false,
+    "demoNotice": "TEST_DEMONOTICE",
+    "heading": "TEST_HEADING",
+    "inquiryLabel": "TEST_INQUIRYLABEL",
+    "inquiryHref": "/#order-inquiry",
+    "approval": {
+      "state": "draft",
+      "source": null,
+      "approvedBy": null
+    },
+    "items": [
+      {
+        "id": "sample",
+        "question": "TEST_QUESTION",
+        "answer": [
+          "TEST_ANSWER"
+        ],
+        "approval": {
+          "state": "draft",
+          "source": null,
+          "approvedBy": null
+        }
+      }
+    ]
+  },
+  "about-carousel": {
+    "options": {
+      "enabled": false,
+      "autoplay": false,
+      "intervalMs": 7000,
+      "manualNavigation": false,
+      "arrows": false,
+      "circles": false,
+      "descriptions": false,
+      "buttons": false,
+      "animation": false,
+      "layout": "full",
+      "imageFit": "cover",
+      "aspectRatio": 1,
+      "eagerFirst": false
+    },
+    "items": [
+      {
+        "id": 1,
+        "enabled": false,
+        "image": "/a.png",
+        "imageAlt": "TEST_IMAGEALT",
+        "imageWidth": 1,
+        "imageHeight": 1
+      }
+    ]
+  },
+  "project-catalog": {
+    "pageSize": 1
+  },
+  "project": {
+    "id": 1,
+    "category": "sample",
+    "status": "demo",
+    "notice": "Synthetic demo",
+    "title": "Sample",
+    "client": "Sample",
+    "attribution": "generic",
+    "description": "Synthetic project",
+    "content": [
+      {
+        "type": "paragraph",
+        "paragraphs": [
+          "Synthetic copy"
+        ]
+      }
+    ]
+  },
+  "categories": [
+    {
+      "slug": "sample",
+      "label": "Sample",
+      "color": "#000000",
+      "textColor": "#ffffff"
+    }
+  ]
+}

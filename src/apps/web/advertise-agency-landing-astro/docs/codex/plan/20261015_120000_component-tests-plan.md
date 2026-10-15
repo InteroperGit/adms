@@ -1,6 +1,6 @@
-﻿# РџР»Р°РЅ СЂР°Р·СЂР°Р±РѕС‚РєРё unit-С‚РµСЃС‚РѕРІ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ
+# РџР»Р°РЅ СЂР°Р·СЂР°Р±РѕС‚РєРё unit-С‚РµСЃС‚РѕРІ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ
 
-Р”Р°С‚Р°: 2026-10-15. РЎС‚Р°С‚СѓСЃ: planned.
+Р”Р°С‚Р°: 2026-10-15. РЎС‚Р°С‚СѓСЃ: in progress; 088 and 089 completed.
 
 РСЃС‚РѕС‡РЅРёРє РєРѕРЅС‚СЂР°РєС‚РѕРІ: `docs/development/components.md`.
 
@@ -287,7 +287,8 @@ Playwright-РЅР°Р±РѕСЂ Р·Р°РїСѓСЃРєР°С‚СЊ РїРѕС
 РџР»Р°РЅ СЂР°Р·Р±РёС‚ РЅР° СЃР»РµРґСѓСЋС‰РёРµ Р·Р°РґР°С‡Рё РІ РїРѕСЂСЏРґРєРµ РІС‹РїРѕР»РЅРµРЅРёСЏ:
 
 - [088](../fixed/20261015/088-test-infrastructure.md) вЂ” Vitest, jsdom, fixtures Рё scripts.
-- [089](../todo/089-unit-validation-and-utilities.md) вЂ” validation Рё С‡РёСЃС‚Р°СЏ Р»РѕРіРёРєР°.
+- [089](../fixed/20261015/089-unit-validation-and-utilities.md) — completed:
+  validation, utilities, inquiry and catalog tests; 115 total tests pass.
 - [090](../todo/090-ui-and-card-components.md) вЂ” UI-РєРѕРјРїРѕРЅРµРЅС‚С‹ Рё РєР°СЂС‚РѕС‡РєРё.
 - [091](../todo/091-content-block-components.md) вЂ” content blocks Рё fallback.
 - [092](../todo/092-client-state-modules.md) вЂ” РєР»РёРµРЅС‚СЃРєРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ Рё cleanup.

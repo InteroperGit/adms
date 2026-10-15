@@ -2,6 +2,14 @@
 
 [Documentation index](../../README.md)
 
+Unit contracts run with `pnpm test:unit`; `pnpm test --coverage` also runs
+component tests and writes ignored HTML/LCOV reports under `coverage/`.
+The current coverage baseline covers validation, image resolution,
+publication, pricing/categories, inquiry payload/form and catalog state.
+It is a task-specific baseline, not a project-wide coverage claim.
+Tests use versioned synthetic JSON under `tests/fixtures/content/`; the
+Vitest category-registry alias avoids importing deployment content.
+
 Run `pnpm verify:boundaries`, `pnpm verify:content`, `pnpm check`, and
 `pnpm build` before submitting changes. The boundary check prevents runtime
 content from entering a change, validates the template manifest, and scans

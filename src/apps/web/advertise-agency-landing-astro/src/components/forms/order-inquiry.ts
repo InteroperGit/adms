@@ -7,6 +7,25 @@ export function initializeInquiry(form: HTMLFormElement): void {
   const button = form.querySelector<HTMLButtonElement>('[type="submit"]');
   const status = form.querySelector<HTMLElement>('[role="status"]');
   if (!fields || !button || !status) return;
+  // Lettering forms require email only for the selected contact channel.
+  // Keep this beside validation so every caller gets the same constraints.
+  const method = form.elements.namedItem('contactMethod');
+  const email = form.elements.namedItem('email');
+  if (method instanceof HTMLSelectElement
+    && email instanceof HTMLInputElement) {
+    const updateContact = () => {
+      email.required = method.value === 'email';
+      const requirement = form.querySelector('[data-requirement="email"]');
+      if (requirement) {
+        requirement.textContent = email.required
+          ? ' *' : ' (необязательно)';
+      }
+    };
+    method.addEventListener('change', updateContact);
+    // Native reset restores values after dispatching its reset event.
+    form.addEventListener('reset', () => queueMicrotask(updateContact));
+    updateContact();
+  }
   // Status receives focus after async outcomes so keyboard users hear them.
   status.tabIndex = -1;
 

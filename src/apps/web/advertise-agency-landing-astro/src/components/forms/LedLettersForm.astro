@@ -219,24 +219,7 @@ const groups = [
   // Install validation before enabling configured submission.
   document.querySelectorAll<HTMLFormElement>('[data-led-letters]')
     .forEach(form => {
-      // Require an email only when it is the chosen contact channel.
-      const method = form.elements.namedItem('contactMethod');
-      const email = form.elements.namedItem('email');
-      if (method instanceof HTMLSelectElement
-        && email instanceof HTMLInputElement) {
-        const updateContact = () => {
-          email.required = method.value === 'email';
-          const requirement = form.querySelector('[data-requirement="email"]');
-          if (requirement) {
-            requirement.textContent = email.required
-              ? ' *' : ' (необязательно)';
-          }
-        };
-        method.addEventListener('change', updateContact);
-        // Reset events fire before native field values return to defaults.
-        form.addEventListener('reset', () => queueMicrotask(updateContact));
-        updateContact();
-      }
+      // Shared initialization also maintains the email contact requirement.
       initializeInquiry(form);
     });
 </script>

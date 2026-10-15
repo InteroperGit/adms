@@ -3,7 +3,7 @@
 const SEARCH_DELAY = 250;
 /** Normalize Russian text while preserving useful word boundaries. */
 export function normalizeSearch(value: string): string {
-  return value.toLocaleLowerCase('ru-RU').replace(/С‘/g, 'Рµ')
+  return value.toLocaleLowerCase('ru-RU').replace(/ё/g, 'е')
     .replace(/\s+/g, ' ').trim();
 }
 
