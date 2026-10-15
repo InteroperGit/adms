@@ -1,0 +1,36 @@
+[
+  { "type": "heading", "id": "intro", "level": 2, "text": "Fixture heading" },
+  { "type": "paragraph", "paragraphs": [
+    "Read https://example.test/guide and javascript:alert(1)."
+  ] },
+  { "type": "ordered-list", "items": ["First", "Second"] },
+  { "type": "unordered-list", "items": ["Alpha", "Beta"] },
+  { "type": "table", "caption": "Fixture comparison", "columns": [
+    { "key": "name", "label": "Name" },
+    { "key": "amount", "label": "Amount" }
+  ], "rows": [
+    { "cells": ["A", "12"] }, { "cells": ["B", "24"] }
+  ] },
+  { "type": "chart", "id": "chart", "chartType": "bar", "unit": "%",
+    "caption": "Fixture chart", "series": [{ "name": "Reach", "points": [
+      { "label": "Jan", "value": 12 }, { "label": "Feb", "value": 24 }
+    ] }] },
+  { "type": "image", "id": "image", "src": "/media/fixture.jpg",
+    "alt": "Fixture image", "width": 800, "height": 450,
+    "caption": "Fixture image caption", "focalPoint": { "x": 20, "y": 30 },
+    "mobileFocalPoint": { "x": 40, "y": 50 } },
+  { "type": "image-gallery", "id": "gallery", "caption": "Fixture gallery",
+    "images": [
+      { "src": "/media/one.jpg", "alt": "One", "width": 400, "height": 300 },
+      { "src": "/media/two.jpg", "alt": "Two", "width": 400, "height": 300 }
+    ] },
+  { "type": "video", "id": "video", "src": "/media/fixture.mp4",
+    "alt": "Fixture video", "width": 16, "height": 9,
+    "caption": "Fixture video caption", "transcript": "Fixture transcript" },
+  { "type": "quote", "id": "quote", "text": "A fixture quote.",
+    "author": "Author", "source": "Source" },
+  { "type": "footnote", "id": "note", "text": "Fixture note.",
+    "reference": "1", "targetId": "intro" },
+  { "type": "order-form", "id": "form", "formId": "general-inquiry",
+    "context": "project" }
+]

@@ -188,3 +188,5 @@ class ImageCarouselElement extends HTMLElement {
 if (!customElements.get('image-carousel')) {
   customElements.define('image-carousel', ImageCarouselElement);
 }
+
+export {};
