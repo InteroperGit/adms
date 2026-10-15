@@ -1,0 +1,109 @@
+---
+// Embed live Yandex reviews and keep a direct link outside the remote frame.
+// Callers must supply the numeric ID from the agency's Yandex Maps profile.
+
+interface Props {
+  enabled: boolean;
+  organizationId: string;
+  companyName: string;
+  reviewsUrl: string;
+  placeholder: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+}
+
+const {
+  enabled,
+  organizationId,
+  companyName,
+  reviewsUrl,
+  placeholder,
+} = Astro.props;
+
+// Reject incomplete IDs instead of embedding another or missing organization.
+if (!/^[1-9]\d*$/.test(organizationId)) {
+  throw new Error('Yandex reviews require a numeric organization ID');
+}
+
+const widgetSrc = 'https://yandex.ru/maps-reviews-widget/'
+  + `${organizationId}?comments`;
+---
+
+{/* The reserved frame prevents layout shifts during lazy remote loading. */}
+<div class="yandex-reviews">
+  {enabled ? (
+    <iframe
+      class="yandex-reviews-frame"
+      src={widgetSrc}
+      title={`Отзывы о компании ${companyName} на Яндекс Картах`}
+      width="760"
+      height="700"
+      loading="lazy"
+    ></iframe>
+  ) : (
+    <img
+      class="yandex-reviews-placeholder"
+      src={placeholder.src}
+      alt={placeholder.alt}
+      width={placeholder.width}
+      height={placeholder.height}
+    />
+  )}
+  {/* Remain usable if Yandex is unavailable or blocked by the browser. */}
+  <p class="yandex-reviews-link">
+    <a
+      class="link link-primary"
+      href={reviewsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Читать отзывы на Яндекс Картах
+      <span class="sr-only">(откроется в новой вкладке)</span>
+    </a>
+  </p>
+</div>
+
+<style>
+  /* Yandex supports frame widths up to 760px; center it within the section. */
+  .yandex-reviews {
+    width: 100%;
+    max-width: 760px;
+    min-width: 0;
+    margin-inline: auto;
+  }
+
+  /* Preserve Yandex's minimum width within the gutters of a 320px screen.
+     The provider's white surface stays independent of the site's theme. */
+  .yandex-reviews-frame {
+    display: block;
+    width: max(100%, 300px);
+    height: 700px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-panel);
+    background: #ffffff;
+    color-scheme: light;
+  }
+
+  /* Keep development builds local and make the disabled state obvious. */
+  .yandex-reviews-placeholder {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-panel);
+    border: 1px solid var(--color-base-300);
+    background: var(--color-base-200);
+  }
+
+  /* The fallback link remains readable and wraps on narrow screens. */
+  .yandex-reviews-link {
+    margin-top: 1rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+</style>

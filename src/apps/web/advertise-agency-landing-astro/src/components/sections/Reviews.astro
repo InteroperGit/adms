@@ -1,24 +1,24 @@
 ---
-// Render supplied reviews as semantic quotations with author attribution.
-// Cards stay static and use the shared one/two/three-column grid.
-// Section titles and descriptions come from the site configuration.
+// Render current company reviews from the configured Yandex Maps profile.
+// The provider owns review content, ratings and moderation.
 
-import ReviewCard from '@/components/cards/ReviewCard.astro';
 import Section from '@/components/ui/Section.astro';
+import YandexReviews from '@/components/ui/YandexReviews.astro';
 import { site } from '@/content/site';
-import { reviews } from '@/content/reviews';
 ---
 
-{/* Section titles and descriptions come from the site configuration. */}
+{/* Section copy and Yandex settings come from site configuration. */}
 <Section
   id="reviews"
   title={site.sections.reviews.title}
   subtitle={site.sections.reviews.subtitle}
   background="default"
 >
-  <div class="grid min-w-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {reviews.map((review) => (
-      <ReviewCard review={review} />
-    ))}
-  </div>
+  <YandexReviews
+    enabled={site.yandexReviews.enabled}
+    organizationId={site.yandexReviews.organizationId}
+    companyName={site.logoText}
+    reviewsUrl={site.yandexReviews.reviewsUrl}
+    placeholder={site.yandexReviews.placeholder}
+  />
 </Section>

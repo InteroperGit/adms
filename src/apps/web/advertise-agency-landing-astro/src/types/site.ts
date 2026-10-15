@@ -13,6 +13,18 @@ export interface SectionContent {
   subtitle?: string;
 }
 
+export interface YandexReviewsConfig {
+  enabled: boolean;
+  organizationId: string;
+  reviewsUrl: string;
+  placeholder: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+}
+
 export interface SiteConfig {
   title: string;
   description: string;
@@ -30,6 +42,7 @@ export interface SiteConfig {
     width: number;
     height: number;
   };
+  yandexReviews: YandexReviewsConfig;
   menu: MenuItem[];
   legal: LegalItem[];
   sections: {

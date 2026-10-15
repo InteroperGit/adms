@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="700" viewBox="0 0 760 700">
+  <rect width="760" height="700" fill="#f3f5f7"/>
+  <rect x="24" y="24" width="712" height="652" rx="18" fill="#fff" stroke="#dce2e8"/>
+  <text x="64" y="92" fill="#18222d" font-family="Arial, sans-serif" font-size="28" font-weight="700">
+    Отзывы клиентов
+  </text>
+  <text x="64" y="132" fill="#526170" font-family="Arial, sans-serif" font-size="18">
+    Отзывы с Яндекс Карт будут показаны здесь
+  </text>
+  <rect x="64" y="174" width="632" height="120" rx="12" fill="#f3f5f7"/>
+  <text x="88" y="218" fill="#b2380a" font-family="Arial, sans-serif" font-size="30" font-weight="700">
+    ★★★★★
+  </text>
+  <text x="88" y="260" fill="#18222d" font-family="Arial, sans-serif" font-size="18">
+    Рейтинг и свежие отзывы компании
+  </text>
+  <rect x="64" y="322" width="632" height="128" rx="12" fill="#f3f5f7"/>
+  <circle cx="105" cy="366" r="24" fill="#dce2e8"/>
+  <rect x="145" y="346" width="220" height="14" rx="7" fill="#bdc8d4"/>
+  <rect x="145" y="378" width="470" height="12" rx="6" fill="#dce2e8"/>
+  <rect x="145" y="404" width="380" height="12" rx="6" fill="#dce2e8"/>
+  <rect x="64" y="478" width="632" height="128" rx="12" fill="#f3f5f7"/>
+  <circle cx="105" cy="522" r="24" fill="#dce2e8"/>
+  <rect x="145" y="502" width="180" height="14" rx="7" fill="#bdc8d4"/>
+  <rect x="145" y="534" width="500" height="12" rx="6" fill="#dce2e8"/>
+  <rect x="145" y="560" width="320" height="12" rx="6" fill="#dce2e8"/>
+</svg>
