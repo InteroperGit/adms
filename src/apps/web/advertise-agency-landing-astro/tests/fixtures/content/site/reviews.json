@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "name": "TEST_NAME",
+    "position": "TEST_POSITION",
+    "company": "TEST_COMPANY",
+    "text": "TEST_TEXT",
+    "avatar": "/review.png",
+    "avatarAlt": "TEST_AVATARALT",
+    "avatarWidth": 1,
+    "avatarHeight": 1
+  }
+]

@@ -1,0 +1,67 @@
+{
+  "demoMode": false,
+  "demoNotice": "TEST_DEMONOTICE",
+  "heading": "TEST_HEADING",
+  "introduction": "TEST_INTRODUCTION",
+  "guidance": [
+    {
+      "title": "TEST_TITLE",
+      "description": "TEST_DESCRIPTION",
+      "icon": "/images/guarantees/production.svg"
+    }
+  ],
+  "copyApproved": false,
+  "approvalSource": null,
+  "pendingInputs": ["TEST_PENDINGINPUTS"],
+  "productionOperations": [
+    {
+      "id": "sample",
+      "title": "TEST_TITLE",
+      "description": "TEST_DESCRIPTION",
+      "evidence": "TEST_EVIDENCE",
+      "approval": "draft"
+    }
+  ],
+  "materials": [
+    {
+      "id": "sample",
+      "title": "TEST_TITLE",
+      "description": "TEST_DESCRIPTION",
+      "evidence": "TEST_EVIDENCE",
+      "approval": "draft"
+    }
+  ],
+  "qualityChecks": [
+    {
+      "id": "sample",
+      "title": "TEST_TITLE",
+      "description": "TEST_DESCRIPTION",
+      "evidence": "TEST_EVIDENCE",
+      "approval": "draft"
+    }
+  ],
+  "photos": [],
+  "warrantyTerms": [
+    {
+      "id": "sample",
+      "title": "TEST_TITLE",
+      "coverage": "TEST_COVERAGE",
+      "duration": "TEST_DURATION",
+      "starts": "TEST_STARTS",
+      "conditions": ["TEST_CONDITIONS"],
+      "exclusions": ["TEST_EXCLUSIONS"],
+      "claimRoute": "TEST_CLAIMROUTE",
+      "sourceType": "pending",
+      "source": "TEST_SOURCE",
+      "approval": "draft"
+    }
+  ],
+  "maintenance": {
+    "scope": ["TEST_SCOPE"],
+    "customerResponsibilities": ["TEST_CUSTOMERRESPONSIBILITIES"],
+    "pricing": "TEST_PRICING",
+    "requestRoute": "TEST_REQUESTROUTE",
+    "approval": "draft"
+  },
+  "inquiryHref": "/#order-inquiry"
+}

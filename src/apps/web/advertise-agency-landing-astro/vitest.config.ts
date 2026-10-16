@@ -8,9 +8,15 @@ export default getViteConfig({
     // Category registries are imported by project types and validators.
     // Resolve their JSON to versioned data even on a clean CI checkout.
     alias: {
-      '@/data/content/project-categories.json': fileURLToPath(new URL(
-        './tests/fixtures/content/project-categories.json', import.meta.url,
-      )),
+      '@/data/content/project-categories.json': fileURLToPath(
+        new URL(
+          './tests/fixtures/content/project-categories.json',
+          import.meta.url,
+        ),
+      ),
+      '@/data/content': fileURLToPath(
+        new URL('./tests/fixtures/content/site', import.meta.url),
+      ),
     },
   },
   test: {
@@ -23,7 +29,7 @@ export default getViteConfig({
       'tests/**/*.{test,spec}.{ts,tsx}',
       'src/**/*.{test,spec}.{ts,tsx}',
     ],
-    exclude: ['node_modules', 'dist', 'output'],
+    exclude: ['node_modules', 'dist', 'output', 'tests/e2e/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov', 'json'],
@@ -44,6 +50,7 @@ export default getViteConfig({
         'src/components/content/resolve-image.ts',
         'src/server/inquiry-payload.ts',
         'src/scripts/project-catalog.ts',
+        'src/scripts/chart-runtime.ts',
         'src/components/forms/order-inquiry.ts',
         'src/components/ui/{Button,Section,Breadcrumbs,ContactInfo}.astro',
         'src/components/cards/*.astro',
@@ -53,4 +60,3 @@ export default getViteConfig({
     },
   },
 } as Parameters<typeof getViteConfig>[0]);
-

@@ -36,10 +36,10 @@
 - `production-and-guarantees.ts`, `project-catalog.ts`, `projects.ts`;
 - `reviews.ts`, `service-articles.ts`, `services.ts`.
 
-Для каждой схемы нужны успешные fixtures, граничные значения, malformed
-values, unknown keys, безопасные URL, уникальность ID и проверка диагностик.
-Особенно подробно покрыть discriminated unions content blocks, media,
-provenance, forms, approval и published-path constraints.
+Для каждой схемы нужны успешные fixtures, граничные значения, malformed values,
+unknown keys, безопасные URL, уникальность ID и проверка диагностик. Особенно
+подробно покрыть discriminated unions content blocks, media, provenance, forms,
+approval и published-path constraints.
 
 ## Этап 3. Content и publication logic
 
@@ -64,10 +64,10 @@ lookup, price formatting, approved content и корректность JSON-да
 
 ### `src/server/inquiry-payload.ts`
 
-Проверить homepage и lettering payloads, required/optional fields, length и
-type limits, email/phone/date/numeric values, consent, UUID, allow-lists,
-unexpected fields, unsafe URLs, credentials и normalized output. Убедиться,
-что модуль не выполняет сетевые запросы.
+Проверить homepage и lettering payloads, required/optional fields, length и type
+limits, email/phone/date/numeric values, consent, UUID, allow-lists, unexpected
+fields, unsafe URLs, credentials и normalized output. Убедиться, что модуль не
+выполняет сетевые запросы.
 
 ### `src/components/content/resolve-image.ts`
 
@@ -142,8 +142,8 @@ disclosure для:
 - `content/mdx-components.ts`.
 
 Проверять semantic HTML, escaping, captions, links, empty data, responsive
-metadata, fallback/error states, transcript, lightbox progressive enhancement
-и publication context.
+metadata, fallback/error states, transcript, lightbox progressive enhancement и
+publication context.
 
 ## Этап 7. Forms
 
@@ -209,8 +209,8 @@ banner не управляет загрузкой внешних ресурсо�
   `terms-of-use.astro`;
 - `pages/projects/index.astro`, `projects/[id].astro`,
   `projects/page/[page].astro`;
-- `pages/services/montazh.astro`, `neon.astro`,
-  `obyomnye-konstruktsii.astro`, `svetovye-bukvy.astro`, `vyveski.astro`.
+- `pages/services/montazh.astro`, `neon.astro`, `obyomnye-konstruktsii.astro`,
+  `svetovye-bukvy.astro`, `vyveski.astro`.
 
 Проверить metadata, canonical/robots, heading hierarchy, layout composition,
 empty/demo content, no-JS reading order и generated links.
@@ -264,9 +264,9 @@ pnpm test:integration
 - components — минимум 70%;
 - overall — минимум 80%.
 
-Приоритет реализации: schemas/content/server, затем browser state и forms,
-после этого Astro branches, затем layouts/pages и integration. Такой порядок
-сначала стабилизирует contracts и fixtures, от которых зависят все render tests.
+Приоритет реализации: schemas/content/server, затем browser state и forms, после
+этого Astro branches, затем layouts/pages и integration. Такой порядок сначала
+стабилизирует contracts и fixtures, от которых зависят все render tests.
 
 ## Разбиение на задачи
 
@@ -278,9 +278,9 @@ pnpm test:integration
 - `094-validation-basic-domains.md` — FAQ, intro, reviews и basic domains;
 - [095 — commerce, projects и services][task-095] — completed 2026-10-16;
 - [096 — publication helpers и registries][task-096] — completed 2026-10-16;
-- `097-inquiry-payload-tests.md` — server payload validator;
-- `098-image-and-chart-utils.md` — image resolver и chart runtime;
-- `099-inquiry-browser-module.md` — client inquiry state;
+- [097 — server payload validator][task-097] — completed 2026-10-16;
+- [098 — image resolver и chart runtime][task-098] — completed 2026-10-16;
+- [099 — client inquiry state][task-099] — completed 2026-10-16;
 - `100-carousel-and-reveal-scripts.md` — carousel/reveal scripts;
 - `101-ui-primitives-tests.md` — базовые UI-компоненты;
 - `102-theme-and-navigation-components.md` — theme, navigation и media UI;
@@ -297,9 +297,12 @@ pnpm test:integration
 - `113-route-and-type-contracts.md` — route handlers и type contracts;
 - `114-integration-matrix-and-gates.md` — composition и финальные gates.
 
-Каждая задача ограничена одной ответственностью и содержит зависимости,
-границы работы и критерии готовности, чтобы реализация не требовала чтения
-всего плана в одном контексте.
+Каждая задача ограничена одной ответственностью и содержит зависимости, границы
+работы и критерии готовности, чтобы реализация не требовала чтения всего плана в
+одном контексте.
 
 [task-095]: ../fixed/20261016/095-validation-commerce-and-catalog.md
 [task-096]: ../fixed/20261016/096-content-publication-logic.md
+[task-097]: ../fixed/20261016/097-inquiry-payload-tests.md
+[task-098]: ../fixed/20261016/098-image-and-chart-utils.md
+[task-099]: ../fixed/20261016/099-inquiry-browser-module.md

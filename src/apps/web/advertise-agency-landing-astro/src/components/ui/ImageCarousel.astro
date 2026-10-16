@@ -9,7 +9,8 @@ import type {
   CarouselPresentation,
 } from '@/types/image-carousel';
 import {
-  carouselItemsSchema, carouselOptionsSchema,
+  carouselItemsSchema,
+  carouselOptionsSchema,
 } from '@/validation/image-carousel';
 
 interface Props {
@@ -18,10 +19,12 @@ interface Props {
   label: string;
   itemLabel?: string;
   slideIdPrefix?: string;
-  items: Array<Omit<CarouselItem, 'enabled' | 'presentation'> & {
-    enabled?: boolean;
-    presentation?: Partial<CarouselPresentation>;
-  }>;
+  items: Array<
+    Omit<CarouselItem, 'enabled' | 'presentation'> & {
+      enabled?: boolean;
+      presentation?: Partial<CarouselPresentation>;
+    }
+  >;
   options?: Partial<CarouselOptions>;
 }
 
@@ -37,8 +40,10 @@ if (!/^[a-zA-Z][\w-]*$/.test(id) || !label.trim()) {
   throw new Error('ImageCarousel needs a unique HTML id and a label');
 }
 const options = carouselOptionsSchema.parse(suppliedOptions);
-const items = carouselItemsSchema.parse(suppliedItems)
-  .filter(item => item.enabled);
+const items = carouselItemsSchema
+  .parse(suppliedItems)
+  .filter((item) => item.enabled);
+const itemName = itemLabel.toLowerCase();
 const multiple = items.length > 1;
 const arrows = multiple && options.manualNavigation && options.arrows;
 const circles = multiple && options.circles;
@@ -72,7 +77,7 @@ const circles = multiple && options.circles;
             direction="previous"
             className="carousel-arrow"
             dataDirection="-1"
-            label={`Предыдущее: ${itemLabel.toLowerCase()}`}
+            label={`Предыдущее: ${itemName}`}
           />
         )}
         {circles && (
@@ -82,21 +87,23 @@ const circles = multiple && options.circles;
             aria-label={options.manualNavigation ? 'Выбор изображения' : null}
             aria-hidden={options.manualNavigation ? undefined : 'true'}
           >
-            {items.map((item, index) => options.manualNavigation ? (
-              <button
-                type="button"
-                class="carousel-dot"
-                data-index={index}
-                aria-label={`Показать: ${itemLabel.toLowerCase()} ${index + 1}`}
-                aria-controls={`${slideIdPrefix}-${item.id}`}
-              >
-                <span aria-hidden="true"></span>
-              </button>
-            ) : (
-              <span class="carousel-dot" data-index={index}>
-                <span></span>
-              </span>
-            ))}
+            {items.map((item, index) =>
+              options.manualNavigation ? (
+                <button
+                  type="button"
+                  class="carousel-dot"
+                  data-index={index}
+                  aria-label={`Показать: ${itemName} ${index + 1}`}
+                  aria-controls={`${slideIdPrefix}-${item.id}`}
+                >
+                  <span aria-hidden="true"></span>
+                </button>
+              ) : (
+                <span class="carousel-dot" data-index={index}>
+                  <span></span>
+                </span>
+              ),
+            )}
           </div>
         )}
         {arrows && (
@@ -104,7 +111,7 @@ const circles = multiple && options.circles;
             direction="next"
             className="carousel-arrow"
             dataDirection="1"
-            label={`Следующее: ${itemLabel.toLowerCase()}`}
+            label={`Следующее: ${itemName}`}
           />
         )}
       </div>

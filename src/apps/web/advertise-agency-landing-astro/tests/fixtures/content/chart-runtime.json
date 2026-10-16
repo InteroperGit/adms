@@ -1,0 +1,20 @@
+{
+  "chartType": "bar",
+  "unit": "orders",
+  "series": [
+    {
+      "name": "Online",
+      "points": [
+        { "label": "Jan", "value": 0 },
+        { "label": "Feb", "value": 12 }
+      ]
+    },
+    {
+      "name": "Offline",
+      "points": [
+        { "label": "Feb", "value": 8 },
+        { "label": "Mar", "value": 5 }
+      ]
+    }
+  ]
+}

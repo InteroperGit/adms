@@ -1,0 +1,14 @@
+node_modules/
+.codex/
+.agents/
+.astro/
+.git/
+.tmp/
+.pnpm-store/
+dist/
+output/
+coverage/
+.playwright-cli/
+data/content*/
+pnpm-lock.yaml
+src/env.d.ts

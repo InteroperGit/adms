@@ -27,6 +27,9 @@ jobs:
           cache-dependency-path: |
             src/apps/web/advertise-agency-landing-astro/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
+      - run: node scripts/prepare-ci-content.mjs
+      - run: pnpm format:check
+      - run: pnpm lint
       - run: pnpm verify:boundaries
       - run: pnpm verify:content
       - run: pnpm check
@@ -40,7 +43,12 @@ jobs:
       - run: pnpm verify:coverage
       - run: pnpm build
       - run: pnpm verify:quality
-      - run: pnpm astro dev --background
-      - run: npx --yes --package @playwright/cli playwright-cli open http://localhost:4321/
-      - run: npx --yes --package @playwright/cli playwright-cli run-code --filename docs/development/browser-coverage.js
-      - run: pnpm astro dev stop
+      - run: pnpm exec playwright install --with-deps
+      - run: pnpm test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-diagnostics
+          path: |
+            src/apps/web/advertise-agency-landing-astro/output/playwright
+          retention-days: 7

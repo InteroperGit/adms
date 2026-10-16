@@ -64,8 +64,7 @@ const { items, phone } = Astro.props;
 </style>
 
 <script>
-  const opener =
-    document.querySelector<HTMLButtonElement>('#mobile-menu-open');
+  const opener = document.querySelector<HTMLButtonElement>('#mobile-menu-open');
   const menu = document.querySelector<HTMLDialogElement>('#mobile-menu');
   // Enhance only when the shared header and native dialog are both present.
   if (opener && menu) {
@@ -73,14 +72,15 @@ const { items, phone } = Astro.props;
       menu.showModal();
       opener.setAttribute('aria-expanded', 'true');
     });
-    menu.addEventListener('close', () =>
-      opener.setAttribute('aria-expanded', 'false'),
-    );
+    menu.addEventListener('close', () => {
+      opener.setAttribute('aria-expanded', 'false');
+      // Safari does not focus buttons on pointer activation automatically.
+      opener.focus({ preventScroll: true });
+    });
     // Wrap Tab at the modal boundaries while leaving native Escape intact.
     menu.addEventListener('keydown', (event) => {
       if (event.key !== 'Tab') return;
-      const controls =
-        menu.querySelectorAll<HTMLElement>('button, a[href]');
+      const controls = menu.querySelectorAll<HTMLElement>('button, a[href]');
       const first = controls[0];
       const last = controls[controls.length - 1];
       if (event.shiftKey && document.activeElement === first) {
@@ -109,19 +109,11 @@ const { items, phone } = Astro.props;
     // Preserve modified navigation; same-page links focus their section.
     menu.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
       link.addEventListener('click', (event) => {
-        if (
-          event.ctrlKey ||
-          event.metaKey ||
-          event.shiftKey ||
-          event.altKey
-        )
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
           return;
         menu.close();
         const destination = new URL(link.href);
-        if (
-          destination.pathname === location.pathname &&
-          destination.hash
-        ) {
+        if (destination.pathname === location.pathname && destination.hash) {
           const section = document.getElementById(
             decodeURIComponent(destination.hash.slice(1)),
           );

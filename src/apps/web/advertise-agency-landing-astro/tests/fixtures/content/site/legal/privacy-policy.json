@@ -1,0 +1,11 @@
+{
+  "title": "TEST_TITLE",
+  "description": "TEST_DESCRIPTION",
+  "effectiveDate": "TEST_EFFECTIVEDATE",
+  "sections": [
+    {
+      "heading": "TEST_HEADING",
+      "content": "TEST_CONTENT"
+    }
+  ]
+}

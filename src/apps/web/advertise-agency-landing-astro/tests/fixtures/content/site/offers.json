@@ -1,0 +1,85 @@
+{
+  "enabled": true,
+  "autoplay": true,
+  "intervalMs": 7000,
+  "items": [
+    {
+      "id": 1,
+      "enabled": true,
+      "description": "Synthetic offer 1",
+      "presentation": {
+        "fontSizeRem": 1,
+        "textColor": "#ffffff",
+        "horizontal": "left",
+        "vertical": "bottom",
+        "overlay": "dark",
+        "focalPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "mobileFocalPoint": {
+          "x": 1,
+          "y": 1
+        }
+      },
+      "image": "/favicon.svg",
+      "imageAlt": "TEST_IMAGEALT",
+      "imageWidth": 400,
+      "imageHeight": 300,
+      "linkLabel": "TEST_LINKLABEL",
+      "href": "/#order-inquiry"
+    },
+    {
+      "id": 2,
+      "enabled": true,
+      "description": "Synthetic offer 2",
+      "presentation": {
+        "fontSizeRem": 1,
+        "textColor": "#ffffff",
+        "horizontal": "left",
+        "vertical": "bottom",
+        "overlay": "dark",
+        "focalPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "mobileFocalPoint": {
+          "x": 1,
+          "y": 1
+        }
+      },
+      "image": "/favicon.svg",
+      "imageAlt": "TEST_IMAGEALT",
+      "imageWidth": 400,
+      "imageHeight": 300,
+      "linkLabel": "TEST_LINKLABEL",
+      "href": "/#order-inquiry"
+    },
+    {
+      "id": 3,
+      "enabled": true,
+      "description": "Synthetic offer 3",
+      "presentation": {
+        "fontSizeRem": 1,
+        "textColor": "#ffffff",
+        "horizontal": "left",
+        "vertical": "bottom",
+        "overlay": "dark",
+        "focalPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "mobileFocalPoint": {
+          "x": 1,
+          "y": 1
+        }
+      },
+      "image": "/favicon.svg",
+      "imageAlt": "TEST_IMAGEALT",
+      "imageWidth": 400,
+      "imageHeight": 300,
+      "linkLabel": "TEST_LINKLABEL",
+      "href": "/#order-inquiry"
+    }
+  ]
+}

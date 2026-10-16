@@ -1,0 +1,53 @@
+{
+  "title": "TEST_TITLE",
+  "subtitle": "TEST_SUBTITLE",
+  "requiredNote": "TEST_REQUIREDNOTE",
+  "privacyLabel": "TEST_PRIVACYLABEL",
+  "submitLabel": "TEST_SUBMITLABEL",
+  "consent": {
+    "approved": true,
+    "label": "TEST_LABEL"
+  },
+  "submission": {
+    "enabled": false,
+    "endpoint": "/__fixture/inquiry",
+    "timeoutMs": 1000
+  },
+  "fields": {
+    "name": {
+      "label": "TEST_LABEL",
+      "hint": "TEST_HINT",
+      "required": true,
+      "maxLength": 100
+    },
+    "email": {
+      "label": "TEST_LABEL",
+      "hint": "TEST_HINT",
+      "required": true,
+      "maxLength": 100
+    },
+    "phone": {
+      "label": "TEST_LABEL",
+      "hint": "TEST_HINT",
+      "required": false,
+      "maxLength": 40
+    },
+    "message": {
+      "label": "TEST_LABEL",
+      "hint": "TEST_HINT",
+      "required": true,
+      "maxLength": 100
+    }
+  },
+  "feedback": {
+    "unavailable": "TEST_UNAVAILABLE",
+    "noJavaScript": "Enable JavaScript for inquiry",
+    "invalid": "TEST_INVALID",
+    "sending": "TEST_SENDING",
+    "success": "TEST_SUCCESS",
+    "failure": "TEST_FAILURE",
+    "required": "TEST_REQUIRED",
+    "email": "test@example.com",
+    "tooLong": "TEST_TOOLONG"
+  }
+}

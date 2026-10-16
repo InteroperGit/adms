@@ -1,4 +1,43 @@
-# Latest task — 096, 2026-10-16
+# Task created — 115, 2026-10-16
+
+- Added planned task for Prettier, ESLint and Playwright Test setup.
+- Task: [115](../docs/codex/todo/115-prettier-eslint-playwright.md).
+- Includes Astro support, CLI smoke migration, browser matrix and CI gates.
+- Implementation is pending; dependencies and application code unchanged.
+
+# Latest task — 099, 2026-10-16
+
+- Completed task 099 without subagents; archived in fixed/20261016/.
+- Expanded colocated inquiry browser suite from 18 to 42 tests.
+- Inquiry: 100% statements/functions/lines, 96.1% branches.
+- Full regression suite: 100 files, 628 tests pass.
+- Type/style, colocation, content checks and build pass (39 pages).
+- Existing Zod hint and large-chunk warning remain.
+- Production code and runtime content unchanged; fetch is mocked.
+- Next pending task: 100-carousel-and-reveal-scripts.md.
+
+# Previous task — 098, 2026-10-16
+
+- Completed task 098 without subagents; archived in fixed/20261016/.
+- Added 17 chart runtime tests and expanded image resolver tests to five.
+- Chart: 100% coverage; image resolver: 100% lines and functions.
+- Full regression suite: 100 files, 604 tests pass.
+- Type/style, colocation, content checks and build pass (39 pages).
+- Existing Zod hint and large-chunk warning remain.
+- Production code and runtime content unchanged.
+- Next pending task: 099-inquiry-browser-module.md.
+
+# Previous task — 097, 2026-10-16
+
+- Completed task 097 without subagents; archived in fixed/20261016/.
+- Added 169 colocated server inquiry tests and synthetic versioned fixtures.
+- Validator: 100% statements, branches, functions and lines.
+- Full regression suite: 99 files, 584 tests pass; colocation gate passes.
+- Type checking and style pass; existing Zod deprecation hint remains.
+- Production code and runtime content unchanged.
+- Next pending task: 098-image-and-chart-utils.md.
+
+# Previous task — 096, 2026-10-16
 
 - Completed task 096 without subagents; archived in fixed/20261016/.
 - Added eleven colocated content publication/registry suites (52 tests).

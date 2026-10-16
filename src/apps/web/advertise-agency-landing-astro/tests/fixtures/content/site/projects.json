@@ -1,0 +1,119 @@
+[
+  {
+    "id": 1,
+    "category": "sample",
+    "status": "demo",
+    "notice": "Synthetic demo",
+    "title": "Synthetic project 1",
+    "client": "Sample",
+    "attribution": "generic",
+    "description": "Synthetic project",
+    "article": {
+      "format": "json",
+      "reason": "Synthetic browser fixture",
+      "content": [
+        {
+          "type": "paragraph",
+          "paragraphs": ["Synthetic copy"]
+        },
+        {
+          "type": "image-gallery",
+          "id": "gallery",
+          "caption": "Fixture gallery",
+          "images": [
+            {
+              "src": "/favicon.svg",
+              "alt": "One",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Two",
+              "width": 400,
+              "height": 300
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "category": "sample",
+    "status": "demo",
+    "notice": "Synthetic demo",
+    "title": "Synthetic project 2",
+    "client": "Sample",
+    "attribution": "generic",
+    "description": "Synthetic project",
+    "article": {
+      "format": "json",
+      "reason": "Synthetic browser fixture",
+      "content": [
+        {
+          "type": "paragraph",
+          "paragraphs": ["Synthetic copy"]
+        },
+        {
+          "type": "image-gallery",
+          "id": "gallery",
+          "caption": "Fixture gallery",
+          "images": [
+            {
+              "src": "/favicon.svg",
+              "alt": "One",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Two",
+              "width": 400,
+              "height": 300
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "category": "other",
+    "status": "demo",
+    "notice": "Synthetic demo",
+    "title": "Synthetic project 3",
+    "client": "Sample",
+    "attribution": "generic",
+    "description": "Synthetic project",
+    "article": {
+      "format": "json",
+      "reason": "Synthetic browser fixture",
+      "content": [
+        {
+          "type": "paragraph",
+          "paragraphs": ["Synthetic copy"]
+        },
+        {
+          "type": "image-gallery",
+          "id": "gallery",
+          "caption": "Fixture gallery",
+          "images": [
+            {
+              "src": "/favicon.svg",
+              "alt": "One",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Two",
+              "width": 400,
+              "height": 300
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

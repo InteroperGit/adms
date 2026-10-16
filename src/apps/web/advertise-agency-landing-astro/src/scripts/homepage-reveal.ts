@@ -16,11 +16,10 @@ export function initializeHomepageReveal(): void {
     return;
   }
 
-  const sections = [...container.querySelectorAll<HTMLElement>(
-    sectionSelector,
-  )];
+  const sections = [
+    ...container.querySelectorAll<HTMLElement>(sectionSelector),
+  ];
   const pending = new Set<HTMLElement>();
-  let observer: IntersectionObserver;
 
   // Decode IDs rather than treating arbitrary fragments as CSS selectors.
   const hashTarget = (hash: string): HTMLElement | null => {
@@ -59,7 +58,7 @@ export function initializeHomepageReveal(): void {
   // Find the owning top-level section without modifying nested sections.
   const revealTarget = (target: EventTarget | null): void => {
     if (!(target instanceof Node)) return;
-    const section = sections.find(item => item.contains(target));
+    const section = sections.find((item) => item.contains(target));
     if (section) reveal(section, true);
   };
 
@@ -91,11 +90,14 @@ export function initializeHomepageReveal(): void {
   };
 
   // Reveal just before entry, then stop watching each section.
-  observer = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) reveal(entry.target as HTMLElement);
-    }
-  }, { threshold: 0, rootMargin: '0px 0px 80px 0px' });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) reveal(entry.target as HTMLElement);
+      }
+    },
+    { threshold: 0, rootMargin: '0px 0px 80px 0px' },
+  );
 
   // Direct hash/focus targets never acquire a hidden state or flash.
   const initialTarget = hashTarget(window.location.hash);
@@ -104,7 +106,8 @@ export function initializeHomepageReveal(): void {
       inViewport(section) ||
       (initialTarget && section.contains(initialTarget)) ||
       section.contains(document.activeElement)
-    ) continue;
+    )
+      continue;
     pending.add(section);
     section.dataset.revealState = 'pending';
     observer.observe(section);

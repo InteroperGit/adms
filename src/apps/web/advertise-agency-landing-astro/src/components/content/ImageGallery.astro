@@ -15,9 +15,7 @@ type GalleryImage = ImageGallery['images'][number];
 const { block, priority = false } = Astro.props as Props;
 // Share emitted asset URLs between no-JS links and the enhanced lightbox.
 const images: GalleryImage[] = block.images;
-const links = await Promise.all(
-  block.images.map(resolveContentImage),
-);
+const links = await Promise.all(block.images.map(resolveContentImage));
 const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
 ---
 
@@ -42,10 +40,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
           data-gallery-open={index}
           aria-current={index === 0 ? 'true' : undefined}
         >
-          <ContentImage
-            image={image}
-            thumbnail
-          />
+          <ContentImage image={image} thumbnail />
         </a>
       ))}
     </div>
@@ -131,8 +126,9 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
     caption?: string;
   }
 
-  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach(
-    (gallery: HTMLElement) => {
+  document
+    .querySelectorAll<HTMLElement>('[data-gallery]')
+    .forEach((gallery: HTMLElement) => {
       const thumbnails = Array.from(
         gallery.querySelectorAll<HTMLAnchorElement>('[data-gallery-open]'),
       ).filter((thumbnail) => !thumbnail.hasAttribute('data-gallery-main'));
@@ -168,9 +164,16 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
       );
 
       if (
-        !dialog || !image || !caption || !announcement || !closeButton
-        || !previousButton || !nextButton || !mainLink || !mainImage
-        || thumbnails.length === 0
+        !dialog ||
+        !image ||
+        !caption ||
+        !announcement ||
+        !closeButton ||
+        !previousButton ||
+        !nextButton ||
+        !mainLink ||
+        !mainImage ||
+        thumbnails.length === 0
       ) {
         return;
       }
@@ -198,9 +201,10 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
         const previousIndex = currentIndex;
         currentIndex = (index + thumbnails.length) % thumbnails.length;
         const item = getItem(currentIndex);
-        const animationClass = currentIndex >= previousIndex
-          ? 'gallery-image-slide-left'
-          : 'gallery-image-slide-right';
+        const animationClass =
+          currentIndex >= previousIndex
+            ? 'gallery-image-slide-left'
+            : 'gallery-image-slide-right';
 
         image.src = item.src;
         image.alt = item.alt;
@@ -216,8 +220,9 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
         // Its aspect ratio stays fixed to avoid moving following content.
         caption.textContent = item.caption ?? '';
         caption.hidden = !item.caption;
-        announcement.textContent =
-          `Изображение ${currentIndex + 1} из ${thumbnails.length}`;
+        const total = thumbnails.length;
+        const position = currentIndex + 1;
+        announcement.textContent = `Изображение ${position} из ${total}`;
         thumbnails.forEach((thumbnail, thumbnailIndex) => {
           if (thumbnailIndex === currentIndex) {
             thumbnail.setAttribute('aria-current', 'true');
@@ -233,7 +238,8 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
           }
         });
         image.classList.remove(
-          'gallery-image-slide-left', 'gallery-image-slide-right',
+          'gallery-image-slide-left',
+          'gallery-image-slide-right',
         );
         void image.offsetWidth;
         image.classList.add(animationClass);
@@ -242,9 +248,8 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
       };
 
       const openGallery = (index: number): void => {
-        returnFocus = document.activeElement instanceof HTMLElement
-          ? document.activeElement
-          : null;
+        // Safari pointer clicks do not necessarily focus the opening link.
+        returnFocus = mainLink;
         showImage(index);
         previousOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
@@ -305,9 +310,11 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
 
       dialog.addEventListener('keydown', (event: KeyboardEvent) => {
         if (event.key === 'Tab') {
-          const focusable = Array.from(dialog.querySelectorAll<HTMLElement>(
-            'button:not([hidden]), [href], [tabindex]:not([tabindex="-1"])',
-          )).filter((element) => !element.hasAttribute('disabled'));
+          const focusable = Array.from(
+            dialog.querySelectorAll<HTMLElement>(
+              'button:not([hidden]), [href], [tabindex]:not([tabindex="-1"])',
+            ),
+          ).filter((element) => !element.hasAttribute('disabled'));
           if (focusable.length > 0) {
             const first = focusable[0];
             const last = focusable[focusable.length - 1];
@@ -331,14 +338,12 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
           showImage(currentIndex + 1);
         }
       });
-    },
-  );
+    });
 </script>
 
 <style>
   /* Keep the selected image large and stable while it loads. */
-  .gallery-main
-  {
+  .gallery-main {
     display: block;
     padding: clamp(0.35rem, 1vw, 0.75rem);
     background: var(--color-base-100);
@@ -349,8 +354,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Keep the gallery figure aligned with the enclosing local surface. */
-  .content-gallery
-  {
+  .content-gallery {
     display: grid;
     gap: 0.875rem;
     min-width: 0;
@@ -358,14 +362,12 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Make the main image fill the reading column without cropping it. */
-  .gallery-main :global(.content-media-frame)
-  {
+  .gallery-main :global(.content-media-frame) {
     width: 100%;
   }
 
   /* Put all choices in one horizontally scrollable thumbnail strip. */
-  .gallery-thumbnails
-  {
+  .gallery-thumbnails {
     display: flex;
     gap: 0.5rem;
     padding: 0.375rem 0;
@@ -376,8 +378,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Keep each thumbnail compact while preserving its keyboard target. */
-  .gallery-thumbnail
-  {
+  .gallery-thumbnail {
     display: block;
     flex: 0 0 clamp(5rem, 16vw, 8rem);
     width: clamp(5rem, 16vw, 8rem);
@@ -388,12 +389,13 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
     cursor: pointer;
     text-decoration: none;
     opacity: 0.62;
-    transition: border-color 160ms ease, opacity 160ms ease;
+    transition:
+      border-color 160ms ease,
+      opacity 160ms ease;
   }
 
   /* Mark the image currently shown in the main viewer. */
-  .gallery-thumbnail[aria-current="true"]
-  {
+  .gallery-thumbnail[aria-current='true'] {
     border-color: var(--color-primary);
     box-shadow: inset 0 0 0 1px var(--color-primary);
     opacity: 1;
@@ -401,22 +403,19 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
 
   /* Restore contrast when a pointer explores an inactive thumbnail. */
   .gallery-thumbnail:hover,
-  .gallery-thumbnail:focus-visible
-  {
+  .gallery-thumbnail:focus-visible {
     border-color: var(--content-block-accent);
     opacity: 0.9;
   }
 
   /* Keep the active thumbnail ring clear for keyboard users. */
-  .gallery-thumbnail:focus-visible
-  {
+  .gallery-thumbnail:focus-visible {
     outline: 2px solid var(--content-block-accent);
     outline-offset: 2px;
   }
 
   /* Treat the gallery caption as editorial metadata beneath the surface. */
-  .content-gallery > figcaption
-  {
+  .content-gallery > figcaption {
     max-width: 65ch;
     color: var(--content-block-caption);
     font-size: 0.9375rem;
@@ -424,14 +423,12 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Let thumbnail images use the full compact tile width. */
-  .gallery-thumbnail :global(.content-media-frame)
-  {
+  .gallery-thumbnail :global(.content-media-frame) {
     width: 100%;
   }
 
   /* Cover the viewport while the selected image is being inspected. */
-  .gallery-lightbox
-  {
+  .gallery-lightbox {
     position: fixed;
     inset: 0;
     z-index: 1000;
@@ -452,20 +449,17 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Hide the native dialog until the user opens the gallery. */
-  .gallery-lightbox:not([open])
-  {
+  .gallery-lightbox:not([open]) {
     display: none;
   }
 
   /* Dim the document beneath the native modal dialog. */
-  .gallery-lightbox::backdrop
-  {
+  .gallery-lightbox::backdrop {
     background: rgb(0 0 0 / 55%);
   }
 
   /* Keep the selected image within the visible viewport. */
-  .gallery-view
-  {
+  .gallery-view {
     grid-column: 1;
     grid-row: 1;
     justify-self: center;
@@ -481,8 +475,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Show the image without cropping its source content. */
-  .gallery-image
-  {
+  .gallery-image {
     display: block;
     width: 100%;
     max-width: calc(100vw - 1.5rem);
@@ -494,48 +487,39 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Slide a newly selected image in from the right. */
-  .gallery-image-slide-left
-  {
+  .gallery-image-slide-left {
     animation: gallery-slide-left 360ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* Slide back in from the left when moving to the previous image. */
-  .gallery-image-slide-right
-  {
+  .gallery-image-slide-right {
     animation: gallery-slide-right 360ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  @keyframes gallery-slide-left
-  {
-    from
-    {
+  @keyframes gallery-slide-left {
+    from {
       opacity: 0.35;
       transform: translateX(1.5rem);
     }
-    to
-    {
+    to {
       opacity: 1;
       transform: translateX(0);
     }
   }
 
-  @keyframes gallery-slide-right
-  {
-    from
-    {
+  @keyframes gallery-slide-right {
+    from {
       opacity: 0.35;
       transform: translateX(-1.5rem);
     }
-    to
-    {
+    to {
       opacity: 1;
       transform: translateX(0);
     }
   }
 
   /* Overlay the selected image caption at its lower edge. */
-  .gallery-caption
-  {
+  .gallery-caption {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -550,8 +534,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
 
   /* Keep close and image navigation controls easy to locate. */
   :global(.gallery-close),
-  :global(.gallery-navigation)
-  {
+  :global(.gallery-navigation) {
     width: 2.75rem;
     height: 2.75rem;
     min-width: 2.75rem;
@@ -566,24 +549,23 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
     display: grid;
     place-items: center;
     box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 25%);
-    transition: background-color 160ms ease, color 160ms ease;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
   }
 
   /* Give pointer and keyboard users a clear, polished control response. */
   :global(.gallery-close):focus-visible,
-  :global(.gallery-navigation):focus-visible
-  {
+  :global(.gallery-navigation):focus-visible {
     background: white;
     color: #111827;
   }
 
   /* Hover feedback belongs to a mouse, avoiding sticky touch highlights. */
-  @media (hover: hover) and (pointer: fine)
-  {
+  @media (hover: hover) and (pointer: fine) {
     /* Invert the control colors without moving their overlay positions. */
     :global(.gallery-close):hover,
-    :global(.gallery-navigation):hover
-    {
+    :global(.gallery-navigation):hover {
       background: white;
       color: #111827;
     }
@@ -592,30 +574,26 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   /* Keep the focus ring visible against both dark and light images. */
   :global(.gallery-close):focus-visible,
   :global(.gallery-navigation):focus-visible,
-  .gallery-lightbox-thumbnail:focus-visible
-  {
+  .gallery-lightbox-thumbnail:focus-visible {
     outline: 2px solid white;
     outline-offset: 3px;
   }
 
   /* Place the close action in the upper-right corner. */
-  :global(.gallery-close)
-  {
+  :global(.gallery-close) {
     position: absolute;
     top: 1rem;
     right: 1rem;
   }
 
   /* Hide side navigation until hover or keyboard focus reveals it. */
-  :global(.gallery-navigation)
-  {
+  :global(.gallery-navigation) {
     opacity: 0;
     transition: opacity 160ms ease;
   }
 
   /* Align the previous control beside the selected image. */
-  :global(.gallery-previous)
-  {
+  :global(.gallery-previous) {
     position: absolute;
     top: 50%;
     left: 1rem;
@@ -624,8 +602,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Keep the next control opposite the previous control. */
-  :global(.gallery-next)
-  {
+  :global(.gallery-next) {
     position: absolute;
     top: 50%;
     right: 1rem;
@@ -635,14 +612,12 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
 
   /* Keep navigation visible while the pointer or keyboard engages it. */
   .gallery-lightbox:hover :global(.gallery-navigation),
-  .gallery-lightbox:focus-within :global(.gallery-navigation)
-  {
+  .gallery-lightbox:focus-within :global(.gallery-navigation) {
     opacity: 1;
   }
 
   /* Keep the live image count and position controls centered. */
-  .gallery-position
-  {
+  .gallery-position {
     grid-column: 1;
     grid-row: 2;
     display: flex;
@@ -653,14 +628,12 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Keep the current image announcement readable. */
-  .gallery-announcement
-  {
+  .gallery-announcement {
     text-align: center;
   }
 
   /* Represent each image position with a round button. */
-  .gallery-lightbox-thumbnails
-  {
+  .gallery-lightbox-thumbnails {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
@@ -670,8 +643,7 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Make each modal thumbnail a compact, keyboard-friendly choice. */
-  .gallery-lightbox-thumbnail
-  {
+  .gallery-lightbox-thumbnail {
     flex: 0 0 4.5rem;
     width: 4.5rem;
     height: 3rem;
@@ -681,12 +653,13 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
     border-radius: 0.2rem;
     background: rgb(20 20 24 / 72%);
     cursor: pointer;
-    transition: border-color 160ms ease, opacity 160ms ease;
+    transition:
+      border-color 160ms ease,
+      opacity 160ms ease;
   }
 
   /* Keep modal thumbnails proportional without distorting their subjects. */
-  .gallery-lightbox-thumbnail img
-  {
+  .gallery-lightbox-thumbnail img {
     display: block;
     width: 100%;
     height: 100%;
@@ -694,77 +667,63 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
   }
 
   /* Highlight the thumbnail that owns the main viewer image. */
-  .gallery-lightbox-thumbnail[aria-current="true"]
-  {
+  .gallery-lightbox-thumbnail[aria-current='true'] {
     border-color: white;
     opacity: 1;
   }
 
   /* Keep inactive thumbnails discoverable without competing with the image. */
-  .gallery-lightbox-thumbnail:not([aria-current="true"])
-  {
+  .gallery-lightbox-thumbnail:not([aria-current='true']) {
     opacity: 0.72;
   }
 
   /* Restore full contrast while a pointer explores a thumbnail. */
   .gallery-lightbox-thumbnail:hover,
-  .gallery-lightbox-thumbnail:focus-visible
-  {
+  .gallery-lightbox-thumbnail:focus-visible {
     border-color: white;
     opacity: 1;
   }
 
   /* Keep side controls visible on touch screens without hover. */
-  @media (hover: none)
-  {
-    :global(.gallery-navigation)
-    {
+  @media (hover: none) {
+    :global(.gallery-navigation) {
       opacity: 1;
     }
   }
 
   /* Remove fades for people who request reduced motion. */
-  @media (prefers-reduced-motion: reduce)
-  {
-    :global(.gallery-navigation)
-    {
+  @media (prefers-reduced-motion: reduce) {
+    :global(.gallery-navigation) {
       transition: none;
     }
 
     .gallery-image-slide-left,
-    .gallery-image-slide-right
-    {
+    .gallery-image-slide-right {
       animation: none;
     }
   }
 
   /* Keep controls beside the image on narrow screens. */
-  @media (max-width: 40rem)
-  {
-    .gallery-thumbnails
-    {
+  @media (max-width: 40rem) {
+    .gallery-thumbnails {
       scroll-snap-type: x proximity;
       overscroll-behavior-inline: contain;
     }
 
-    .gallery-thumbnail
-    {
+    .gallery-thumbnail {
       scroll-snap-align: start;
     }
 
-    .gallery-lightbox
-    {
+    .gallery-lightbox {
       padding-right: 0.5rem;
       padding-left: 0.5rem;
     }
 
-    :global(.gallery-previous)
-    {
+    :global(.gallery-previous) {
       left: 0.5rem;
     }
 
-    :global(.gallery-next)
-    {
+    :global(.gallery-next) {
       right: 0.5rem;
     }
   }

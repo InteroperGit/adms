@@ -4,10 +4,13 @@ import { glob } from 'astro/loaders';
 import { serviceArticleMetadataSchema } from './validation/service-articles';
 import { projectArticleMetadataSchema } from './validation/projects';
 
+// E2E builds load only synthetic articles, never deployment content.
+const contentRoot = process.env.E2E_CONTENT_ROOT ?? './data/content';
+
 const serviceArticles = defineCollection({
   loader: glob({
     pattern: '**/*.mdx',
-    base: './data/content/articles/services',
+    base: `${contentRoot}/articles/services`,
   }),
   schema: serviceArticleMetadataSchema,
 });
@@ -15,7 +18,7 @@ const serviceArticles = defineCollection({
 const projectArticles = defineCollection({
   loader: glob({
     pattern: '**/*.mdx',
-    base: './data/content/articles/projects',
+    base: `${contentRoot}/articles/projects`,
   }),
   schema: projectArticleMetadataSchema,
 });
@@ -24,11 +27,13 @@ const projectArticles = defineCollection({
 const articleFixtures = defineCollection({
   loader: glob({
     pattern: '**/*.mdx',
-    base: './data/content/fixtures/articles',
+    base: `${contentRoot}/fixtures/articles`,
   }),
   schema: serviceArticleMetadataSchema,
 });
 
 export const collections = {
-  serviceArticles, projectArticles, articleFixtures,
+  serviceArticles,
+  projectArticles,
+  articleFixtures,
 };

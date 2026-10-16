@@ -1,0 +1,22 @@
+{
+  "options": { "projectIds": ["fixture-project"] },
+  "homepage": {
+    "name": "Fixture customer",
+    "email": "fixture@example.test",
+    "message": "Synthetic inquiry",
+    "consent": "on",
+    "requestId": "12345678-1234-4123-8123-123456789abc"
+  },
+  "lettering": {
+    "name": "Fixture customer",
+    "phone": "+7 (999) 123-45-67",
+    "consent": "on",
+    "requestId": "12345678-1234-4123-8123-123456789abc",
+    "serviceId": "svetovye-bukvy",
+    "projectId": "fixture-project",
+    "lighting": "advice",
+    "installation": "advice",
+    "power": "unknown",
+    "contactMethod": "phone"
+  }
+}
