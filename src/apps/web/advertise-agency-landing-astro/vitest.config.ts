@@ -27,8 +27,7 @@ export default getViteConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov', 'json'],
-      // Explicit scopes include unimported pure modules and task 090 cards/UI.
-      // Broader component/client thresholds belong to task 095.
+      // Include pure modules and every colocated component in the gate.
       include: [
         'src/validation/**/*.ts',
         'src/content/block-publication.ts',
@@ -40,7 +39,7 @@ export default getViteConfig({
         'src/components/forms/order-inquiry.ts',
         'src/components/ui/{Button,Section,Breadcrumbs,ContactInfo}.astro',
         'src/components/cards/*.astro',
-        // Keep every component in coverage as colocated tests are migrated.
+        // Colocated tests keep every component in the coverage report.
         'src/components/**/*.{astro,ts,tsx}',
       ],
     },

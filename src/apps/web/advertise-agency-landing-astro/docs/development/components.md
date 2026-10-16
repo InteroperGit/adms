@@ -8,6 +8,13 @@
 
 ## РћР±С‰РёРµ РїСЂР°РІРёР»Р° С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
 
+Each `src/components/**/*.astro` file may have a colocated
+`Component.test.ts` or `Component.spec.ts` file. Keep pure client modules
+next to their source as well. Use `tests/integration` for composition tests
+that connect multiple components, and keep versioned fixtures in
+`tests/fixtures/content/`. The `verify:component-tests` gate keeps the legacy
+`tests/components` directory free of test files.
+
 - РџСЂРѕРІРµСЂСЏР№С‚Рµ СЃРµРјР°РЅС‚РёС‡РµСЃРєСѓСЋ HTML-СЂР°Р·РјРµС‚РєСѓ, РґРѕСЃС‚СѓРїРЅС‹Рµ РёРјРµРЅР° Рё РЅР°С‚РёРІРЅСѓСЋ
   РєР»Р°РІРёР°С‚СѓСЂРЅСѓСЋ РЅР°РІРёРіР°С†РёСЋ.
 - Р”Р»СЏ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ СЃ РєРѕРЅС‚РµРЅС‚РѕРј РёСЃРїРѕР»СЊР·СѓР№С‚Рµ РјРёРЅРёРјР°Р»СЊРЅС‹Рµ РІР°Р»РёРґРЅС‹Рµ С„РёРєСЃС‚СѓСЂС‹ РёР·

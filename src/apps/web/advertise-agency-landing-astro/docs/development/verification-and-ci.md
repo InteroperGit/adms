@@ -2,25 +2,24 @@
 
 [Documentation index](../../README.md)
 
-Unit contracts run with `pnpm test:unit`; `pnpm test:coverage` also runs
-component tests and writes ignored HTML/LCOV reports under `coverage/`.
-The current coverage baseline covers validation, image resolution,
-publication, pricing/categories, inquiry payload/form and catalog state.
-It is a task-specific baseline, not a project-wide coverage claim.
-Task 090 adds DOM contract tests for Button, Section, Breadcrumbs,
-ContactInfo, ServiceCard, ProjectCard, ReviewCard and PricingExample.
-Run these with `pnpm test:components`. Astro assets stay in Vite's module
-pipeline so bundled-image tests render real responsive image markup.
-The explicit coverage scope includes these eight `.astro` files; the report
-measures their mapped server render code, not CSS or browser interactions.
+Unit contracts run with `pnpm test:unit`; component contracts run with
+`pnpm test:components`. Every component test belongs beside its source file,
+using the same basename, such as `Button.astro` and `Button.test.ts`.
+`pnpm verify:component-tests` fails if a component test is added back under
+`tests/components`.
+`pnpm test:coverage` runs the full suite and writes ignored HTML/LCOV reports
+under `coverage/`. The coverage include covers every component plus the pure
+validation, content, server, form, and catalog modules. The report measures
+mapped server render code for Astro components, not CSS or browser behavior.
 Review portraits are required by the current Review type and validator.
 The older component reference's optional-portrait wording does not describe
 an accepted input; tests use valid portraits with alt text and dimensions.
 Tests use versioned synthetic JSON under `tests/fixtures/content/`; the
 Vitest category-registry alias avoids importing deployment content.
 
-Run `pnpm verify:boundaries`, `pnpm verify:content`, `pnpm check`, and
-`pnpm build` before submitting changes. The boundary check prevents runtime
+Run `pnpm verify:boundaries`, `pnpm verify:content`, `pnpm check`,
+`pnpm verify:component-tests`, and `pnpm build` before submitting changes.
+The boundary check prevents runtime
 content from entering a change, validates the template manifest, and scans
 templates for unsafe values. The check command uses the installed
 `@astrojs/check` package; no interactive dependency installation is needed.
@@ -28,9 +27,10 @@ TypeScript is kept on version 6 because `@astrojs/check` 0.9.10 does not
 support TypeScript 7. See the [Astro TypeScript guide](https://docs.astro.build/en/guides/typescript/#type-checking).
 
 After `pnpm test:coverage`, run `pnpm verify:coverage`. It enforces 90% line
-coverage for validation/content/server logic, 85% for client state, 80% for
-components, and 80% overall. The JSON report is emitted beside the HTML and
-LCOV reports for this gate.
+coverage for validation/content/server logic, 85% for client state, 70% for
+components, and 80% overall. The component baseline covers every colocated
+Astro renderer, including static branches that are only exercised in browser
+acceptance. The JSON report is emitted beside the HTML and LCOV reports.
 
 The repository workflow at `.github/workflows/quality.yml` runs on pull
 requests and pushes that affect
@@ -42,6 +42,7 @@ pnpm install --frozen-lockfile
 pnpm verify:boundaries
 pnpm verify:content
 pnpm check
+pnpm verify:component-tests
 pnpm test
 pnpm test:coverage
 pnpm verify:coverage

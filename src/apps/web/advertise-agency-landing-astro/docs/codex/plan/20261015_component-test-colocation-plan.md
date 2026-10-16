@@ -133,6 +133,6 @@ focus trap, no-JS, responsive layout, browser storage и внешние fallback
 [task-097]: ../fixed/20261016/097-migrate-existing-component-tests.md
 [task-098]: ../fixed/20261016/098-test-content-and-form-components.md
 [task-099]: ../fixed/20261016/099-test-sections-projects-and-ui.md
-[task-100]: ../todo/100-preserve-integration-browser-coverage.md
-[task-101]: ../todo/101-update-component-test-gates.md
+[task-100]: ../fixed/20261016/100-preserve-integration-browser-coverage.md
+[task-101]: ../fixed/20261016/101-update-component-test-gates.md
 [task-102]: ../todo/102-wavy-section-transitions.md

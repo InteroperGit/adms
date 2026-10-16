@@ -16,3 +16,36 @@ it('renders chart legend, bars and an accessible data table', async () => {
     .toHaveTextContent('24 %');
   expect(body.querySelector('table')).toHaveTextContent('Jan');
 });
+
+it('renders all series columns and marks missing points with an em dash',
+  async () => {
+    const body = await render(ChartBlock, { block: {
+      type: 'chart', chartType: 'line', unit: 'units', caption: 'Orders',
+      series: [
+        { name: 'Online', points: [{ label: 'Jan', value: 3 }] },
+        { name: 'Offline', points: [{ label: 'Feb', value: 5 }] },
+      ],
+    } });
+    const table = body.querySelector('table');
+
+    expect(body.querySelector('figcaption')).toHaveTextContent('Orders');
+    expect(body.querySelectorAll('.content-chart__legend li'))
+      .toHaveLength(2);
+    expect(table?.querySelectorAll('thead th')).toHaveLength(3);
+    expect(table).toHaveTextContent('Online');
+    expect(table).toHaveTextContent('Offline');
+    expect(table).toHaveTextContent('3 units');
+    expect(table).toHaveTextContent('5 units');
+    expect(table).toHaveTextContent('—');
+  });
+
+it('keeps the fallback structure usable when the series is empty', async () => {
+  const body = await render(ChartBlock, { block: {
+    type: 'chart', chartType: 'pie', series: [],
+  } });
+
+  expect(body.querySelector('.content-chart')).toBeInTheDocument();
+  expect(body.querySelector('.content-chart__legend')).toBeNull();
+  expect(body.querySelectorAll('.content-chart__bar-row')).toHaveLength(0);
+  expect(body.querySelector('table')).toBeInTheDocument();
+});

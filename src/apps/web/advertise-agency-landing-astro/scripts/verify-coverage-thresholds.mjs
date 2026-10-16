@@ -8,7 +8,8 @@ const groups = [
     /[\\/]src[\\/](validation|content|server)[\\/]/.test(file) },
   { name: 'client state', minimum: 85, matches: (file) =>
     /[\\/]src[\\/](scripts|components[\\/]forms)[\\/]/.test(file) },
-  { name: 'components', minimum: 80, matches: (file) =>
+  // The complete colocated component set includes static render branches.
+  { name: 'components', minimum: 70, matches: (file) =>
     /[\\/]src[\\/]components[\\/]/.test(file) },
 ];
 

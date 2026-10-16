@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "test:unit": "vitest run tests/unit src/scripts src/server",
     "test:components": "vitest run tests/components src/components",
+    "verify:component-tests": "node scripts/check-component-tests.mjs",
     "test:integration": "vitest run tests/integration --passWithNoTests",
     "test:coverage": "vitest run --coverage",
     "verify:coverage": "node scripts/verify-coverage-thresholds.mjs",

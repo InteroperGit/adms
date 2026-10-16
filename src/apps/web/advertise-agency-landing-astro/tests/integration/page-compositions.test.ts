@@ -6,6 +6,7 @@ import { getByRole } from '@testing-library/dom';
 import Header from '../../src/components/Header.astro';
 import OrderInquiry from '../../src/components/sections/OrderInquiry.astro';
 import ContentBlocks from '../../src/components/content/ContentBlocks.astro';
+import OrderFormBlock from '../../src/components/content/OrderFormBlock.astro';
 import ServiceArticle from '../../src/components/sections/ServiceArticle.astro';
 import CookieBanner from '../../src/components/CookieBanner.astro';
 import ProjectCatalogControls
@@ -79,6 +80,44 @@ it(
   expect(body.querySelectorAll('ol, ul').length).toBeGreaterThanOrEqual(2);
   },
 );
+
+it('keeps published article forms tied to their owning context', async () => {
+  const block = {
+    type: 'order-form',
+    id: 'led-letters',
+    formId: 'led-letters',
+    context: 'service',
+    category: 'svetovye-bukvy',
+    status: 'published',
+    provenance: { source: 'integration fixture' },
+  } as const;
+  const published = await render(OrderFormBlock, {
+    block,
+    context: {
+      kind: 'service',
+      serviceId: 'svetovye-bukvy',
+      category: 'svetovye-bukvy',
+      published: true,
+    },
+  });
+  const rejected = await render(OrderFormBlock, {
+    block,
+    context: {
+      kind: 'service',
+      serviceId: 'neon',
+      category: 'neon',
+      published: true,
+    },
+  });
+
+  expect(published.querySelector('section#led-letters'))
+    .toBeInTheDocument();
+  expect(published.querySelector('input[name="serviceId"]'))
+    .toHaveValue('svetovye-bukvy');
+  expect(rejected.querySelector('[data-led-letters]')).toBeNull();
+  expect(rejected.querySelector('a[href="/#order-inquiry"]'))
+    .toBeInTheDocument();
+});
 
 it(
   'composes catalog controls, results, empty state and pagination',
