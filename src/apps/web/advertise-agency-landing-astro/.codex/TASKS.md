@@ -1,3 +1,22 @@
+# Latest task — 096, 2026-10-16
+
+- Completed task 096 without subagents; archived in fixed/20261016/.
+- Added eleven colocated content publication/registry suites (52 tests).
+- All eleven scoped modules: 100% statements, branches, functions and lines.
+- Full suite: 98 files, 415 tests pass; type/style and colocation gates pass.
+- Content invariants/boundaries and production build pass.
+- Existing Zod hint and build chunk warning remain. Runtime code unchanged.
+- Next pending task: 097-inquiry-payload-tests.md.
+
+# Previous task — 095, 2026-10-16
+
+- Completed without subagents; archived in fixed/20261016/.
+- Added seven colocated commerce/catalog validation suites (72 tests).
+- All seven scoped modules: 100% statements, branches, functions and lines.
+- Full suite: 87 files, 363 tests pass; check and colocation gate pass.
+- Existing Zod deprecation hint remains. No production code changed.
+- Next pending task: 096-content-publication-logic.md.
+
 # Latest task — 090, 2026-10-15
 
 - Completed without subagents; archived in fixed/20261015/.

@@ -1,0 +1,23 @@
+[
+  { "type": "heading", "level": 2, "text": "Heading", "id": "heading" },
+  { "type": "paragraph", "paragraphs": ["Paragraph"] },
+  { "type": "ordered-list", "items": ["One"] },
+  { "type": "unordered-list", "items": ["One"] },
+  { "type": "table", "columns": [{ "key": "name", "label": "Name" }],
+    "rows": [{ "cells": ["Value"] }] },
+  { "type": "chart", "chartType": "line", "series": [{
+    "name": "Series", "points": [{ "label": "Jan", "value": 1 }]
+  }] },
+  { "type": "image", "src": "/media/image.webp", "alt": "Image",
+    "width": 800, "height": 600 },
+  { "type": "image-gallery", "images": [{
+    "src": "/media/image.webp", "alt": "Image", "width": 800,
+    "height": 600
+  }] },
+  { "type": "video", "src": "/media/video.mp4", "alt": "Video",
+    "width": 16, "height": 9 },
+  { "type": "order-form", "formId": "general-inquiry",
+    "context": "project" },
+  { "type": "quote", "text": "Quote" },
+  { "type": "footnote", "text": "Note", "targetId": "heading" }
+]
