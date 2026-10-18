@@ -36,6 +36,20 @@ it('omits the photo frame and link for a text-only service', async () => {
   expect(body).toHaveTextContent(item.description);
 });
 
+it('renders service copy as text and preserves a native destination',
+  async () => {
+  const item = service();
+  item.name = '<script>unsafe()</script>';
+  item.description = '<b>unsafe</b>';
+  item.image = null;
+  item.href = '/services/safe/';
+  const body = await render(ServiceCard, { service: item });
+  expect(body.querySelector('script, b')).toBeNull();
+  expect(body).toHaveTextContent(item.name);
+  expect(body).toHaveTextContent(item.description);
+  expect(getByRole(body, 'link')).toHaveAttribute('href', item.href);
+});
+
 it('builds responsive sources for a bundled image', async () => {
   const item = service();
   item.image!.src = '/src/assets/introduction/storefront-sign.webp';

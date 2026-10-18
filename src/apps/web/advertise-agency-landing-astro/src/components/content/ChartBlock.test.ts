@@ -49,3 +49,17 @@ it('keeps the fallback structure usable when the series is empty', async () => {
   expect(body.querySelectorAll('.content-chart__bar-row')).toHaveLength(0);
   expect(body.querySelector('table')).toBeInTheDocument();
 });
+
+it('keeps unitless values and a stable authored chart id in the fallback',
+  async () => {
+    const body = await render(ChartBlock, { block: {
+      type: 'chart', id: 'sales', chartType: 'bar', series: [{
+        name: 'Sales', points: [{ label: 'Q1', value: 0 }],
+      }],
+    } });
+    expect(body.querySelector('#chart-sales')).toBeInTheDocument();
+    expect(body.querySelector('.content-chart__bar-number'))
+      .toHaveTextContent('0');
+    expect(body.querySelector('.content-chart__bar-number'))
+      .not.toHaveTextContent('undefined');
+  });

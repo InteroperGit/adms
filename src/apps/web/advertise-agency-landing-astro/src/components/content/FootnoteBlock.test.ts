@@ -12,3 +12,12 @@ it('renders reference text and a backlink when a target exists', async () => {
   expect(body.querySelector('.footnote-backlink'))
     .toHaveAttribute('href', '#intro');
 });
+
+it('omits optional reference and backlink fields when absent', async () => {
+  const body = await render(FootnoteBlock, { block: {
+    type: 'footnote', reference: '', text: '<b>Note</b>', targetId: '',
+  } });
+  expect(body.querySelector('strong, a')).toBeNull();
+  expect(body.querySelector('b')).toBeNull();
+  expect(body).toHaveTextContent('<b>Note</b>');
+});

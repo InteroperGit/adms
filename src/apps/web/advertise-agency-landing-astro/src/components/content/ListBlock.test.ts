@@ -11,3 +11,13 @@ it('renders ordered items with native list semantics', async () => {
   expect(body.querySelectorAll('ol > li')).toHaveLength(2);
   expect(body.querySelector('ul')).toBeNull();
 });
+
+it('renders unordered items as escaped native list content', async () => {
+  const body = await render(ListBlock, { block: {
+    type: 'unordered-list', items: ['<b>First</b>', 'Second'],
+  } });
+  expect(body.querySelectorAll('ul > li')).toHaveLength(2);
+  expect(body.querySelector('ol')).toBeNull();
+  expect(body.querySelector('b')).toBeNull();
+  expect(body).toHaveTextContent('<b>First</b>');
+});

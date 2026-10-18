@@ -1,11 +1,14 @@
-// Keep a colocated smoke contract for the Projects component.
 // @vitest-environment node
-import { expect, it, vi } from 'vitest';
-
-vi.mock('@/data/content/config/projects.json', () => ({ default: [] }));
-
+import { expect, it } from 'vitest';
+import { getByRole } from '@testing-library/dom';
 import Component from './Projects.astro';
+import { render } from '../../../tests/helpers/render';
 
-it('exports a renderable component', () => {
+it('renders featured projects and the complete catalogue action', async () => {
+  const body = await render(Component, {});
   expect(Component).toBeDefined();
+  expect(getByRole(body, 'heading', { level: 2 })).toBeInTheDocument();
+  expect(body.querySelectorAll('.project-card').length).toBeLessThanOrEqual(3);
+  expect(getByRole(body, 'link', { name: /все проекты/i }))
+    .toHaveAttribute('href', '/projects/');
 });

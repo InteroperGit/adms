@@ -13,3 +13,12 @@ it('renders image alt text, caption and service crop state', async () => {
   expect(body.querySelector('figcaption')).toHaveTextContent('Fixture caption');
   expect(body.querySelector('.content-media-service')).toBeInTheDocument();
 });
+
+it('omits an absent caption while preserving lazy media defaults', async () => {
+  const body = await render(ImageBlock, { block: {
+    type: 'image', src: '/fixture.webp', alt: 'Fixture', width: 640,
+    height: 480,
+  } });
+  expect(body.querySelector('figcaption')).toBeNull();
+  expect(body.querySelector('img')).toHaveAttribute('loading', 'lazy');
+});

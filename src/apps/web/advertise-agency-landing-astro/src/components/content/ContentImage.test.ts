@@ -15,3 +15,15 @@ it('renders public media with reserved geometry and metadata', async () => {
   expect(body.querySelector('img')).toHaveAttribute('alt', 'Fixture');
   expect(body.querySelector('img')).toHaveAttribute('loading', 'eager');
 });
+
+it('keeps missing media readable through the rendered error status',
+  async () => {
+  const body = await render(ContentImage, { image: {
+    src: '/missing.webp', alt: '<b>Missing</b>', width: 320, height: 180,
+  } });
+  expect(body.querySelector('img')).toHaveAttribute('src', '/missing.webp');
+  expect(body.querySelector('.content-media-error')).toHaveAttribute(
+    'role', 'status',
+  );
+  expect(body.querySelector('b')).toBeNull();
+});

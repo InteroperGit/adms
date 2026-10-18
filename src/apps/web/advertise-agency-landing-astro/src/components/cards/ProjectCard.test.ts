@@ -77,3 +77,16 @@ it('omits media when every supplied image is a draft', async () => {
   expect(body.querySelector('img, .content-media-frame')).toBeNull();
   expect(getByRole(body, 'link')).toHaveAttribute('href', '/projects/42/');
 });
+
+it('escapes project copy while keeping the stable detail URL', async () => {
+  const item = project();
+  item.title = '<script>unsafe()</script>';
+  item.client = '<b>unsafe client</b>';
+  item.description = '<i>unsafe summary</i>';
+  const body = await render(ProjectCard, { project: item });
+  expect(body.querySelector('script, b, i')).toBeNull();
+  expect(body).toHaveTextContent(item.title);
+  expect(body).toHaveTextContent(item.client);
+  expect(body).toHaveTextContent(item.description);
+  expect(getByRole(body, 'link')).toHaveAttribute('href', '/projects/42/');
+});

@@ -15,3 +15,11 @@ it('renders a main image and one native link per gallery image', async () => {
   expect(body.querySelectorAll('.gallery-thumbnail')).toHaveLength(2);
   expect(body.querySelector('[data-gallery-dialog]')).toBeInTheDocument();
 });
+
+it('renders no interactive surface for an empty gallery', async () => {
+  const body = await render(ImageGallery, { block: {
+    type: 'image-gallery', images: [], caption: 'Empty gallery',
+  } });
+  expect(body.querySelector('.content-gallery')).toBeNull();
+  expect(body.querySelector('[data-gallery-dialog]')).toBeNull();
+});

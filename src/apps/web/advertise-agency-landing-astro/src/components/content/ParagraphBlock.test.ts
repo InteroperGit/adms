@@ -13,3 +13,16 @@ it('renders paragraphs and safe authored links', async () => {
     'href', 'https://example.test/guide',
   );
 });
+
+it('keeps unsafe URL-like text escaped and preserves paragraph boundaries',
+  async () => {
+    const body = await render(ParagraphBlock, { block: {
+      type: 'paragraph', paragraphs: [
+        '<strong>unsafe</strong> javascript:alert(1)', 'Second paragraph',
+      ],
+    } });
+    expect(body.querySelectorAll('p')).toHaveLength(2);
+    expect(body.querySelector('strong')).toBeNull();
+    expect(body.querySelector('a')).toBeNull();
+    expect(body).toHaveTextContent('javascript:alert(1)');
+  });

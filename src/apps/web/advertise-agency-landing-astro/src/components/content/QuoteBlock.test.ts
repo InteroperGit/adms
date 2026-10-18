@@ -12,3 +12,20 @@ it('renders quotation attribution when supplied', async () => {
   expect(body.querySelector('figcaption')).toHaveTextContent('Author');
   expect(body.querySelector('cite')).toHaveTextContent('Source');
 });
+
+it.each([
+  [{ author: 'Author' }, 'Author'],
+  [{ source: 'Source' }, 'Source'],
+  [{}, null],
+] as const)('supports optional attribution fields: %s',
+  async (fields, text) => {
+  const body = await render(QuoteBlock, { block: {
+    type: 'quote', text: '<i>Quote</i>', ...fields,
+  } });
+  expect(body.querySelector('i')).toBeNull();
+  if (text) {
+    expect(body.querySelector('figcaption')).toBeInTheDocument();
+  } else {
+    expect(body.querySelector('figcaption')).toBeNull();
+  }
+});

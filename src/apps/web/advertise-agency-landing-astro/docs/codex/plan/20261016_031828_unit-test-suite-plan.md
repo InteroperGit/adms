@@ -1,5 +1,14 @@
 # План полноценного набора unit-тестов
 
+## Модели для оставшихся задач
+
+Для задач 103–113 подготовлена [оценка моделей с приоритетом Luna][models].
+В каждом TODO указаны модель, effort, обоснование и подзадачи для отдельных
+запусков: 6 задач достаточно выполнить Luna целиком, ещё 5 разделены между
+Luna и Sol. Исходные критерии готовности и зависимости сохраняются.
+
+[models]: 20261018_todo-model-assessment.md
+
 ## Основания и текущее состояние
 
 План составлен по `AGENTS.md`, правилам `docs/development/rules/`,
@@ -284,12 +293,12 @@ pnpm test:integration
 - `100-carousel-and-reveal-scripts.md` — carousel/reveal scripts;
 - [101 — базовые UI-компоненты][task-101];
 - [102 — theme, navigation и media UI][task-102] — completed 2026-10-17;
-- `103-card-components-tests.md` — карточки;
-- `104-basic-content-block-components.md` — простые content blocks;
-- `105-media-and-form-block-components.md` — media/form blocks;
-- `106-form-components.md` — Astro forms;
-- `107-home-sections.md` — homepage sections;
-- `108-article-and-contact-sections.md` — article/contact sections;
+- [103 — карточки][task-103] — completed 2026-10-18;
+- [104 — простые content blocks][task-104] — completed 2026-10-18;
+- [105 — media/form blocks][task-105] — completed 2026-10-18;
+- [106 — Astro forms][task-106] — completed 2026-10-18;
+- [107 — homepage sections][task-107] — completed 2026-10-18;
+- [108 — article/contact sections][task-108] — completed 2026-10-18;
 - `109-project-catalog-components.md` — catalog components;
 - `110-project-catalog-script.md` — catalog browser script;
 - `111-global-components.md` — Header, Footer и CookieBanner;
@@ -308,3 +317,9 @@ pnpm test:integration
 [task-099]: ../fixed/20261016/099-inquiry-browser-module.md
 [task-101]: ../fixed/20261017/101-ui-primitives-tests.md
 [task-102]: ../fixed/20261017/102-theme-and-navigation-components.md
+[task-103]: ../fixed/20261018/103-card-components-tests.md
+[task-104]: ../fixed/20261018/104-basic-content-block-components.md
+[task-105]: ../fixed/20261018/105-media-and-form-block-components.md
+[task-106]: ../fixed/20261018/106-form-components.md
+[task-107]: ../fixed/20261018/107-home-sections.md
+[task-108]: ../fixed/20261018/108-article-and-contact-sections.md

@@ -10,3 +10,14 @@ it('renders the requested heading level and id', async () => {
   } });
   expect(body.querySelector('h3#details')).toHaveTextContent('Details');
 });
+
+it('escapes heading text and supports the document boundary levels',
+  async () => {
+    const body = await render(HeadingBlock, { block: {
+      type: 'heading', level: 6, id: 'safe', text: '<em>Details</em>',
+    } });
+    expect(body.querySelector('h6#safe')).toHaveTextContent(
+      '<em>Details</em>',
+    );
+    expect(body.querySelector('em')).toBeNull();
+  });

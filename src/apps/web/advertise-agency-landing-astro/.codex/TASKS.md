@@ -1,3 +1,75 @@
+# Latest task — 108, 2026-10-18
+
+- Completed article and contact section render tests and archived the task in
+  fixed/20261018/.
+- OrderingProcess, BusinessSolutions, ProductionAndGuarantees, Faq, Contacts
+  and ServiceArticle now cover output ordering, approval filtering, native
+  links, empty sections, demo disclosure and unknown-service failure.
+- Seven focused tests pass and changed-file code style passes.
+- Next pending task: 109-project-catalog-components.md.
+
+# Latest task — 107, 2026-10-18
+
+- Completed homepage section render tests and archived the task in
+  fixed/20261018/.
+- About, Introduction, OffersCarousel, Services, Projects, Reviews and
+  PricingExamples now cover section output, optional media, ordering, links,
+  empty collections and demo/provider branches.
+- Eight focused tests pass and changed-file code style passes.
+- Next pending task: 108-article-and-contact-sections.md.
+
+# Latest task — 106, 2026-10-18
+
+- Completed form component render tests and archived the task in
+  fixed/20261018/.
+- LedLettersForm and OrderInquiry now cover context fields, required and
+  conditional controls, consent, legal links, disabled initial submission,
+  status wiring and accessible error associations.
+- Five focused tests pass; code style and component colocation pass.
+- Next pending task: 107-home-sections.md.
+
+# Latest task — 105, 2026-10-18
+
+- Completed media and form block contract tests and archived the task in
+  fixed/20261018/.
+- ContentImage, image, gallery, chart, video and order-form suites cover
+  metadata, captions, fallbacks, safe native links, MIME/poster handling and
+  registered/demo/general form publication cases.
+- Nineteen focused tests pass; code style and component colocation pass.
+- Next pending task: 106-form-components.md.
+
+# Latest task — 104, 2026-10-18
+
+- Completed basic content block contract tests and archived the task in
+  fixed/20261018/.
+- Heading, paragraph, list, table, quote and footnote suites now cover
+  semantic HTML, optional fields, escaping and safe links; the MDX allowlist
+  has an exact export assertion.
+- Fifteen focused tests pass and changed-file code style passes.
+- Next pending task: 105-media-and-form-block-components.md.
+
+# Latest task — 103, 2026-10-18
+
+- Completed card component contract tests and archived the task in
+  fixed/20261018/.
+- ServiceCard, ProjectCard, ReviewCard and PricingExample now have focused
+  colocated suites covering normal, empty/media, escaping, links, dimensions,
+  thumbnail selection, price context and disclosures.
+- All four card components reach 100% statements, branches, functions and
+  lines in the focused coverage run; 18 tests pass.
+- Next pending task: 104-basic-content-block-components.md.
+
+# TODO model assessment — 2026-10-18
+
+- Assessed all 11 pending tasks, 103–113, with Luna as the default.
+- Added model IDs, reasoning effort, rationale and runnable subtasks.
+- Six tasks use Luna throughout; five split work between Luna and Sol.
+- Subtasks: 34 Luna, 8 Sol. Implementation tasks remain planned.
+- Summary: [model assessment][todo-model-assessment].
+- Documentation only; no implementation tests or model trials run.
+
+[todo-model-assessment]: ../docs/codex/plan/20261018_todo-model-assessment.md
+
 # Task created — 115, 2026-10-16
 
 - Added planned task for Prettier, ESLint and Playwright Test setup.

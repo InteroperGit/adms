@@ -4,4 +4,5 @@ import { mdxContentComponents } from './mdx-components';
 
 it('registers ContentBlocks as the MDX component', () => {
   expect(mdxContentComponents.ContentBlocks).toBeDefined();
+  expect(Object.keys(mdxContentComponents)).toEqual(['ContentBlocks']);
 });
