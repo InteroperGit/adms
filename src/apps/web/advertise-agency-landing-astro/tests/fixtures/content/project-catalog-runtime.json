@@ -1,0 +1,9 @@
+{
+  "categories": ["signs", "letters"],
+  "records": [
+    { "category": "signs", "searchText": "Ёлка Световая вывеска" },
+    { "category": "letters", "searchText": "Alpha letters" },
+    { "category": "signs", "searchText": "Alpha bright sign" },
+    {}
+  ]
+}

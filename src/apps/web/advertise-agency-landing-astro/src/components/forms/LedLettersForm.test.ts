@@ -17,7 +17,9 @@ it('renders the lettering form with required contact controls', async () => {
 it('uses the default service and exposes the full accessible field groups',
   async () => {
     const body = await render(LedLettersForm, {});
-    const form = body.querySelector('form[data-led-letters]')!;
+    const form = body.querySelector<HTMLFormElement>(
+      'form[data-led-letters]',
+    )!;
     expect(form).toHaveAttribute('method', 'post');
     expect(form).toHaveAttribute('data-enabled');
     expect(form).toHaveAttribute('data-endpoint');

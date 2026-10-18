@@ -115,8 +115,16 @@
         : `${Math.ceil(banner.getBoundingClientRect().height)}px`;
     };
     reserveSpace();
-    const sizeObserver = new ResizeObserver(reserveSpace);
-    sizeObserver.observe(banner);
+    // Hidden banners need no layout observation; older browsers can still
+    // dismiss the notice without ResizeObserver support.
+    const sizeObserver =
+      !banner.hidden && typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(reserveSpace)
+        : undefined;
+    sizeObserver?.observe(banner);
+    window.addEventListener('pagehide', () => sizeObserver?.disconnect(), {
+      once: true,
+    });
 
     // Keep dismissal usable even when writing the preference is blocked.
     banner
@@ -124,15 +132,13 @@
       .forEach((button) => {
         button.addEventListener('click', () => {
           try {
-            localStorage.setItem(
-              'cookieConsent',
-              button.dataset.cookieChoice!,
-            );
+            localStorage.setItem('cookieConsent', button.dataset.cookieChoice!);
           } catch {
             // Dismiss for this page even when the choice cannot be persisted.
           }
           banner.hidden = true;
           reserveSpace();
+          sizeObserver?.disconnect();
         });
       });
   }

@@ -3,8 +3,11 @@
 const SEARCH_DELAY = 250;
 /** Normalize Russian text while preserving useful word boundaries. */
 export function normalizeSearch(value: string): string {
-  return value.toLocaleLowerCase('ru-RU').replace(/ё/g, 'е')
-    .replace(/\s+/g, ' ').trim();
+  return value
+    .toLocaleLowerCase('ru-RU')
+    .replace(/ё/g, 'е')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 /** Return true when every entered word appears in the searchable text. */
@@ -26,6 +29,8 @@ interface CatalogElements {
   pagination: HTMLElement;
   pages: HTMLElement;
   pageSize: number;
+  /** Cancel superseded input when a visitor commits another navigation. */
+  searchTimer?: number;
 }
 
 export interface CatalogRecord {
@@ -35,11 +40,13 @@ export interface CatalogRecord {
 
 /** Select matching records without depending on a browser or the DOM. */
 export function filterCatalog(
-  records: CatalogRecord[], query: string, selectedCategory: string,
+  records: CatalogRecord[],
+  query: string,
+  selectedCategory: string,
 ): CatalogRecord[] {
   return records.filter((record) => {
-    const matchesCategory = !selectedCategory ||
-      record.category === selectedCategory;
+    const matchesCategory =
+      !selectedCategory || record.category === selectedCategory;
     return matchesCategory && matchesSearch(record.searchText, query);
   });
 }
@@ -49,9 +56,8 @@ function getElements(): CatalogElements | undefined {
     '[data-catalog-controls]',
   );
   const input = document.querySelector<HTMLInputElement>('#project-search');
-  const category = document.querySelector<HTMLSelectElement>(
-    '#project-category',
-  );
+  const category =
+    document.querySelector<HTMLSelectElement>('#project-category');
   const count = document.querySelector<HTMLElement>('[data-catalog-count]');
   const countValue = document.querySelector<HTMLElement>(
     '[data-catalog-count-value]',
@@ -68,17 +74,35 @@ function getElements(): CatalogElements | undefined {
   const pages = document.querySelector<HTMLElement>('[data-catalog-pages]');
   const rawPageSize = pagination?.dataset.pageSize;
   const pageSize = Number(rawPageSize);
-  const cards = Array.from(document.querySelectorAll<HTMLElement>(
-    '[data-project-card]',
-  ));
-  if (!form || !input || !category || !count || !countValue || !empty ||
+  const cards = Array.from(
+    document.querySelectorAll<HTMLElement>('[data-project-card]'),
+  );
+  if (
+    !form ||
+    !input ||
+    !category ||
+    !count ||
+    !countValue ||
+    !empty ||
     !reset ||
-    !pagination || !pages || !Number.isInteger(pageSize) || pageSize < 1) {
+    !pagination ||
+    !pages ||
+    !Number.isInteger(pageSize) ||
+    pageSize < 1
+  ) {
     return undefined;
   }
   return {
-    form, input, category, cards, count, countValue, empty, reset,
-    pagination, pages,
+    form,
+    input,
+    category,
+    cards,
+    count,
+    countValue,
+    empty,
+    reset,
+    pagination,
+    pages,
     pageSize,
   };
 }
@@ -86,16 +110,23 @@ function getElements(): CatalogElements | undefined {
 function readState(): { query: string; category: string; page: number } {
   const params = new URLSearchParams(window.location.search);
   // Static pagination uses a route segment; enhanced links may use a query.
-  const routePage = window.location.pathname
-    .match(/^\/projects\/page\/(\d+)\/?$/)?.[1];
+  const routePage = window.location.pathname.match(
+    /^\/projects\/page\/(\d+)\/?$/,
+  )?.[1];
   const rawPage = routePage ?? params.get('page') ?? '';
   const parsedPage = /^\d+$/.test(rawPage) ? Number(rawPage) : 1;
-  return { query: params.get('q') ?? '', category: params.get('category') ?? '',
-    page: Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1 };
+  return {
+    query: params.get('q') ?? '',
+    category: params.get('category') ?? '',
+    page: Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1,
+  };
 }
 
-function writeState(elements: CatalogElements, page: number,
-  mode: 'push' | 'replace'): void {
+function writeState(
+  elements: CatalogElements,
+  page: number,
+  mode: 'push' | 'replace',
+): void {
   const params = new URLSearchParams(window.location.search);
   params.delete('q');
   params.delete('category');
@@ -113,27 +144,45 @@ function writeState(elements: CatalogElements, page: number,
   else window.history.replaceState(null, '', url);
 }
 
-function renderPagination(elements: CatalogElements, current: number,
-  total: number): void {
+function renderPagination(
+  elements: CatalogElements,
+  current: number,
+  total: number,
+): void {
   elements.pages.replaceChildren();
   elements.pagination.hidden = total <= 1;
   if (total <= 1) return;
-  const add = (label: string, page: number, disabled = false,
-    accessibleLabel = label) => {
+  const add = (
+    label: string,
+    page: number,
+    disabled = false,
+    accessibleLabel = label,
+  ) => {
     const link = document.createElement('a');
     link.className = 'catalog-pagination__link';
     link.textContent = label;
     link.setAttribute('aria-label', accessibleLabel);
     link.setAttribute('aria-disabled', String(disabled));
     link.href = pageUrl(elements, page);
-    if (page === current) link.setAttribute('aria-current', 'page');
+    if (page === current && !disabled) {
+      link.setAttribute('aria-current', 'page');
+    }
     if (disabled) link.tabIndex = -1;
     link.addEventListener('click', (event) => {
-      if (disabled || event.defaultPrevented || event.button !== 0 ||
-        event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      if (disabled) {
         event.preventDefault();
         return;
       }
+      // Modified clicks keep native new-tab/window behavior and link URLs.
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return;
       event.preventDefault();
       update(elements, page, true, true);
     });
@@ -174,9 +223,8 @@ function renderPagination(elements: CatalogElements, current: number,
       elements.pages.append(ellipsis);
       continue;
     }
-    const pageLabel = page === 1
-      ? 'First page'
-      : page === total ? 'Last page' : `Page ${page}`;
+    const pageLabel =
+      page === 1 ? 'First page' : page === total ? 'Last page' : `Page ${page}`;
     add(String(page), page, false, pageLabel);
   }
   add('→', Math.min(total, current + 1), current === total, 'Next page');
@@ -192,8 +240,7 @@ function pageUrl(elements: CatalogElements, page: number): string {
   if (elements.category.value) params.set('category', elements.category.value);
   const path = page > 1 ? `/projects/page/${page}/` : '/projects/';
   const suffix = params.toString();
-  return `${path}${suffix ? `?${suffix}` : ''}`
-    + window.location.hash;
+  return `${path}${suffix ? `?${suffix}` : ''}` + window.location.hash;
 }
 
 /** Apply filters and show only the requested page of matching cards. */
@@ -205,16 +252,17 @@ function applyFilters(
     category: card.dataset.category ?? '',
     searchText: card.dataset.search ?? '',
   }));
-  const matching = filterCatalog(records, elements.input.value,
-    elements.category.value);
-  const total = Math.max(1,
-    Math.ceil(matching.length / elements.pageSize));
+  const matching = filterCatalog(
+    records,
+    elements.input.value,
+    elements.category.value,
+  );
+  const total = Math.max(1, Math.ceil(matching.length / elements.pageSize));
   const page = Math.min(Math.max(requestedPage, 1), total);
   const start = (page - 1) * elements.pageSize;
   elements.cards.forEach((card, index) => {
     const matchIndex = matching.indexOf(records[index]);
-    card.hidden = matchIndex < start ||
-      matchIndex >= start + elements.pageSize;
+    card.hidden = matchIndex < start || matchIndex >= start + elements.pageSize;
   });
   elements.countValue.textContent = String(matching.length);
   elements.empty.hidden = matching.length !== 0 || elements.cards.length === 0;
@@ -228,6 +276,9 @@ function update(
   push: boolean,
   moveFocus = false,
 ): void {
+  // Explicit actions supersede pending input so it cannot reset their page.
+  window.clearTimeout(elements.searchTimer);
+  elements.searchTimer = undefined;
   const actualPage = applyFilters(elements, page);
   writeState(elements, actualPage, push ? 'push' : 'replace');
   if (moveFocus) {
@@ -257,27 +308,36 @@ function initializeCatalog(): void {
   const state = readState();
   elements.input.value = state.query;
   elements.category.value = state.category;
-  let timer: number | undefined;
   const resetPage = (push: boolean) => update(elements, 1, push);
   elements.input.addEventListener('input', () => {
-    window.clearTimeout(timer);
-    timer = window.setTimeout(() => resetPage(false), SEARCH_DELAY);
+    window.clearTimeout(elements.searchTimer);
+    elements.searchTimer = window.setTimeout(
+      () => resetPage(false),
+      SEARCH_DELAY,
+    );
   });
   elements.form.addEventListener('submit', (event) => {
-    event.preventDefault(); window.clearTimeout(timer); resetPage(true);
+    event.preventDefault();
+    resetPage(true);
   });
   elements.category.addEventListener('change', () => resetPage(true));
   elements.reset.addEventListener('click', () => {
-    elements.input.value = ''; elements.category.value = '';
-    resetPage(true); elements.input.focus();
+    elements.input.value = '';
+    elements.category.value = '';
+    resetPage(true);
+    elements.input.focus();
   });
   window.addEventListener('popstate', () => {
-    const next = readState(); elements.input.value = next.query;
-    elements.category.value = next.category; applyFilters(elements, next.page);
+    // Restored history wins over input scheduled on the page being left.
+    window.clearTimeout(elements.searchTimer);
+    elements.searchTimer = undefined;
+    const next = readState();
+    elements.input.value = next.query;
+    elements.category.value = next.category;
+    applyFilters(elements, next.page);
   });
   const actualPage = applyFilters(elements, state.page);
-  if (state.category !== elements.category.value ||
-    actualPage !== state.page) {
+  if (state.category !== elements.category.value || actualPage !== state.page) {
     writeState(elements, actualPage, 'replace');
   }
 }

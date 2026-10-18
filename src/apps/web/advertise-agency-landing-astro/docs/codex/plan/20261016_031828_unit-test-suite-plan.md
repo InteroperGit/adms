@@ -98,6 +98,10 @@ cleanup на `pagehide`.
 
 ### `src/scripts/project-catalog.ts`
 
+Завершено 2026-10-18: [задача 110][task-110], 36 catalog tests,
+100% line/branch/function coverage. Исправлены pending debounce, native
+modified clicks и `aria-current` у disabled arrows.
+
 Проверить normalization/matching, фильтры и категории, count/empty state,
 debounce, URL serialization, сохранение server pagination и back/forward через
 `popstate`.
@@ -299,9 +303,9 @@ pnpm test:integration
 - [106 — Astro forms][task-106] — completed 2026-10-18;
 - [107 — homepage sections][task-107] — completed 2026-10-18;
 - [108 — article/contact sections][task-108] — completed 2026-10-18;
-- `109-project-catalog-components.md` — catalog components;
-- `110-project-catalog-script.md` — catalog browser script;
-- `111-global-components.md` — Header, Footer и CookieBanner;
+- `../fixed/20261018/109-project-catalog-components.md` — catalog components;
+- [110 — catalog browser script][task-110] — completed 2026-10-18;
+- [111 — global components][task-111] — completed 2026-10-18;
 - `112-layouts-and-pages.md` — layouts и route pages;
 - `113-route-and-type-contracts.md` — route handlers и type contracts;
 - `114-integration-matrix-and-gates.md` — composition и финальные gates.
@@ -311,6 +315,8 @@ pnpm test:integration
 одном контексте.
 
 [task-095]: ../fixed/20261016/095-validation-commerce-and-catalog.md
+[task-110]: ../fixed/20261018/110-project-catalog-script.md
+[task-111]: ../fixed/20261018/111-global-components.md
 [task-096]: ../fixed/20261016/096-content-publication-logic.md
 [task-097]: ../fixed/20261016/097-inquiry-payload-tests.md
 [task-098]: ../fixed/20261016/098-image-and-chart-utils.md

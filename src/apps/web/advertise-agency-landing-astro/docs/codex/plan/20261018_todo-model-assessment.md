@@ -44,8 +44,8 @@
 | [107 — home sections][t107] | Luna high | 4 шага Luna |
 | [108 — article/contacts][t108] | Sol medium | 3 Luna + article на Sol |
 | [109 — catalog components][t109] | Luna high | 4 шага Luna |
-| [110 — catalog script][t110] | Sol high | 2 Luna + 2 Sol |
-| [111 — global components][t111] | Sol high | 2 Luna + Header на Sol |
+| [110 — catalog script (completed)][t110] | Sol high | 2 Luna + 2 Sol |
+| [111 — global components (completed)][t111] | Sol high | 2 Luna + Header на Sol |
 | [112 — layouts/pages][t112] | Sol high | Sol harness → 3 Luna → Sol |
 | [113 — routes/types][t113] | Sol medium | 3 Luna + 2 Sol |
 
@@ -92,8 +92,8 @@ Luna остаётся основным исполнителем, пока раб
 [t106]: ../todo/106-form-components.md
 [t107]: ../todo/107-home-sections.md
 [t108]: ../todo/108-article-and-contact-sections.md
-[t109]: ../todo/109-project-catalog-components.md
-[t110]: ../todo/110-project-catalog-script.md
-[t111]: ../todo/111-global-components.md
+[t109]: ../fixed/20261018/109-project-catalog-components.md
+[t110]: ../fixed/20261018/110-project-catalog-script.md
+[t111]: ../fixed/20261018/111-global-components.md
 [t112]: ../todo/112-layouts-and-pages.md
 [t113]: ../todo/113-route-and-type-contracts.md
