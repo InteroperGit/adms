@@ -27,7 +27,7 @@ Russian-language website for Рекламастер, built with Astro, TypeScrip
 | [Cookie preferences](docs/site/cookie-preferences.md) | Persistence, storage failures, and resource-loading behavior |
 | [Deployment and assets](docs/site/deployment-and-assets.md) | Static hosting, external resources, and pending agency assets |
 | [External asset verification](docs/development/external-assets.md) | Pre-deployment remote media and CSS checks |
-| [Agent task management](docs/codex/task-management.md) | Task folders, naming rules, and dated completion archives |
+| [Agent task management](docs/development/task-management.md) | Task folders, naming rules, and dated completion archives |
 
 ## Agent references
 
