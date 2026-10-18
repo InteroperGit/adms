@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/data/content/config/*": ["./tests/fixtures/content/site/config/*"]
+    }
+  },
+  "include": ["tests/fixtures/content/type-contracts/**/*.ts"],
+  "exclude": ["node_modules", "dist", "output", "coverage"]
+}

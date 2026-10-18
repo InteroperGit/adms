@@ -2,10 +2,10 @@
 
 ## Модели для оставшихся задач
 
-Для задач 103–113 подготовлена [оценка моделей с приоритетом Luna][models].
-В каждом TODO указаны модель, effort, обоснование и подзадачи для отдельных
-запусков: 6 задач достаточно выполнить Luna целиком, ещё 5 разделены между
-Luna и Sol. Исходные критерии готовности и зависимости сохраняются.
+Для задач 103–113 подготовлена [оценка моделей с приоритетом Luna][models]. В
+каждом TODO указаны модель, effort, обоснование и подзадачи для отдельных
+запусков: 6 задач достаточно выполнить Luna целиком, ещё 5 разделены между Luna
+и Sol. Исходные критерии готовности и зависимости сохраняются.
 
 [models]: 20261018_todo-model-assessment.md
 
@@ -98,9 +98,9 @@ cleanup на `pagehide`.
 
 ### `src/scripts/project-catalog.ts`
 
-Завершено 2026-10-18: [задача 110][task-110], 36 catalog tests,
-100% line/branch/function coverage. Исправлены pending debounce, native
-modified clicks и `aria-current` у disabled arrows.
+Завершено 2026-10-18: [задача 110][task-110], 36 catalog tests, 100%
+line/branch/function coverage. Исправлены pending debounce, native modified
+clicks и `aria-current` у disabled arrows.
 
 Проверить normalization/matching, фильтры и категории, count/empty state,
 debounce, URL serialization, сохранение server pagination и back/forward через
@@ -307,7 +307,7 @@ pnpm test:integration
 - [110 — catalog browser script][task-110] — completed 2026-10-18;
 - [111 — global components][task-111] — completed 2026-10-18;
 - `112-layouts-and-pages.md` — layouts и route pages;
-- `113-route-and-type-contracts.md` — route handlers и type contracts;
+- [113 — route handlers и type contracts][task-113] — completed 2026-10-18;
 - `114-integration-matrix-and-gates.md` — composition и финальные gates.
 
 Каждая задача ограничена одной ответственностью и содержит зависимости, границы
@@ -317,6 +317,7 @@ pnpm test:integration
 [task-095]: ../fixed/20261016/095-validation-commerce-and-catalog.md
 [task-110]: ../fixed/20261018/110-project-catalog-script.md
 [task-111]: ../fixed/20261018/111-global-components.md
+[task-113]: ../fixed/20261018/113-route-and-type-contracts.md
 [task-096]: ../fixed/20261016/096-content-publication-logic.md
 [task-097]: ../fixed/20261016/097-inquiry-payload-tests.md
 [task-098]: ../fixed/20261016/098-image-and-chart-utils.md

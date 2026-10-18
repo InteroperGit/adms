@@ -33,6 +33,7 @@ jobs:
       - run: pnpm verify:boundaries
       - run: pnpm verify:content
       - run: pnpm check
+      - run: pnpm test:types
       - run: pnpm verify:component-tests
       - run: pnpm test:unit
         if: github.event_name == 'pull_request'

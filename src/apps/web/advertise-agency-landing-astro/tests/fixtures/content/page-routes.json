@@ -1,0 +1,53 @@
+{
+  "legal": {
+    "title": "Fixture legal document",
+    "description": "Fixture legal description",
+    "effectiveDate": "2026-10-18",
+    "sections": [
+      {
+        "heading": "First legal topic",
+        "content": "First legal paragraph",
+        "list": ["First condition", "Second condition"]
+      },
+      {
+        "heading": "Second legal topic",
+        "content": "Second legal paragraph"
+      }
+    ]
+  },
+  "publishedBlocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Approved article topic",
+      "status": "published",
+      "provenance": {
+        "source": "Synthetic route fixture",
+        "approvedBy": "Fixture editor",
+        "approvedAt": "2026-10-18"
+      }
+    },
+    {
+      "type": "paragraph",
+      "paragraphs": ["Approved article copy"],
+      "status": "published",
+      "provenance": {
+        "source": "Synthetic route fixture",
+        "approvedBy": "Fixture editor",
+        "approvedAt": "2026-10-18"
+      }
+    }
+  ],
+  "demoBlocks": [
+    {
+      "type": "paragraph",
+      "paragraphs": ["Visible demo article copy"],
+      "status": "demo"
+    },
+    {
+      "type": "paragraph",
+      "paragraphs": ["Withheld draft article copy"],
+      "status": "draft"
+    }
+  ]
+}

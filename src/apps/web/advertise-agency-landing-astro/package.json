@@ -15,6 +15,7 @@
     "test:components": "vitest run tests/components src/components",
     "verify:component-tests": "node scripts/check-component-tests.mjs",
     "test:integration": "vitest run tests/integration --passWithNoTests",
+    "test:types": "tsc --noEmit --project tsconfig.type-contracts.json",
     "test:coverage": "vitest run --coverage",
     "verify:coverage": "node scripts/verify-coverage-thresholds.mjs",
     "verify:content": "node scripts/verify-content-invariants.mjs",

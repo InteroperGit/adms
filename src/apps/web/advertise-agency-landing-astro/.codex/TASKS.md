@@ -1,3 +1,22 @@
+# Latest task — 113, 2026-10-18
+
+- Completed route-handler and type-contract coverage; archived in
+  fixed/20261018/.
+- Added eight crawler response cases and strict compile-time fixtures for all
+  18 `src/types` modules, including barrel exports and schema compatibility.
+- Fifty-eight integration tests, the strict type harness, Astro check/build,
+  lint, formatting, content, boundary, colocation and style checks pass.
+- No task file is currently present in `docs/codex/todo/`; task 114 remains
+  listed in the plan but has not been added to the active queue.
+# Latest task — 112, 2026-10-18
+
+- Completed route and layout integration coverage; archived in fixed/20261018/.
+- Added full-document Astro render context and fixture-backed cases for both
+  layouts and all 12 page templates, including metadata, publication states,
+  pagination, heading hierarchy and no-JS reading order.
+- Fifty focused integration tests pass; check, build, content, boundary,
+  colocation, lint, formatting and whitespace checks pass.
+- Next pending task: 113-route-and-type-contracts.md.
 # Latest task — 108, 2026-10-18
 
 - Completed article and contact section render tests and archived the task in

@@ -17,12 +17,12 @@ dimensions. Tests use versioned synthetic JSON under `tests/fixtures/content/`;
 the Vitest category-registry alias avoids importing deployment content.
 
 Run `pnpm verify:boundaries`, `pnpm verify:content`, `pnpm check`,
-`pnpm verify:component-tests`, and `pnpm build` before submitting changes. The
-boundary check prevents runtime content from entering a change, validates the
-template manifest, and scans templates for unsafe values. The check command uses
-the installed `@astrojs/check` package; no interactive dependency installation
-is needed. TypeScript is kept on version 6 because `@astrojs/check` 0.9.10 does
-not support TypeScript 7. See the
+`pnpm test:types`, `pnpm verify:component-tests`, and `pnpm build` before
+submitting changes. The boundary check prevents runtime content from entering a
+change, validates the template manifest, and scans templates for unsafe values.
+The check command uses the installed `@astrojs/check` package; no interactive
+dependency installation is needed. TypeScript is kept on version 6 because
+`@astrojs/check` 0.9.10 does not support TypeScript 7. See the
 [Astro TypeScript guide](https://docs.astro.build/en/guides/typescript/#type-checking).
 
 After `pnpm test:coverage`, run `pnpm verify:coverage`. It enforces 90% line
@@ -44,6 +44,7 @@ pnpm lint
 pnpm verify:boundaries
 pnpm verify:content
 pnpm check
+pnpm test:types
 pnpm verify:component-tests
 pnpm test
 pnpm test:coverage
@@ -80,3 +81,61 @@ fixtures before the normal build. The helper requires CI=true and refuses an
 existing directory. Local runtime content is never overwritten. Vitest resolves
 content imports to versioned fixtures. See
 [browser coverage](browser-coverage.md) for E2E setup and diagnostics.
+
+## Compile-time domain contracts
+
+Run `pnpm test:types`, which invokes
+`tsc --noEmit --project tsconfig.type-contracts.json`. The dedicated config
+inherits the application's Astro strict config, keeps `strict: true`, and
+enables unused-local and unused-parameter diagnostics. Its `@/*` alias resolves
+source modules; `@/data/content/config/*` resolves versioned synthetic config.
+It works without deployment content or generated `.astro` declarations. Fixtures
+are compiled, never executed or discovered as Vitest runtime tests.
+
+Each source module maps to the same basename under
+`tests/fixtures/content/type-contracts/`:
+
+| Source in `src/types/`         | Compile-time fixture           |
+| ------------------------------ | ------------------------------ |
+| `about.ts`                     | `about.ts`                     |
+| `business-solutions.ts`        | `business-solutions.ts`        |
+| `content-blocks.ts`            | `content-blocks.ts`            |
+| `faq.ts`                       | `faq.ts`                       |
+| `icons.ts`                     | `icons.ts`                     |
+| `image-carousel.ts`            | `image-carousel.ts`            |
+| `index.ts`                     | `index.ts`                     |
+| `introduction.ts`              | `introduction.ts`              |
+| `legal.ts`                     | `legal.ts`                     |
+| `offer.ts`                     | `offer.ts`                     |
+| `order-inquiry.ts`             | `order-inquiry.ts`             |
+| `ordering-process.ts`          | `ordering-process.ts`          |
+| `pricing.ts`                   | `pricing.ts`                   |
+| `production-and-guarantees.ts` | `production-and-guarantees.ts` |
+| `project.ts`                   | `project.ts`                   |
+| `review.ts`                    | `review.ts`                    |
+| `services.ts`                  | `services.ts`                  |
+| `site.ts`                      | `site.ts`                      |
+
+Positive literals use `satisfies` for domain and nested types, including every
+content-block discriminant. Each module has an addressed negative case using
+`@ts-expect-error` with an explanation on the line before its expected error.
+TypeScript rejects unused directives, so a weakened domain type fails the job.
+Keep each negative expression small: a missing property is checked on its own
+expression line, and an invalid property on its own property line. This also
+keeps diagnostics stable after formatting. Do not use `@ts-ignore` or cast
+negative fixtures into the expected domain type.
+
+`index.ts` checks every current barrel type against its direct module export and
+checks the category registry value export. `schema-compatibility.ts` uses the
+existing `AssertContract`/`SameContract` helpers to compare schema outputs with
+domain types in both directions, including surplus keys. Importing schemas also
+compiles their existing nested contract assertions. Raw schema inputs can differ
+from normalized outputs: FAQ/business paragraphs normalize to strings, and
+carousel settings acquire defaults. About, icons, legal and site have no
+matching Zod schemas; their fixtures check their plain domain contracts.
+
+When adding a type module or barrel export, update this matrix and its fixture.
+The CI `pnpm test:types` step must retain the regular nonzero exit handling; do
+not filter diagnostics or relax strict checking to accept a negative case.
+Crawler route responses are exercised separately by
+`tests/integration/crawler-routes.test.ts` with full text/XML output checks.
