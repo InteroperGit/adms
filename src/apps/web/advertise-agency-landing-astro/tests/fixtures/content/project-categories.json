@@ -4,5 +4,11 @@
     "label": "Sample",
     "color": "#000000",
     "textColor": "#ffffff"
+  },
+  {
+    "slug": "other",
+    "label": "Other",
+    "color": "#000000",
+    "textColor": "#ffffff"
   }
 ]

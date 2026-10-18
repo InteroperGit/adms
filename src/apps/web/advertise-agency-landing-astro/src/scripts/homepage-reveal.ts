@@ -12,7 +12,11 @@ export function initializeHomepageReveal(): void {
   const container = document.querySelector('.homepage-sections');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (!container || !('IntersectionObserver' in window) || motion.matches) {
+  if (
+    !container ||
+    typeof IntersectionObserver !== 'function' ||
+    motion.matches
+  ) {
     return;
   }
 
@@ -43,6 +47,8 @@ export function initializeHomepageReveal(): void {
     document.removeEventListener('click', onClick, true);
     window.removeEventListener('hashchange', onHash);
     window.removeEventListener('pageshow', onPageShow);
+    document.removeEventListener('visibilitychange', onVisibility);
+    window.removeEventListener('pagehide', onPageHide);
     motion.removeEventListener('change', onMotion);
   };
 
@@ -84,6 +90,17 @@ export function initializeHomepageReveal(): void {
     }
   };
 
+  // A tab may become visible after layout changed while it was hidden.
+  const onVisibility = (): void => {
+    if (document.hidden) return;
+    for (const section of pending) {
+      if (inViewport(section)) reveal(section, true);
+    }
+  };
+
+  // Stop observing a page that is being discarded or placed in the BFCache.
+  const onPageHide = (): void => cleanup();
+
   const onMotion = (): void => {
     if (!motion.matches) return;
     for (const section of pending) reveal(section, true);
@@ -122,5 +139,7 @@ export function initializeHomepageReveal(): void {
   document.addEventListener('click', onClick, true);
   window.addEventListener('hashchange', onHash);
   window.addEventListener('pageshow', onPageShow);
+  document.addEventListener('visibilitychange', onVisibility);
+  window.addEventListener('pagehide', onPageHide);
   motion.addEventListener('change', onMotion);
 }

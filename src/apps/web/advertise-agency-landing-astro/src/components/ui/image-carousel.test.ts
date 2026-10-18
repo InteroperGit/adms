@@ -6,13 +6,26 @@ class ObserverMock {
   static instances: ObserverMock[] = [];
   callback: IntersectionObserverCallback | ResizeObserverCallback;
   disconnected = false;
+  observed: Element[] = [];
 
   constructor(callback: IntersectionObserverCallback | ResizeObserverCallback) {
     this.callback = callback;
     ObserverMock.instances.push(this);
   }
 
-  observe() {}
+  observe(target: Element) {
+    this.observed.push(target);
+  }
+
+  emit(entry: Partial<IntersectionObserverEntry>) {
+    (this.callback as unknown as (entries: unknown[]) => void)([
+      {
+        isIntersecting: false,
+        target: this.observed[0],
+        ...entry,
+      } as IntersectionObserverEntry,
+    ]);
+  }
   disconnect() {
     this.disconnected = true;
   }
@@ -56,10 +69,7 @@ afterEach(() => {
 it(
   'initializes manual state and cleans observers on disconnection',
   async () => {
-  vi.stubGlobal(
-    'IntersectionObserver',
-    ObserverMock,
-  );
+  vi.stubGlobal('IntersectionObserver', ObserverMock);
   vi.stubGlobal('ResizeObserver', ObserverMock);
   vi.stubGlobal('matchMedia', () => matchMedia());
   vi.resetModules();
@@ -78,16 +88,20 @@ it(
   (dots[1] as HTMLElement).click();
   expect(slides[0]).toHaveAttribute('aria-hidden', 'true');
   expect(slides[1]).not.toHaveAttribute('aria-hidden');
-  expect(carousel.querySelector('[role="status"]'))
-    .toHaveTextContent('Slide 2');
+  expect(carousel.querySelector('[role="status"]')).toHaveTextContent(
+    'Slide 2',
+  );
+
+  (carousel.querySelector('.carousel-arrow') as HTMLElement).click();
+  expect(slides[0]).not.toHaveAttribute('aria-hidden');
 
   carousel.remove();
-  expect(ObserverMock.instances.every(observer => observer.disconnected))
-    .toBe(true);
+  expect(
+    ObserverMock.instances.every((observer) => observer.disconnected),
+  ).toBe(true);
   expect(carousel.dataset.ready).toBeUndefined();
   expect(slides[0]).not.toHaveAttribute('aria-hidden');
-  },
-);
+});
 
 it('does not enhance when observer support is unavailable', async () => {
   vi.stubGlobal('IntersectionObserver', undefined);
@@ -99,6 +113,60 @@ it('does not enhance when observer support is unavailable', async () => {
   const carousel = document.querySelector<HTMLElement>('image-carousel')!;
 
   expect(carousel.dataset.ready).toBeUndefined();
-  expect(carousel.querySelector('.carousel-slide'))
-    .not.toHaveAttribute('aria-hidden');
+  expect(carousel.querySelector('.carousel-slide')).not.toHaveAttribute(
+    'aria-hidden',
+  );
+});
+
+it('rotates with fake time and pauses while hovered or hidden', async () => {
+  vi.useFakeTimers();
+  vi.stubGlobal('IntersectionObserver', ObserverMock);
+  vi.stubGlobal('ResizeObserver', ObserverMock);
+  vi.stubGlobal('matchMedia', () => matchMedia());
+  vi.resetModules();
+  await import('./image-carousel');
+  document.body.innerHTML = carouselMarkup();
+  const carousel = document.querySelector<HTMLElement>('image-carousel')!;
+  const slides = carousel.querySelectorAll('.carousel-slide');
+  const observer = ObserverMock.instances[0];
+
+  observer.emit({ isIntersecting: true });
+  vi.advanceTimersByTime(1000);
+  expect(slides[1]).not.toHaveAttribute('aria-hidden');
+
+  carousel.dispatchEvent(new PointerEvent('pointerenter'));
+  vi.advanceTimersByTime(1000);
+  expect(slides[1]).not.toHaveAttribute('aria-hidden');
+
+  Object.defineProperty(document, 'hidden', {
+    value: true,
+    configurable: true,
+  });
+  document.dispatchEvent(new Event('visibilitychange'));
+  vi.advanceTimersByTime(1000);
+  expect(slides[1]).not.toHaveAttribute('aria-hidden');
+});
+
+it(
+  'keeps automatic content static when reduced motion is enabled',
+  async () => {
+  vi.useFakeTimers();
+  vi.stubGlobal('IntersectionObserver', ObserverMock);
+  vi.stubGlobal('ResizeObserver', ObserverMock);
+  vi.stubGlobal('matchMedia', () => matchMedia(true));
+  vi.resetModules();
+  await import('./image-carousel');
+  document.body.innerHTML = carouselMarkup().replace(
+    'data-manual="true"',
+    'data-manual="false"',
+  );
+  const carousel = document.querySelector<HTMLElement>('image-carousel')!;
+  const slides = carousel.querySelectorAll('.carousel-slide');
+
+  ObserverMock.instances[0].emit({ isIntersecting: true });
+  vi.advanceTimersByTime(5000);
+
+  expect(slides[0]).not.toHaveAttribute('aria-hidden');
+  expect(slides[1]).not.toHaveAttribute('aria-hidden');
+  expect(carousel.dataset.ready).toBeUndefined();
 });

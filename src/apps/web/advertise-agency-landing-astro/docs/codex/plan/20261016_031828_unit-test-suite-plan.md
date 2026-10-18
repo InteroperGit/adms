@@ -282,8 +282,8 @@ pnpm test:integration
 - [098 — image resolver и chart runtime][task-098] — completed 2026-10-16;
 - [099 — client inquiry state][task-099] — completed 2026-10-16;
 - `100-carousel-and-reveal-scripts.md` — carousel/reveal scripts;
-- `101-ui-primitives-tests.md` — базовые UI-компоненты;
-- `102-theme-and-navigation-components.md` — theme, navigation и media UI;
+- [101 — базовые UI-компоненты][task-101];
+- [102 — theme, navigation и media UI][task-102] — completed 2026-10-17;
 - `103-card-components-tests.md` — карточки;
 - `104-basic-content-block-components.md` — простые content blocks;
 - `105-media-and-form-block-components.md` — media/form blocks;
@@ -306,3 +306,5 @@ pnpm test:integration
 [task-097]: ../fixed/20261016/097-inquiry-payload-tests.md
 [task-098]: ../fixed/20261016/098-image-and-chart-utils.md
 [task-099]: ../fixed/20261016/099-inquiry-browser-module.md
+[task-101]: ../fixed/20261017/101-ui-primitives-tests.md
+[task-102]: ../fixed/20261017/102-theme-and-navigation-components.md

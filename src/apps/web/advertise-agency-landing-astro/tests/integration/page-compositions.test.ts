@@ -4,6 +4,7 @@
 import { expect, it } from 'vitest';
 import { getByRole } from '@testing-library/dom';
 import Header from '../../src/components/Header.astro';
+import Homepage from '../../src/pages/index.astro';
 import OrderInquiry from '../../src/components/sections/OrderInquiry.astro';
 import ContentBlocks from '../../src/components/content/ContentBlocks.astro';
 import OrderFormBlock from '../../src/components/content/OrderFormBlock.astro';
@@ -26,51 +27,82 @@ import { render } from '../helpers/render';
 
 it('composes shared header controls with mobile navigation and settings',
   async () => {
-    const body = await render(Header);
+  const body = await render(Header);
 
-    expect(body.querySelector('header[data-auto-hide-header]'))
-      .toBeInTheDocument();
-    expect(body.querySelector('#mobile-menu-open'))
-      .toHaveAttribute('aria-controls', 'mobile-menu');
-    expect(body.querySelector('#mobile-menu')).toBeInTheDocument();
-    expect(getByRole(body, 'navigation', { name: /Основная/ }))
-      .toBeInTheDocument();
-    expect(body.querySelector('[data-theme-settings]')).toBeInTheDocument();
-  });
+  expect(
+    body.querySelector('header[data-auto-hide-header]'),
+  ).toBeInTheDocument();
+  expect(body.querySelector('#mobile-menu-open')).toHaveAttribute(
+    'aria-controls',
+    'mobile-menu',
+  );
+  expect(body.querySelector('#mobile-menu')).toBeInTheDocument();
+  expect(
+    getByRole(body, 'navigation', { name: /Основная/ }),
+  ).toBeInTheDocument();
+  expect(body.querySelector('[data-theme-settings]')).toBeInTheDocument();
+});
 
 it('composes inquiry section with disabled delivery and no-JS fallback',
   async () => {
-    const body = await render(OrderInquiry);
+  const body = await render(OrderInquiry);
 
-    expect(body.querySelector('#order-inquiry')).toBeInTheDocument();
-    expect(body.querySelector('[data-inquiry]')).toHaveAttribute(
-      'data-enabled', 'false',
-    );
-    expect(body.querySelector('fieldset')).toBeDisabled();
-    expect(body.querySelector('noscript')).toHaveTextContent(
-      'JavaScript',
-    );
-  });
+  expect(body.querySelector('#order-inquiry')).toBeInTheDocument();
+  expect(body.querySelector('[data-inquiry]')).toHaveAttribute(
+    'data-enabled',
+    'false',
+  );
+  expect(body.querySelector('fieldset')).toBeDisabled();
+  expect(body.querySelector('noscript')).toHaveTextContent('JavaScript');
+});
 
 it('composes a service article with content, fallback actions and noindex',
   async () => {
-    const body = await render(ServiceArticle, { serviceId: 'neon' });
+  const body = await render(ServiceArticle, { serviceId: 'neon' });
 
-    expect(body.querySelector('article.service-article')).toBeInTheDocument();
-    expect(body.querySelector('h1')).toBeInTheDocument();
-    expect(body.querySelector('.content-blocks')).toBeInTheDocument();
-    expect(body.querySelector('meta[name="robots"]')).toBeNull();
-    expect(body.querySelector('a[href="/#order-inquiry"]'))
-      .toBeInTheDocument();
-  });
+  expect(body.querySelector('article.service-article')).toBeInTheDocument();
+  expect(body.querySelector('h1')).toBeInTheDocument();
+  expect(body.querySelector('.content-blocks')).toBeInTheDocument();
+  expect(body.querySelector('meta[name="robots"]')).toBeNull();
+  expect(body.querySelector('a[href="/#order-inquiry"]')).toBeInTheDocument();
+});
 
-it(
-  'composes content blocks with article ownership and safe fallback',
+it('composes the homepage sections in the configured editorial order',
+  async () => {
+  const body = await render(Homepage);
+  const sections = [...body.querySelectorAll('section[id]')].map(
+    (section) => section.id,
+  );
+
+  expect(sections).toEqual([
+    'offers',
+    'introduction',
+    'about',
+    'services',
+    'projects',
+    'ordering-process',
+    'production-and-guarantees',
+    'reviews',
+    'business-solutions',
+    'contacts',
+    'order-inquiry',
+  ]);
+  expect(body.querySelector('#pricing')).toBeNull();
+  expect(body.querySelector('#faq')).toBeNull();
+  expect(body.querySelector('h1')).toBeInTheDocument();
+  expect(body.querySelector('[data-inquiry]')).toBeInTheDocument();
+});
+
+it('composes content blocks with article ownership and safe fallback',
   async () => {
   const body = await render(ContentBlocks, {
     blocks: fixture as ContentBlock[],
-    context: { kind: 'project', projectId: 1, category: 'sample',
-      published: true },
+    context: {
+      kind: 'project',
+      projectId: 1,
+      category: 'sample',
+      published: true,
+    },
   });
 
   expect(body.querySelector('.content-blocks')).toBeInTheDocument();
@@ -78,8 +110,17 @@ it(
   expect(body.querySelector('.inquiry-link')).toBeInTheDocument();
   expect(body.querySelector('a[href^="javascript:"]')).toBeNull();
   expect(body.querySelectorAll('ol, ul').length).toBeGreaterThanOrEqual(2);
-  },
-);
+});
+
+it('keeps an empty article stream renderable and free of unsafe links',
+  async () => {
+  const body = await render(ContentBlocks, { blocks: [] });
+
+  expect(body.querySelector('.content-blocks')).toBeInTheDocument();
+  expect(body.querySelector('.block-demo-notice')).toBeNull();
+  expect(body.querySelector('a[href^="javascript:"]')).toBeNull();
+  expect(body.querySelectorAll('.content-block')).toHaveLength(0);
+});
 
 it('keeps published article forms tied to their owning context', async () => {
   const block = {
@@ -110,54 +151,70 @@ it('keeps published article forms tied to their owning context', async () => {
     },
   });
 
-  expect(published.querySelector('section#led-letters'))
-    .toBeInTheDocument();
-  expect(published.querySelector('input[name="serviceId"]'))
-    .toHaveValue('svetovye-bukvy');
+  expect(published.querySelector('section#led-letters')).toBeInTheDocument();
+  expect(published.querySelector('input[name="serviceId"]')).toHaveValue(
+    'svetovye-bukvy',
+  );
   expect(rejected.querySelector('[data-led-letters]')).toBeNull();
-  expect(rejected.querySelector('a[href="/#order-inquiry"]'))
-    .toBeInTheDocument();
+  expect(
+    rejected.querySelector('a[href="/#order-inquiry"]'),
+  ).toBeInTheDocument();
 });
 
-it(
-  'composes catalog controls, results, empty state and pagination',
+it('composes catalog controls, results, empty state and pagination',
   async () => {
   const project: Project = {
-    id: 1, category: 'sample', status: 'published', notice: null,
-    title: 'Fixture project', client: 'Fixture client', attribution: 'generic',
-    description: 'Fixture description', content: [],
+    id: 1,
+    category: 'sample',
+    status: 'published',
+    notice: null,
+    title: 'Fixture project',
+    client: 'Fixture client',
+    attribution: 'generic',
+    description: 'Fixture description',
+    content: [],
   };
   const body = await render(ProjectCatalogControls, {
-    categories: [{ slug: 'sample', label: 'Sample', color: '#000000',
-      textColor: '#ffffff' }],
+    categories: [
+      {
+        slug: 'sample',
+        label: 'Sample',
+        color: '#000000',
+        textColor: '#ffffff',
+      },
+    ],
   });
   const count = await render(ProjectCatalogCount, { count: 1 });
   const grid = await render(ProjectCatalogGrid, {
-    projects: [project], page: 1, pageSize: 12,
+    projects: [project],
+    page: 1,
+    pageSize: 12,
   });
   const empty = await render(ProjectCatalogEmpty, { type: 'search' });
   const pagination = await render(ProjectCatalogPagination, {
-    items: [1, 2], currentPage: 1, pageCount: 2, pageSize: 1,
+    items: [1, 2],
+    currentPage: 1,
+    pageCount: 2,
+    pageSize: 1,
     pageHref: (page: number) => `/projects/?page=${page}`,
   });
 
   expect(body.querySelector('[data-catalog-controls]')).toBeInTheDocument();
   expect(count.querySelector('[data-catalog-count]')).toBeInTheDocument();
   expect(grid.querySelector('[data-project-card]')).toBeInTheDocument();
-  expect(empty.querySelector('[data-catalog-search-empty]'))
-    .toBeInTheDocument();
-  expect(pagination.querySelector('[data-catalog-pagination]'))
-    .toBeInTheDocument();
-  },
-);
+  expect(
+    empty.querySelector('[data-catalog-search-empty]'),
+  ).toBeInTheDocument();
+  expect(
+    pagination.querySelector('[data-catalog-pagination]'),
+  ).toBeInTheDocument();
+});
 
 it('keeps cookie choices and legal links in the composed banner', async () => {
   const body = await render(CookieBanner);
 
   expect(body.querySelector('#cookie-banner')).toBeInTheDocument();
   expect(body.querySelectorAll('[data-cookie-choice]')).toHaveLength(2);
-  expect(body.querySelector('a[href="/privacy-policy"]'))
-    .toBeInTheDocument();
-  expect(body.querySelector('a[href="/terms-of-use"]'))
-    .toBeInTheDocument();
+  expect(body.querySelector('a[href="/privacy-policy"]')).toBeInTheDocument();
+  expect(body.querySelector('a[href="/terms-of-use"]')).toBeInTheDocument();
 });
