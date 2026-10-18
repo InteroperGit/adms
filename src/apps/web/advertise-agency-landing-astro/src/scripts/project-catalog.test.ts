@@ -385,4 +385,14 @@ describe('catalog browser state', () => {
     fireEvent.click(elements.count);
     document.dispatchEvent(new dom.window.MouseEvent('click'));
   });
+
+  it('preserves filtered state in card return URLs', async () => {
+    const elements = await start(
+      '/projects/?keep=1&q=Alpha&category=letters#results',
+    );
+    fireEvent.click(elements.cards[1].querySelector('span')!);
+    expect(sessionStorage.getItem('project-catalog-return')).toBe(
+      '/projects/?keep=1&q=Alpha&category=letters#catalog-results',
+    );
+  });
 });

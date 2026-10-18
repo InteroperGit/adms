@@ -1,8 +1,14 @@
+// @vitest-environment node
 // Boundary tests for FAQ copy and approval rules.
 import { expect, it } from 'vitest';
 import type { z } from 'astro/zod';
 import fixture from '../../tests/fixtures/content/unit-contracts.json';
+import { expectContentContract } from '../../tests/helpers/content-contract';
 import { faqSchema } from './faq';
+
+it('enforces the FAQ root contract', () => {
+  expectContentContract(faqSchema, fixture.faq);
+});
 
 it('parses and joins the versioned FAQ fixture', () => {
   const value = faqSchema.parse(fixture.faq);

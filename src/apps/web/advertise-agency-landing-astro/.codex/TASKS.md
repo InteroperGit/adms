@@ -1,3 +1,34 @@
+# Latest task — 120, 2026-10-19
+
+- Removed `tests/unit` and pointed `test:unit` at colocated pure logic suites.
+- Updated verification documentation; quality CI already used the correct
+  gates, and Vitest still discovers integration tests under `tests/**`.
+- Unit: 32 files/451 tests; components: 64/234; integration: 2/58;
+  full: 98/743. Check, lint, style, coverage and component gate pass.
+- Repository-wide Prettier check reports 420 existing violations; changed
+  code/config files pass focused formatting checks.
+- Archive: `docs/codex/fixed/20261019/120-remove-legacy-unit-tree.md`.
+
+# Latest task — 119, 2026-10-19
+
+- Colocated content publication, pricing/category, catalog and server payload
+  suites with their source modules.
+- Removed migrated suites from `tests/unit`; task 120 owns the empty directory,
+  scripts, CI and documentation cleanup.
+- Focused run: 5 files and 223 tests pass; code-style check passes.
+- Archive: `docs/codex/fixed/20261019/119-colocate-content-runtime-suites.md`.
+- Next task: 120-remove-legacy-unit-tree.md.
+
+# Latest task — 118, 2026-10-19
+
+- Colocated validation contracts and boundary cases with their schemas;
+  added `src/validation/image-carousel.test.ts`.
+- Removed migrated validation suites from `tests/unit`; retained block
+  publication coverage for task 119.
+- Focused run: 18 files and 176 tests pass.
+- Archive: `docs/codex/fixed/20261019/118-colocate-validation-suites.md`.
+- Next task: 119-colocate-content-runtime-suites.md.
+
 # Latest task — 113, 2026-10-18
 
 - Completed route-handler and type-contract coverage; archived in

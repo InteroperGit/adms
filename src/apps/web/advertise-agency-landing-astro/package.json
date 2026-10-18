@@ -11,7 +11,7 @@
     "check:style": "node scripts/check-code-style.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:unit": "vitest run tests/unit src/scripts src/server",
+    "test:unit": "vitest run src/validation src/content src/scripts src/server",
     "test:components": "vitest run tests/components src/components",
     "verify:component-tests": "node scripts/check-component-tests.mjs",
     "test:integration": "vitest run tests/integration --passWithNoTests",

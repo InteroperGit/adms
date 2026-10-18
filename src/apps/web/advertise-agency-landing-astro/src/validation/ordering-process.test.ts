@@ -1,11 +1,18 @@
+// @vitest-environment node
 // Boundary tests for the five-step ordering process contract.
 import { expect, it } from 'vitest';
 import fixture from '../../tests/fixtures/content/unit-contracts.json';
+import { expectContentContract } from '../../tests/helpers/content-contract';
 import { orderingProcessSchema } from './ordering-process';
 
+it('enforces the ordering-process root contract', () => {
+  expectContentContract(orderingProcessSchema, fixture['ordering-process']);
+});
+
 it('parses the versioned five-step fixture', () => {
-  expect(orderingProcessSchema.parse(fixture['ordering-process']).steps)
-    .toHaveLength(5);
+  expect(
+    orderingProcessSchema.parse(fixture['ordering-process']).steps,
+  ).toHaveLength(5);
 });
 
 it('requires approval evidence when copy is approved', () => {

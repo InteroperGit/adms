@@ -2,9 +2,11 @@
 
 [Documentation index](../../README.md)
 
-Unit contracts run with `pnpm test:unit`; component contracts run with
-`pnpm test:components`. Every component test belongs beside its source file,
-using the same basename, such as `Button.astro` and `Button.test.ts`.
+Colocated pure logic contracts run with `pnpm test:unit`, which discovers the
+suites under `src/validation`, `src/content`, `src/scripts` and `src/server`.
+Component contracts run separately with `pnpm test:components`. Every
+component test belongs beside its source file, using the same basename, such
+as `Button.astro` and `Button.test.ts`.
 `pnpm verify:component-tests` fails if a component test is added back under
 `tests/components`. `pnpm test:coverage` runs the full suite and writes ignored
 HTML/LCOV reports under `coverage/`. The coverage include covers every component

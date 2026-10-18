@@ -44,6 +44,14 @@ export default defineConfig(
     },
   },
   {
+    files: ['docs/development/browser-coverage.js'],
+    languageOptions: { globals: globals.browser },
+    rules: {
+      // Playwright CLI evaluates this file as a callback expression.
+      '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
+  {
     files: ['**/*.astro'],
     processor: 'astro/client-side-ts',
     languageOptions: { parserOptions: { parser: ts.parser } },

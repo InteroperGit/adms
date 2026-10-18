@@ -1,3 +1,4 @@
+// @vitest-environment node
 // Boundary tests for reusable validation primitives.
 import { describe, expect, it } from 'vitest';
 import { z } from 'astro/zod';

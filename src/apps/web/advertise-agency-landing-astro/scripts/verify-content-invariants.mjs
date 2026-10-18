@@ -9,7 +9,7 @@ async function productionFiles(path) {
   const files = [];
   for (const entry of await readdir(path, { withFileTypes: true })) {
     if (entry.isDirectory() && entry.name !== 'fixtures') {
-      files.push(...await productionFiles(`${path}/${entry.name}`));
+      files.push(...(await productionFiles(`${path}/${entry.name}`)));
     } else if (entry.isFile() && entry.name.endsWith('.json')) {
       files.push(`${path}/${entry.name}`);
     }
@@ -18,14 +18,20 @@ async function productionFiles(path) {
 }
 const files = await productionFiles(directory);
 const urlFields = new Set([
-  'avatar', 'endpoint', 'href', 'image', 'mapSrc', 'src',
+  'avatar',
+  'endpoint',
+  'href',
+  'image',
+  'mapSrc',
+  'src',
 ]);
 const errors = [];
 
 function visit(value, path) {
   if (Array.isArray(value)) {
-    const keyed = value.filter(item => item && typeof item === 'object'
-      && 'id' in item);
+    const keyed = value.filter(
+      (item) => item && typeof item === 'object' && 'id' in item,
+    );
     const seen = new Map();
     keyed.forEach((item, index) => {
       const id = item.id;
@@ -46,6 +52,8 @@ function visit(value, path) {
       if (/^[a-z]+:/i.test(child) && !/^https?:\/\//i.test(child)) {
         errors.push(`${childPath} uses an unsafe URL scheme`);
       }
+      // Control characters and spaces are invalid in authored URL values.
+      // eslint-disable-next-line no-control-regex
       if (/[\u0000-\u0020\u007f\\]/.test(child)) {
         errors.push(`${childPath} contains control characters or spaces`);
       }
@@ -61,9 +69,13 @@ function visit(value, path) {
         errors.push(`${childPath} is not a valid URL or root-relative path`);
       }
     }
-    if ((key === 'width' || key === 'height' || key === 'imageWidth'
-      || key === 'imageHeight') &&
-      (!Number.isInteger(child) || child <= 0)) {
+    if (
+      (key === 'width' ||
+        key === 'height' ||
+        key === 'imageWidth' ||
+        key === 'imageHeight') &&
+      (!Number.isInteger(child) || child <= 0)
+    ) {
       errors.push(`${childPath} must be a positive integer`);
     }
     visit(child, childPath);
