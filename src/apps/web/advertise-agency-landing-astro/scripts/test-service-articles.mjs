@@ -12,10 +12,10 @@ const publication = await import(
   await moduleURL('src/content/service-publication.ts')
 );
 const before = JSON.parse(await readFile(
-  'data/content/fixtures/services-before-blocks.json', 'utf8',
+  'tests/fixtures/content/services-before-blocks.json', 'utf8',
 ));
 const catalog = JSON.parse(await readFile(
-  'data/content/services.json', 'utf8',
+  'data/content/config/services.json', 'utf8',
 ));
 const paths = before.items.map((service) => service.href);
 validation.createServiceRecordsSchema(paths).parse(catalog);

@@ -1,6 +1,6 @@
 # Service article authoring
 
-Service catalog settings stay in `data/content/services.json`. Each `article`
+Service catalog settings stay in `data/content/config/services.json`. Each `article`
 reference is `{ "format": "mdx", "entry": "<service-id>" }`; the entry must
 match its service id and `data/content/articles/services/<service-id>.mdx`.
 Keep existing service ids and hrefs stable. Catalog images retain their full

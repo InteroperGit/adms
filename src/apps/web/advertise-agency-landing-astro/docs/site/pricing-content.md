@@ -4,7 +4,7 @@ Task: [032](../codex/fixed/20261007/032-pricing-content-and-examples.md)
 
 ## Current demonstration dataset
 
-Edit `data/content/pricing.json`. Array order is presentation order. The
+Edit `data/content/config/pricing.json`. Array order is presentation order. The
 enabled `demoMode` contains three fictional scopes: facade letters, a flat
 entrance sign, and an interior neon inscription. Dimensions, materials,
 included work, exclusions, and ruble amounts are invented for demonstration.

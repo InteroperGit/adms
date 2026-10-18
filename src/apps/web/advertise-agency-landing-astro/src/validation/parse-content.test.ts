@@ -17,13 +17,13 @@ describe('parseContent', () => {
 
   it('includes the source and nested diagnostics for invalid content', () => {
     expect(() => parseContent(schema, { title: '', count: 0 },
-      'data/content/example.json')).toThrow(
+      'data/content/config/example.json')).toThrow(
       /Invalid content in data\/content\/example\.json:\n/,
     );
     expect(() => parseContent(schema, { title: '', count: 0 },
-      'data/content/example.json')).toThrow(/title:/);
+      'data/content/config/example.json')).toThrow(/title:/);
     expect(() => parseContent(schema, { title: '', count: 0 },
-      'data/content/example.json')).toThrow(/count:/);
+      'data/content/config/example.json')).toThrow(/count:/);
   });
 
   it('supports an issue without a path', () => {

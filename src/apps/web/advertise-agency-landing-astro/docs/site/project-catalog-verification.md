@@ -8,7 +8,7 @@ retention, unique IDs, and page two all passed.
 
 The fixture source is `scripts/verify-task-073-fixture.mjs`; its result is
 recorded in `output/playwright/task-073/fixture-results.json`. The production
-`data/content/projects.json` is read-only input and is never modified.
+`data/content/config/projects.json` is read-only input and is never modified.
 
 `astro build` passed and generated 38 pages. The project code-style check and
 the fixture verification passed. The full `pnpm check`, content verification,

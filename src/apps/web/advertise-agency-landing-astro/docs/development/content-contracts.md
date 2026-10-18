@@ -17,7 +17,7 @@ protocol-relative URLs, URL credentials, control characters, and non-positive
 image dimensions. The Zod schemas remain authoritative for cross-field rules,
 publication approval, link destinations, consent, and defaults.
 
-FAQ content lives in `data/content/faq.json`, with parsed types in
+FAQ content lives in `data/content/config/faq.json`, with parsed types in
 `src/types/faq.ts`, strict validation in `src/validation/faq.ts`, and the
 loader in `src/content/faq.ts`. Source answer lines become one complete
 answer string. Section and answer approvals each require an evidence source

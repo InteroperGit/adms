@@ -51,13 +51,13 @@ supplied URLs/dimensions without build-time remote downloads.
 ## Consumers and editing
 
 OffersCarousel retains the outer `offers` anchor and passes validated
-`data/content/offers.json` items/autoplay/timing to the shared component.
+`data/content/config/offers.json` items/autoplay/timing to the shared component.
 Its existing description, button, alignment, and crop settings remain.
 The offers JSON contract and public validation exports are unchanged.
 Autoplay configuration is supplied at render time, as before; rebuilding
 is required after editing JSON. Theme settings remain independent.
 
-About uses `data/content/about-carousel.json`, parsed by
+About uses `data/content/config/about-carousel.json`, parsed by
 `src/content/about-carousel.ts`. This file exposes all options and images.
 It enables autoplay/circles and disables manual navigation, arrows,
 descriptions, and slide buttons. About's own contact/project actions stay

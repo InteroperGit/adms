@@ -1,28 +1,29 @@
 # Справочник шаблонов контента
 
-Документ описывает файлы из `data/templates/manifest.json`. Значения
-`TEST_*`, `test@example.com`, `example.test` и `/test-destination` являются
-тестовыми и должны быть заменены до публикации. Не копируйте в шаблоны данные
-из `data/content/`, имена клиентов, реальные URL или готовые рекламные тексты.
+Документ описывает файлы из `data/templates/manifest.json`. Значения `TEST_*`,
+`test@example.com`, `example.test` и `/test-destination` являются тестовыми и
+должны быть заменены до публикации. Не копируйте в шаблоны данные из
+`data/content/`, имена клиентов, реальные URL или готовые рекламные тексты.
 
 ## Общие правила
 
 JSON остаётся обычным JSON: комментарии и служебные поля вроде `_comment`
-запрещены. Необязательные поля отмечены в схеме; `null` допустим только там,
-где он разрешён схемой. Строки не должны быть пустыми, идентификаторы должны
-быть уникальными, а slug используют `kebab-case`.
+запрещены. Необязательные поля отмечены в схеме; `null` допустим только там, где
+он разрешён схемой. Строки не должны быть пустыми, идентификаторы должны быть
+уникальными, а slug используют `kebab-case`.
 
 Пути медиа — root-relative (`/media/file.webp`) или URL `http(s)` без учётных
 данных. Внутренние ссылки также root-relative. Даты имеют формат `YYYY-MM-DD`.
-Размеры изображений — положительные целые числа в пикселях, focal point —
-числа от `0` до `100`.
+Размеры изображений — положительные целые числа в пикселях, focal point — числа
+от `0` до `100`.
 
 ## Manifest и схема
 
 `manifest.json` содержит версию `1.0.0`, массив `files` и объект `placeholders`
-(`text`, `slug`, `media`, `source`). Каждая запись `files` содержит относительные
-`path`, `kind` (`json` или `mdx`) и `output`. Все записи из `files` копируются
-при инициализации; отдельный список обязательных файлов не нужен.
+(`text`, `slug`, `media`, `source`). Каждая запись `files` содержит
+относительные `path`, `kind` (`json` или `mdx`) и `output`. Все записи из
+`files` копируются при инициализации; отдельный список обязательных файлов не
+нужен.
 
 `schema.json` фиксирует ту же версию, поддерживаемые виды файлов, правило медиа
 `root-relative-or-https` и наличие одной проектной и одной сервисной
@@ -49,8 +50,8 @@ starter-статьи.
   feedback. При включённой отправке нужны одобренное согласие и endpoint.
 - `ordering-process.json` — ровно пять шагов с уникальными id и непустыми
   списками действий клиента и агентства.
-- `pricing.json` — факторы стоимости и примеры. Цена бывает `exact` или
-  `range`, валюта только `RUB`, контекст `demo|current|historical`; для
+- `pricing.json` — факторы стоимости и примеры. Цена бывает `exact` или `range`,
+  валюта только `RUB`, контекст `demo|current|historical`; для
   current/historical обязательна дата `asOf`.
 - `production-and-guarantees.json` — операции, материалы, проверки, фото,
   гарантии и обслуживание. Одобренная гарантия не может иметь
@@ -85,25 +86,26 @@ starter-статьи.
 - `FootnoteBlock` — `text`, optional `reference` и `targetId` существующего
   блока.
 
-Каждый блок может иметь unique kebab-case `id`, статус `draft|demo|published`
-и provenance. В provenance обязательны `source`; `approvedBy` и `approvedAt`
+Каждый блок может иметь unique kebab-case `id`, статус `draft|demo|published` и
+provenance. В provenance обязательны `source`; `approvedBy` и `approvedAt`
 задаются парой, дата имеет формат `YYYY-MM-DD`. Импорты, произвольный JSX,
 скрипты и незарегистрированные компоненты запрещены.
 
 ## Проверка
 
 Выполните `node scripts/test-content-catalog.mjs`,
-`node scripts/verify-content-invariants.mjs`, `node_modules/.bin/astro.cmd check`
-и `node scripts/check-code-style.mjs`. После генерации проверьте состав файлов,
-сохранение чистого JSON, копирование MDX без валидации генератором и отсутствие
-изменений в `data/content/`.
+`node scripts/verify-content-invariants.mjs`,
+`node_modules/.bin/astro.cmd check` и `node scripts/check-code-style.mjs`. После
+генерации проверьте состав файлов, сохранение чистого JSON, копирование MDX без
+валидации генератором и отсутствие изменений в `data/content/`.
 
 ## Полное дерево полей с комментариями
 
-Дерево построено по текущим JSON-шаблонам. Для массивов показана структура одного элемента;
-обязательность, перечисления и дополнительные ограничения приведены в комментариях и схемах.
+Дерево построено по текущим JSON-шаблонам. Для массивов показана структура
+одного элемента; обязательность, перечисления и дополнительные ограничения
+приведены в комментариях и схемах.
 
-### `json/about-carousel.json`
+### `config/about-carousel.json`
 
 - `options` — object — Настройки поведения компонента.
   - `enabled` — boolean — Включает компонент или элемент.
@@ -115,8 +117,10 @@ starter-статьи.
   - `descriptions` — boolean — Показывает описания слайдов.
   - `buttons` — boolean — Показывает CTA-кнопки.
   - `animation` — boolean — Включает анимацию.
-  - `layout` — string — Вариант раскладки. Допустимые значения: `full` или `panel`.
-  - `imageFit` — string — Способ вписывания изображения. Допустимые значения: `cover` или `contain`.
+  - `layout` — string — Вариант раскладки. Допустимые значения: `full` или
+    `panel`.
+  - `imageFit` — string — Способ вписывания изображения. Допустимые значения:
+    `cover` или `contain`.
   - `aspectRatio` — number — Соотношение сторон.
   - `eagerFirst` — boolean — Загружает первый слайд без задержки.
 - `items` — array — Коллекция элементов.
@@ -128,7 +132,7 @@ starter-статьи.
     - `imageWidth` — number — Ширина изображения в пикселях.
     - `imageHeight` — number — Высота изображения в пикселях.
 
-### `json/about.json`
+### `config/about.json`
 
 - `description1` — string — Первый абзац описания.
 - `description2` — string — Второй абзац описания.
@@ -138,7 +142,7 @@ starter-статьи.
     - `label` — string — Подпись поля или ссылки.
 - `icon` — string — Иконка или её путь.
 
-### `json/business-solutions.json`
+### `config/business-solutions.json`
 
 - `heading` — string — Заголовок секции.
 - `introduction` — array — Вводный текст секции.
@@ -173,12 +177,15 @@ starter-статьи.
         - `descriptions` — boolean — Показывает описания слайдов.
         - `buttons` — boolean — Показывает CTA-кнопки.
         - `animation` — boolean — Включает анимацию.
-        - `layout` — string — Вариант раскладки. Допустимые значения: `full` или `panel`.
-        - `imageFit` — string — Способ вписывания изображения. Допустимые значения: `cover` или `contain`.
+        - `layout` — string — Вариант раскладки. Допустимые значения: `full` или
+          `panel`.
+        - `imageFit` — string — Способ вписывания изображения. Допустимые
+          значения: `cover` или `contain`.
         - `aspectRatio` — number — Соотношение сторон.
         - `eagerFirst` — boolean — Загружает первый слайд без задержки.
       - `items` — array — Коллекция элементов.
-        - `[элемент]` — object — Один элемент массива; дочерние поля описаны ниже.
+        - `[элемент]` — object — Один элемент массива; дочерние поля описаны
+          ниже.
           - `id` — number — Стабильный уникальный идентификатор.
           - `enabled` — boolean — Включает компонент или элемент.
           - `image` — string — Изображение примера.
@@ -186,10 +193,12 @@ starter-статьи.
           - `imageWidth` — number — Ширина изображения в пикселях.
           - `imageHeight` — number — Высота изображения в пикселях.
           - `description` — string — Описание для страницы, карточки или записи.
-          - `presentation` — object — Параметры отображения текста поверх изображения.
+          - `presentation` — object — Параметры отображения текста поверх
+            изображения.
             - `fontSizeRem` — number — Размер текста в rem.
             - `textColor` — string — Цвет текста категории.
-            - `overlay` — string — Тип затемняющей подложки. Допустимые значения: `dark` или `light`.
+            - `overlay` — string — Тип затемняющей подложки. Допустимые
+              значения: `dark` или `light`.
             - `horizontal` — string — Горизонтальное выравнивание.
             - `vertical` — string — Вертикальное выравнивание.
             - `focalPoint` — object — Точка фокусировки изображения.
@@ -202,7 +211,7 @@ starter-статьи.
       - `evidence` — null — Ссылка на подтверждение.
       - `media` — array — Связанные материалы.
 
-### `json/faq.json`
+### `config/faq.json`
 
 - `demoMode` — boolean — Режим демонстрационных данных.
 - `demoNotice` — string — Предупреждение о демонстрационном содержимом.
@@ -210,7 +219,8 @@ starter-статьи.
 - `inquiryLabel` — string — Подпись ссылки на заявку.
 - `inquiryHref` — string — Ссылка на форму заявки.
 - `approval` — object — Сведения об одобрении.
-  - `state` — string — Состояние проверки. Допустимые значения: `draft` или `approved`.
+  - `state` — string — Состояние проверки. Допустимые значения: `draft` или
+    `approved`.
   - `source` — null — Источник или подтверждение данных.
   - `approvedBy` — null — Кто одобрил содержимое.
 - `items` — array — Коллекция элементов.
@@ -220,11 +230,12 @@ starter-статьи.
     - `answer` — array — Ответ FAQ.
       - `[элемент]` — string — Одно строковое значение массива.
     - `approval` — object — Сведения об одобрении.
-      - `state` — string — Состояние проверки. Допустимые значения: `draft` или `approved`.
+      - `state` — string — Состояние проверки. Допустимые значения: `draft` или
+        `approved`.
       - `source` — null — Источник или подтверждение данных.
       - `approvedBy` — null — Кто одобрил содержимое.
 
-### `json/icons.json`
+### `config/icons.json`
 
 - `phone` — string — Телефон для связи.
 - `email` — string — Email для связи.
@@ -242,7 +253,7 @@ starter-статьи.
   - `telegram` — string — Ссылка или иконка Telegram.
   - `vk` — string — Ссылка или иконка VK.
 
-### `json/introduction.json`
+### `config/introduction.json`
 
 - `heading` — string — Заголовок секции.
 - `summary` — string — Краткое резюме.
@@ -268,7 +279,7 @@ starter-статьи.
     - `x` — number — Горизонтальная координата от 0 до 100.
     - `y` — number — Вертикальная координата от 0 до 100.
 
-### `json/legal/privacy-policy.json`
+### `config/legal/privacy-policy.json`
 
 - `title` — string — Заголовок страницы или записи.
 - `description` — string — Описание для страницы, карточки или записи.
@@ -278,7 +289,7 @@ starter-статьи.
     - `heading` — string — Заголовок секции.
     - `content` — string — Текст раздела документа.
 
-### `json/legal/terms-of-use.json`
+### `config/legal/terms-of-use.json`
 
 - `title` — string — Заголовок страницы или записи.
 - `description` — string — Описание для страницы, карточки или записи.
@@ -290,7 +301,7 @@ starter-статьи.
     - `list` — array — Список положений.
       - `[элемент]` — string — Одно строковое значение массива.
 
-### `json/offers.json`
+### `config/offers.json`
 
 - `enabled` — boolean — Включает компонент или элемент.
 - `autoplay` — boolean — Автоматическая смена слайдов.
@@ -305,7 +316,8 @@ starter-статьи.
       - `textColor` — string — Цвет текста категории.
       - `horizontal` — string — Горизонтальное выравнивание.
       - `vertical` — string — Вертикальное выравнивание.
-      - `overlay` — string — Тип затемняющей подложки. Допустимые значения: `dark` или `light`.
+      - `overlay` — string — Тип затемняющей подложки. Допустимые значения:
+        `dark` или `light`.
       - `focalPoint` — object — Точка фокусировки изображения.
         - `x` — number — Горизонтальная координата от 0 до 100.
         - `y` — number — Вертикальная координата от 0 до 100.
@@ -319,7 +331,7 @@ starter-статьи.
     - `linkLabel` — string — Подпись ссылки.
     - `href` — string — Ссылка или URL назначения.
 
-### `json/order-inquiry.json`
+### `config/order-inquiry.json`
 
 - `title` — string — Заголовок страницы или записи.
 - `subtitle` — string — Подзаголовок секции.
@@ -365,7 +377,7 @@ starter-статьи.
   - `email` — string — Email для связи.
   - `tooLong` — string — Сообщение о превышении длины.
 
-### `json/ordering-process.json`
+### `config/ordering-process.json`
 
 - `demoMode` — boolean — Режим демонстрационных данных.
 - `demoNotice` — string — Предупреждение о демонстрационном содержимом.
@@ -386,7 +398,7 @@ starter-статьи.
     - `agencyHandles` — array — Что делает агентство.
       - `[элемент]` — string — Одно строковое значение массива.
 
-### `json/pricing.json`
+### `config/pricing.json`
 
 - `demoMode` — boolean — Режим демонстрационных данных.
 - `demoNotice` — string — Предупреждение о демонстрационном содержимом.
@@ -421,7 +433,8 @@ starter-статьи.
       - `min` — number — Минимальное значение.
       - `max` — number — Максимальное значение.
       - `currency` — string — Валюта.
-      - `context` — string — Контекст использования. Зависит от схемы: `project`/`service` или ценовой контекст.
+      - `context` — string — Контекст использования. Зависит от схемы:
+        `project`/`service` или ценовой контекст.
       - `asOf` — null — Дата актуальности.
       - `conditions` — string — Условия применения.
     - `approval` — object — Сведения об одобрении.
@@ -446,7 +459,7 @@ starter-статьи.
         - `x` — number — Горизонтальная координата от 0 до 100.
         - `y` — number — Вертикальная координата от 0 до 100.
 
-### `json/production-and-guarantees.json`
+### `config/production-and-guarantees.json`
 
 - `demoMode` — boolean — Режим демонстрационных данных.
 - `demoNotice` — string — Предупреждение о демонстрационном содержимом.
@@ -495,7 +508,8 @@ starter-статьи.
     - `exclusions` — array — Исключения из состава работ.
       - `[элемент]` — string — Одно строковое значение массива.
     - `claimRoute` — string — Путь подачи претензии.
-    - `sourceType` — string — Тип источника гарантии. Допустимые значения задаёт схема гарантии.
+    - `sourceType` — string — Тип источника гарантии. Допустимые значения задаёт
+      схема гарантии.
     - `source` — string — Источник или подтверждение данных.
     - `approval` — string — Сведения об одобрении.
 - `maintenance` — object — Условия обслуживания.
@@ -508,11 +522,11 @@ starter-статьи.
   - `approval` — string — Сведения об одобрении.
 - `inquiryHref` — string — Ссылка на форму заявки.
 
-### `json/project-catalog.json`
+### `config/project-catalog.json`
 
 - `pageSize` — number — Количество элементов на странице.
 
-### `json/project-categories.json`
+### `config/project-categories.json`
 
 - `[корень]` — array — Корневой массив записей.
   - `[элемент]` — object — Один элемент массива; дочерние поля описаны ниже.
@@ -521,13 +535,14 @@ starter-статьи.
     - `color` — string — Цвет категории.
     - `textColor` — string — Цвет текста категории.
 
-### `json/projects.json`
+### `config/projects.json`
 
 - `[корень]` — array — Корневой массив записей.
   - `[элемент]` — object — Один элемент массива; дочерние поля описаны ниже.
     - `id` — number — Стабильный уникальный идентификатор.
     - `category` — string — Категория проекта или услуги.
-    - `status` — string — Статус публикации. Допустимые значения: `draft`, `demo`, `published`.
+    - `status` — string — Статус публикации. Допустимые значения: `draft`,
+      `demo`, `published`.
     - `notice` — string — Уведомление для демонстрационного материала.
     - `title` — string — Заголовок страницы или записи.
     - `client` — string — Клиент проекта.
@@ -540,10 +555,11 @@ starter-статьи.
       - `outcome` — null — Подтверждение результата проекта.
       - `attribution` — null — Тип указания авторства.
     - `article` — object — Связанная статья.
-      - `format` — string — Формат статьи или источника. Допустимые значения: `mdx` или `json`.
+      - `format` — string — Формат статьи или источника. Допустимые значения:
+        `mdx` или `json`.
       - `entry` — string — Идентификатор записи статьи.
 
-### `json/reviews.json`
+### `config/reviews.json`
 
 - `[корень]` — array — Корневой массив записей.
   - `[элемент]` — object — Один элемент массива; дочерние поля описаны ниже.
@@ -557,7 +573,7 @@ starter-статьи.
     - `avatarWidth` — number — Ширина аватара.
     - `avatarHeight` — number — Высота аватара.
 
-### `json/services.json`
+### `config/services.json`
 
 - `heading` — string — Заголовок секции.
 - `introduction` — string — Вводный текст секции.
@@ -587,12 +603,13 @@ starter-статьи.
         - `y` — number — Вертикальная координата от 0 до 100.
     - `href` — string — Ссылка или URL назначения.
     - `article` — object — Связанная статья.
-      - `format` — string — Формат статьи или источника. Допустимые значения: `mdx` или `json`.
+      - `format` — string — Формат статьи или источника. Допустимые значения:
+        `mdx` или `json`.
       - `entry` — string — Идентификатор записи статьи.
 - `demoMode` — boolean — Режим демонстрационных данных.
 - `demoNotice` — string — Предупреждение о демонстрационном содержимом.
 
-### `json/site.json`
+### `config/site.json`
 
 - `title` — string — Заголовок страницы или записи.
 - `description` — string — Описание для страницы, карточки или записи.
@@ -661,7 +678,8 @@ starter-статьи.
   - `title` — string, optional — заголовок таблицы.
   - `caption` — string, optional — пояснение таблицы.
   - `columns` — array[object] — колонки; каждая имеет `key` и `label`.
-  - `rows` — array[object] — строки; каждая имеет `cells`, по одной ячейке на колонку.
+  - `rows` — array[object] — строки; каждая имеет `cells`, по одной ячейке на
+    колонку.
 - `ChartBlock`
   - `title`, `caption`, `unit` — string, optional — подписи графика.
   - `chartType` — enum — `bar`, `line` или `pie`.
@@ -676,7 +694,8 @@ starter-статьи.
   - `focalPoint`, `mobileFocalPoint` — object, optional — `{x, y}` от 0 до 100.
 - `ImageGalleryBlock`
   - `caption` — string, optional — подпись галереи.
-  - `images` — array[object] — изображения с полями `src`, `alt`, `width`, `height` и медиа-метаданными.
+  - `images` — array[object] — изображения с полями `src`, `alt`, `width`,
+    `height` и медиа-метаданными.
 - `OrderFormBlock`
   - `formId` — string — идентификатор зарегистрированной формы.
   - `context` — enum — `project` или `service`.

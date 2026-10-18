@@ -1,0 +1,5 @@
+[
+  { "type": "unknown", "text": "Unsupported block" },
+  { "type": "ordered-list", "items": [] },
+  { "type": "unordered-list", "items": [] }
+]

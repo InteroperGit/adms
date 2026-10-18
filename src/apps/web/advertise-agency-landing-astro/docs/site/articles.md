@@ -6,15 +6,15 @@ All authored JSON and MDX stays under `data/content/`.
 
 ## Sources
 
-- `data/content/projects.json`: ordered project catalog metadata, evidence and
+- `data/content/config/projects.json`: ordered project catalog metadata, evidence and
   article references. No legacy details/photos/story fields remain here.
 - `data/content/articles/projects/<id>.mdx`: project article; strict frontmatter
   contains only `projectId`, which must match the catalog's numeric ID and entry.
 - `data/content/articles/services/<slug>.mdx`: service article with strict
   title/description/approved frontmatter, as described in
   [service authoring](service-articles.md).
-- `data/content/fixtures/projects-before-blocks.json`: archived migration source.
-  It is regression evidence, never consumed by application loaders.
+- `tests/fixtures/content/`: versioned regression JSON and MDX fixtures. They
+  are regression evidence and are never consumed as production content.
 
 The project loader validates authored catalog records, resolves collection
 entries, then validates each normalized article against `projectSchema`.

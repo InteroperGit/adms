@@ -2,7 +2,7 @@
 
 [Documentation index](../../README.md)
 
-`src/layouts/Layout.astro` adds the shared agency name from `data/content/site.json` to page titles and renders page descriptions, Open Graph metadata, and Twitter summary metadata. The homepage uses the configured site title as its visually hidden main heading. Project descriptions come from project content; legal descriptions come from the `description` field in `data/content/legal/privacy-policy.json` and `data/content/legal/terms-of-use.json`.
+`src/layouts/Layout.astro` adds the shared agency name from `data/content/config/site.json` to page titles and renders page descriptions, Open Graph metadata, and Twitter summary metadata. The homepage uses the configured site title as its visually hidden main heading. Project descriptions come from project content; legal descriptions come from the `description` field in `data/content/config/legal/privacy-policy.json` and `data/content/config/legal/terms-of-use.json`.
 
 The production domain is supplied at release time through `PUBLIC_SITE_URL`.
 It must be the confirmed HTTPS origin with no path, query, or fragment. Astro

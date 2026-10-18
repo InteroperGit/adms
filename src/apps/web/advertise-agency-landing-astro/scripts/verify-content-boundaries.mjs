@@ -14,9 +14,11 @@ const forbidden = [
 ];
 
 function git(...args) {
-  return execFileSync('git', [
-    '-c', 'safe.directory=D:/Projects/adms', ...args,
-  ], { cwd: root, encoding: 'utf8' });
+  return execFileSync(
+    'git',
+    ['-c', 'safe.directory=D:/Projects/adms', ...args],
+    { cwd: root, encoding: 'utf8' },
+  );
 }
 
 function fail(message) {
@@ -27,19 +29,22 @@ const changed = [
   ...git('diff', '--name-only').split(/\r?\n/),
   ...git('diff', '--cached', '--name-only').split(/\r?\n/),
   ...git('ls-files', '--others', '--exclude-standard').split(/\r?\n/),
-].filter(Boolean).map((path) => path.replaceAll('\\', '/'));
-const runtimeChanges = changed.filter((path) => (
-  path === 'data/content' || path.startsWith('data/content/')
-));
+]
+  .filter(Boolean)
+  .map((path) => path.replaceAll('\\', '/'));
+const runtimeChanges = changed.filter(
+  (path) => path === 'data/content' || path.startsWith('data/content/'),
+);
 if (runtimeChanges.length) {
   fail(`runtime content changed or returned: ${runtimeChanges.join(', ')}`);
 }
 
-const manifest = JSON.parse(await readFile(
-  join(templateRoot, 'manifest.json'), 'utf8',
-));
+const manifest = JSON.parse(
+  await readFile(join(templateRoot, 'manifest.json'), 'utf8'),
+);
 const trackedTemplates = git('ls-files', 'data/templates')
-  .split(/\r?\n/).filter(Boolean);
+  .split(/\r?\n/)
+  .filter(Boolean);
 if (!trackedTemplates.includes('data/templates/manifest.json')) {
   fail('data/templates/manifest.json must be tracked');
 }
@@ -57,6 +62,12 @@ if (json.length !== 19 || mdx.length !== 2) {
 const starterKinds = mdx.map((entry) => entry.path.split('/')[1]);
 if (!starterKinds.includes('projects') || !starterKinds.includes('services')) {
   fail('manifest must contain project and service starters');
+}
+if (
+  json.some((entry) => !entry.path.startsWith('config/')) ||
+  json.some((entry) => !entry.output.startsWith('config/'))
+) {
+  fail('JSON templates must use the config/ layout');
 }
 
 for (const entry of entries) {

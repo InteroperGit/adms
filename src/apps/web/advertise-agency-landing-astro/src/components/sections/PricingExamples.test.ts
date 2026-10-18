@@ -2,7 +2,7 @@
 // @vitest-environment node
 import { expect, it, vi } from 'vitest';
 
-vi.mock('@/data/content/projects.json', () => ({ default: [] }));
+vi.mock('@/data/content/config/projects.json', () => ({ default: [] }));
 vi.mock('@/content/pricing', () => ({
   pricing: {},
   visiblePricingExamples: [],

@@ -1,4 +1,4 @@
-import data from '@/data/content/project-catalog.json';
+import data from '@/data/content/config/project-catalog.json';
 import { z } from 'astro/zod';
 
 const projectCatalogSchema = z.object({

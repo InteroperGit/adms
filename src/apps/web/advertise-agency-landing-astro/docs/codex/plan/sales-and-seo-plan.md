@@ -21,7 +21,7 @@ Before directing more traffic to the site:
 
 - Replace test offer copy and library photos with real agency content.
 - Connect and verify inquiry delivery. Submission is currently disabled
-  in `data/content/order-inquiry.json`.
+  in `data/content/config/order-inquiry.json`.
 - Confirm claims, prices, turnaround times, and warranty terms before
   publishing them.
 

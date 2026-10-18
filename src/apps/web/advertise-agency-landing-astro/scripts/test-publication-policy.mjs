@@ -22,10 +22,10 @@ const { getArticleFormRegistration } = await import(
   await moduleURL('src/content/article-context.ts')
 );
 const fixture = JSON.parse(await readFile(
-  'data/content/fixtures/publication.json', 'utf8',
+  'tests/fixtures/content/publication.json', 'utf8',
 ));
 const base = JSON.parse(await readFile(
-  'data/content/fixtures/content-blocks.valid.json', 'utf8',
+  'tests/fixtures/content/content-blocks.valid.json', 'utf8',
 ));
 const approved = base.map((block) => ({
   ...block, status: 'published', provenance: fixture.approval,
@@ -36,7 +36,7 @@ const approved = base.map((block) => ({
   } : {}),
 }));
 const records = JSON.parse(await readFile(
-  'data/content/projects.json', 'utf8',
+  'data/content/config/projects.json', 'utf8',
 ));
 const { article: _source, ...metadata } = records[0];
 const project = { ...metadata, status: 'published', content: approved };
@@ -127,7 +127,7 @@ assert.deepEqual(projectPolicy.getPublishedProjectPaths([
 ]), ['/projects/1/']);
 
 const catalog = JSON.parse(await readFile(
-  'data/content/services.json', 'utf8',
+  'data/content/config/services.json', 'utf8',
 ));
 const paths = catalog.items.map((item) => item.href);
 const service = {

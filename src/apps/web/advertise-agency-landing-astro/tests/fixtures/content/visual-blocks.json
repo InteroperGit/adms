@@ -1,0 +1,173 @@
+[
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Длинный заголовок для проверки переноса внутри потока статьи",
+    "id": "visual-intro-heading"
+  },
+  {
+    "type": "paragraph",
+    "id": "visual-intro",
+    "paragraphs": [
+      "Проверяем длинные строки, ритм текста и сохранение единой колонки.",
+      "https://example.invalid/abcdefghijklmnopqrstuvwxyz0123456789abcdef"
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Последовательность работ"
+  },
+  {
+    "type": "ordered-list",
+    "items": [
+      "Первый этап с длинным описанием требований и условий изготовления",
+      "Проверка макета",
+      "Подготовка",
+      "Производство",
+      "Сборка",
+      "Проверка",
+      "Упаковка",
+      "Доставка",
+      "Монтаж",
+      "Десятый этап: проверяем ширину двузначного маркера"
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Материалы"
+  },
+  {
+    "type": "unordered-list",
+    "items": [
+      "Длинное описание материала с несколькими характеристиками и условиями",
+      "abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789"
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Сравнение вариантов изготовления"
+  },
+  {
+    "type": "table",
+    "caption": "Учебные данные для проверки адаптивного представления",
+    "columns": [
+      {
+        "key": "material",
+        "label": "Материал и вариант обработки"
+      },
+      {
+        "key": "dimensions",
+        "label": "Габариты и ограничения монтажа"
+      },
+      {
+        "key": "finish",
+        "label": "Покрытие и условия эксплуатации"
+      }
+    ],
+    "rows": [
+      {
+        "cells": [
+          "Акрил с рассеивателем",
+          "1200 × 900 мм",
+          "В помещении"
+        ]
+      },
+      {
+        "cells": [
+          "Металл с порошковой окраской",
+          "2400 × 600 мм",
+          "На улице"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Учебное сравнение этапов"
+  },
+  {
+    "type": "chart",
+    "caption": "Данные доступны и без интерактивного графика",
+    "unit": "часов",
+    "chartType": "bar",
+    "series": [
+      {
+        "name": "Длинное название учебной серии",
+        "points": [
+          {
+            "label": "Подготовка и согласование",
+            "value": 0
+          },
+          {
+            "label": "Производство и сборка",
+            "value": 120
+          },
+          {
+            "label": "Проверка и упаковка",
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "image",
+    "src": "/src/assets/services/svetovye-bukvy-demo.png",
+    "alt": "Учебная схема световых букв",
+    "width": 1200,
+    "height": 900,
+    "caption": "Длинная подпись: учебная иллюстрация, не выполненный заказ"
+  },
+  {
+    "type": "image-gallery",
+    "caption": "Учебные схемы для проверки галереи и клавиатуры",
+    "images": [
+      {
+        "src": "/src/assets/services/svetovye-bukvy-demo.png",
+        "alt": "Первая учебная схема",
+        "width": 1200,
+        "height": 900,
+        "caption": "Первая схема с длинным пояснением к изображению"
+      },
+      {
+        "src": "/src/assets/services/montazh-demo.png",
+        "alt": "Вторая учебная схема",
+        "width": 1200,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "type": "quote",
+    "text": "Длинная учебная цитата проверяет переносы и ритм внутри статьи.",
+    "author": "Учебный автор с длинным именем",
+    "source": "Внутренний материал для визуальной проверки"
+  },
+  {
+    "type": "footnote",
+    "text": "Длинное примечание с пояснением происхождения учебных данных.",
+    "reference": "Вернуться к началу проверки",
+    "targetId": "visual-intro"
+  },
+  {
+    "type": "video",
+    "src": "/media/demo-signage.mp4",
+    "poster": "/src/assets/services/svetovye-bukvy-demo.png",
+    "alt": "Учебное видео о монтаже световых букв",
+    "width": 1280,
+    "height": 720,
+    "caption": "Демонстрационное видео для проверки резервирования места",
+    "transcript": "Demo montage.",
+    "kind": "demo"
+  },
+  {
+    "type": "order-form",
+    "formId": "led-letters",
+    "context": "project",
+    "category": "led-letters"
+  }
+]

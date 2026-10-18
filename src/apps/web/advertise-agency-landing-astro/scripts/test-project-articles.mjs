@@ -15,10 +15,10 @@ const { getArticleFormRegistration } = await import(
   await moduleURL('src/content/article-context.ts')
 );
 const before = JSON.parse(await readFile(
-  'data/content/fixtures/projects-before-blocks.json', 'utf8',
+  'tests/fixtures/content/projects-before-blocks.json', 'utf8',
 ));
 const records = validation.projectRecordsSchema.parse(JSON.parse(
-  await readFile('data/content/projects.json', 'utf8'),
+  await readFile('data/content/config/projects.json', 'utf8'),
 ));
 assert.equal(records.length, before.length);
 const projects = [];

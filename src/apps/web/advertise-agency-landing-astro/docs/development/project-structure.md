@@ -23,7 +23,7 @@
 `-- pnpm-lock.yaml
 ```
 
-Use `data/content/site.json` for the displayed agency name (`logoText`), site
+Use `data/content/config/site.json` for the displayed agency name (`logoText`), site
 title and description, contact information, navigation, section headings, and
 footer description/copyright. The header, footer, and page metadata share that
 configuration. The footer year is generated at build time; rebuild when it needs

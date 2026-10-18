@@ -26,7 +26,7 @@ photography before bringing more visitors in.
 - Use evergreen service offers with clear customer needs and contact CTAs.
   Obtain agency approval before release. Time-limited promotions, if added,
   need confirmed eligibility, prices/discount conditions and dates.
-- Replace library/test offer material in data/content/offers.json while
+- Replace library/test offer material in data/content/config/offers.json while
   preserving the existing carousel and user-requested first-section order.
 - Disable expired or unavailable promotions through the existing content
   controls; do not invent an offer to fill the carousel.

@@ -5,13 +5,12 @@
 ## Source and current audit
 
 Task 080 supersedes the historical shape described below. All 27 projects now
-use metadata/article references in `data/content/projects.json` and MDX under
+use metadata/article references in `data/content/config/projects.json` and MDX under
 `data/content/articles/projects/`. Evidence and media provenance/crop data are
 preserved. See [current article contract and verification](articles.md).
-The archived source remains `data/content/fixtures/projects-before-blocks.json`.
 `ProjectPhoto.astro` has been replaced by the shared `ContentImage.astro`.
 
-`data/content/projects.json` is the single ordered catalog. Numeric IDs 1-3
+`data/content/config/projects.json` is the single ordered catalog. Numeric IDs 1-3
 remain stable and their demo routes remain `/projects/1` through `/projects/3`.
 The three records describe proposed project solutions with planned details.
 Public copy uses project language; status remains demo internally.
@@ -42,7 +41,7 @@ records, including drafts. Nested contract assertions guard schema/type drift.
 catalog and `projects` for visible records. Avoid another detail-page catalog.
 
 Project category labels and badge colors are configured only in
-`data/content/project-categories.json`. Each entry has a stable English
+`data/content/config/project-categories.json`. Each entry has a stable English
 `slug`, a Russian `label`, and six-digit hexadecimal `color` and `textColor`
 values. The loader validates strict fields and unique slugs before exposing
 the registry to cards and catalogue controls. Add a category by adding one
@@ -70,7 +69,7 @@ use null when the service is unknown. Unknown strings fail validation.
 form-specific link. Return/contact navigation remains available.
 Submission includes the originating `projectId`, contacts,
 lettering parameters, and the shared handler's retry-stable `requestId`.
-It reuses `data/content/order-inquiry.json` delivery configuration and feedback.
+It reuses `data/content/config/order-inquiry.json` delivery configuration and feedback.
 Fields are editable, while sending remains disabled without a configured
 endpoint. Server validation and actual receipt are still unconfigured.
 

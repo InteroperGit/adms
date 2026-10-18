@@ -1,5 +1,5 @@
 // src/content/site.ts
-import siteData from '@/data/content/site.json';
+import siteData from '@/data/content/config/site.json';
 import type { SiteConfig } from '@/types/site';
 import { visibleServices } from './services';
 

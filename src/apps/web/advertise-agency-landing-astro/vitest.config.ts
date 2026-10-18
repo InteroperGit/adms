@@ -8,14 +8,8 @@ export default getViteConfig({
     // Category registries are imported by project types and validators.
     // Resolve their JSON to versioned data even on a clean CI checkout.
     alias: {
-      '@/data/content/project-categories.json': fileURLToPath(
-        new URL(
-          './tests/fixtures/content/project-categories.json',
-          import.meta.url,
-        ),
-      ),
-      '@/data/content': fileURLToPath(
-        new URL('./tests/fixtures/content/site', import.meta.url),
+      '@/data/content/config': fileURLToPath(
+        new URL('./tests/fixtures/content/site/config', import.meta.url),
       ),
     },
   },

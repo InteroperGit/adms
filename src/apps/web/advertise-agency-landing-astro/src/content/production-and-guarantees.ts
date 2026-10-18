@@ -1,4 +1,4 @@
-import data from '@/data/content/production-and-guarantees.json';
+import data from '@/data/content/config/production-and-guarantees.json';
 import { parseContent } from '../validation/parse-content';
 import {
   productionAndGuaranteesSchema,
@@ -8,5 +8,5 @@ import {
 export const productionAndGuarantees = parseContent(
   productionAndGuaranteesSchema,
   data,
-  'data/content/production-and-guarantees.json',
+  'data/content/config/production-and-guarantees.json',
 );

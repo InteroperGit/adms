@@ -1,4 +1,4 @@
-import data from '@/data/content/business-solutions.json';
+import data from '@/data/content/config/business-solutions.json';
 import { parseContent } from '../validation/parse-content';
 import { businessSolutionsSchema } from '../validation/business-solutions';
 
@@ -6,5 +6,5 @@ import { businessSolutionsSchema } from '../validation/business-solutions';
 export const businessSolutions = parseContent(
   businessSolutionsSchema,
   data,
-  'data/content/business-solutions.json',
+  'data/content/config/business-solutions.json',
 );

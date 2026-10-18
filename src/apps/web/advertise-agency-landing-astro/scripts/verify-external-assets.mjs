@@ -6,12 +6,12 @@ import { join } from 'node:path';
 const root = new URL('..', import.meta.url);
 const timeoutMs = 10_000;
 const sourceFiles = [
-  'data/content/about-carousel.json',
-  'data/content/introduction.json',
-  'data/content/projects.json',
-  'data/content/reviews.json',
-  'data/content/site.json',
-  'data/content/offers.json',
+  'data/content/config/about-carousel.json',
+  'data/content/config/introduction.json',
+  'data/content/config/projects.json',
+  'data/content/config/reviews.json',
+  'data/content/config/site.json',
+  'data/content/config/offers.json',
   'src/layouts/Layout.astro',
 ];
 const expectedTypes = [

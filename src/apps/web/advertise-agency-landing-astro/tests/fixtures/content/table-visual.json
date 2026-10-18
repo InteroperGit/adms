@@ -1,0 +1,58 @@
+[
+  {
+    "type": "table",
+    "caption": "Two columns",
+    "columns": [
+      { "key": "name", "label": "Name" },
+      { "key": "amount", "label": "Amount" }
+    ],
+    "rows": [
+      { "cells": ["Alpha", "0"] },
+      { "cells": ["Beta", "-12.5"] },
+      { "cells": ["Gamma", "1 234,50"] }
+    ]
+  },
+  {
+    "type": "table",
+    "columns": [
+      { "key": "name", "label": "Name" },
+      { "key": "count", "label": "Count" },
+      { "key": "share", "label": "Share" },
+      { "key": "notes", "label": "Notes" }
+    ],
+    "rows": [
+      { "cells": ["Delta", "0", "0%", "<b>Escaped text</b>"] },
+      { "cells": ["Epsilon", "42", "12,5%", "Text with 12 units"] },
+      { "cells": ["Zeta", "−7", "100%", "2026-10-14"] }
+    ]
+  },
+  {
+    "type": "table",
+    "caption": "Eight columns with all mobile fields",
+    "columns": [
+      { "key": "name", "label": "Name" },
+      { "key": "count", "label": "Count" },
+      { "key": "share", "label": "Share" },
+      { "key": "format", "label": "Format" },
+      { "key": "material", "label": "Material" },
+      { "key": "location", "label": "Location" },
+      { "key": "date", "label": "Date" },
+      { "key": "notes", "label": "Notes and limitations" }
+    ],
+    "rows": [
+      { "cells": [
+        "Eta", "0", "0%", "Landscape", "Aluminium", "North",
+        "2026-10-14", "All eight fields must remain available on mobile."
+      ] },
+      { "cells": [
+        "Theta", "100", "25%", "Portrait", "Steel", "South",
+        "2026-10-15",
+        "UnbrokenText01234567890123456789012345678901234567890123456789"
+      ] },
+      { "cells": [
+        "Iota", "-3", "75%", "Square", "Wood", "East",
+        "2026-10-16", "A longer value that wraps without losing any data."
+      ] }
+    ]
+  }
+]

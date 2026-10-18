@@ -23,7 +23,9 @@ try {
   );
   const { getPublishedFaqItems, getVisibleFaqItems } = publication;
   const { faq } = await server.ssrLoadModule('/src/content/faq.ts');
-  const raw = JSON.parse(await readFile('data/content/faq.json', 'utf8'));
+  const raw = JSON.parse(await readFile(
+    'data/content/config/faq.json', 'utf8',
+  ));
   assert.equal(faq.items.length, 9);
   assert.deepEqual(getPublishedFaqItems(faq), []);
   assert.equal(getVisibleFaqItems(faq).length, 9);

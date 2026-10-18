@@ -1,6 +1,6 @@
 // Build deterministic versioned fixtures, then let Playwright own preview.
 import { spawn } from 'node:child_process';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { preview } from 'astro';
 
@@ -13,7 +13,7 @@ for (const entry of templates.files.filter((item) => item.kind === 'json')) {
   const value = JSON.parse(
     await readFile(resolve('tests/fixtures/content/site', path), 'utf8'),
   );
-  if (path === 'order-inquiry.json') value.submission.enabled = true;
+  if (path === 'config/order-inquiry.json') value.submission.enabled = true;
   const target = resolve(root, path);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, JSON.stringify(value, null, 2));
@@ -22,6 +22,11 @@ for (const kind of ['services', 'projects', 'fixtures']) {
   await mkdir(resolve(root, 'articles', kind), { recursive: true });
 }
 await mkdir(resolve(root, 'fixtures/articles'), { recursive: true });
+await cp(
+  'tests/fixtures/content/articles',
+  resolve(root, 'fixtures/articles'),
+  { recursive: true },
+);
 
 const env = {
   ...process.env,

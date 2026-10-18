@@ -1,0 +1,24 @@
+[
+  { "id": "gallery-one", "entry": "gallery-one" },
+  { "id": "gallery-many", "entry": "gallery-many" },
+  { "id": "block-policy", "entry": "block-policy" },
+  {
+    "id": "published-project",
+    "entry": "published-project",
+    "context": {
+      "kind": "project",
+      "projectId": 501,
+      "category": "led-letters",
+      "published": true
+    }
+  },
+  {
+    "id": "published-service",
+    "entry": "published-service",
+    "context": {
+      "kind": "service",
+      "serviceId": "svetovye-bukvy",
+      "published": true
+    }
+  }
+]

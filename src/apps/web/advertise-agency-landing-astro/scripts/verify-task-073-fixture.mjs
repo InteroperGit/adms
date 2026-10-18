@@ -2,7 +2,7 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 
-const sourcePath = 'data/content/projects.json';
+const sourcePath = 'data/content/config/projects.json';
 const outputPath = 'output/playwright/task-073/fixture-results.json';
 const source = await readFile(sourcePath, 'utf8');
 const records = JSON.parse(source);

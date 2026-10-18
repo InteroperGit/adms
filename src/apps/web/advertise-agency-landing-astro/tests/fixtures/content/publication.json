@@ -1,0 +1,11 @@
+{
+  "approval": {
+    "source": "Acceptance fixture",
+    "rights": "Synthetic test content",
+    "approvedBy": "QA fixture",
+    "approvedAt": "2026-10-15"
+  },
+  "draftText": "Draft content is hidden from published output.",
+  "demoText": "Demo content is labelled for acceptance tests.",
+  "draftAlt": "Draft image alternative text"
+}

@@ -2,7 +2,7 @@
 
 The private `/__visual-check/{long,optional,form,demo}/` routes render all ten
 current block types through the production `ContentBlocks` component. Fixture
-content lives in `data/content/fixtures/visual-blocks.json` and is validated
+content lives in `tests/fixtures/content/visual-blocks.json` and is validated
 at build time. These routes exist only with `CONTENT_ACCEPTANCE=true` and are
 always noindex. Video joins this fixture after its contract in VCB-10–12.
 
@@ -122,7 +122,7 @@ inactive tree from both accessibility reading and keyboard navigation.
 The private isolated fixture renders the real TableBlock with global CSS and
 the article reading measure. Local authored data, including 2/4/8 columns,
 zero, negatives, decimals, percentages, dates, long values and escaped markup,
-lives in `data/content/fixtures/table-visual.json`. Runtime content is ignored
+lives in `tests/fixtures/content/table-visual.json`. Runtime content is ignored
 by Git; retain that local fixture when reproducing this check.
 
 ```powershell

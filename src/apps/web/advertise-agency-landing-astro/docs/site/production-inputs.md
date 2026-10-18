@@ -133,11 +133,11 @@ use this list to obtain missing inputs; no live delivery is authorized here.
 [task-050]: ../codex/fixed/20261009/050-confirm-production-business-and-legal-inputs.md
 [task-051]: ../codex/fixed/20261009/051-enable-and-verify-inquiry-delivery.md
 [task-022]: ../codex/fixed/20261006/022-order-inquiry-form-section.md
-[site]: ../../data/content/site.json
-[introduction]: ../../data/content/introduction.json
-[privacy]: ../../data/content/legal/privacy-policy.json
-[consent]: ../../data/content/legal/terms-of-use.json
-[inquiry-config]: ../../data/content/order-inquiry.json
+[site]: ../../data/content/config/site.json
+[introduction]: ../../data/content/config/introduction.json
+[privacy]: ../../data/content/config/legal/privacy-policy.json
+[consent]: ../../data/content/config/legal/terms-of-use.json
+[inquiry-config]: ../../data/content/config/order-inquiry.json
 [homepage-form]: ../../src/components/sections/OrderInquiry.astro
 [lettering-form]: ../../src/components/forms/LedLettersForm.astro
 [transport]: ../../src/components/forms/order-inquiry.ts

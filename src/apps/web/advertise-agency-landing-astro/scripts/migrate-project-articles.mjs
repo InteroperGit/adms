@@ -3,8 +3,8 @@ import { readFile, writeFile, mkdir, access } from 'node:fs/promises';
 import { moduleURL } from './lib/import-typescript.mjs';
 import { blockComponentTypes } from '../src/content/mdx-blocks.mjs';
 
-const fixture = 'data/content/fixtures/projects-before-blocks.json';
-const catalogPath = 'data/content/projects.json';
+const fixture = 'tests/fixtures/content/projects-before-blocks.json';
+const catalogPath = 'data/content/config/projects.json';
 // Archive before removing any legacy fields; subsequent runs use the archive.
 try {
   await access(fixture);

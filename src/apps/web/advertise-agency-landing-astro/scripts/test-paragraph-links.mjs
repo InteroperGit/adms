@@ -7,7 +7,7 @@ const { paragraphLinks } = await import(
   await moduleURL('src/content/paragraph-links.ts')
 );
 const fixtures = JSON.parse(await readFile(
-  'data/content/fixtures/paragraph-links.json', 'utf8',
+  'tests/fixtures/content/paragraph-links.json', 'utf8',
 ));
 for (const fixture of fixtures) {
   const input = fixture.input.join('');

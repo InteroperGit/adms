@@ -1,4 +1,4 @@
-﻿import data from '@/data/content/projects.json';
+import data from '@/data/content/config/projects.json';
 import { getCollection, render } from 'astro:content';
 import { projectsSchema, projectRecordsSchema } from '../validation/projects';
 import { parseContent } from '../validation/parse-content';
@@ -9,7 +9,7 @@ import {
 import { assertPublicationPolicy } from './block-publication';
 
 const records = parseContent(
-  projectRecordsSchema, data, 'data/content/projects.json',
+  projectRecordsSchema, data, 'data/content/config/projects.json',
 );
 const entries = await getCollection('projectArticles');
 const articleById = new Map(entries.map((entry) => [entry.id, entry]));
@@ -28,7 +28,7 @@ const resolved = await Promise.all(records.map(async (record) => {
   return { ...metadata, content: remarkPluginFrontmatter.content };
 }));
 export const projectRecords = parseContent(
-  projectsSchema, resolved, 'data/content/projects.json',
+  projectsSchema, resolved, 'data/content/config/projects.json',
 );
 projectRecords.forEach((project) => assertPublicationPolicy(
   project.content, project.status, `project ${project.id}`,

@@ -12,99 +12,99 @@
       "output": "articles/services/starter-service.mdx"
     },
     {
-      "path": "json/about-carousel.json",
+      "path": "config/about-carousel.json",
       "kind": "json",
-      "output": "about-carousel.json"
+      "output": "config/about-carousel.json"
     },
     {
-      "path": "json/about.json",
+      "path": "config/about.json",
       "kind": "json",
-      "output": "about.json"
+      "output": "config/about.json"
     },
     {
-      "path": "json/business-solutions.json",
+      "path": "config/business-solutions.json",
       "kind": "json",
-      "output": "business-solutions.json"
+      "output": "config/business-solutions.json"
     },
     {
-      "path": "json/faq.json",
+      "path": "config/faq.json",
       "kind": "json",
-      "output": "faq.json"
+      "output": "config/faq.json"
     },
     {
-      "path": "json/icons.json",
+      "path": "config/icons.json",
       "kind": "json",
-      "output": "icons.json"
+      "output": "config/icons.json"
     },
     {
-      "path": "json/introduction.json",
+      "path": "config/introduction.json",
       "kind": "json",
-      "output": "introduction.json"
+      "output": "config/introduction.json"
     },
     {
-      "path": "json/legal/privacy-policy.json",
+      "path": "config/legal/privacy-policy.json",
       "kind": "json",
-      "output": "legal/privacy-policy.json"
+      "output": "config/legal/privacy-policy.json"
     },
     {
-      "path": "json/legal/terms-of-use.json",
+      "path": "config/legal/terms-of-use.json",
       "kind": "json",
-      "output": "legal/terms-of-use.json"
+      "output": "config/legal/terms-of-use.json"
     },
     {
-      "path": "json/offers.json",
+      "path": "config/offers.json",
       "kind": "json",
-      "output": "offers.json"
+      "output": "config/offers.json"
     },
     {
-      "path": "json/order-inquiry.json",
+      "path": "config/order-inquiry.json",
       "kind": "json",
-      "output": "order-inquiry.json"
+      "output": "config/order-inquiry.json"
     },
     {
-      "path": "json/ordering-process.json",
+      "path": "config/ordering-process.json",
       "kind": "json",
-      "output": "ordering-process.json"
+      "output": "config/ordering-process.json"
     },
     {
-      "path": "json/pricing.json",
+      "path": "config/pricing.json",
       "kind": "json",
-      "output": "pricing.json"
+      "output": "config/pricing.json"
     },
     {
-      "path": "json/production-and-guarantees.json",
+      "path": "config/production-and-guarantees.json",
       "kind": "json",
-      "output": "production-and-guarantees.json"
+      "output": "config/production-and-guarantees.json"
     },
     {
-      "path": "json/project-catalog.json",
+      "path": "config/project-catalog.json",
       "kind": "json",
-      "output": "project-catalog.json"
+      "output": "config/project-catalog.json"
     },
     {
-      "path": "json/project-categories.json",
+      "path": "config/project-categories.json",
       "kind": "json",
-      "output": "project-categories.json"
+      "output": "config/project-categories.json"
     },
     {
-      "path": "json/projects.json",
+      "path": "config/projects.json",
       "kind": "json",
-      "output": "projects.json"
+      "output": "config/projects.json"
     },
     {
-      "path": "json/reviews.json",
+      "path": "config/reviews.json",
       "kind": "json",
-      "output": "reviews.json"
+      "output": "config/reviews.json"
     },
     {
-      "path": "json/services.json",
+      "path": "config/services.json",
       "kind": "json",
-      "output": "services.json"
+      "output": "config/services.json"
     },
     {
-      "path": "json/site.json",
+      "path": "config/site.json",
       "kind": "json",
-      "output": "site.json"
+      "output": "config/site.json"
     }
   ],
   "placeholders": {

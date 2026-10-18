@@ -1,0 +1,109 @@
+[
+  {
+    "type": "paragraph",
+    "id": "fixture-paragraph",
+    "paragraphs": [
+      "Fixture paragraph."
+    ]
+  },
+  {
+    "type": "heading",
+    "id": "fixture-heading",
+    "level": 2,
+    "text": "Fixture heading"
+  },
+  {
+    "type": "ordered-list",
+    "id": "fixture-ordered-list",
+    "items": [
+      "First item",
+      "Second item"
+    ]
+  },
+  {
+    "type": "unordered-list",
+    "id": "fixture-unordered-list",
+    "items": [
+      "One item",
+      "Two item"
+    ]
+  },
+  {
+    "type": "table",
+    "id": "fixture-table",
+    "caption": "Fixture table",
+    "columns": [
+      {
+        "key": "name",
+        "label": "Name"
+      },
+      {
+        "key": "value",
+        "label": "Value"
+      }
+    ],
+    "rows": [
+      {
+        "cells": [
+          "Example",
+          "42"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "chart",
+    "id": "fixture-chart",
+    "chartType": "bar",
+    "series": [
+      {
+        "name": "Fixture series",
+        "points": [
+          {
+            "label": "Example",
+            "value": 42
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "image",
+    "id": "fixture-image",
+    "src": "/src/assets/services/svetovye-bukvy-demo.png",
+    "alt": "Fixture image",
+    "width": 1200,
+    "height": 900,
+    "kind": "installation"
+  },
+  {
+    "type": "image-gallery",
+    "id": "fixture-gallery",
+    "images": [
+      {
+        "src": "/src/assets/services/montazh-demo.png",
+        "alt": "Fixture gallery image",
+        "width": 1200,
+        "height": 900,
+        "kind": "installation"
+      }
+    ]
+  },
+  {
+    "type": "order-form",
+    "id": "fixture-form",
+    "formId": "general-inquiry",
+    "context": "project"
+  },
+  {
+    "type": "quote",
+    "id": "fixture-quote",
+    "text": "Fixture quote"
+  },
+  {
+    "type": "footnote",
+    "id": "fixture-footnote",
+    "text": "Fixture note",
+    "targetId": "fixture-paragraph"
+  }
+]

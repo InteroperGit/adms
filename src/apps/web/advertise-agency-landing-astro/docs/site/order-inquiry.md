@@ -27,7 +27,7 @@ and shows a required, initially unchecked policy agreement checkbox even
 while delivery is disabled. The checkbox label is editable in
 `consent.label`; agency approval for live delivery remains pending.
 
-Edit `data/content/order-inquiry.json`. Its typed wrapper validates all copy,
+Edit `data/content/config/order-inquiry.json`. Its typed wrapper validates all copy,
 required flags, length limits, timeout (1000–30000ms), safe endpoint and consent
 configuration at build time. Enabling delivery requires a nonempty local path
 or credential-free HTTPS endpoint, `consent.approved: true` and approved

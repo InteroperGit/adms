@@ -7,8 +7,8 @@ const { contentBlocksSchema } = await import(
   await moduleURL('src/validation/content-blocks.ts')
 );
 
-const validPath = 'data/content/fixtures/content-blocks.valid.json';
-const invalidPath = 'data/content/fixtures/content-blocks.invalid.json';
+const validPath = 'tests/fixtures/content/content-blocks.valid.json';
+const invalidPath = 'tests/fixtures/content/content-blocks.invalid.json';
 const valid = JSON.parse(await readFile(validPath, 'utf8'));
 const invalid = JSON.parse(await readFile(invalidPath, 'utf8'));
 const validImage = valid.find((block) => block.type === 'image');
@@ -32,7 +32,7 @@ for (const blocks of [
   assert.equal(contentBlocksSchema.safeParse(blocks).success, false);
 }
 for (const name of ['minimal', 'project', 'service']) {
-  const path = `data/content/fixtures/articles/${name}.mdx`;
+  const path = `tests/fixtures/content/articles/${name}.mdx`;
   const { content } = await compileMdx(await readFile(path, 'utf8'), path);
   contentBlocksSchema.parse(content);
 }

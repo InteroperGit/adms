@@ -4,7 +4,7 @@ Task: [027](../codex/fixed/20261007/027-services-content-and-images.md)
 
 ## Editing and publication
 
-Edit `data/content/services.json`. Array order is card order. IDs are stable
+Edit `data/content/config/services.json`. Array order is card order. IDs are stable
 lowercase slugs; changing a name does not require changing its ID.
 
 `src/content/services.ts` parses the file using the shared `parseContent`

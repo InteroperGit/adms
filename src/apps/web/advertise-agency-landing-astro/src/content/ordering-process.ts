@@ -1,4 +1,4 @@
-import data from '@/data/content/ordering-process.json';
+import data from '@/data/content/config/ordering-process.json';
 import { orderingProcessSchema } from '../validation/ordering-process';
 import { parseContent } from '../validation/parse-content';
 
@@ -6,5 +6,5 @@ import { parseContent } from '../validation/parse-content';
 export const orderingProcess = parseContent(
   orderingProcessSchema,
   data,
-  'data/content/ordering-process.json',
+  'data/content/config/ordering-process.json',
 );

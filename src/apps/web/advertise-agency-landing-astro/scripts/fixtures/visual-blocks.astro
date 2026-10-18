@@ -4,8 +4,8 @@
 import Layout from '@/layouts/Layout.astro';
 import ContentBlocks from '@/components/content/ContentBlocks.astro';
 import { contentBlocksSchema } from '@/validation/content-blocks';
-import fixture from '@/data/content/fixtures/visual-blocks.json';
-import paragraphs from '@/data/content/fixtures/paragraph-visual.json';
+import fixture from '../../tests/fixtures/content/visual-blocks.json';
+import paragraphs from '../../tests/fixtures/content/paragraph-visual.json';
 import type { ArticleContext } from '@/content/article-context';
 
 export function getStaticPaths() {

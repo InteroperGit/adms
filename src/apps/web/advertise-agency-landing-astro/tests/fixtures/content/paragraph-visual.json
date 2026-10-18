@@ -1,0 +1,75 @@
+[
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Длинный заголовок сохраняет связь с текстом своей секции",
+    "id": "paragraph-measure-heading"
+  },
+  {
+    "type": "paragraph",
+    "id": "paragraph-measure",
+    "paragraphs": [
+      [
+        "Первый абзац объясняет задачу читателю. На широком экране ",
+        "строка остаётся ограниченной шириной статьи. На телефоне ",
+        "текст занимает доступное пространство и переносится без ",
+        "горизонтальной прокрутки. Увеличение размера шрифта сохраняет ",
+        "порядок чтения и расстояния между абзацами."
+      ],
+      [
+        "Ссылка внутри текста: ",
+        "https://example.invalid/abcdefghijklmnopqrstuvwxyz0123456789ab",
+        "cdefghijklmnopqrstuvwxyz0123456789?material=acrylic&finish=mat",
+        "te. ",
+        "Следующее предложение остаётся обычным текстом."
+      ],
+      [
+        "Третий абзац отделён от предыдущего и продолжает мысль без ",
+        "дополнительной карточки, фона или рамки. The same reading ",
+        "flow supports English text and long words: ",
+        "abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz",
+        "0123456789."
+      ]
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Заголовок без авторского ID"
+  },
+  {
+    "type": "paragraph",
+    "paragraphs": [
+      [
+        "Для секции автоматически создаётся доступная связь с ",
+        "заголовком."
+      ]
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Заголовок без авторского ID"
+  },
+  {
+    "type": "paragraph",
+    "paragraphs": [
+      [
+        "Повторный заголовок сохраняет отдельный уникальный ",
+        "идентификатор."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "paragraphs": [
+      [
+        "Без заголовка: <img src=x onerror=alert(1)> остаётся текстом."
+      ],
+      [
+        "javascript:alert(1), ftp://example.invalid/ и ",
+        "https://user:pass@example.invalid/ остаются текстом."
+      ]
+    ]
+  }
+]

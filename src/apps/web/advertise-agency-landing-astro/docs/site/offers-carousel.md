@@ -4,7 +4,7 @@
 
 ## Publication and ownership
 
-Edit `data/content/offers.json`. The enabled baseline contains four evergreen
+Edit `data/content/config/offers.json`. The enabled baseline contains four evergreen
 service offers: illuminated signs, neon lettering, information stands and
 city architecture sign approval. All CTAs lead to contacts. The copy describes a
 case and invites discussion, without price, discount, deadline or result claims.

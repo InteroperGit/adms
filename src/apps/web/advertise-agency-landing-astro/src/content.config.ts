@@ -24,10 +24,14 @@ const projectArticles = defineCollection({
 });
 
 // Fixtures validate with the same compiler but have no production route.
+const fixtureRoot = process.env.E2E_CONTENT_ROOT
+  ? `${contentRoot}/fixtures`
+  : './tests/fixtures/content';
+
 const articleFixtures = defineCollection({
   loader: glob({
     pattern: '**/*.mdx',
-    base: `${contentRoot}/fixtures/articles`,
+    base: `${fixtureRoot}/articles`,
   }),
   schema: serviceArticleMetadataSchema,
 });

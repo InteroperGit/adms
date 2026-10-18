@@ -2,7 +2,7 @@
 import { contentBlocksSchema } from '@/validation/content-blocks';
 import { getPublicationIssues } from '@/content/block-publication';
 import type { ContentBlock } from '@/types/content-blocks';
-import fixture from '@/data/content/fixtures/publication.json';
+import fixture from '../../tests/fixtures/content/publication.json';
 
 export function acceptanceBlocks(input: ContentBlock[], id: string) {
   const blocks = contentBlocksSchema.parse(structuredClone(input));

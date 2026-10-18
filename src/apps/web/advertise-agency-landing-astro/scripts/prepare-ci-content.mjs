@@ -5,5 +5,7 @@ import { cp, mkdir } from 'node:fs/promises';
 if (process.env.CI !== 'true') {
   throw new Error('Synthetic runtime provisioning is restricted to CI');
 }
-await mkdir('data/content');
-await cp('tests/fixtures/content/site', 'data/content', { recursive: true });
+await mkdir('data/content/config', { recursive: true });
+await cp('tests/fixtures/content/site/config', 'data/content/config', {
+  recursive: true,
+});

@@ -11,7 +11,7 @@ The repository has no suitable approved photo: the three project previews
 have no approved photos, and the local map illustration is not project work.
 Provide the original image, installation context, source and permission
 to publish. Set its actual dimensions, accurate alt text and inspected
-desktop/mobile focal points in `data/content/introduction.json`; see
+desktop/mobile focal points in `data/content/config/introduction.json`; see
 [introduction content](content.md#introduction-content). The checked-in
 `photo: null` intentionally reserves no fake photo or crop.
 
@@ -28,7 +28,7 @@ The names above identify existing JSON records, not verified customer identities
 
 ## Replacing the placeholders
 
-Keep record IDs stable. Populate `photos` in `data/content/projects.json` using the [case study contract](case-studies.md); update `avatar`, `avatarAlt`, `avatarWidth`, and `avatarHeight` in `data/content/reviews.json`. Dimensions must be positive integers matching the supplied file. Replace demonstration alternative text with a concise, accurate description of the photograph; do not repeat marketing claims. Root-relative public paths and HTTP(S) URLs are supported.
+Keep record IDs stable. Populate `photos` in `data/content/config/projects.json` using the [case study contract](case-studies.md); update `avatar`, `avatarAlt`, `avatarWidth`, and `avatarHeight` in `data/content/config/reviews.json`. Dimensions must be positive integers matching the supplied file. Replace demonstration alternative text with a concise, accurate description of the photograph; do not repeat marketing claims. Root-relative public paths and HTTP(S) URLs are supported.
 
 For a simple local handoff, place approved files under `public/images/projects/` and `public/images/reviews/` and reference them as `/images/...`. Public files are served as supplied: compress and resize them before publishing. Prefer project originals at least 1200 pixels wide and square portrait crops at least 150 pixels wide; these are delivery recommendations, not validation requirements. Check framing on desktop and mobile: project cards reserve a 3:2 frame and crop with `object-fit: cover`; detail images use `object-fit: contain` inside a 3:2 frame up to 56rem wide so the full photograph remains visible. Portraits retain a nonshrinking 48 × 48 pixel circle. Review future image ratios before replacing the current 600 × 400 placeholders.
 
@@ -51,6 +51,6 @@ customer approval has been obtained as part of task 035.
 About currently uses the existing local service demo PNGs for light
 letters, neon, and signs. These are illustrations, not approved photos of
 agency work. Alt text retains that distinction; no caption is displayed.
-Image sources/options are editable in `data/content/about-carousel.json`;
+Image sources/options are editable in `data/content/config/about-carousel.json`;
 see [shared carousel editing](image-carousel.md). Bundled originals use
 responsive Astro variants, full-image framing, and lazy loading.

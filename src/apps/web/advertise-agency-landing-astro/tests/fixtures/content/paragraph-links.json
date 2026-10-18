@@ -1,0 +1,33 @@
+[
+  {
+    "input": [
+      "Текст без ссылок и javascript:alert(1)"
+    ],
+    "links": []
+  },
+  {
+    "input": [
+      "См. (https://example.invalid/a_(b)). Затем ",
+      "http://example.org/."
+    ],
+    "links": [
+      "https://example.invalid/a_(b)",
+      "http://example.org/"
+    ]
+  },
+  {
+    "input": [
+      "https://user:pass@example.invalid/ и https:// и ",
+      "ftp://example.org"
+    ],
+    "links": []
+  },
+  {
+    "input": [
+      "<img src=x onerror=alert(1)> https://example.invalid/?a=1&b=2"
+    ],
+    "links": [
+      "https://example.invalid/?a=1&b=2"
+    ]
+  }
+]
