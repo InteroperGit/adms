@@ -111,9 +111,13 @@ const { items, phone } = Astro.props;
       link.addEventListener('click', (event) => {
         if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
           return;
-        menu.close();
         const destination = new URL(link.href);
         if (destination.pathname === location.pathname && destination.hash) {
+          // Keep the target focus after closing instead of letting native
+          // anchor navigation reset it to the document.
+          event.preventDefault();
+          history.pushState(null, '', destination.pathname + destination.hash);
+          menu.close();
           const section = document.getElementById(
             decodeURIComponent(destination.hash.slice(1)),
           );
@@ -127,9 +131,11 @@ const { items, phone } = Astro.props;
                 { once: true },
               );
             }
-            section.focus({ preventScroll: true });
+            requestAnimationFrame(() => section.focus({ preventScroll: true }));
           }
+          return;
         }
+        menu.close();
       });
     });
     // Close the drawer when the desktop layout removes its opener.

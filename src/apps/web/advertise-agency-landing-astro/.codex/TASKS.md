@@ -1,3 +1,35 @@
+# Latest task — 124, 2026-10-19
+
+- Expanded mobile navigation coverage for focus trapping, Escape, close button,
+  resize, same-page hashes, cross-page hashes, and contact links.
+- Fixed same-page hash focus in `MobileMenuDialog.astro` by preserving the
+  URL with `history.pushState` and focusing after dialog close.
+- Navigation and preferences Chromium suites: 11 tests passed.
+- Archived the task in `docs/codex/fixed/20261019/`.
+
+# Latest task — 123, 2026-10-19
+
+- Expanded `tests/e2e/preferences.spec.ts` into six isolated browser tests.
+- Covered accepted and declined consent, blocked storage, explicit and system
+  themes, and synchronization across two pages.
+- Focused Chromium run: 6 tests passed.
+- Archived the task in `docs/codex/fixed/20261019/`.
+
+# Latest task — 122, 2026-10-19
+
+- Split the original E2E site scenarios into focused specs under `tests/e2e/`.
+- Removed `tests/e2e/site.spec.ts` after preserving its assertions by topic.
+- Archived the task in `docs/codex/fixed/20261019/`.
+
+# E2E planning — 2026-10-19
+
+- Created docs/codex/plan/20261019_e2e-test-suite-plan.md.
+- Added 16 pending tasks, 121–136, under docs/codex/todo/.
+- Each task specifies input files, allowed edits, steps, acceptance and
+  a focused command; Luna is the default implementation model.
+- Started with 121-e2e-network-fixture.md; task 122 is now archived.
+- Planning only: no application/test code changed, no tests run.
+
 # Latest task — 120, 2026-10-19
 
 - Removed `tests/unit` and pointed `test:unit` at colocated pure logic suites.
