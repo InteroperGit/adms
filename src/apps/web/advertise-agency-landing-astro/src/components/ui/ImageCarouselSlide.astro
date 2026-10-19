@@ -35,14 +35,17 @@ if (item.image.startsWith('/src/assets/') && !original) {
   throw new Error(`Carousel image missing: ${item.image}`);
 }
 // Include the original width once and avoid upscaling smaller source images.
-const widths = original ? [...new Set([
-  ...[320, 640, 960].filter(width => width < original.width),
-  original.width,
-])] : [];
+const widths = original
+  ? [
+      ...new Set([
+        ...[320, 640, 960].filter((width) => width < original.width),
+        original.width,
+      ]),
+    ]
+  : [];
 const loading = index === 0 && options.eagerFirst ? 'eager' : 'lazy';
-const sizes = options.layout === 'panel'
-  ? '(min-width: 64rem) 40vw, 92vw'
-  : '100vw';
+const sizes =
+  options.layout === 'panel' ? '(min-width: 64rem) 40vw, 92vw' : '100vw';
 ---
 
 {/* Each static slide keeps its image and enabled content accessible. */}
@@ -94,8 +97,9 @@ const sizes = options.layout === 'panel'
     >
       <div class="carousel-copy">
         {description && <p>{description}</p>}
+        {/* Include the active CTA in Safari's sequential keyboard focus. */}
         {button && item.href && (
-          <Button href={item.href} class="carousel-link">
+          <Button href={item.href} class="carousel-link" tabindex="0">
             {item.linkLabel}
           </Button>
         )}
@@ -188,9 +192,7 @@ const sizes = options.layout === 'panel'
   :global(.image-carousel[data-ready][data-circles='true']) .carousel-stage {
     padding-bottom: max(
       4.5rem,
-      calc(
-        var(--indicator-height) + var(--control-inset) + var(--control-gap)
-      )
+      calc(var(--indicator-height) + var(--control-inset) + var(--control-gap))
     );
   }
 

@@ -65,6 +65,24 @@ content is supplied outside Git and initialized from `data/templates/` with an
 explicit generator command. Never use `--force` against an existing content
 reserve without a backup and a recorded hash manifest.
 
+## E2E acceptance result
+
+The E2E command builds the production preview and binds it to
+`http://127.0.0.1:4327`; Playwright owns and stops that process. The normal
+matrix contains 234 executions across Chromium, Firefox and WebKit. On
+2026-10-20 it reported 210 passed and 24 failed with no local retries. The
+diagnostic run `pnpm test:e2e --repeat-each=2` completed 468 executions and
+reported 415 passed and 53 failed.
+
+The failures are recorded in `docs/development/browser-coverage.md` and in the
+retained Playwright traces. They include the video 404 fallback staying in
+`loading`, homepage horizontal overflow across responsive widths and themes, and
+order-sensitive Firefox/WebKit navigation, carousel, theme and inquiry timing
+cases. Until those defects are fixed, the CI `pnpm test:e2e` step remains
+correctly failing; no assertion was weakened and no scenario was skipped. CI
+does not claim real email delivery, physical mobile coverage, video playback or
+numeric E2E code coverage.
+
 Formatting uses Prettier with Astro support and an 80-column target. Run
 `pnpm format` to write or `pnpm format:check` to check; the existing hard
 80-column gate remains in `pnpm check`. ESLint owns correctness rules for Astro,

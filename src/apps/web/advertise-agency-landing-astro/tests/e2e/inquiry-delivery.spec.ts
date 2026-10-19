@@ -79,6 +79,8 @@ test('unavailable delivery stays disabled and explains fallback', async ({
 test('pending delivery blocks duplicate submission until release', async ({
   page,
 }) => {
+  // Keep this pending-state contract independent of the real delivery timeout.
+  await page.clock.install({ time: new Date('2026-10-20T00:00:00Z') });
   const requests: Record<string, string>[] = [];
   let release: (() => void) | undefined;
   const held = new Promise<void>((resolve) => {
@@ -99,7 +101,9 @@ test('pending delivery blocks duplicate submission until release', async ({
     const form = page.locator('#order-inquiry form');
     const fields = form.locator('fieldset');
     const submit = form.locator('[type="submit"]');
-    await submit.click();
+    await page.clock.pauseAt(new Date('2026-10-20T01:00:00Z'));
+    // Native activation avoids animation waits while the clock is paused.
+    await submit.evaluate((node: HTMLButtonElement) => node.click());
     expect(await form.locator('[role="status"]').textContent()).toBe(
       'TEST_SENDING',
     );

@@ -10,10 +10,15 @@ test('manual controls select and announce slides', async ({ page }) => {
   const dots = carousel.locator('.carousel-dot');
   const status = carousel.locator('[role="status"]');
 
+  // Select a known starting slide and suspend autoplay through control focus.
+  await dots.nth(0).click();
+  await dots.nth(0).focus();
+
   await expect(slides).toHaveCount(3);
   await expect(carousel.locator('.carousel-controls')).toBeVisible();
-  await expect(carousel.locator('.carousel-slide:not([aria-hidden])'))
-    .toHaveCount(1);
+  await expect(
+    carousel.locator('.carousel-slide:not([aria-hidden])'),
+  ).toHaveCount(1);
   await expect(dots.nth(0)).toHaveAttribute('aria-current', 'true');
 
   await carousel.locator('[data-direction="1"]').focus();
@@ -91,10 +96,12 @@ test('reduced motion retains usable manual carousel controls', async ({
 
   await expect(slides).toHaveCount(3);
   await expect(carousel.locator('.carousel-controls')).toBeVisible();
-  await expect(carousel.locator('.carousel-slide:not([aria-hidden])'))
-    .toHaveCount(1);
+  await expect(
+    carousel.locator('.carousel-slide:not([aria-hidden])'),
+  ).toHaveCount(1);
   await carousel.locator('[data-direction="1"]').focus();
   await page.keyboard.press('Enter');
-  await expect(carousel.locator('.carousel-dot[aria-current="true"]'))
-    .toHaveAttribute('data-index', '1');
+  await expect(
+    carousel.locator('.carousel-dot[aria-current="true"]'),
+  ).toHaveAttribute('data-index', '1');
 });
