@@ -8,12 +8,33 @@ const root = resolve('output/playwright/content');
 const templates = JSON.parse(
   await readFile('data/templates/manifest.json', 'utf8'),
 );
+const overrides = JSON.parse(
+  await readFile('tests/fixtures/content/e2e-overrides.json', 'utf8'),
+);
 for (const entry of templates.files.filter((item) => item.kind === 'json')) {
   const path = entry.output ?? entry.path;
   const value = JSON.parse(
     await readFile(resolve('tests/fixtures/content/site', path), 'utf8'),
   );
   if (path === 'config/order-inquiry.json') value.submission.enabled = true;
+  if (path === 'config/services.json') {
+    value.demoMode = overrides.services.demoMode;
+    value.copyApproved = overrides.services.copyApproved;
+    const itemOverride = overrides.services.item;
+    const service = value.items.find((item) => item.id === itemOverride.id);
+    if (!service) {
+      throw new Error(`E2E service not found: ${itemOverride.id}`);
+    }
+    service.confirmed = itemOverride.confirmed;
+    service.copyApproved = itemOverride.copyApproved;
+    service.image = { ...service.image, ...itemOverride.image };
+    service.article = { ...service.article, ...itemOverride.article };
+  }
+  if (path === 'config/projects.json') {
+    const project = value.find((item) => item.id === 1);
+    if (!project) throw new Error('E2E project not found: 1');
+    project.article.content.push(...overrides.projectBlocks);
+  }
   const target = resolve(root, path);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, JSON.stringify(value, null, 2));

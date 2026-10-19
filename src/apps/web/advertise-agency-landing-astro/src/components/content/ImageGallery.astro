@@ -247,9 +247,10 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
         nextButton.hidden = thumbnails.length < 2;
       };
 
-      const openGallery = (index: number): void => {
-        // Safari pointer clicks do not necessarily focus the opening link.
-        returnFocus = mainLink;
+      const openGallery = (index: number, opener: HTMLElement): void => {
+        // Remember the actual opener even when a Safari click leaves focus
+        // elsewhere, so closing restores the visitor's place in the page.
+        returnFocus = opener;
         showImage(index);
         previousOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
@@ -266,13 +267,13 @@ const galleryId = `gallery-${block.id ?? crypto.randomUUID()}`;
       thumbnails.forEach((thumbnail: HTMLAnchorElement, index: number) => {
         thumbnail.addEventListener('click', (event: MouseEvent) => {
           event.preventDefault();
-          showImage(index);
+          openGallery(index, thumbnail);
         });
       });
 
       mainLink.addEventListener('click', (event: MouseEvent) => {
         event.preventDefault();
-        openGallery(currentIndex);
+        openGallery(currentIndex, mainLink);
       });
       closeButton.addEventListener('click', () => {
         closeGallery();

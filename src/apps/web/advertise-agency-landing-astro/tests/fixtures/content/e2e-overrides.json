@@ -1,0 +1,70 @@
+{
+  "services": {
+    "demoMode": false,
+    "copyApproved": true,
+    "item": {
+      "id": "svetovye-bukvy",
+      "confirmed": true,
+      "copyApproved": true,
+      "image": { "approved": true },
+      "article": {
+        "approved": true,
+        "content": [
+          {
+            "type": "paragraph",
+            "id": "e2e-service-copy",
+            "paragraphs": ["Synthetic E2E service"],
+            "provenance": {
+              "source": "Synthetic E2E fixture",
+              "approvedBy": "Synthetic E2E reviewer",
+              "approvedAt": "2026-10-19"
+            }
+          },
+          {
+            "type": "order-form",
+            "id": "e2e-led-form",
+            "formId": "led-letters",
+            "context": "service",
+            "category": "svetovye-bukvy",
+            "provenance": {
+              "source": "Synthetic E2E fixture",
+              "approvedBy": "Synthetic E2E reviewer",
+              "approvedAt": "2026-10-19"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "projectBlocks": [
+    {
+      "type": "chart",
+      "id": "e2e-chart",
+      "chartType": "bar",
+      "unit": "units",
+      "series": [
+        {
+          "name": "E2E series",
+          "points": [
+            { "label": "Alpha", "value": 10 },
+            { "label": "Beta", "value": 20 }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "id": "e2e-video",
+      "src": "/__fixture/broken.mp4",
+      "poster": "/favicon.svg",
+      "alt": "E2E video",
+      "width": 640,
+      "height": 360,
+      "transcript": "E2E transcript",
+      "provenance": {
+        "source": "Synthetic E2E fixture",
+        "rights": "Synthetic test source; no external media"
+      }
+    }
+  ]
+}

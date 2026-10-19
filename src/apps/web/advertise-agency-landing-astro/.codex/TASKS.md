@@ -1,3 +1,72 @@
+# Latest task — 132, 2026-10-19
+
+- Added five LED-lettering form E2E scenarios on the fixture service route.
+- Verified minimal phone submission, conditional email, corrected validation,
+  service payload context, receipt resets and retained fields after 503.
+- Required Chromium command exited 0: 5 passed in 44.7 seconds. ESLint,
+  Prettier and the 80-column check passed; earlier `pnpm check` passed.
+- Diagnosed sandbox Windows preview-process termination as the prior stall;
+  the approved run outside sandbox completed cleanup and released port 4327.
+- Archived as `docs/codex/fixed/20261019/132-e2e-led-letters-form.md`.
+- Next pending task: 133-e2e-chart-and-video.md.
+
+# Latest task — 131, 2026-10-19
+
+- Added E2E-only publication overrides for the LED service and project media.
+- Verified the service form and project chart/video in the fixture build;
+  the three projects and original gallery remain intact.
+- Chromium suite: 43 tests passed; `pnpm check`, ESLint, Prettier and
+  `git diff --check` passed. Runner required termination after reporting.
+- Archived as `docs/codex/fixed/20261019/131-e2e-rich-content-fixtures.md`.
+
+# Latest task — 130, 2026-10-19
+
+- Expanded inquiry delivery E2E coverage for pending state, duplicate submits,
+  response validation, retry IDs, aborts, timeouts and focus behavior.
+- Preserved the unavailable and 503-to-200 delivery scenarios.
+- Focused Chromium run: 10 tests passed; formatting and lint checks passed.
+- Archived as `docs/codex/fixed/20261019/130-e2e-inquiry-delivery.md`.
+
+# Latest task — 129, 2026-10-19
+
+- Added inquiry validation browser coverage for empty, malformed email,
+  missing consent and corrected successful submission.
+- Verified accessible errors, focus, request prevention and one receipt.
+- Focused Chromium run: 4 tests passed.
+- Archived as `docs/codex/fixed/20261019/129-e2e-inquiry-validation.md`.
+
+# Latest task — 128, 2026-10-19
+
+- Expanded gallery browser coverage for navigation, wrapping, thumbnails,
+  keyboard focus containment, focus return and reduced motion.
+- Fixed external thumbnail opening and exact focus restoration on close.
+- Focused Chromium run: 5 tests passed.
+- Archived as `docs/codex/fixed/20261019/128-e2e-gallery.md`.
+
+# Latest task — 127, 2026-10-19
+
+- Added catalog pagination browser coverage in a dedicated E2E spec.
+- Verified pagination links, reload/direct routes, current-page state,
+  boundary accessibility, category history, and search route reset.
+- Focused Chromium run: 4 tests passed.
+- Archived as `docs/codex/fixed/20261019/127-e2e-catalog-pagination.md`.
+
+# Latest task — 126, 2026-10-19
+
+- Expanded catalog browser coverage for search, empty results, categories,
+  reset, direct URLs, reload and Back/Forward restoration.
+- Verified fixture result links, visible cards, counts, controls and URL state.
+- Focused Chromium run: 3 tests passed.
+- Archived as `docs/codex/fixed/20261019/126-e2e-catalog-search.md`.
+
+# Latest task — 125, 2026-10-19
+
+- Expanded carousel browser coverage for manual navigation, wraparound,
+  selected indicators, announcements, inert slides and reduced motion.
+- Verified hidden CTA keyboard exclusion and Enter activation in Chromium.
+- Focused Chromium run: 3 tests passed.
+- Archived as `docs/codex/fixed/20261019/125-e2e-carousel.md`.
+
 # Latest task — 124, 2026-10-19
 
 - Expanded mobile navigation coverage for focus trapping, Escape, close button,
@@ -24,11 +93,11 @@
 # E2E planning — 2026-10-19
 
 - Created docs/codex/plan/20261019_e2e-test-suite-plan.md.
-- Added 16 pending tasks, 121–136, under docs/codex/todo/.
+- Added tasks 121–136; tasks 121–132 are archived and 133–136 remain pending.
 - Each task specifies input files, allowed edits, steps, acceptance and
   a focused command; Luna is the default implementation model.
-- Started with 121-e2e-network-fixture.md; task 122 is now archived.
-- Planning only: no application/test code changed, no tests run.
+- Started with 121-e2e-network-fixture.md; tasks 121–132 are now archived.
+- At planning time, no application/test code changed and no tests were run.
 
 # Latest task — 120, 2026-10-19
 
