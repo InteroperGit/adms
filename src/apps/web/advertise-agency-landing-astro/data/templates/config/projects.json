@@ -3,7 +3,6 @@
     "id": 1,
     "category": "TEST_CATEGORY",
     "status": "demo",
-    "notice": "TEST_NOTICE",
     "title": "TEST_TITLE",
     "client": "TEST_CLIENT",
     "attribution": "TEST_ATTRIBUTION",

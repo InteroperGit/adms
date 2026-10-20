@@ -46,14 +46,11 @@ export function hasDemoBlocks(blocks: ContentBlock[]): boolean {
       || image.kind === 'demo'));
 }
 
-export const blockDemoNotice =
-  'Демонстрационный материал. Сведения не являются подтверждённым кейсом.';
-
 /**
  * Explicit published blocks always require approval. An indexable article
  * also requires approval for inherited, unclassified content. Drafts may be
  * edited on demo/draft pages, but are rejected in approved articles. Demo
- * content remains visible with a notice and makes the whole page noindex.
+ * content remains visible and makes the whole page noindex.
  */
 export function getPublicationIssues(
   blocks: ContentBlock[],

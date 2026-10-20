@@ -4,7 +4,6 @@ import { buildContentBlocks } from '../../tests/helpers/fixtures';
 import type { ContentBlock } from '../types/content-blocks';
 import {
   assertPublicationPolicy,
-  blockDemoNotice,
   getPublicationIssues,
   getVisibleBlocks,
   hasDemoBlocks,
@@ -64,9 +63,6 @@ it('detects visible demo metadata, video kind and nested media kind', () => {
   if (gallery?.type !== 'image-gallery') throw new Error('Missing gallery');
   gallery.images[0].status = 'demo';
   expect(hasDemoBlocks([gallery])).toBe(true);
-  expect(blockDemoNotice).toBe(
-    'Демонстрационный материал. Сведения не являются подтверждённым кейсом.',
-  );
 });
 
 it('requires explicit and inherited approval but permits demo copy', () => {

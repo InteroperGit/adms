@@ -33,7 +33,6 @@ export interface Project {
   id: number;
   category?: ProjectCategory | null;
   status: 'draft' | 'demo' | 'published';
-  notice: string | null;
   title: string;
   client: string;
   /** ISO calendar date for the project milestone, when known. */

@@ -25,7 +25,6 @@ export const projectMetadataSchema = z.object({
   id,
   category: z.enum(categorySlugs).nullable().optional(),
   status: z.enum(['draft', 'demo', 'published']),
-  notice: text.nullable(),
   title: text,
   client: text,
   date: text.regex(/^\d{4}-\d{2}-\d{2}$/).optional(),

@@ -11,7 +11,6 @@ import { projects } from '@/content/projects';
 import { site } from '@/content/site';
 import type { Project } from '@/types/project';
 import { isProjectPublished } from '@/content/project-publication';
-import { blockDemoNotice } from '@/content/block-publication';
 
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -23,7 +22,6 @@ export function getStaticPaths() {
 const { project } = Astro.props as { project: Project };
 const projectsHref = '/projects/';
 const published = isProjectPublished(project);
-const notice = project.notice ?? (!published ? blockDemoNotice : undefined);
 ---
 
 <Layout
@@ -40,8 +38,6 @@ const notice = project.notice ?? (!published ? blockDemoNotice : undefined);
       current={project.title}
     />
     <ProjectDetailHeader project={project} />
-    {/* Qualify demo claims before readers encounter the article or media. */}
-    {notice && <p class="project-notice">{notice}</p>}
     {/* The page owns category/approval; blocks own reading order. */}
     <ContentBlocks
       blocks={project.content}
@@ -65,14 +61,6 @@ const notice = project.notice ?? (!published ? blockDemoNotice : undefined);
   .project-detail :global(.content-blocks) {
     width: 100%;
     max-width: none;
-  }
-
-  /* Make the editorial qualification visible beside the project content. */
-  .project-notice {
-    margin-bottom: 1.5rem;
-    padding-left: 1rem;
-    border-left: 3px solid var(--color-primary);
-    color: var(--color-muted);
   }
 
 </style>

@@ -4,7 +4,6 @@
 import type { ContentBlock } from '@/types/content-blocks';
 import type { ArticleContext } from '@/content/article-context';
 import {
-  blockDemoNotice,
   getVisibleBlocks,
   hasDemoBlocks,
 } from '@/content/block-publication';
@@ -43,8 +42,6 @@ const wrapperId = (block: ContentBlock) =>
 
 {/* Block IDs identify article targets, including standalone headings. */}
 <div class="content-blocks">
-  {/* Qualify demo blocks even when an approved page contains mixed content. */}
-  {demo && <p class="block-demo-notice">{blockDemoNotice}</p>}
   {visibleBlocks.map((block: ContentBlock, index) => (
     <div
       class="content-block"
@@ -109,13 +106,6 @@ const wrapperId = (block: ContentBlock) =>
       transparent
     );
     outline-offset: 0.5rem;
-  }
-
-  /* Keep demo disclosure distinct from approved narrative and media. */
-  .block-demo-notice {
-    padding-left: 1rem;
-    border-left: 3px solid var(--content-block-accent);
-    color: var(--content-block-caption);
   }
 
   /* Use a comfortable line height for both narrative and inquiry paragraphs. */
