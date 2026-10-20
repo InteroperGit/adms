@@ -68,6 +68,8 @@ export default defineConfig(
   },
   {
     rules: {
+      // Keep every conditional branch explicit, even for one statement.
+      curly: ['error', 'all'],
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

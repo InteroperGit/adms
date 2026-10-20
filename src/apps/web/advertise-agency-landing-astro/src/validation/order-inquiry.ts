@@ -78,6 +78,10 @@ export const orderInquirySchema = z
         required: text,
         email: text,
         tooLong: text,
+        captchaLoading: text,
+        captchaUnavailable: text,
+        captchaRequired: text,
+        captchaExpired: text,
       })
       .strict(),
   })

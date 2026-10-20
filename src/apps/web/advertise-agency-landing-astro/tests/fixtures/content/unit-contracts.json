@@ -111,7 +111,11 @@
       "failure": "TEST_FAILURE",
       "required": "TEST_REQUIRED",
       "email": "test@example.com",
-      "tooLong": "TEST_TOOLONG"
+      "tooLong": "TEST_TOOLONG",
+      "captchaLoading": "TEST_CAPTCHA_LOADING",
+      "captchaUnavailable": "TEST_CAPTCHA_UNAVAILABLE",
+      "captchaRequired": "TEST_CAPTCHA_REQUIRED",
+      "captchaExpired": "TEST_CAPTCHA_EXPIRED"
     }
   },
   "ordering-process": {
@@ -121,69 +125,47 @@
     "introduction": "TEST_INTRODUCTION",
     "copyApproved": false,
     "approvalSource": null,
-    "pendingInputs": [
-      "TEST_PENDINGINPUTS"
-    ],
+    "pendingInputs": ["TEST_PENDINGINPUTS"],
     "steps": [
       {
         "id": "step-0",
         "icon": "/images/guarantees/production.svg",
         "title": "TEST_TITLE",
         "description": "TEST_DESCRIPTION",
-        "customerProvides": [
-          "TEST_CUSTOMERPROVIDES"
-        ],
-        "agencyHandles": [
-          "TEST_AGENCYHANDLES"
-        ]
+        "customerProvides": ["TEST_CUSTOMERPROVIDES"],
+        "agencyHandles": ["TEST_AGENCYHANDLES"]
       },
       {
         "id": "step-1",
         "icon": "/images/guarantees/production.svg",
         "title": "TEST_TITLE",
         "description": "TEST_DESCRIPTION",
-        "customerProvides": [
-          "TEST_CUSTOMERPROVIDES"
-        ],
-        "agencyHandles": [
-          "TEST_AGENCYHANDLES"
-        ]
+        "customerProvides": ["TEST_CUSTOMERPROVIDES"],
+        "agencyHandles": ["TEST_AGENCYHANDLES"]
       },
       {
         "id": "step-2",
         "icon": "/images/guarantees/production.svg",
         "title": "TEST_TITLE",
         "description": "TEST_DESCRIPTION",
-        "customerProvides": [
-          "TEST_CUSTOMERPROVIDES"
-        ],
-        "agencyHandles": [
-          "TEST_AGENCYHANDLES"
-        ]
+        "customerProvides": ["TEST_CUSTOMERPROVIDES"],
+        "agencyHandles": ["TEST_AGENCYHANDLES"]
       },
       {
         "id": "step-3",
         "icon": "/images/guarantees/production.svg",
         "title": "TEST_TITLE",
         "description": "TEST_DESCRIPTION",
-        "customerProvides": [
-          "TEST_CUSTOMERPROVIDES"
-        ],
-        "agencyHandles": [
-          "TEST_AGENCYHANDLES"
-        ]
+        "customerProvides": ["TEST_CUSTOMERPROVIDES"],
+        "agencyHandles": ["TEST_AGENCYHANDLES"]
       },
       {
         "id": "step-4",
         "icon": "/images/guarantees/production.svg",
         "title": "TEST_TITLE",
         "description": "TEST_DESCRIPTION",
-        "customerProvides": [
-          "TEST_CUSTOMERPROVIDES"
-        ],
-        "agencyHandles": [
-          "TEST_AGENCYHANDLES"
-        ]
+        "customerProvides": ["TEST_CUSTOMERPROVIDES"],
+        "agencyHandles": ["TEST_AGENCYHANDLES"]
       }
     ]
   },
@@ -197,9 +179,7 @@
     "approvalSource": null,
     "costFactors": {
       "heading": "TEST_HEADING",
-      "items": [
-        "TEST_ITEMS"
-      ]
+      "items": ["TEST_ITEMS"]
     },
     "estimateGuidance": {
       "heading": "TEST_HEADING",
@@ -212,15 +192,9 @@
         "title": "TEST_TITLE",
         "description": "TEST_DESCRIPTION",
         "dimensions": "TEST_DIMENSIONS",
-        "materials": [
-          "TEST_MATERIALS"
-        ],
-        "includedWork": [
-          "TEST_INCLUDEDWORK"
-        ],
-        "exclusions": [
-          "TEST_EXCLUSIONS"
-        ],
+        "materials": ["TEST_MATERIALS"],
+        "includedWork": ["TEST_INCLUDEDWORK"],
+        "exclusions": ["TEST_EXCLUSIONS"],
         "source": "TEST_SOURCE",
         "price": {
           "type": "exact",
@@ -272,9 +246,7 @@
     ],
     "copyApproved": false,
     "approvalSource": null,
-    "pendingInputs": [
-      "TEST_PENDINGINPUTS"
-    ],
+    "pendingInputs": ["TEST_PENDINGINPUTS"],
     "productionOperations": [
       {
         "id": "sample",
@@ -310,12 +282,8 @@
         "coverage": "TEST_COVERAGE",
         "duration": "TEST_DURATION",
         "starts": "TEST_STARTS",
-        "conditions": [
-          "TEST_CONDITIONS"
-        ],
-        "exclusions": [
-          "TEST_EXCLUSIONS"
-        ],
+        "conditions": ["TEST_CONDITIONS"],
+        "exclusions": ["TEST_EXCLUSIONS"],
         "claimRoute": "TEST_CLAIMROUTE",
         "sourceType": "pending",
         "source": "TEST_SOURCE",
@@ -323,12 +291,8 @@
       }
     ],
     "maintenance": {
-      "scope": [
-        "TEST_SCOPE"
-      ],
-      "customerResponsibilities": [
-        "TEST_CUSTOMERRESPONSIBILITIES"
-      ],
+      "scope": ["TEST_SCOPE"],
+      "customerResponsibilities": ["TEST_CUSTOMERRESPONSIBILITIES"],
       "pricing": "TEST_PRICING",
       "requestRoute": "TEST_REQUESTROUTE",
       "approval": "draft"
@@ -337,27 +301,17 @@
   },
   "business-solutions": {
     "heading": "TEST_HEADING",
-    "introduction": [
-      "TEST_INTRODUCTION"
-    ],
+    "introduction": ["TEST_INTRODUCTION"],
     "items": [
       {
         "id": "solution-0",
         "title": "TEST_TITLE",
-        "summary": [
-          "TEST_SUMMARY"
-        ],
-        "customerTask": [
-          "TEST_CUSTOMERTASK"
-        ],
-        "solution": [
-          "TEST_SOLUTION"
-        ],
+        "summary": ["TEST_SUMMARY"],
+        "customerTask": ["TEST_CUSTOMERTASK"],
+        "solution": ["TEST_SOLUTION"],
         "example": {
           "title": "TEST_TITLE",
-          "text": [
-            "TEST_TEXT"
-          ]
+          "text": ["TEST_TEXT"]
         },
         "inquiryLabel": "TEST_INQUIRYLABEL",
         "inquiryHref": "/#order-inquiry",
@@ -414,20 +368,12 @@
       {
         "id": "solution-1",
         "title": "TEST_TITLE",
-        "summary": [
-          "TEST_SUMMARY"
-        ],
-        "customerTask": [
-          "TEST_CUSTOMERTASK"
-        ],
-        "solution": [
-          "TEST_SOLUTION"
-        ],
+        "summary": ["TEST_SUMMARY"],
+        "customerTask": ["TEST_CUSTOMERTASK"],
+        "solution": ["TEST_SOLUTION"],
         "example": {
           "title": "TEST_TITLE",
-          "text": [
-            "TEST_TEXT"
-          ]
+          "text": ["TEST_TEXT"]
         },
         "inquiryLabel": "TEST_INQUIRYLABEL",
         "inquiryHref": "/#order-inquiry",
@@ -484,20 +430,12 @@
       {
         "id": "solution-2",
         "title": "TEST_TITLE",
-        "summary": [
-          "TEST_SUMMARY"
-        ],
-        "customerTask": [
-          "TEST_CUSTOMERTASK"
-        ],
-        "solution": [
-          "TEST_SOLUTION"
-        ],
+        "summary": ["TEST_SUMMARY"],
+        "customerTask": ["TEST_CUSTOMERTASK"],
+        "solution": ["TEST_SOLUTION"],
         "example": {
           "title": "TEST_TITLE",
-          "text": [
-            "TEST_TEXT"
-          ]
+          "text": ["TEST_TEXT"]
         },
         "inquiryLabel": "TEST_INQUIRYLABEL",
         "inquiryHref": "/#order-inquiry",
@@ -554,20 +492,12 @@
       {
         "id": "solution-3",
         "title": "TEST_TITLE",
-        "summary": [
-          "TEST_SUMMARY"
-        ],
-        "customerTask": [
-          "TEST_CUSTOMERTASK"
-        ],
-        "solution": [
-          "TEST_SOLUTION"
-        ],
+        "summary": ["TEST_SUMMARY"],
+        "customerTask": ["TEST_CUSTOMERTASK"],
+        "solution": ["TEST_SOLUTION"],
         "example": {
           "title": "TEST_TITLE",
-          "text": [
-            "TEST_TEXT"
-          ]
+          "text": ["TEST_TEXT"]
         },
         "inquiryLabel": "TEST_INQUIRYLABEL",
         "inquiryHref": "/#order-inquiry",
@@ -661,9 +591,7 @@
           "content": [
             {
               "type": "paragraph",
-              "paragraphs": [
-                "Synthetic copy"
-              ]
+              "paragraphs": ["Synthetic copy"]
             }
           ]
         }
@@ -700,9 +628,7 @@
       {
         "id": "sample",
         "question": "TEST_QUESTION",
-        "answer": [
-          "TEST_ANSWER"
-        ],
+        "answer": ["TEST_ANSWER"],
         "approval": {
           "state": "draft",
           "source": null,
@@ -753,9 +679,7 @@
     "content": [
       {
         "type": "paragraph",
-        "paragraphs": [
-          "Synthetic copy"
-        ]
+        "paragraphs": ["Synthetic copy"]
       }
     ]
   },

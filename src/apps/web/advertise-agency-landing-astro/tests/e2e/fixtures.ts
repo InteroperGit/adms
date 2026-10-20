@@ -11,19 +11,50 @@ type E2eFixtures = {
   blockExternalRequests: void;
 };
 
-/** Reject external requests that could make E2E tests nondeterministic. */
+/** Stub Yandex's widget locally and reject other external requests. */
 export async function blockExternalRequests(
   context: BrowserContext,
 ): Promise<void> {
-  await context.route('**/*', (route) => {
+  await context.route('**/*', async (route) => {
     const url = new URL(route.request().url());
     const isHttp = url.protocol === 'http:' || url.protocol === 'https:';
 
     if (!isHttp || url.origin === localOrigin) {
-      return route.continue();
+      await route.continue();
+      return;
     }
 
-    return route.abort();
+    if (
+      url.origin === 'https://smartcaptcha.cloud.yandex.ru' &&
+      url.pathname === '/captcha.js'
+    ) {
+      await route.fulfill({
+        contentType: 'application/javascript',
+        body: `(() => {
+          let sequence = 0;
+          let callback;
+          window.smartCaptcha = {
+            render(_container, options) {
+              callback = options.callback;
+              callback('synthetic-yandex-token-' + ++sequence);
+              return 'e2e-widget';
+            },
+            reset() {
+              callback('synthetic-yandex-token-' + ++sequence);
+            },
+            subscribe() {
+              return () => {};
+            }
+          };
+          const ready = new URL(document.currentScript.src)
+            .searchParams.get('onload');
+          window[ready]();
+        })();`,
+      });
+      return;
+    }
+
+    await route.abort();
   });
 }
 

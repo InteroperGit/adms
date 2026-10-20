@@ -44,6 +44,7 @@ test('phone contact needs only name, phone and consent', async ({ page }) => {
   await expect(form.locator('[role="status"]')).toHaveText('TEST_SUCCESS');
   expect(requests).toHaveLength(1);
   expect(requests[0]).toMatchObject({
+    captchaToken: 'synthetic-yandex-token-1',
     name: 'Synthetic visitor',
     phone: '+79990000000',
     consent: 'on',

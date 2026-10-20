@@ -104,4 +104,7 @@ test('corrected email clears its error before one successful request', async ({
 
   await expect(form.locator('[role="status"]')).toHaveText('TEST_SUCCESS');
   expect(requests).toHaveLength(1);
+  expect(requests[0]).toMatchObject({
+    captchaToken: 'synthetic-yandex-token-1',
+  });
 });

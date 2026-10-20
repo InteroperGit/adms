@@ -48,8 +48,54 @@ function setup(
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  delete window.smartCaptcha;
   vi.useRealTimers();
   document.body.replaceChildren();
+});
+
+it('requires a valid widget token and reuses retry identity', async () => {
+  let issueToken: ((token: string) => void) | undefined;
+  const api = {
+    render: vi.fn((_container, options) => {
+      issueToken = options.callback;
+      return 'inquiry-widget';
+    }),
+    reset: vi.fn(),
+    subscribe: vi.fn(() => vi.fn()),
+  };
+  window.smartCaptcha = api;
+  const form = setup(true, false, (form) => {
+    const captcha = document.createElement('div');
+    captcha.dataset.smartcaptcha = '';
+    captcha.dataset.sitekey = 'public-test-key';
+    form.append(captcha);
+  });
+  const fetch = vi.fn().mockResolvedValue({ ok: false });
+  vi.stubGlobal('fetch', fetch);
+  const requestId = '12345678-1234-4123-8123-123456789abc';
+  vi.spyOn(crypto, 'randomUUID').mockReturnValue(requestId);
+  await waitFor(() => expect(form.querySelector('button')).toBeEnabled());
+
+  fireEvent.submit(form);
+  expect(fetch).not.toHaveBeenCalled();
+  expect(form.querySelector('[role="status"]')).toHaveTextContent(
+    fixtures['order-inquiry'].feedback.captchaRequired,
+  );
+
+  issueToken?.('synthetic-token-1');
+  fireEvent.submit(form);
+  await waitFor(() => expect(form).not.toHaveAttribute('aria-busy'));
+  issueToken?.('synthetic-token-2');
+  fireEvent.submit(form);
+  await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+
+  const first = JSON.parse(fetch.mock.calls[0][1].body);
+  const second = JSON.parse(fetch.mock.calls[1][1].body);
+  expect(first.captchaToken).toBe('synthetic-token-1');
+  expect(second.captchaToken).toBe('synthetic-token-2');
+  expect(first.requestId).toBe(requestId);
+  expect(second.requestId).toBe(requestId);
+  expect(api.reset).toHaveBeenCalledTimes(2);
 });
 
 it.each([

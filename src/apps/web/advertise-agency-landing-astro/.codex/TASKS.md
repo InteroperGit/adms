@@ -1,3 +1,23 @@
+# Latest task — 138, 2026-10-20
+
+- Created `docs/codex/todo/138-service-articles-dynamic-route.md`.
+- Replace five service page files with `services/[id].astro`, following
+  the project detail route and using validated catalog data.
+- Includes route validation changes, stable URLs, publication gates,
+  content/form context, documentation and acceptance criteria.
+
+# Latest task — 137, 2026-10-20
+
+- Implemented Yandex SmartCaptcha on both inquiry forms with fail-closed
+  behavior and token delivery; added a local Playwright widget stub.
+- Unit/component tests: 746 passed; full E2E: 234 passed across three browsers.
+- `pnpm check`, ESLint and production build passed. External intake verifier
+  tests: 34 passed.
+- Production activation is pending a compatible backend adapter and approved
+  keys/domain/runtime configuration.
+- Archived as
+  `docs/codex/fixed/20261020/137-yandex-smartcaptcha-for-order-forms.md`.
+
 # Latest task — 132, 2026-10-19
 
 - Added five LED-lettering form E2E scenarios on the fixture service route.

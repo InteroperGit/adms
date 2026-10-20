@@ -52,6 +52,10 @@ export const value = {
     required: 'TEST_REQUIRED',
     email: 'test@example.com',
     tooLong: 'TEST_TOOLONG',
+    captchaLoading: 'TEST_CAPTCHA_LOADING',
+    captchaUnavailable: 'TEST_CAPTCHA_UNAVAILABLE',
+    captchaRequired: 'TEST_CAPTCHA_REQUIRED',
+    captchaExpired: 'TEST_CAPTCHA_EXPIRED',
   },
 } satisfies Domain.OrderInquiryContent;
 

@@ -7,6 +7,9 @@ import Section from '@/components/ui/Section.astro';
 import { orderInquiry as content } from '@/content/order-inquiry';
 import { site } from '@/content/site';
 
+const smartCaptchaSiteKey =
+  import.meta.env.PUBLIC_YANDEX_SMARTCAPTCHA_SITE_KEY ?? '';
+
 // Keep input identity and native autocomplete stable across field copy.
 const inputs = [
   { key: 'name', type: 'text', autocomplete: 'name' },
@@ -19,11 +22,7 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
 {/*
   Delivery stays disabled when no backend is configured; copy stays visible.
 */}
-<Section
-  id="order-inquiry"
-  title={content.title}
-  subtitle={content.subtitle}
->
+<Section id="order-inquiry" title={content.title} subtitle={content.subtitle}>
   <div class="inquiry">
     <form
       class="inquiry-form"
@@ -67,11 +66,7 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
               <p id={`inquiry-${key}-hint`} class="inquiry-note">
                 {field.hint} (≤ {field.maxLength})
               </p>
-              <p
-                id={`inquiry-${key}-error`}
-                class="inquiry-error"
-                hidden
-              ></p>
+              <p id={`inquiry-${key}-error`} class="inquiry-error" hidden></p>
             </div>
           );
         })}
@@ -89,10 +84,25 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
             aria-describedby="inquiry-message-hint inquiry-message-error"
           ></textarea>
           <p id="inquiry-message-hint" class="inquiry-note">
-            {content.fields.message.hint} (≤{' '}
-            {content.fields.message.maxLength})
+            {content.fields.message.hint} (≤ {content.fields.message.maxLength})
           </p>
           <p id="inquiry-message-error" class="inquiry-error" hidden></p>
+        </div>
+        {/* Tell visitors that Yandex processes challenge interaction data. */}
+        <div
+          class="inquiry-captcha"
+          data-smartcaptcha
+          data-sitekey={smartCaptchaSiteKey}
+          role="group"
+          aria-label="Проверка защиты формы"
+          tabindex="-1"
+        >
+          {smartCaptchaSiteKey && (
+            <p class="inquiry-note">
+              Проверка формы использует Яндекс SmartCaptcha, который
+              обрабатывает технические данные взаимодействия.
+            </p>
+          )}
         </div>
         {/*
           Keep the required native agreement and policy destination together.
@@ -261,6 +271,12 @@ const privacy = site.legal.find((item) => item.href === '/privacy-policy');
     grid-column: 1 / -1;
     padding-top: 1.5rem;
     border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Keep the challenge notice with the agreement before the submit action. */
+  .inquiry-captcha {
+    grid-column: 1 / -1;
+    min-height: 100px;
   }
 
   /* Keep the checkbox and wrapping agreement text one generous target. */

@@ -52,6 +52,7 @@ await cp(
 const env = {
   ...process.env,
   E2E_CONTENT_ROOT: './output/playwright/content',
+  PUBLIC_YANDEX_SMARTCAPTCHA_SITE_KEY: 'e2e-public-key',
 };
 const astro = resolve('node_modules/astro/bin/astro.mjs');
 let child;

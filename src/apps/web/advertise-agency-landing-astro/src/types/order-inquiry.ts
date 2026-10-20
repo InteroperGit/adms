@@ -29,5 +29,9 @@ export interface OrderInquiryContent {
     required: string;
     email: string;
     tooLong: string;
+    captchaLoading: string;
+    captchaUnavailable: string;
+    captchaRequired: string;
+    captchaExpired: string;
   };
 }
