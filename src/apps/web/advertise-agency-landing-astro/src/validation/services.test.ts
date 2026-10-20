@@ -56,6 +56,12 @@ it('rejects missing, unknown and malformed published destinations', () => {
   expect(schema.safeParse({ ...source, extra: true }).success).toBe(false);
 });
 
+it('requires each service link to use its own catalog ID', () => {
+  expect(schema.safeParse(withItem({ href: '/services/other/' })).success).toBe(
+    false,
+  );
+});
+
 it('requires demo images and detail links but permits text-only drafts', () => {
   expect(schema.safeParse({ ...source, demoMode: true }).success).toBe(true);
   for (const change of [{ image: null }, { href: undefined }]) {

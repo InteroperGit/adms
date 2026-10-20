@@ -38,11 +38,9 @@ import Terms from '../../src/pages/terms-of-use.astro';
 import ProjectsIndex from '../../src/pages/projects/index.astro';
 import ProjectDetail from '../../src/pages/projects/[id].astro';
 import ProjectPage from '../../src/pages/projects/page/[page].astro';
-import Montazh from '../../src/pages/services/montazh.astro';
-import Neon from '../../src/pages/services/neon.astro';
-import Structures from '../../src/pages/services/obyomnye-konstruktsii.astro';
-import Letters from '../../src/pages/services/svetovye-bukvy.astro';
-import Signs from '../../src/pages/services/vyveski.astro';
+import ServicePage, {
+  getStaticPaths as getServiceStaticPaths,
+} from '../../src/pages/services/[id].astro';
 import { services } from '../../src/content/services';
 import { site } from '../../src/content/site';
 import { privacyPolicy, termsOfUse } from '../../src/content/legal';
@@ -798,11 +796,11 @@ it.each(['demo', 'empty', 'nested-demo'])(
 );
 
 const serviceRoutes = [
-  { component: Montazh, id: 'montazh' },
-  { component: Neon, id: 'neon' },
-  { component: Structures, id: 'obyomnye-konstruktsii' },
-  { component: Letters, id: 'svetovye-bukvy' },
-  { component: Signs, id: 'vyveski' },
+  { component: ServicePage, id: 'montazh' },
+  { component: ServicePage, id: 'neon' },
+  { component: ServicePage, id: 'obyomnye-konstruktsii' },
+  { component: ServicePage, id: 'svetovye-bukvy' },
+  { component: ServicePage, id: 'vyveski' },
 ];
 
 it('keeps every Astro page in the route coverage inventory', () => {
@@ -815,9 +813,17 @@ it('keeps every Astro page in the route coverage inventory', () => {
     'projects/index',
     'projects/[id]',
     'projects/page/[page]',
-    ...serviceRoutes.map(({ id }) => `services/${id}`),
+    'services/[id]',
   ].map((path) => `../../src/pages/${path}.astro`);
   expect(Object.keys(pages).sort()).toEqual(expected.sort());
+});
+
+it('generates service routes from catalog IDs and passes typed props', () => {
+  const paths = getServiceStaticPaths();
+  expect(paths.map(({ params }) => params.id)).toEqual(
+    services.items.map((service) => service.id),
+  );
+  expect(paths.every(({ props }) => 'service' in props)).toBe(true);
 });
 
 function approvedServices() {
@@ -844,6 +850,9 @@ it.each(serviceRoutes)(
   async ({ component, id }) => {
     overrides.services = approvedServices();
     const document = await renderDocument(component, {
+      props: {
+        service: overrides.services.items.find((item) => item.id === id),
+      },
       url: `https://request.test/services/${id}/?tracking=1`,
       site: 'https://production.test/',
     });
@@ -887,6 +896,9 @@ it.each(serviceRoutes)(
       routeFixture.demoBlocks,
     ) as ContentBlock[];
     const document = await renderDocument(component, {
+      props: {
+        service: overrides.services.items.find((item) => item.id === id),
+      },
       url: `https://request.test/services/${id}/`,
     });
     expectPage(document);
@@ -912,7 +924,9 @@ it.each(serviceRoutes)(
     overrides.services.copyApproved = false;
     const service = overrides.services.items.find((item) => item.id === id)!;
     service.article.content = [];
-    const document = await renderDocument(component);
+    const document = await renderDocument(component, {
+      props: { service },
+    });
     expectPage(document);
     expectMetadata(
       document,

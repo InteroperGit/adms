@@ -1,0 +1,23 @@
+---
+// Generate every service article from the validated catalog record.
+// Route params stay derived from stable service IDs, so new catalog entries
+// receive a page without a new Astro file.
+
+import ServiceArticle from '@/components/sections/ServiceArticle.astro';
+import { services } from '@/content/services';
+import type { Service } from '@/types/services';
+
+export function getStaticPaths() {
+  return services.items
+    .filter((service) => service.href)
+    .map((service) => ({
+      params: { id: service.id },
+      props: { service },
+    }));
+}
+
+const { service } = Astro.props as { service: Service };
+---
+
+{/* The shared article owns layout, metadata, publication and form context. */}
+<ServiceArticle serviceId={service.id} />
