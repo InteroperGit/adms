@@ -2,6 +2,9 @@
 
 [Documentation index](../../README.md)
 
+For generated build and verification files, see
+[temporary file cleanup](cleanup.md).
+
 Use Node.js **22.12.0 or newer** (see `package.json`) and pnpm **10.7.0**, the
 version used for the documented verification workflow. Run commands from this
 application directory, `src/apps/web/advertise-agency-landing-astro` in the

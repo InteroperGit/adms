@@ -1,3 +1,11 @@
+# Latest task — 139, 2026-10-20
+
+- Implemented preview/apply cleanup commands with fixed targets and an
+  explicit option to remove all of `output/`.
+- Five cleanup safety tests, code-style, ESLint and Prettier checks passed.
+- Archived as
+  `docs/codex/fixed/20261020/139-clean-temporary-project-files.md`.
+
 # Latest task — 138, 2026-10-20
 
 - Created `docs/codex/todo/138-service-articles-dynamic-route.md`.
