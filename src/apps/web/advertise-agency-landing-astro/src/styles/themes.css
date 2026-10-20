@@ -1,0 +1,55 @@
+/* Register light shadow utilities; the dark theme overrides their tokens. */
+@theme {
+  --shadow-panel: 0 4px 16px rgb(24 34 45 / 8%);
+  --shadow-elevated: 0 8px 28px rgb(24 34 45 / 12%);
+}
+
+/* Extend DaisyUI light, retaining its unspecified status and sizing tokens. */
+@plugin 'daisyui/theme' {
+  name: 'light';
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-primary: #b2380a;
+  --color-primary-content: #ffffff;
+  --color-secondary: #526170;
+  --color-secondary-content: #ffffff;
+  --color-accent: #9a3412;
+  --color-accent-content: #ffffff;
+  --color-neutral: #18222d;
+  --color-neutral-content: #ffffff;
+  --color-base-100: #ffffff;
+  --color-base-200: #f3f5f7;
+  --color-base-300: #dce2e8;
+  --color-base-content: #18222d;
+  --site-muted: #526170;
+  --site-control-border: #687787;
+}
+
+/* DaisyUI emits explicit dark and the no-JS system fallback from this source.
+ * Its fallback targets :root:not([data-theme]), preserving explicit choices.
+ */
+@plugin 'daisyui/theme' {
+  name: 'dark';
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-primary: #ffa04d;
+  --color-primary-content: #18222d;
+  --color-secondary: #bdc8d4;
+  --color-secondary-content: #18222d;
+  --color-accent: #fdba74;
+  --color-accent-content: #18222d;
+  --color-neutral: #dce2e8;
+  --color-neutral-content: #18222d;
+  --color-base-100: #18212b;
+  --color-base-200: #202c38;
+  --color-base-300: #354555;
+  --color-base-content: #edf2f7;
+  --site-muted: #bdc8d4;
+  --site-control-border: #8798aa;
+  --shadow-panel: 0 4px 16px rgb(0 0 0 / 18%);
+  --shadow-elevated: 0 8px 28px rgb(0 0 0 / 24%);
+}

@@ -3,7 +3,7 @@
 [Documentation index](../../README.md)
 
 Playwright Test runs the versioned E2E contracts in `tests/e2e/` against
-Chromium, Firefox and WebKit. There are 78 scenarios per browser, for 234
+Chromium, Firefox and WebKit. There are 81 scenarios per browser, for 243
 executions in the normal matrix. Vitest owns unit, component and integration
 contracts; it excludes `tests/e2e/`.
 
@@ -24,9 +24,10 @@ specs cover:
 - `led-letters.spec.ts`: the service lettering form and retry behavior.
 - `navigation.spec.ts`: mobile menu focus, hash links and contact links.
 - `network.spec.ts`: external request isolation.
-- `no-javascript.spec.ts`: native navigation, readable media, legal links and
-  submission protection with JavaScript disabled.
-- `preferences.spec.ts`: cookie consent and theme persistence.
+- `no-javascript.spec.ts`: native navigation, readable media, legal links,
+  submission protection and computed system palettes with JavaScript disabled.
+- `preferences.spec.ts`: cookie consent, theme persistence, computed palettes,
+  explicit choices over the OS theme, document keyboard focus and reduced motion.
 - `responsive.spec.ts`: four routes at 320, 375 and 1440 pixels in both themes,
   plus failed-image geometry.
 
@@ -82,14 +83,36 @@ pnpm exec playwright show-report output/playwright/report
 pnpm exec playwright show-trace path/to/trace.zip
 ```
 
-The 2026-10-20 acceptance runs used three browsers with zero configured local
+The earlier 2026-10-20 acceptance runs used three browsers with zero local
 retries. The normal matrix reported 210 passed and 24 failed. The repeated
 matrix ran 468 executions and reported 415 passed and 53 failed. Persistent
 failures are the video 404 fallback remaining in `loading` and homepage
 horizontal overflow at every responsive width and theme. The repeat run also
 exposed intermittent Firefox and WebKit failures in pagination, menu/theme,
-carousel and pending-delivery timing. These remain defects; tests are not
+carousel and pending-delivery timing. These describe the state of those runs;
+later scoped checks do not establish a new full-suite result. Tests are not
 weakened, skipped or hidden behind longer timeouts.
+
+## Global CSS refactor checks (task 140, 2026-10-20)
+
+The initial full run could not build until three obsolete `notice` fields
+were removed from the synthetic project fixture. With that fixture repaired,
+233 of 234 existing executions passed; one Firefox test timed out creating
+its page. Capture-only checks are recorded separately in task 140.
+
+The first affected matrix reported 135/138 passed. All 84 responsive/carousel
+executions passed; Firefox had a context teardown/compositor failure, and
+WebKit exposed a new focus-test assumption and a theme-test timeout. The
+focus test now navigates a known native input rather than assuming that the
+first Tab stops on a link. Computed styles are read in one sample per poll.
+The final preferences/no-JS/navigation diagnostic passed 54/54 executions
+across all three browsers using `--workers=1`, with unchanged timeouts and
+assertions. This does not replace a fresh full parallel matrix result.
+
+See [task 140](../codex/fixed/20261020/140-refactor-global-css.md) for the
+20 visual comparisons across routes, themes and viewports, retained traces
+and unrelated TypeScript gate failures. Artifacts live under
+`output/playwright/task-140/`.
 
 The suite uses synthetic fixtures and intercepted inquiry delivery. It does not
 verify real email delivery, physical mobile devices or browser chrome, actual

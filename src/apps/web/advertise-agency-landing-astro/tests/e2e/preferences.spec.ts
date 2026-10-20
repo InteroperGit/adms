@@ -1,5 +1,6 @@
 // Browser contracts for cookie consent and theme persistence.
 import { expect, test } from './fixtures';
+import { expectDocumentFocus, expectThemeStyles } from './theme-styles';
 
 test('accepted cookie consent persists across reload and navigation', async ({
   page,
@@ -58,18 +59,24 @@ test('cookie banner and theme work when storage is blocked', async ({
 test('explicit light and dark choices persist after reload', async ({
   page,
 }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto('/');
   await page.locator('[data-cookie-choice="declined"]').click();
   await page.locator('[data-settings-trigger]').click();
   await page.locator('[data-theme-radio][value="light"]').check();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expectThemeStyles(page, 'light');
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expectThemeStyles(page, 'light');
+  await page.emulateMedia({ colorScheme: 'light' });
   await page.locator('[data-settings-trigger]').click();
   await page.locator('[data-theme-radio][value="dark"]').check();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expectThemeStyles(page, 'dark');
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expectThemeStyles(page, 'dark');
 });
 
 test('system theme follows media changes until an explicit choice', async ({
@@ -79,12 +86,55 @@ test('system theme follows media changes until an explicit choice', async ({
   await page.goto('/');
   await page.locator('[data-cookie-choice="declined"]').click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expectThemeStyles(page, 'light');
   await page.emulateMedia({ colorScheme: 'dark' });
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expectThemeStyles(page, 'dark');
   await page.locator('[data-settings-trigger]').click();
   await page.locator('[data-theme-radio][value="light"]').check();
   await page.emulateMedia({ colorScheme: 'dark' });
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expectThemeStyles(page, 'light');
+});
+
+test('document focus and motion respect accessibility preferences', async ({
+  page,
+}) => {
+  await page.emulateMedia({
+    colorScheme: 'light',
+    reducedMotion: 'no-preference',
+  });
+  await page.goto('/projects/');
+  await expect(page.locator('html')).toHaveCSS('scroll-behavior', 'smooth');
+  // All engines include form fields in Tab order; WebKit may skip links.
+  // Use a field with the document ring, not Settings' local 2px offset.
+  const search = page.locator('#project-search');
+  await expect(search).toBeVisible();
+  await search.focus();
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Shift+Tab');
+  await expect(search).toBeFocused();
+  await expectDocumentFocus(page, 'light');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await expectDocumentFocus(page, 'dark');
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const selector of ['html', 'body', 'header']) {
+    const element = page.locator(selector);
+    await expect(element).toHaveCSS('scroll-behavior', 'auto');
+    // Engines serialize this tiny duration in decimal or scientific form.
+    for (const property of ['transition-duration', 'animation-duration']) {
+      await expect
+        .poll(() =>
+          element.evaluate(
+            (node, name) =>
+              parseFloat(getComputedStyle(node).getPropertyValue(name)),
+            property,
+          ),
+        )
+        .toBe(0.00001);
+    }
+  }
 });
 
 test('theme choice synchronizes across two pages in one context', async ({

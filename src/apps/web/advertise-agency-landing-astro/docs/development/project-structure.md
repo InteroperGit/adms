@@ -15,7 +15,7 @@
 |   |-- layouts/              # Shared page and legal document layouts
 |   |-- pages/                # Homepage, projects/[id].astro, legal pages
 |   |-- validation/           # Schemas, helpers and source-aware parser
-|   |-- styles/               # Tailwind/DaisyUI and scrollbar styles
+|   |-- styles/               # Global entry, tokens, themes and foundations
 |   `-- types/                # Plain shared domain contracts
 |-- docs/codex/               # Plans, pending tasks, and completed tasks
 |-- astro.config.mjs          # Static output and Tailwind Vite plugin
@@ -36,6 +36,27 @@ item/aggregate output compatibility. Content wrappers import JSON and
 validators; components consume wrappers and `@/types`. See [content ownership
 and field changes][source-1]. Validation belongs to server/build imports, never
 client scripts.
+
+## Shared styles
+
+`Layout.astro` imports only `src/styles/global.css`. That entry declares the
+`theme`, `base`, `components`, `utilities` layer order and imports the
+scrollbar rules, Tailwind, `tokens.css`, `themes.css` and `foundations.css`.
+The main DaisyUI plugin is registered once with automatic themes disabled;
+`themes.css` supplies the customized built-in light/dark themes and the
+system fallback. Do not import Tailwind or register DaisyUI in components.
+
+`tokens.css` owns constant utilities, runtime color aliases, unlayered site
+geometry and shared content tokens. `themes.css` owns palettes and shadows.
+`foundations.css` keeps document defaults in `base`, shared `.site-*` rules
+in `components`, and native smooth scrolling unlayered. Scrollbars also
+remain unlayered. Important reduced-motion rules override scrolling and
+animation regardless of layer.
+
+Keep local layouts and states in component-scoped styles; place only shared
+foundations in these modules. Preserve public token/class names when
+refactoring. See [design tokens and cascade][source-2] and
+[theme behavior][source-3] for ownership and compatibility details.
 
 ## Code line length
 
@@ -92,3 +113,5 @@ the layout change. Follow these rules when adding or editing component styles;
 
 
 [source-1]: ../site/content.md#changing-a-domain-field
+[source-2]: ../site/design-system.md#tokens-and-primitives
+[source-3]: ../site/themes.md

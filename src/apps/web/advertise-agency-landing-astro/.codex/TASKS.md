@@ -1,3 +1,21 @@
+# Latest task — 140, 2026-10-20
+
+- Split global CSS into tokens, themes and foundations; DaisyUI now emits
+  explicit/system dark from one palette. Preserved compiled shadow behavior.
+- Added computed palette/no-JS/focus/motion E2E checks. Removed three obsolete
+  notice fields from browser fixtures so the synthetic build can start.
+- Build, content boundaries/invariants, test colocation and formatting pass.
+  Astro check retains six unrelated stale notice/blockDemoNotice test errors;
+  test:types fails on the unchanged type-contract fixture.
+- Twenty visual/computed comparisons preserve geometry and styles; only native
+  video loading indicator pixels vary. Evidence: output/playwright/task-140/.
+- First targeted matrix: 135/138 passed, including all 84 responsive/carousel
+  executions. Fixed WebKit focus assumption and batched computed reads.
+- Final preferences/no-JS/navigation diagnostic: 54/54 passed across three
+  browsers with one worker; no retries or relaxed timeouts/assertions.
+- Archived implementation and explicit TS gate limitations at
+  `docs/codex/fixed/20261020/140-refactor-global-css.md`.
+
 # Latest task — 139, 2026-10-20
 
 - Implemented preview/apply cleanup commands with fixed targets and an

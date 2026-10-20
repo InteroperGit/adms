@@ -45,7 +45,41 @@ Evidence under ignored `output/playwright/task-014/`: 12 before and 12 matching 
 
 Header settings use a compact gear surface with the shared DaisyUI `btn-sm` sizing and `site-button` radius, matching the desktop phone button (32px at default text size). A separate centered target remains at least 44×44px. `Settings.astro` contains the panel and interaction boundary; `ThemeToggle.astro` renders only sun/moon/monitor radios with hidden Russian names. Selected double borders and outer keyboard outlines have distinct shapes. Bounded icon/gap/padding growth keeps the row compact at enlarged text sizes; see [theme verification](themes.md) for current measurements and limitations.
 
-The source of truth is `src/styles/global.css`; Tailwind 4 registers reusable utilities through `@theme`, DaisyUI consumes the semantic color variables, and scoped components compose the shared classes.
+`src/styles/global.css` is the single stylesheet imported by `Layout.astro`.
+It declares the `theme`, `base`, `components`, `utilities` layer order and
+loads the scrollbar rules, Tailwind and the site modules once:
+
+| Module | Owns |
+| --- | --- |
+| `tokens.css` | Constant utilities, semantic aliases, geometry and content tokens |
+| `themes.css` | Light/dark palettes, system fallback and shadow recipes |
+| `foundations.css` | Document typography, focus/motion and shared `.site-*` classes |
+| `scrollbar.css` | Native scrollbars using the active semantic colors |
+
+Tailwind constants use `@theme`. The `muted` and `control-border` aliases
+use `@theme static inline`: utilities read their semantic source at the
+element, and the public custom properties remain available to scoped CSS.
+Geometry and content tokens remain unlayered on `:root`, preserving the
+site's field radii over DaisyUI's defaults. `--site-focus-ring` owns the
+document focus recipe; `--content-block-focus-ring` remains its alias.
+
+Palettes extend DaisyUI's built-in themes through `daisyui/theme` in the
+`base` layer, retaining unspecified status and sizing tokens. Global
+typography and accessibility rules also belong to `base`, and shared
+`.site-*` classes belong to `components`. Utilities and unlayered scoped
+component rules can override these foundations. Native anchor scrolling
+and scrollbar rules retain their unlayered priority; the important
+reduced-motion rules override smooth scrolling at every level.
+
+Add reusable tokens here; keep component-specific layout and states in
+scoped component styles. Import additional shared modules through
+`global.css`, rather than connecting framework plugins from components.
+
+The refactor preserves the existing distinction between shadow consumers:
+`shadow-panel` and `shadow-elevated` utilities use the light compile-time
+recipes in both themes, while direct `var(--shadow-*)` consumers such as
+Settings use the active theme's recipe. Unifying those appearances would
+be a separate visual change.
 
 | Role | Light | Dark |
 | --- | --- | --- |

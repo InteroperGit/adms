@@ -1,8 +1,21 @@
 // Browser contracts for native navigation and no-JavaScript fallbacks.
 import { expect, test } from './fixtures';
+import { expectThemeStyles } from './theme-styles';
 
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
+
+  for (const theme of ['light', 'dark'] as const) {
+    test(`system ${theme} renders the palette without JavaScript`, async ({
+      page,
+    }) => {
+      await page.emulateMedia({ colorScheme: theme });
+      await page.goto('/projects/');
+      await expect(page.locator('html')).not.toHaveAttribute('data-theme');
+      await expectThemeStyles(page, theme);
+      await expect(page.locator('[data-theme-control]')).toBeHidden();
+    });
+  }
 
   test('catalog links navigate to projects without JavaScript', async ({
     page,
@@ -33,12 +46,11 @@ test.describe('without JavaScript', () => {
 
     await page.goto('/projects/1/');
     const article = page.locator('article');
-    const chart = page.locator(
-      '[data-chart-figure="chart-e2e-chart"]',
-    );
+    const chart = page.locator('[data-chart-figure="chart-e2e-chart"]');
     await expect(article).toContainText('Synthetic copy');
-    await expect(article.locator('a[href="/favicon.svg"]').first())
-      .toBeVisible();
+    await expect(
+      article.locator('a[href="/favicon.svg"]').first(),
+    ).toBeVisible();
     await expect(chart.locator('canvas')).toHaveCount(0);
     await chart.locator('summary').click();
     const table = chart.locator('table');
@@ -66,8 +78,7 @@ test.describe('without JavaScript', () => {
 
     await page.goto('/services/svetovye-bukvy/');
     const letteringForm = page.locator('form[data-led-letters]');
-    await expect(letteringForm.locator('[type="submit"]'))
-      .toBeDisabled();
+    await expect(letteringForm.locator('[type="submit"]')).toBeDisabled();
     await expect(letteringForm.locator('noscript')).toBeVisible();
     expect(inquiryRequests).toHaveLength(0);
   });
@@ -81,8 +92,10 @@ test.describe('without JavaScript', () => {
       await expect(link).toBeVisible();
       const responsePromise = page.waitForResponse((response) => {
         const url = new URL(response.url());
-        return url.origin === 'http://127.0.0.1:4327'
-          && url.pathname.startsWith(path);
+        return (
+          url.origin === 'http://127.0.0.1:4327' &&
+          url.pathname.startsWith(path)
+        );
       });
       await link.click();
       const response = await responsePromise;

@@ -1,0 +1,79 @@
+/* Keep native anchor scrolling unlayered, preserving its original priority. */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Document defaults yield to utilities and component-specific presentation. */
+@layer base {
+  /* Set the document's shared type and text color. */
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    color: var(--color-base-content);
+  }
+
+  /* Keep heading line height compact and consistent across themes. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.2;
+  }
+
+  /* Keep keyboard focus visible across native and custom controls. */
+  :focus-visible {
+    outline: var(--site-focus-ring);
+    outline-offset: 4px;
+  }
+
+  /* Important overrides also disable unlayered and utility smooth scrolling. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Preserve content and state changes while minimizing motion. */
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Shared site primitives yield to utilities and unlayered scoped rules. */
+@layer components {
+  /* Keep section content centered inside the site container. */
+  .site-container {
+    width: 100%;
+    max-width: var(--site-container);
+    margin-inline: auto;
+    padding-inline: var(--site-gutter);
+  }
+
+  /* Reserve vertical space and preserve anchored section headings. */
+  .site-section {
+    padding-block: var(--site-section-space);
+    scroll-margin-top: var(--site-header-clearance, 5rem);
+  }
+
+  /* Establish the shared visual hierarchy for section titles. */
+  .site-section-title {
+    font-size: var(--site-heading-size);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  /* Keep supporting section copy readable and centered. */
+  .site-section-subtitle {
+    color: var(--site-muted);
+    text-align: center;
+    max-width: var(--site-reading-width);
+    margin: 0 auto 3rem;
+  }
+
+  /* Give shared buttons the site's field radius and emphasis. */
+  .site-button {
+    border-radius: var(--radius-field);
+    font-weight: 600;
+  }
+}

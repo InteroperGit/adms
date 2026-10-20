@@ -10,7 +10,23 @@ The solid panel aligns below the gear, clamps to 16px viewport clearance, scroll
 
 System is the default. A blocking inline script in the document head reads only valid `light`, `dark`, or `system` preferences from localStorage key `site-theme`, then sets `data-theme` and `color-scheme` before page content is parsed. Explicit choices override operating-system changes; System follows them. Local-storage events synchronize other tabs, including removal/clear; sessionStorage events are ignored. Invalid stored values fall back to System. Storage exceptions keep the current page usable with an in-memory choice; persistence across reloads is unavailable when storage is blocked.
 
-Without JavaScript, the control stays hidden and CSS follows the operating-system theme. Pages and contact links remain available. The CSS fallback duplicates dark tokens from `global.css`; update both dark blocks together when changing the palette. Shared brand orange remains `#EA580C` in both themes.
+Without JavaScript, the control stays hidden and CSS follows the
+operating-system theme. Pages and contact links remain available.
+`src/styles/themes.css` defines each palette once using `daisyui/theme`.
+The light definition is the default; dark sets `prefersdark: true`, which
+generates a CSS fallback for `:root:not([data-theme])`. Explicit light/dark
+choices therefore take priority over the operating system. Change the dark
+palette in that one definition; do not maintain a separate fallback copy.
+The plugins inherit unspecified variables from DaisyUI's built-in themes.
+`global.css` sets the main plugin's `themes: false` to avoid duplicate
+theme registrations. Shared brand orange remains `#EA580C` in both themes.
+
+Palettes now live in the `base` layer; the old unlayered palette overrides
+are removed. Site radii remain unlayered in `tokens.css`, and Footer's
+scoped colors and Settings' scoped states retain their priority. The early
+theme initializer and its storage/event contracts are unchanged. See the
+[style modules and cascade](design-system.md#tokens-and-primitives) before
+adding a shared token or changing a layer.
 
 No CSP is configured in this repository. If hosting adds a restrictive Content Security Policy, authorize the exact inline initializer using a hash (or a nonce for server rendering), rather than broadly permitting inline scripts. Otherwise the OS-based CSS fallback remains available, but saved choices cannot initialize. The initializer must remain a blocking head script; deferring it may cause a theme flash.
 

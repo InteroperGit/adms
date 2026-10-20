@@ -1,35 +1,30 @@
-/* src/styles/scrollbar.css */
-
-/* Стилизация скроллбара для WebKit-браузеров (Chrome, Safari, Edge) */
+/* Global unlayered scrollbars use the active semantic theme colors. */
+/* Size native WebKit scrollbars in both scrolling directions. */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
+/* Match the track to the page surface. */
 ::-webkit-scrollbar-track {
   background: var(--color-base-100);
   border-radius: 10px;
 }
 
+/* Give the draggable thumb the theme's primary accent. */
 ::-webkit-scrollbar-thumb {
   background: var(--color-primary);
   border-radius: 10px;
   transition: background 0.2s;
 }
 
+/* Distinguish the thumb's pointer state without changing its size. */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent);
 }
 
-/* Стилизация для Firefox */
+/* Use native standard scrollbars where supported, including Firefox. */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary) var(--color-base-100);
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  scrollbar-width: none;
 }
