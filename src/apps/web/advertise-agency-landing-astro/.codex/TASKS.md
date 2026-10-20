@@ -1,3 +1,21 @@
+# Latest task — 141, 2026-10-21
+
+- Created `docs/codex/todo/141-image-gallery2-tile-layout.md`.
+- Planned a tile gallery with three/two/one columns and a first image spanning
+  two columns where available; the sketch was approved before implementation.
+- User chose to keep one `ImageGallery` component with only its tile layout.
+  Lightbox behavior and hover highlight remain available. Project 2 has nine
+  gallery images.
+- Removed the temporary `ImageGallery2` wrapper and the former strip mode,
+  including its markup, styles, script branches and tests.
+- Refactored modal behavior into `src/scripts/image-gallery.ts`; source data,
+  selection updates and shared CSS dimensions no longer use duplicate logic.
+- Split markup and scoped styles into `ImageGalleryTiles.astro` and
+  `ImageGalleryLightbox.astro`; `ImageGallery` prepares data and composes them.
+- Five component tests, ten Chromium scenarios, fixture build, ESLint and
+  formatting pass. Playwright needed manual termination during server cleanup.
+  Astro check retains six unrelated notice/blockDemoNotice test errors.
+
 # Latest task — 140, 2026-10-20
 
 - Split global CSS into tokens, themes and foundations; DaisyUI now emits

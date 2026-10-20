@@ -60,13 +60,55 @@
           "images": [
             {
               "src": "/favicon.svg",
-              "alt": "One",
+              "alt": "Gallery image one",
               "width": 400,
               "height": 300
             },
             {
               "src": "/favicon.svg",
-              "alt": "Two",
+              "alt": "Gallery image two",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Gallery image three",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Gallery image four",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Gallery image five",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Gallery image six",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Gallery image seven",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Gallery image eight",
+              "width": 400,
+              "height": 300
+            },
+            {
+              "src": "/favicon.svg",
+              "alt": "Gallery image nine",
               "width": 400,
               "height": 300
             }

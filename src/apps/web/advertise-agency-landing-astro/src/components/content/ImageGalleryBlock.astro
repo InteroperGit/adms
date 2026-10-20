@@ -22,17 +22,13 @@ const { block, priority = false } = Astro.props as Props;
     min-width: 0;
     margin-block: 2rem;
     padding: clamp(0.875rem, 2.5vw, 1.5rem);
-    background: color-mix(
-      in srgb,
-      var(--color-base-200) 28%,
-      transparent
-    );
+    background: color-mix(in srgb, var(--color-base-200) 28%, transparent);
     border-block: 1px solid var(--content-block-border);
   }
 
-  /* Keep the gallery itself at its original focused reading width. */
+  /* Let the tile layout use the full width of the reading surface. */
   .image-gallery-block :global(.content-gallery) {
-    width: min(75%, 100%);
+    width: 100%;
     margin-inline: auto;
   }
 
@@ -40,10 +36,6 @@ const { block, priority = false } = Astro.props as Props;
   @media (max-width: 42rem) {
     .image-gallery-block {
       padding-inline: 0.75rem;
-    }
-
-    .image-gallery-block :global(.content-gallery) {
-      width: 100%;
     }
   }
 </style>
