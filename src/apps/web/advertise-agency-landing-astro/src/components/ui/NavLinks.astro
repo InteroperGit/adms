@@ -1,6 +1,6 @@
 ---
-// Render supplied navigation items and a native telephone action.
-// The required variant selects desktop links or the mobile list.
+// Render supplied navigation items and contact actions in one semantic list.
+// The variant changes presentation and phone copy, while links stay native.
 // Layout breakpoints hide desktop navigation until there is enough room.
 
 import type { MenuItem } from '@/types';
@@ -15,70 +15,65 @@ export interface Props {
 }
 
 const { items, variant, phone } = Astro.props;
+const isDesktop = variant === 'desktop';
+const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
 ---
 
-{/* Layout breakpoints hide desktop navigation until there is enough room. */}
-{variant === 'desktop' ? (
-  <nav aria-label="Основная навигация" class="desktop-nav">
+{/* One list keeps desktop and mobile navigation order identical. */}
+<nav
+  aria-label="Основная навигация"
+  class:list={['nav-shell', { 'desktop-nav': isDesktop }]}
+>
+  <ul
+    class:list={[
+      'nav-list',
+      {
+        'mobile-links menu p-4 bg-base-200 text-base-content gap-3':
+          !isDesktop,
+      },
+    ]}
+  >
     {items.map((item) => (
-      <a href={item.href} class="section-link link link-hover">
-        {item.label}
-      </a>
-    ))}
-    <Button
-      variant="outline"
-      size="sm"
-      href={`tel:${phone.replace(/\s/g, '')}`}
-      class="header-phone"
-    >
-      {phone}
-    </Button>
-    {/* Keep the Макс contact action directly beside the phone action. */}
-    <a
-      href="https://max.ru/"
-      class="max-contact btn btn-sm"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Написать в Макс"
-    >
-      <MaxLogo />
-      <span>Написать в Макс</span>
-    </a>
-  </nav>
-) : (
-  <nav aria-label="Основная навигация">
-    <ul class="mobile-links menu p-4 bg-base-200 text-base-content gap-3">
-      {items.map((item) => (
-        <li>
-          <a href={item.href}>{item.label}</a>
-        </li>
-      ))}
-      <li>
-        {/* The telephone action uses its native protocol destination. */}
-        <Button
-          variant="primary"
-          size="md"
-          href={`tel:${phone.replace(/\s/g, '')}`}
-          class="btn-block mt-4"
-        >
-          Позвонить
-        </Button>
-      </li>
-      <li>
-        {/* Keep messenger contact available in the mobile drawer. */}
+      <li class="nav-item">
         <a
-          href="https://max.ru/"
-          class="max-contact btn btn-secondary btn-block mt-2"
-          target="_blank"
-          rel="noopener noreferrer"
+          href={item.href}
+          class:list={[
+            { 'section-link link link-hover': isDesktop },
+          ]}
         >
-          <MaxLogo />
-          <span>Написать в Макс</span>
+          {item.label}
         </a>
       </li>
-    </ul>
-  </nav>
-)}
+    ))}
+    {/* The phone label and button treatment follow the active variant. */}
+    <li class="nav-item">
+      <Button
+        variant={isDesktop ? 'outline' : 'primary'}
+        size={isDesktop ? 'sm' : 'md'}
+        href={phoneHref}
+        class={isDesktop ? 'header-phone' : 'btn-block mt-4'}
+      >
+        {isDesktop ? phone : 'Позвонить'}
+      </Button>
+    </li>
+    {/* Keep the Макс action after the phone action in both modes. */}
+    <li class="nav-item">
+      <a
+        href="https://max.ru/"
+        class:list={[
+          'max-contact',
+          isDesktop ? 'btn btn-sm' : 'btn btn-secondary btn-block mt-2',
+        ]}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Написать в Макс"
+      >
+        <MaxLogo />
+        <span>Написать в Макс</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 
 <style>
   /* Show the wide navigation only when its breakpoint permits. */
@@ -90,14 +85,29 @@ const { items, variant, phone } = Astro.props;
   @media (min-width: 64rem) {
     /* Wrap wide links and align the contact action at the row end. */
     .desktop-nav {
+      display: block;
+      flex: 0 1 auto;
+      max-width: 100%;
+    }
+
+    /* Arrange wide links and contact actions in one wrapping row. */
+    .desktop-nav .nav-list {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
       justify-content: flex-end;
       gap: 0.5rem 1.25rem;
-      flex: 0 1 auto;
-      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
+  }
+
+  /* Keep each desktop list item aligned without changing list semantics. */
+  .desktop-nav .nav-item {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
   }
 
   /* Keep section links wrappable with generous native targets. */
@@ -130,6 +140,11 @@ const { items, variant, phone } = Astro.props;
   /* Fill the drawer width with the supplied navigation list. */
   .mobile-links {
     width: 100%;
+  }
+
+  /* Keep the mobile list semantics while removing browser list markers. */
+  .mobile-links .nav-item {
+    list-style: none;
   }
 
   /* Wrap long mobile labels while preserving target height. */

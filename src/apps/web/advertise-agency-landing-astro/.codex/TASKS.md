@@ -1,3 +1,19 @@
+# Latest task — 143, 2026-10-22
+
+- Created `docs/codex/todo/143-fix-legacy-test-contract-errors.md`.
+- Scope: fix nine stale Vitest failures and six related Astro type diagnostics
+  caused by removed `Project.notice` and `blockDemoNotice` contracts.
+- Covers project validation fixtures, ContentBlocks fallback assertions and
+  project page composition edge cases; implementation remains pending.
+
+# Latest task — 142, 2026-10-22
+
+- Implemented and archived `docs/codex/fixed/20261022/142-refactor-nav-links.md`.
+- Unified desktop/mobile NavLinks markup and preserved public behavior.
+- Added three render contract tests; component and Header tests pass.
+- Style checks and production build pass; `pnpm check` retains six unrelated
+  fixture/test errors for removed `notice` and `blockDemoNotice` fields.
+
 # Latest task — 141, 2026-10-21
 
 - Created `docs/codex/todo/141-image-gallery2-tile-layout.md`.
