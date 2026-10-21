@@ -5,7 +5,6 @@ export const value = {
   id: 1,
   category: 'sample',
   status: 'demo',
-  notice: 'Synthetic demo',
   title: 'Sample',
   client: 'Sample',
   attribution: 'generic',

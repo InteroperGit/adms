@@ -11,7 +11,7 @@ const image: ImageBlock = {
   width: 800, height: 600,
 };
 const project = (): Project => ({
-  id: 42, status: 'demo', notice: null, title: 'Sample project',
+  id: 42, status: 'demo', title: 'Sample project',
   client: 'Sample client', attribution: 'generic', description: 'Summary',
   category: 'sample', content: [],
 });

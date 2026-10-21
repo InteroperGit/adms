@@ -56,7 +56,7 @@ it('keeps drafts out and discloses demo media in the stream', async () => {
 
   expect(queryByRole(body, 'heading', { name: 'Fixture heading' }))
     .toBeNull();
-  expect(body.querySelector('.block-demo-notice')).toBeInTheDocument();
+  expect(body.querySelectorAll('.content-block')).toHaveLength(2);
   expect(body.querySelectorAll('img[alt="Two"]')).not.toHaveLength(0);
   expect(queryByRole(body, 'img', { name: 'One' })).toBeNull();
 });

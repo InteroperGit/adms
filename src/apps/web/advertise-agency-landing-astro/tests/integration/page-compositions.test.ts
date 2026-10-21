@@ -44,7 +44,6 @@ import ServicePage, {
 import { services } from '../../src/content/services';
 import { site } from '../../src/content/site';
 import { privacyPolicy, termsOfUse } from '../../src/content/legal';
-import { blockDemoNotice } from '../../src/content/block-publication';
 import { render, renderDocument } from '../helpers/render';
 import { buildProject, cloneFixture } from '../helpers/fixtures';
 import routeFixture from '../fixtures/content/page-routes.json';
@@ -258,7 +257,6 @@ it('composes catalog controls, results and pagination', async () => {
     id: 1,
     category: 'sample',
     status: 'published',
-    notice: null,
     title: 'Fixture project',
     client: 'Fixture client',
     attribution: 'generic',
@@ -598,7 +596,6 @@ function catalogProjects(count = 3): Project[] {
       id: index + 1,
       title: `Route project ${index + 1}`,
       status: index === 1 ? 'demo' : 'published',
-      notice: null,
       content: cloneFixture(routeFixture.publishedBlocks) as ContentBlock[],
     }),
   );
@@ -756,7 +753,6 @@ it.each(['demo', 'empty', 'nested-demo'])(
     const project = buildProject({
       title: 'Edge project',
       status: kind === 'nested-demo' ? 'published' : 'demo',
-      notice: null,
       date: undefined,
       content,
     });
@@ -772,9 +768,7 @@ it.each(['demo', 'empty', 'nested-demo'])(
       project.description,
       true,
     );
-    expect(document.querySelector('.project-notice')).toHaveTextContent(
-      blockDemoNotice,
-    );
+    expect(document.querySelector('.project-notice')).toBeNull();
     expect(document.querySelector('.project-meta')).toHaveTextContent(
       'Уточняется',
     );
@@ -784,10 +778,9 @@ it.each(['demo', 'empty', 'nested-demo'])(
     if (kind === 'empty') {
       expect(document.querySelectorAll('.content-block')).toHaveLength(0);
     } else {
-      const notice = document.querySelector('.project-notice')!;
       const blocks = document.querySelector('.content-blocks')!;
-      expect(notice.compareDocumentPosition(blocks) & 4).toBe(4);
       expect(blocks).toHaveTextContent('Visible demo article copy');
+      expect(blocks).not.toHaveTextContent('Withheld draft article copy');
     }
     expect(
       document.querySelector('main a[href="/projects/"]'),
