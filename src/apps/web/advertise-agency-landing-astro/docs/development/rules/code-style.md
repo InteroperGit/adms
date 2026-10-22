@@ -2,7 +2,12 @@
 
 Every line of code must be at most 80 characters, including indentation. Apply
 this limit to all code, including Astro markup, scripts, styles, configuration
-and code examples. Wrap long lines using valid syntax.
+and code examples. Wrap long lines using valid syntax. Configure Prettier with
+`printWidth: 80` to match this limit. Prettier treats that width as a wrapping
+target, so `pnpm check:style` remains the strict line-length check.
+
+At the end of each task, run `pnpm format:check` in the same final verification
+pass as the relevant tests.
 
 ## Conditional blocks
 

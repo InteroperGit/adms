@@ -17,5 +17,9 @@ export const reviewSchema = z.object({
 
 export const reviewsSchema = z.array(reviewSchema).superRefine(uniqueIds);
 
-export type ReviewSchemaContract = AssertContract<SameContract<z.output<typeof reviewSchema>, Review>>;
-export type ReviewsSchemaContract = AssertContract<SameContract<z.output<typeof reviewsSchema>, Review[]>>;
+export type ReviewSchemaContract = AssertContract<
+  SameContract<z.output<typeof reviewSchema>, Review>
+>;
+export type ReviewsSchemaContract = AssertContract<
+  SameContract<z.output<typeof reviewsSchema>, Review[]>
+>;
