@@ -40,7 +40,9 @@ project-root/
 
 - **`.codex/`** — standard place for Codex service files.  
   Store custom agents, skills, and user prompts here.  
-  For current tasks, use `TASKS.md` so the agent can restore state after context compression.
+  For current tasks, use the compact `TASKS.md` handoff so the agent can restore
+  state after context compression. Detailed task history belongs in the task
+  files under `docs/codex/`, not in this handoff.
 
 - **`harness/build/`** — recommended for files describing individual development phases.  
   This helps break large tasks into manageable parts.
@@ -123,6 +125,22 @@ The file name must match the agent name in the TOML file:
 5. Do not create task files in the project root, except for `AGENTS.md`, `GOALS.md`, `PLANS.md`, and `PROMPTS.md`.
 6. If unsure where a file belongs, ask the user or use `docs/codex/` as a safe default.
 7. After completing and verifying a task, mark it completed, record its changes and verification results, and move it from `docs/codex/todo/` to `docs/codex/fixed/yyyyMMdd/`. Use the completion date in the project's local timezone (for example, `20261001`), creating the date folder if needed. Preserve its numbered filename and update relative links in the moved task and links and status in the corresponding plan. Pending tasks remain in `todo/`.
+
+### `TASKS.md` handoff policy
+
+`.codex/TASKS.md` is a compact current-state handoff, not a chronological
+task journal. Keep only:
+
+- active task links and their short status or next action;
+- current blockers, constraints and decisions needed to resume work;
+- a small recent-completion summary when it helps the next session;
+- links to `todo/`, `backlog/`, `fixed/` and the task-management rules.
+
+Do not copy full scopes, implementation notes, verification logs or completed
+task histories into `TASKS.md`; those belong in the numbered task files and Git.
+When a task is archived or deferred, remove its old detailed entry from the
+handoff and keep only the current link or a short status. Aim to keep the file
+under 80 lines; compact it when it grows beyond that size.
 
 ---
 

@@ -6,6 +6,8 @@
 interface Item {
   label: string;
   href: string;
+  /** Optional caller-owned attributes for progressive enhancement hooks. */
+  attributes?: Record<string, string | boolean | undefined>;
 }
 
 // Caller-supplied data and presentation options for this component.
@@ -23,10 +25,8 @@ const { items, current } = Astro.props;
     {items.map((item) => (
       <li>
         <a
+          {...item.attributes}
           href={item.href}
-          data-project-catalog-return={item.href === '/projects/'
-            ? true
-            : undefined}
         >
           {item.label}
         </a>

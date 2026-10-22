@@ -35,7 +35,7 @@ that connect multiple components, and keep versioned fixtures in
 | `ui/Logo.astro` | `size: header \| footer`. Р”РµРєРѕСЂР°С‚РёРІРЅР°СЏ SVG-РјРµС‚РєР° РёРјРµРµС‚ РїСѓСЃС‚РѕР№ `alt` Рё `aria-hidden`; С‚РµРєСЃС‚ Р±СЂРµРЅРґР° РѕСЃС‚Р°С‘С‚СЃСЏ Сѓ СЃСЃС‹Р»РєРё-СЂРѕРґРёС‚РµР»СЏ. |
 | `ui/MaxLogo.astro` | Р”РµРєРѕСЂР°С‚РёРІРЅС‹Р№ SVG РјРµСЃСЃРµРЅРґР¶РµСЂР° Р±РµР· СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕРіРѕ РґРѕСЃС‚СѓРїРЅРѕРіРѕ РёРјРµРЅРё. |
 | `ui/ContactInfo.astro` | РќРµРѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ `phone`, `email`, `address`, `workHours`, `workHoursWeekend`, `class`. РџСѓСЃС‚С‹Рµ СЃС‚СЂРѕРєРё РЅРµ СЂРµРЅРґРµСЂСЏС‚СЃСЏ; С‚РµР»РµС„РѕРЅ Рё email вЂ” РЅР°С‚РёРІРЅС‹Рµ СЃСЃС‹Р»РєРё. |
-| `ui/Breadcrumbs.astro` | `items: {label, href}[]`, `current`. РџСЂРµРґРєРё вЂ” СЃСЃС‹Р»РєРё, С‚РµРєСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РёРјРµРµС‚ `aria-current="page"`. |
+| `ui/Breadcrumbs.astro` | `items: {label, href, attributes?}[]`, `current`. РџСЂРµРґРєРё вЂ” СЃСЃС‹Р»РєРё, С‚РµРєСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РёРјРµРµС‚ `aria-current="page"`; optional `attributes` are forwarded to the caller-owned links. |
 | `ui/NavLinks.astro` | `items`, `variant: desktop \| mobile`, `phone`. Р РµРЅРґРµСЂРёС‚ РЅР°РІРёРіР°С†РёСЋ Рё С‚РµР»РµС„РѕРЅРЅРѕРµ РґРµР№СЃС‚РІРёРµ; РјРѕР±РёР»СЊРЅС‹Р№ РІР°СЂРёР°РЅС‚ РёСЃРїРѕР»СЊР·СѓРµС‚ С‚Сѓ Р¶Рµ РјРѕРґРµР»СЊ СЃСЃС‹Р»РѕРє. |
 | `ui/MobileMenuDialog.astro` | `items`, `phone`. РќР°С‚РёРІРЅС‹Р№ `dialog`: РѕС‚РєСЂС‹С‚РёРµ/Р·Р°РєСЂС‹С‚РёРµ, Escape, focus trap, backdrop click, РІРѕР·РІСЂР°С‚ С„РѕРєСѓСЃР° Рё same-page hash navigation. |
 | `ui/Settings.astro` | РџРѕРїР°Рї РЅР°СЃС‚СЂРѕРµРє С‚РµРјС‹ РІРЅСѓС‚СЂРё header. РћС‚РєСЂС‹РІР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїРѕСЃР»Рµ РіРѕС‚РѕРІРЅРѕСЃС‚Рё `ThemeInit`; Р·Р°РєСЂС‹РІР°РµС‚СЃСЏ РїСЂРё СѓС…РѕРґРµ С„РѕРєСѓСЃР°/РєР»РёРєРµ РІРЅРµ РїРѕРїР°РїР°. |

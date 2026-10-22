@@ -7,7 +7,8 @@ import { render } from '../../../tests/helpers/render';
 it('renders ordered ancestors and one nonlinked current page', async () => {
   const body = await render(Breadcrumbs, {
     items: [{ label: 'Home', href: '/' },
-      { label: 'Projects', href: '/projects/' }], current: 'Sample',
+      { label: 'Projects', href: '/projects/' }],
+    current: 'Sample',
   });
   const nav = getByRole(body, 'navigation');
   expect(nav).toHaveAccessibleName('Хлебные крошки');
@@ -16,11 +17,29 @@ it('renders ordered ancestors and one nonlinked current page', async () => {
   expect(links[0]).toHaveAttribute('href', '/');
   expect(links[0]).not.toHaveAttribute('data-project-catalog-return');
   expect(links[1]).toHaveAttribute('href', '/projects/');
-  expect(links[1]).toHaveAttribute('data-project-catalog-return');
+  expect(links[1]).not.toHaveAttribute('data-project-catalog-return');
   const current = nav.querySelector('[aria-current="page"]');
   expect(current).toHaveTextContent('Sample');
   expect(current?.querySelector('a')).toBeNull();
 });
+
+it(
+  'renders caller-owned link attributes without route assumptions',
+  async () => {
+    const body = await render(Breadcrumbs, {
+      items: [{
+        label: 'Projects',
+        href: '/projects/',
+        attributes: { 'data-project-catalog-return': true },
+      }],
+      current: 'Sample',
+    });
+
+    expect(getByRole(body, 'link')).toHaveAttribute(
+      'data-project-catalog-return',
+    );
+  },
+);
 
 it('supports an empty ancestor collection', async () => {
   const body = await render(Breadcrumbs, { items: [], current: 'Home' });

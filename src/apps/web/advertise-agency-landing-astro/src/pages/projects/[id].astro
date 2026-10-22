@@ -21,6 +21,8 @@ export function getStaticPaths() {
 
 const { project } = Astro.props as { project: Project };
 const projectsHref = '/projects/';
+// The project page owns catalog restoration; Breadcrumbs only forwards it.
+const projectsLinkAttributes = { 'data-project-catalog-return': true };
 const published = isProjectPublished(project);
 ---
 
@@ -33,7 +35,11 @@ const published = isProjectPublished(project);
     <Breadcrumbs
       items={[
         { label: 'Главная', href: '/' },
-        { label: site.sections.projects.title, href: projectsHref },
+        {
+          label: site.sections.projects.title,
+          href: projectsHref,
+          attributes: projectsLinkAttributes,
+        },
       ]}
       current={project.title}
     />
