@@ -25,26 +25,37 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
   let currentSlide = 0;
   let inViewport = false;
   let suspended = false;
-  let hovered = matchMedia('(hover: hover)').matches &&
-    carousel.matches(':hover');
+  let hovered =
+    matchMedia('(hover: hover)').matches && carousel.matches(':hover');
   let timer: ReturnType<typeof setTimeout> | undefined;
 
   // Nonmanual instances expose a static gallery when automatic rotation
   // is unavailable, so reduced motion never strands hidden images.
-  const navigable = manual && (carousel.dataset.arrows === 'true' ||
-    carousel.dataset.circles === 'true');
+  const navigable =
+    manual &&
+    (carousel.dataset.arrows === 'true' || carousel.dataset.circles === 'true');
   const enhanced = () => navigable || (autoplay && !motion.matches);
-  const canRotate = () => enhanced() && autoplay && !motion.matches &&
-    !hovered && !document.hidden && inViewport && !suspended &&
+  const canRotate = () =>
+    enhanced() &&
+    autoplay &&
+    !motion.matches &&
+    !hovered &&
+    !document.hidden &&
+    inViewport &&
+    !suspended &&
     !carousel.contains(document.activeElement);
 
   // Keep one timer; every restart/resume receives a full fresh interval.
   const reconcileRotation = () => {
     clearTimeout(timer);
     timer = undefined;
-    if (!canRotate()) return;
+    if (!canRotate()) {
+      return;
+    }
     timer = setTimeout(() => {
-      if (canRotate()) selectSlide(currentSlide + 1);
+      if (canRotate()) {
+        selectSlide(currentSlide + 1);
+      }
       reconcileRotation();
     }, interval);
   };
@@ -70,15 +81,18 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
       }
     });
     if (announce && status) {
-      status.textContent = `${carousel.dataset.itemLabel} ` +
+      status.textContent =
+        `${carousel.dataset.itemLabel} ` +
         `${currentSlide + 1} из ${slides.length}`;
     }
   };
 
   // Control spacing follows actual indicator wrapping and font size.
   const reserveIndicators = () => {
-    carousel.style.setProperty('--indicator-height',
-      `${indicators?.getBoundingClientRect().height ?? 0}px`);
+    carousel.style.setProperty(
+      '--indicator-height',
+      `${indicators?.getBoundingClientRect().height ?? 0}px`,
+    );
   };
   const updatePresentation = () => {
     if (enhanced()) {
@@ -89,53 +103,84 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
       carousel.removeAttribute('aria-roledescription');
     }
     selectSlide(currentSlide);
-    if (controls) controls.hidden = !enhanced();
+    if (controls) {
+      controls.hidden = !enhanced();
+    }
     reserveIndicators();
     reconcileRotation();
   };
 
   // Only rendered manual buttons receive selection listeners.
   if (manual) {
-    carousel.querySelectorAll<HTMLButtonElement>(
-      '.carousel-arrow, button.carousel-dot',
-    ).forEach(button => {
-      button.addEventListener('click', () => {
-        const index = button.dataset.direction
-          ? currentSlide + Number(button.dataset.direction)
-          : Number(button.dataset.index);
-        selectSlide(index, true);
-        reconcileRotation();
-      }, { signal });
-    });
+    carousel
+      .querySelectorAll<HTMLButtonElement>(
+        '.carousel-arrow, button.carousel-dot',
+      )
+      .forEach((button) => {
+        button.addEventListener(
+          'click',
+          () => {
+            const index = button.dataset.direction
+              ? currentSlide + Number(button.dataset.direction)
+              : Number(button.dataset.index);
+            selectSlide(index, true);
+            reconcileRotation();
+          },
+          { signal },
+        );
+      });
   }
 
   // Touch never latches hover; focused content is never auto-replaced.
-  carousel.addEventListener('pointerenter', event => {
-    if (event.pointerType === 'touch') return;
-    hovered = true;
-    reconcileRotation();
-  }, { signal });
-  carousel.addEventListener('pointerleave', () => {
-    hovered = false;
-    reconcileRotation();
-  }, { signal });
+  carousel.addEventListener(
+    'pointerenter',
+    (event) => {
+      if (event.pointerType === 'touch') {
+        return;
+      }
+      hovered = true;
+      reconcileRotation();
+    },
+    { signal },
+  );
+  carousel.addEventListener(
+    'pointerleave',
+    () => {
+      hovered = false;
+      reconcileRotation();
+    },
+    { signal },
+  );
   carousel.addEventListener('focusin', reconcileRotation, { signal });
-  carousel.addEventListener('focusout', () => {
-    queueMicrotask(() => {
-      if (!signal.aborted) reconcileRotation();
-    });
-  }, { signal });
-  document.addEventListener('visibilitychange', reconcileRotation,
-    { signal });
+  carousel.addEventListener(
+    'focusout',
+    () => {
+      queueMicrotask(() => {
+        if (!signal.aborted) {
+          reconcileRotation();
+        }
+      });
+    },
+    { signal },
+  );
+  document.addEventListener('visibilitychange', reconcileRotation, { signal });
   motion.addEventListener('change', updatePresentation, { signal });
-  window.addEventListener('pagehide', () => {
-    suspended = true;
-    reconcileRotation();
-  }, { signal });
-  window.addEventListener('pageshow', () => {
-    suspended = false;
-    reconcileRotation();
-  }, { signal });
+  window.addEventListener(
+    'pagehide',
+    () => {
+      suspended = true;
+      reconcileRotation();
+    },
+    { signal },
+  );
+  window.addEventListener(
+    'pageshow',
+    () => {
+      suspended = false;
+      reconcileRotation();
+    },
+    { signal },
+  );
 
   // Observe each instance independently; stop observers on disconnection.
   const visibility = new IntersectionObserver(([entry]) => {
@@ -150,16 +195,20 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
     resize.disconnect();
     delete carousel.dataset.ready;
     carousel.removeAttribute('aria-roledescription');
-    slides.forEach(slide => {
+    slides.forEach((slide) => {
       slide.inert = false;
       slide.removeAttribute('aria-hidden');
     });
-    if (controls) controls.hidden = true;
+    if (controls) {
+      controls.hidden = true;
+    }
   };
   // Roll back any partial initialization instead of stranding slides.
   try {
     visibility.observe(carousel);
-    if (indicators) resize.observe(indicators);
+    if (indicators) {
+      resize.observe(indicators);
+    }
     updatePresentation();
   } catch {
     cleanup();

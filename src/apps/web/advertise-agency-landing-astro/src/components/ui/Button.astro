@@ -3,15 +3,10 @@
 // An href selects an anchor; otherwise type defaults to button.
 // Variant/size default to primary/md; rest attributes and slot pass through.
 
-// Caller-supplied data and presentation options for this component.
-export interface Props {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
-  size?: 'sm' | 'md' | 'lg';
-  href?: string;
-  type?: 'button' | 'submit' | 'reset';
-  class?: string;
-  [key: string]: unknown;
-}
+import type { ButtonProps } from './button-props';
+
+// The href property selects which native element callers may configure.
+export type Props = ButtonProps;
 
 const {
   variant = 'primary',

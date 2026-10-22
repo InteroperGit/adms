@@ -15,7 +15,9 @@
     let preference = 'system';
     try {
       const stored = localStorage.getItem(key);
-      if (valid(stored)) preference = stored;
+      if (valid(stored)) {
+        preference = stored;
+      }
     } catch {
       /* Storage can be disabled; keep an in-memory preference. */
     }
@@ -37,30 +39,36 @@
     apply();
     // System changes affect only visitors who chose the system preference.
     media.addEventListener('change', () => {
-      if (preference === 'system') apply();
+      if (preference === 'system') {
+        apply();
+      }
     });
     // Synchronize other tabs while ignoring unrelated or inaccessible storage.
     window.addEventListener('storage', (event) => {
       try {
-        if (event.storageArea !== localStorage) return;
+        if (event.storageArea !== localStorage) {
+          return;
+        }
       } catch {
         return;
       }
-      if (event.key !== key && event.key !== null) return;
+      if (event.key !== key && event.key !== null) {
+        return;
+      }
       preference = valid(event.newValue) ? event.newValue : 'system';
       apply();
     });
     // Reveal controls only after their radio handlers can apply preferences.
     document.addEventListener('DOMContentLoaded', () => {
       apply();
-      document
-        .querySelectorAll('[data-theme-control]')
-        .forEach((control) => {
-          control.hidden = false;
-        });
+      document.querySelectorAll('[data-theme-control]').forEach((control) => {
+        control.hidden = false;
+      });
       document.querySelectorAll('[data-theme-radio]').forEach((control) => {
         control.addEventListener('change', () => {
-          if (!valid(control.value)) return;
+          if (!valid(control.value)) {
+            return;
+          }
           preference = control.value;
           apply();
           try {

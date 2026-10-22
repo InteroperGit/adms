@@ -18,7 +18,7 @@ async function runSettingsScript(dom: JSDOM) {
   dom.window.eval(code);
 }
 
-function fixture() {
+function fixture(headerLeft = 0, headerTop = 0) {
   const dom = new JSDOM(
     '<header><div data-theme-settings>' +
       '<button data-settings-trigger aria-expanded="false"></button>' +
@@ -54,7 +54,7 @@ function fixture() {
   trigger.getBoundingClientRect = () => bounds(700, 20, 44, 44);
   panel.getBoundingClientRect = () => bounds(0, 0, 240, 120);
   const header = dom.window.document.querySelector('header')!;
-  header.getBoundingClientRect = () => bounds(0, 0, 800, 80);
+  header.getBoundingClientRect = () => bounds(headerLeft, headerTop, 800, 80);
   Object.defineProperty(dom.window, 'innerWidth', { value: 800 });
   Object.defineProperty(dom.window, 'innerHeight', { value: 600 });
   return { dom, panel, trigger };
@@ -87,6 +87,31 @@ it('opens, places, resizes and dismisses the settings panel', async () => {
     ?.dispatchEvent(new dom.window.Event('pointerdown', { bubbles: true }));
   expect(panel.hidden).toBe(true);
   expect(trigger.getAttribute('aria-expanded')).toBe('false');
+  dom.window.close();
+});
+
+it('positions with visual viewport and header offsets', async () => {
+  const { dom, panel, trigger } = fixture(100, 50);
+  const visualViewport = Object.assign(new dom.window.EventTarget(), {
+    width: 400,
+    height: 200,
+    offsetLeft: 200,
+    offsetTop: 100,
+  });
+  Object.defineProperty(dom.window, 'visualViewport', {
+    configurable: true,
+    value: visualViewport,
+  });
+
+  await runSettingsScript(dom);
+  trigger.dispatchEvent(
+    new dom.window.MouseEvent('click', { bubbles: true, detail: 1 }),
+  );
+
+  expect(panel.style.maxWidth).toBe('368px');
+  expect(panel.style.left).toBe('244px');
+  expect(panel.style.top).toBe('22px');
+  expect(panel.style.maxHeight).toBe('212px');
   dom.window.close();
 });
 

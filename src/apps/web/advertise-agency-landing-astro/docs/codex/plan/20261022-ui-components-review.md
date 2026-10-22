@@ -13,19 +13,19 @@
 | Компонент | Решение и основание |
 | --- | --- |
 | Breadcrumbs | Новая задача не нужна: контракт исправлен задачей 144. |
-| Button | Задача 148: нативные props скрыты за `unknown`. |
+| Button | Задача 148 выполнена: native props разделены по типу элемента. |
 | CarouselControl | Новая задача не нужна: API и CSS исправлены в 145. |
 | ContactInfo | Не нужна: простые явные ветви, проверены optional поля. |
-| ImageCarousel | Задача 149: CSS стрелок и ветвления клиентского модуля. |
+| ImageCarousel | Задача 149 завершена: CSS стрелок ограничен, ветвления развернуты. |
 | ImageCarouselSlide | Не нужна: явные image-ветви и описанные состояния. |
 | Logo | Не нужна: небольшой компонент с двумя размерами. |
 | MaxLogo | Не нужна: небольшой декоративный SVG без сложной логики. |
-| MobileMenuDialog | Задача 150: вложенные handlers и ветви без скобок. |
+| MobileMenuDialog | Задача 150 завершена: обработчики и фокус-ветви приведены к именованным блокам. |
 | NavLinks | Новая задача не нужна: дублирование устранено задачей 142. |
 | Section | Не нужна: компактный контракт и понятный порядок slot. |
 | ServiceVisual | Не нужна: простой image pipeline и scoped crop-стили. |
-| Settings | Задача 151: сценарий popup и ветви без скобок. |
-| ThemeInit | Задача 152: условные блоки inline-script без скобок. |
+| Settings | Задача 151 завершена: раздельное позиционирование и именованные handlers. |
+| ThemeInit | Задача 152 выполнена: ветви inline-script раскрыты без изменения timing. |
 | ThemeToggle | Не нужна: декларативные radios и scoped состояния. |
 | YandexReviews | Не нужна: явные widget/fallback и проверка ID. |
 
@@ -36,11 +36,11 @@
 
 ## Задачи
 
-- [148 — Button](../todo/148-refactor-button-native-props.md).
-- [149 — ImageCarousel](../todo/149-refactor-image-carousel-style-scope.md).
-- [150 — MobileMenuDialog](../todo/150-refactor-mobile-menu-dialog-handlers.md).
-- [151 — Settings](../todo/151-refactor-settings-popup-handlers.md).
-- [152 — ThemeInit](../todo/152-refactor-theme-init-control-flow.md).
+- [148 — Button](../fixed/20261022/148-refactor-button-native-props.md) — выполнено.
+- [149 — ImageCarousel](../fixed/20261022/149-refactor-image-carousel-style-scope.md) — выполнено.
+- [150 — MobileMenuDialog](../fixed/20261023/150-refactor-mobile-menu-dialog-handlers.md) — выполнено.
+- [151 — Settings](../fixed/20261023/151-refactor-settings-popup-handlers.md) — выполнено.
+- [152 — ThemeInit](../fixed/20261023/152-refactor-theme-init-control-flow.md) — выполнено.
 
 Задачи независимы; изменение API CarouselControl по задаче 145
 не повторяется. Каждый пункт имеет собственные границы и приёмку.

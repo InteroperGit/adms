@@ -1,6 +1,6 @@
 # План e2e-тестов
 
-Дата: 2026-10-19. Статус: in progress; задачи 121-129 completed.
+Дата: 2026-10-19. Статус: completed; задачи 121-136 completed.
 
 Цель: проверить основные пользовательские пути на production HTML и
 разбить работу на короткие задания с ограниченным контекстом для Luna.
@@ -109,10 +109,10 @@ Shared files меняют только 121/122/131, в этом порядке.
 | 130: Доставка, повтор и подтверждение приёма | [130](../fixed/20261019/130-e2e-inquiry-delivery.md) | completed 2026-10-19 |
 | 131: Изолированные данные для формы и медиаблоков | [131](../fixed/20261019/131-e2e-rich-content-fixtures.md) | completed 2026-10-19 |
 | 132: Форма световых букв и условный email | [132](../fixed/20261019/132-e2e-led-letters-form.md) | completed 2026-10-19 |
-| 133: Диаграмма и fallback видео | [133](../todo/133-e2e-chart-and-video.md) | pending |
-| 134: Пользовательские пути без JavaScript | [134](../todo/134-e2e-without-javascript.md) | pending |
-| 135: Адаптивность и геометрия при отказе изображения | [135](../todo/135-e2e-responsive-and-media-failure.md) | pending |
-| 136: Полный прогон и документация покрытия | [136](../todo/136-e2e-final-acceptance.md) | pending |
+| 133: Диаграмма и fallback видео | [133](../fixed/20261023/133-e2e-chart-and-video.md) | completed 2026-10-23 |
+| 134: Пользовательские пути без JavaScript | [134](../fixed/20261023/134-e2e-without-javascript.md) | completed 2026-10-23 |
+| 135: Адаптивность и геометрия при отказе изображения | [135](../fixed/20261023/135-e2e-responsive-and-media-failure.md) | completed 2026-10-23 |
+| 136: Полный прогон и документация покрытия | [136](../fixed/20261020/136-e2e-final-acceptance.md) | completed 2026-10-20 |
 
 ## Приёмка всего плана
 
@@ -136,5 +136,6 @@ Shared files меняют только 121/122/131, в этом порядке.
 только в E2E сборке. Проект 1 остаётся demo; добавленные chart/video не
 меняют категории, порядок проектов и исходную галерею.
 
-Tasks 121-132 are completed and archived; tasks 133-136 remain pending.
+Tasks 121-133 and 136 are completed and archived; tasks 134-135 remain
+pending in TODO.
 

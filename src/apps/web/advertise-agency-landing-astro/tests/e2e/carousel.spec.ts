@@ -50,6 +50,62 @@ test('manual controls select and announce slides', async ({ page }) => {
   }
 });
 
+test('scopes arrow styles across layouts, themes and viewport sizes', async ({
+  page,
+}) => {
+  await page.emulateMedia({
+    colorScheme: 'light',
+    reducedMotion: 'reduce',
+  });
+  await page.goto('/');
+
+  const carousel = page.locator('#offers-carousel');
+  const carouselList = carousel.locator('.carousel-list');
+  const arrow = carousel.locator('.carousel-arrow').first();
+  const outsidePosition = await page.locator('body').evaluate((body) => {
+    const outsideArrow = document.createElement('div');
+    outsideArrow.className = 'carousel-arrow';
+    body.append(outsideArrow);
+    return getComputedStyle(outsideArrow).position;
+  });
+  await expect(carousel).toHaveAttribute('data-layout', 'full');
+  await expect(arrow).toHaveCSS('position', 'absolute');
+  await carousel.evaluate((element) => {
+    element.dataset.layout = 'panel';
+    element.removeAttribute('data-ready');
+  });
+  await expect(carousel).toHaveAttribute('data-layout', 'panel');
+  await expect(carouselList).toHaveCSS('gap', '16px');
+
+  for (const viewport of [
+    { width: 1280, height: 900 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport);
+    for (const colorScheme of ['light', 'dark'] as const) {
+      await page.emulateMedia({
+        colorScheme,
+        reducedMotion: 'reduce',
+      });
+      await expect(page.locator('html')).toHaveAttribute(
+        'data-theme',
+        colorScheme,
+      );
+      await expect(arrow).toHaveCSS('position', 'absolute');
+      const transitionDuration = await arrow.evaluate((element) =>
+        Number.parseFloat(getComputedStyle(element).transitionDuration),
+      );
+      expect(transitionDuration).toBeLessThanOrEqual(0.00001);
+      const width = await arrow.evaluate((element) =>
+        Number.parseFloat(getComputedStyle(element).width),
+      );
+      expect(width).toBeGreaterThanOrEqual(44);
+    }
+  }
+
+  expect(outsidePosition).toBe('static');
+});
+
 test('hidden slide links are excluded from keyboard navigation', async ({
   page,
 }) => {

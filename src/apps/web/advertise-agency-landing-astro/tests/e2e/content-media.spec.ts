@@ -79,14 +79,6 @@ test('video exposes an error fallback after a real 404 response', async ({
   await page.goto('/projects/1/');
   const video = page.locator('[data-video-state]');
   await video.scrollIntoViewIfNeeded();
-  // Fetch the 404 through the browser, then exercise the media error handler.
-  // This keeps the contract stable on WebKit builds without MP4 decoders.
-  await page.evaluate(async () => {
-    await fetch('/__fixture/broken.mp4');
-    document
-      .querySelector<HTMLVideoElement>('[data-video-state] video')
-      ?.dispatchEvent(new Event('error'));
-  });
   await expect.poll(() => fulfilledUrls.length).toBeGreaterThan(0);
   await expect(video).toHaveAttribute('data-video-state', 'error');
 

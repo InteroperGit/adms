@@ -66,9 +66,7 @@ afterEach(() => {
   ObserverMock.instances = [];
 });
 
-it(
-  'initializes manual state and cleans observers on disconnection',
-  async () => {
+it('initializes manual state and disconnects observers', async () => {
   vi.stubGlobal('IntersectionObserver', ObserverMock);
   vi.stubGlobal('ResizeObserver', ObserverMock);
   vi.stubGlobal('matchMedia', () => matchMedia());
@@ -118,6 +116,27 @@ it('does not enhance when observer support is unavailable', async () => {
   );
 });
 
+it('keeps slide selection independent for each carousel instance', async () => {
+  vi.stubGlobal('IntersectionObserver', ObserverMock);
+  vi.stubGlobal('ResizeObserver', ObserverMock);
+  vi.stubGlobal('matchMedia', () => matchMedia());
+  vi.resetModules();
+  await import('./image-carousel');
+  document.body.innerHTML = carouselMarkup() + carouselMarkup();
+  const carousels = document.querySelectorAll<HTMLElement>('image-carousel');
+  const firstSlides = carousels[0].querySelectorAll('.carousel-slide');
+  const secondSlides = carousels[1].querySelectorAll('.carousel-slide');
+
+  carousels[0]
+    .querySelector<HTMLButtonElement>('.carousel-dot[data-index="1"]')
+    ?.click();
+
+  expect(firstSlides[0]).toHaveAttribute('aria-hidden', 'true');
+  expect(firstSlides[1]).not.toHaveAttribute('aria-hidden');
+  expect(secondSlides[0]).not.toHaveAttribute('aria-hidden');
+  expect(secondSlides[1]).toHaveAttribute('aria-hidden', 'true');
+});
+
 it('rotates with fake time and pauses while hovered or hidden', async () => {
   vi.useFakeTimers();
   vi.stubGlobal('IntersectionObserver', ObserverMock);
@@ -147,9 +166,7 @@ it('rotates with fake time and pauses while hovered or hidden', async () => {
   expect(slides[1]).not.toHaveAttribute('aria-hidden');
 });
 
-it(
-  'keeps automatic content static when reduced motion is enabled',
-  async () => {
+it('keeps manual controls with reduced motion', async () => {
   vi.useFakeTimers();
   vi.stubGlobal('IntersectionObserver', ObserverMock);
   vi.stubGlobal('ResizeObserver', ObserverMock);

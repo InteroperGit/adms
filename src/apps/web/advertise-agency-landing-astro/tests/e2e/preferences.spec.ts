@@ -137,6 +137,41 @@ test('document focus and motion respect accessibility preferences', async ({
   }
 });
 
+test('settings popup stays in bounds when zoomed and keyboard opened', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.goto('/');
+  await page.locator('[data-cookie-choice="declined"]').click();
+  await page.evaluate(() => {
+    document.documentElement.style.zoom = '125%';
+  });
+
+  const trigger = page.locator('[data-settings-trigger]');
+  const panel = page.locator('[data-settings-panel]');
+  await trigger.focus();
+  await page.keyboard.press('Enter');
+
+  await expect(panel).toBeVisible();
+  await expect(panel.locator('[data-theme-radio]:checked')).toBeFocused();
+  const bounds = await panel.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    return {
+      left: rect.left,
+      top: rect.top,
+      right: rect.right,
+      bottom: rect.bottom,
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    };
+  });
+
+  expect(bounds.left).toBeGreaterThanOrEqual(0);
+  expect(bounds.top).toBeGreaterThanOrEqual(0);
+  expect(bounds.right).toBeLessThanOrEqual(bounds.width);
+  expect(bounds.bottom).toBeLessThanOrEqual(bounds.height);
+});
+
 test('theme choice synchronizes across two pages in one context', async ({
   page,
   context,

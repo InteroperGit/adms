@@ -14,12 +14,21 @@ it('defaults to a native primary medium button with slot content', async () => {
 });
 
 it.each(['primary', 'secondary', 'outline', 'ghost', 'link'])(
-  'supports the %s variant and link attributes', async (variant) => {
-    const body = await render(Button, {
-      href: '/contact/', variant, class: 'custom',
-      'aria-label': 'Contact us', 'data-action': 'contact',
-      target: '_blank', rel: 'noopener',
-    }, { default: 'Contact' });
+  'supports the %s variant and link attributes',
+  async (variant) => {
+    const body = await render(
+      Button,
+      {
+        href: '/contact/',
+        variant,
+        class: 'custom',
+        'aria-label': 'Contact us',
+        'data-action': 'contact',
+        target: '_blank',
+        rel: 'noopener',
+      },
+      { default: 'Contact' },
+    );
     const link = getByRole(body, 'link', { name: 'Contact us' });
     expect(link).toHaveAttribute('href', '/contact/');
     expect(link).toHaveAttribute('data-action', 'contact');
@@ -41,8 +50,11 @@ it.each(['sm', 'md', 'lg'])('supports size %s', async (size) => {
 
 it('passes hidden, aria, data and reset attributes through', async () => {
   const body = await render(Button, {
-    type: 'reset', hidden: true, 'aria-expanded': 'false',
-    'aria-controls': 'panel', 'data-toggle': 'panel',
+    type: 'reset',
+    hidden: true,
+    'aria-expanded': 'false',
+    'aria-controls': 'panel',
+    'data-toggle': 'panel',
   });
   const button = body.querySelector('button');
   expect(button).toHaveAttribute('hidden');
@@ -52,10 +64,27 @@ it('passes hidden, aria, data and reset attributes through', async () => {
   expect(button).toHaveAttribute('data-toggle', 'panel');
 });
 
-it('renders an anchor with href and accessible label', async () => {
+it('passes native button form attributes through', async () => {
   const body = await render(Button, {
-    href: '/contact', 'aria-label': 'Contact',
-  }, { default: 'Contact' });
+    form: 'inquiry-form',
+    name: 'intent',
+    value: 'send',
+  });
+  const button = body.querySelector('button');
+  expect(button).toHaveAttribute('form', 'inquiry-form');
+  expect(button).toHaveAttribute('name', 'intent');
+  expect(button).toHaveAttribute('value', 'send');
+});
+
+it('renders an anchor with href and accessible label', async () => {
+  const body = await render(
+    Button,
+    {
+      href: '/contact',
+      'aria-label': 'Contact',
+    },
+    { default: 'Contact' },
+  );
   const link = getByRole(body, 'link', { name: 'Contact' });
   expect(link).toHaveAttribute('href', '/contact');
   expect(link).toHaveAttribute('aria-label', 'Contact');

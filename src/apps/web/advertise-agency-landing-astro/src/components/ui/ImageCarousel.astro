@@ -186,7 +186,7 @@ const circles = multiple && options.circles;
   }
 
   /* Make arrows and dots comfortably reachable with pointer or touch. */
-  :global(.carousel-arrow),
+  .image-carousel :global(.carousel-arrow),
   .carousel-dot {
     display: grid;
     place-items: center;
@@ -199,7 +199,7 @@ const circles = multiple && options.circles;
   }
 
   /* Center circular arrows at the edges with a solid image-independent base. */
-  :global(.carousel-arrow) {
+  .image-carousel :global(.carousel-arrow) {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -217,19 +217,19 @@ const circles = multiple && options.circles;
   }
 
   /* Place previous navigation inside the left image edge. */
-  :global(.carousel-arrow)[data-direction='-1'] {
+  .image-carousel :global(.carousel-arrow)[data-direction='-1'] {
     left: var(--control-inset);
   }
 
   /* Place next navigation inside the right image edge. */
-  :global(.carousel-arrow)[data-direction='1'] {
+  .image-carousel :global(.carousel-arrow)[data-direction='1'] {
     right: var(--control-inset);
   }
 
   /* Hide mouse arrows without removing their keyboard destinations. */
   @media (hover: hover) and (pointer: fine) {
     /* Fade hidden arrows while preventing invisible pointer activation. */
-    :global(.carousel-arrow) {
+    .image-carousel :global(.carousel-arrow) {
       opacity: 0;
       pointer-events: none;
       transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -246,7 +246,7 @@ const circles = multiple && options.circles;
   /* Remove hover reveal motion when the visitor requests reduced motion. */
   @media (prefers-reduced-motion: reduce) {
     /* Switch arrow visibility immediately while preserving navigation. */
-    :global(.carousel-arrow) {
+    .image-carousel :global(.carousel-arrow) {
       transition: none;
     }
   }

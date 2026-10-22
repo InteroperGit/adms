@@ -66,23 +66,36 @@ const { items, phone } = Astro.props;
 <script>
   const opener = document.querySelector<HTMLButtonElement>('#mobile-menu-open');
   const menu = document.querySelector<HTMLDialogElement>('#mobile-menu');
+
   // Enhance only when the shared header and native dialog are both present.
   if (opener && menu) {
-    opener.addEventListener('click', () => {
+    // Open the native modal before exposing its expanded state.
+    const openMenu = () => {
       menu.showModal();
       opener.setAttribute('aria-expanded', 'true');
-    });
-    menu.addEventListener('close', () => {
+    };
+
+    const closeMenu = () => {
+      menu.close();
+    };
+
+    // Restore opener focus when native close, including Escape, completes.
+    const handleMenuClose = () => {
       opener.setAttribute('aria-expanded', 'false');
       // Safari does not focus buttons on pointer activation automatically.
       opener.focus({ preventScroll: true });
-    });
-    // Wrap Tab at the modal boundaries while leaving native Escape intact.
-    menu.addEventListener('keydown', (event) => {
-      if (event.key !== 'Tab') return;
+    };
+
+    // Wrap Tab at the modal boundaries and leave other keys to the dialog.
+    const handleMenuKeydown = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') {
+        return;
+      }
+
       const controls = menu.querySelectorAll<HTMLElement>('button, a[href]');
       const first = controls[0];
       const last = controls[controls.length - 1];
+
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last?.focus();
@@ -90,62 +103,101 @@ const { items, phone } = Astro.props;
         event.preventDefault();
         first?.focus();
       }
-    });
+    };
+
+    // Dismiss clicks on the backdrop without closing for inside clicks.
+    const handleBackdropClick = (event: MouseEvent) => {
+      if (event.target !== menu) {
+        return;
+      }
+
+      const bounds = menu.getBoundingClientRect();
+      const outsideBounds =
+        event.clientX < bounds.left ||
+        event.clientX > bounds.right ||
+        event.clientY < bounds.top ||
+        event.clientY > bounds.bottom;
+
+      if (outsideBounds) {
+        closeMenu();
+      }
+    };
+
+    // Add a temporary focus target only when the section lacks tabindex.
+    const makeSectionTemporarilyFocusable = (section: HTMLElement) => {
+      if (section.hasAttribute('tabindex')) {
+        return;
+      }
+
+      section.setAttribute('tabindex', '-1');
+      const removeTemporaryTabindex = () => {
+        section.removeAttribute('tabindex');
+      };
+      section.addEventListener('blur', removeTemporaryTabindex, { once: true });
+    };
+
+    // Register after handleMenuClose so section focus wins after close.
+    const focusSectionAfterClose = (section: HTMLElement) => {
+      const handleClosedSectionFocus = () => {
+        section.focus({ preventScroll: true });
+      };
+      menu.addEventListener('close', handleClosedSectionFocus, { once: true });
+    };
+
+    // Preserve modifiers and the existing same-page path/hash navigation.
+    const handleMenuLinkClick = (
+      event: MouseEvent,
+      link: HTMLAnchorElement,
+    ) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      const destination = new URL(link.href);
+      const isSamePageHash =
+        destination.pathname === location.pathname && destination.hash;
+
+      if (!isSamePageHash) {
+        closeMenu();
+        return;
+      }
+
+      event.preventDefault();
+      history.pushState(null, '', destination.pathname + destination.hash);
+
+      const sectionId = decodeURIComponent(destination.hash.slice(1));
+      const section = document.getElementById(sectionId);
+
+      if (section) {
+        makeSectionTemporarilyFocusable(section);
+        // The close event restores opener focus before focusing this section.
+        focusSectionAfterClose(section);
+      }
+
+      closeMenu();
+    };
+
+    // Close the drawer when desktop layout hides the opener.
+    const closeMenuWhenOpenerDisappears = () => {
+      if (menu.open && opener.getClientRects().length === 0) {
+        closeMenu();
+      }
+    };
+
+    opener.addEventListener('click', openMenu);
+    menu.addEventListener('close', handleMenuClose);
+    menu.addEventListener('keydown', handleMenuKeydown);
     menu
       .querySelector('[data-menu-close]')
-      ?.addEventListener('click', () => menu.close());
-    // Dismiss backdrop clicks without treating clicks inside as dismissal.
-    menu.addEventListener('click', (event) => {
-      const bounds = menu.getBoundingClientRect();
-      if (
-        event.target === menu &&
-        (event.clientX < bounds.left ||
-          event.clientX > bounds.right ||
-          event.clientY < bounds.top ||
-          event.clientY > bounds.bottom)
-      )
-        menu.close();
-    });
-    // Preserve modified navigation; same-page links focus their section.
+      ?.addEventListener('click', closeMenu);
+    menu.addEventListener('click', handleBackdropClick);
+
     menu.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
       link.addEventListener('click', (event) => {
-        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
-          return;
-        const destination = new URL(link.href);
-        if (destination.pathname === location.pathname && destination.hash) {
-          // Keep the target focus after closing instead of letting native
-          // anchor navigation reset it to the document.
-          event.preventDefault();
-          history.pushState(null, '', destination.pathname + destination.hash);
-          const section = document.getElementById(
-            decodeURIComponent(destination.hash.slice(1)),
-          );
-          if (section) {
-            if (!section.hasAttribute('tabindex')) {
-              section.setAttribute('tabindex', '-1');
-              // Remove the temporary focus target when the visitor leaves it.
-              section.addEventListener(
-                'blur',
-                () => section.removeAttribute('tabindex'),
-                { once: true },
-              );
-            }
-            // The queued close event restores opener focus before this runs.
-            menu.addEventListener(
-              'close',
-              () => section.focus({ preventScroll: true }),
-              { once: true },
-            );
-          }
-          menu.close();
-          return;
-        }
-        menu.close();
+        handleMenuLinkClick(event, link);
       });
     });
-    // Close the drawer when the desktop layout removes its opener.
-    window.addEventListener('resize', () => {
-      if (menu.open && opener.getClientRects().length === 0) menu.close();
-    });
+
+    window.addEventListener('resize', closeMenuWhenOpenerDisappears);
   }
 </script>

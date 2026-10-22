@@ -1,23 +1,31 @@
-﻿# Current task state — 2026-10-22
+# Current task state — 2026-10-23
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal.
 Detailed scope and verification belong to the linked task files.
 
 ## Active tasks
 
-- [148 — Button](../docs/codex/todo/148-refactor-button-native-props.md)
-  — запланировано; типизировать нативные атрибуты ссылки и кнопки.
-- [149 — ImageCarousel](../docs/codex/todo/149-refactor-image-carousel-style-scope.md)
-  — запланировано; ограничить CSS стрелок и развернуть ветвления модуля.
-- [150 — MobileMenuDialog](../docs/codex/todo/150-refactor-mobile-menu-dialog-handlers.md)
-  — запланировано; сделать обработчики и условные блоки читаемыми.
-- [151 — Settings](../docs/codex/todo/151-refactor-settings-popup-handlers.md)
-  — запланировано; упорядочить сценарий popup и условные блоки.
-- [152 — ThemeInit](../docs/codex/todo/152-refactor-theme-init-control-flow.md)
-  — запланировано; развернуть ветви, сохранив синхронный inline-script.
+No active tasks.
 
 ## Recent completed work
 
+- [135 — Адаптивность и геометрия](../docs/codex/fixed/20261023/135-e2e-responsive-and-media-failure.md)
+  — завершено; 25 Chromium-тестов прошли, включая 24 адаптивные комбинации.
+- [134 — Пути без JavaScript](../docs/codex/fixed/20261023/134-e2e-without-javascript.md)
+  — завершено; 6 Chromium-тестов прошли.
+
+- [133 — Chart/Video E2E](../docs/codex/fixed/20261023/133-e2e-chart-and-video.md)
+  — завершено; реальный 404 проверен; 3 Chromium-теста пройдены.
+- [152 — ThemeInit](../docs/codex/fixed/20261023/152-refactor-theme-init-control-flow.md)
+  — завершено; синхронный inline-script сохранён; проверки пройдены.
+- [151 — Settings](../docs/codex/fixed/20261023/151-refactor-settings-popup-handlers.md)
+  — завершено; позиционирование и обработчики разделены; проверки пройдены.
+- [150 — MobileMenuDialog](../docs/codex/fixed/20261023/150-refactor-mobile-menu-dialog-handlers.md)
+  — завершено; обработчики и временная фокусируемость разделены; browser/unit checks passed.
+- [149 — ImageCarousel](../docs/codex/fixed/20261022/149-refactor-image-carousel-style-scope.md)
+  — завершено; scoped CSS, развернутые ветвления; проверки пройдены.
+- [148 — Button](../docs/codex/fixed/20261022/148-refactor-button-native-props.md)
+  — завершено; нативные атрибуты типизированы, render-тесты пройдены.
 - [147 — форматирование review-контрактов](../docs/codex/fixed/20261022/147-refactor-review-schema-formatting.md)
   — завершено; compile-time проверки развернуты в пределах 80 колонок.
 - [146 — форматирование парсера контента](../docs/codex/fixed/20261022/146-refactor-content-parser-formatting.md)
