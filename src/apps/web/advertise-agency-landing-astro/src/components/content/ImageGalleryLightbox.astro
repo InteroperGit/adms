@@ -198,19 +198,13 @@ const firstImage = images[0]?.image;
     height: 2.75rem;
     min-width: 2.75rem;
     min-height: 2.75rem;
-    padding: 0;
     border: 1px solid rgb(255 255 255 / 45%);
     border-radius: 50%;
     color: white;
     background: rgb(20 20 24 / 72%);
     cursor: pointer;
     aspect-ratio: 1;
-    display: grid;
-    place-items: center;
     box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 25%);
-    transition:
-      background-color 160ms ease,
-      color 160ms ease;
   }
 
   /* Give pointer and keyboard users a clear, polished control response. */
@@ -220,19 +214,7 @@ const firstImage = images[0]?.image;
     color: #111827;
   }
 
-  /* Hover feedback belongs to a mouse, avoiding sticky touch highlights. */
-  @media (hover: hover) and (pointer: fine) {
-    /* Invert the control colors without moving their overlay positions. */
-    :global(.gallery-close):hover,
-    :global(.gallery-navigation):hover {
-      background: white;
-      color: #111827;
-    }
-  }
-
-  /* Keep the focus ring visible against both dark and light images. */
-  :global(.gallery-close):focus-visible,
-  :global(.gallery-navigation):focus-visible,
+  /* Keep the thumbnail focus ring visible against the modal backdrop. */
   .gallery-lightbox-thumbnail:focus-visible {
     outline: 2px solid white;
     outline-offset: 3px;

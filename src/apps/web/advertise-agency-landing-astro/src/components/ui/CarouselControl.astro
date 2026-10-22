@@ -1,82 +1,79 @@
 ---
-// Share circular SVG controls between the carousel and gallery overlays.
-interface Props {
+// Render one accessible control contract for carousel and gallery consumers.
+interface CommonProps {
   label: string;
-  direction?: 'previous' | 'next';
-  variant?: 'arrow' | 'close';
   className?: string;
-  dataDirection?: '-1' | '1';
-  dataGallery?: 'close' | 'previous' | 'next';
 }
 
-const {
-  label,
-  direction,
-  variant = 'arrow',
-  className,
-  dataDirection,
-  dataGallery,
-} = Astro.props;
+type Props = CommonProps &
+  (
+    | {
+        variant?: 'arrow';
+        direction: 'previous' | 'next';
+        dataDirection?: '-1' | '1';
+        dataGallery?: 'previous' | 'next';
+      }
+    | {
+        variant: 'close';
+        direction?: never;
+        dataDirection?: never;
+        dataGallery?: 'close';
+      }
+  );
+
+const props = Astro.props as Props;
+const variant = props.variant ?? 'arrow';
+const direction = variant === 'arrow' ? props.direction : undefined;
+const isClose = variant === 'close';
+const controlVariant = isClose
+  ? 'carousel-control-close'
+  : 'carousel-control-arrow';
+const iconPath = isClose
+  ? 'M6 6l12 12M18 6L6 18'
+  : direction === 'previous'
+    ? 'm15 5-7 7 7 7'
+    : 'm9 5 7 7-7 7';
+const directionMarker = isClose ? undefined : props.dataDirection;
+const galleryMarker = isClose
+  ? props.dataGallery === 'close'
+    ? 'close'
+    : undefined
+  : props.dataGallery;
 ---
 
 <button
   type="button"
   class:list={[
     'carousel-control',
-    variant === 'close'
-      ? 'carousel-control-close'
-      : 'carousel-control-arrow',
-    className,
+    controlVariant,
+    props.className,
   ]}
-  aria-label={label}
-  data-direction={dataDirection}
-  data-gallery-close={dataGallery === 'close' ? true : undefined}
-  data-gallery-previous={dataGallery === 'previous' ? true : undefined}
-  data-gallery-next={dataGallery === 'next' ? true : undefined}
+  aria-label={props.label}
+  data-direction={directionMarker}
+  data-gallery-close={galleryMarker === 'close' ? true : undefined}
+  data-gallery-previous={galleryMarker === 'previous' ? true : undefined}
+  data-gallery-next={galleryMarker === 'next' ? true : undefined}
 >
   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    {variant === 'close' ? (
-      <path d="M6 6l12 12M18 6L6 18" />
-    ) : direction === 'previous' ? (
-      <path d="m15 5-7 7 7 7" />
-    ) : (
-      <path d="m9 5 7 7-7 7" />
-    )}
+    <path d={iconPath} />
   </svg>
 </button>
 
 <style>
-  /* Center the vector glyph independently of font metrics. */
-  .carousel-control
-  {
+  /* Keep every control large enough for touch and keyboard activation. */
+  .carousel-control {
     display: grid;
     place-items: center;
+    box-sizing: border-box;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
     cursor: pointer;
     transition: background-color 160ms ease, color 160ms ease;
   }
 
-  /* Touch taps must not retain the mouse hover appearance. */
-  @media (hover: hover) and (pointer: fine)
-  {
-    /* Invert the control colors when a mouse points at the button. */
-    .carousel-control:hover
-    {
-      color: #111827;
-      background: #fff;
-    }
-  }
-
-  /* Keep keyboard focus as visible as mouse hover. */
-  .carousel-control:focus-visible
-  {
-    outline: 3px solid white;
-    outline-offset: 3px;
-    box-shadow: 0 0 0 8px rgb(0 0 0 / 80%);
-  }
-
-  /* Keep every direction and close icon optically balanced. */
-  .carousel-control svg
-  {
+  /* Center the vector glyph independently of font metrics. */
+  .carousel-control svg {
     display: block;
     width: 1.35rem;
     height: 1.35rem;
@@ -85,5 +82,29 @@ const {
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 1.8;
+  }
+
+  /* Touch taps must not retain the mouse hover appearance. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Invert the control colors when a mouse points at the button. */
+    .carousel-control:hover {
+      color: #111827;
+      background: #fff;
+    }
+  }
+
+  /* Keep keyboard focus as visible as mouse hover. */
+  .carousel-control:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 8px rgb(0 0 0 / 80%);
+  }
+
+  /* Remove control transitions for visitors who request less motion. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Keep state changes immediate while preserving control feedback. */
+    .carousel-control {
+      transition: none;
+    }
   }
 </style>

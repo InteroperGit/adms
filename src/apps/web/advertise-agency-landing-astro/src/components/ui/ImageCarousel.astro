@@ -193,7 +193,6 @@ const circles = multiple && options.circles;
     width: var(--arrow-size);
     height: var(--arrow-size);
     flex: 0 0 auto;
-    padding: 0;
     border-radius: 50%;
     color: inherit;
     cursor: pointer;
@@ -252,17 +251,6 @@ const circles = multiple && options.circles;
     }
   }
 
-  /* Draw local directional icons with strong contrast. */
-  :global(.carousel-arrow) svg {
-    width: min(1.5rem, 28px);
-    height: min(1.5rem, 28px);
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
   /* Draw a circular position marker inside each generous target. */
   .carousel-dot span {
     width: 0.75rem;
@@ -276,23 +264,6 @@ const circles = multiple && options.circles;
   /* Fill the current marker without changing any circle's radius. */
   .carousel-dot[aria-current] span {
     background: currentColor;
-  }
-
-  /* Avoid retaining mouse hover colors after tapping on touch screens. */
-  @media (hover: hover) and (pointer: fine) {
-    /* Give pointer feedback without moving controls. */
-    :global(.carousel-arrow):hover {
-      color: #111827;
-      background: #fff;
-    }
-  }
-
-  /* Keep focus readable over bright and dark image areas. */
-  :global(.carousel-arrow):focus-visible,
-  .carousel-dot:focus-visible {
-    outline: 3px solid #fff;
-    outline-offset: 3px;
-    box-shadow: 0 0 0 8px #000;
   }
 
   /* Passive circles show position without implying a click target. */

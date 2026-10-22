@@ -5,11 +5,7 @@ Detailed scope and verification belong to the linked task files.
 
 ## Active tasks
 
-- [145 — CarouselControl API and styles](../docs/codex/todo/145-refactor-carousel-control-api-and-styles.md)
-  — planned. Clarify the shared control API and CSS ownership while preserving
-  runtime selectors and accessibility behavior.
-
-No other files are currently present in `docs/codex/todo/`.
+No active tasks are currently present in `docs/codex/todo/`.
 
 ## Recent completed work
 
@@ -18,6 +14,8 @@ No other files are currently present in `docs/codex/todo/`.
 - [142 — NavLinks refactor](../docs/codex/fixed/20261022/142-refactor-nav-links.md)
   — archived after implementation and verification.
 - [144 — Breadcrumbs contract](../docs/codex/fixed/20261022/144-refactor-breadcrumbs-component-contract.md)
+  — archived after implementation and verification.
+- [145 — CarouselControl API and styles](../docs/codex/fixed/20261022/145-refactor-carousel-control-api-and-styles.md)
   — archived after implementation and verification.
 
 ## Handoff
