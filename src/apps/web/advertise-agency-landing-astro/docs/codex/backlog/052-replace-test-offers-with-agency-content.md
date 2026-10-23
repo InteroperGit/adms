@@ -24,8 +24,8 @@ photography before bringing more visitors in.
 - User scope updated 2026-10-09: real selling texts and stock photographs
   processed with Sharp. Sharp processes images; it has no photo collection.
 - Use evergreen service offers with clear customer needs and contact CTAs.
-  Obtain agency approval before release. Time-limited promotions, if added,
-  need confirmed eligibility, prices/discount conditions and dates.
+  Obtain agency approval before release. Time-limited promotions, if added, need
+  confirmed eligibility, prices/discount conditions and dates.
 - Replace library/test offer material in data/content/config/offers.json while
   preserving the existing carousel and user-requested first-section order.
 - Disable expired or unavailable promotions through the existing content
@@ -37,8 +37,8 @@ photography before bringing more visitors in.
 
 - Every enabled offer has approved copy, current dates where applicable,
   relevant licensed imagery, and a working destination.
-- No test promotion or unrelated library photograph is sold as agency work;
-  the homepage remains usable when there is no genuine promotion.
+- No test promotion or unrelated library photograph is sold as agency work; the
+  homepage remains usable when there is no genuine promotion.
 
 ## Implementation
 
@@ -50,12 +50,12 @@ photography before bringing more visitors in.
   Astro carousel generates responsive variants without remote dependencies.
 - Image sources, authors, licenses and processing are recorded in
   [Offers carousel documentation](../../site/offers-carousel.md).
-- Stock imagery is illustrative; it is not evidence of agency projects.
-  Prices, discounts, schedules and performance results were not invented.
+- Stock imagery is illustrative; it is not evidence of agency projects. Prices,
+  discounts, schedules and performance results were not invented.
 - Archived at user request on 2026-10-10 after implementation and verification.
   Subsequently moved from fixed to backlog at user request on the same date.
-  Agency copy/publication approval remains a release dependency; archival
-  does not establish the original production acceptance.
+  Agency copy/publication approval remains a release dependency; archival does
+  not establish the original production acceptance.
 
 ## Verification — 2026-10-10
 
@@ -63,22 +63,22 @@ photography before bringing more visitors in.
   sign approval, each with a specific contacts CTA. Stands use an original
   decorative SVG; sign approval reuses the licensed storefront photograph.
   Follow-up `pnpm check`, `pnpm build` and diff checks pass; generated homepage
-  contains both new slides and service-specific contact links. The eight
-  browser cases below describe the original two-offer baseline.
+  contains both new slides and service-specific contact links. The eight browser
+  cases below describe the original two-offer baseline.
 
 - `pnpm check` passes: zero errors/warnings, one existing unused-variable hint
   in an older browser-check artifact. Changed-file code style passes.
 - `pnpm build` passes and generates four responsive variants per offer image.
-- Eight browser cases pass: both slides, 1440/320px, light/dark themes.
-  Photos decode locally, responsive sources exist, CTAs fit and target the
-  existing contacts section. Keyboard Enter selects each slide with reduced
-  motion enabled. Both static slides remain visible without JavaScript.
+- Eight browser cases pass: both slides, 1440/320px, light/dark themes. Photos
+  decode locally, responsive sources exist, CTAs fit and target the existing
+  contacts section. Keyboard Enter selects each slide with reduced motion
+  enabled. Both static slides remain visible without JavaScript.
 - Screenshots reviewed for image crops and copy readability; evidence and
   verification script are in `output/task-052/` (local, ignored artifacts).
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

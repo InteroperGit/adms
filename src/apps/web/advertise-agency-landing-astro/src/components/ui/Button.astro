@@ -3,39 +3,39 @@
 // An href selects an anchor; otherwise type defaults to button.
 // Variant/size default to primary/md; rest attributes and slot pass through.
 
-import type { ButtonProps } from './button-props';
+import type { ButtonProps } from "./button-props";
 
 // The href property selects which native element callers may configure.
 export type Props = ButtonProps;
 
 const {
-  variant = 'primary',
-  size = 'md',
+  variant = "primary",
+  size = "md",
   href,
-  type = 'button',
-  class: className = '',
+  type = "button",
+  class: className = "",
   ...rest
 } = Astro.props;
 
-const baseClasses = 'btn site-button';
+const baseClasses = "btn site-button";
 const variantClasses = {
-  primary: 'btn-primary',
-  secondary: 'btn-secondary',
-  outline: 'btn-outline',
-  ghost: 'btn-ghost',
-  link: 'btn-link',
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  outline: "btn-outline",
+  ghost: "btn-ghost",
+  link: "btn-link",
 };
 const sizeClasses = {
-  sm: 'btn-sm',
-  md: 'btn-md',
-  lg: 'btn-lg',
+  sm: "btn-sm",
+  md: "btn-md",
+  lg: "btn-lg",
 };
 
 // Explicit utilities keep outline actions on the semantic primary palette.
 const outlineClasses =
-  variant === 'outline'
-    ? 'border-primary text-primary hover:bg-primary hover:text-primary-content'
-    : '';
+  variant === "outline"
+    ? "border-primary text-primary hover:bg-primary hover:text-primary-content"
+    : "";
 
 // Compose variant, size and caller classes without overriding attributes.
 const combinedClasses = [
@@ -46,18 +46,26 @@ const combinedClasses = [
   className,
 ]
   .filter(Boolean)
-  .join(' ');
+  .join(" ");
 ---
 
 {/*
   Variant/size default to primary/md; rest attributes and slot pass through.
 */}
 {href ? (
-  <a href={href} class={combinedClasses} {...rest}>
+  <a
+    href={href}
+    class={combinedClasses}
+    {...rest}
+  >
     <slot />
   </a>
 ) : (
-  <button type={type} class={combinedClasses} {...rest}>
+  <button
+    type={type}
+    class={combinedClasses}
+    {...rest}
+  >
     <slot />
   </button>
 )}

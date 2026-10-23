@@ -1,14 +1,14 @@
 // Compile-only examples; this file is never executed.
-import type * as Domain from '@/types/legal';
+import type * as Domain from "@/types/legal";
 
 export const value = {
-  title: 'TEST_TITLE',
-  description: 'TEST_DESCRIPTION',
-  effectiveDate: 'TEST_EFFECTIVEDATE',
+  title: "TEST_TITLE",
+  description: "TEST_DESCRIPTION",
+  effectiveDate: "TEST_EFFECTIVEDATE",
   sections: [
     {
-      heading: 'TEST_HEADING',
-      content: 'TEST_CONTENT',
+      heading: "TEST_HEADING",
+      content: "TEST_CONTENT",
     },
   ],
 } satisfies Domain.LegalDocument;

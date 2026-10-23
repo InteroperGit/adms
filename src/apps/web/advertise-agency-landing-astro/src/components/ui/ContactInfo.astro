@@ -3,7 +3,7 @@
 // All fields are optional; absent details render no empty rows.
 // The class prop adds caller styling; icons are decorative, not labels.
 
-import { icons } from '@/content/icons';
+import { icons } from "@/content/icons";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -21,7 +21,7 @@ const {
   address,
   workHours,
   workHoursWeekend,
-  class: className = '',
+  class: className = "",
 } = Astro.props;
 ---
 
@@ -32,9 +32,9 @@ const {
     <div class="flex items-center gap-3">
       <i
         class:list={[
-          'fas',
+          "fas",
           icons.address,
-          'text-2xl text-brand w-6 shrink-0 text-center',
+          "text-2xl text-brand w-6 shrink-0 text-center",
         ]}
         aria-hidden="true"
       ></i>
@@ -46,13 +46,16 @@ const {
     <div class="flex items-center gap-3">
       <i
         class:list={[
-          'fas',
+          "fas",
           icons.phone,
-          'text-2xl text-brand w-6 shrink-0 text-center',
+          "text-2xl text-brand w-6 shrink-0 text-center",
         ]}
         aria-hidden="true"
       ></i>
-      <a href={`tel:${phone.replace(/\s/g, '')}`} class="contact-action">
+      <a
+        href={`tel:${phone.replace(/\s/g, "")}`}
+        class="contact-action"
+      >
         {phone}
       </a>
     </div>
@@ -62,13 +65,16 @@ const {
     <div class="flex items-center gap-3">
       <i
         class:list={[
-          'fas',
+          "fas",
           icons.email,
-          'text-2xl text-brand w-6 shrink-0 text-center',
+          "text-2xl text-brand w-6 shrink-0 text-center",
         ]}
         aria-hidden="true"
       ></i>
-      <a href={`mailto:${email}`} class="contact-action">
+      <a
+        href={`mailto:${email}`}
+        class="contact-action"
+      >
         {email}
       </a>
     </div>
@@ -78,9 +84,9 @@ const {
     <div class="flex items-center gap-3">
       <i
         class:list={[
-          'far',
+          "far",
           icons.clock,
-          'text-2xl text-brand w-6 shrink-0 text-center',
+          "text-2xl text-brand w-6 shrink-0 text-center",
         ]}
         aria-hidden="true"
       ></i>

@@ -24,11 +24,11 @@ Finish agency acceptance of ordering, guarantees, FAQ, and business solutions.
   materials and quality checks; confirm actual warranty coverage, exclusions,
   conditions, and maintenance options behind the six brief guarantee cards.
 - Review FAQ cost, turnaround, files/design, installation, repairs, maintenance,
-  and approvals answers; publish only approved answers and remove demo mode
-  when ready. Do not promise FAQ rich results.
+  and approvals answers; publish only approved answers and remove demo mode when
+  ready. Do not promise FAQ rich results.
 - Review the four business-type recommendations and media for accuracy. Attach
-  actual matching cases when available; generic solution copy need not wait
-  for named customers and must not invent completed work.
+  actual matching cases when available; generic solution copy need not wait for
+  named customers and must not invent completed work.
 - Update approval metadata and repeat affected content/rendering checks,
   preserving existing section order and customer-facing copy conventions.
 
@@ -41,7 +41,7 @@ Finish agency acceptance of ordering, guarantees, FAQ, and business solutions.
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

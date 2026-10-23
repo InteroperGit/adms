@@ -42,4 +42,4 @@ export interface ServicesContent {
   copyApproved: boolean;
   items: Service[];
 }
-import type { ContentBlock } from './content-blocks';
+import type { ContentBlock } from "./content-blocks";

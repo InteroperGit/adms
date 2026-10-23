@@ -10,7 +10,8 @@
 
 **Plan:** [Sales and SEO improvement plan](../plan/sales-and-seo-plan.md).
 
-**Depends on:** Tasks 053, 058, and 060; task 051 for working inquiry submission.
+**Depends on:** Tasks 053, 058, and 060; task 051 for working inquiry
+submission.
 
 ## Goal
 
@@ -33,14 +34,14 @@ Upgrade existing demonstration articles into production service pages.
 
 ## Acceptance
 
-- The first three pages provide distinct approved information and usable
-  inquiry navigation with valid metadata and internal links.
-- Approved pages are indexable and included in the production sitemap;
-  remaining demo pages stay excluded from production indexing.
+- The first three pages provide distinct approved information and usable inquiry
+  navigation with valid metadata and internal links.
+- Approved pages are indexable and included in the production sitemap; remaining
+  demo pages stay excluded from production indexing.
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

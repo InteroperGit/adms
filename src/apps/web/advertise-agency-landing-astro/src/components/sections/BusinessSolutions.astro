@@ -2,10 +2,10 @@
 // Present validated solutions for four business types without client code.
 // Optional attribution and media render only when supplied with evidence.
 
-import Button from '@/components/ui/Button.astro';
-import ImageCarousel from '@/components/ui/ImageCarousel.astro';
-import Section from '@/components/ui/Section.astro';
-import { businessSolutions } from '@/content/business-solutions';
+import Button from "@/components/ui/Button.astro";
+import ImageCarousel from "@/components/ui/ImageCarousel.astro";
+import Section from "@/components/ui/Section.astro";
+import { businessSolutions } from "@/content/business-solutions";
 ---
 
 {/* Keep the business types in the editorial order from the content source. */}
@@ -19,10 +19,10 @@ import { businessSolutions } from '@/content/business-solutions';
   </div>
   <div class="solutions-list">
     {businessSolutions.items.map((item) => (
-        <article
-          class="solution-item"
-          aria-labelledby={`solution-${item.id}`}
-        >
+      <article
+        class="solution-item"
+        aria-labelledby={`solution-${item.id}`}
+      >
         <div class="solution-heading">
           <h3 id={`solution-${item.id}`}>{item.title}</h3>
           <p class="solution-summary">{item.summary}</p>
@@ -60,13 +60,11 @@ import { businessSolutions } from '@/content/business-solutions';
         {item.attribution.customerName && item.attribution.evidence && (
           <div class="solution-attribution">
             <p>
-              Реализовано для: {item.attribution.customerName}.
-              {' '}{item.attribution.evidence}
+              Реализовано для: {item.attribution.customerName}.{" "}
+              {item.attribution.evidence}
             </p>
             {item.attribution.href && (
-              <a href={item.attribution.href}>
-                Смотреть проект
-              </a>
+              <a href={item.attribution.href}>Смотреть проект</a>
             )}
           </div>
         )}

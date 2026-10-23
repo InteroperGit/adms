@@ -140,6 +140,7 @@ data/content/offers.json, docs/site/offers-carousel.md, docs/site/content.md,
 carousel plan and this archived task. Existing task 018/018a work was preserved.
 
 Verification:
+
 - 160 actual schema/parser/content-wrapper assertions: defaults, positions,
   focal ranges, contrast, colors, URL safety, removed/unknown fields, positive
   unique IDs/dimensions and interval rules. pnpm check confirms

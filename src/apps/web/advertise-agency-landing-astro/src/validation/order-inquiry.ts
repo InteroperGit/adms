@@ -1,7 +1,7 @@
-import { z } from 'astro/zod';
-import type { OrderInquiryContent } from '../types/order-inquiry';
-import { text } from './shared';
-import type { AssertContract, SameContract } from './shared';
+import { z } from "astro/zod";
+import type { OrderInquiryContent } from "../types/order-inquiry";
+import { text } from "./shared";
+import type { AssertContract, SameContract } from "./shared";
 
 const field = z
   .object({
@@ -18,10 +18,10 @@ function safeEndpoint(value: string): boolean {
   // Reject control characters in authored input intentionally.
   // eslint-disable-next-line no-control-regex
   if (/[\u0000-\u0020\u007f\\#]/.test(value)) return false;
-  if (value.startsWith('/')) return true;
+  if (value.startsWith("/")) return true;
   try {
     const url = new URL(value);
-    return url.protocol === 'https:' && !url.username && !url.password;
+    return url.protocol === "https:" && !url.username && !url.password;
   } catch {
     return false;
   }
@@ -89,24 +89,24 @@ export const orderInquirySchema = z
   .superRefine((value, context) => {
     if (value.submission.endpoint && !safeEndpoint(value.submission.endpoint)) {
       context.addIssue({
-        code: 'custom',
-        path: ['submission', 'endpoint'],
-        message: 'Use a local path or a credential-free HTTPS URL',
+        code: "custom",
+        path: ["submission", "endpoint"],
+        message: "Use a local path or a credential-free HTTPS URL",
       });
     }
     if (value.submission.enabled) {
       if (!value.submission.endpoint) {
         context.addIssue({
-          code: 'custom',
-          path: ['submission', 'endpoint'],
-          message: 'Enabled delivery requires an approved endpoint',
+          code: "custom",
+          path: ["submission", "endpoint"],
+          message: "Enabled delivery requires an approved endpoint",
         });
       }
       if (!value.consent.approved || !value.consent.label.trim()) {
         context.addIssue({
-          code: 'custom',
-          path: ['consent'],
-          message: 'Approve nonblank consent copy before enabling delivery',
+          code: "custom",
+          path: ["consent"],
+          message: "Approve nonblank consent copy before enabling delivery",
         });
       }
     }

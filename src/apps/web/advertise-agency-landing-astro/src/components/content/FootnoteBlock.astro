@@ -1,6 +1,6 @@
 ---
 // Display a secondary note with a native fragment link to its article target.
-import type { FootnoteBlock as Footnote } from '@/types/content-blocks';
+import type { FootnoteBlock as Footnote } from "@/types/content-blocks";
 
 interface Props {
   block: Footnote;
@@ -10,7 +10,10 @@ const { block } = Astro.props as Props;
 ---
 
 {/* The shared stream owns this note's anchor; links work without JS. */}
-<aside class="content-footnote" role="note">
+<aside
+  class="content-footnote"
+  role="note"
+>
   {block.reference && <strong>{block.reference}</strong>}
   <span class="footnote-text">{block.text}</span>
   {block.targetId && (

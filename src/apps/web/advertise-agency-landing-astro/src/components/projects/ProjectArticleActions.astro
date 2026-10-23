@@ -7,25 +7,41 @@ const { contactLabel } = Astro.props;
 ---
 
 {/* Native links work for direct entry, disabled JS or blocked storage. */}
-<nav aria-label="Действия проекта" class="project-actions">
-  <a class="project-link" href="/projects/" data-project-catalog-return>
+<nav
+  aria-label="Действия проекта"
+  class="project-actions"
+>
+  <a
+    class="project-link"
+    href="/projects/"
+    data-project-catalog-return
+  >
     Вернуться к проектам
   </a>
-  <a class="project-link" href="/#contacts">{contactLabel}</a>
+  <a
+    class="project-link"
+    href="/#contacts"
+  >
+    {contactLabel}
+  </a>
 </nav>
 
 <script>
   // Accept only the catalogue or its static pages on this origin. Preserve
   // search/category query parameters and the result anchor for Back/Forward.
   const links = document.querySelectorAll<HTMLAnchorElement>(
-    '[data-project-catalog-return]',
+    "[data-project-catalog-return]",
   );
   try {
-    const stored = sessionStorage.getItem('project-catalog-return');
+    const stored = sessionStorage.getItem("project-catalog-return");
     const target = stored ? new URL(stored, location.origin) : null;
-    if (target?.origin === location.origin
-      && /^\/projects\/(?:page\/[1-9]\d*\/)?$/.test(target.pathname)) {
-      links.forEach((link) => { link.href = target.href; });
+    if (
+      target?.origin === location.origin &&
+      /^\/projects\/(?:page\/[1-9]\d*\/)?$/.test(target.pathname)
+    ) {
+      links.forEach((link) => {
+        link.href = target.href;
+      });
     }
   } catch {
     // Corrupt URLs or blocked storage retain the direct catalogue fallback.

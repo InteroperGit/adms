@@ -4,14 +4,14 @@
 
 ## Publication and ownership
 
-Edit `data/content/config/offers.json`. The enabled baseline contains four evergreen
-service offers: illuminated signs, neon lettering, information stands and
-city architecture sign approval. All CTAs lead to contacts. The copy describes a
-case and invites discussion, without price, discount, deadline or result claims.
-Agency approval remains a release input. Stock photographs illustrate the
-services and do not show agency work.
-Without JavaScript, offers remain an ordered stacked list with native links.
-Configured autoplay follows the JSON setting with temporary safety holds.
+Edit `data/content/config/offers.json`. The enabled baseline contains four
+evergreen service offers: illuminated signs, neon lettering, information stands
+and city architecture sign approval. All CTAs lead to contacts. The copy
+describes a case and invites discussion, without price, discount, deadline or
+result claims. Agency approval remains a release input. Stock photographs
+illustrate the services and do not show agency work. Without JavaScript, offers
+remain an ordered stacked list with native links. Configured autoplay follows
+the JSON setting with temporary safety holds.
 
 `src/content/offers.ts` validates the entire document, exports `offers`, and
 filters `enabledOffers` once in editorial order. Consumers respect global
@@ -25,20 +25,20 @@ together. Parser errors identify the source and field path.
 ## Current image sources
 
 The 2026-10-09 stock selection is illustrative, not a portfolio or an
-endorsement by the depicted business. Backgrounds are decorative (`alt=""`);
-the adjacent copy supplies the service information. No remote photo host is
-needed at runtime or build time.
+endorsement by the depicted business. Backgrounds are decorative (`alt=""`); the
+adjacent copy supplies the service information. No remote photo host is needed
+at runtime or build time.
 
-| Asset | Source and author | License | Dimensions |
-| --- | --- | --- | --- |
-| `storefront.webp` | [Houston storefront][storefront-source], Restoration Hardware | CC0 1.0 | 1081 × 646 |
-| `neon-sign.webp` | [Neon Sign][neon-source], Alex Knight; originally [ShotStash][shotstash-photo] | CC0 1.0 | 1100 × 733 |
+| Asset             | Source and author                                                              | License | Dimensions |
+| ----------------- | ------------------------------------------------------------------------------ | ------- | ---------- |
+| `storefront.webp` | [Houston storefront][storefront-source], Restoration Hardware                  | CC0 1.0 | 1081 × 646 |
+| `neon-sign.webp`  | [Neon Sign][neon-source], Alex Knight; originally [ShotStash][shotstash-photo] | CC0 1.0 | 1100 × 733 |
 
-The sign-approval offer reuses the storefront photograph. The stands offer
-uses an original decorative SVG at `public/images/offers/information-stand.svg`
-(1600 × 900), illustrating document pockets rather than an agency project.
-Approval copy invites discussion of the address and design; it promises no
-permit, official endorsement or approval deadline.
+The sign-approval offer reuses the storefront photograph. The stands offer uses
+an original decorative SVG at `public/images/offers/information-stand.svg` (1600
+× 900), illustrating document pockets rather than an agency project. Approval
+copy invites discussion of the address and design; it promises no permit,
+official endorsement or approval deadline.
 
 Downloaded from Wikimedia Commons and converted using Sharp 0.35.5 at WebP
 quality 85, without upscaling or embedded metadata. Retained widths allow Astro
@@ -46,7 +46,8 @@ to generate 320, 640, 960 and original-width responsive variants. Keep photo
 credits and licensing provenance here when replacing an asset. Sharp is the
 image-processing library, not the stock-photo provider.
 
-[storefront-source]: https://commons.wikimedia.org/wiki/File:Houston_Storefront_PR828_2011_-_Restoration_Hardware.jpg
+[storefront-source]:
+  https://commons.wikimedia.org/wiki/File:Houston_Storefront_PR828_2011_-_Restoration_Hardware.jpg
 [neon-source]: https://commons.wikimedia.org/wiki/File:Neon_Sign.jpg
 [shotstash-photo]: https://shotstash.com/photo/neon-sign/
 
@@ -65,8 +66,8 @@ image-processing library, not the stock-photo provider.
 - `image`; Rule / default: Safe root-relative public path or absolute HTTP(S)
   URL; current offers use bundled `/src/assets/offers/` images. Astro generates
   responsive variants with its default Sharp service during the build.
-- `imageAlt`; Rule / default: Meaningful text for informative artwork or
-  exactly empty for decorative artwork; no whitespace-only value.
+- `imageAlt`; Rule / default: Meaningful text for informative artwork or exactly
+  empty for decorative artwork; no whitespace-only value.
 - `imageWidth`, `imageHeight`; Rule / default: Positive integer intrinsic
   dimensions matching the actual source image.
 - `href`; Rule / default: Safe root-relative path, nonempty local fragment or
@@ -78,13 +79,13 @@ image-processing library, not the stock-photo provider.
 - `presentation.textColor`; Rule / default: Opaque six-digit hex; default
   `#ffffff`. Must pass the 4.5:1 solid glyph-edge palette check; review the
   actual image and rendered text before publication.
-- `presentation.overlay`; Rule / default: `dark` (default) or `light`;
-  retained field name selects the 25% black or white rectangle behind
-  description text only. No image-wide overlay.
+- `presentation.overlay`; Rule / default: `dark` (default) or `light`; retained
+  field name selects the 25% black or white rectangle behind description text
+  only. No image-wide overlay.
 - `presentation.horizontal`; Rule / default: `left` (default), `center`,
   `right`. Places and aligns description/CTA.
-- `presentation.vertical`; Rule / default: `top`, `center`, `bottom`
-  (default). Requires spare height to show alignment.
+- `presentation.vertical`; Rule / default: `top`, `center`, `bottom` (default).
+  Requires spare height to show alignment.
 - `presentation.focalPoint`; Rule / default: Optional strict `{x,y}` object,
   numeric percentages 0–100 inclusive; omitted axes default 50.
 - `presentation.mobileFocalPoint`; Rule / default: Optional strict `{x,y}`
@@ -135,14 +136,14 @@ retain neutral black/white fallback, text and native CTAs. No styling JavaScript
 is required to measure heights.
 
 Description backing stays 25% black for `overlay: dark` or white for `light`.
-This alone cannot guarantee contrast over a photograph: white text against
-white imagery with 25% black backing is only about 1.83:1. A 1px solid glyph
-edge and hard shadows now follow the selected black/white presentation, while
-the rectangle stays translucent. `offerTextContrast` checks that solid edge
-palette, not the composite photograph. Review replacement artwork at every
-crop and minimum text size; schema success is not rendered contrast proof.
-Empty descriptions render no rectangle or edge. CTA white on orange
-`#b2380a` remains 6.06:1; white/black focus rings support both image extremes.
+This alone cannot guarantee contrast over a photograph: white text against white
+imagery with 25% black backing is only about 1.83:1. A 1px solid glyph edge and
+hard shadows now follow the selected black/white presentation, while the
+rectangle stays translucent. `offerTextContrast` checks that solid edge palette,
+not the composite photograph. Review replacement artwork at every crop and
+minimum text size; schema success is not rendered contrast proof. Empty
+descriptions render no rectangle or edge. CTA white on orange `#b2380a` remains
+6.06:1; white/black focus rings support both image extremes.
 
 ## Remote demo rights
 
@@ -185,7 +186,6 @@ Checks use development output; native browser zoom was not tested (200% root
 text is separate). Historical task evidence remains historical; task 021 owns
 integrated production review. No commit or deployment.
 
-
 ## Description background follow-up
 
 Removed the whole-image wash and placed an opaque square-corner rectangle behind
@@ -201,16 +201,16 @@ paragraphs/backgrounds with two images and CTAs; original demo JSON restored.
 hint; `pnpm build` generated six pages. Evidence: ignored
 `output/playwright/description-background/`.
 
-Description rectangles use 25% black/white backing; images and CTAs remain
-fully opaque. Component CSS uses documented multiline declarations and
-purpose comments for each rule.
+Description rectangles use 25% black/white backing; images and CTAs remain fully
+opaque. Component CSS uses documented multiline declarations and purpose
+comments for each rule.
 
 ## Manual navigation (task 019, historical placement)
 
 With multiple items, a small Astro browser script initializes one current-slide
 index. Previous/next native buttons wrap through editorial order; circular dot
-buttons select directly and expose `aria-current="true"`. The current dot has
-a filled center and extra outline. A quiet numeric counter provides position.
+buttons select directly and expose `aria-current="true"`. The current dot has a
+filled center and extra outline. A quiet numeric counter provides position.
 Local inline SVG arrows have Russian accessible names. All targets are at least
 44×44px at the default text size and have visible theme-aware focus outlines.
 Tab, Enter and Space use native browser behavior; no global keys are captured.
@@ -223,20 +223,20 @@ stacked fallback and hides controls. Inactive slides use `aria-hidden`, `inert`
 and `visibility: hidden`, so links and content are absent from the accessibility
 tree and keyboard order. Their grid geometry remains in the shared track,
 reserving the tallest slide without measuring or clipping text. Layout adapts
-automatically to resizing and enlarged/long copy. The separate control row
-wraps and stays clear of descriptions and CTAs. Active slides fade for 160ms
-only when reduced motion is off. No autoplay, swipe or pause/play is added yet.
+automatically to resizing and enlarged/long copy. The separate control row wraps
+and stays clear of descriptions and CTAs. Active slides fade for 160ms only when
+reduced motion is off. No autoplay, swipe or pause/play is added yet.
 
 Task 019 verification: Chrome passed 16 light/dark × 320/375/768/1440px ×
 normal/200% root-text combinations, both-theme 844×390 landscape and resizing.
 Arrows wrap, dots/counter agree, manual status is polite, native CTA targets
-work, Enter/Space retain focus, and Tab skips inactive CTAs. Controls have
-44px minimum targets, visible focus and no overlap with copy. Rotation height
-stays stable with no horizontal overflow. Reduced motion removes animation.
-Both-theme no-JS and blocked-image fallbacks preserve content/links; both remote
-images also loaded successfully. Four maximum-size, long/unbroken copy/CTA
-checks with 200% text expanded without clipping and preserved rotation height.
-Actual JSON fixtures passed zero/global-disabled/all-disabled/one/filtered and
+work, Enter/Space retain focus, and Tab skips inactive CTAs. Controls have 44px
+minimum targets, visible focus and no overlap with copy. Rotation height stays
+stable with no horizontal overflow. Reduced motion removes animation. Both-theme
+no-JS and blocked-image fallbacks preserve content/links; both remote images
+also loaded successfully. Four maximum-size, long/unbroken copy/CTA checks with
+200% text expanded without clipping and preserved rotation height. Actual JSON
+fixtures passed zero/global-disabled/all-disabled/one/filtered and
 restored-multiple cases. Original JSON bytes, including `enabled: true`,
 `autoplay: true` and `intervalMs: 7000`, were restored.
 
@@ -253,9 +253,9 @@ Navigation now sits inside the image area. Circular previous/next buttons are
 vertically centered at its left/right edges. On fine-pointer hover devices,
 arrows fade in/out over 180ms as the pointer enters/leaves the carousel. Hidden
 arrows do not intercept clicks. Keyboard focus within the carousel reveals
-arrows and preserves focus visibility; touch/non-hover devices keep them visible.
-Reduced motion removes meaningful reveal animation. Arrow backgrounds use
-solid theme tokens so icons stay readable independently of the photograph.
+arrows and preserves focus visibility; touch/non-hover devices keep them
+visible. Reduced motion removes meaningful reveal animation. Arrow backgrounds
+use solid theme tokens so icons stay readable independently of the photograph.
 
 Standalone equal-radius circles sit at the bottom horizontal center. The
 selected circle is filled; others are empty outlines. There is no visible group
@@ -269,31 +269,31 @@ Control size is bounded at 44–56px to preserve reading space when text grows.
 The content stage reserves responsive side padding for arrow targets, focus
 outlines and a gap, and bottom padding for the indicators. Padding remains when
 arrows hide, so hover/focus causes no text movement. A small ResizeObserver
-updates bottom clearance when the indicator group wraps or resizes. Slide
-height still comes from the shared tallest grid track; content is never clipped.
-One/zero/no-JS behavior and native CTA links remain as described above.
-Current autoplay follows task 020a below; task 020 is historical.
+updates bottom clearance when the indicator group wraps or resizes. Slide height
+still comes from the shared tallest grid track; content is never clipped.
+One/zero/no-JS behavior and native CTA links remain as described above. Current
+autoplay follows task 020a below; task 020 is historical.
 
 Verification: Chrome passed 16 light/dark × 320/375/768/1440px × normal/200%
 root-text cases, including 144 copy-position combinations, circular button/icon
 centering, bottom dot centering, fill-only selection, transparent dot controls,
-44px targets, no overlap/overflow and stable rotation height. Pointer entry/exit,
-rapid re-entry, control-entry stability, hidden hit testing, unchanged hover
-geometry, Tab/Enter/Space, focus reveal, native CTA navigation and reduced motion
-passed. Both-theme touch and no-JS cases passed, as did short 844×390 landscape,
-resizing and four long/unbroken description/CTA cases at maximum 3rem with 200%
-text. Artificially wrapped indicators retained clearance. Bright/black image
-fallback screenshots and loaded images were checked; desktop/mobile loaded
-screenshots were visually reviewed. Six actual JSON fixtures passed and original
-bytes/publication settings were restored (`enabled: true`, `autoplay: true`,
-`intervalMs: 7000`, two demo items).
+44px targets, no overlap/overflow and stable rotation height. Pointer
+entry/exit, rapid re-entry, control-entry stability, hidden hit testing,
+unchanged hover geometry, Tab/Enter/Space, focus reveal, native CTA navigation
+and reduced motion passed. Both-theme touch and no-JS cases passed, as did short
+844×390 landscape, resizing and four long/unbroken description/CTA cases at
+maximum 3rem with 200% text. Artificially wrapped indicators retained clearance.
+Bright/black image fallback screenshots and loaded images were checked;
+desktop/mobile loaded screenshots were visually reviewed. Six actual JSON
+fixtures passed and original bytes/publication settings were restored
+(`enabled: true`, `autoplay: true`, `intervalMs: 7000`, two demo items).
 
-`pnpm check`: zero errors/warnings, one preexisting ignored task-018 script hint.
-`pnpm build`: six pages. Diff and 80-column component code checks pass. Evidence:
-ignored `output/playwright/task-019a/`. Checks use development output; native
-browser zoom, screen-reader speech and integrated production performance remain
-unverified. Task 021 owns integrated production review. No commit or deployment.
-
+`pnpm check`: zero errors/warnings, one preexisting ignored task-018 script
+hint. `pnpm build`: six pages. Diff and 80-column component code checks pass.
+Evidence: ignored `output/playwright/task-019a/`. Checks use development output;
+native browser zoom, screen-reader speech and integrated production performance
+remain unverified. Task 021 owns integrated production review. No commit or
+deployment.
 
 ## Autoplay and explicit pause/play (task 020, historical)
 
@@ -305,8 +305,8 @@ JavaScript remain stacked with controls hidden. No storage or cookies are used.
 An always-visible circular rotation button sits at the bottom right, separate
 from the centered dots. Its solid theme background, Russian accessible action
 name, local pause/play SVG, 44–56px target and white/black focus outline match
-the existing controls. The dots reserve horizontal room for this button and
-wrap within that space; shared bottom clearance keeps both controls below copy.
+the existing controls. The dots reserve horizontal room for this button and wrap
+within that space; shared bottom clearance keeps both controls below copy.
 Controls precede slides in keyboard order, with rotation first.
 
 Rotation has a requested state and temporary constraints:
@@ -320,10 +320,10 @@ Rotation has a requested state and temporary constraints:
   navigation control, and keyboard interaction within the carousel. Leaving
   focus/hover does not clear these stops; explicit Play is required.
 - Play toggles the request but does not override any temporary hold or reduced
-  motion. Pause remains the button action while a requested rotation is held.
-  To resume with the keyboard, activate Play then Shift+Tab outside the region.
-  Tab toward other carousel controls stops the request again. Modifier keys
-  alone do not stop it. Focus remains on the activating button.
+  motion. Pause remains the button action while a requested rotation is held. To
+  resume with the keyboard, activate Play then Shift+Tab outside the region. Tab
+  toward other carousel controls stops the request again. Modifier keys alone do
+  not stop it. Focus remains on the activating button.
 - Reduced motion starts paused and removes slide animation. Enabling reduced
   motion during a visit cancels the request. Explicit Play while reduced motion
   is on waits until that preference and all other holds are cleared.
@@ -331,9 +331,9 @@ Rotation has a requested state and temporary constraints:
   full interval. There are no accumulated ticks or catch-up changes. Pagehide
   clears the timer; pageshow restores the same request subject to all holds.
 
-Automatic selection updates slides, inert state and selected dots silently.
-It never moves focus or changes the polite manual-navigation status. The focus
-gate prevents a focused CTA from being replaced automatically.
+Automatic selection updates slides, inert state and selected dots silently. It
+never moves focus or changes the polite manual-navigation status. The focus gate
+prevents a focused CTA from being replaced automatically.
 
 Production Chrome verification on 2026-10-06 passed a real approximately 7s
 interval and wrap, plus controlled-clock checks for interval boundaries,
@@ -357,30 +357,30 @@ headed automated Chrome, including disabling focus emulation, did not change
 `document.hidden`. Hidden/visible event tests therefore override that getter
 explicitly; they verify the production state handling, not a native tab
 transition. Task 020 was archived as fixed at the user's request on 2026-10-06;
-task 021 carries this native visibility verification gap.
-Native zoom, screen-reader speech and integrated performance remain task 021
-work. No commit or deployment.
+task 021 carries this native visibility verification gap. Native zoom,
+screen-reader speech and integrated performance remain task 021 work. No commit
+or deployment.
 
 ## Settings-controlled autoplay (task 020a)
 
 Task 020a supersedes task 020's pause/play button and persistent manual stops.
-The autoplay button, icons, labels, event handlers and styles are removed.
-Dots remain centered and use the full available bottom width without reserving
-space for a deleted button; copy still reserves arrow and indicator clearance.
+The autoplay button, icons, labels, event handlers and styles are removed. Dots
+remain centered and use the full available bottom width without reserving space
+for a deleted button; copy still reserves arrow and indicator clearance.
 
 `autoplay: true` enables rotation for multiple offers using the validated
 `intervalMs`. `autoplay: false` keeps automatic rotation off for the page visit.
 There is no user-requested state or visitor override. Manual arrows/dots reset
 its interval and preserve polite manual position status.
 
-Hover (excluding touch), focus anywhere within the carousel, hidden document,
-no viewport intersection, page suspension and reduced motion are temporary
-holds. Clearing all holds automatically schedules one fresh full interval when
-autoplay is enabled. Focused CTA content stays active; automatic changes never
-move focus or update the live status. Reduced motion removes slide animation
-and suppresses rotation, including on initial load. Clearing that preference
-allows configured autoplay to resume. Every reconciliation clears the previous
-timeout before scheduling, preventing duplicate timers and catch-up changes.
+Hover (excluding touch), focus anywhere within the carousel, hidden document, no
+viewport intersection, page suspension and reduced motion are temporary holds.
+Clearing all holds automatically schedules one fresh full interval when autoplay
+is enabled. Focused CTA content stays active; automatic changes never move focus
+or update the live status. Reduced motion removes slide animation and suppresses
+rotation, including on initial load. Clearing that preference allows configured
+autoplay to resume. Every reconciliation clears the previous timeout before
+scheduling, preventing duplicate timers and catch-up changes.
 
 Zero/one offers remain omitted/static; no-JS offers are stacked native links
 with controls hidden. No content/schema/storage changes are required.
@@ -391,26 +391,26 @@ Checked actual `dist/` over a local static HTTP server in Chrome. Earlier
 development-output checks above remain historical. No critical carousel
 regression remained in this review; optional swipe stays deferred.
 
-- Both themes at 320/375/768/1440px and normal/200% root text passed 16
-  layouts and 144 copy-position cases. Short 844×390 landscape, resizing,
-  3rem long/unbroken descriptions and enlarged CTA labels retained clearance,
-  no horizontal overflow and stable rotation height. Twenty actual offers
-  wrapped dots without clipping copy. Root text resizing is separate from
-  native browser zoom, which was not tested.
+- Both themes at 320/375/768/1440px and normal/200% root text passed 16 layouts
+  and 144 copy-position cases. Short 844×390 landscape, resizing, 3rem
+  long/unbroken descriptions and enlarged CTA labels retained clearance, no
+  horizontal overflow and stable rotation height. Twenty actual offers wrapped
+  dots without clipping copy. Root text resizing is separate from native browser
+  zoom, which was not tested.
 - Circular arrow/icon centering, equal standalone dots, fill-only selection,
   transparent dot targets, at least 44px targets, mouse entry/exit/rapid
   re-entry, hidden-arrow hit testing, focus reveal/retention, native
   Enter/Space/Tab, touch/non-hover and both CTA fragment destinations passed.
   Accessibility snapshots excluded inactive slides and CTAs. No screen-reader
   speech test was performed; accessible-tree evidence does not prove speech.
-- Real approximately 7s rotation and wrap stayed silent. Controlled-clock
-  tests covered manual reset/resume, focus/hover/offscreen holds, reduced
-  motion, suspension and duplicate-timer prevention. Native stock Chrome
-  separately transitioned visible → hidden → visible using direct CDP tab
-  activation, with no hidden-property override or synthetic visibility event:
-  index 0 held for 8500ms hidden, remained 0 on return, then became 1 after
-  7600ms visible. Status stayed empty. This closes task 020's native tab gap;
-  synthetic visibility tests remain separately identified in their evidence.
+- Real approximately 7s rotation and wrap stayed silent. Controlled-clock tests
+  covered manual reset/resume, focus/hover/offscreen holds, reduced motion,
+  suspension and duplicate-timer prevention. Native stock Chrome separately
+  transitioned visible → hidden → visible using direct CDP tab activation, with
+  no hidden-property override or synthetic visibility event: index 0 held for
+  8500ms hidden, remained 0 on return, then became 1 after 7600ms visible.
+  Status stayed empty. This closes task 020's native tab gap; synthetic
+  visibility tests remain separately identified in their evidence.
 - Eight real JSON fixtures were rebuilt: zero, global-disabled, all-disabled,
   one, filtered, autoplay-off, empty/whitespace descriptions and 20-item dots.
   Original JSON bytes were restored, then production rebuilt: `enabled: true`,
@@ -421,34 +421,34 @@ regression remained in this review; optional swipe stays deferred.
   contracts passed `pnpm check`. Browser inline scripts exclude validator
   signatures; plain types → validation → content wrappers remain server-only.
   Header/settings/theme/menu/cookie interactions and all five project/legal
-  routes passed. Offers remain homepage-only below header and above About,
-  with one hidden h1 and Russian names.
+  routes passed. Offers remain homepage-only below header and above About, with
+  one hidden h1 and Russian names.
 
-Both retained remote backgrounds loaded at 1280×960 and 1280×961. Desktop
-focal points are 50%/50%; mobile overrides rendered 42%/50% and 65%/50%.
-First image is eager, second lazy, but Chrome requested both on initial load
-in this sample; lazy is a hint, not guaranteed deferral. No priority or LCP
-claim follows from these observations.
+Both retained remote backgrounds loaded at 1280×960 and 1280×961. Desktop focal
+points are 50%/50%; mobile overrides rendered 42%/50% and 65%/50%. First image
+is eager, second lazy, but Chrome requested both on initial load in this sample;
+lazy is a hint, not guaranteed deferral. No priority or LCP claim follows from
+these observations.
 
 Contrast screenshots cover retained imagery and white/black/checkerboard
-extremes. Reviewed loaded 320px and white-background text visually; 1rem
-minimum text evidence is also saved. Rendered solid glyph/edge colors are
-white/black (21:1) and `#18222d`/white (16.1:1); CTA is 6.06:1. White markers
-have a black edge (21:1), and focus uses the same dual colors. These ratios
-describe the solid interiors/edges, not every antialiased pixel or all possible
-future image/color combinations. Arrow solid theme surfaces isolate icons
-from images; replacement palettes and actual artwork still need review.
+extremes. Reviewed loaded 320px and white-background text visually; 1rem minimum
+text evidence is also saved. Rendered solid glyph/edge colors are white/black
+(21:1) and `#18222d`/white (16.1:1); CTA is 6.06:1. White markers have a black
+edge (21:1), and focus uses the same dual colors. These ratios describe the
+solid interiors/edges, not every antialiased pixel or all possible future
+image/color combinations. Arrow solid theme surfaces isolate icons from images;
+replacement palettes and actual artwork still need review.
 
 Production homepage scripts total 8317 raw bytes; the offer inline script is
 1906 bytes (903 gzip). Two referenced CSS files total 117550 bytes; the home
 sheet containing offers is 10098 bytes (2373 gzip), including other homepage
-sections, so it is not an offer-only delta. Shared CSS is 107452 bytes.
-Gzip measurements are offline sizes, not proof of host compression. In one
-1440px production run with remote requests blocked, the initial layout-shift
-sample was 0.1349 (sources About and desktop navigation); after settling,
-15 seconds of automatic rotation produced no recorded shifts. Stress resize
-and root-text changes caused shifts and are excluded from that steady sample.
-This is not a Lighthouse/Core Web Vitals certification or a zero-CLS claim.
+sections, so it is not an offer-only delta. Shared CSS is 107452 bytes. Gzip
+measurements are offline sizes, not proof of host compression. In one 1440px
+production run with remote requests blocked, the initial layout-shift sample was
+0.1349 (sources About and desktop navigation); after settling, 15 seconds of
+automatic rotation produced no recorded shifts. Stress resize and root-text
+changes caused shifts and are excluded from that steady sample. This is not a
+Lighthouse/Core Web Vitals certification or a zero-CLS claim.
 
 `pnpm check`: zero errors/warnings, one preexisting ignored task-018 hint.
 `pnpm build`: six routes. Diff and changed-code 80-column/CSS rule checks pass.
@@ -472,12 +472,12 @@ stock is not agency work. No commit or deployment was made.
 
 OffersCarousel now supplies its existing data and configuration to
 [ImageCarousel](image-carousel.md). The outer `offers` section anchor and
-`offer-ID` slide anchors remain. Implementation classes/data selectors
-are now `image-carousel`, `carousel-*`, and `data-item-id` inside
-`#offers-carousel`; older verification helpers using `offer-*` selectors
-need this mapping. The JSON content contract is unchanged.
+`offer-ID` slide anchors remain. Implementation classes/data selectors are now
+`image-carousel`, `carousel-*`, and `data-item-id` inside `#offers-carousel`;
+older verification helpers using `offer-*` selectors need this mapping. The JSON
+content contract is unchanged.
 
-The same component powers About with passive circles and image-only
-slides. Optional features are controlled per instance; reduced motion
-and no-navigation fallbacks expose static content rather than stranding
-images. Current behavior and verification are recorded in task 038.
+The same component powers About with passive circles and image-only slides.
+Optional features are controlled per instance; reduced motion and no-navigation
+fallbacks expose static content rather than stranding images. Current behavior
+and verification are recorded in task 038.

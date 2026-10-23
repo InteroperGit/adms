@@ -3,9 +3,9 @@
 // Optional items default to the validated visibleServices collection.
 // Demo disclosure uses shared content and does not claim approved work.
 
-import ServiceCard from '@/components/cards/ServiceCard.astro';
-import { services, visibleServices } from '@/content/services';
-import type { Service } from '@/types/services';
+import ServiceCard from "@/components/cards/ServiceCard.astro";
+import { services, visibleServices } from "@/content/services";
+import type { Service } from "@/types/services";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -24,7 +24,10 @@ const { items = visibleServices } = Astro.props;
   >
     <div class="site-container">
       <div class="services-introduction">
-        <h2 id="services-heading" class="site-section-title">
+        <h2
+          id="services-heading"
+          class="site-section-title"
+        >
           {services.heading}
         </h2>
         <p class="services-summary">{services.introduction}</p>

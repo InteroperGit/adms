@@ -1,12 +1,12 @@
 ---
 // Render plain paragraphs without embedding structural headings.
-import type { ParagraphBlock as Paragraph } from '@/types/content-blocks';
-import { paragraphLinks } from '@/content/paragraph-links';
+import type { ParagraphBlock as Paragraph } from "@/types/content-blocks";
+import { paragraphLinks } from "@/content/paragraph-links";
 
 interface Props {
   block: Paragraph;
 }
-type ParagraphText = Paragraph['paragraphs'][number];
+type ParagraphText = Paragraph["paragraphs"][number];
 
 const { block } = Astro.props as Props;
 ---
@@ -14,9 +14,11 @@ const { block } = Astro.props as Props;
 {/* The outer stream owns the block anchor; this block contains prose only. */}
 <section class="content-paragraph">
   {block.paragraphs.map((paragraph: ParagraphText) => (
-    <p>{paragraphLinks(paragraph).map((segment) => segment.href
-      ? <a href={segment.href}>{segment.text}</a>
-      : segment.text)}</p>
+    <p>
+      {paragraphLinks(paragraph).map((segment) =>
+        segment.href ? <a href={segment.href}>{segment.text}</a> : segment.text,
+      )}
+    </p>
   ))}
 </section>
 

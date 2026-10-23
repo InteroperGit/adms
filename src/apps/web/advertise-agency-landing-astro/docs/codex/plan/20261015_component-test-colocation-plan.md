@@ -1,17 +1,16 @@
 # План размещения unit-тестов рядом с компонентами
 
-Дата: 2026-10-15
-Статус: planned
+Дата: 2026-10-15 Статус: planned
 
 ## Цель
 
 Разместить unit/component-тест каждого файла из `src/components` рядом с
-исходным файлом. Сохранить отдельные integration- и browser-тесты для
-проверки композиций, навигации, reload, history и no-JavaScript-сценариев.
+исходным файлом. Сохранить отдельные integration- и browser-тесты для проверки
+композиций, навигации, reload, history и no-JavaScript-сценариев.
 
 Сейчас в проекте 60 Astro-компонентов и четыре TypeScript-модуля в
-`src/components`, но только часть из них имеет тесты. Vitest ищет тесты
-только в `tests/`, поэтому сначала нужно изменить discovery и команды.
+`src/components`, но только часть из них имеет тесты. Vitest ищет тесты только в
+`tests/`, поэтому сначала нужно изменить discovery и команды.
 
 ## Целевая структура
 
@@ -31,9 +30,9 @@ src/components/forms/order-inquiry.test.ts
 
 ## Объём тестирования
 
-Каждый Astro-тест проверяет рендеринг через `AstroContainer`, props и
-defaults, семантическую разметку, доступные имена, ссылки, `aria-*`,
-пустые данные и fallback-состояния. Snapshot-тесты не вводятся.
+Каждый Astro-тест проверяет рендеринг через `AstroContainer`, props и defaults,
+семантическую разметку, доступные имена, ссылки, `aria-*`, пустые данные и
+fallback-состояния. Snapshot-тесты не вводятся.
 
 Нужно покрыть следующие группы:
 
@@ -47,12 +46,12 @@ defaults, семантическую разметку, доступные име
 - все UI-компоненты в `ui/`, включая `image-carousel.ts`;
 - `resolve-image.ts` как отдельный unit-тест утилиты.
 
-Content-компоненты должны иметь сценарии для каждого discriminator,
-изображений и их размеров, ссылок, таблиц, видео, caption/transcript,
+Content-компоненты должны иметь сценарии для каждого discriminator, изображений
+и их размеров, ссылок, таблиц, видео, caption/transcript,
 publication/fallback-состояний и безопасных URL.
 
-Интерактивные модули должны проверять события, focus, keyboard, cleanup,
-reduced motion, timeout, retry, storage failures и повторную инициализацию.
+Интерактивные модули должны проверять события, focus, keyboard, cleanup, reduced
+motion, timeout, retry, storage failures и повторную инициализацию.
 
 ## Перенос существующих тестов
 
@@ -64,12 +63,12 @@ reduced motion, timeout, retry, storage failures и повторную иниц�
 
 Объединить `button.smoke.test.ts` с `Button.test.ts`. Переместить тесты
 `resolve-image`, `order-inquiry` и `image-carousel` из `tests/unit` к
-соответствующим исходникам. Остальные тесты бизнес-логики, валидаторов,
-каталога и payload оставить в `tests/unit`.
+соответствующим исходникам. Остальные тесты бизнес-логики, валидаторов, каталога
+и payload оставить в `tests/unit`.
 
-`tests/integration/page-compositions.test.ts` оставить на прежнем уровне:
-он проверяет связи между страницами и компонентами, а не локальный контракт
-одного компонента.
+`tests/integration/page-compositions.test.ts` оставить на прежнем уровне: он
+проверяет связи между страницами и компонентами, а не локальный контракт одного
+компонента.
 
 ## Перенастройка Vitest и package scripts
 
@@ -80,9 +79,8 @@ src/**/*.{test,spec}.{ts,tsx}
 tests/**/*.{test,spec}.{ts,tsx}
 ```
 
-Сохранить `tests/setup.ts`, Astro/Vite pipeline и alias fixtures. Добавить
-alias для тестовых helpers, если это уменьшит относительные импорты в
-соседних тестах.
+Сохранить `tests/setup.ts`, Astro/Vite pipeline и alias fixtures. Добавить alias
+для тестовых helpers, если это уменьшит относительные импорты в соседних тестах.
 
 Обновить команды:
 
@@ -92,9 +90,9 @@ alias для тестовых helpers, если это уменьшит отно
 - `test:integration` — `tests/integration`;
 - `test:coverage` — весь новый набор.
 
-Coverage include должен охватывать все
-`src/components/**/*.{astro,ts}`. Сохранить пороги 90% для логики, 85% для
-client state, 80% для компонентов и 80% общего покрытия.
+Coverage include должен охватывать все `src/components/**/*.{astro,ts}`.
+Сохранить пороги 90% для логики, 85% для client state, 80% для компонентов и 80%
+общего покрытия.
 
 ## Integration и browser границы
 
@@ -103,8 +101,8 @@ ContentBlocks, каталога и CookieBanner без дублирования 
 DOM-контракта.
 
 Playwright остаётся источником проверки реального браузера: reload, history,
-focus trap, no-JS, responsive layout, browser storage и внешние fallback.
-Эти сценарии не переносятся в unit-тесты.
+focus trap, no-JS, responsive layout, browser storage и внешние fallback. Эти
+сценарии не переносятся в unit-тесты.
 
 ## Приёмка
 

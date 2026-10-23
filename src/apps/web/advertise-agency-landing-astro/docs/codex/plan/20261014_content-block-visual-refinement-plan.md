@@ -4,9 +4,9 @@
 
 ## Цель
 
-Сделать каждый `ContentBlock` визуально понятным внутри единого линейного
-потока статьи, с адаптивным представлением и доступными состояниями. Сохранить
-MDX/JSON источники, SSR/no-JS fallback и publication policy. Отдельные surface
+Сделать каждый `ContentBlock` визуально понятным внутри единого линейного потока
+статьи, с адаптивным представлением и доступными состояниями. Сохранить MDX/JSON
+источники, SSR/no-JS fallback и publication policy. Отдельные surface
 допускаются только для блоков, которым они нужны по смыслу, например gallery,
 form или media group.
 
@@ -21,17 +21,17 @@ form или media group.
 локальный overflow для широких данных и стабильная геометрия до загрузки media.
 
 Таблица получает desktop comparison view с шапкой, zebra rows и подсветкой
-строки. На mobile строки переходят в вертикальные группы пар «поле — значение»
-с явными labels и без потери данных.
+строки. На mobile строки переходят в вертикальные группы пар «поле — значение» с
+явными labels и без потери данных.
 
 `image-gallery` получает отдельную surface-секцию с фоном, active thumbnail,
 mobile snap-strip и доступным lightbox. `chart` сохраняет статический data
 fallback. `order-form` сохраняет различие production, demo и general fallback.
 
-Новый `video` должен иметь типизированный контракт, poster, transcript,
-нативные controls, `preload="metadata"`, no-JS fallback и запрет autoplay по
-умолчанию. Для него отдельно проверяются ошибочный источник, печать,
-клавиатура, reduced motion и отсутствие layout shift.
+Новый `video` должен иметь типизированный контракт, poster, transcript, нативные
+controls, `preload="metadata"`, no-JS fallback и запрет autoplay по умолчанию.
+Для него отдельно проверяются ошибочный источник, печать, клавиатура, reduced
+motion и отсутствие layout shift.
 
 ## Порядок выполнения
 

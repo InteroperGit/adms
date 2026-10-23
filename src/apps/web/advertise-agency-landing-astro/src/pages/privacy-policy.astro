@@ -2,9 +2,12 @@
 // Publish the supplied privacy document through the shared legal layout.
 // The route owns no browser state or duplicate document presentation.
 
-import LegalLayout from '@/layouts/LegalLayout.astro';
-import { privacyPolicy } from '@/content/legal';
+import LegalLayout from "@/layouts/LegalLayout.astro";
+import { privacyPolicy } from "@/content/legal";
 ---
 
 {/* The route owns no browser state or duplicate document presentation. */}
-<LegalLayout document={privacyPolicy} showMobileBackLink />
+<LegalLayout
+  document={privacyPolicy}
+  showMobileBackLink
+/>

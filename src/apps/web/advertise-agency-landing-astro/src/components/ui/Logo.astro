@@ -5,14 +5,14 @@
 
 // Caller-supplied data and presentation options for this component.
 interface Props {
-  size?: 'header' | 'footer';
+  size?: "header" | "footer";
 }
-const { size = 'header' } = Astro.props;
+const { size = "header" } = Astro.props;
 ---
 
 {/* Empty alt and aria-hidden prevent repeating the adjacent brand text. */}
 <img
-  class:list={['brand-logo', size]}
+  class:list={["brand-logo", size]}
   src="/images/butterfly-logo.svg"
   alt=""
   width="64"

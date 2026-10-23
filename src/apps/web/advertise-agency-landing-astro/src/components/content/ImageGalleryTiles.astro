@@ -1,7 +1,7 @@
 ﻿---
 // Render responsive native image links; the parent owns lightbox enhancement.
-import type { GalleryImage } from './image-gallery.types';
-import ContentImage from './ContentImage.astro';
+import type { GalleryImage } from "./image-gallery.types";
+import ContentImage from "./ContentImage.astro";
 
 interface Props {
   images: GalleryImage[];
@@ -19,7 +19,7 @@ const { images, priority = false } = Astro.props;
       class="gallery-tile"
       href={src}
       data-gallery-open={index}
-      aria-current={index === 0 ? 'true' : undefined}
+      aria-current={index === 0 ? "true" : undefined}
     >
       <ContentImage
         image={image}

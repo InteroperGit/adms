@@ -2,10 +2,10 @@
 // Render one project with reserved image space and concise project copy.
 // Project metadata supplies image alternatives, dimensions and destination.
 
-import type { Project } from '@/types';
-import ContentImage from '@/components/content/ContentImage.astro';
-import { getProjectCategory } from '@/content/project-categories';
-import { getVisibleBlocks } from '@/content/block-publication';
+import type { Project } from "@/types";
+import ContentImage from "@/components/content/ContentImage.astro";
+import { getProjectCategory } from "@/content/project-categories";
+import { getVisibleBlocks } from "@/content/block-publication";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -14,15 +14,20 @@ export interface Props {
 
 const { project } = Astro.props;
 const photo = getVisibleBlocks(project.content).find(
-  (block) => block.type === 'image' || block.type === 'image-gallery',
+  (block) => block.type === "image" || block.type === "image-gallery",
 );
-const thumbnail = photo?.type === 'image' ? photo : photo?.images[0];
+const thumbnail = photo?.type === "image" ? photo : photo?.images[0];
 const category = getProjectCategory(project.category);
 ---
 
 <article class="project-card">
   {/* Missing photos produce text-only cards without changing copy. */}
-  {thumbnail && <ContentImage image={thumbnail} thumbnail />}
+  {thumbnail && (
+    <ContentImage
+      image={thumbnail}
+      thumbnail
+    />
+  )}
   {/* Keep only the title, metadata, summary and detail action in the copy. */}
   <div class="project-copy">
     {category && (
@@ -36,7 +41,8 @@ const category = getProjectCategory(project.category);
     )}
     <h3>{project.title}</h3>
     <p class="project-client">
-      {project.client}{project.date !== undefined && `, ${project.date}`}
+      {project.client}
+      {project.date !== undefined && `, ${project.date}`}
     </p>
     <p class="project-summary">{project.description}</p>
     <a

@@ -1,6 +1,6 @@
 ---
 // Render a responsive chart with a semantic, expandable data fallback.
-import type { ChartBlock as ChartBlockType } from '@/types/content-blocks';
+import type { ChartBlock as ChartBlockType } from "@/types/content-blocks";
 
 interface Props {
   block: ChartBlockType;
@@ -13,12 +13,17 @@ const maximum = Math.max(
   ...(primarySeries?.points.map((point) => point.value) ?? [1]),
   1,
 );
-const labels = [...new Set(block.series.flatMap((series) =>
-  series.points.map((point) => point.label),
-))];
+const labels = [
+  ...new Set(
+    block.series.flatMap((series) => series.points.map((point) => point.label)),
+  ),
+];
 ---
 
-<figure class="content-chart" data-chart-figure={chartId}>
+<figure
+  class="content-chart"
+  data-chart-figure={chartId}
+>
   <div
     class="content-chart__canvas"
     id={chartId}
@@ -28,19 +33,28 @@ const labels = [...new Set(block.series.flatMap((series) =>
       series: block.series,
     })}
     role="img"
-    aria-label={block.caption ?? 'Диаграмма'}
+    aria-label={block.caption ?? "Диаграмма"}
   ></div>
   {block.series.length > 0 && (
-    <ul class="content-chart__legend" aria-label="Легенда диаграммы">
+    <ul
+      class="content-chart__legend"
+      aria-label="Легенда диаграммы"
+    >
       {block.series.map((series) => (
         <li>
-          <span class="content-chart__legend-swatch" aria-hidden="true"></span>
+          <span
+            class="content-chart__legend-swatch"
+            aria-hidden="true"
+          ></span>
           {series.name}
         </li>
       ))}
     </ul>
   )}
-  <div class="content-chart__bars" aria-label="Диаграмма без JavaScript">
+  <div
+    class="content-chart__bars"
+    aria-label="Диаграмма без JavaScript"
+  >
     {primarySeries?.points.map((point) => (
       <div class="content-chart__bar-row">
         <span class="content-chart__bar-label">{point.label}</span>
@@ -51,7 +65,8 @@ const labels = [...new Set(block.series.flatMap((series) =>
           ></span>
         </span>
         <strong class="content-chart__bar-number">
-          {point.value}{block.unit ? ` ${block.unit}` : ''}
+          {point.value}
+          {block.unit ? ` ${block.unit}` : ""}
         </strong>
       </div>
     ))}
@@ -63,7 +78,9 @@ const labels = [...new Set(block.series.flatMap((series) =>
         <thead>
           <tr>
             <th scope="col">Серия</th>
-            {labels.map((label) => <th scope="col">{label}</th>)}
+            {labels.map((label) => (
+              <th scope="col">{label}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -72,9 +89,9 @@ const labels = [...new Set(block.series.flatMap((series) =>
               <th scope="row">{series.name}</th>
               {labels.map((label) => (
                 <td>
-                  {series.points.find((point) => point.label === label)?.value
-                    ?? '—'}
-                  {block.unit && ' ' + block.unit}
+                  {series.points.find((point) => point.label === label)
+                    ?.value ?? "—"}
+                  {block.unit && " " + block.unit}
                 </td>
               ))}
             </tr>
@@ -243,21 +260,20 @@ const labels = [...new Set(block.series.flatMap((series) =>
 
 <script>
   // Enhance visible charts only; the semantic fallback remains complete.
-  const elements = document.querySelectorAll<HTMLElement>('[data-chart]');
+  const elements = document.querySelectorAll<HTMLElement>("[data-chart]");
   const enhance = async (element: HTMLElement) => {
     try {
-      const { renderChart } = await import('@/scripts/chart-runtime');
+      const { renderChart } = await import("@/scripts/chart-runtime");
       renderChart(element);
-      element.closest<HTMLElement>('[data-chart-figure]')?.setAttribute(
-        'data-chart-enhanced',
-        'true',
-      );
+      element
+        .closest<HTMLElement>("[data-chart-figure]")
+        ?.setAttribute("data-chart-enhanced", "true");
     } catch {
       // Keep the server-rendered bars and data table when canvas fails.
       element.hidden = true;
     }
   };
-  if (elements.length && 'IntersectionObserver' in window) {
+  if (elements.length && "IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
@@ -266,10 +282,12 @@ const labels = [...new Set(block.series.flatMap((series) =>
       });
     });
     elements.forEach((element) => observer.observe(element));
-    window.addEventListener('pagehide', (event) => {
+    window.addEventListener("pagehide", (event) => {
       if (!event.persisted) observer.disconnect();
     });
   } else {
-    elements.forEach((element) => { void enhance(element); });
+    elements.forEach((element) => {
+      void enhance(element);
+    });
   }
 </script>

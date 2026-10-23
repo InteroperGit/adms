@@ -8,53 +8,53 @@ interface CommonProps {
 type Props = CommonProps &
   (
     | {
-        variant?: 'arrow';
-        direction: 'previous' | 'next';
-        dataDirection?: '-1' | '1';
-        dataGallery?: 'previous' | 'next';
+        variant?: "arrow";
+        direction: "previous" | "next";
+        dataDirection?: "-1" | "1";
+        dataGallery?: "previous" | "next";
       }
     | {
-        variant: 'close';
+        variant: "close";
         direction?: never;
         dataDirection?: never;
-        dataGallery?: 'close';
+        dataGallery?: "close";
       }
   );
 
 const props = Astro.props as Props;
-const variant = props.variant ?? 'arrow';
-const direction = variant === 'arrow' ? props.direction : undefined;
-const isClose = variant === 'close';
+const variant = props.variant ?? "arrow";
+const direction = variant === "arrow" ? props.direction : undefined;
+const isClose = variant === "close";
 const controlVariant = isClose
-  ? 'carousel-control-close'
-  : 'carousel-control-arrow';
+  ? "carousel-control-close"
+  : "carousel-control-arrow";
 const iconPath = isClose
-  ? 'M6 6l12 12M18 6L6 18'
-  : direction === 'previous'
-    ? 'm15 5-7 7 7 7'
-    : 'm9 5 7 7-7 7';
+  ? "M6 6l12 12M18 6L6 18"
+  : direction === "previous"
+    ? "m15 5-7 7 7 7"
+    : "m9 5 7 7-7 7";
 const directionMarker = isClose ? undefined : props.dataDirection;
 const galleryMarker = isClose
-  ? props.dataGallery === 'close'
-    ? 'close'
+  ? props.dataGallery === "close"
+    ? "close"
     : undefined
   : props.dataGallery;
 ---
 
 <button
   type="button"
-  class:list={[
-    'carousel-control',
-    controlVariant,
-    props.className,
-  ]}
+  class:list={["carousel-control", controlVariant, props.className]}
   aria-label={props.label}
   data-direction={directionMarker}
-  data-gallery-close={galleryMarker === 'close' ? true : undefined}
-  data-gallery-previous={galleryMarker === 'previous' ? true : undefined}
-  data-gallery-next={galleryMarker === 'next' ? true : undefined}
+  data-gallery-close={galleryMarker === "close" ? true : undefined}
+  data-gallery-previous={galleryMarker === "previous" ? true : undefined}
+  data-gallery-next={galleryMarker === "next" ? true : undefined}
 >
-  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+  >
     <path d={iconPath} />
   </svg>
 </button>
@@ -69,7 +69,9 @@ const galleryMarker = isClose
     min-height: 44px;
     padding: 0;
     cursor: pointer;
-    transition: background-color 160ms ease, color 160ms ease;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
   }
 
   /* Center the vector glyph independently of font metrics. */

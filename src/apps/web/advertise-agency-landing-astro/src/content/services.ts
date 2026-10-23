@@ -1,32 +1,32 @@
-import data from '@/data/content/config/services.json';
-import { getCollection, render } from 'astro:content';
+import data from "@/data/content/config/services.json";
+import { getCollection, render } from "astro:content";
 import {
   createServiceRecordsSchema,
   createServicesSchema,
-} from '../validation/services';
-import { serviceArticleSchema } from '../validation/service-articles';
-import { parseContent } from '../validation/parse-content';
-import { getVisibleServices, isServicePublished } from './service-publication';
-import { assertPublicationPolicy } from './block-publication';
+} from "../validation/services";
+import { serviceArticleSchema } from "../validation/service-articles";
+import { parseContent } from "../validation/parse-content";
+import { getVisibleServices, isServicePublished } from "./service-publication";
+import { assertPublicationPolicy } from "./block-publication";
 
 // The dynamic route is backed by catalog IDs, so route validation can happen
 // without importing or scanning page modules and without a loader cycle.
 const servicePaths = data.items.flatMap((item) =>
-  typeof item.href === 'string' ? [item.href] : [],
+  typeof item.href === "string" ? [item.href] : [],
 );
 const records = parseContent(
   createServiceRecordsSchema(servicePaths),
   data,
-  'data/content/config/services.json',
+  "data/content/config/services.json",
 );
-const entries = await getCollection('serviceArticles');
+const entries = await getCollection("serviceArticles");
 const articleById = new Map(entries.map((entry) => [entry.id, entry]));
 
 // Compile MDX once and share its validated normalized blocks with all readers.
 // Invalid or missing MDX is an error, never an implicit JSON fallback.
 const items = await Promise.all(
   records.items.map(async (record) => {
-    if (record.article.format === 'json') {
+    if (record.article.format === "json") {
       const { format: _format, reason: _reason, ...article } = record.article;
       return { ...record, article };
     }
@@ -51,7 +51,7 @@ const items = await Promise.all(
 export const services = parseContent(
   createServicesSchema(servicePaths),
   { ...records, items },
-  'data/content/config/services.json',
+  "data/content/config/services.json",
 );
 services.items.forEach((service) =>
   assertPublicationPolicy(
@@ -59,8 +59,8 @@ services.items.forEach((service) =>
     !services.demoMode &&
       isServicePublished(services, service) &&
       service.article.approved
-      ? 'published'
-      : 'demo',
+      ? "published"
+      : "demo",
     `service ${service.id}`,
   ),
 );

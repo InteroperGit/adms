@@ -3,9 +3,9 @@ import {
   type BrowserContext,
   expect as baseExpect,
   test as base,
-} from '@playwright/test';
+} from "@playwright/test";
 
-const localOrigin = 'http://127.0.0.1:4327';
+const localOrigin = "http://127.0.0.1:4327";
 
 type E2eFixtures = {
   blockExternalRequests: void;
@@ -15,9 +15,9 @@ type E2eFixtures = {
 export async function blockExternalRequests(
   context: BrowserContext,
 ): Promise<void> {
-  await context.route('**/*', async (route) => {
+  await context.route("**/*", async (route) => {
     const url = new URL(route.request().url());
-    const isHttp = url.protocol === 'http:' || url.protocol === 'https:';
+    const isHttp = url.protocol === "http:" || url.protocol === "https:";
 
     if (!isHttp || url.origin === localOrigin) {
       await route.continue();
@@ -25,11 +25,11 @@ export async function blockExternalRequests(
     }
 
     if (
-      url.origin === 'https://smartcaptcha.cloud.yandex.ru' &&
-      url.pathname === '/captcha.js'
+      url.origin === "https://smartcaptcha.cloud.yandex.ru" &&
+      url.pathname === "/captcha.js"
     ) {
       await route.fulfill({
-        contentType: 'application/javascript',
+        contentType: "application/javascript",
         body: `(() => {
           let sequence = 0;
           let callback;

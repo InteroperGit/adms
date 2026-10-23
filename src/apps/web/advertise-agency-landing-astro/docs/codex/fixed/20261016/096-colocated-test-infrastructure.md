@@ -15,9 +15,8 @@
 
 ## Приёмка
 
-`pnpm test`, `pnpm test:unit`, `pnpm test:components` и
-`pnpm test:integration` находят тесты в обоих деревьях и завершаются без
-ошибок.
+`pnpm test`, `pnpm test:unit`, `pnpm test:components` и `pnpm test:integration`
+находят тесты в обоих деревьях и завершаются без ошибок.
 
 ## Зависимости
 
@@ -27,4 +26,6 @@
 
 Status: completed on 2026-10-16.
 
-Implemented colocated Vitest discovery, component coverage inclusion, and focused test scripts. Validation: pnpm test (20 files, 164 tests passed) and pnpm check passed with one existing Zod deprecation hint.
+Implemented colocated Vitest discovery, component coverage inclusion, and
+focused test scripts. Validation: pnpm test (20 files, 164 tests passed) and
+pnpm check passed with one existing Zod deprecation hint.

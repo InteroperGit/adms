@@ -3,8 +3,8 @@
 // The content contract keeps agency approval and open inputs explicit.
 // The section has no browser behavior, so it remains available without JS.
 
-import Button from '@/components/ui/Button.astro';
-import { orderingProcess } from '@/content/ordering-process';
+import Button from "@/components/ui/Button.astro";
+import { orderingProcess } from "@/content/ordering-process";
 ---
 
 <section
@@ -15,7 +15,10 @@ import { orderingProcess } from '@/content/ordering-process';
   <div class="site-container">
     {/* Keep the sequence introduction separate from its ordered list. */}
     <div class="ordering-introduction">
-      <h2 id="ordering-process-heading" class="site-section-title">
+      <h2
+        id="ordering-process-heading"
+        class="site-section-title"
+      >
         {orderingProcess.heading}
       </h2>
       <p class="ordering-summary">{orderingProcess.introduction}</p>
@@ -33,11 +36,14 @@ import { orderingProcess } from '@/content/ordering-process';
             {/* Content selects each mark; copy remains the label. */}
             <span
               class="ordering-icon"
-              style={{ '--ordering-icon': `url(${step.icon})` }}
+              style={{ "--ordering-icon": `url(${step.icon})` }}
               aria-hidden="true"
             ></span>
-            <p class="ordering-step-number" aria-hidden="true">
-              {String(orderingProcess.steps.indexOf(step) + 1).padStart(2, '0')}
+            <p
+              class="ordering-step-number"
+              aria-hidden="true"
+            >
+              {String(orderingProcess.steps.indexOf(step) + 1).padStart(2, "0")}
             </p>
             <h3 id={`${step.id}-heading`}>{step.title}</h3>
             <p class="ordering-description">{step.description}</p>
@@ -45,13 +51,17 @@ import { orderingProcess } from '@/content/ordering-process';
               <div>
                 <h4>Что нужно от клиента</h4>
                 <ul>
-                  {step.customerProvides.map((item) => <li>{item}</li>)}
+                  {step.customerProvides.map((item) => (
+                    <li>{item}</li>
+                  ))}
                 </ul>
               </div>
               <div>
                 <h4>Что делает агентство</h4>
                 <ul>
-                  {step.agencyHandles.map((item) => <li>{item}</li>)}
+                  {step.agencyHandles.map((item) => (
+                    <li>{item}</li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -62,7 +72,10 @@ import { orderingProcess } from '@/content/ordering-process';
 
     {/* Keep the next action adjacent to the final process explanation. */}
     <div class="ordering-action">
-      <Button href="/#order-inquiry" size="lg">
+      <Button
+        href="/#order-inquiry"
+        size="lg"
+      >
         Обсудить задачу
       </Button>
     </div>
@@ -120,7 +133,9 @@ import { orderingProcess } from '@/content/ordering-process';
   .ordering-card:focus {
     border-color: var(--color-primary);
     background: color-mix(
-      in srgb, var(--color-primary) 8%, var(--color-base-100)
+      in srgb,
+      var(--color-primary) 8%,
+      var(--color-base-100)
     );
     box-shadow: inset 0 0 0 1px var(--color-primary);
   }
@@ -135,7 +150,9 @@ import { orderingProcess } from '@/content/ordering-process';
   .ordering-card:hover {
     border-color: var(--color-primary);
     background: color-mix(
-      in srgb, var(--color-primary) 8%, var(--color-base-100)
+      in srgb,
+      var(--color-primary) 8%,
+      var(--color-base-100)
     );
     box-shadow: inset 0 0 0 1px var(--color-primary);
   }

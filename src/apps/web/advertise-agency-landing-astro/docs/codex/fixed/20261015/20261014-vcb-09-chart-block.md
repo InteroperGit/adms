@@ -4,8 +4,8 @@
 
 ## Задача
 
-Зависимости: VCB-01, VCB-02. Улучшить локальную chart surface, legend, series colors,
-mobile labels, resize, reduced-motion и раскрываемый data fallback.
+Зависимости: VCB-01, VCB-02. Улучшить локальную chart surface, legend, series
+colors, mobile labels, resize, reduced-motion и раскрываемый data fallback.
 
 ## Ограничение общего потока
 
@@ -13,12 +13,8 @@ mobile labels, resize, reduced-motion и раскрываемый data fallback.
 отдельная карточка с обязательным фоном, рамкой, скруглением или тенью.
 Локальная surface допускается только вокруг смысловой группы, если это прямо
 описано в задаче (например gallery, media, chart или form), и не должна
-создавать ощущение набора разрозненных карточек.
-Готово, когда данные доступны без JS/цвета, canvas не вызывает layout shift.
-
-
-
-
+создавать ощущение набора разрозненных карточек. Готово, когда данные доступны
+без JS/цвета, canvas не вызывает layout shift.
 
 ## Implementation and verification — 2026-10-15
 
@@ -36,5 +32,5 @@ lifecycle changes.
 Verification: `node_modules\\.bin\\astro.cmd build` passed (38 pages),
 `node scripts/check-code-style.mjs` passed, and `git diff --check` passed.
 `astro check` remains blocked by the existing missing
-`article-cases.json`/`publication.json` fixtures and its existing deprecated
-Zod hint.
+`article-cases.json`/`publication.json` fixtures and its existing deprecated Zod
+hint.

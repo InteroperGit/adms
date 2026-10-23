@@ -6,21 +6,21 @@
 // Local decorative symbols accompany the accessible Russian radio names.
 const themes = [
   {
-    value: 'light',
-    label: 'Светлая',
+    value: "light",
+    label: "Светлая",
     path:
-      'M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7' +
-      'm10 10 1.4 1.4M5.6 18.4 7 17m10-10 1.4-1.4',
+      "M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7" +
+      "m10 10 1.4 1.4M5.6 18.4 7 17m10-10 1.4-1.4",
   },
   {
-    value: 'dark',
-    label: 'Тёмная',
-    path: 'M20 13a8 8 0 1 1-9-9 6 6 0 0 0 9 9Z',
+    value: "dark",
+    label: "Тёмная",
+    path: "M20 13a8 8 0 1 1-9-9 6 6 0 0 0 9 9Z",
   },
   {
-    value: 'system',
-    label: 'Системная',
-    path: 'M4 4h16v12H4ZM8 20h8m-4-4v4',
+    value: "system",
+    label: "Системная",
+    path: "M4 4h16v12H4ZM8 20h8m-4-4v4",
   },
 ];
 ---
@@ -28,17 +28,23 @@ const themes = [
 {/* System is the markup default; icon-only controls retain hidden names. */}
 <fieldset>
   <legend class="sr-only">Тема оформления</legend>
-  <span class="theme-label" aria-hidden="true">
+  <span
+    class="theme-label"
+    aria-hidden="true"
+  >
     Тема
   </span>
   <div class="theme-options">
     {themes.map((theme) => (
-      <label class="theme-option" title={theme.label}>
+      <label
+        class="theme-option"
+        title={theme.label}
+      >
         <input
           type="radio"
           name="site-theme"
           value={theme.value}
-          checked={theme.value === 'system'}
+          checked={theme.value === "system"}
           data-theme-radio
         />
         <span class="theme-icon">
@@ -52,7 +58,13 @@ const themes = [
             aria-hidden="true"
           >
             <path d={theme.path} />
-            {theme.value === 'light' && <circle cx="12" cy="12" r="4" />}
+            {theme.value === "light" && (
+              <circle
+                cx="12"
+                cy="12"
+                r="4"
+              />
+            )}
           </svg>
           <span class="sr-only">{theme.label}</span>
         </span>
@@ -152,7 +164,7 @@ const themes = [
   }
 
   /* Preserve the requested black hover treatment in explicit light mode. */
-  :global([data-theme='light']) input:not(:checked):hover + .theme-icon {
+  :global([data-theme="light"]) input:not(:checked):hover + .theme-icon {
     background: #000;
     color: #fff;
     border-color: #000;

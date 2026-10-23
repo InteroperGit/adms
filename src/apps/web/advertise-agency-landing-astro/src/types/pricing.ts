@@ -1,13 +1,13 @@
-import type { ServiceImage } from './services';
+import type { ServiceImage } from "./services";
 
 /** Numeric ruble amounts keep formatting separate from editable copy. */
 export type PricingAmount =
-  | { type: 'exact'; amount: number }
-  | { type: 'range'; min: number; max: number };
+  | { type: "exact"; amount: number }
+  | { type: "range"; min: number; max: number };
 
 export type PricingPrice = PricingAmount & {
-  currency: 'RUB';
-  context: 'demo' | 'current' | 'historical';
+  currency: "RUB";
+  context: "demo" | "current" | "historical";
   asOf: string | null;
   conditions: string;
 };

@@ -23,8 +23,8 @@ Make the production site discoverable and inspect real indexing status.
 - Submit the verified production sitemap and inspect homepage, prioritized
   service pages, and representative case URLs in both available services.
 - Check crawl access, canonical selection, noindex, redirects, sitemap errors,
-  and accidental preview/demo indexing; resolve actionable implementation
-  issues with task 060.
+  and accidental preview/demo indexing; resolve actionable implementation issues
+  with task 060.
 - Record submission/inspection dates, observed status, and follow-up owner/date.
   Account access or external actions require authorization at execution.
 
@@ -37,7 +37,7 @@ Make the production site discoverable and inspect real indexing status.
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

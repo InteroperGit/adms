@@ -31,12 +31,12 @@ Give buyers usable budget guidance based on real agency pricing.
 
 - Every visible price/range has a traceable approved source and clear scope;
   historical amounts cannot be mistaken for a current guaranteed quote.
-- Fictional examples/prices are absent from the production section; no
-  approval flag is enabled merely to retain demo visibility.
+- Fictional examples/prices are absent from the production section; no approval
+  flag is enabled merely to retain demo visibility.
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

@@ -45,8 +45,8 @@ statuses, and `.codex/TASKS.md`; pending tasks stay in `todo/`.
   source/rights metadata, and a native `/#order-inquiry` link.
 - Attribution fields are null for all four items, so no customer, project, or
   unsupported completion claim is rendered.
-- Server-rendered carousel slides preserve no-JavaScript access. Shared
-  carousel controls provide native keyboard focus and reduced-motion behavior.
+- Server-rendered carousel slides preserve no-JavaScript access. Shared carousel
+  controls provide native keyboard focus and reduced-motion behavior.
 - Responsive panel sizing, content-driven copy, theme tokens, and section order
   were inspected from the generated homepage HTML.
 - Evidence: `output/playwright/task-049/summary.json` and `transcript.txt`.
@@ -66,5 +66,3 @@ environment limitation because the Playwright CLI could not be fetched.
 
 Archived after static verification. Browser automation remains a documented
 environment limitation because the Playwright CLI could not be fetched.
-
-

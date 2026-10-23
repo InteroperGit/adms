@@ -10,7 +10,8 @@
 
 **Plan:** [Sales and SEO improvement plan](../plan/sales-and-seo-plan.md).
 
-**Depends on:** Tasks 051 and 063; agency owner and approved operational workflow.
+**Depends on:** Tasks 051 and 063; agency owner and approved operational
+workflow.
 
 ## Goal
 
@@ -37,7 +38,7 @@ Connect inquiries to lead quality and actual sales outcomes.
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

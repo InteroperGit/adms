@@ -3,9 +3,9 @@
 // The map flag alone selects third-party iframe versus local static media.
 // Reserve map space while lazy content loads and keep iframe naming intact.
 
-import { site } from '@/content/site';
-import ContactInfo from '@/components/ui/ContactInfo.astro';
-import Section from '@/components/ui/Section.astro';
+import { site } from "@/content/site";
+import ContactInfo from "@/components/ui/ContactInfo.astro";
+import Section from "@/components/ui/Section.astro";
 ---
 
 {/*
@@ -22,8 +22,8 @@ import Section from '@/components/ui/Section.astro';
     <div class="lg:col-span-1 min-w-0">
       <div
         class:list={[
-          'contact-panel rounded-[var(--radius-field)] bg-base-100',
-          'border border-base-300 h-full',
+          "contact-panel rounded-[var(--radius-field)] bg-base-100",
+          "border border-base-300 h-full",
         ]}
       >
         <h3 class="text-xl font-semibold mb-6">
@@ -44,8 +44,8 @@ import Section from '@/components/ui/Section.astro';
     <div class="lg:col-span-2 min-w-0">
       <div
         class:list={[
-          'contact-map w-full rounded-[var(--radius-field)]',
-          'overflow-hidden border border-base-300 bg-base-200',
+          "contact-map w-full rounded-[var(--radius-field)]",
+          "overflow-hidden border border-base-300 bg-base-200",
         ]}
       >
         {site.mapEnabled ? (

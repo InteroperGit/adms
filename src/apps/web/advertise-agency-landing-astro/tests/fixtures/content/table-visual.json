@@ -40,19 +40,42 @@
       { "key": "notes", "label": "Notes and limitations" }
     ],
     "rows": [
-      { "cells": [
-        "Eta", "0", "0%", "Landscape", "Aluminium", "North",
-        "2026-10-14", "All eight fields must remain available on mobile."
-      ] },
-      { "cells": [
-        "Theta", "100", "25%", "Portrait", "Steel", "South",
-        "2026-10-15",
-        "UnbrokenText01234567890123456789012345678901234567890123456789"
-      ] },
-      { "cells": [
-        "Iota", "-3", "75%", "Square", "Wood", "East",
-        "2026-10-16", "A longer value that wraps without losing any data."
-      ] }
+      {
+        "cells": [
+          "Eta",
+          "0",
+          "0%",
+          "Landscape",
+          "Aluminium",
+          "North",
+          "2026-10-14",
+          "All eight fields must remain available on mobile."
+        ]
+      },
+      {
+        "cells": [
+          "Theta",
+          "100",
+          "25%",
+          "Portrait",
+          "Steel",
+          "South",
+          "2026-10-15",
+          "UnbrokenText01234567890123456789012345678901234567890123456789"
+        ]
+      },
+      {
+        "cells": [
+          "Iota",
+          "-3",
+          "75%",
+          "Square",
+          "Wood",
+          "East",
+          "2026-10-16",
+          "A longer value that wraps without losing any data."
+        ]
+      }
     ]
   }
 ]

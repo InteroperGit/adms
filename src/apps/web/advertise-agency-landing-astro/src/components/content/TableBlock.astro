@@ -1,6 +1,6 @@
 ---
 // Render comparison data on desktop and labeled row groups on small screens.
-import type { TableBlock as Table } from '@/types/content-blocks';
+import type { TableBlock as Table } from "@/types/content-blocks";
 
 interface Props {
   // Callers validate that each row has exactly one cell per column.
@@ -13,9 +13,10 @@ const { block } = Astro.props as Props;
 const numberPattern =
   /^[+−-]?(?:\d+|\d{1,3}(?:[ \u00a0\u202f]\d{3})+)(?:[.,]\d+)?\s*%?$/;
 const numericColumns = block.columns.map((_, index) =>
-  block.rows.every((row) => numberPattern.test(row.cells[index].trim())));
-const tableLabel = block.caption || block.columns.map((column) =>
-  column.label).join(', ');
+  block.rows.every((row) => numberPattern.test(row.cells[index].trim())),
+);
+const tableLabel =
+  block.caption || block.columns.map((column) => column.label).join(", ");
 ---
 
 <section class="content-table">
@@ -32,7 +33,10 @@ const tableLabel = block.caption || block.columns.map((column) =>
       <thead>
         <tr>
           {block.columns.map((column, index) => (
-            <th scope="col" class:list={{ numeric: numericColumns[index] }}>
+            <th
+              scope="col"
+              class:list={{ numeric: numericColumns[index] }}
+            >
               {column.label}
             </th>
           ))}
@@ -55,7 +59,10 @@ const tableLabel = block.caption || block.columns.map((column) =>
   <div class="table-stack">
     {block.caption && <p class="stack-caption">{block.caption}</p>}
     {block.rows.map((row) => (
-      <dl class="stack-row" tabindex="0">
+      <dl
+        class="stack-row"
+        tabindex="0"
+      >
         {row.cells.map((cell, index) => (
           <div class="stack-pair">
             <dt>{block.columns[index].label}</dt>
@@ -126,8 +133,11 @@ const tableLabel = block.caption || block.columns.map((column) =>
   .content-table tbody tr:focus-within,
   .stack-row:hover,
   .stack-row:focus-within {
-    background: color-mix(in srgb, var(--content-block-accent) 12%,
-      var(--color-base-100));
+    background: color-mix(
+      in srgb,
+      var(--content-block-accent) 12%,
+      var(--color-base-100)
+    );
   }
 
   /* Inset outlines stay visible inside the horizontal clipping region. */
@@ -192,8 +202,11 @@ const tableLabel = block.caption || block.columns.map((column) =>
     .stack-pair dt {
       padding: 0.25em 0.5em;
       border-inline-start: 3px solid var(--content-block-accent);
-      background: color-mix(in srgb, var(--color-base-content) 10%,
-        var(--color-base-100));
+      background: color-mix(
+        in srgb,
+        var(--color-base-content) 10%,
+        var(--color-base-100)
+      );
       color: var(--content-block-accent);
       font-weight: 700;
     }

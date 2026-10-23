@@ -1,6 +1,6 @@
 ---
 // Render an authored semantic heading at its requested HTML level.
-import type { HeadingBlock as Heading } from '@/types/content-blocks';
+import type { HeadingBlock as Heading } from "@/types/content-blocks";
 
 interface Props {
   block: Heading;
@@ -11,7 +11,12 @@ const Tag = `h${block.level}` as keyof HTMLElementTagNameMap;
 ---
 
 {/* Keep the heading as its own stream item so source order is semantic. */}
-<Tag class="content-heading" id={block.id}>{block.text}</Tag>
+<Tag
+  class="content-heading"
+  id={block.id}
+>
+  {block.text}
+</Tag>
 
 <style>
   /* Keep standalone headings aligned with the article reading column. */

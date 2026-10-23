@@ -1,12 +1,12 @@
 ---
 // Render an allowed production form or a native general-inquiry fallback.
-import type { OrderFormBlock as OrderForm } from '@/types/content-blocks';
+import type { OrderFormBlock as OrderForm } from "@/types/content-blocks";
 import {
   getArticleFormRegistration,
   type ArticleContext,
-} from '@/content/article-context';
-import LedLettersForm from '@/components/forms/LedLettersForm.astro';
-import OrderFormContainer from './OrderFormContainer.astro';
+} from "@/content/article-context";
+import LedLettersForm from "@/components/forms/LedLettersForm.astro";
+import OrderFormContainer from "./OrderFormContainer.astro";
 
 interface Props {
   block: OrderForm;
@@ -18,11 +18,11 @@ const sectionId = block.id ?? `order-form-${block.formId}`;
 ---
 
 {/* Preserve local anchors and form payloads only for approved pages. */}
-{registration?.formId === 'led-letters' && context ? (
-  <div id={sectionId === 'led-letters' ? undefined : sectionId}>
+{registration?.formId === "led-letters" && context ? (
+  <div id={sectionId === "led-letters" ? undefined : sectionId}>
     <LedLettersForm
-      projectId={context.kind === 'project' ? context.projectId : undefined}
-      serviceId={context.kind === 'service' ? context.serviceId : undefined}
+      projectId={context.kind === "project" ? context.projectId : undefined}
+      serviceId={context.kind === "service" ? context.serviceId : undefined}
     />
   </div>
 ) : (
@@ -31,7 +31,12 @@ const sectionId = block.id ?? `order-form-${block.formId}`;
     title="Обсудить проект"
     description="Расскажите о задаче, и мы поможем подготовить запрос."
   >
-    <a class="inquiry-link" href="/#order-inquiry">Открыть форму запроса</a>
+    <a
+      class="inquiry-link"
+      href="/#order-inquiry"
+    >
+      Открыть форму запроса
+    </a>
   </OrderFormContainer>
 )}
 

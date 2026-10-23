@@ -1,47 +1,47 @@
-import type { OrderInquiryContent } from '@/types/order-inquiry';
+import type { OrderInquiryContent } from "@/types/order-inquiry";
 import {
   initializeSmartCaptcha,
   type SmartCaptchaControls,
-} from './smart-captcha';
+} from "./smart-captcha";
 
 type Control = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
 export function initializeInquiry(form: HTMLFormElement): void {
-  const fields = form.querySelector<HTMLFieldSetElement>('fieldset');
+  const fields = form.querySelector<HTMLFieldSetElement>("fieldset");
   const button = form.querySelector<HTMLButtonElement>('[type="submit"]');
   const status = form.querySelector<HTMLElement>('[role="status"]');
   if (!fields || !button || !status) return;
   // Lettering forms require email only for the selected contact channel.
   // Keep this beside validation so every caller gets the same constraints.
-  const method = form.elements.namedItem('contactMethod');
-  const email = form.elements.namedItem('email');
+  const method = form.elements.namedItem("contactMethod");
+  const email = form.elements.namedItem("email");
   if (
     method instanceof HTMLSelectElement &&
     email instanceof HTMLInputElement
   ) {
     const updateContact = () => {
-      email.required = method.value === 'email';
+      email.required = method.value === "email";
       const requirement = form.querySelector('[data-requirement="email"]');
       if (requirement) {
-        requirement.textContent = email.required ? ' *' : ' (необязательно)';
+        requirement.textContent = email.required ? " *" : " (необязательно)";
       }
     };
-    method.addEventListener('change', updateContact);
+    method.addEventListener("change", updateContact);
     // Native reset restores values after dispatching its reset event.
-    form.addEventListener('reset', () => queueMicrotask(updateContact));
+    form.addEventListener("reset", () => queueMicrotask(updateContact));
     updateContact();
   }
   // Status receives focus after async outcomes so keyboard users hear them.
   status.tabIndex = -1;
 
-  const feedback: OrderInquiryContent['feedback'] = JSON.parse(
-    form.dataset.feedback ?? '{}',
+  const feedback: OrderInquiryContent["feedback"] = JSON.parse(
+    form.dataset.feedback ?? "{}",
   );
-  const enabled = form.dataset.enabled === 'true';
+  const enabled = form.dataset.enabled === "true";
   const captchaContainer = form.querySelector<HTMLElement>(
-    '[data-smartcaptcha]',
+    "[data-smartcaptcha]",
   );
-  const captchaSiteKey = captchaContainer?.dataset.sitekey?.trim() ?? '';
+  const captchaSiteKey = captchaContainer?.dataset.sitekey?.trim() ?? "";
   const captchaRequired = captchaContainer !== null;
   const controls = [
     ...fields.querySelectorAll<Control>(
@@ -49,8 +49,8 @@ export function initializeInquiry(form: HTMLFormElement): void {
     ),
   ];
   let sending = false;
-  let previousPayload = '';
-  let requestId = '';
+  let previousPayload = "";
+  let requestId = "";
   let captcha: SmartCaptchaControls | undefined;
 
   function focusStatus() {
@@ -59,41 +59,41 @@ export function initializeInquiry(form: HTMLFormElement): void {
 
   function showError(control: Control): boolean {
     const error = form.querySelector<HTMLElement>(`#${control.id}-error`);
-    let message = '';
-    if (control instanceof HTMLInputElement && control.type === 'checkbox') {
+    let message = "";
+    if (control instanceof HTMLInputElement && control.type === "checkbox") {
       if (control.required && !control.checked) message = feedback.required;
     } else if (control.required && !control.value.trim()) {
       message = feedback.required;
     } else if (
-      'maxLength' in control &&
+      "maxLength" in control &&
       control.maxLength > 0 &&
       control.value.length > control.maxLength
     ) {
       message = feedback.tooLong;
     } else if (control.validity.typeMismatch) {
       message =
-        control instanceof HTMLInputElement && control.type === 'email'
+        control instanceof HTMLInputElement && control.type === "email"
           ? feedback.email
           : control.validationMessage;
     } else if (
       control instanceof HTMLInputElement &&
-      control.type === 'tel' &&
+      control.type === "tel" &&
       control.value.trim() &&
       !/^\+?[\d\s().-]+$/.test(control.value.trim())
     ) {
-      message = 'Укажите корректный номер телефона.';
+      message = "Укажите корректный номер телефона.";
     } else if (
       control instanceof HTMLInputElement &&
-      control.type === 'tel' &&
+      control.type === "tel" &&
       control.value.trim() &&
-      !/^\d{7,15}$/.test(control.value.replace(/\D/g, ''))
+      !/^\d{7,15}$/.test(control.value.replace(/\D/g, ""))
     ) {
-      message = 'Укажите номер телефона: от 7 до 15 цифр.';
+      message = "Укажите номер телефона: от 7 до 15 цифр.";
     } else if (!control.validity.valid) {
       // Numeric ranges, steps and other native constraints remain enforced.
       message = control.validationMessage;
     }
-    control.setAttribute('aria-invalid', String(Boolean(message)));
+    control.setAttribute("aria-invalid", String(Boolean(message)));
     if (error) {
       error.textContent = message;
       error.hidden = !message;
@@ -102,7 +102,7 @@ export function initializeInquiry(form: HTMLFormElement): void {
   }
 
   // Cancel native submission even when delivery is unavailable.
-  form.addEventListener('submit', async (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (sending) return;
     if (!enabled) {
@@ -114,7 +114,7 @@ export function initializeInquiry(form: HTMLFormElement): void {
     if (!valid) {
       status.textContent = feedback.invalid;
       controls
-        .find((control) => control.getAttribute('aria-invalid') === 'true')
+        .find((control) => control.getAttribute("aria-invalid") === "true")
         ?.focus();
       return;
     }
@@ -141,36 +141,36 @@ export function initializeInquiry(form: HTMLFormElement): void {
     sending = true;
     fields.disabled = true;
     button.disabled = true;
-    form.setAttribute('aria-busy', 'true');
+    form.setAttribute("aria-busy", "true");
     status.textContent = feedback.sending;
     try {
       if (serialized !== previousPayload) {
         requestId = crypto.randomUUID();
         previousPayload = serialized;
       }
-      const response = await fetch(form.dataset.endpoint ?? '', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch(form.dataset.endpoint ?? "", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...payload, requestId }),
         signal: controller.signal,
-        credentials: 'omit',
-        redirect: 'error',
+        credentials: "omit",
+        redirect: "error",
       });
-      if (!response.ok) throw new Error('Delivery rejected');
+      if (!response.ok) throw new Error("Delivery rejected");
       const result: unknown = await response.json();
       if (
         !result ||
-        typeof result !== 'object' ||
-        !('accepted' in result) ||
+        typeof result !== "object" ||
+        !("accepted" in result) ||
         result.accepted !== true ||
-        !('receiptId' in result) ||
-        typeof result.receiptId !== 'string' ||
+        !("receiptId" in result) ||
+        typeof result.receiptId !== "string" ||
         !result.receiptId.trim()
       )
-        throw new Error('Acceptance not confirmed');
+        throw new Error("Acceptance not confirmed");
       form.reset();
-      previousPayload = '';
-      requestId = '';
+      previousPayload = "";
+      requestId = "";
       status.textContent = feedback.success;
       focusStatus();
     } catch {
@@ -182,13 +182,13 @@ export function initializeInquiry(form: HTMLFormElement): void {
       sending = false;
       fields.disabled = false;
       button.disabled = false;
-      form.removeAttribute('aria-busy');
+      form.removeAttribute("aria-busy");
     }
   });
 
   controls.forEach((control) =>
-    control.addEventListener('input', () => {
-      if (control.getAttribute('aria-invalid') === 'true') showError(control);
+    control.addEventListener("input", () => {
+      if (control.getAttribute("aria-invalid") === "true") showError(control);
     }),
   );
   if (captchaRequired) {
@@ -199,12 +199,12 @@ export function initializeInquiry(form: HTMLFormElement): void {
         : feedback.unavailable;
     } else {
       status.textContent = feedback.captchaLoading;
-      captchaContainer.addEventListener('captcha-token', () => {
+      captchaContainer.addEventListener("captcha-token", () => {
         if (
           status.textContent === feedback.captchaExpired ||
           status.textContent === feedback.captchaUnavailable
         ) {
-          status.textContent = '';
+          status.textContent = "";
         }
       });
       void initializeSmartCaptcha(
@@ -220,7 +220,7 @@ export function initializeInquiry(form: HTMLFormElement): void {
         .then((controls) => {
           captcha = controls;
           button.disabled = !enabled;
-          status.textContent = enabled ? '' : feedback.unavailable;
+          status.textContent = enabled ? "" : feedback.unavailable;
         })
         .catch(() => {
           status.textContent = feedback.captchaUnavailable;

@@ -56,8 +56,8 @@ Date: 2026-10-14. Status: planned.
 
 - [083](../fixed/20261014/083-inventory-content-history.md) — completed
   inventory and data policy.
-- [084](../fixed/20261014/084-create-content-templates.md) — completed
-  templates and deterministic generator.
+- [084](../fixed/20261014/084-create-content-templates.md) — completed templates
+  and deterministic generator.
 - [084a](../todo/084a-document-template-comments-and-examples.md) — Russian
   template comments, field types, enum guidance, and MDX examples.
 - [085](../todo/085-switch-runtime-content-source.md) — новый источник и
@@ -69,6 +69,6 @@ Date: 2026-10-14. Status: planned.
 ## Data preservation constraint
 
 The existing `data/content/` directory must remain physically present and
-byte-for-byte unchanged. Future history cleanup may remove the path from the
-Git index and approved rewritten refs, but must never delete or edit this local
+byte-for-byte unchanged. Future history cleanup may remove the path from the Git
+index and approved rewritten refs, but must never delete or edit this local
 ready-data reserve. Record and compare its file hashes before and after.

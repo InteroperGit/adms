@@ -1,30 +1,35 @@
 ---
 interface Props {
-  type: 'catalog' | 'search';
+  type: "catalog" | "search";
   hidden?: boolean;
 }
 
 const { type, hidden = false } = Astro.props;
-const isSearch = type === 'search';
+const isSearch = type === "search";
 ---
 
 <section
-  class:list={['catalog-empty', isSearch && 'catalog-search-empty']}
+  class:list={["catalog-empty", isSearch && "catalog-search-empty"]}
   data-catalog-search-empty={isSearch ? true : undefined}
   hidden={hidden}
   aria-labelledby={
-    isSearch ? 'catalog-search-empty-title' : 'catalog-empty-title'
+    isSearch ? "catalog-search-empty-title" : "catalog-empty-title"
   }
 >
-  <h2 id={isSearch ? 'catalog-search-empty-title' : 'catalog-empty-title'}>
-    {isSearch ? 'Проекты не найдены' : 'Проекты пока не опубликованы'}
+  <h2 id={isSearch ? "catalog-search-empty-title" : "catalog-empty-title"}>
+    {isSearch ? "Проекты не найдены" : "Проекты пока не опубликованы"}
   </h2>
   <p>
     {isSearch
-      ? 'Измените запрос или сбросьте фильтр категории.'
-      : 'Здесь появятся наши реализованные проекты.'}
+      ? "Измените запрос или сбросьте фильтр категории."
+      : "Здесь появятся наши реализованные проекты."}
   </p>
   {isSearch && (
-    <button type="button" data-catalog-reset>Сбросить фильтры</button>
+    <button
+      type="button"
+      data-catalog-reset
+    >
+      Сбросить фильтры
+    </button>
   )}
 </section>

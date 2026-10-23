@@ -2,17 +2,17 @@
 
 ## Required Astro skill
 
-Use the `astro-best-practices` skill whenever creating, changing, reviewing,
-or refactoring `.astro` files, including components, layouts and pages.
-Read its `SKILL.md` from the available skills catalog before starting work
-and apply its architecture, accessibility, performance and styling guidance.
-If the skill is unavailable, report that limitation instead of claiming it
-was applied. Project rules and explicit user instructions take precedence.
+Use the `astro-best-practices` skill whenever creating, changing, reviewing, or
+refactoring `.astro` files, including components, layouts and pages. Read its
+`SKILL.md` from the available skills catalog before starting work and apply its
+architecture, accessibility, performance and styling guidance. If the skill is
+unavailable, report that limitation instead of claiming it was applied. Project
+rules and explicit user instructions take precedence.
 
 Write human-readable, fully explained components following
-[code style](code-style.md#astro-component-readability-and-comments).
-Keep static content in Astro, client JavaScript minimal, and styles scoped
-unless an existing shared convention requires otherwise.
+[code style](code-style.md#astro-component-readability-and-comments). Keep
+static content in Astro, client JavaScript minimal, and styles scoped unless an
+existing shared convention requires otherwise.
 
 ## Official documentation
 

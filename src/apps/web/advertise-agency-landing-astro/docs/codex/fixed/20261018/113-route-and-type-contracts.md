@@ -70,5 +70,5 @@ strict type harness, focused ESLint/Prettier, code style, content, boundaries
 and component test colocation checks pass.
 
 Astro validation: `pnpm check` passed with zero errors/warnings and one
-pre-existing Zod deprecation hint. `pnpm build` generated 39 pages; the
-existing large-bundle warning remains.
+pre-existing Zod deprecation hint. `pnpm build` generated 39 pages; the existing
+large-bundle warning remains.

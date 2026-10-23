@@ -1,6 +1,6 @@
 ---
 // Present the project title and the small set of verified attribution fields.
-import type { Project } from '@/types/project';
+import type { Project } from "@/types/project";
 
 interface Props {
   project: Project;
@@ -19,9 +19,11 @@ const { project } = Astro.props;
     <div>
       <dt>Год</dt>
       <dd>
-        {project.date
-          ? <time datetime={project.date}>{project.date}</time>
-          : 'Уточняется'}
+        {project.date ? (
+          <time datetime={project.date}>{project.date}</time>
+        ) : (
+          "Уточняется"
+        )}
       </dd>
     </div>
   </dl>

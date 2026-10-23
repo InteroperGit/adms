@@ -3,21 +3,22 @@
 // Alternate surfaces by rendered section order, including optional offers.
 // Each section owns its content and any narrowly scoped browser behavior.
 
-import Layout from '@/layouts/Layout.astro';
-import About from '@/components/sections/About.astro';
-import Services from '@/components/sections/Services.astro';
-import Introduction from '@/components/sections/Introduction.astro';
-import OffersCarousel from '@/components/sections/OffersCarousel.astro';
-import Projects from '@/components/sections/Projects.astro';
-import PricingExamples from '@/components/sections/PricingExamples.astro';
-import OrderingProcess from '@/components/sections/OrderingProcess.astro';
-import ProductionAndGuarantees
-  from '@/components/sections/ProductionAndGuarantees.astro';
-import Reviews from '@/components/sections/Reviews.astro';
-import Faq from '@/components/sections/Faq.astro';
-import BusinessSolutions from '@/components/sections/BusinessSolutions.astro';
-import Contacts from '@/components/sections/Contacts.astro';
-import OrderInquiry from '@/components/sections/OrderInquiry.astro';
+import Layout from "@/layouts/Layout.astro";
+import About from "@/components/sections/About.astro";
+import Services from "@/components/sections/Services.astro";
+import Introduction from "@/components/sections/Introduction.astro";
+import OffersCarousel from "@/components/sections/OffersCarousel.astro";
+import Projects from "@/components/sections/Projects.astro";
+import PricingExamples from "@/components/sections/PricingExamples.astro";
+import OrderingProcess from "@/components/sections/OrderingProcess.astro";
+// prettier-ignore
+import ProductionAndGuarantees from
+  '@/components/sections/ProductionAndGuarantees.astro';
+import Reviews from "@/components/sections/Reviews.astro";
+import Faq from "@/components/sections/Faq.astro";
+import BusinessSolutions from "@/components/sections/BusinessSolutions.astro";
+import Contacts from "@/components/sections/Contacts.astro";
+import OrderInquiry from "@/components/sections/OrderInquiry.astro";
 ---
 
 {/* Each section owns its content and any narrowly scoped browser behavior. */}
@@ -48,7 +49,7 @@ import OrderInquiry from '@/components/sections/OrderInquiry.astro';
 </Layout>
 
 <script>
-  import { initializeHomepageReveal } from '../scripts/homepage-reveal';
+  import { initializeHomepageReveal } from "../scripts/homepage-reveal";
 
   // Keep browser-only behavior outside the page composition markup.
   initializeHomepageReveal();
@@ -77,7 +78,7 @@ import OrderInquiry from '@/components/sections/OrderInquiry.astro';
     > :global(
       section:not(.offers-section) + section:not(.offers-section)
     )::before {
-    content: '';
+    content: "";
     position: absolute;
     z-index: 0;
     top: -1rem;
@@ -96,12 +97,12 @@ import OrderInquiry from '@/components/sections/OrderInquiry.astro';
   }
 
   /* Fade contents only; preserve section backgrounds and layout geometry. */
-  .homepage-sections > :global(section[data-reveal-state='pending'] > *) {
+  .homepage-sections > :global(section[data-reveal-state="pending"] > *) {
     opacity: 0;
   }
 
   /* Revealed content stays visible without transforms affecting controls. */
-  .homepage-sections > :global(section[data-reveal-state='revealed'] > *) {
+  .homepage-sections > :global(section[data-reveal-state="revealed"] > *) {
     transition: opacity 360ms ease-out;
   }
 

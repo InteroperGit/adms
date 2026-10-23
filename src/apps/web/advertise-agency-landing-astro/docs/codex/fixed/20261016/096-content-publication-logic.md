@@ -18,8 +18,8 @@ links и полное соответствие block labels.
 
 ## Готово, когда
 
-Pure logic тестируется без Astro render, unknown IDs и empty collections покрыты,
-coverage content group не ниже 90%.
+Pure logic тестируется без Astro render, unknown IDs и empty collections
+покрыты, coverage content group не ниже 90%.
 
 Зависимость: 094, 095.
 
@@ -27,10 +27,10 @@ coverage content group не ниже 90%.
 
 Completed without subagents. Added eleven colocated pure-logic suites using
 versioned fixtures. Cases cover nested draft filtering, cascading footnotes,
-demo media, approvals and rights, source-labelled policy failures, FAQ and
-photo gates, service/project visibility and indexable paths, price formatting,
-form ownership and registry fallback, safe paragraph links, category validation
-and complete Russian block labels. No Astro rendering or network is needed.
+demo media, approvals and rights, source-labelled policy failures, FAQ and photo
+gates, service/project visibility and indexable paths, price formatting, form
+ownership and registry fallback, safe paragraph links, category validation and
+complete Russian block labels. No Astro rendering or network is needed.
 
 Extended the normal coverage include to all eleven scoped content modules.
 Production logic and runtime content were not changed.

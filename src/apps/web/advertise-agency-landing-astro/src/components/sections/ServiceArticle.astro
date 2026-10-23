@@ -3,11 +3,11 @@
 // Unknown IDs fail the build; unapproved demo content remains noindex.
 // Keep image, inquiry checklist and return/contact actions in reading order.
 
-import Layout from '@/layouts/Layout.astro';
-import ContentBlocks from '@/components/content/ContentBlocks.astro';
-import Button from '@/components/ui/Button.astro';
-import { services, visibleServices } from '@/content/services';
-import { isServiceArticlePublished } from '@/content/service-publication';
+import Layout from "@/layouts/Layout.astro";
+import ContentBlocks from "@/components/content/ContentBlocks.astro";
+import Button from "@/components/ui/Button.astro";
+import { services, visibleServices } from "@/content/services";
+import { isServiceArticlePublished } from "@/content/service-publication";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -22,8 +22,8 @@ const { article } = service;
 // Index only when category, copy, image and article approvals all permit it.
 const demo = !isServiceArticlePublished(services, service);
 // A withheld catalog has no homepage anchor, so return to the homepage.
-const catalogHref = visibleServices.length ? '/#services' : '/';
-const catalogLabel = visibleServices.length ? 'Все услуги' : 'На главную';
+const catalogHref = visibleServices.length ? "/#services" : "/";
+const catalogLabel = visibleServices.length ? "Все услуги" : "На главную";
 ---
 
 {/*
@@ -35,7 +35,10 @@ const catalogLabel = visibleServices.length ? 'Все услуги' : 'На гл
   noindex={demo}
 >
   <article class="site-container service-article">
-    <a class="service-back" href={catalogHref}>
+    <a
+      class="service-back"
+      href={catalogHref}
+    >
       {catalogLabel}
     </a>
     <div class="service-heading">
@@ -48,13 +51,21 @@ const catalogLabel = visibleServices.length ? 'Все услуги' : 'На гл
       <ContentBlocks
         blocks={article.content}
         context={{
-          kind: 'service', serviceId: service.id,
-          category: service.id, published: !demo,
+          kind: "service",
+          serviceId: service.id,
+          category: service.id,
+          published: !demo,
         }}
       />
-      <nav class="service-actions" aria-label="Действия по услуге">
+      <nav
+        class="service-actions"
+        aria-label="Действия по услуге"
+      >
         <Button href="/#order-inquiry">Обсудить проект</Button>
-        <a class="service-back" href={catalogHref}>
+        <a
+          class="service-back"
+          href={catalogHref}
+        >
           {catalogLabel}
         </a>
       </nav>

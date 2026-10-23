@@ -1,23 +1,23 @@
 // Build deterministic versioned fixtures, then let Playwright own preview.
-import { spawn } from 'node:child_process';
-import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
-import { preview } from 'astro';
+import { spawn } from "node:child_process";
+import { cp, mkdir, readFile, writeFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
+import { preview } from "astro";
 
-const root = resolve('output/playwright/content');
+const root = resolve("output/playwright/content");
 const templates = JSON.parse(
-  await readFile('data/templates/manifest.json', 'utf8'),
+  await readFile("data/templates/manifest.json", "utf8"),
 );
 const overrides = JSON.parse(
-  await readFile('tests/fixtures/content/e2e-overrides.json', 'utf8'),
+  await readFile("tests/fixtures/content/e2e-overrides.json", "utf8"),
 );
-for (const entry of templates.files.filter((item) => item.kind === 'json')) {
+for (const entry of templates.files.filter((item) => item.kind === "json")) {
   const path = entry.output ?? entry.path;
   const value = JSON.parse(
-    await readFile(resolve('tests/fixtures/content/site', path), 'utf8'),
+    await readFile(resolve("tests/fixtures/content/site", path), "utf8"),
   );
-  if (path === 'config/order-inquiry.json') value.submission.enabled = true;
-  if (path === 'config/services.json') {
+  if (path === "config/order-inquiry.json") value.submission.enabled = true;
+  if (path === "config/services.json") {
     value.demoMode = overrides.services.demoMode;
     value.copyApproved = overrides.services.copyApproved;
     const itemOverride = overrides.services.item;
@@ -30,33 +30,33 @@ for (const entry of templates.files.filter((item) => item.kind === 'json')) {
     service.image = { ...service.image, ...itemOverride.image };
     service.article = { ...service.article, ...itemOverride.article };
   }
-  if (path === 'config/projects.json') {
+  if (path === "config/projects.json") {
     const project = value.find((item) => item.id === 1);
-    if (!project) throw new Error('E2E project not found: 1');
+    if (!project) throw new Error("E2E project not found: 1");
     project.article.content.push(...overrides.projectBlocks);
   }
   const target = resolve(root, path);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, JSON.stringify(value, null, 2));
 }
-for (const kind of ['services', 'projects', 'fixtures']) {
-  await mkdir(resolve(root, 'articles', kind), { recursive: true });
+for (const kind of ["services", "projects", "fixtures"]) {
+  await mkdir(resolve(root, "articles", kind), { recursive: true });
 }
-await mkdir(resolve(root, 'fixtures/articles'), { recursive: true });
+await mkdir(resolve(root, "fixtures/articles"), { recursive: true });
 await cp(
-  'tests/fixtures/content/articles',
-  resolve(root, 'fixtures/articles'),
+  "tests/fixtures/content/articles",
+  resolve(root, "fixtures/articles"),
   { recursive: true },
 );
 
 const env = {
   ...process.env,
-  E2E_CONTENT_ROOT: './output/playwright/content',
-  PUBLIC_YANDEX_SMARTCAPTCHA_SITE_KEY: 'e2e-public-key',
+  E2E_CONTENT_ROOT: "./output/playwright/content",
+  PUBLIC_YANDEX_SMARTCAPTCHA_SITE_KEY: "e2e-public-key",
 };
-const astro = resolve('node_modules/astro/bin/astro.mjs');
+const astro = resolve("node_modules/astro/bin/astro.mjs");
 let child;
-for (const signal of ['SIGTERM', 'SIGINT']) {
+for (const signal of ["SIGTERM", "SIGINT"]) {
   process.on(signal, () => {
     child?.kill(signal);
   });
@@ -65,22 +65,22 @@ function run(args) {
   return new Promise((accept, reject) => {
     child = spawn(process.execPath, [astro, ...args], {
       env,
-      stdio: 'inherit',
+      stdio: "inherit",
     });
-    child.once('error', reject);
-    child.once('exit', (code) => {
+    child.once("error", reject);
+    child.once("exit", (code) => {
       if (code === 0) accept();
       else reject(new Error(`Astro exited with ${code}`));
     });
   });
 }
-await run(['build', '--config', 'scripts/e2e.config.mjs']);
+await run(["build", "--config", "scripts/e2e.config.mjs"]);
 // The API avoids the CLI daemon and leaves existing preview servers alone.
 const server = await preview({
-  configFile: 'scripts/e2e.config.mjs',
-  server: { host: '127.0.0.1', port: 4327 },
+  configFile: "scripts/e2e.config.mjs",
+  server: { host: "127.0.0.1", port: 4327 },
 });
-for (const signal of ['SIGTERM', 'SIGINT']) {
+for (const signal of ["SIGTERM", "SIGINT"]) {
   process.on(signal, async () => {
     await server.stop();
     process.exit(0);

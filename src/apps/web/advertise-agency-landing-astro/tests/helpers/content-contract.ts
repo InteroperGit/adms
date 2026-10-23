@@ -1,5 +1,5 @@
-import { expect } from 'vitest';
-import type { z } from 'astro/zod';
+import { expect } from "vitest";
+import type { z } from "astro/zod";
 
 /** Keeps the shared root-contract checks consistent across content schemas. */
 export function expectContentContract(
@@ -9,7 +9,7 @@ export function expectContentContract(
 ): void {
   expect(schema.safeParse(fixture).success).toBe(true);
 
-  for (const invalid of [null, true, 42, 'text']) {
+  for (const invalid of [null, true, 42, "text"]) {
     expect(schema.safeParse(invalid).success).toBe(false);
   }
 

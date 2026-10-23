@@ -4,19 +4,19 @@
 
 Colocated pure logic contracts run with `pnpm test:unit`, which discovers the
 suites under `src/validation`, `src/content`, `src/scripts` and `src/server`.
-Component contracts run separately with `pnpm test:components`. Every
-component test belongs beside its source file, using the same basename, such
-as `Button.astro` and `Button.test.ts`.
-`pnpm verify:component-tests` fails if a component test is added back under
-`tests/components`. `pnpm test:coverage` runs the full suite and writes ignored
-HTML/LCOV reports under `coverage/`. The coverage include covers every component
-plus the pure validation, content, server, form, and catalog modules. The report
-measures mapped server render code for Astro components, not CSS or browser
-behavior. Review portraits are required by the current Review type and
-validator. The older component reference's optional-portrait wording does not
-describe an accepted input; tests use valid portraits with alt text and
-dimensions. Tests use versioned synthetic JSON under `tests/fixtures/content/`;
-the Vitest category-registry alias avoids importing deployment content.
+Component contracts run separately with `pnpm test:components`. Every component
+test belongs beside its source file, using the same basename, such as
+`Button.astro` and `Button.test.ts`. `pnpm verify:component-tests` fails if a
+component test is added back under `tests/components`. `pnpm test:coverage` runs
+the full suite and writes ignored HTML/LCOV reports under `coverage/`. The
+coverage include covers every component plus the pure validation, content,
+server, form, and catalog modules. The report measures mapped server render code
+for Astro components, not CSS or browser behavior. Review portraits are required
+by the current Review type and validator. The older component reference's
+optional-portrait wording does not describe an accepted input; tests use valid
+portraits with alt text and dimensions. Tests use versioned synthetic JSON under
+`tests/fixtures/content/`; the Vitest category-registry alias avoids importing
+deployment content.
 
 Run `pnpm verify:boundaries`, `pnpm verify:content`, `pnpm check`,
 `pnpm test:types`, `pnpm verify:component-tests`, and `pnpm build` before

@@ -25,8 +25,9 @@ Measure accepted inquiries separately from contact intent.
 - Track phone clicks as separate intent events, never as completed inquiries.
   Capture relevant page/service/source attribution without form text or other
   personal data in analytics URLs, events, or logs.
-- Verify success, failure, timeout, retry, duplicate-click, unavailable delivery,
-  and consent states with controlled events; document no-JavaScript limits.
+- Verify success, failure, timeout, retry, duplicate-click, unavailable
+  delivery, and consent states with controlled events; document no-JavaScript
+  limits.
 - Keep client code small and document configuration, dashboards, and event
   meanings so the agency can interpret results.
 
@@ -39,7 +40,7 @@ Measure accepted inquiries separately from contact intent.
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

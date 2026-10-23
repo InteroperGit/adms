@@ -23,12 +23,12 @@
 `-- pnpm-lock.yaml
 ```
 
-Use `data/content/config/site.json` for the displayed agency name (`logoText`), site
-title and description, contact information, navigation, section headings, and
-footer description/copyright. The header, footer, and page metadata share that
-configuration. The footer year is generated at build time; rebuild when it needs
-to change. Keep approved legal copy in its legal JSON documents rather than
-substituting brand names programmatically.
+Use `data/content/config/site.json` for the displayed agency name (`logoText`),
+site title and description, contact information, navigation, section headings,
+and footer description/copyright. The header, footer, and page metadata share
+that configuration. The footer year is generated at build time; rebuild when it
+needs to change. Keep approved legal copy in its legal JSON documents rather
+than substituting brand names programmatically.
 
 Domain contracts in `src/types/` remain independent of runtime validation.
 Validators in `src/validation/` import contracts only as types and check
@@ -40,48 +40,48 @@ client scripts.
 ## Shared styles
 
 `Layout.astro` imports only `src/styles/global.css`. That entry declares the
-`theme`, `base`, `components`, `utilities` layer order and imports the
-scrollbar rules, Tailwind, `tokens.css`, `themes.css` and `foundations.css`.
-The main DaisyUI plugin is registered once with automatic themes disabled;
-`themes.css` supplies the customized built-in light/dark themes and the
-system fallback. Do not import Tailwind or register DaisyUI in components.
+`theme`, `base`, `components`, `utilities` layer order and imports the scrollbar
+rules, Tailwind, `tokens.css`, `themes.css` and `foundations.css`. The main
+DaisyUI plugin is registered once with automatic themes disabled; `themes.css`
+supplies the customized built-in light/dark themes and the system fallback. Do
+not import Tailwind or register DaisyUI in components.
 
 `tokens.css` owns constant utilities, runtime color aliases, unlayered site
 geometry and shared content tokens. `themes.css` owns palettes and shadows.
-`foundations.css` keeps document defaults in `base`, shared `.site-*` rules
-in `components`, and native smooth scrolling unlayered. Scrollbars also
-remain unlayered. Important reduced-motion rules override scrolling and
-animation regardless of layer.
+`foundations.css` keeps document defaults in `base`, shared `.site-*` rules in
+`components`, and native smooth scrolling unlayered. Scrollbars also remain
+unlayered. Important reduced-motion rules override scrolling and animation
+regardless of layer.
 
 Keep local layouts and states in component-scoped styles; place only shared
 foundations in these modules. Preserve public token/class names when
-refactoring. See [design tokens and cascade][source-2] and
-[theme behavior][source-3] for ownership and compatibility details.
+refactoring. See [design tokens and cascade][source-2] and [theme
+behavior][source-3] for ownership and compatibility details.
 
 ## Code line length
 
-Every line of code must be at most 80 characters, including indentation.
-This applies to Astro markup, scripts, styles, configuration and code examples.
-Wrap long lines using valid syntax when adding or editing code.
+Every line of code must be at most 80 characters, including indentation. This
+applies to Astro markup, scripts, styles, configuration and code examples. Wrap
+long lines using valid syntax when adding or editing code.
 
 ## Astro component readability
 
 Use `astro-best-practices` when creating, changing or reviewing any Astro
 component, layout or page. Explain the file's responsibility and meaningful
-props, defaults and slots near their definitions. Add source-only comments
-for logical markup sections and explain nontrivial browser initialization,
-state changes, focus handling, storage fallbacks and cleanup.
+props, defaults and slots near their definitions. Add source-only comments for
+logical markup sections and explain nontrivial browser initialization, state
+changes, focus handling, storage fallbacks and cleanup.
 
 Keep metadata/content preparation in frontmatter and narrowly scoped browser
-behavior in scripts. ThemeInit is deliberately an inline head script: its
-first application must run before content can paint. The inquiry form starts
-protected until its submission handler is installed. Static page wrappers
-should retain their route/content ownership without adding client state.
+behavior in scripts. ThemeInit is deliberately an inline head script: its first
+application must run before content can paint. The inquiry form starts protected
+until its submission handler is installed. Static page wrappers should retain
+their route/content ownership without adding client state.
 
-Use descriptive names and expanded markup, scripts and styles. Comments
-explain purpose and reasoning rather than narrating every obvious line.
-Task 031 reviews all 37 existing Astro files against these conventions;
-follow the [readability rules](rules/code-style.md) for subsequent changes.
+Use descriptive names and expanded markup, scripts and styles. Comments explain
+purpose and reasoning rather than narrating every obvious line. Task 031 reviews
+all 37 existing Astro files against these conventions; follow the
+[readability rules](rules/code-style.md) for subsequent changes.
 
 ## Astro component CSS
 
@@ -110,7 +110,6 @@ the layout change. Follow these rules when adding or editing component styles;
   }
 }
 ```
-
 
 [source-1]: ../site/content.md#changing-a-domain-field
 [source-2]: ../site/design-system.md#tokens-and-primitives

@@ -1,7 +1,7 @@
 /* Register constant design tokens as reusable Tailwind utilities. */
 @theme {
   --color-brand: #ea580c;
-  --font-sans: 'Segoe UI', Arial, sans-serif;
+  --font-sans: "Segoe UI", Arial, sans-serif;
   --radius-panel: 1rem;
 }
 

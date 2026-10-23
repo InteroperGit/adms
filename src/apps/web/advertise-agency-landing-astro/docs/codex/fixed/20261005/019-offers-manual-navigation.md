@@ -41,8 +41,8 @@ quiet counter, visible theme-aware focus and polite manual status. One current
 index drives all navigation. Initialization alone adds carousel semantics and
 reveals controls; zero/one/no-JS preserve static behavior. Inactive slides use
 `aria-hidden`, `inert` and CSS visibility while sharing the tallest grid track.
-This avoids Tailwind's `hidden` display rule removing reserved geometry.
-No height measurements, carousel package, autoplay or swipe. Short fade respects
+This avoids Tailwind's `hidden` display rule removing reserved geometry. No
+height measurements, carousel package, autoplay or swipe. Short fade respects
 reduced motion. A separate wrapping control row stays clear of all copy/CTAs.
 
 Updated `docs/site/offers-carousel.md` with behavior and verification, corrected
@@ -53,22 +53,24 @@ Original `data/content/offers.json` restored byte-for-byte after fixtures:
 ## Verification and limits
 
 - Chrome: 16 light/dark × 320/375/768/1440px × normal/200% root text cases.
-  Wrapping arrows, direct dots, selected indicator/counter, native CTA navigation,
-  concise status, silent initialization, Tab/Enter/Space, retained focus,
-  inactive accessibility/tab exclusion, 44px targets and visible focus passed.
+  Wrapping arrows, direct dots, selected indicator/counter, native CTA
+  navigation, concise status, silent initialization, Tab/Enter/Space, retained
+  focus, inactive accessibility/tab exclusion, 44px targets and visible focus
+  passed.
 - Stable height, contained copy, separate controls and no document overflow
-  passed, including both-theme 844×390 landscape and resizing to 320px.
-  Reduced motion disables animation. Four long/unbroken maximum-3rem
-  description/CTA cases with 200% root text expand without clipping.
+  passed, including both-theme 844×390 landscape and resizing to 320px. Reduced
+  motion disables animation. Four long/unbroken maximum-3rem description/CTA
+  cases with 200% root text expand without clipping.
 - Both-theme no-JS and blocked-image fallbacks passed. Both remote images loaded
   successfully in a separate check; desktop screenshot visually reviewed.
 - Six actual JSON browser fixtures passed: zero, global-disabled, all-disabled,
   one, filtered order and restored multiple. Fixture cleanup restores bytes even
   on failure; a development reload connection reset was retried successfully.
 - Final `pnpm check`: zero errors/warnings, one preexisting ignored task-018
-  script hint. Final `pnpm build`: six pages. Diff and 80-column code checks pass.
-- Evidence scripts, matrix record, fixture/edge results and screenshots:
-  ignored `output/playwright/task-019/`.
+  script hint. Final `pnpm build`: six pages. Diff and 80-column code checks
+  pass.
+- Evidence scripts, matrix record, fixture/edge results and screenshots: ignored
+  `output/playwright/task-019/`.
 
 Browser checks use development output. Native browser zoom and screen-reader
 speech were not tested; 200% root text is a separate check. Task 021 owns

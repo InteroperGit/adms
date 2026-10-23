@@ -6,8 +6,8 @@
 
 ## Объём
 
-Покрыть carousel, project catalog, order inquiry, theme initialization,
-mobile menu и cookie storage. Проверить aria/data-состояния, autoplay,
+Покрыть carousel, project catalog, order inquiry, theme initialization, mobile
+menu и cookie storage. Проверить aria/data-состояния, autoplay,
 hover/focus/visibility/reduced-motion, history и query string, blocked
 localStorage, ошибки формы и отсутствие дублирующихся listeners.
 

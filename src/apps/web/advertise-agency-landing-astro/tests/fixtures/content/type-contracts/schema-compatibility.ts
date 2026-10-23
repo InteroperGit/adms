@@ -1,23 +1,23 @@
 // Compile schema outputs together with their plain browser domain contracts.
 // These checks also load each schema's existing nested contract assertions.
-import type { z } from 'astro/zod';
-import type * as Domain from '@/types';
-import type { AssertContract, SameContract } from '@/validation/shared';
-import type { businessSolutionsSchema } from '@/validation/business-solutions';
-import type { contentBlockSchema } from '@/validation/content-blocks';
-import type { faqSchema } from '@/validation/faq';
-import type { carouselContentSchema } from '@/validation/image-carousel';
-import type { introductionSchema } from '@/validation/introduction';
-import type { offersSchema } from '@/validation/offers';
-import type { orderInquirySchema } from '@/validation/order-inquiry';
-import type { orderingProcessSchema } from '@/validation/ordering-process';
-import type { pricingSchema } from '@/validation/pricing';
+import type { z } from "astro/zod";
+import type * as Domain from "@/types";
+import type { AssertContract, SameContract } from "@/validation/shared";
+import type { businessSolutionsSchema } from "@/validation/business-solutions";
+import type { contentBlockSchema } from "@/validation/content-blocks";
+import type { faqSchema } from "@/validation/faq";
+import type { carouselContentSchema } from "@/validation/image-carousel";
+import type { introductionSchema } from "@/validation/introduction";
+import type { offersSchema } from "@/validation/offers";
+import type { orderInquirySchema } from "@/validation/order-inquiry";
+import type { orderingProcessSchema } from "@/validation/ordering-process";
+import type { pricingSchema } from "@/validation/pricing";
 // prettier-ignore
 import type { productionAndGuaranteesSchema }
   from '@/validation/production-and-guarantees';
-import type { projectSchema } from '@/validation/projects';
-import type { reviewSchema } from '@/validation/reviews';
-import type { servicesSchema } from '@/validation/services';
+import type { projectSchema } from "@/validation/projects";
+import type { reviewSchema } from "@/validation/reviews";
+import type { servicesSchema } from "@/validation/services";
 
 export type Business = AssertContract<
   SameContract<
@@ -69,7 +69,7 @@ export type Services = AssertContract<
 >;
 
 // Missing and surplus keys must fail the shared comparison helper itself.
-type MissingComparison = SameContract<Pick<Domain.Review, 'id'>, Domain.Review>;
+type MissingComparison = SameContract<Pick<Domain.Review, "id">, Domain.Review>;
 // @ts-expect-error Removing domain keys breaks compatibility.
 export type Missing = AssertContract<MissingComparison>;
 type ExtraShape = Domain.Review & { accidental: string };

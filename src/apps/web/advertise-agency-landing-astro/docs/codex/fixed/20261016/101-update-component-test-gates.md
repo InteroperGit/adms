@@ -28,12 +28,12 @@
 Status: completed on 2026-10-16.
 
 Added `verify:component-tests`, which fails if component tests return to
-`tests/components`, and made it an unconditional CI quality step. Updated
-Vitest coverage comments and the component/CI documentation for colocated
-tests. The complete component scope now enforces a 70% line baseline; the
-full run currently reaches 73.92% component and 86.46% overall coverage.
+`tests/components`, and made it an unconditional CI quality step. Updated Vitest
+coverage comments and the component/CI documentation for colocated tests. The
+complete component scope now enforces a 70% line baseline; the full run
+currently reaches 73.92% component and 86.46% overall coverage.
 
-Validation: 71 files and 219 tests passed, coverage thresholds passed,
-component colocation passed, boundaries/content checks passed, Astro check
-reported no errors, the production build generated 39 pages, built quality
-passed, and code style passed.
+Validation: 71 files and 219 tests passed, coverage thresholds passed, component
+colocation passed, boundaries/content checks passed, Astro check reported no
+errors, the production build generated 39 pages, built quality passed, and code
+style passed.

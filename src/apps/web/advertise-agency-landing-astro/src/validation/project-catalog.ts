@@ -1,5 +1,7 @@
-import { z } from 'astro/zod';
+import { z } from "astro/zod";
 
-export const projectCatalogSchema = z.object({
-  pageSize: z.number().int().positive(),
-}).strict();
+export const projectCatalogSchema = z
+  .object({
+    pageSize: z.number().int().positive(),
+  })
+  .strict();

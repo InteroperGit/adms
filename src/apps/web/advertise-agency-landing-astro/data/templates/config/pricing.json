@@ -8,9 +8,7 @@
   "approvalSource": null,
   "costFactors": {
     "heading": "TEST_HEADING",
-    "items": [
-      "TEST_ITEMS"
-    ]
+    "items": ["TEST_ITEMS"]
   },
   "estimateGuidance": {
     "heading": "TEST_HEADING",
@@ -23,15 +21,9 @@
       "title": "TEST_TITLE",
       "description": "TEST_DESCRIPTION",
       "dimensions": "TEST_DIMENSIONS",
-      "materials": [
-        "TEST_MATERIALS"
-      ],
-      "includedWork": [
-        "TEST_INCLUDEDWORK"
-      ],
-      "exclusions": [
-        "TEST_EXCLUSIONS"
-      ],
+      "materials": ["TEST_MATERIALS"],
+      "includedWork": ["TEST_INCLUDEDWORK"],
+      "exclusions": ["TEST_EXCLUSIONS"],
       "source": "TEST_SOURCE",
       "price": {
         "type": "test",

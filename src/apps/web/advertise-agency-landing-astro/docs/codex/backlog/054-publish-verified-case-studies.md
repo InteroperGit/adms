@@ -26,8 +26,8 @@ Replace proposed-project demonstrations with evidence of actual agency work.
   URLs where possible; document route/redirect decisions for removed cases.
 - Replace unrelated previews and diagrams that imply completed work. Preserve
   optional process sections and matching inquiry actions/forms.
-- Verify media decoding, crops, accessible galleries, responsive pages,
-  project links, and content approval gates against supplied evidence.
+- Verify media decoding, crops, accessible galleries, responsive pages, project
+  links, and content approval gates against supplied evidence.
 
 ## Acceptance
 
@@ -38,7 +38,7 @@ Replace proposed-project demonstrations with evidence of actual agency work.
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

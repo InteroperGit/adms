@@ -1,11 +1,11 @@
 // Shared builders for stable, schema-shaped test data.
-import contracts from '../fixtures/content/unit-contracts.json';
-import blocks from '../fixtures/content/content-blocks.json';
-import type { ContentBlock } from '../../src/types/content-blocks';
-import type { Project } from '../../src/types/project';
+import contracts from "../fixtures/content/unit-contracts.json";
+import blocks from "../fixtures/content/content-blocks.json";
+import type { ContentBlock } from "../../src/types/content-blocks";
+import type { Project } from "../../src/types/project";
 
-type JsonValue = string | number | boolean | null | JsonValue[] |
-  { [key: string]: JsonValue };
+type JsonValue =
+  string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
 /** Clone JSON fixtures so a test can mutate its copy safely. */
 export function cloneFixture<T>(value: T): T {
@@ -43,7 +43,7 @@ export function buildContentBlocks(
 export function buildProject(overrides: Partial<Project> = {}): Project {
   const source = contracts.project as unknown as Project;
   return buildFixture(source, {
-    content: buildContentBlocks([{ type: 'paragraph' }]),
+    content: buildContentBlocks([{ type: "paragraph" }]),
     ...overrides,
   });
 }

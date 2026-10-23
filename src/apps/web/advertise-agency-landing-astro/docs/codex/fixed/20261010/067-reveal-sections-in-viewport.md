@@ -8,13 +8,13 @@
 
 ## Goal
 
-Dynamically reveal homepage sections as they enter the viewport, using a
-subtle transition while preserving accessible, server-rendered content.
+Dynamically reveal homepage sections as they enter the viewport, using a subtle
+transition while preserving accessible, server-rendered content.
 
 ## Scope
 
-- Use a shared IntersectionObserver for top-level homepage sections,
-  including Section.astro instances and custom section wrappers.
+- Use a shared IntersectionObserver for top-level homepage sections, including
+  Section.astro instances and custom section wrappers.
 - Reveal each section once and keep it visible after it leaves the viewport.
 - Keep sections already in view visible on initial load; avoid content flash.
 - Preserve section dimensions, background bands, anchor navigation and SEO.
@@ -45,8 +45,8 @@ subtle transition while preserving accessible, server-rendered content.
 ## Execution notes
 
 Read project rules and apply the astro-best-practices skill before changes.
-Follow the 80-column code limit and document initialization and fallbacks.
-Move this task to fixed only after implementation and acceptance checks.
+Follow the 80-column code limit and document initialization and fallbacks. Move
+this task to fixed only after implementation and acceptance checks.
 
 ## Implementation and review
 
@@ -56,8 +56,8 @@ Move this task to fixed only after implementation and acceptance checks.
 - Initial viewport, focus and fragment targets bypass the fade immediately.
 - Reduced-motion changes reveal pending content and clean up browser hooks.
 - No JavaScript or observer support leaves server-rendered content visible.
-- review_067 found a P2 focus/fragment timing issue during active fades.
-  The implementation agent fixed it; a second review found no further issues.
+- review_067 found a P2 focus/fragment timing issue during active fades. The
+  implementation agent fixed it; a second review found no further issues.
 - Existing user edits were preserved. No commit or deployment performed.
 
 ## Verification evidence
@@ -74,5 +74,5 @@ Move this task to fixed only after implementation and acceptance checks.
 - Screenshot: output/playwright/task-067/mobile.png.
 - Full-load navigation timed out during a verification attempt. Successful
   checks wait for DOM readiness; remote asset loading was outside this task.
-- .codex/TASKS.md remains unchanged because its protected reparse point
-  prevents sandbox writes, as established during task creation.
+- .codex/TASKS.md remains unchanged because its protected reparse point prevents
+  sandbox writes, as established during task creation.

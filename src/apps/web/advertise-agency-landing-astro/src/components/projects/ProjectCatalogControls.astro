@@ -1,5 +1,5 @@
 ---
-import type { ProjectCategoryConfig } from '@/content/project-categories';
+import type { ProjectCategoryConfig } from "@/content/project-categories";
 
 interface Props {
   categories: ProjectCategoryConfig[];
@@ -8,7 +8,12 @@ interface Props {
 const { categories } = Astro.props;
 ---
 
-<form class="catalog-controls" role="search" data-catalog-controls hidden>
+<form
+  class="catalog-controls"
+  role="search"
+  data-catalog-controls
+  hidden
+>
   <label for="project-search">Поиск по проектам</label>
   <input
     id="project-search"
@@ -19,7 +24,10 @@ const { categories } = Astro.props;
   />
   <fieldset>
     <legend>Категория</legend>
-    <select id="project-category" name="category">
+    <select
+      id="project-category"
+      name="category"
+    >
       <option value="">Все проекты</option>
       {categories.map((category) => (
         <option value={category.slug}>{category.label}</option>

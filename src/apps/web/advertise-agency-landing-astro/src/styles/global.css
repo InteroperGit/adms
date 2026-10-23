@@ -2,11 +2,11 @@
 @layer theme, base, components, utilities;
 
 /* Scrollbars remain unlayered, as do site tokens and document scrolling. */
-@import './scrollbar.css';
-@import 'tailwindcss';
-@import './tokens.css';
-@import './themes.css';
-@import './foundations.css';
+@import "./scrollbar.css";
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./themes.css";
+@import "./foundations.css";
 
 /* themes.css customizes the built-in palettes without emitting them twice. */
 @plugin 'daisyui' {

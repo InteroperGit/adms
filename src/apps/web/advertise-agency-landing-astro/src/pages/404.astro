@@ -1,9 +1,9 @@
 ---
 // Render a static, noindex recovery page for unknown routes.
 // Navigation stays available without client-side JavaScript or redirects.
-import Button from '@/components/ui/Button.astro';
-import Layout from '@/layouts/Layout.astro';
-import { visibleServices } from '@/content/services';
+import Button from "@/components/ui/Button.astro";
+import Layout from "@/layouts/Layout.astro";
+import { visibleServices } from "@/content/services";
 ---
 
 <Layout
@@ -19,8 +19,16 @@ import { visibleServices } from '@/content/services';
   >
     <div class="site-container not-found-page__container">
       {/* Keep the numeric status decorative beside the meaningful heading. */}
-      <p class="not-found-status" aria-hidden="true">404</p>
-      <h1 id="not-found-title" class="not-found-title">
+      <p
+        class="not-found-status"
+        aria-hidden="true"
+      >
+        404
+      </p>
+      <h1
+        id="not-found-title"
+        class="not-found-title"
+      >
         Страница не найдена
       </h1>
       <p class="not-found-description">
@@ -29,18 +37,32 @@ import { visibleServices } from '@/content/services';
 
       {/* Make the homepage the primary recovery action. */}
       <div class="not-found-actions">
-        <Button href="/" size="lg">На главную</Button>
+        <Button
+          href="/"
+          size="lg"
+        >
+          На главную
+        </Button>
       </div>
 
       {/* Offer existing routes without introducing a second primary action. */}
-      <nav class="not-found-links" aria-label="Полезные ссылки">
+      <nav
+        class="not-found-links"
+        aria-label="Полезные ссылки"
+      >
         <span class="not-found-links__label">Или перейдите в раздел:</span>
         <ul class="not-found-links__list">
           {visibleServices.length > 0 && (
-            <li><a href="/#services">Услуги</a></li>
+            <li>
+              <a href="/#services">Услуги</a>
+            </li>
           )}
-          <li><a href="/projects/">Проекты</a></li>
-          <li><a href="/#contacts">Контакты</a></li>
+          <li>
+            <a href="/projects/">Проекты</a>
+          </li>
+          <li>
+            <a href="/#contacts">Контакты</a>
+          </li>
         </ul>
       </nav>
     </div>

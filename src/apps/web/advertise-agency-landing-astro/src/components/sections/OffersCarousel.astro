@@ -1,12 +1,16 @@
 ---
 // The offers section owns publication/data; shared UI owns carousel behavior.
-import ImageCarousel from '@/components/ui/ImageCarousel.astro';
-import { offers, enabledOffers } from '@/content/offers';
+import ImageCarousel from "@/components/ui/ImageCarousel.astro";
+import { offers, enabledOffers } from "@/content/offers";
 ---
 
 {/* Preserve the public section anchor and offers' configured presentation. */}
 {offers.enabled && enabledOffers.length > 0 && (
-  <section id="offers" class="offers-section" aria-label="Предложения">
+  <section
+    id="offers"
+    class="offers-section"
+    aria-label="Предложения"
+  >
     <ImageCarousel
       id="offers-carousel"
       label="Предложения"

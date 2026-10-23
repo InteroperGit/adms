@@ -1,7 +1,6 @@
 # 145. Разделить контракт и стили CarouselControl
 
-Статус: запланировано. Создано: 2026-10-22.
-Приоритет: средний.
+Статус: запланировано. Создано: 2026-10-22. Приоритет: средний.
 
 ## Основание и границы
 
@@ -14,8 +13,8 @@
 файлах. Сейчас colocated-тест проверяет только наличие экспорта.
 
 Цель — оставить один доступный статический control-компонент с ясной
-типизированной конфигурацией и предсказуемой CSS-границей, не меняя
-селекторы runtime, размеры целей, иконки, клавиатуру или reduced-motion.
+типизированной конфигурацией и предсказуемой CSS-границей, не меняя селекторы
+runtime, размеры целей, иконки, клавиатуру или reduced-motion.
 
 Рабочие файлы: `CarouselControl.astro`, `CarouselControl.test.ts`,
 `ImageCarousel.astro`, `ImageGalleryLightbox.astro` и связанные стили.
@@ -41,26 +40,29 @@
 
 ## Приёмка и проверки
 
-- Semantic render-тесты проверяют arrow previous/next и close variant,
-  классы, пользовательский класс, accessible name, `type`, SVG и каждый
-  data-marker; невалидные/неиспользуемые комбинации не создают ложных
-  маркеров.
+- Semantic render-тесты проверяют arrow previous/next и close variant, классы,
+  пользовательский класс, accessible name, `type`, SVG и каждый data-marker;
+  невалидные/неиспользуемые комбинации не создают ложных маркеров.
 - `ImageCarousel` и lightbox сохраняют прежние query selectors и проходят
   существующие component/E2E сценарии управления, focus и reduced motion.
 - В CSS нет дублирующихся базовых правил, а каждая scoped/global граница
   объяснена комментарием; все строки исходников не длиннее 80 символов.
 - Запустить сфокусированные component tests, `pnpm check:style`, ESLint и
   `pnpm build`. Прежние несвязанные ошибки записать отдельно.
-- После выполнения архивировать задачу в `docs/codex/fixed/20261022/` и
-  обновить `.codex/TASKS.md` по правилам управления задачами.
-
+- После выполнения архивировать задачу в `docs/codex/fixed/20261022/` и обновить
+  `.codex/TASKS.md` по правилам управления задачами.
 
 ## Implementation result
 
 Status: completed on 2026-10-22.
 
-- CarouselControl now uses a discriminated arrow/close contract, computes its class, marker values, and SVG path in frontmatter, and preserves the runtime selectors and accessibility attributes.
-- Shared control sizing, SVG, hover, focus, and reduced-motion rules now live in CarouselControl; carousel and lightbox files retain placement and consumer-specific behavior.
-- Added semantic render coverage for arrow markers, close markers, custom classes, icons, and invalid marker combinations.
-- Verified focused Vitest component tests, code style, ESLint, Astro check, and Astro build. Existing Zod deprecation and large-chunk warnings remain.
-
+- CarouselControl now uses a discriminated arrow/close contract, computes its
+  class, marker values, and SVG path in frontmatter, and preserves the runtime
+  selectors and accessibility attributes.
+- Shared control sizing, SVG, hover, focus, and reduced-motion rules now live in
+  CarouselControl; carousel and lightbox files retain placement and
+  consumer-specific behavior.
+- Added semantic render coverage for arrow markers, close markers, custom
+  classes, icons, and invalid marker combinations.
+- Verified focused Vitest component tests, code style, ESLint, Astro check, and
+  Astro build. Existing Zod deprecation and large-chunk warnings remain.

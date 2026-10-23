@@ -1,12 +1,12 @@
 // Shared carousel validation runs at build time, never in browser scripts.
-import { z } from 'astro/zod';
-import { text, id, uniqueIds } from './shared';
+import { z } from "astro/zod";
+import { text, id, uniqueIds } from "./shared";
 import type {
   CarouselItem,
   CarouselOptions,
   CarouselPresentation,
-} from '../types/image-carousel';
-import type { AssertContract, SameContract } from './shared';
+} from "../types/image-carousel";
+import type { AssertContract, SameContract } from "./shared";
 /** Reject URL normalization that could turn paths into external URLs. */
 export function safeCarouselUrl(
   value: string,
@@ -19,13 +19,13 @@ export function safeCarouselUrl(
     /[\u0000-\u0020\u007f\\]/.test(value)
   )
     return false;
-  if (value.startsWith('/') && !value.startsWith('//')) return true;
-  if (allowFragment && value.startsWith('#') && value.length > 1) return true;
+  if (value.startsWith("/") && !value.startsWith("//")) return true;
+  if (allowFragment && value.startsWith("#") && value.length > 1) return true;
   if (!/^https?:\/\//i.test(value)) return false;
   try {
     const url = new URL(value);
     return (
-      (url.protocol === 'https:' || url.protocol === 'http:') &&
+      (url.protocol === "https:" || url.protocol === "http:") &&
       !url.username &&
       !url.password
     );
@@ -50,14 +50,14 @@ function linear(channel: number): number {
 }
 export function carouselTextContrast(
   color: string,
-  overlay: 'dark' | 'light',
+  overlay: "dark" | "light",
 ): number {
   const channels = [1, 3, 5].map((offset) =>
     linear(parseInt(color.slice(offset, offset + 2), 16) / 255),
   );
   const luminance =
     channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
-  const background = overlay === 'dark' ? 0 : 1;
+  const background = overlay === "dark" ? 0 : 1;
   return (
     (Math.max(luminance, background) + 0.05) /
     (Math.min(luminance, background) + 0.05)
@@ -71,12 +71,12 @@ export const carouselPresentationSchema = z
       .string()
       .regex(
         /^#[0-9a-fA-F]{6}$/,
-        'Use an opaque six-digit hex color, such as #ffffff',
+        "Use an opaque six-digit hex color, such as #ffffff",
       )
-      .default('#ffffff'),
-    overlay: z.enum(['dark', 'light']).default('dark'),
-    horizontal: z.enum(['left', 'center', 'right']).default('left'),
-    vertical: z.enum(['top', 'center', 'bottom']).default('bottom'),
+      .default("#ffffff"),
+    overlay: z.enum(["dark", "light"]).default("dark"),
+    horizontal: z.enum(["left", "center", "right"]).default("left"),
+    vertical: z.enum(["top", "center", "bottom"]).default("bottom"),
     focalPoint: carouselFocalPointSchema.default(() =>
       carouselFocalPointSchema.parse({}),
     ),
@@ -89,13 +89,13 @@ export const carouselPresentationSchema = z
       carouselTextContrast(value.textColor, value.overlay) < 4.5
     ) {
       context.addIssue({
-        code: 'custom',
-        path: ['textColor'],
+        code: "custom",
+        path: ["textColor"],
         message:
-          'Text color must meet 4.5:1 contrast with the solid ' +
+          "Text color must meet 4.5:1 contrast with the solid " +
           `${value.overlay} ` +
-          'palette reference; choose a lighter color for dark or darker ' +
-          'color for light. Review contrast over the actual image separately',
+          "palette reference; choose a lighter color for dark or darker " +
+          "color for light. Review contrast over the actual image separately",
       });
     }
   });
@@ -113,8 +113,8 @@ export const carouselOptionsSchema = z
     descriptions: z.boolean().default(true),
     buttons: z.boolean().default(true),
     animation: z.boolean().default(true),
-    layout: z.enum(['full', 'panel']).default('full'),
-    imageFit: z.enum(['cover', 'contain']).default('cover'),
+    layout: z.enum(["full", "panel"]).default("full"),
+    imageFit: z.enum(["cover", "contain"]).default("cover"),
     aspectRatio: z
       .number()
       .positive()
@@ -129,11 +129,11 @@ export const carouselItemSchema = z
     enabled: z.boolean().default(true),
     image: text.refine(
       (value) => safeCarouselUrl(value, false),
-      'Use a safe root-relative asset path or HTTP(S) URL',
+      "Use a safe root-relative asset path or HTTP(S) URL",
     ),
     imageAlt: z
       .string()
-      .refine((value) => value === '' || value.trim().length > 0),
+      .refine((value) => value === "" || value.trim().length > 0),
     imageWidth: z.number().int().positive(),
     imageHeight: z.number().int().positive(),
     description: z.string().optional(),
@@ -147,9 +147,9 @@ export const carouselItemSchema = z
   .superRefine((item, context) => {
     if (Boolean(item.href) !== Boolean(item.linkLabel)) {
       context.addIssue({
-        code: 'custom',
-        path: ['href'],
-        message: 'Supply both href and linkLabel, or omit both',
+        code: "custom",
+        path: ["href"],
+        message: "Supply both href and linkLabel, or omit both",
       });
     }
   });

@@ -1,16 +1,16 @@
 // Generate the route map; service paths require article publication approval.
 // The sitemap is empty-safe and omitted from indexing until a site is set.
-import type { APIRoute } from 'astro';
-import { projects } from '@/content/projects';
-import { services } from '@/content/services';
-import { getPublishedServicePaths } from '@/content/service-publication';
-import { getPublishedProjectPaths } from '@/content/project-publication';
+import type { APIRoute } from "astro";
+import { projects } from "@/content/projects";
+import { services } from "@/content/services";
+import { getPublishedServicePaths } from "@/content/service-publication";
+import { getPublishedProjectPaths } from "@/content/project-publication";
 
 const paths = [
-  '/',
-  '/projects/',
-  '/privacy-policy/',
-  '/terms-of-use/',
+  "/",
+  "/projects/",
+  "/privacy-policy/",
+  "/terms-of-use/",
   ...getPublishedProjectPaths(projects),
   ...getPublishedServicePaths(services),
 ];
@@ -20,11 +20,11 @@ function escapeXml(value: string): string {
     /[<>&'"]/g,
     (character) =>
       ({
-        '<': '&lt;',
-        '>': '&gt;',
-        '&': '&amp;',
-        "'": '&apos;',
-        '"': '&quot;',
+        "<": "&lt;",
+        ">": "&gt;",
+        "&": "&amp;",
+        "'": "&apos;",
+        '"': "&quot;",
       })[character] ?? character,
   );
 }
@@ -36,17 +36,17 @@ export const GET: APIRoute = ({ site }) => {
           (path) =>
             `  <url><loc>${escapeXml(new URL(path, site).href)}</loc></url>`,
         )
-        .join('\n')
-    : '';
+        .join("\n")
+    : "";
   const body = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     urls,
-    '</urlset>',
+    "</urlset>",
   ]
     .filter(Boolean)
-    .join('\n');
+    .join("\n");
   return new Response(`${body}\n`, {
-    headers: { 'Content-Type': 'application/xml; charset=utf-8' },
+    headers: { "Content-Type": "application/xml; charset=utf-8" },
   });
 };

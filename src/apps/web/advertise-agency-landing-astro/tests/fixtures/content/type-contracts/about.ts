@@ -1,16 +1,16 @@
 // Compile-only examples; this file is never executed.
-import type * as Domain from '@/types/about';
+import type * as Domain from "@/types/about";
 
 export const value = {
-  description1: 'TEST_DESCRIPTION1',
-  description2: 'TEST_DESCRIPTION2',
+  description1: "TEST_DESCRIPTION1",
+  description2: "TEST_DESCRIPTION2",
   stats: [
     {
-      value: 'TEST_VALUE',
-      label: 'TEST_LABEL',
+      value: "TEST_VALUE",
+      label: "TEST_LABEL",
     },
   ],
-  icon: 'TEST_ICON',
+  icon: "TEST_ICON",
 } satisfies Domain.AboutContent;
 
 export const Stat = value.stats[0] satisfies Domain.Stat;

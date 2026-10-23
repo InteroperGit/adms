@@ -1,18 +1,18 @@
-import { z } from 'astro/zod';
+import { z } from "astro/zod";
 import type {
   Service,
   ServiceFocalPoint,
   ServiceImage,
   ServicesContent,
-} from '../types/services';
-import { mediaSource, text, uniqueValues } from './shared';
+} from "../types/services";
+import { mediaSource, text, uniqueValues } from "./shared";
 import {
   serviceArticleSchema,
   serviceArticleSourceSchema,
-} from './service-articles';
-import type { AssertContract, SameContract } from './shared';
-import { getPublicationIssues } from '../content/block-publication';
-import { isServicePublished } from '../content/service-publication';
+} from "./service-articles";
+import type { AssertContract, SameContract } from "./shared";
+import { getPublicationIssues } from "../content/block-publication";
+import { isServicePublished } from "../content/service-publication";
 
 const focalPoint = z
   .object({
@@ -38,7 +38,7 @@ const image = z
 
 const service = z
   .object({
-    id: text.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use a stable slug'),
+    id: text.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a stable slug"),
     name: text,
     description: text,
     claimSource: text,
@@ -48,7 +48,7 @@ const service = z
     href: text
       .regex(
         /^\/services\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/,
-        'Must be a dedicated /services/slug/ route without query or fragment',
+        "Must be a dedicated /services/slug/ route without query or fragment",
       )
       .optional(),
     article: serviceArticleSchema,
@@ -62,35 +62,35 @@ export function createServicesSchema(publishedPaths: readonly string[]) {
       catalog.items.forEach((item, itemIndex) => {
         if (item.href && item.href !== `/services/${item.id}/`) {
           context.addIssue({
-            code: 'custom',
-            path: ['items', itemIndex, 'href'],
-            message: 'Service href must match its stable catalog ID',
+            code: "custom",
+            path: ["items", itemIndex, "href"],
+            message: "Service href must match its stable catalog ID",
           });
         }
         const status =
           !catalog.demoMode &&
           isServicePublished(catalog, item) &&
           item.article.approved
-            ? 'published'
-            : 'demo';
+            ? "published"
+            : "demo";
         getPublicationIssues(item.article.content, status).forEach(
           ({ block, message }) =>
             context.addIssue({
-              code: 'custom',
-              path: ['items', itemIndex, 'article', 'content', block],
+              code: "custom",
+              path: ["items", itemIndex, "article", "content", block],
               message,
             }),
         );
         item.article.content.forEach((block, blockIndex) => {
-          if (block.type !== 'order-form') return;
+          if (block.type !== "order-form") return;
           if (
-            block.context !== 'service' ||
+            block.context !== "service" ||
             (block.category && block.category !== item.id)
           ) {
             context.addIssue({
-              code: 'custom',
-              path: ['items', itemIndex, 'article', 'content', blockIndex],
-              message: 'Service form context/category must match its article',
+              code: "custom",
+              path: ["items", itemIndex, "article", "content", blockIndex],
+              message: "Service form context/category must match its article",
             });
           }
         });
@@ -124,13 +124,13 @@ function createCatalogSchema<
       introduction: text,
       copyApproved: z.boolean(),
       items: z.array(itemSchema).superRefine((items, context) => {
-        uniqueValues(items, (item) => item.id, context, 'id');
+        uniqueValues(items, (item) => item.id, context, "id");
         items.forEach((item, index) => {
           if (item.href && !publishedPaths.includes(item.href)) {
             context.addIssue({
-              code: 'custom',
-              path: [index, 'href'],
-              message: 'Service page does not exist; omit href until published',
+              code: "custom",
+              path: [index, "href"],
+              message: "Service page does not exist; omit href until published",
             });
           }
         });
@@ -140,12 +140,12 @@ function createCatalogSchema<
     .superRefine((content, context) => {
       if (!content.demoMode) return;
       content.items.forEach((item, index) => {
-        for (const field of ['image', 'href'] as const) {
+        for (const field of ["image", "href"] as const) {
           if (!item[field]) {
             context.addIssue({
-              code: 'custom',
-              path: ['items', index, field],
-              message: 'Demo cards require an image and a detail page',
+              code: "custom",
+              path: ["items", index, field],
+              message: "Demo cards require an image and a detail page",
             });
           }
         }

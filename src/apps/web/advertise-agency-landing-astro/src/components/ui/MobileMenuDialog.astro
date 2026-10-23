@@ -3,8 +3,8 @@
 // Callers supply menu items and phone; Header supplies the opener element.
 // Preserve modal focus, Escape dismissal and same-page anchor navigation.
 
-import NavLinks from '@/components/ui/NavLinks.astro';
-import type { MenuItem } from '@/types';
+import NavLinks from "@/components/ui/NavLinks.astro";
+import type { MenuItem } from "@/types";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -29,12 +29,19 @@ const { items, phone } = Astro.props;
       aria-label="Закрыть меню"
       autofocus
     >
-      <span aria-hidden="true" class="text-2xl">
+      <span
+        aria-hidden="true"
+        class="text-2xl"
+      >
         ×
       </span>
     </button>
   </div>
-  <NavLinks items={items} variant="mobile" phone={phone} />
+  <NavLinks
+    items={items}
+    variant="mobile"
+    phone={phone}
+  />
 </dialog>
 
 <style>
@@ -64,15 +71,15 @@ const { items, phone } = Astro.props;
 </style>
 
 <script>
-  const opener = document.querySelector<HTMLButtonElement>('#mobile-menu-open');
-  const menu = document.querySelector<HTMLDialogElement>('#mobile-menu');
+  const opener = document.querySelector<HTMLButtonElement>("#mobile-menu-open");
+  const menu = document.querySelector<HTMLDialogElement>("#mobile-menu");
 
   // Enhance only when the shared header and native dialog are both present.
   if (opener && menu) {
     // Open the native modal before exposing its expanded state.
     const openMenu = () => {
       menu.showModal();
-      opener.setAttribute('aria-expanded', 'true');
+      opener.setAttribute("aria-expanded", "true");
     };
 
     const closeMenu = () => {
@@ -81,18 +88,18 @@ const { items, phone } = Astro.props;
 
     // Restore opener focus when native close, including Escape, completes.
     const handleMenuClose = () => {
-      opener.setAttribute('aria-expanded', 'false');
+      opener.setAttribute("aria-expanded", "false");
       // Safari does not focus buttons on pointer activation automatically.
       opener.focus({ preventScroll: true });
     };
 
     // Wrap Tab at the modal boundaries and leave other keys to the dialog.
     const handleMenuKeydown = (event: KeyboardEvent) => {
-      if (event.key !== 'Tab') {
+      if (event.key !== "Tab") {
         return;
       }
 
-      const controls = menu.querySelectorAll<HTMLElement>('button, a[href]');
+      const controls = menu.querySelectorAll<HTMLElement>("button, a[href]");
       const first = controls[0];
       const last = controls[controls.length - 1];
 
@@ -125,15 +132,15 @@ const { items, phone } = Astro.props;
 
     // Add a temporary focus target only when the section lacks tabindex.
     const makeSectionTemporarilyFocusable = (section: HTMLElement) => {
-      if (section.hasAttribute('tabindex')) {
+      if (section.hasAttribute("tabindex")) {
         return;
       }
 
-      section.setAttribute('tabindex', '-1');
+      section.setAttribute("tabindex", "-1");
       const removeTemporaryTabindex = () => {
-        section.removeAttribute('tabindex');
+        section.removeAttribute("tabindex");
       };
-      section.addEventListener('blur', removeTemporaryTabindex, { once: true });
+      section.addEventListener("blur", removeTemporaryTabindex, { once: true });
     };
 
     // Register after handleMenuClose so section focus wins after close.
@@ -141,7 +148,7 @@ const { items, phone } = Astro.props;
       const handleClosedSectionFocus = () => {
         section.focus({ preventScroll: true });
       };
-      menu.addEventListener('close', handleClosedSectionFocus, { once: true });
+      menu.addEventListener("close", handleClosedSectionFocus, { once: true });
     };
 
     // Preserve modifiers and the existing same-page path/hash navigation.
@@ -163,7 +170,7 @@ const { items, phone } = Astro.props;
       }
 
       event.preventDefault();
-      history.pushState(null, '', destination.pathname + destination.hash);
+      history.pushState(null, "", destination.pathname + destination.hash);
 
       const sectionId = decodeURIComponent(destination.hash.slice(1));
       const section = document.getElementById(sectionId);
@@ -184,20 +191,20 @@ const { items, phone } = Astro.props;
       }
     };
 
-    opener.addEventListener('click', openMenu);
-    menu.addEventListener('close', handleMenuClose);
-    menu.addEventListener('keydown', handleMenuKeydown);
+    opener.addEventListener("click", openMenu);
+    menu.addEventListener("close", handleMenuClose);
+    menu.addEventListener("keydown", handleMenuKeydown);
     menu
-      .querySelector('[data-menu-close]')
-      ?.addEventListener('click', closeMenu);
-    menu.addEventListener('click', handleBackdropClick);
+      .querySelector("[data-menu-close]")
+      ?.addEventListener("click", closeMenu);
+    menu.addEventListener("click", handleBackdropClick);
 
-    menu.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
-      link.addEventListener('click', (event) => {
+    menu.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+      link.addEventListener("click", (event) => {
         handleMenuLinkClick(event, link);
       });
     });
 
-    window.addEventListener('resize', closeMenuWhenOpenerDisappears);
+    window.addEventListener("resize", closeMenuWhenOpenerDisappears);
   }
 </script>

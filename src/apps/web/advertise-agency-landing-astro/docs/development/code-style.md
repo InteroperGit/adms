@@ -14,6 +14,6 @@ pnpm check
 ```
 
 When adding or editing an Astro component, keep a short file-purpose comment,
-comments before logical markup sections, and a purpose comment before every
-CSS selector, including responsive and state rules. Use the existing component
+comments before logical markup sections, and a purpose comment before every CSS
+selector, including responsive and state rules. Use the existing component
 styles as the formatting reference while cleanup proceeds.

@@ -1,74 +1,86 @@
 ---
 // Render the complete public project catalogue and progressively enhance it
 // with client-side search and category filtering.
-import Layout from '@/layouts/Layout.astro';
-import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
-import ProjectCatalogControls
-  from '@/components/projects/ProjectCatalogControls.astro';
-import ProjectCatalogCount
-  from '@/components/projects/ProjectCatalogCount.astro';
-import ProjectCatalogGrid from '@/components/projects/ProjectCatalogGrid.astro';
-import ProjectCatalogEmpty
-  from '@/components/projects/ProjectCatalogEmpty.astro';
-import ProjectCatalogPagination
-  from '@/components/projects/ProjectCatalogPagination.astro';
-import { availableProjectCategories, projects } from '@/content/projects';
-import { projectCatalogSettings } from '@/content/project-catalog';
+import Layout from "@/layouts/Layout.astro";
+import Breadcrumbs from "@/components/ui/Breadcrumbs.astro";
+// prettier-ignore
+import ProjectCatalogControls from
+  '@/components/projects/ProjectCatalogControls.astro';
+// prettier-ignore
+import ProjectCatalogCount from
+  '@/components/projects/ProjectCatalogCount.astro';
+import ProjectCatalogGrid from "@/components/projects/ProjectCatalogGrid.astro";
+// prettier-ignore
+import ProjectCatalogEmpty from
+  '@/components/projects/ProjectCatalogEmpty.astro';
+// prettier-ignore
+import ProjectCatalogPagination from
+  '@/components/projects/ProjectCatalogPagination.astro';
+import { availableProjectCategories, projects } from "@/content/projects";
+import { projectCatalogSettings } from "@/content/project-catalog";
 const catalogProjects = projects;
 const pageSize = projectCatalogSettings.pageSize;
 const staticPageCount = Math.ceil(catalogProjects.length / pageSize);
-const routePage = Astro.url.pathname
-  .match(/^\/projects\/page\/(\d+)\/?$/)?.[1];
+const routePage = Astro.url.pathname.match(/^\/projects\/page\/(\d+)\/?$/)?.[1];
 const requestedStaticPage = Number(
-  routePage ?? Astro.url.searchParams.get('page'),
+  routePage ?? Astro.url.searchParams.get("page"),
 );
-const staticCurrentPage = Number.isInteger(requestedStaticPage) &&
-  requestedStaticPage > 0
-  ? Math.min(requestedStaticPage, Math.max(staticPageCount, 1))
-  : 1;
+const staticCurrentPage =
+  Number.isInteger(requestedStaticPage) && requestedStaticPage > 0
+    ? Math.min(requestedStaticPage, Math.max(staticPageCount, 1))
+    : 1;
 
-type PaginationItem = number | 'ellipsis';
+type PaginationItem = number | "ellipsis";
 const paginationSiblings = 1;
 const paginationBoundaries = 1;
 function getPaginationItems(total: number, current: number): PaginationItem[] {
   if (total <= 1) return [];
-  const totalPageNumbers = paginationBoundaries * 2 +
-    paginationSiblings * 2 + 3;
+  const totalPageNumbers =
+    paginationBoundaries * 2 + paginationSiblings * 2 + 3;
   if (total <= totalPageNumbers) {
     return Array.from({ length: total }, (_, index) => index + 1);
   }
   const leftDots = current > paginationSiblings + paginationBoundaries + 2;
-  const rightDots = current < total - paginationSiblings -
-    paginationBoundaries - 1;
+  const rightDots =
+    current < total - paginationSiblings - paginationBoundaries - 1;
   if (!leftDots && rightDots) {
     return [
       ...Array.from({ length: totalPageNumbers - 2 }, (_, index) => index + 1),
-      'ellipsis', total,
+      "ellipsis",
+      total,
     ];
   }
   if (leftDots && !rightDots) {
     return [
-      1, 'ellipsis',
-      ...Array.from({ length: totalPageNumbers - 2 },
-        (_, index) => total - totalPageNumbers + 3 + index),
+      1,
+      "ellipsis",
+      ...Array.from(
+        { length: totalPageNumbers - 2 },
+        (_, index) => total - totalPageNumbers + 3 + index,
+      ),
     ];
   }
   return [
-    1, 'ellipsis',
-    ...Array.from({ length: paginationSiblings * 2 + 1 },
-      (_, index) => current - paginationSiblings + index),
-    'ellipsis', total,
+    1,
+    "ellipsis",
+    ...Array.from(
+      { length: paginationSiblings * 2 + 1 },
+      (_, index) => current - paginationSiblings + index,
+    ),
+    "ellipsis",
+    total,
   ];
 }
 function pageHref(page: number): string {
   const params = new URLSearchParams(Astro.url.searchParams);
-  params.delete('page');
-  const path = page > 1 ? `/projects/page/${page}/` : '/projects/';
+  params.delete("page");
+  const path = page > 1 ? `/projects/page/${page}/` : "/projects/";
   const query = params.toString();
-  return `${path}${query ? `?${query}` : ''}${Astro.url.hash}`;
+  return `${path}${query ? `?${query}` : ""}${Astro.url.hash}`;
 }
 const staticPaginationItems = getPaginationItems(
-  staticPageCount, staticCurrentPage,
+  staticPageCount,
+  staticCurrentPage,
 );
 ---
 
@@ -80,7 +92,7 @@ const staticPaginationItems = getPaginationItems(
     <div class="site-container">
       <h1 class="catalog-title">Проекты</h1>
       <Breadcrumbs
-        items={[{ label: 'Главная', href: '/' }]}
+        items={[{ label: "Главная", href: "/" }]}
         current="Проекты"
       />
 
@@ -98,7 +110,10 @@ const staticPaginationItems = getPaginationItems(
         <ProjectCatalogEmpty type="catalog" />
       )}
 
-      <ProjectCatalogEmpty type="search" hidden={staticPageCount <= 1} />
+      <ProjectCatalogEmpty
+        type="search"
+        hidden={staticPageCount <= 1}
+      />
 
       <ProjectCatalogPagination
         items={staticPaginationItems}
@@ -255,8 +270,11 @@ const staticPaginationItems = getPaginationItems(
     cursor: pointer;
     font-weight: 600;
     text-decoration: none;
-    transition: border-color 160ms ease, background-color 160ms ease,
-      color 160ms ease, transform 160ms ease;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
   }
 
   :global(.catalog-pagination__direction) {
@@ -278,14 +296,14 @@ const staticPaginationItems = getPaginationItems(
   }
 
   /* Make the active page clear to sighted and assistive technology users. */
-  :global(.catalog-pagination__link[aria-current='page']) {
+  :global(.catalog-pagination__link[aria-current="page"]) {
     color: var(--color-primary-content);
     background: var(--color-primary);
     border-color: var(--color-primary);
   }
 
   /* Explain unavailable edge-page controls without removing their context. */
-  :global(.catalog-pagination__link[aria-disabled='true']) {
+  :global(.catalog-pagination__link[aria-disabled="true"]) {
     cursor: not-allowed;
     opacity: 0.5;
     pointer-events: none;

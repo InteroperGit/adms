@@ -4,29 +4,29 @@
 
 ## Модель и оценка
 
-Рекомендуемая модель: `gpt-6-luna`; reasoning effort: `high`.
-Оценка: 2026-10-18, с приоритетом экономии ресурсов.
+Рекомендуемая модель: `gpt-6-luna`; reasoning effort: `high`. Оценка:
+2026-10-18, с приоритетом экономии ресурсов.
 
-Секции используют готовые publication contracts и дочерние компоненты.
-Малые группы секций позволяют Luna работать с ограниченным контекстом.
+Секции используют готовые publication contracts и дочерние компоненты. Малые
+группы секций позволяют Luna работать с ограниченным контекстом.
 
 ## Подзадачи для отдельных запусков
 
-- [ ] 107.a — `gpt-6-luna`, medium: About и Introduction.
-  Проверить valid/empty/optional media, CTA и carousel composition.
-- [ ] 107.b — `gpt-6-luna`, high: OffersCarousel и Services.
-  Проверить published/demo/empty, порядок, ссылки и hidden empty sections.
-- [ ] 107.c — `gpt-6-luna`, high: Projects и PricingExamples.
-  Проверить visible filtering, порядок, CTA и demo disclosure.
-- [ ] 107.d — `gpt-6-luna`, medium: Reviews.
-  Проверить valid/empty коллекции, optional content и Yandex branch.
+- [ ] 107.a — `gpt-6-luna`, medium: About и Introduction. Проверить
+      valid/empty/optional media, CTA и carousel composition.
+- [ ] 107.b — `gpt-6-luna`, high: OffersCarousel и Services. Проверить
+      published/demo/empty, порядок, ссылки и hidden empty sections.
+- [ ] 107.c — `gpt-6-luna`, high: Projects и PricingExamples. Проверить visible
+      filtering, порядок, CTA и demo disclosure.
+- [ ] 107.d — `gpt-6-luna`, medium: Reviews. Проверить valid/empty коллекции,
+      optional content и Yandex branch.
 
 Готовность каждого шага: fixtures для valid/empty/optional веток и meaningful
-assertions по output. После всех шагов проверить исходный порог components;
-не расширять mocks на весь сайт ради одной секции.
+assertions по output. После всех шагов проверить исходный порог components; не
+расширять mocks на весь сайт ради одной секции.
 
-Общий порядок работы и условия перехода на более сильную модель:
-[оценка моделей][model-assessment].
+Общий порядок работы и условия перехода на более сильную модель: [оценка
+моделей][model-assessment].
 
 [model-assessment]: ../plan/20261018_todo-model-assessment.md
 

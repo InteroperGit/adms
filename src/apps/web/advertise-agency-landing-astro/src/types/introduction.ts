@@ -24,7 +24,7 @@ export interface IntroductionContent {
   demoMode: boolean;
   action: {
     label: string;
-    href: '/#order-inquiry';
+    href: "/#order-inquiry";
   };
   photo: IntroductionPhoto | null;
 }

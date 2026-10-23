@@ -28,4 +28,8 @@ theme/menu state, disabled/fallback варианты и безопасное о�
 
 Status: completed on 2026-10-16.
 
-Added colocated contracts for all sections, projects, remaining UI components, and shared shell components. Section loader tests use isolated fixture mocks where production content is unavailable in Vitest. Validation: full suite reached 70 passing files and 215 passing tests before the focused final fix; focused PricingExamples test and pnpm check passed.
+Added colocated contracts for all sections, projects, remaining UI components,
+and shared shell components. Section loader tests use isolated fixture mocks
+where production content is unavailable in Vitest. Validation: full suite
+reached 70 passing files and 215 passing tests before the focused final fix;
+focused PricingExamples test and pnpm check passed.

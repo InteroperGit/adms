@@ -3,24 +3,24 @@
 // A configured photo is optional; no missing-photo column is reserved.
 // Validate local image lookup and retain independently configured crops.
 
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-import Button from '@/components/ui/Button.astro';
-import { introduction as content } from '@/content/introduction';
-import {
-  getVisibleIntroductionPhoto,
-} from '@/content/introduction-publication';
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Button from "@/components/ui/Button.astro";
+import { introduction as content } from "@/content/introduction";
+// prettier-ignore
+import { getVisibleIntroductionPhoto } from
+  '@/content/introduction-publication';
 
 // Resolve optional bundled media at build time and reject missing assets.
 const originals = import.meta.glob<ImageMetadata>(
-  '/src/assets/**/*.{avif,jpeg,jpg,png,webp}',
-  { eager: true, import: 'default' },
+  "/src/assets/**/*.{avif,jpeg,jpg,png,webp}",
+  { eager: true, import: "default" },
 );
 // Explicit demo mode restores the configured illustration at user request.
 // Otherwise, display media only after copy and photo rights are approved.
 const photo = getVisibleIntroductionPhoto(content);
 const original = photo ? originals[photo.src] : undefined;
-if (photo?.src.startsWith('/src/assets/') && !original) {
+if (photo?.src.startsWith("/src/assets/") && !original) {
   throw new Error(`Introduction photo not found: ${photo.src}`);
 }
 const focalPoint = (point: { x: number; y: number }) =>
@@ -34,18 +34,21 @@ const focalPoint = (point: { x: number; y: number }) =>
   aria-labelledby="introduction-heading"
 >
   <div
-    class:list={[
-      'site-container introduction-layout',
-      { 'has-photo': photo },
-    ]}
+    class:list={["site-container introduction-layout", { "has-photo": photo }]}
   >
     <div class="introduction-copy">
-      <h1 id="introduction-heading" class="introduction-heading">
+      <h1
+        id="introduction-heading"
+        class="introduction-heading"
+      >
         {content.heading}
       </h1>
       <p class="introduction-summary">{content.summary}</p>
       <p class="introduction-location">{content.location}</p>
-      <Button href={content.action.href} class="introduction-action">
+      <Button
+        href={content.action.href}
+        class="introduction-action"
+      >
         {content.action.label}
       </Button>
     </div>
@@ -54,8 +57,8 @@ const focalPoint = (point: { x: number; y: number }) =>
       <div
         class="introduction-photo"
         style={{
-          '--desktop-focal-point': focalPoint(photo.desktopFocalPoint),
-          '--mobile-focal-point': focalPoint(photo.mobileFocalPoint),
+          "--desktop-focal-point": focalPoint(photo.desktopFocalPoint),
+          "--mobile-focal-point": focalPoint(photo.mobileFocalPoint),
         }}
       >
         {original ? (

@@ -23,6 +23,12 @@ cleanup.
 
 ## Completion � 2026-10-17
 
-Added deterministic carousel lifecycle coverage for arrows, dots, autoplay, hover/visibility pauses, reduced motion, unsupported observers, and disconnect cleanup. Added homepage reveal coverage for observer fallback, pending-section reveal, reduced motion, pagehide teardown, and fixed the missing-observer guard plus visibility cleanup hooks.
+Added deterministic carousel lifecycle coverage for arrows, dots, autoplay,
+hover/visibility pauses, reduced motion, unsupported observers, and disconnect
+cleanup. Added homepage reveal coverage for observer fallback, pending-section
+reveal, reduced motion, pagehide teardown, and fixed the missing-observer guard
+plus visibility cleanup hooks.
 
-Validation: focused Vitest suites passed with 8 tests; Prettier, ESLint, and Astro check passed with no errors. Astro check retains one existing deprecation hint in validation content blocks.
+Validation: focused Vitest suites passed with 8 tests; Prettier, ESLint, and
+Astro check passed with no errors. Astro check retains one existing deprecation
+hint in validation content blocks.

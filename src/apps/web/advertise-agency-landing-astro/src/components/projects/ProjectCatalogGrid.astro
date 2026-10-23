@@ -1,7 +1,7 @@
 ---
-import ProjectCard from '@/components/cards/ProjectCard.astro';
-import { getProjectCategory } from '@/content/project-categories';
-import type { Project } from '@/types/project';
+import ProjectCard from "@/components/cards/ProjectCard.astro";
+import { getProjectCategory } from "@/content/project-categories";
+import type { Project } from "@/types/project";
 
 interface Props {
   projects: Project[];
@@ -25,15 +25,15 @@ const { projects, page, pageSize } = Astro.props;
       project.client,
       project.description,
       category?.label,
-    ].filter(Boolean).join(' ');
+    ]
+      .filter(Boolean)
+      .join(" ");
     return (
       <div
         data-project-card
-        data-category={project.category ?? ''}
+        data-category={project.category ?? ""}
         data-search={searchText}
-        hidden={
-          index < (page - 1) * pageSize || index >= page * pageSize
-        }
+        hidden={index < (page - 1) * pageSize || index >= page * pageSize}
       >
         <ProjectCard project={project} />
       </div>

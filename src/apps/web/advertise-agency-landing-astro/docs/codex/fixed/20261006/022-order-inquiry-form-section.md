@@ -10,8 +10,8 @@
 
 ## Goal
 
-Add a homepage section where visitors can describe the advertising product
-they need and send the agency a message to discuss an order.
+Add a homepage section where visitors can describe the advertising product they
+need and send the agency a message to discuss an order.
 
 Read [project instructions](../../../../AGENTS.md),
 [task management](../../task-management.md), and applicable development rules.
@@ -22,8 +22,8 @@ Apply frontend-design and astro-best-practices when implementing the section.
 - Create `src/components/sections/OrderInquiry.astro` and place it immediately
   after Contacts on the homepage, with the anchor `order-inquiry`.
 - Use the existing section component, design tokens, and light/dark themes.
-  Provide Russian copy, for example «Обсудим ваш заказ» and
-  «Расскажите, какая реклама вам нужна».
+  Provide Russian copy, for example «Обсудим ваш заказ» and «Расскажите, какая
+  реклама вам нужна».
 - Include name, reply email, optional phone, and a required message describing
   the order. Mark required fields clearly; use visible labels, suitable input
   types, autocomplete, and reasonable length limits.
@@ -40,8 +40,8 @@ Apply frontend-design and astro-best-practices when implementing the section.
   accessibly, prevent duplicate submissions while sending, preserve input on
   failure, and clear it only after confirmed acceptance by the service.
 - Provide existing agency email/phone as a fallback when delivery is
-  unavailable. Without a configured service, clearly explain that submission
-  is unavailable; never show a simulated success message.
+  unavailable. Without a configured service, clearly explain that submission is
+  unavailable; never show a simulated success message.
 
 ## Inputs needed for delivery
 
@@ -67,20 +67,20 @@ there. Record missing configuration as a dependency of working delivery.
 - Run `pnpm check`, `pnpm build`, and diff checks. Document configuration,
   delivery behavior, test evidence, and remaining dependencies.
 
-Archived at the user's explicit request; unresolved delivery dependencies
-and verification limits remain documented below.
+Archived at the user's explicit request; unresolved delivery dependencies and
+verification limits remain documented below.
 
 ## Implementation and verification — 2026-10-06
 
-Added the homepage section after Contacts, validated editable JSON, plain
-domain types, native fields, policy/direct-contact links and lightweight
-browser enhancement. Delivery is disabled pending confirmed recipient,
-backend/provider, hosting support and approved consent copy. Existing legal
-documents name a different email from public contacts; agency review is needed.
+Added the homepage section after Contacts, validated editable JSON, plain domain
+types, native fields, policy/direct-contact links and lightweight browser
+enhancement. Delivery is disabled pending confirmed recipient, backend/provider,
+hosting support and approved consent copy. Existing legal documents name a
+different email from public contacts; agency review is needed.
 
-Production browser checks passed for both themes at 320/1440px with 16/32px
-root text, long input, no overflow, labels, keyboard focus, status semantics
-and no-JavaScript fallback. An enabled local fixture with intercepted responses
+Production browser checks passed for both themes at 320/1440px with 16/32px root
+text, long input, no overflow, labels, keyboard focus, status semantics and
+no-JavaScript fallback. An enabled local fixture with intercepted responses
 passed validation, sending, error/offline/timeout, duplicate-submit protection,
 retry IDs and confirmed-acceptance-only reset. No real delivery was performed.
 The test fixture was removed and disabled configuration restored.

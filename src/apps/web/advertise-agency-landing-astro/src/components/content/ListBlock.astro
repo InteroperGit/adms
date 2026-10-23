@@ -3,17 +3,17 @@
 import type {
   OrderedListBlock,
   UnorderedListBlock,
-} from '@/types/content-blocks';
+} from "@/types/content-blocks";
 
 interface Props {
   // Validated plain strings remain escaped text in authored item order.
   block: OrderedListBlock | UnorderedListBlock;
 }
 
-type ListItem = Props['block']['items'][number];
+type ListItem = Props["block"]["items"][number];
 
 const { block } = Astro.props as Props;
-const ListTag = block.type === 'ordered-list' ? 'ol' : 'ul';
+const ListTag = block.type === "ordered-list" ? "ol" : "ul";
 // Reserve at least two digits; larger lists keep native numbers in the gutter.
 const markerDigits = Math.max(2, String(block.items.length).length);
 ---

@@ -3,9 +3,9 @@
 // Keep complete answers in document order without client-side JavaScript.
 // Explicit demo mode exposes drafts without changing agency approvals.
 
-import Section from '@/components/ui/Section.astro';
-import { faq } from '@/content/faq';
-import { getVisibleFaqItems } from '@/content/faq-publication';
+import Section from "@/components/ui/Section.astro";
+import { faq } from "@/content/faq";
+import { getVisibleFaqItems } from "@/content/faq-publication";
 
 // Outside demo mode, only approved section copy and answers are displayed.
 const items = getVisibleFaqItems(faq);
@@ -13,23 +13,31 @@ const items = getVisibleFaqItems(faq);
 
 {/* Omit empty sections; identify preliminary copy in explicit demo mode. */}
 {items.length > 0 && (
-  <Section id="faq" title={faq.heading} ariaLabel={faq.heading}>
+  <Section
+    id="faq"
+    title={faq.heading}
+    ariaLabel={faq.heading}
+  >
     <div class="faq-content">
       {/* Explain that these answers remain subject to order-specific terms. */}
       {faq.demoMode && <p class="faq-notice">{faq.demoNotice}</p>}
       {/* Native disclosures keep every full answer after its question. */}
       <div class="faq-list">
         {items.map((item) => (
-          <details class="faq-item" id={`faq-${item.id}`}>
-            <summary class="faq-question">
-              {item.question}
-            </summary>
+          <details
+            class="faq-item"
+            id={`faq-${item.id}`}
+          >
+            <summary class="faq-question">{item.question}</summary>
             <p class="faq-answer">{item.answer}</p>
           </details>
         ))}
       </div>
       {/* A native inquiry link offers a project-specific conversation. */}
-      <a class="faq-inquiry" href={faq.inquiryHref}>
+      <a
+        class="faq-inquiry"
+        href={faq.inquiryHref}
+      >
         {faq.inquiryLabel}
       </a>
     </div>

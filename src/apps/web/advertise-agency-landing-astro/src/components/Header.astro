@@ -3,11 +3,11 @@
 // Site content supplies links; the mobile dialog owns its focus handling.
 // Keep focused or expanded controls visible while scrolling.
 
-import { site } from '@/content/site';
-import NavLinks from '@/components/ui/NavLinks.astro';
-import MobileMenuDialog from '@/components/ui/MobileMenuDialog.astro';
-import Settings from '@/components/ui/Settings.astro';
-import Logo from '@/components/ui/Logo.astro';
+import { site } from "@/content/site";
+import NavLinks from "@/components/ui/NavLinks.astro";
+import MobileMenuDialog from "@/components/ui/MobileMenuDialog.astro";
+import Settings from "@/components/ui/Settings.astro";
+import Logo from "@/components/ui/Logo.astro";
 ---
 
 {/* Keep focused or expanded controls visible while scrolling. */}
@@ -17,13 +17,20 @@ import Logo from '@/components/ui/Logo.astro';
 >
   <div class="header-layout site-container">
     <div class="header-brand-wrap">
-      <a href="/" class="header-brand text-2xl font-bold text-brand">
+      <a
+        href="/"
+        class="header-brand text-2xl font-bold text-brand"
+      >
         <Logo />
         <span>{site.logoText}</span>
       </a>
     </div>
     {/* Show wide navigation beside independently sized controls. */}
-    <NavLinks items={site.menu} variant="desktop" phone={site.phone} />
+    <NavLinks
+      items={site.menu}
+      variant="desktop"
+      phone={site.phone}
+    />
     <Settings />
     {/* The opener names the native modal drawer rendered below. */}
     <div class="header-menu-wrap">
@@ -51,7 +58,10 @@ import Logo from '@/components/ui/Logo.astro';
       </button>
     </div>
   </div>
-  <MobileMenuDialog items={site.menu} phone={site.phone} />
+  <MobileMenuDialog
+    items={site.menu}
+    phone={site.phone}
+  />
 </header>
 
 <style>
@@ -130,7 +140,7 @@ import Logo from '@/components/ui/Logo.astro';
   }
 
   /* Slide the header away on downward scrolling. */
-  header[data-hidden='true'] {
+  header[data-hidden="true"] {
     transform: translateY(-100%);
   }
 
@@ -151,14 +161,12 @@ import Logo from '@/components/ui/Logo.astro';
 </style>
 
 <script>
-  const header = document.querySelector<HTMLElement>(
-    '[data-auto-hide-header]',
-  );
+  const header = document.querySelector<HTMLElement>("[data-auto-hide-header]");
   if (header) {
     // Measure the rendered header so anchor targets clear it at any text size.
     const setClearance = () => {
       document.documentElement.style.setProperty(
-        '--site-header-clearance',
+        "--site-header-clearance",
         `${header.offsetHeight + 16}px`,
       );
     };
@@ -172,7 +180,7 @@ import Logo from '@/components/ui/Logo.astro';
       const interrupt = () => {
         interrupted = true;
       };
-      const events = ['pointerdown', 'wheel', 'touchstart', 'keydown'];
+      const events = ["pointerdown", "wheel", "touchstart", "keydown"];
       events.forEach((event) =>
         window.addEventListener(event, interrupt, { passive: true }),
       );
@@ -186,9 +194,7 @@ import Logo from '@/components/ui/Logo.astro';
             /* A malformed hash has no matching section. */
           }
         }
-        events.forEach((event) =>
-          window.removeEventListener(event, interrupt),
-        );
+        events.forEach((event) => window.removeEventListener(event, interrupt));
       });
     }
     // Track accumulated direction changes to avoid jitter on tiny scrolls.
@@ -199,7 +205,7 @@ import Logo from '@/components/ui/Logo.astro';
 
     // Reset the travel threshold whenever an interaction needs the header.
     const reveal = () => {
-      header.dataset.hidden = 'false';
+      header.dataset.hidden = "false";
       distance = 0;
     };
 
@@ -217,7 +223,7 @@ import Logo from '@/components/ui/Logo.astro';
       if (
         y <= header.offsetHeight ||
         header.contains(document.activeElement) ||
-        header.querySelector('dialog[open], [data-settings-open]')
+        header.querySelector("dialog[open], [data-settings-open]")
       ) {
         reveal();
         return;
@@ -229,14 +235,14 @@ import Logo from '@/components/ui/Logo.astro';
       direction = nextDirection;
       distance += Math.abs(delta);
       if (distance >= 12) {
-        header.dataset.hidden = delta > 0 ? 'true' : 'false';
+        header.dataset.hidden = delta > 0 ? "true" : "false";
         distance = 0;
       }
     };
 
     // Coalesce passive scroll events into one layout update per frame.
     window.addEventListener(
-      'scroll',
+      "scroll",
       () => {
         if (!scheduled) {
           scheduled = true;
@@ -245,16 +251,15 @@ import Logo from '@/components/ui/Logo.astro';
       },
       { passive: true },
     );
-    header.addEventListener('focusin', reveal);
-    window.addEventListener('hashchange', reveal);
-    window.addEventListener('pageshow', reveal);
+    header.addEventListener("focusin", reveal);
+    window.addEventListener("hashchange", reveal);
+    window.addEventListener("pageshow", reveal);
     // Opening a drawer or settings panel overrides scroll-driven hiding.
     new MutationObserver(() => {
-      if (header.querySelector('dialog[open], [data-settings-open]'))
-        reveal();
+      if (header.querySelector("dialog[open], [data-settings-open]")) reveal();
     }).observe(header, {
       attributes: true,
-      attributeFilter: ['open', 'data-settings-open'],
+      attributeFilter: ["open", "data-settings-open"],
       subtree: true,
     });
   }

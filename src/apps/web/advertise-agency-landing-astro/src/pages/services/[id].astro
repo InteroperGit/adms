@@ -3,9 +3,9 @@
 // Route params stay derived from stable service IDs, so new catalog entries
 // receive a page without a new Astro file.
 
-import ServiceArticle from '@/components/sections/ServiceArticle.astro';
-import { services } from '@/content/services';
-import type { Service } from '@/types/services';
+import ServiceArticle from "@/components/sections/ServiceArticle.astro";
+import { services } from "@/content/services";
+import type { Service } from "@/types/services";
 
 export function getStaticPaths() {
   return services.items

@@ -3,11 +3,11 @@
 // Each card retains a uniquely named native link to its static detail page.
 // Section titles and descriptions come from the site configuration.
 
-import ProjectCard from '@/components/cards/ProjectCard.astro';
-import Section from '@/components/ui/Section.astro';
-import Button from '@/components/ui/Button.astro';
-import { site } from '@/content/site';
-import { projects } from '@/content/projects';
+import ProjectCard from "@/components/cards/ProjectCard.astro";
+import Section from "@/components/ui/Section.astro";
+import Button from "@/components/ui/Button.astro";
+import { site } from "@/content/site";
+import { projects } from "@/content/projects";
 
 // Keep the homepage concise while the catalogue remains the complete source.
 const featuredProjects = projects.slice(0, 3);
@@ -29,7 +29,10 @@ const featuredProjects = projects.slice(0, 3);
   </div>
   {/* Keep the complete catalogue reachable, including when no cards exist. */}
   <div class="projects-catalog-link">
-    <Button href="/projects/" variant="outline">
+    <Button
+      href="/projects/"
+      variant="outline"
+    >
       Все проекты
     </Button>
   </div>

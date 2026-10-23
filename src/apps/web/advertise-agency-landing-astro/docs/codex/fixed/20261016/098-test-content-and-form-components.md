@@ -12,8 +12,8 @@
 `TableBlock`, `VideoBlock`, `mdx-components.ts`, `LedLettersForm` и
 `order-inquiry.ts`.
 
-Проверить `ContentBlocks` для каждого discriminator, пустые и draft/demo
-данные, safe links, media metadata, accessibility и fallback.
+Проверить `ContentBlocks` для каждого discriminator, пустые и draft/demo данные,
+safe links, media metadata, accessibility и fallback.
 
 ## Приёмка
 
@@ -29,4 +29,7 @@
 
 Status: completed on 2026-10-16.
 
-Added colocated coverage for all listed content renderers, MDX mapping, and LedLettersForm, including accessibility, fallback, media, link, and metadata assertions. Validation: pnpm test (35 files, 180 tests passed) and pnpm check passed with one existing Zod deprecation hint.
+Added colocated coverage for all listed content renderers, MDX mapping, and
+LedLettersForm, including accessibility, fallback, media, link, and metadata
+assertions. Validation: pnpm test (35 files, 180 tests passed) and pnpm check
+passed with one existing Zod deprecation hint.

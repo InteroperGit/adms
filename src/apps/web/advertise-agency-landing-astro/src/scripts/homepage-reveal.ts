@@ -1,7 +1,7 @@
 // Reveal homepage sections as they approach the viewport without hiding the
 // initial, focused or directly addressed content from keyboard users.
 
-const sectionSelector = ':scope > section';
+const sectionSelector = ":scope > section";
 
 /**
  * Progressively reveals direct homepage sections when browser APIs permit it.
@@ -9,12 +9,12 @@ const sectionSelector = ':scope > section';
  * IntersectionObserver or reduced-motion support is unavailable.
  */
 export function initializeHomepageReveal(): void {
-  const container = document.querySelector('.homepage-sections');
-  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const container = document.querySelector(".homepage-sections");
+  const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   if (
     !container ||
-    typeof IntersectionObserver !== 'function' ||
+    typeof IntersectionObserver !== "function" ||
     motion.matches
   ) {
     return;
@@ -43,20 +43,20 @@ export function initializeHomepageReveal(): void {
   // Release observers and navigation hooks once every section is visible.
   const cleanup = (): void => {
     observer.disconnect();
-    document.removeEventListener('focusin', onFocus, true);
-    document.removeEventListener('click', onClick, true);
-    window.removeEventListener('hashchange', onHash);
-    window.removeEventListener('pageshow', onPageShow);
-    document.removeEventListener('visibilitychange', onVisibility);
-    window.removeEventListener('pagehide', onPageHide);
-    motion.removeEventListener('change', onMotion);
+    document.removeEventListener("focusin", onFocus, true);
+    document.removeEventListener("click", onClick, true);
+    window.removeEventListener("hashchange", onHash);
+    window.removeEventListener("pageshow", onPageShow);
+    document.removeEventListener("visibilitychange", onVisibility);
+    window.removeEventListener("pagehide", onPageHide);
+    motion.removeEventListener("change", onMotion);
   };
 
   // Navigation and focus bypass the fade so targets are immediately usable.
   const reveal = (section: HTMLElement, immediate = false): void => {
-    if (immediate) section.removeAttribute('data-reveal-state');
+    if (immediate) section.removeAttribute("data-reveal-state");
     if (!pending.delete(section)) return;
-    if (!immediate) section.dataset.revealState = 'revealed';
+    if (!immediate) section.dataset.revealState = "revealed";
     observer.unobserve(section);
     if (!pending.size) cleanup();
   };
@@ -72,7 +72,7 @@ export function initializeHomepageReveal(): void {
   const onFocus = (event: FocusEvent): void => revealTarget(event.target);
   const onClick = (event: MouseEvent): void => {
     if (!(event.target instanceof Element)) return;
-    const link = event.target.closest<HTMLAnchorElement>('a[href]');
+    const link = event.target.closest<HTMLAnchorElement>("a[href]");
     if (!link) return;
     const url = new URL(link.href, window.location.href);
     if (
@@ -113,7 +113,7 @@ export function initializeHomepageReveal(): void {
         if (entry.isIntersecting) reveal(entry.target as HTMLElement);
       }
     },
-    { threshold: 0, rootMargin: '0px 0px 80px 0px' },
+    { threshold: 0, rootMargin: "0px 0px 80px 0px" },
   );
 
   // Direct hash/focus targets never acquire a hidden state or flash.
@@ -126,7 +126,7 @@ export function initializeHomepageReveal(): void {
     )
       continue;
     pending.add(section);
-    section.dataset.revealState = 'pending';
+    section.dataset.revealState = "pending";
     observer.observe(section);
   }
 
@@ -135,11 +135,11 @@ export function initializeHomepageReveal(): void {
     return;
   }
 
-  document.addEventListener('focusin', onFocus, true);
-  document.addEventListener('click', onClick, true);
-  window.addEventListener('hashchange', onHash);
-  window.addEventListener('pageshow', onPageShow);
-  document.addEventListener('visibilitychange', onVisibility);
-  window.addEventListener('pagehide', onPageHide);
-  motion.addEventListener('change', onMotion);
+  document.addEventListener("focusin", onFocus, true);
+  document.addEventListener("click", onClick, true);
+  window.addEventListener("hashchange", onHash);
+  window.addEventListener("pageshow", onPageShow);
+  document.addEventListener("visibilitychange", onVisibility);
+  window.addEventListener("pagehide", onPageHide);
+  motion.addEventListener("change", onMotion);
 }

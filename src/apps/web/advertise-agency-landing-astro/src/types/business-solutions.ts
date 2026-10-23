@@ -1,4 +1,4 @@
-import type { CarouselContent } from './image-carousel';
+import type { CarouselContent } from "./image-carousel";
 
 /** Reusable solution copy and optional evidence for business types. */
 export interface BusinessSolutionMedia {
@@ -30,7 +30,7 @@ export interface BusinessSolutionItem {
     text: string;
   };
   inquiryLabel: string;
-  inquiryHref: '/#order-inquiry';
+  inquiryHref: "/#order-inquiry";
   carousel: BusinessSolutionCarousel;
   attribution: BusinessSolutionAttribution;
 }

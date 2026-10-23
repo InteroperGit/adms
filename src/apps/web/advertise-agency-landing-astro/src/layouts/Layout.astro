@@ -3,12 +3,12 @@
 // Optional metadata overrides site defaults; noindex defaults to false.
 // The default slot belongs inside main; ThemeInit must stay in the head.
 
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
-import CookieBanner from '@/components/CookieBanner.astro';
-import ThemeInit from '@/components/ui/ThemeInit.astro';
-import { site } from '@/content/site';
-import '/src/styles/global.css';
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import CookieBanner from "@/components/CookieBanner.astro";
+import ThemeInit from "@/components/ui/ThemeInit.astro";
+import { site } from "@/content/site";
+import "/src/styles/global.css";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -17,11 +17,7 @@ export interface Props {
   noindex?: boolean;
 }
 
-const {
-  title,
-  description = site.description,
-  noindex = false,
-} = Astro.props;
+const { title, description = site.description, noindex = false } = Astro.props;
 const pageTitle = title ? `${title} | ${site.logoText}` : site.title;
 // Astro.site is undefined until a verified production URL is configured.
 const canonicalURL = Astro.site
@@ -29,44 +25,97 @@ const canonicalURL = Astro.site
   : undefined;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      name="color-scheme"
+      content="light dark"
+    />
     {/* Apply the preference before subsequent styles or content can paint. */}
     <ThemeInit />
     {/* Use caller metadata with validated site defaults. */}
     <title>{pageTitle}</title>
-    <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
-    {canonicalURL && <link rel="canonical" href={canonicalURL.href} />}
+    <meta
+      name="description"
+      content={description}
+    />
+    {noindex && (
+      <meta
+        name="robots"
+        content="noindex, follow"
+      />
+    )}
+    {canonicalURL && (
+      <link
+        rel="canonical"
+        href={canonicalURL.href}
+      />
+    )}
     {/*
       Share document metadata without inventing a production canonical URL.
     */}
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ru_RU" />
-    <meta property="og:site_name" content={site.logoText} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
-    {canonicalURL && <meta property="og:url" content={canonicalURL.href} />}
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta
+      property="og:type"
+      content="website"
+    />
+    <meta
+      property="og:locale"
+      content="ru_RU"
+    />
+    <meta
+      property="og:site_name"
+      content={site.logoText}
+    />
+    <meta
+      property="og:title"
+      content={pageTitle}
+    />
+    <meta
+      property="og:description"
+      content={description}
+    />
+    {canonicalURL && (
+      <meta
+        property="og:url"
+        content={canonicalURL.href}
+      />
+    )}
+    <meta
+      name="twitter:card"
+      content="summary"
+    />
+    <meta
+      name="twitter:title"
+      content={pageTitle}
+    />
+    <meta
+      name="twitter:description"
+      content={description}
+    />
     <link
       rel="icon"
       type="image/x-icon"
       href="/favicon.ico"
       sizes="16x16 32x32 48x48"
     />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+      sizes="any"
+    />
     {/* Font Awesome 6 (free) */}
     <link
       rel="stylesheet"
       href={
-        'https://cdnjs.cloudflare.com/ajax/libs/' +
-        'font-awesome/6.7.2/css/all.min.css'
+        "https://cdnjs.cloudflare.com/ajax/libs/" +
+        "font-awesome/6.7.2/css/all.min.css"
       }
     />
   </head>

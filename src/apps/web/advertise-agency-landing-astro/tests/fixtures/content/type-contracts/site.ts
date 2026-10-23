@@ -1,76 +1,76 @@
 // Compile-only examples; this file is never executed.
-import type * as Domain from '@/types/site';
+import type * as Domain from "@/types/site";
 
 export const value = {
-  title: 'TEST_TITLE',
-  description: 'TEST_DESCRIPTION',
-  logoText: 'TEST_LOGOTEXT',
-  phone: 'TEST_PHONE',
-  email: 'test@example.com',
-  address: 'TEST_ADDRESS',
-  workHours: 'TEST_WORKHOURS',
-  workHoursWeekend: 'TEST_WORKHOURSWEEKEND',
+  title: "TEST_TITLE",
+  description: "TEST_DESCRIPTION",
+  logoText: "TEST_LOGOTEXT",
+  phone: "TEST_PHONE",
+  email: "test@example.com",
+  address: "TEST_ADDRESS",
+  workHours: "TEST_WORKHOURS",
+  workHoursWeekend: "TEST_WORKHOURSWEEKEND",
   mapEnabled: false,
   mapFallback: {
-    src: '/favicon.svg',
-    alt: 'TEST_ALT',
+    src: "/favicon.svg",
+    alt: "TEST_ALT",
     width: 1,
     height: 1,
   },
-  mapSrc: 'https://example.test/test-asset',
+  mapSrc: "https://example.test/test-asset",
   menu: [
     {
-      label: 'Projects',
-      href: '/projects/',
+      label: "Projects",
+      href: "/projects/",
     },
     {
-      label: 'Inquiry',
-      href: '/#order-inquiry',
+      label: "Inquiry",
+      href: "/#order-inquiry",
     },
     {
-      label: 'Contacts',
-      href: '/#contacts',
+      label: "Contacts",
+      href: "/#contacts",
     },
   ],
   legal: [
     {
-      label: 'Privacy',
-      href: '/privacy-policy',
+      label: "Privacy",
+      href: "/privacy-policy",
     },
     {
-      label: 'Terms',
-      href: '/terms-of-use',
+      label: "Terms",
+      href: "/terms-of-use",
     },
   ],
   footer: {
-    description: 'TEST_DESCRIPTION',
-    copyright: 'TEST_COPYRIGHT',
+    description: "TEST_DESCRIPTION",
+    copyright: "TEST_COPYRIGHT",
   },
   sections: {
     about: {
-      title: 'TEST_TITLE',
+      title: "TEST_TITLE",
     },
     projects: {
-      title: 'TEST_TITLE',
-      subtitle: 'TEST_SUBTITLE',
+      title: "TEST_TITLE",
+      subtitle: "TEST_SUBTITLE",
     },
     reviews: {
-      title: 'TEST_TITLE',
-      subtitle: 'TEST_SUBTITLE',
+      title: "TEST_TITLE",
+      subtitle: "TEST_SUBTITLE",
     },
     contacts: {
-      panelTitle: 'TEST_PANELTITLE',
-      title: 'TEST_TITLE',
-      subtitle: 'TEST_SUBTITLE',
+      panelTitle: "TEST_PANELTITLE",
+      title: "TEST_TITLE",
+      subtitle: "TEST_SUBTITLE",
     },
   },
   yandexReviews: {
     enabled: false,
-    organizationId: '1',
-    reviewsUrl: 'https://example.test/reviews',
+    organizationId: "1",
+    reviewsUrl: "https://example.test/reviews",
     placeholder: {
-      src: '/favicon.svg',
-      alt: 'Synthetic review placeholder',
+      src: "/favicon.svg",
+      alt: "Synthetic review placeholder",
       width: 760,
       height: 700,
     },
@@ -87,5 +87,5 @@ export const YandexReviewsConfig =
 export const invalid = {
   ...value,
   // @ts-expect-error mapEnabled must retain its domain type.
-  mapEnabled: 'yes',
+  mapEnabled: "yes",
 } satisfies Domain.SiteConfig;

@@ -21,7 +21,9 @@ versioned, а group logic coverage не ниже 90%.
 
 ## Implementation
 
-Added separate colocated suites for business solutions, FAQ, introduction, ordering process, reviews, and service article schemas using versioned contract fixtures.
+Added separate colocated suites for business solutions, FAQ, introduction,
+ordering process, reviews, and service article schemas using versioned contract
+fixtures.
 
 ## Verification
 

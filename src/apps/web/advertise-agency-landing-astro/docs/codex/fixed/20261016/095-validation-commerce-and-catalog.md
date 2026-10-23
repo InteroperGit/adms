@@ -23,10 +23,10 @@ Boundary fixtures покрывают все public schema exports, а group cove
 
 ## Implementation — 2026-10-16
 
-Added seven colocated suites using versioned unit-contracts.json fixtures.
-Every public schema export is exercised, including record-source factories
-and offer presentation/focal-point re-exports. Boundary cases cover dates,
-prices, approvals, route allow-lists, inquiry fields/endpoints, image metadata,
+Added seven colocated suites using versioned unit-contracts.json fixtures. Every
+public schema export is exercised, including record-source factories and offer
+presentation/focal-point re-exports. Boundary cases cover dates, prices,
+approvals, route allow-lists, inquiry fields/endpoints, image metadata,
 uniqueness, publication evidence and article form ownership.
 
 ## Verification

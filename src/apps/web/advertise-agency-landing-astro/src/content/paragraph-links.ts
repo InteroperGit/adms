@@ -9,12 +9,12 @@ export function paragraphLinks(text: string): ParagraphSegment[] {
   const segments: ParagraphSegment[] = [];
   let cursor = 0;
   for (const match of text.matchAll(/\bhttps?:\/\/[^\s<>"']+/giu)) {
-    let candidate = match[0].replace(/[.,;:!?]+$/u, '');
+    let candidate = match[0].replace(/[.,;:!?]+$/u, "");
     // Sentence-closing brackets stay outside links; balanced URL brackets stay.
     for (const [open, close] of [
-      ['(', ')'],
-      ['[', ']'],
-      ['{', '}'],
+      ["(", ")"],
+      ["[", "]"],
+      ["{", "}"],
     ]) {
       while (
         candidate.endsWith(close) &&
@@ -27,7 +27,7 @@ export function paragraphLinks(text: string): ParagraphSegment[] {
       const url = new URL(candidate);
       // Avoid credential-bearing destinations and hidden control characters.
       if (
-        !['http:', 'https:'].includes(url.protocol) ||
+        !["http:", "https:"].includes(url.protocol) ||
         url.username ||
         url.password ||
         // eslint-disable-next-line no-control-regex

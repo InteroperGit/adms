@@ -1,68 +1,68 @@
 // @vitest-environment node
-import { expect, it } from 'vitest';
-import { getByRole } from '@testing-library/dom';
-import ServiceCard from './ServiceCard.astro';
-import { createServicesSchema } from '../../../src/validation/services';
-import fixtures from '../../../tests/fixtures/content/unit-contracts.json';
-import { render } from '../../../tests/helpers/render';
+import { expect, it } from "vitest";
+import { getByRole } from "@testing-library/dom";
+import ServiceCard from "./ServiceCard.astro";
+import { createServicesSchema } from "../../../src/validation/services";
+import fixtures from "../../../tests/fixtures/content/unit-contracts.json";
+import { render } from "../../../tests/helpers/render";
 
-const service = () => createServicesSchema(['/services/sample/'])
-  .parse(fixtures.services).items[0];
+const service = () =>
+  createServicesSchema(["/services/sample/"]).parse(fixtures.services).items[0];
 
-it('labels the article and preserves its title link and copy', async () => {
+it("labels the article and preserves its title link and copy", async () => {
   const item = service();
   const body = await render(ServiceCard, { service: item });
-  expect(getByRole(body, 'article')).toHaveAccessibleName(item.name);
-  expect(getByRole(body, 'heading', { level: 3 })).toHaveTextContent(item.name);
-  expect(getByRole(body, 'link')).toHaveAttribute('href', item.href);
+  expect(getByRole(body, "article")).toHaveAccessibleName(item.name);
+  expect(getByRole(body, "heading", { level: 3 })).toHaveTextContent(item.name);
+  expect(getByRole(body, "link")).toHaveAttribute("href", item.href);
   expect(body).toHaveTextContent(item.description);
-  const image = getByRole(body, 'img', { name: item.image!.alt });
-  expect(image).toHaveAttribute('src', item.image!.src);
-  expect(image).toHaveAttribute('width', String(item.image!.width));
-  expect(image).toHaveAttribute('height', String(item.image!.height));
-  expect(image).toHaveAttribute('loading', 'lazy');
-  expect(image).toHaveAttribute('decoding', 'async');
-  expect(image.parentElement?.getAttribute('style'))
-    .toContain('--mobile-focal-point:1% 1%');
+  const image = getByRole(body, "img", { name: item.image!.alt });
+  expect(image).toHaveAttribute("src", item.image!.src);
+  expect(image).toHaveAttribute("width", String(item.image!.width));
+  expect(image).toHaveAttribute("height", String(item.image!.height));
+  expect(image).toHaveAttribute("loading", "lazy");
+  expect(image).toHaveAttribute("decoding", "async");
+  expect(image.parentElement?.getAttribute("style")).toContain(
+    "--mobile-focal-point:1% 1%",
+  );
 });
 
-it('omits the photo frame and link for a text-only service', async () => {
+it("omits the photo frame and link for a text-only service", async () => {
   const item = service();
   item.image = null;
   delete item.href;
   const body = await render(ServiceCard, { service: item });
-  expect(body.querySelector('img, .service-photo, a')).toBeNull();
-  expect(getByRole(body, 'heading')).toHaveTextContent(item.name);
+  expect(body.querySelector("img, .service-photo, a")).toBeNull();
+  expect(getByRole(body, "heading")).toHaveTextContent(item.name);
   expect(body).toHaveTextContent(item.description);
 });
 
-it('renders service copy as text and preserves a native destination',
-  async () => {
+it("renders service copy with a native destination", async () => {
   const item = service();
-  item.name = '<script>unsafe()</script>';
-  item.description = '<b>unsafe</b>';
+  item.name = "<script>unsafe()</script>";
+  item.description = "<b>unsafe</b>";
   item.image = null;
-  item.href = '/services/safe/';
+  item.href = "/services/safe/";
   const body = await render(ServiceCard, { service: item });
-  expect(body.querySelector('script, b')).toBeNull();
+  expect(body.querySelector("script, b")).toBeNull();
   expect(body).toHaveTextContent(item.name);
   expect(body).toHaveTextContent(item.description);
-  expect(getByRole(body, 'link')).toHaveAttribute('href', item.href);
+  expect(getByRole(body, "link")).toHaveAttribute("href", item.href);
 });
 
-it('builds responsive sources for a bundled image', async () => {
+it("builds responsive sources for a bundled image", async () => {
   const item = service();
-  item.image!.src = '/src/assets/introduction/storefront-sign.webp';
+  item.image!.src = "/src/assets/introduction/storefront-sign.webp";
   const body = await render(ServiceCard, { service: item });
-  const image = getByRole(body, 'img');
-  expect(image.getAttribute('srcset')).toContain('320w');
-  expect(image.getAttribute('sizes')).toContain('380px');
-  expect(image).toHaveAttribute('alt', item.image!.alt);
+  const image = getByRole(body, "img");
+  expect(image.getAttribute("srcset")).toContain("320w");
+  expect(image.getAttribute("sizes")).toContain("380px");
+  expect(image).toHaveAttribute("alt", item.image!.alt);
 });
 
-it('rejects a missing bundled asset with service context', async () => {
+it("rejects a missing bundled asset with service context", async () => {
   const item = service();
-  item.image!.src = '/src/assets/missing.webp';
+  item.image!.src = "/src/assets/missing.webp";
   await expect(render(ServiceCard, { service: item })).rejects.toThrow(
     `Service image not found (${item.id})`,
   );

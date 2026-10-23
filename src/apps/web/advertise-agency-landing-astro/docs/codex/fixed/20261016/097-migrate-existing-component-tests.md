@@ -14,15 +14,18 @@
 
 ## Приёмка
 
-Каждый перенесённый тест запускается из нового пути. В `tests/components`
-не остаётся component-тестов. Поведение и количество проверок не ухудшаются.
+Каждый перенесённый тест запускается из нового пути. В `tests/components` не
+остаётся component-тестов. Поведение и количество проверок не ухудшаются.
 
 ## Зависимости
 
-096.
+96.
 
 ## Completion
 
 Status: completed on 2026-10-16.
 
-Moved component, content, form, image resolver, and carousel tests beside their source files; merged Button smoke coverage and removed the old test locations. Validation: pnpm test (19 files, 164 tests passed) and pnpm check passed with one existing Zod deprecation hint.
+Moved component, content, form, image resolver, and carousel tests beside their
+source files; merged Button smoke coverage and removed the old test locations.
+Validation: pnpm test (19 files, 164 tests passed) and pnpm check passed with
+one existing Zod deprecation hint.

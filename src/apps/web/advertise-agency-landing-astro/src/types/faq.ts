@@ -1,6 +1,6 @@
 /** Reusable answers remain drafts until the agency confirms their terms. */
 export interface FaqApproval {
-  state: 'draft' | 'approved';
+  state: "draft" | "approved";
   source: string | null;
   approvedBy: string | null;
 }
@@ -17,7 +17,7 @@ export interface FaqContent {
   demoNotice: string;
   heading: string;
   inquiryLabel: string;
-  inquiryHref: '/#order-inquiry';
+  inquiryHref: "/#order-inquiry";
   approval: FaqApproval;
   items: FaqItem[];
 }

@@ -4,7 +4,8 @@
 
 ## Purpose
 
-This document describes **where the agent should store task files, plans, and context** in the project, as well as **which naming rules to apply**.  
+This document describes **where the agent should store task files, plans, and
+context** in the project, as well as **which naming rules to apply**.  
 Follow these rules when creating, searching for, and modifying files.
 
 ---
@@ -44,12 +45,15 @@ project-root/
   state after context compression. Detailed task history belongs in the task
   files under `docs/codex/`, not in this handoff.
 
-- **`harness/build/`** — recommended for files describing individual development phases.  
+- **`harness/build/`** — recommended for files describing individual development
+  phases.  
   This helps break large tasks into manageable parts.
 
-- **`docs/codex/`** — suitable for the strict "Plan-Todo-Learn" protocol, where each file type has its own purpose and naming rules.
+- **`docs/codex/`** — suitable for the strict "Plan-Todo-Learn" protocol, where
+  each file type has its own purpose and naming rules.
 
-- **Avoid synchronized folders.** Do not store agent working files in `Documents`, `Desktop`, OneDrive, or other synchronized folders.  
+- **Avoid synchronized folders.** Do not store agent working files in
+  `Documents`, `Desktop`, OneDrive, or other synchronized folders.  
   This can cause sync and performance issues.  
   Prefer a local folder inside the project or `~/dev/`.
 
@@ -118,18 +122,28 @@ The file name must match the agent name in the TOML file:
 
 ## 3. Agent Instructions
 
-1. Before starting work, check for files in `.codex/`, `harness/`, and `docs/codex/`.
-2. If creating a new task, place it in `docs/codex/todo/` or `harness/build/` depending on the task type.
+1. Before starting work, check for files in `.codex/`, `harness/`, and
+   `docs/codex/`.
+2. If creating a new task, place it in `docs/codex/todo/` or `harness/build/`
+   depending on the task type.
 3. If the task belongs to the current active session, update `.codex/TASKS.md`.
 4. When naming files, strictly follow the rules in Section 2.
-5. Do not create task files in the project root, except for `AGENTS.md`, `GOALS.md`, `PLANS.md`, and `PROMPTS.md`.
-6. If unsure where a file belongs, ask the user or use `docs/codex/` as a safe default.
-7. After completing and verifying a task, mark it completed, record its changes and verification results, and move it from `docs/codex/todo/` to `docs/codex/fixed/yyyyMMdd/`. Use the completion date in the project's local timezone (for example, `20261001`), creating the date folder if needed. Preserve its numbered filename and update relative links in the moved task and links and status in the corresponding plan. Pending tasks remain in `todo/`.
+5. Do not create task files in the project root, except for `AGENTS.md`,
+   `GOALS.md`, `PLANS.md`, and `PROMPTS.md`.
+6. If unsure where a file belongs, ask the user or use `docs/codex/` as a safe
+   default.
+7. After completing and verifying a task, mark it completed, record its changes
+   and verification results, and move it from `docs/codex/todo/` to
+   `docs/codex/fixed/yyyyMMdd/`. Use the completion date in the project's local
+   timezone (for example, `20261001`), creating the date folder if needed.
+   Preserve its numbered filename and update relative links in the moved task
+   and links and status in the corresponding plan. Pending tasks remain in
+   `todo/`.
 
 ### `TASKS.md` handoff policy
 
-`.codex/TASKS.md` is a compact current-state handoff, not a chronological
-task journal. Keep only:
+`.codex/TASKS.md` is a compact current-state handoff, not a chronological task
+journal. Keep only:
 
 - active task links and their short status or next action;
 - current blockers, constraints and decisions needed to resume work;
@@ -146,15 +160,16 @@ under 80 lines; compact it when it grows beyond that size.
 
 ## Backlog handling
 
-Tasks explicitly deferred by the user belong in `docs/codex/backlog/`.
-Keep their numbered filenames, implementation evidence and outstanding
-acceptance inputs. Update plan/status links when moving between backlog,
-todo and fixed. On 2026-10-10 the user moved tasks 052–066 to backlog,
-including the previously archived tasks 052–053.
+Tasks explicitly deferred by the user belong in `docs/codex/backlog/`. Keep
+their numbered filenames, implementation evidence and outstanding acceptance
+inputs. Update plan/status links when moving between backlog, todo and fixed. On
+2026-10-10 the user moved tasks 052–066 to backlog, including the previously
+archived tasks 052–053.
 
 ## 4. Prohibited
 
-- Storing agent working files in `Documents`, `Desktop`, OneDrive, or other synchronized folders.
+- Storing agent working files in `Documents`, `Desktop`, OneDrive, or other
+  synchronized folders.
 - Using spaces or uppercase letters in file names.
 - Creating duplicate tasks in different folders unnecessarily.
 - Changing the folder structure without user approval.
@@ -163,18 +178,19 @@ including the previously archived tasks 052–053.
 
 ## 5. Quick Reference
 
-| File Type              | Folder                 | Example Name                     |
-|------------------------|------------------------|----------------------------------|
-| Active tasks           | `.codex/`              | `TASKS.md`                       |
-| Development phase      | `harness/build/`       | `phase-01-create-list.md`        |
-| Plan                   | `docs/codex/plan/`     | `20231027_100000_plan.md`        |
-| Current task           | `docs/codex/todo/`     | `001-feature.md`                 |
-| Completed task         | `docs/codex/fixed/yyyyMMdd/` | `20261001/001-feature.md` (relative to `fixed/`) |
-| Postmortem             | `docs/codex/learn/`    | `20231027_110000_learn.md`       |
-| Custom agent           | `.codex/agents/`       | `scaffolder.toml`                |
-| Skill                  | `.codex/skills/`       | `database-migration.md`          |
-| User prompt            | `.codex/prompts/`      | `create-prompt.md`               |
+| File Type         | Folder                       | Example Name                                     |
+| ----------------- | ---------------------------- | ------------------------------------------------ |
+| Active tasks      | `.codex/`                    | `TASKS.md`                                       |
+| Development phase | `harness/build/`             | `phase-01-create-list.md`                        |
+| Plan              | `docs/codex/plan/`           | `20231027_100000_plan.md`                        |
+| Current task      | `docs/codex/todo/`           | `001-feature.md`                                 |
+| Completed task    | `docs/codex/fixed/yyyyMMdd/` | `20261001/001-feature.md` (relative to `fixed/`) |
+| Postmortem        | `docs/codex/learn/`          | `20231027_110000_learn.md`                       |
+| Custom agent      | `.codex/agents/`             | `scaffolder.toml`                                |
+| Skill             | `.codex/skills/`             | `database-migration.md`                          |
+| User prompt       | `.codex/prompts/`            | `create-prompt.md`                               |
 
 ---
 
-_Following these rules ensures predictability, order, and efficient Codex agent operation in the project._
+_Following these rules ensures predictability, order, and efficient Codex agent
+operation in the project._

@@ -1,7 +1,7 @@
 ---
 // Render authored media with a production URL and reserved intrinsic space.
-import type { ImageBlock as ImageContent } from '@/types/content-blocks';
-import ContentImage from './ContentImage.astro';
+import type { ImageBlock as ImageContent } from "@/types/content-blocks";
+import ContentImage from "./ContentImage.astro";
 
 interface Props {
   block: ImageContent;
@@ -13,7 +13,11 @@ const { block, priority = false, serviceCrop = false } = Astro.props as Props;
 
 {/* Captions retain the author's qualification of the image. */}
 <figure class="content-image">
-  <ContentImage image={block} priority={priority} serviceCrop={serviceCrop} />
+  <ContentImage
+    image={block}
+    priority={priority}
+    serviceCrop={serviceCrop}
+  />
   {block.caption && <figcaption>{block.caption}</figcaption>}
 </figure>
 

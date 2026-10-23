@@ -1,23 +1,20 @@
 ---
 // One ordered article renderer for normalized MDX and explicit JSON fallback.
 // Only the page supplies owner context; authors cannot enable production forms.
-import type { ContentBlock } from '@/types/content-blocks';
-import type { ArticleContext } from '@/content/article-context';
-import {
-  getVisibleBlocks,
-  hasDemoBlocks,
-} from '@/content/block-publication';
-import ChartBlock from './ChartBlock.astro';
-import FootnoteBlock from './FootnoteBlock.astro';
-import HeadingBlock from './HeadingBlock.astro';
-import ImageBlock from './ImageBlock.astro';
-import ImageGalleryBlock from './ImageGalleryBlock.astro';
-import ListBlock from './ListBlock.astro';
-import OrderFormBlock from './OrderFormBlock.astro';
-import ParagraphBlock from './ParagraphBlock.astro';
-import QuoteBlock from './QuoteBlock.astro';
-import TableBlock from './TableBlock.astro';
-import VideoBlock from './VideoBlock.astro';
+import type { ContentBlock } from "@/types/content-blocks";
+import type { ArticleContext } from "@/content/article-context";
+import { getVisibleBlocks, hasDemoBlocks } from "@/content/block-publication";
+import ChartBlock from "./ChartBlock.astro";
+import FootnoteBlock from "./FootnoteBlock.astro";
+import HeadingBlock from "./HeadingBlock.astro";
+import ImageBlock from "./ImageBlock.astro";
+import ImageGalleryBlock from "./ImageGalleryBlock.astro";
+import ListBlock from "./ListBlock.astro";
+import OrderFormBlock from "./OrderFormBlock.astro";
+import ParagraphBlock from "./ParagraphBlock.astro";
+import QuoteBlock from "./QuoteBlock.astro";
+import TableBlock from "./TableBlock.astro";
+import VideoBlock from "./VideoBlock.astro";
 
 interface Props {
   blocks: ContentBlock[];
@@ -29,15 +26,19 @@ const { blocks, context } = Astro.props as Props;
 const visibleBlocks = getVisibleBlocks(blocks);
 const demo = hasDemoBlocks(blocks);
 // A mixed demo stream cannot enable production forms via an approved owner.
-const formContext = context && demo
-  ? { ...context, published: false } : context;
-const firstMediaIndex = visibleBlocks.findIndex((block) =>
-  block.type === 'image' || block.type === 'image-gallery');
+const formContext =
+  context && demo ? { ...context, published: false } : context;
+const firstMediaIndex = visibleBlocks.findIndex(
+  (block) => block.type === "image" || block.type === "image-gallery",
+);
 // Renderer-owned IDs already identify headings and media; reserving the
 // wrapper anchor for text-only blocks prevents duplicate fragment targets.
 const wrapperId = (block: ContentBlock) =>
-  ['heading', 'chart', 'image', 'image-gallery', 'order-form']
-    .includes(block.type) ? undefined : block.id;
+  ["heading", "chart", "image", "image-gallery", "order-form"].includes(
+    block.type,
+  )
+    ? undefined
+    : block.id;
 ---
 
 {/* Block IDs identify article targets, including standalone headings. */}
@@ -48,37 +49,39 @@ const wrapperId = (block: ContentBlock) =>
       data-block-type={block.type}
       id={wrapperId(block)}
     >
-      {block.type === 'heading' && <HeadingBlock block={block} />}
-      {block.type === 'paragraph' && (
-        <ParagraphBlock block={block} />
+      {block.type === "heading" && <HeadingBlock block={block} />}
+      {block.type === "paragraph" && <ParagraphBlock block={block} />}
+      {(block.type === "ordered-list" || block.type === "unordered-list") && (
+        <ListBlock block={block} />
       )}
-      {(block.type === 'ordered-list' ||
-        block.type === 'unordered-list') && <ListBlock block={block} />}
-      {block.type === 'table' && <TableBlock block={block} />}
-      {block.type === 'chart' && <ChartBlock block={block} />}
-      {block.type === 'image' && (
+      {block.type === "table" && <TableBlock block={block} />}
+      {block.type === "chart" && <ChartBlock block={block} />}
+      {block.type === "image" && (
         <ImageBlock
           block={block}
           priority={index === firstMediaIndex}
-          serviceCrop={context?.kind === 'service'}
+          serviceCrop={context?.kind === "service"}
         />
       )}
-      {block.type === 'image-gallery' && (
+      {block.type === "image-gallery" && (
         <ImageGalleryBlock
           block={block}
           priority={index === firstMediaIndex}
         />
       )}
-      {block.type === 'video' && <VideoBlock block={block} />}
-      {block.type === 'order-form' && (
+      {block.type === "video" && <VideoBlock block={block} />}
+      {block.type === "order-form" && (
         <OrderFormBlock
           block={block}
-          context={block.status === 'published' && context
-            ? { ...context, published: true } : formContext}
+          context={
+            block.status === "published" && context
+              ? { ...context, published: true }
+              : formContext
+          }
         />
       )}
-      {block.type === 'quote' && <QuoteBlock block={block} />}
-      {block.type === 'footnote' && <FootnoteBlock block={block} />}
+      {block.type === "quote" && <QuoteBlock block={block} />}
+      {block.type === "footnote" && <FootnoteBlock block={block} />}
     </div>
   ))}
 </div>
@@ -100,11 +103,8 @@ const wrapperId = (block: ContentBlock) =>
 
   /* Briefly identify a fragment target after returning from a footnote. */
   .content-block:target {
-    outline: 2px solid color-mix(
-      in srgb,
-      var(--content-block-accent) 55%,
-      transparent
-    );
+    outline: 2px solid
+      color-mix(in srgb, var(--content-block-accent) 55%, transparent);
     outline-offset: 0.5rem;
   }
 

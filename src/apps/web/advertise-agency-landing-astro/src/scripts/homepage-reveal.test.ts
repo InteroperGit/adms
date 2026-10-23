@@ -1,6 +1,6 @@
 ﻿// Browser-state coverage verifies reveal fallback, navigation and cleanup.
 // @vitest-environment jsdom
-import { afterEach, expect, it, vi } from 'vitest';
+import { afterEach, expect, it, vi } from "vitest";
 
 type ObserverEntry = { isIntersecting: boolean; target: Element };
 
@@ -27,7 +27,7 @@ class ObserverMock {
 function mediaQuery(matches = false) {
   return {
     matches,
-    media: '(prefers-reduced-motion: reduce)',
+    media: "(prefers-reduced-motion: reduce)",
     onchange: null,
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
@@ -43,9 +43,9 @@ function markup() {
       <section id="first"><a href="#second">Next</a></section>
       <section id="second"><button>Action</button></section>
     </main>`;
-  const sections = [...document.querySelectorAll('section')];
+  const sections = [...document.querySelectorAll("section")];
   sections.forEach((section, index) => {
-    vi.spyOn(section, 'getBoundingClientRect').mockReturnValue({
+    vi.spyOn(section, "getBoundingClientRect").mockReturnValue({
       top: index === 0 ? 0 : 1000,
       bottom: index === 0 ? 500 : 1500,
     } as DOMRect);
@@ -58,57 +58,55 @@ afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
   ObserverMock.instances = [];
-  window.history.replaceState({}, '', '/');
+  window.history.replaceState({}, "", "/");
 });
 
-it('leaves sections readable when observers are unavailable', async () => {
-  vi.stubGlobal('IntersectionObserver', undefined);
-  vi.stubGlobal('matchMedia', () => mediaQuery());
+it("leaves sections readable when observers are unavailable", async () => {
+  vi.stubGlobal("IntersectionObserver", undefined);
+  vi.stubGlobal("matchMedia", () => mediaQuery());
   vi.resetModules();
-  const { initializeHomepageReveal } = await import('./homepage-reveal');
+  const { initializeHomepageReveal } = await import("./homepage-reveal");
   markup();
 
   initializeHomepageReveal();
 
-  expect(document.querySelectorAll('[data-reveal-state]')).toHaveLength(0);
+  expect(document.querySelectorAll("[data-reveal-state]")).toHaveLength(0);
 });
 
-it(
-  'reveals pending sections and cleans listeners after the final entry',
-  async () => {
-  vi.stubGlobal('IntersectionObserver', ObserverMock);
-  vi.stubGlobal('matchMedia', () => mediaQuery());
+it("reveals pending sections and removes listeners when done", async () => {
+  vi.stubGlobal("IntersectionObserver", ObserverMock);
+  vi.stubGlobal("matchMedia", () => mediaQuery());
   vi.resetModules();
-  const { initializeHomepageReveal } = await import('./homepage-reveal');
+  const { initializeHomepageReveal } = await import("./homepage-reveal");
   const sections = markup();
 
   initializeHomepageReveal();
 
-  expect(sections[1]).toHaveAttribute('data-reveal-state', 'pending');
+  expect(sections[1]).toHaveAttribute("data-reveal-state", "pending");
   ObserverMock.instances[0].reveal(sections[1]);
-  expect(sections[1]).toHaveAttribute('data-reveal-state', 'revealed');
+  expect(sections[1]).toHaveAttribute("data-reveal-state", "revealed");
   expect(ObserverMock.instances[0].disconnected).toBe(true);
 });
 
-it('tears down the observer on pagehide', async () => {
-  vi.stubGlobal('IntersectionObserver', ObserverMock);
-  vi.stubGlobal('matchMedia', () => mediaQuery());
+it("tears down the observer on pagehide", async () => {
+  vi.stubGlobal("IntersectionObserver", ObserverMock);
+  vi.stubGlobal("matchMedia", () => mediaQuery());
   vi.resetModules();
-  const { initializeHomepageReveal } = await import('./homepage-reveal');
+  const { initializeHomepageReveal } = await import("./homepage-reveal");
   const sections = markup();
 
   initializeHomepageReveal();
-  window.dispatchEvent(new Event('pagehide'));
+  window.dispatchEvent(new Event("pagehide"));
 
   expect(ObserverMock.instances[0].disconnected).toBe(true);
-  expect(sections[1]).toHaveAttribute('data-reveal-state', 'pending');
+  expect(sections[1]).toHaveAttribute("data-reveal-state", "pending");
 });
 
-it('does not initialize under reduced motion', async () => {
-  vi.stubGlobal('IntersectionObserver', ObserverMock);
-  vi.stubGlobal('matchMedia', () => mediaQuery(true));
+it("does not initialize under reduced motion", async () => {
+  vi.stubGlobal("IntersectionObserver", ObserverMock);
+  vi.stubGlobal("matchMedia", () => mediaQuery(true));
   vi.resetModules();
-  const { initializeHomepageReveal } = await import('./homepage-reveal');
+  const { initializeHomepageReveal } = await import("./homepage-reveal");
   markup();
 
   initializeHomepageReveal();

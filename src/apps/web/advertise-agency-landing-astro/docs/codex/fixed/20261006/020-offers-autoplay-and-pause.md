@@ -6,22 +6,36 @@
 
 **Dependency:** 019 and 019a.
 
-**Follow-up:** [020a](020a-offers-settings-autoplay.md)
-supersedes the explicit
+**Follow-up:** [020a](020a-offers-settings-autoplay.md) supersedes the explicit
 pause/play button and persistent manual-stop requirements. Preserve the
 implementation history below; carry native visibility verification forward.
 
-Read the [carousel plan](../../plan/20261005_044149_plan.md), [task guide](../../task-management.md), [README](../../../../README.md) and [project instructions](../../../../AGENTS.md). Apply relevant astro-best-practices/frontend-design guidance and Playwright for browser work; consult required Astro guides.
+Read the [carousel plan](../../plan/20261005_044149_plan.md),
+[task guide](../../task-management.md), [README](../../../../README.md) and
+[project instructions](../../../../AGENTS.md). Apply relevant
+astro-best-practices/frontend-design guidance and Playwright for browser work;
+consult required Astro guides.
 
 ## Scope
 
-Add configured autoplay and explicit pause/play using one timer. Respect hover, focus, document/viewport visibility, reduced motion and zero/one items. Manual navigation or keyboard interaction stops rotation until explicit Play; user pause lasts this page visit. Automatic changes never move focus or announce every slide. Play still respects temporary hover/focus/visibility constraints; avoid duplicate timers/catch-up jumps.
+Add configured autoplay and explicit pause/play using one timer. Respect hover,
+focus, document/viewport visibility, reduced motion and zero/one items. Manual
+navigation or keyboard interaction stops rotation until explicit Play; user
+pause lasts this page visit. Automatic changes never move focus or announce
+every slide. Play still respects temporary hover/focus/visibility constraints;
+avoid duplicate timers/catch-up jumps.
 
 ## Acceptance
 
-Verify timing/wrap, manual stop/restart, hover/focus, hidden-tab/offscreen pause/resume, reduced motion and focused CTA safety in production Chrome. Document state rules and results; run check/build and restore original publication setting.
+Verify timing/wrap, manual stop/restart, hover/focus, hidden-tab/offscreen
+pause/resume, reduced motion and focused CTA safety in production Chrome.
+Document state rules and results; run check/build and restore original
+publication setting.
 
-Keep content truthful and JSON-editable. Browser evidence belongs under ignored `output/playwright/task-020/`. Record changed files, checks and limits; archive by actual completion date and update the plan after verification. No commit or deployment is implied.
+Keep content truthful and JSON-editable. Browser evidence belongs under ignored
+`output/playwright/task-020/`. Record changed files, checks and limits; archive
+by actual completion date and update the plan after verification. No commit or
+deployment is implied.
 
 ## Implementation and verification — 2026-10-06
 
@@ -44,9 +58,9 @@ the mobile screenshot was visually reviewed.
 
 Three actual JSON fixtures (zero, one, autoplay false with explicit Play) were
 built and checked in Chrome. Original JSON bytes/publication settings restored:
-enabled true, autoplay true, interval 7000, two items. Production build restored.
-`pnpm check`: zero errors/warnings, one preexisting ignored task-018 script hint.
-`pnpm build`: six pages. Component 80-column and diff checks pass.
+enabled true, autoplay true, interval 7000, two items. Production build
+restored. `pnpm check`: zero errors/warnings, one preexisting ignored task-018
+script hint. `pnpm build`: six pages. Component 80-column and diff checks pass.
 
 Native hidden-tab acceptance remains unverified: automated Chrome kept
 `document.hidden` false on tab switch/window minimization even with focus

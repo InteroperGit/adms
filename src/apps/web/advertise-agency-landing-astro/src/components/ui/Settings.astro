@@ -2,11 +2,16 @@
 // Render a viewport-bounded settings popup containing native theme radios.
 // ThemeInit reveals controls only when their preference handling is ready.
 // Keep popup positioning and focus dismissal within the header boundary.
-import ThemeToggle from './ThemeToggle.astro';
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 {/* Keep popup positioning and focus dismissal within the header boundary. */}
-<div class="theme-settings" hidden data-theme-control data-theme-settings>
+<div
+  class="theme-settings"
+  hidden
+  data-theme-control
+  data-theme-settings
+>
   <button
     type="button"
     class="settings-trigger"
@@ -28,14 +33,18 @@ import ThemeToggle from './ThemeToggle.astro';
       >
         <path
           d={
-            'm9 3-.5 2.5-2 1.2L4 6l-2 3.5 2 1.7v2.3' +
-            'l-2 1.8L4 19l2.5-.7 2 1.2L9 22h4l.5-2.5' +
-            ' 2-1.2 2.5.7 2-3.7-2-1.8v-2.3l2-1.7L18 6' +
-            'l-2.5.7-2-1.2L13 3Z'
+            "m9 3-.5 2.5-2 1.2L4 6l-2 3.5 2 1.7v2.3" +
+            "l-2 1.8L4 19l2.5-.7 2 1.2L9 22h4l.5-2.5" +
+            " 2-1.2 2.5.7 2-3.7-2-1.8v-2.3l2-1.7L18 6" +
+            "l-2.5.7-2-1.2L13 3Z"
           }
           transform="translate(1 -0.5) scale(.95)"
         />
-        <circle cx="12" cy="12" r="3" />
+        <circle
+          cx="12"
+          cy="12"
+          r="3"
+        />
       </svg>
     </span>
   </button>
@@ -86,7 +95,7 @@ import ThemeToggle from './ThemeToggle.astro';
   }
   /* Give the open settings panel a persistent surface cue. */
   .settings-trigger:hover .settings-surface,
-  .settings-trigger[aria-expanded='true'] .settings-surface {
+  .settings-trigger[aria-expanded="true"] .settings-surface {
     background: var(--color-base-200);
   }
   /* Use primary contrast for pointer feedback on the compact gear. */
@@ -96,7 +105,7 @@ import ThemeToggle from './ThemeToggle.astro';
     border-color: var(--color-primary);
   }
   /* Preserve the requested black hover surface in explicit light mode. */
-  :global([data-theme='light']) .settings-trigger:hover .settings-surface {
+  :global([data-theme="light"]) .settings-trigger:hover .settings-surface {
     background: #000;
     color: #fff;
     border-color: #000;
@@ -130,11 +139,11 @@ import ThemeToggle from './ThemeToggle.astro';
   }
 </style>
 <script>
-  const settings = document.querySelector<HTMLElement>('[data-theme-settings]');
+  const settings = document.querySelector<HTMLElement>("[data-theme-settings]");
   const trigger = settings?.querySelector<HTMLButtonElement>(
-    '[data-settings-trigger]',
+    "[data-settings-trigger]",
   );
-  const panel = settings?.querySelector<HTMLElement>('[data-settings-panel]');
+  const panel = settings?.querySelector<HTMLElement>("[data-settings-panel]");
   if (settings && trigger && panel) {
     // Read visual viewport values so zoom and on-screen offsets stay in view.
     const readViewport = () => {
@@ -151,7 +160,7 @@ import ThemeToggle from './ThemeToggle.astro';
       const viewport = readViewport();
       const anchor = trigger.getBoundingClientRect();
       const maxWidth = Math.max(0, viewport.width - 32);
-      panel.style.maxWidth = String(maxWidth) + 'px';
+      panel.style.maxWidth = String(maxWidth) + "px";
       const panelWidth = Math.min(
         panel.getBoundingClientRect().width,
         viewport.width - 32,
@@ -168,7 +177,7 @@ import ThemeToggle from './ThemeToggle.astro';
         ),
       );
       // The header filter makes it a fixed-position containing block.
-      const headerBounds = settings.closest('header')?.getBoundingClientRect();
+      const headerBounds = settings.closest("header")?.getBoundingClientRect();
       return {
         left: left - (headerBounds?.left ?? 0),
         top: top - (headerBounds?.top ?? 0),
@@ -182,9 +191,9 @@ import ThemeToggle from './ThemeToggle.astro';
     const applyPanelPosition = (
       position: ReturnType<typeof calculatePanelPosition>,
     ) => {
-      panel.style.left = String(position.left) + 'px';
-      panel.style.top = String(position.top) + 'px';
-      panel.style.maxHeight = String(position.maxHeight) + 'px';
+      panel.style.left = String(position.left) + "px";
+      panel.style.top = String(position.top) + "px";
+      panel.style.maxHeight = String(position.maxHeight) + "px";
     };
     // Recalculate only while open; closed popups need no layout work.
     const place = () => {
@@ -196,8 +205,8 @@ import ThemeToggle from './ThemeToggle.astro';
     // Keep visibility and accessible state changes in one close action.
     const closeSettings = (restoreFocus = false) => {
       panel.hidden = true;
-      settings.removeAttribute('data-settings-open');
-      trigger.setAttribute('aria-expanded', 'false');
+      settings.removeAttribute("data-settings-open");
+      trigger.setAttribute("aria-expanded", "false");
       if (restoreFocus) {
         trigger.focus({ preventScroll: true });
       }
@@ -205,12 +214,12 @@ import ThemeToggle from './ThemeToggle.astro';
     // Open first, then focus the selected radio for keyboard activation only.
     const openSettings = (focusSelectedRadio: boolean) => {
       panel.hidden = false;
-      settings.setAttribute('data-settings-open', '');
-      trigger.setAttribute('aria-expanded', 'true');
+      settings.setAttribute("data-settings-open", "");
+      trigger.setAttribute("aria-expanded", "true");
       place();
       if (focusSelectedRadio) {
         panel
-          .querySelector<HTMLInputElement>('input:checked')
+          .querySelector<HTMLInputElement>("input:checked")
           ?.focus({ preventScroll: true });
       }
     };
@@ -224,7 +233,7 @@ import ThemeToggle from './ThemeToggle.astro';
     };
     // Restore trigger focus without leaking Escape to header handlers.
     const handleSettingsKeydown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape' || panel.hidden) {
+      if (event.key !== "Escape" || panel.hidden) {
         return;
       }
       event.preventDefault();
@@ -248,16 +257,16 @@ import ThemeToggle from './ThemeToggle.astro';
     const handleMobileMenuOpen = () => {
       closeSettings();
     };
-    trigger.addEventListener('click', handleTriggerClick);
-    settings.addEventListener('keydown', handleSettingsKeydown);
-    settings.addEventListener('focusout', handleSettingsFocusout);
-    document.addEventListener('pointerdown', handleDocumentPointerdown);
+    trigger.addEventListener("click", handleTriggerClick);
+    settings.addEventListener("keydown", handleSettingsKeydown);
+    settings.addEventListener("focusout", handleSettingsFocusout);
+    document.addEventListener("pointerdown", handleDocumentPointerdown);
     document
-      .querySelector('#mobile-menu-open')
-      ?.addEventListener('click', handleMobileMenuOpen);
-    window.addEventListener('resize', place);
-    window.visualViewport?.addEventListener('resize', place);
-    window.visualViewport?.addEventListener('scroll', place);
+      .querySelector("#mobile-menu-open")
+      ?.addEventListener("click", handleMobileMenuOpen);
+    window.addEventListener("resize", place);
+    window.visualViewport?.addEventListener("resize", place);
+    window.visualViewport?.addEventListener("scroll", place);
     // Font enlargement can change the anchor without resizing the viewport.
     new ResizeObserver(place).observe(trigger);
   }

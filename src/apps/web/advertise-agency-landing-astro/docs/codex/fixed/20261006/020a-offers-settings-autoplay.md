@@ -30,9 +30,9 @@ Retain temporary hover, focus-within, hidden-document, offscreen, page lifecycle
 and reduced-motion holds. Resume automatically with a fresh full interval when
 all holds clear and autoplay is enabled. Never replace a focused CTA or move
 focus automatically. Reduced motion suppresses rotation and slide animation;
-when that preference clears, configured autoplay may resume. Use one timer,
-with no duplicate scheduling or catch-up jumps. Automatic changes stay silent;
-manual changes retain the concise polite position status.
+when that preference clears, configured autoplay may resume. Use one timer, with
+no duplicate scheduling or catch-up jumps. Automatic changes stay silent; manual
+changes retain the concise polite position status.
 
 Keep overlay arrows and centered standalone dots. Remove the horizontal space
 reserved specifically for the deleted button while retaining necessary arrow,
@@ -61,8 +61,8 @@ to describe the new configuration and automatic resume rules.
 
 Store browser scripts/results/screenshots under ignored
 `output/playwright/task-020a/`. Record changed files, verification and limits.
-Archive after completion using the actual local date and update the plan.
-No commit or deployment is implied.
+Archive after completion using the actual local date and update the plan. No
+commit or deployment is implied.
 
 ## Changes and verification
 
@@ -74,8 +74,8 @@ updates remain safe. Restored the dots' full available width. Updated the offers
 guide and plan; task 020 remains historical with its native visibility gap.
 
 Production Chrome passed real timing/wrap plus controlled-clock hover, focus,
-manual arrows/dots, keyboard, reduced-motion, viewport, simulated visibility
-and page lifecycle pause/resume. Combined holds and rapid changes passed without
+manual arrows/dots, keyboard, reduced-motion, viewport, simulated visibility and
+page lifecycle pause/resume. Combined holds and rapid changes passed without
 duplicate timers. Sixteen theme/width/text-size layouts passed centered dots,
 44px targets, visible focus, stable height, copy clearance and no overflow;
 844×390 landscape passed. Screenshots were captured and settled mobile fallback
@@ -84,10 +84,10 @@ snapshot confirms both stacked articles/native links and no carousel controls.
 
 Three actual production JSON fixtures (zero, one and autoplay false) passed.
 Autoplay false stayed off before and after manual navigation. Original JSON
-bytes were restored: enabled true, autoplay true, interval 7000, two items.
-The original production build was rebuilt. `pnpm check`: zero errors/warnings,
-one preexisting ignored task-018 script hint. `pnpm build`: six pages.
-Component 80-column and diff checks passed. Evidence lives under ignored
+bytes were restored: enabled true, autoplay true, interval 7000, two items. The
+original production build was rebuilt. `pnpm check`: zero errors/warnings, one
+preexisting ignored task-018 script hint. `pnpm build`: six pages. Component
+80-column and diff checks passed. Evidence lives under ignored
 `output/playwright/task-020a/`.
 
 Visibility-event checks explicitly simulate document.hidden. The native

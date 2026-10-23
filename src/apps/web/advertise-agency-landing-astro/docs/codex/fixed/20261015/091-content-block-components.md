@@ -2,7 +2,8 @@
 
 ## Цель
 
-Покрыть рендеринг универсальных блоков и безопасные media/form fallback-состояния.
+Покрыть рендеринг универсальных блоков и безопасные media/form
+fallback-состояния.
 
 ## Объём
 
@@ -10,8 +11,8 @@
 графики, изображения, галереи, видео, цитаты, footnotes и order forms.
 Использовать матрицу `input block -> component -> output`; проверить heading
 levels, safe links, native lists, captions, ratios, focal points, responsive
-sources, media errors, transcript/caption, no-JS fallback, publication
-filtering и general inquiry fallback.
+sources, media errors, transcript/caption, no-JS fallback, publication filtering
+и general inquiry fallback.
 
 ## Приёмка
 

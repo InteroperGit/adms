@@ -3,9 +3,9 @@
 // Validated metadata supplies copy, image dimensions and separate crops.
 // Missing local assets fail the build; image-free cards remain readable.
 
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-import type { Service } from '@/types/services';
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import type { Service } from "@/types/services";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -16,26 +16,29 @@ const { service } = Astro.props;
 const { image } = service;
 // Resolve local assets at build time; other URLs retain native image loading.
 const originals = import.meta.glob<ImageMetadata>(
-  '/src/assets/**/*.{avif,jpeg,jpg,png,webp}',
-  { eager: true, import: 'default' },
+  "/src/assets/**/*.{avif,jpeg,jpg,png,webp}",
+  { eager: true, import: "default" },
 );
 const original = image ? originals[image.src] : undefined;
-if (image?.src.startsWith('/src/assets/') && !original) {
+if (image?.src.startsWith("/src/assets/") && !original) {
   throw new Error(`Service image not found (${service.id}): ${image.src}`);
 }
 const focalPoint = (point: { x: number; y: number }) =>
   `${point.x}% ${point.y}%`;
-const sizes = '(min-width: 68rem) 380px, (min-width: 42rem) 46vw, 94vw';
+const sizes = "(min-width: 68rem) 380px, (min-width: 42rem) 46vw, 94vw";
 ---
 
 {/* Missing local assets fail the build; image-free cards remain readable. */}
-<article class="service-card" aria-labelledby={`service-${service.id}`}>
+<article
+  class="service-card"
+  aria-labelledby={`service-${service.id}`}
+>
   {image && (
     <div
       class="service-photo"
       style={{
-        '--desktop-focal-point': focalPoint(image.desktopFocalPoint),
-        '--mobile-focal-point': focalPoint(image.mobileFocalPoint),
+        "--desktop-focal-point": focalPoint(image.desktopFocalPoint),
+        "--mobile-focal-point": focalPoint(image.mobileFocalPoint),
       }}
     >
       {original ? (
@@ -64,12 +67,11 @@ const sizes = '(min-width: 68rem) 380px, (min-width: 42rem) 46vw, 94vw';
     </div>
   )}
   {/* Render a linked title only when its destination is supplied. */}
-  <h3 id={`service-${service.id}`} class="service-title">
-    {service.href ? (
-      <a href={service.href}>{service.name}</a>
-    ) : (
-      service.name
-    )}
+  <h3
+    id={`service-${service.id}`}
+    class="service-title"
+  >
+    {service.href ? <a href={service.href}>{service.name}</a> : service.name}
   </h3>
   <p class="service-description">{service.description}</p>
 </article>

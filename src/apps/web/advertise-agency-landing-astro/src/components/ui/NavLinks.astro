@@ -3,33 +3,32 @@
 // The variant changes presentation and phone copy, while links stay native.
 // Layout breakpoints hide desktop navigation until there is enough room.
 
-import type { MenuItem } from '@/types';
-import Button from '@/components/ui/Button.astro';
-import MaxLogo from '@/components/ui/MaxLogo.astro';
+import type { MenuItem } from "@/types";
+import Button from "@/components/ui/Button.astro";
+import MaxLogo from "@/components/ui/MaxLogo.astro";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
   items: MenuItem[];
-  variant: 'desktop' | 'mobile';
+  variant: "desktop" | "mobile";
   phone: string;
 }
 
 const { items, variant, phone } = Astro.props;
-const isDesktop = variant === 'desktop';
-const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
+const isDesktop = variant === "desktop";
+const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
 ---
 
 {/* One list keeps desktop and mobile navigation order identical. */}
 <nav
   aria-label="Основная навигация"
-  class:list={['nav-shell', { 'desktop-nav': isDesktop }]}
+  class:list={["nav-shell", { "desktop-nav": isDesktop }]}
 >
   <ul
     class:list={[
-      'nav-list',
+      "nav-list",
       {
-        'mobile-links menu p-4 bg-base-200 text-base-content gap-3':
-          !isDesktop,
+        "mobile-links menu p-4 bg-base-200 text-base-content gap-3": !isDesktop,
       },
     ]}
   >
@@ -37,9 +36,7 @@ const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
       <li class="nav-item">
         <a
           href={item.href}
-          class:list={[
-            { 'section-link link link-hover': isDesktop },
-          ]}
+          class:list={[{ "section-link link link-hover": isDesktop }]}
         >
           {item.label}
         </a>
@@ -48,12 +45,12 @@ const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
     {/* The phone label and button treatment follow the active variant. */}
     <li class="nav-item">
       <Button
-        variant={isDesktop ? 'outline' : 'primary'}
-        size={isDesktop ? 'sm' : 'md'}
+        variant={isDesktop ? "outline" : "primary"}
+        size={isDesktop ? "sm" : "md"}
         href={phoneHref}
-        class={isDesktop ? 'header-phone' : 'btn-block mt-4'}
+        class={isDesktop ? "header-phone" : "btn-block mt-4"}
       >
-        {isDesktop ? phone : 'Позвонить'}
+        {isDesktop ? phone : "Позвонить"}
       </Button>
     </li>
     {/* Keep the Макс action after the phone action in both modes. */}
@@ -61,8 +58,8 @@ const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
       <a
         href="https://max.ru/"
         class:list={[
-          'max-contact',
-          isDesktop ? 'btn btn-sm' : 'btn btn-secondary btn-block mt-2',
+          "max-contact",
+          isDesktop ? "btn btn-sm" : "btn btn-secondary btn-block mt-2",
         ]}
         target="_blank"
         rel="noopener noreferrer"

@@ -15,6 +15,20 @@ Always wrap if, else, and else if bodies in braces, including one-line branches.
 Keep the branch body on its own line inside the braces. ESLint's curly rule
 enforces braces; Prettier formats the resulting blocks.
 
+## HTML component attributes
+
+For HTML and Astro elements with multiple attributes, put each attribute on its
+own indented line. Put the closing `>` on its own line after the attributes.
+Prettier's `singleAttributePerLine` option enforces this layout.
+
+```astro
+<a
+  class="project-link"
+  href={`/projects/${project.id}/`}
+  data-project-link
+>
+```
+
 ## Astro component readability and comments
 
 Apply `astro-best-practices` as required by [Astro rules](astro-guides.md).

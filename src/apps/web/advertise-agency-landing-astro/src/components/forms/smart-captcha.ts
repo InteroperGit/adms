@@ -5,7 +5,7 @@ interface SmartCaptchaApi {
     container: HTMLElement,
     options: {
       sitekey: string;
-      hl: 'ru';
+      hl: "ru";
       callback: (token: string) => void;
     },
   ): string | number;
@@ -37,9 +37,9 @@ function loadApi(): Promise<SmartCaptchaApi> {
 
   apiPromise = new Promise((resolve, reject) => {
     loadSequence += 1;
-    const callbackName = 'onSmartCaptchaReady' + loadSequence;
+    const callbackName = "onSmartCaptchaReady" + loadSequence;
     const host = window as unknown as Record<string, unknown>;
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     let settled = false;
 
     const finish = (api?: SmartCaptchaApi) => {
@@ -49,14 +49,14 @@ function loadApi(): Promise<SmartCaptchaApi> {
       if (api) resolve(api);
       else {
         apiPromise = undefined;
-        reject(new Error('Yandex SmartCaptcha did not initialize'));
+        reject(new Error("Yandex SmartCaptcha did not initialize"));
       }
     };
 
     host[callbackName] = () => finish(window.smartCaptcha);
     script.src =
-      'https://smartcaptcha.cloud.yandex.ru/captcha.js' +
-      '?render=onload&onload=' +
+      "https://smartcaptcha.cloud.yandex.ru/captcha.js" +
+      "?render=onload&onload=" +
       callbackName;
     script.async = true;
     script.defer = true;
@@ -74,31 +74,31 @@ export async function initializeSmartCaptcha(
   onFailure: () => void,
 ): Promise<SmartCaptchaControls> {
   const api = await loadApi();
-  const token = document.createElement('input');
-  token.type = 'hidden';
-  token.name = 'captchaToken';
-  container.closest('form')?.append(token);
+  const token = document.createElement("input");
+  token.type = "hidden";
+  token.name = "captchaToken";
+  container.closest("form")?.append(token);
 
   const widgetId = api.render(container, {
     sitekey: siteKey,
-    hl: 'ru',
+    hl: "ru",
     callback: (value) => {
       token.value = value;
-      token.dispatchEvent(new Event('captcha-token', { bubbles: true }));
+      token.dispatchEvent(new Event("captcha-token", { bubbles: true }));
     },
   });
 
-  api.subscribe(widgetId, 'token-expired', () => {
-    token.value = '';
+  api.subscribe(widgetId, "token-expired", () => {
+    token.value = "";
     onTokenExpired();
   });
-  api.subscribe(widgetId, 'network-error', onFailure);
-  api.subscribe(widgetId, 'javascript-error', onFailure);
+  api.subscribe(widgetId, "network-error", onFailure);
+  api.subscribe(widgetId, "javascript-error", onFailure);
 
   return {
     getToken: () => token.value,
     reset: () => {
-      token.value = '';
+      token.value = "";
       api.reset(widgetId);
     },
   };

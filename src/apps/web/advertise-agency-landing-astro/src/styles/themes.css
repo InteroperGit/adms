@@ -6,7 +6,7 @@
 
 /* Extend DaisyUI light, retaining its unspecified status and sizing tokens. */
 @plugin 'daisyui/theme' {
-  name: 'light';
+  name: "light";
   default: true;
   prefersdark: false;
   color-scheme: light;
@@ -31,7 +31,7 @@
  * Its fallback targets :root:not([data-theme]), preserving explicit choices.
  */
 @plugin 'daisyui/theme' {
-  name: 'dark';
+  name: "dark";
   default: false;
   prefersdark: true;
   color-scheme: dark;

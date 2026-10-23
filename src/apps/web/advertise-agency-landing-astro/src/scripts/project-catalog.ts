@@ -4,16 +4,16 @@ const SEARCH_DELAY = 250;
 /** Normalize Russian text while preserving useful word boundaries. */
 export function normalizeSearch(value: string): string {
   return value
-    .toLocaleLowerCase('ru-RU')
-    .replace(/ё/g, 'е')
-    .replace(/\s+/g, ' ')
+    .toLocaleLowerCase("ru-RU")
+    .replace(/ё/g, "е")
+    .replace(/\s+/g, " ")
     .trim();
 }
 
 /** Return true when every entered word appears in the searchable text. */
 export function matchesSearch(text: string, query: string): boolean {
   const normalizedText = normalizeSearch(text);
-  const words = normalizeSearch(query).split(' ').filter(Boolean);
+  const words = normalizeSearch(query).split(" ").filter(Boolean);
   return words.every((word) => normalizedText.includes(word));
 }
 
@@ -53,29 +53,29 @@ export function filterCatalog(
 
 function getElements(): CatalogElements | undefined {
   const form = document.querySelector<HTMLFormElement>(
-    '[data-catalog-controls]',
+    "[data-catalog-controls]",
   );
-  const input = document.querySelector<HTMLInputElement>('#project-search');
+  const input = document.querySelector<HTMLInputElement>("#project-search");
   const category =
-    document.querySelector<HTMLSelectElement>('#project-category');
-  const count = document.querySelector<HTMLElement>('[data-catalog-count]');
+    document.querySelector<HTMLSelectElement>("#project-category");
+  const count = document.querySelector<HTMLElement>("[data-catalog-count]");
   const countValue = document.querySelector<HTMLElement>(
-    '[data-catalog-count-value]',
+    "[data-catalog-count-value]",
   );
   const empty = document.querySelector<HTMLElement>(
-    '[data-catalog-search-empty]',
+    "[data-catalog-search-empty]",
   );
   const reset = document.querySelector<HTMLButtonElement>(
-    '[data-catalog-reset]',
+    "[data-catalog-reset]",
   );
   const pagination = document.querySelector<HTMLElement>(
-    '[data-catalog-pagination]',
+    "[data-catalog-pagination]",
   );
-  const pages = document.querySelector<HTMLElement>('[data-catalog-pages]');
+  const pages = document.querySelector<HTMLElement>("[data-catalog-pages]");
   const rawPageSize = pagination?.dataset.pageSize;
   const pageSize = Number(rawPageSize);
   const cards = Array.from(
-    document.querySelectorAll<HTMLElement>('[data-project-card]'),
+    document.querySelectorAll<HTMLElement>("[data-project-card]"),
   );
   if (
     !form ||
@@ -113,11 +113,11 @@ function readState(): { query: string; category: string; page: number } {
   const routePage = window.location.pathname.match(
     /^\/projects\/page\/(\d+)\/?$/,
   )?.[1];
-  const rawPage = routePage ?? params.get('page') ?? '';
+  const rawPage = routePage ?? params.get("page") ?? "";
   const parsedPage = /^\d+$/.test(rawPage) ? Number(rawPage) : 1;
   return {
-    query: params.get('q') ?? '',
-    category: params.get('category') ?? '',
+    query: params.get("q") ?? "",
+    category: params.get("category") ?? "",
     page: Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1,
   };
 }
@@ -125,23 +125,23 @@ function readState(): { query: string; category: string; page: number } {
 function writeState(
   elements: CatalogElements,
   page: number,
-  mode: 'push' | 'replace',
+  mode: "push" | "replace",
 ): void {
   const params = new URLSearchParams(window.location.search);
-  params.delete('q');
-  params.delete('category');
-  params.delete('page');
+  params.delete("q");
+  params.delete("category");
+  params.delete("page");
   const query = elements.input.value.trim();
-  if (query) params.set('q', query);
-  if (elements.category.value) params.set('category', elements.category.value);
-  const path = page > 1 ? `/projects/page/${page}/` : '/projects/';
+  if (query) params.set("q", query);
+  if (elements.category.value) params.set("category", elements.category.value);
+  const path = page > 1 ? `/projects/page/${page}/` : "/projects/";
   const suffix = params.toString();
   const hash = window.location.hash;
-  const url = `${path}${suffix ? `?${suffix}` : ''}${hash}`;
+  const url = `${path}${suffix ? `?${suffix}` : ""}${hash}`;
   const current = `${window.location.pathname}${window.location.search}${hash}`;
   if (url === current) return;
-  if (mode === 'push') window.history.pushState(null, '', url);
-  else window.history.replaceState(null, '', url);
+  if (mode === "push") window.history.pushState(null, "", url);
+  else window.history.replaceState(null, "", url);
 }
 
 function renderPagination(
@@ -158,17 +158,17 @@ function renderPagination(
     disabled = false,
     accessibleLabel = label,
   ) => {
-    const link = document.createElement('a');
-    link.className = 'catalog-pagination__link';
+    const link = document.createElement("a");
+    link.className = "catalog-pagination__link";
     link.textContent = label;
-    link.setAttribute('aria-label', accessibleLabel);
-    link.setAttribute('aria-disabled', String(disabled));
+    link.setAttribute("aria-label", accessibleLabel);
+    link.setAttribute("aria-disabled", String(disabled));
     link.href = pageUrl(elements, page);
     if (page === current && !disabled) {
-      link.setAttribute('aria-current', 'page');
+      link.setAttribute("aria-current", "page");
     }
     if (disabled) link.tabIndex = -1;
-    link.addEventListener('click', (event) => {
+    link.addEventListener("click", (event) => {
       if (disabled) {
         event.preventDefault();
         return;
@@ -188,11 +188,11 @@ function renderPagination(
     });
     elements.pages.append(link);
   };
-  add('←', Math.max(1, current - 1), current === 1, 'Previous page');
+  add("←", Math.max(1, current - 1), current === 1, "Previous page");
   const siblings = 1;
   const boundaries = 1;
   const totalPageNumbers = boundaries * 2 + siblings * 2 + 3;
-  const paginationItems: Array<number | 'ellipsis'> = [];
+  const paginationItems: Array<number | "ellipsis"> = [];
   const leftDots = current > siblings + boundaries + 2;
   const rightDots = current < total - siblings - boundaries - 1;
   if (total <= totalPageNumbers) {
@@ -201,46 +201,46 @@ function renderPagination(
     for (let page = 1; page <= totalPageNumbers - 2; page += 1) {
       paginationItems.push(page);
     }
-    paginationItems.push('ellipsis', total);
+    paginationItems.push("ellipsis", total);
   } else if (leftDots && !rightDots) {
-    paginationItems.push(1, 'ellipsis');
+    paginationItems.push(1, "ellipsis");
     for (let page = total - totalPageNumbers + 3; page <= total; page += 1) {
       paginationItems.push(page);
     }
   } else {
-    paginationItems.push(1, 'ellipsis');
+    paginationItems.push(1, "ellipsis");
     for (let page = current - siblings; page <= current + siblings; page += 1) {
       paginationItems.push(page);
     }
-    paginationItems.push('ellipsis', total);
+    paginationItems.push("ellipsis", total);
   }
   for (const page of paginationItems) {
-    if (page === 'ellipsis') {
-      const ellipsis = document.createElement('span');
-      ellipsis.className = 'catalog-pagination__ellipsis';
-      ellipsis.textContent = '…';
-      ellipsis.setAttribute('aria-hidden', 'true');
+    if (page === "ellipsis") {
+      const ellipsis = document.createElement("span");
+      ellipsis.className = "catalog-pagination__ellipsis";
+      ellipsis.textContent = "…";
+      ellipsis.setAttribute("aria-hidden", "true");
       elements.pages.append(ellipsis);
       continue;
     }
     const pageLabel =
-      page === 1 ? 'First page' : page === total ? 'Last page' : `Page ${page}`;
+      page === 1 ? "First page" : page === total ? "Last page" : `Page ${page}`;
     add(String(page), page, false, pageLabel);
   }
-  add('→', Math.min(total, current + 1), current === total, 'Next page');
+  add("→", Math.min(total, current + 1), current === total, "Next page");
 }
 
 function pageUrl(elements: CatalogElements, page: number): string {
   const params = new URLSearchParams(window.location.search);
-  params.delete('q');
-  params.delete('category');
-  params.delete('page');
+  params.delete("q");
+  params.delete("category");
+  params.delete("page");
   const query = elements.input.value.trim();
-  if (query) params.set('q', query);
-  if (elements.category.value) params.set('category', elements.category.value);
-  const path = page > 1 ? `/projects/page/${page}/` : '/projects/';
+  if (query) params.set("q", query);
+  if (elements.category.value) params.set("category", elements.category.value);
+  const path = page > 1 ? `/projects/page/${page}/` : "/projects/";
   const suffix = params.toString();
-  return `${path}${suffix ? `?${suffix}` : ''}` + window.location.hash;
+  return `${path}${suffix ? `?${suffix}` : ""}` + window.location.hash;
 }
 
 /** Apply filters and show only the requested page of matching cards. */
@@ -249,8 +249,8 @@ function applyFilters(
   requestedPage: number,
 ): number {
   const records = elements.cards.map((card) => ({
-    category: card.dataset.category ?? '',
-    searchText: card.dataset.search ?? '',
+    category: card.dataset.category ?? "",
+    searchText: card.dataset.search ?? "",
   }));
   const matching = filterCatalog(
     records,
@@ -280,9 +280,9 @@ function update(
   window.clearTimeout(elements.searchTimer);
   elements.searchTimer = undefined;
   const actualPage = applyFilters(elements, page);
-  writeState(elements, actualPage, push ? 'push' : 'replace');
+  writeState(elements, actualPage, push ? "push" : "replace");
   if (moveFocus) {
-    document.querySelector<HTMLElement>('[data-catalog-results]')?.focus();
+    document.querySelector<HTMLElement>("[data-catalog-results]")?.focus();
   }
 }
 
@@ -292,13 +292,13 @@ function initializeCatalog(): void {
   if (!elements) return;
   elements.form.hidden = false;
   // Preserve the filtered result tab when a visitor opens a project card.
-  document.addEventListener('click', (event) => {
+  document.addEventListener("click", (event) => {
     if (!(event.target instanceof Element)) return;
-    const link = event.target.closest<HTMLAnchorElement>('[data-project-link]');
+    const link = event.target.closest<HTMLAnchorElement>("[data-project-link]");
     if (!link) return;
     try {
       sessionStorage.setItem(
-        'project-catalog-return',
+        "project-catalog-return",
         `${window.location.pathname}${window.location.search}#catalog-results`,
       );
     } catch {
@@ -309,25 +309,25 @@ function initializeCatalog(): void {
   elements.input.value = state.query;
   elements.category.value = state.category;
   const resetPage = (push: boolean) => update(elements, 1, push);
-  elements.input.addEventListener('input', () => {
+  elements.input.addEventListener("input", () => {
     window.clearTimeout(elements.searchTimer);
     elements.searchTimer = window.setTimeout(
       () => resetPage(false),
       SEARCH_DELAY,
     );
   });
-  elements.form.addEventListener('submit', (event) => {
+  elements.form.addEventListener("submit", (event) => {
     event.preventDefault();
     resetPage(true);
   });
-  elements.category.addEventListener('change', () => resetPage(true));
-  elements.reset.addEventListener('click', () => {
-    elements.input.value = '';
-    elements.category.value = '';
+  elements.category.addEventListener("change", () => resetPage(true));
+  elements.reset.addEventListener("click", () => {
+    elements.input.value = "";
+    elements.category.value = "";
     resetPage(true);
     elements.input.focus();
   });
-  window.addEventListener('popstate', () => {
+  window.addEventListener("popstate", () => {
     // Restored history wins over input scheduled on the page being left.
     window.clearTimeout(elements.searchTimer);
     elements.searchTimer = undefined;
@@ -338,8 +338,8 @@ function initializeCatalog(): void {
   });
   const actualPage = applyFilters(elements, state.page);
   if (state.category !== elements.category.value || actualPage !== state.page) {
-    writeState(elements, actualPage, 'replace');
+    writeState(elements, actualPage, "replace");
   }
 }
 
-if (typeof document !== 'undefined') initializeCatalog();
+if (typeof document !== "undefined") initializeCatalog();

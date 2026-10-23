@@ -24,7 +24,8 @@ Astro render tests с browser E2E.
 
 ## Implementation
 
-Added tests/helpers/fixtures.ts and tests/helpers/browser.ts, plus isolated browser cleanup in tests/setup.ts.
+Added tests/helpers/fixtures.ts and tests/helpers/browser.ts, plus isolated
+browser cleanup in tests/setup.ts.
 
 ## Verification
 

@@ -10,19 +10,25 @@
   aria-label="Предпочтения cookie"
   hidden
   class:list={[
-    'cookie-banner fixed bottom-0 left-0 right-0 z-30',
-    'bg-base-100 border-t border-control-border',
-    'shadow-elevated',
+    "cookie-banner fixed bottom-0 left-0 right-0 z-30",
+    "bg-base-100 border-t border-control-border",
+    "shadow-elevated",
   ]}
 >
   <div class="site-container cookie-layout">
     <p class="text-sm">
-      Мы используем файлы cookie. Продолжая, вы соглашаетесь с{' '}
-      <a href="/privacy-policy" class="link link-primary">
+      Мы используем файлы cookie. Продолжая, вы соглашаетесь с{" "}
+      <a
+        href="/privacy-policy"
+        class="link link-primary"
+      >
         Политикой конфиденциальности
-      </a>{' '}
-      и{' '}
-      <a href="/terms-of-use" class="link link-primary">
+      </a>{" "}
+      и{" "}
+      <a
+        href="/terms-of-use"
+        class="link link-primary"
+      >
         Согласием на обработку
       </a>
       .
@@ -95,13 +101,13 @@
 </style>
 
 <script>
-  const banner = document.querySelector<HTMLElement>('#cookie-banner');
+  const banner = document.querySelector<HTMLElement>("#cookie-banner");
 
   if (banner) {
     // Any remembered choice suppresses this banner on subsequent loads.
     let consent: string | null = null;
     try {
-      consent = localStorage.getItem('cookieConsent');
+      consent = localStorage.getItem("cookieConsent");
     } catch {
       // Storage may be blocked; still let visitors dismiss the banner.
     }
@@ -111,28 +117,28 @@
     // above the fixed banner. Body padding does not change the banner's width.
     const reserveSpace = () => {
       document.body.style.paddingBottom = banner.hidden
-        ? ''
+        ? ""
         : `${Math.ceil(banner.getBoundingClientRect().height)}px`;
     };
     reserveSpace();
     // Hidden banners need no layout observation; older browsers can still
     // dismiss the notice without ResizeObserver support.
     const sizeObserver =
-      !banner.hidden && typeof ResizeObserver !== 'undefined'
+      !banner.hidden && typeof ResizeObserver !== "undefined"
         ? new ResizeObserver(reserveSpace)
         : undefined;
     sizeObserver?.observe(banner);
-    window.addEventListener('pagehide', () => sizeObserver?.disconnect(), {
+    window.addEventListener("pagehide", () => sizeObserver?.disconnect(), {
       once: true,
     });
 
     // Keep dismissal usable even when writing the preference is blocked.
     banner
-      .querySelectorAll<HTMLButtonElement>('[data-cookie-choice]')
+      .querySelectorAll<HTMLButtonElement>("[data-cookie-choice]")
       .forEach((button) => {
-        button.addEventListener('click', () => {
+        button.addEventListener("click", () => {
           try {
-            localStorage.setItem('cookieConsent', button.dataset.cookieChoice!);
+            localStorage.setItem("cookieConsent", button.dataset.cookieChoice!);
           } catch {
             // Dismiss for this page even when the choice cannot be persisted.
           }

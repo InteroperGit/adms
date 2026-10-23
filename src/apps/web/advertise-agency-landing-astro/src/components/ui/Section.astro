@@ -8,7 +8,7 @@ export interface Props {
   id?: string;
   title?: string;
   subtitle?: string;
-  background?: 'default' | 'gradient' | 'dark' | 'none';
+  background?: "default" | "gradient" | "dark" | "none";
   class?: string;
   ariaLabel?: string;
 }
@@ -17,28 +17,32 @@ const {
   id,
   title,
   subtitle,
-  background = 'default',
-  class: className = '',
+  background = "default",
+  class: className = "",
   ariaLabel,
 } = Astro.props;
 
 // Map the public background variants to existing shared theme utilities.
 const bgClasses = {
-  default: 'bg-base-100',
-  gradient: 'bg-gradient-to-b from-base-100 to-base-200/50',
-  dark: 'bg-base-200',
-  none: '',
+  default: "bg-base-100",
+  gradient: "bg-gradient-to-b from-base-100 to-base-200/50",
+  dark: "bg-base-200",
+  none: "",
 };
 
-const sectionClasses = ['site-section', bgClasses[background], className]
+const sectionClasses = ["site-section", bgClasses[background], className]
   .filter(Boolean)
-  .join(' ');
+  .join(" ");
 ---
 
 {/*
   The default slot follows optional h2/subtitle content inside the container.
 */}
-<section id={id} class={sectionClasses} aria-label={ariaLabel}>
+<section
+  id={id}
+  class={sectionClasses}
+  aria-label={ariaLabel}
+>
   <div class="site-container">
     {title && <h2 class="site-section-title">{title}</h2>}
     {subtitle && <p class="site-section-subtitle">{subtitle}</p>}

@@ -27,25 +27,24 @@ image area:
   keep focused controls visible. On touch/non-hover devices, keep arrows
   available without requiring mouse hover. Respect reduced motion by removing
   show/hide animation.
-- Move the circular slide indicators inside the carousel at the bottom,
-  centered horizontally. Keep dots visible independently of mouse hover.
+- Move the circular slide indicators inside the carousel at the bottom, centered
+  horizontally. Keep dots visible independently of mouse hover.
 - Show only the indicator circles: no visible group container, pill, panel,
   background, border or shadow around the group. Individual dot buttons must
   have transparent backgrounds in default, hover and selected states; no
   highlighted area around the selected circle. Keep generous invisible click
   targets and a visible keyboard focus outline when focused.
 - Give every visible indicator circle the same radius, including the selected
-  circle.
-  Use outlined empty circles for unselected slides and a filled circle for the
-  selected slide. Remove the current extra outline/size emphasis; retain
+  circle. Use outlined empty circles for unselected slides and a filled circle
+  for the selected slide. Remove the current extra outline/size emphasis; retain
   `aria-current` and generous button targets around the small markers.
 - Remove the visible current-item/total-item numbers and their counter markup
   and updates. Preserve accessible slide labels, dot names and concise polite
   manual status for screen-reader orientation.
-- Add responsive padding to the content area containing the description and
-  CTA. Reserve left/right space for the circular arrow buttons, including their
-  full click targets and focus outlines, plus a clear gap. Reserve bottom space
-  for the indicators. Keep this padding while arrows are hidden so hover/focus
+- Add responsive padding to the content area containing the description and CTA.
+  Reserve left/right space for the circular arrow buttons, including their full
+  click targets and focus outlines, plus a clear gap. Reserve bottom space for
+  the indicators. Keep this padding while arrows are hidden so hover/focus
   reveal does not shift content. Apply it to every configured copy position;
   description text and CTA must never overlap navigation controls.
 
@@ -65,17 +64,17 @@ Verify in Chrome:
 - Both arrow buttons have circular boundaries, equal width and height, and
   centered icons at every tested viewport/text size.
 - Animated arrow show/hide on mouse entry/exit, including rapid re-entry;
-  pointer movement between slides/controls causes no flicker. Hidden arrows
-  do not block underlying content or links.
+  pointer movement between slides/controls causes no flicker. Hidden arrows do
+  not block underlying content or links.
 - Equal visible circle radii, filled selected circle, correct `aria-current`,
   direct dot selection and wrapping arrows.
-- Indicators have no visible container or button background in default, hover
-  or selected states. Selection changes only the circle fill, with no outer
-  ring or highlighted area. Keyboard focus remains visibly distinguishable.
+- Indicators have no visible container or button background in default, hover or
+  selected states. Selection changes only the circle fill, with no outer ring or
+  highlighted area. Keyboard focus remains visibly distinguishable.
 - Keyboard Tab/Enter/Space, focus-triggered visibility, retained focus and
   visible focus outlines; touch/non-hover navigation remains usable.
-- Reduced motion removes reveal/hide animation. Controls have at least
-  44×44px targets and sufficient contrast over bright/dark/failed images.
+- Reduced motion removes reveal/hide animation. Controls have at least 44×44px
+  targets and sufficient contrast over bright/dark/failed images.
 - Both themes at 320/375/768/1440px, 200% text, short landscape height and
   resizing; all copy positions and long text stay clear of controls with no
   clipping, overflow or slide-height jump.
@@ -87,25 +86,27 @@ Verify in Chrome:
 
 Record browser scripts/results/screenshots under ignored
 `output/playwright/task-019a/`. Run `pnpm check`, `pnpm build` and diff checks;
-update `docs/site/offers-carousel.md`. Restore original JSON/publication settings
-after temporary fixtures. Record changed files, checks and limits, then archive
-by actual completion date and update the plan. No commit or deployment implied.
+update `docs/site/offers-carousel.md`. Restore original JSON/publication
+settings after temporary fixtures. Record changed files, checks and limits, then
+archive by actual completion date and update the plan. No commit or deployment
+implied.
 
 ## Completed changes
 
 - `src/components/sections/OffersCarousel.astro`: circular edge arrows centered
-  vertically, 180ms hover show/hide, keyboard focus reveal, non-hover visibility,
-  hidden pointer exclusion and reduced motion. Bottom-centered standalone dots
-  have equal radii and fill-only selection, transparent default/hover/selected
-  targets, no visible group container and visible keyboard focus. Removed
-  counter markup/state. Controls are bounded at 44–56px; icons remain centered.
+  vertically, 180ms hover show/hide, keyboard focus reveal, non-hover
+  visibility, hidden pointer exclusion and reduced motion. Bottom-centered
+  standalone dots have equal radii and fill-only selection, transparent
+  default/hover/selected targets, no visible group container and visible
+  keyboard focus. Removed counter markup/state. Controls are bounded at 44–56px;
+  icons remain centered.
 - Reserved side padding protects description/CTA from arrow targets/outlines;
   persistent bottom padding protects against dots. ResizeObserver adjusts
   clearance for wrapped indicators without measuring slides. Shared grid height
   and JSON copy positions remain. No autoplay or carousel dependency added.
 - Updated `docs/site/offers-carousel.md` and the carousel plan. Original JSON
-  bytes restored after fixtures, including enabled/autoplay true, 7000ms and
-  two enabled demos. No publication configuration change remains.
+  bytes restored after fixtures, including enabled/autoplay true, 7000ms and two
+  enabled demos. No publication configuration change remains.
 
 ## Verification and limits
 
@@ -117,10 +118,10 @@ CTA exclusion. Hover entry/exit, rapid re-entry, movement onto controls, hidden
 hit testing and unchanged text geometry passed. Reduced-motion duration respects
 the site's global near-zero rule. Both-theme touch/no-JS, short landscape and
 resizing passed. Four long/unbroken copy/CTA cases at 3rem and 200% root text
-had no clipping/overflow/overlap and stable rotation height. Artificially wrapped
-indicators retained clearance. Both remote images loaded; bright/black fallback
-and loaded desktop/mobile screenshots reviewed. Six real JSON fixtures passed:
-zero/global-disabled/all-disabled/one/filtered/restored multiple.
+had no clipping/overflow/overlap and stable rotation height. Artificially
+wrapped indicators retained clearance. Both remote images loaded; bright/black
+fallback and loaded desktop/mobile screenshots reviewed. Six real JSON fixtures
+passed: zero/global-disabled/all-disabled/one/filtered/restored multiple.
 
 `pnpm check`: zero errors/warnings and one preexisting ignored task-018 hint.
 `pnpm build`: six pages. Diff and component 80-column code checks passed.

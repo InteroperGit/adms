@@ -1,5 +1,5 @@
 // Compile-only examples; this file is never executed.
-import type * as Domain from '@/types/image-carousel';
+import type * as Domain from "@/types/image-carousel";
 
 export const value = {
   options: {
@@ -12,8 +12,8 @@ export const value = {
     descriptions: false,
     buttons: false,
     animation: false,
-    layout: 'full',
-    imageFit: 'cover',
+    layout: "full",
+    imageFit: "cover",
     aspectRatio: 1,
     eagerFirst: false,
   },
@@ -21,16 +21,16 @@ export const value = {
     {
       id: 1,
       enabled: false,
-      image: '/a.png',
-      imageAlt: 'TEST_IMAGEALT',
+      image: "/a.png",
+      imageAlt: "TEST_IMAGEALT",
       imageWidth: 1,
       imageHeight: 1,
       presentation: {
         fontSizeRem: 1,
-        textColor: '#ffffff',
-        horizontal: 'left',
-        vertical: 'bottom',
-        overlay: 'dark',
+        textColor: "#ffffff",
+        horizontal: "left",
+        vertical: "bottom",
+        overlay: "dark",
         focalPoint: {
           x: 1,
           y: 1,

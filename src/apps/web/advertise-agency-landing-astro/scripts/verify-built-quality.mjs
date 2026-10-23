@@ -1,43 +1,48 @@
 // Check generated HTML for stable layout, semantics, and basic accessibility.
 // Browser and assistive-technology behavior still needs real-device review.
-import { access, readFile, readdir } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { access, readFile, readdir } from "node:fs/promises";
+import { resolve } from "node:path";
 
 async function htmlFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
     const path = `${directory}/${entry.name}`;
-    if (entry.isDirectory()) files.push(...await htmlFiles(path));
-    else if (entry.name.endsWith('.html')) files.push(path);
+    if (entry.isDirectory()) files.push(...(await htmlFiles(path)));
+    else if (entry.name.endsWith(".html")) files.push(path);
   }
   return files;
 }
 
 function attribute(tag, name) {
-  return tag.match(new RegExp(`\\b${name}=(?:"([^"]*)"|'([^']*)')`))
-    ?.slice(1).find(Boolean);
+  return tag
+    .match(new RegExp(`\\b${name}=(?:"([^"]*)"|'([^']*)')`))
+    ?.slice(1)
+    .find(Boolean);
 }
 
 const errors = [];
-const root = process.argv[2] ?? 'dist';
+const root = process.argv[2] ?? "dist";
 const origin = process.argv[3];
 const files = await htmlFiles(root);
-const documents = new Map(await Promise.all(files.map(async (file) =>
-  [resolve(file), await readFile(file, 'utf8')],
-)));
-const sitemap = await readFile(`${root}/sitemap.xml`, 'utf8');
-if (origin ? !sitemap.includes(new URL('/', origin).href)
-  : /<loc>/.test(sitemap)) {
-  errors.push('sitemap: configured/unconfigured origin policy failed');
+const documents = new Map(
+  await Promise.all(
+    files.map(async (file) => [resolve(file), await readFile(file, "utf8")]),
+  ),
+);
+const sitemap = await readFile(`${root}/sitemap.xml`, "utf8");
+if (
+  origin ? !sitemap.includes(new URL("/", origin).href) : /<loc>/.test(sitemap)
+) {
+  errors.push("sitemap: configured/unconfigured origin policy failed");
 }
-if (sitemap.includes('/__article-check/')) {
-  errors.push('sitemap: test fixture route leaked');
+if (sitemap.includes("/__article-check/")) {
+  errors.push("sitemap: test fixture route leaked");
 }
 for (const file of files) {
-  const html = await readFile(file, 'utf8');
-  const route = file.replace(/^dist[\\/]/, '');
-  if (html.includes('/src/assets/')) {
+  const html = await readFile(file, "utf8");
+  const route = file.replace(/^dist[\\/]/, "");
+  if (html.includes("/src/assets/")) {
     errors.push(`${route}: unresolved source asset URL`);
   }
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/);
@@ -53,8 +58,10 @@ for (const file of files) {
     errors.push(`${route}: draft fixture content leaked into HTML`);
   }
   if (origin) {
-    const path = file.replace(root, '').replaceAll('\\', '/')
-      .replace(/index\.html$/, '');
+    const path = file
+      .replace(root, "")
+      .replaceAll("\\", "/")
+      .replace(/index\.html$/, "");
     if (canonical?.[1] !== new URL(path, origin).href) {
       errors.push(`${route}: canonical does not match configured origin`);
     }
@@ -66,14 +73,18 @@ for (const file of files) {
   for (const [, attributeName, raw] of html.matchAll(
     /\b(href|src)="([^"<>]+)"/g,
   )) {
-    const url = new URL(raw.replaceAll('&amp;', '&'), 'https://local.invalid');
-    if (url.origin !== 'https://local.invalid') continue;
-    const target = raw.startsWith('#') ? resolve(file)
-      : resolve(root, `.${url.pathname}`,
-        url.pathname.endsWith('/') ? 'index.html' : '');
+    const url = new URL(raw.replaceAll("&amp;", "&"), "https://local.invalid");
+    if (url.origin !== "https://local.invalid") continue;
+    const target = raw.startsWith("#")
+      ? resolve(file)
+      : resolve(
+          root,
+          `.${url.pathname}`,
+          url.pathname.endsWith("/") ? "index.html" : "",
+        );
     try {
       await access(target);
-      if (attributeName === 'href' && url.hash && documents.has(target)) {
+      if (attributeName === "href" && url.hash && documents.has(target)) {
         const id = decodeURIComponent(url.hash.slice(1));
         if (!documents.get(target).includes(`id="${id}"`)) {
           errors.push(`${route}: broken fragment ${raw}`);
@@ -92,16 +103,17 @@ for (const file of files) {
   if (!/<meta name="description" content="[^"]+"/.test(html)) {
     errors.push(`${route}: description is missing or empty`);
   }
-  for (const landmark of ['header', 'main', 'footer']) {
-    const count = (html.match(new RegExp(`<${landmark}(?:\\s|>)`, 'g'))
-      ?? []).length;
-    if (landmark === 'header' ? count < 1 : count !== 1) {
+  for (const landmark of ["header", "main", "footer"]) {
+    const count = (html.match(new RegExp(`<${landmark}(?:\\s|>)`, "g")) ?? [])
+      .length;
+    if (landmark === "header" ? count < 1 : count !== 1) {
       errors.push(`${route}: expected site landmarks`);
     }
   }
-  const headings = [...html.matchAll(/<h([1-6])\b/g)]
-    .map(match => Number(match[1]));
-  if (headings.filter(level => level === 1).length !== 1) {
+  const headings = [...html.matchAll(/<h([1-6])\b/g)].map((match) =>
+    Number(match[1]),
+  );
+  if (headings.filter((level) => level === 1).length !== 1) {
     errors.push(`${route}: expected exactly one h1`);
   }
   headings.slice(1).forEach((level, index) => {
@@ -111,25 +123,31 @@ for (const file of files) {
   });
   for (const tag of html.matchAll(/<img\b[^>]*>/g)) {
     const image = tag[0];
-    const label = attribute(image, 'alt');
-    const width = Number(attribute(image, 'width'));
-    const height = Number(attribute(image, 'height'));
+    const label = attribute(image, "alt");
+    const width = Number(attribute(image, "width"));
+    const height = Number(attribute(image, "height"));
     if (label === undefined && !/\balt(?:\s|=)/.test(image)) {
       errors.push(`${route}: image is missing alt`);
     }
-    if (!Number.isInteger(width) || width <= 0 ||
-      !Number.isInteger(height) || height <= 0) {
+    if (
+      !Number.isInteger(width) ||
+      width <= 0 ||
+      !Number.isInteger(height) ||
+      height <= 0
+    ) {
       errors.push(`${route}: image is missing intrinsic dimensions`);
     }
-    if (!/class="[^"]*\bbrand-logo\b/.test(image) &&
-      !attribute(image, 'loading')) {
+    if (
+      !/class="[^"]*\bbrand-logo\b/.test(image) &&
+      !attribute(image, "loading")
+    ) {
       errors.push(`${route}: non-brand image is missing loading policy`);
     }
-    const srcset = attribute(image, 'srcset');
+    const srcset = attribute(image, "srcset");
     if (srcset) {
-      for (const candidate of srcset.split(',')) {
+      for (const candidate of srcset.split(",")) {
         const url = candidate.trim().split(/\s+/)[0];
-        if (!url.startsWith('/_astro/')) continue;
+        if (!url.startsWith("/_astro/")) continue;
         try {
           await access(resolve(root, `.${url}`));
         } catch {
@@ -153,7 +171,7 @@ for (const file of files) {
 }
 
 if (errors.length) {
-  console.error(errors.join('\n'));
+  console.error(errors.join("\n"));
   process.exitCode = 1;
 } else {
   console.log(`Built quality checks passed for ${files.length} routes.`);

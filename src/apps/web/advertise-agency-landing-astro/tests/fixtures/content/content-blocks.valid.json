@@ -2,9 +2,7 @@
   {
     "type": "paragraph",
     "id": "fixture-paragraph",
-    "paragraphs": [
-      "Fixture paragraph."
-    ]
+    "paragraphs": ["Fixture paragraph."]
   },
   {
     "type": "heading",
@@ -15,18 +13,12 @@
   {
     "type": "ordered-list",
     "id": "fixture-ordered-list",
-    "items": [
-      "First item",
-      "Second item"
-    ]
+    "items": ["First item", "Second item"]
   },
   {
     "type": "unordered-list",
     "id": "fixture-unordered-list",
-    "items": [
-      "One item",
-      "Two item"
-    ]
+    "items": ["One item", "Two item"]
   },
   {
     "type": "table",
@@ -44,10 +36,7 @@
     ],
     "rows": [
       {
-        "cells": [
-          "Example",
-          "42"
-        ]
+        "cells": ["Example", "42"]
       }
     ]
   },

@@ -31,14 +31,14 @@ Write distinct useful content for the three prioritized service pages.
 
 ## Acceptance
 
-- Each prioritized service has a complete distinct approved content package
-  and metadata, with supported examples and working proposed link targets.
-- Unsupported prices, turnaround promises, outcomes, or generic placeholders
-  are excluded; missing production evidence remains an explicit dependency.
+- Each prioritized service has a complete distinct approved content package and
+  metadata, with supported examples and working proposed link targets.
+- Unsupported prices, turnaround promises, outcomes, or generic placeholders are
+  excluded; missing production evidence remains an explicit dependency.
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

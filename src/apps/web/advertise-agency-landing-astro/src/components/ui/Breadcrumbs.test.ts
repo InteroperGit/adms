@@ -1,49 +1,50 @@
 // @vitest-environment node
-import { expect, it } from 'vitest';
-import { getByRole, getAllByRole } from '@testing-library/dom';
-import Breadcrumbs from './Breadcrumbs.astro';
-import { render } from '../../../tests/helpers/render';
+import { expect, it } from "vitest";
+import { getByRole, getAllByRole } from "@testing-library/dom";
+import Breadcrumbs from "./Breadcrumbs.astro";
+import { render } from "../../../tests/helpers/render";
 
-it('renders ordered ancestors and one nonlinked current page', async () => {
+it("renders ordered ancestors and one nonlinked current page", async () => {
   const body = await render(Breadcrumbs, {
-    items: [{ label: 'Home', href: '/' },
-      { label: 'Projects', href: '/projects/' }],
-    current: 'Sample',
+    items: [
+      { label: "Home", href: "/" },
+      { label: "Projects", href: "/projects/" },
+    ],
+    current: "Sample",
   });
-  const nav = getByRole(body, 'navigation');
-  expect(nav).toHaveAccessibleName('Хлебные крошки');
-  expect(getAllByRole(getByRole(nav, 'list'), 'listitem')).toHaveLength(3);
-  const links = getAllByRole(nav, 'link');
-  expect(links[0]).toHaveAttribute('href', '/');
-  expect(links[0]).not.toHaveAttribute('data-project-catalog-return');
-  expect(links[1]).toHaveAttribute('href', '/projects/');
-  expect(links[1]).not.toHaveAttribute('data-project-catalog-return');
+  const nav = getByRole(body, "navigation");
+  expect(nav).toHaveAccessibleName("Хлебные крошки");
+  expect(getAllByRole(getByRole(nav, "list"), "listitem")).toHaveLength(3);
+  const links = getAllByRole(nav, "link");
+  expect(links[0]).toHaveAttribute("href", "/");
+  expect(links[0]).not.toHaveAttribute("data-project-catalog-return");
+  expect(links[1]).toHaveAttribute("href", "/projects/");
+  expect(links[1]).not.toHaveAttribute("data-project-catalog-return");
   const current = nav.querySelector('[aria-current="page"]');
-  expect(current).toHaveTextContent('Sample');
-  expect(current?.querySelector('a')).toBeNull();
+  expect(current).toHaveTextContent("Sample");
+  expect(current?.querySelector("a")).toBeNull();
 });
 
-it(
-  'renders caller-owned link attributes without route assumptions',
-  async () => {
-    const body = await render(Breadcrumbs, {
-      items: [{
-        label: 'Projects',
-        href: '/projects/',
-        attributes: { 'data-project-catalog-return': true },
-      }],
-      current: 'Sample',
-    });
+it("renders caller-owned link attributes", async () => {
+  const body = await render(Breadcrumbs, {
+    items: [
+      {
+        label: "Projects",
+        href: "/projects/",
+        attributes: { "data-project-catalog-return": true },
+      },
+    ],
+    current: "Sample",
+  });
 
-    expect(getByRole(body, 'link')).toHaveAttribute(
-      'data-project-catalog-return',
-    );
-  },
-);
+  expect(getByRole(body, "link")).toHaveAttribute(
+    "data-project-catalog-return",
+  );
+});
 
-it('supports an empty ancestor collection', async () => {
-  const body = await render(Breadcrumbs, { items: [], current: 'Home' });
-  expect(getAllByRole(body, 'listitem')).toHaveLength(1);
-  expect(body.querySelector('a')).toBeNull();
-  expect(body.querySelector('[aria-current]')).toHaveTextContent('Home');
+it("supports an empty ancestor collection", async () => {
+  const body = await render(Breadcrumbs, { items: [], current: "Home" });
+  expect(getAllByRole(body, "listitem")).toHaveLength(1);
+  expect(body.querySelector("a")).toBeNull();
+  expect(body.querySelector("[aria-current]")).toHaveTextContent("Home");
 });

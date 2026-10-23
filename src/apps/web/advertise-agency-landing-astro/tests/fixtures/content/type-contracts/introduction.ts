@@ -1,24 +1,24 @@
 // Compile-only examples; this file is never executed.
-import type * as Domain from '@/types/introduction';
+import type * as Domain from "@/types/introduction";
 
 export const value = {
-  heading: 'TEST_HEADING',
-  summary: 'TEST_SUMMARY',
-  location: 'TEST_LOCATION',
+  heading: "TEST_HEADING",
+  summary: "TEST_SUMMARY",
+  location: "TEST_LOCATION",
   copyApproved: false,
   demoMode: false,
   action: {
-    label: 'TEST_LABEL',
-    href: '/#order-inquiry',
+    label: "TEST_LABEL",
+    href: "/#order-inquiry",
   },
   photo: {
-    src: 'https://example.test/test-asset',
-    alt: 'TEST_ALT',
+    src: "https://example.test/test-asset",
+    alt: "TEST_ALT",
     width: 1,
     height: 1,
-    source: 'TEST_SOURCE',
-    projectContext: 'TEST_PROJECTCONTEXT',
-    publicationPermission: 'TEST_PUBLICATIONPERMISSION',
+    source: "TEST_SOURCE",
+    projectContext: "TEST_PROJECTCONTEXT",
+    publicationPermission: "TEST_PUBLICATIONPERMISSION",
     approved: false,
     desktopFocalPoint: {
       x: 1,

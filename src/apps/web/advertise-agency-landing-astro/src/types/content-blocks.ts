@@ -6,7 +6,7 @@ export interface ContentBlockProvenance {
   approvedAt?: string | null;
 }
 
-export type ContentBlockStatus = 'draft' | 'demo' | 'published';
+export type ContentBlockStatus = "draft" | "demo" | "published";
 
 export interface ContentBlockMeta {
   id?: string;
@@ -18,38 +18,38 @@ export interface ContentBlockMeta {
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface HeadingBlock extends ContentBlockMeta {
-  type: 'heading';
+  type: "heading";
   level: HeadingLevel;
   text: string;
 }
 
 export interface ParagraphBlock extends ContentBlockMeta {
-  type: 'paragraph';
+  type: "paragraph";
   paragraphs: string[];
 }
 
 export interface OrderedListBlock extends ContentBlockMeta {
-  type: 'ordered-list';
+  type: "ordered-list";
   items: string[];
 }
 
 export interface UnorderedListBlock extends ContentBlockMeta {
-  type: 'unordered-list';
+  type: "unordered-list";
   items: string[];
 }
 
 export interface TableBlock extends ContentBlockMeta {
-  type: 'table';
+  type: "table";
   caption?: string;
   columns: { key: string; label: string }[];
   rows: { cells: string[] }[];
 }
 
 export interface ChartBlock extends ContentBlockMeta {
-  type: 'chart';
+  type: "chart";
   caption?: string;
   unit?: string;
-  chartType: 'bar' | 'line' | 'pie';
+  chartType: "bar" | "line" | "pie";
   series: {
     name: string;
     points: { label: string; value: number }[];
@@ -63,24 +63,24 @@ export interface ContentImage extends ContentBlockMeta {
   height: number;
   caption?: string;
   /** Distinguish preview media without inventing installation approval. */
-  kind?: 'demo' | 'installation';
+  kind?: "demo" | "installation";
   cropGuidance?: string;
   focalPoint?: { x: number; y: number };
   mobileFocalPoint?: { x: number; y: number };
 }
 
 export interface ImageBlock extends ContentImage {
-  type: 'image';
+  type: "image";
 }
 
 export interface ImageGalleryBlock extends ContentBlockMeta {
-  type: 'image-gallery';
+  type: "image-gallery";
   caption?: string;
   images: ContentImage[];
 }
 
 export interface VideoBlock extends ContentBlockMeta {
-  type: 'video';
+  type: "video";
   src: string;
   poster?: string;
   alt: string;
@@ -88,25 +88,25 @@ export interface VideoBlock extends ContentBlockMeta {
   height: number;
   caption?: string;
   transcript?: string;
-  kind?: 'demo' | 'installation';
+  kind?: "demo" | "installation";
 }
 
 export interface OrderFormBlock extends ContentBlockMeta {
-  type: 'order-form';
+  type: "order-form";
   formId: string;
-  context: 'project' | 'service';
+  context: "project" | "service";
   category?: string;
 }
 
 export interface QuoteBlock extends ContentBlockMeta {
-  type: 'quote';
+  type: "quote";
   text: string;
   author?: string;
   source?: string;
 }
 
 export interface FootnoteBlock extends ContentBlockMeta {
-  type: 'footnote';
+  type: "footnote";
   text: string;
   reference?: string;
   targetId?: string;

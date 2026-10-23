@@ -1,51 +1,51 @@
 // @vitest-environment node
 // Service catalogs validate static destinations and article ownership.
-import { expect, it } from 'vitest';
-import fixtures from '../../tests/fixtures/content/unit-contracts.json';
-import { expectContentContract } from '../../tests/helpers/content-contract';
+import { expect, it } from "vitest";
+import fixtures from "../../tests/fixtures/content/unit-contracts.json";
+import { expectContentContract } from "../../tests/helpers/content-contract";
 import {
   createServiceRecordsSchema,
   createServicesSchema,
   servicesSchema,
-} from './services';
+} from "./services";
 
 const source = fixtures.services;
 const item = source.items[0];
-const schema = createServicesSchema(['/services/sample/']);
+const schema = createServicesSchema(["/services/sample/"]);
 const withItem = (change: object) => ({
   ...source,
   items: [{ ...item, ...change }],
 });
 const approval = {
-  source: 'Evidence',
-  approvedBy: 'Reviewer',
-  approvedAt: '2026-10-16',
+  source: "Evidence",
+  approvedBy: "Reviewer",
+  approvedAt: "2026-10-16",
 };
 
-it('enforces the service root contract', () => {
+it("enforces the service root contract", () => {
   expectContentContract(schema, source);
 });
 
-it('parses resolved and source catalogs with MDX or JSON articles', () => {
+it("parses resolved and source catalogs with MDX or JSON articles", () => {
   expect(schema.parse(source)).toEqual(source);
   expect(servicesSchema.safeParse(withItem({ href: undefined })).success).toBe(
     true,
   );
-  const records = createServiceRecordsSchema(['/services/sample/']);
+  const records = createServiceRecordsSchema(["/services/sample/"]);
   for (const article of [
-    { format: 'mdx', entry: 'sample' },
-    { format: 'json', reason: 'Fallback', ...item.article },
+    { format: "mdx", entry: "sample" },
+    { format: "json", reason: "Fallback", ...item.article },
   ]) {
     expect(records.safeParse(withItem({ article })).success).toBe(true);
   }
 });
 
-it('rejects missing, unknown and malformed published destinations', () => {
+it("rejects missing, unknown and malformed published destinations", () => {
   for (const href of [
-    '/services/unknown/',
-    '/services/sample',
-    '/services/sample/?query=1',
-    'https://example.test',
+    "/services/unknown/",
+    "/services/sample",
+    "/services/sample/?query=1",
+    "https://example.test",
   ]) {
     expect(schema.safeParse(withItem({ href })).success).toBe(false);
   }
@@ -56,13 +56,13 @@ it('rejects missing, unknown and malformed published destinations', () => {
   expect(schema.safeParse({ ...source, extra: true }).success).toBe(false);
 });
 
-it('requires each service link to use its own catalog ID', () => {
-  expect(schema.safeParse(withItem({ href: '/services/other/' })).success).toBe(
+it("requires each service link to use its own catalog ID", () => {
+  expect(schema.safeParse(withItem({ href: "/services/other/" })).success).toBe(
     false,
   );
 });
 
-it('requires demo images and detail links but permits text-only drafts', () => {
+it("requires demo images and detail links but permits text-only drafts", () => {
   expect(schema.safeParse({ ...source, demoMode: true }).success).toBe(true);
   for (const change of [{ image: null }, { href: undefined }]) {
     expect(
@@ -72,7 +72,7 @@ it('requires demo images and detail links but permits text-only drafts', () => {
   }
 });
 
-it('checks image focal boundaries, dimensions, media and unknown keys', () => {
+it("checks image focal boundaries, dimensions, media and unknown keys", () => {
   expect(
     schema.safeParse(
       withItem({
@@ -83,7 +83,7 @@ it('checks image focal boundaries, dimensions, media and unknown keys', () => {
   for (const change of [
     { width: 0 },
     { height: 1.5 },
-    { src: 'javascript:alert(1)' },
+    { src: "javascript:alert(1)" },
     { mobileFocalPoint: { x: -1, y: 101 } },
     { extra: true },
   ]) {
@@ -94,7 +94,7 @@ it('checks image focal boundaries, dimensions, media and unknown keys', () => {
   }
 });
 
-it('requires approved blocks for approved service articles', () => {
+it("requires approved blocks for approved service articles", () => {
   const approved = {
     ...source,
     copyApproved: true,
@@ -120,8 +120,8 @@ it('requires approved blocks for approved service articles', () => {
             ...service.article,
             content: [
               {
-                type: 'paragraph',
-                paragraphs: ['Approved'],
+                type: "paragraph",
+                paragraphs: ["Approved"],
                 provenance: approval,
               },
             ],
@@ -132,12 +132,12 @@ it('requires approved blocks for approved service articles', () => {
   ).toBe(true);
 });
 
-it('matches embedded forms to service context and category', () => {
+it("matches embedded forms to service context and category", () => {
   const form = {
-    type: 'order-form',
-    formId: 'general-inquiry',
-    context: 'service',
-    category: 'sample',
+    type: "order-form",
+    formId: "general-inquiry",
+    context: "service",
+    category: "sample",
   };
   const article = (change: object) =>
     withItem({
@@ -147,7 +147,7 @@ it('matches embedded forms to service context and category', () => {
       },
     });
   expect(schema.safeParse(article({})).success).toBe(true);
-  for (const change of [{ context: 'project' }, { category: 'other' }]) {
+  for (const change of [{ context: "project" }, { category: "other" }]) {
     expect(schema.safeParse(article(change)).success).toBe(false);
   }
 });

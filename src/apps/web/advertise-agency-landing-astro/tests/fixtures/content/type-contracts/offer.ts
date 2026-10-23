@@ -1,5 +1,5 @@
 // Compile-only examples; this file is never executed.
-import type * as Domain from '@/types/offer';
+import type * as Domain from "@/types/offer";
 
 export const value = {
   enabled: false,
@@ -9,13 +9,13 @@ export const value = {
     {
       id: 1,
       enabled: false,
-      description: 'TEST_DESCRIPTION',
+      description: "TEST_DESCRIPTION",
       presentation: {
         fontSizeRem: 1,
-        textColor: '#ffffff',
-        horizontal: 'left',
-        vertical: 'bottom',
-        overlay: 'dark',
+        textColor: "#ffffff",
+        horizontal: "left",
+        vertical: "bottom",
+        overlay: "dark",
         focalPoint: {
           x: 1,
           y: 1,
@@ -25,12 +25,12 @@ export const value = {
           y: 1,
         },
       },
-      image: '/a.png',
-      imageAlt: 'TEST_IMAGEALT',
+      image: "/a.png",
+      imageAlt: "TEST_IMAGEALT",
       imageWidth: 1,
       imageHeight: 1,
-      linkLabel: 'TEST_LINKLABEL',
-      href: '/#order-inquiry',
+      linkLabel: "TEST_LINKLABEL",
+      href: "/#order-inquiry",
     },
   ],
 } satisfies Domain.Offers;
@@ -44,5 +44,5 @@ export const OfferFocalPoint = value.items[0].presentation
 export const invalid = {
   ...value,
   // @ts-expect-error intervalMs must retain its domain type.
-  intervalMs: '7000',
+  intervalMs: "7000",
 } satisfies Domain.Offers;

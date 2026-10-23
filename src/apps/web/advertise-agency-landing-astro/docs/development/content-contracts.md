@@ -18,13 +18,12 @@ image dimensions. The Zod schemas remain authoritative for cross-field rules,
 publication approval, link destinations, consent, and defaults.
 
 FAQ content lives in `data/content/config/faq.json`, with parsed types in
-`src/types/faq.ts`, strict validation in `src/validation/faq.ts`, and the
-loader in `src/content/faq.ts`. Source answer lines become one complete
-answer string. Section and answer approvals each require an evidence source
-and named approver. Consumers use `getPublishedFaqItems` from
-`src/content/faq-publication.ts` and omit empty sections. All current FAQ
-copy remains draft. Explicit `demoMode` now displays the supplied answers
-with `demoNotice`, using `getVisibleFaqItems`; turning demo mode off restores
-approval-only visibility. Approval records remain unchanged.
-Run `node scripts/verify-faq.mjs` to exercise the loader,
-schema, original copy, and approval boundaries before UI integration.
+`src/types/faq.ts`, strict validation in `src/validation/faq.ts`, and the loader
+in `src/content/faq.ts`. Source answer lines become one complete answer string.
+Section and answer approvals each require an evidence source and named approver.
+Consumers use `getPublishedFaqItems` from `src/content/faq-publication.ts` and
+omit empty sections. All current FAQ copy remains draft. Explicit `demoMode` now
+displays the supplied answers with `demoNotice`, using `getVisibleFaqItems`;
+turning demo mode off restores approval-only visibility. Approval records remain
+unchanged. Run `node scripts/verify-faq.mjs` to exercise the loader, schema,
+original copy, and approval boundaries before UI integration.

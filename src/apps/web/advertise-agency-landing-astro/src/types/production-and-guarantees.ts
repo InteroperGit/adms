@@ -1,11 +1,11 @@
 /** Draft-safe content for production evidence, warranties and maintenance. */
-export type ProductionApproval = 'draft' | 'approved';
+export type ProductionApproval = "draft" | "approved";
 export type ProductionGuidanceIcon =
-  | '/images/guarantees/design-approval.svg'
-  | '/images/guarantees/inquiry.svg'
-  | '/images/guarantees/installation.svg'
-  | '/images/guarantees/measurements.svg'
-  | '/images/guarantees/production.svg';
+  | "/images/guarantees/design-approval.svg"
+  | "/images/guarantees/inquiry.svg"
+  | "/images/guarantees/installation.svg"
+  | "/images/guarantees/measurements.svg"
+  | "/images/guarantees/production.svg";
 
 export interface ProductionPhoto {
   src: string;
@@ -35,7 +35,7 @@ export interface WarrantyTerm {
   conditions: string[];
   exclusions: string[];
   claimRoute: string;
-  sourceType: 'agency-workmanship' | 'manufacturer-component' | 'pending';
+  sourceType: "agency-workmanship" | "manufacturer-component" | "pending";
   source: string;
   approval: ProductionApproval;
 }
@@ -67,5 +67,5 @@ export interface ProductionAndGuaranteesContent {
   photos: ProductionPhoto[];
   warrantyTerms: WarrantyTerm[];
   maintenance: MaintenanceContent;
-  inquiryHref: '/#order-inquiry';
+  inquiryHref: "/#order-inquiry";
 }

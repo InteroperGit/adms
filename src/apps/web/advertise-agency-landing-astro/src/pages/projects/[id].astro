@@ -1,16 +1,18 @@
 ---
 // Generate static project pages from validated metadata and content blocks.
-import Layout from '@/layouts/Layout.astro';
-import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
-import ProjectDetailHeader
-  from '@/components/projects/ProjectDetailHeader.astro';
-import ContentBlocks from '@/components/content/ContentBlocks.astro';
-import ProjectArticleActions
-  from '@/components/projects/ProjectArticleActions.astro';
-import { projects } from '@/content/projects';
-import { site } from '@/content/site';
-import type { Project } from '@/types/project';
-import { isProjectPublished } from '@/content/project-publication';
+import Layout from "@/layouts/Layout.astro";
+import Breadcrumbs from "@/components/ui/Breadcrumbs.astro";
+// prettier-ignore
+import ProjectDetailHeader from
+  '@/components/projects/ProjectDetailHeader.astro';
+import ContentBlocks from "@/components/content/ContentBlocks.astro";
+// prettier-ignore
+import ProjectArticleActions from
+  '@/components/projects/ProjectArticleActions.astro';
+import { projects } from "@/content/projects";
+import { site } from "@/content/site";
+import type { Project } from "@/types/project";
+import { isProjectPublished } from "@/content/project-publication";
 
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -20,9 +22,9 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props as { project: Project };
-const projectsHref = '/projects/';
+const projectsHref = "/projects/";
 // The project page owns catalog restoration; Breadcrumbs only forwards it.
-const projectsLinkAttributes = { 'data-project-catalog-return': true };
+const projectsLinkAttributes = { "data-project-catalog-return": true };
 const published = isProjectPublished(project);
 ---
 
@@ -34,7 +36,7 @@ const published = isProjectPublished(project);
   <article class="site-container project-detail">
     <Breadcrumbs
       items={[
-        { label: 'Главная', href: '/' },
+        { label: "Главная", href: "/" },
         {
           label: site.sections.projects.title,
           href: projectsHref,
@@ -48,7 +50,9 @@ const published = isProjectPublished(project);
     <ContentBlocks
       blocks={project.content}
       context={{
-        kind: 'project', projectId: project.id, category: project.category,
+        kind: "project",
+        projectId: project.id,
+        category: project.category,
         published,
       }}
     />
@@ -68,5 +72,4 @@ const published = isProjectPublished(project);
     width: 100%;
     max-width: none;
   }
-
 </style>

@@ -1,19 +1,19 @@
 ---
 // Render authored video with stable geometry, native controls and a fallback.
-import type { VideoBlock as VideoContent } from '@/types/content-blocks';
+import type { VideoBlock as VideoContent } from "@/types/content-blocks";
 
 interface Props {
   block: VideoContent;
 }
 
 const { block } = Astro.props as Props;
-const extension = block.src.split('?')[0].split('#')[0].split('.').pop();
+const extension = block.src.split("?")[0].split("#")[0].split(".").pop();
 const mime =
-  extension === 'webm'
-    ? 'video/webm'
-    : extension === 'ogg'
-      ? 'video/ogg'
-      : 'video/mp4';
+  extension === "webm"
+    ? "video/webm"
+    : extension === "ogg"
+      ? "video/ogg"
+      : "video/mp4";
 ---
 
 <figure
@@ -28,13 +28,19 @@ const mime =
     poster={block.poster}
     aria-label={block.alt}
   >
-    <source src={block.src} type={mime} />
+    <source
+      src={block.src}
+      type={mime}
+    />
     <p class="video-native-fallback">
       Видео недоступно. <a href={block.src}>Открыть видео</a>.
     </p>
   </video>
   {/* Network failures get a readable status with reserved space. */}
-  <p class="video-error" role="status">
+  <p
+    class="video-error"
+    role="status"
+  >
     Видео недоступно. <a href={block.src}>Открыть видео</a>.
   </p>
   {block.caption && <figcaption>{block.caption}</figcaption>}
@@ -78,7 +84,7 @@ const mime =
   }
 
   /* Expose a useful fallback after a network or decode failure. */
-  [data-video-state='error'] .video-error {
+  [data-video-state="error"] .video-error {
     display: block;
   }
 
@@ -119,17 +125,17 @@ const mime =
 <script>
   // Surface decode and network failures without making playback depend on JS.
   document
-    .querySelectorAll<HTMLElement>('[data-video-state]')
+    .querySelectorAll<HTMLElement>("[data-video-state]")
     .forEach((figure) => {
-      const video = figure.querySelector('video');
+      const video = figure.querySelector("video");
       if (!video) return;
       const markError = () => {
-        figure.dataset.videoState = 'error';
+        figure.dataset.videoState = "error";
       };
-      video.addEventListener('error', markError);
+      video.addEventListener("error", markError);
       // Source selection errors do not bubble to the parent video element.
-      video.querySelectorAll('source').forEach((source) => {
-        source.addEventListener('error', markError);
+      video.querySelectorAll("source").forEach((source) => {
+        source.addEventListener("error", markError);
       });
       // A small or cached response may fail before this module executes.
       if (

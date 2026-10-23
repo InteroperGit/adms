@@ -2,8 +2,8 @@
 // Render eligible pricing scopes and shared estimate guidance as static HTML.
 // Empty collections omit the section. The loader owns demo/approval gates;
 // this section owns visible demo disclosure and the section heading.
-import PricingExample from '@/components/cards/PricingExample.astro';
-import { pricing, visiblePricingExamples } from '@/content/pricing';
+import PricingExample from "@/components/cards/PricingExample.astro";
+import { pricing, visiblePricingExamples } from "@/content/pricing";
 ---
 
 {visiblePricingExamples.length > 0 && (
@@ -15,13 +15,14 @@ import { pricing, visiblePricingExamples } from '@/content/pricing';
     <div class="site-container">
       {/* Explain the examples and disclose their demonstration status. */}
       <div class="pricing-introduction">
-        <h2 id="pricing-heading" class="site-section-title">
+        <h2
+          id="pricing-heading"
+          class="site-section-title"
+        >
           {pricing.heading}
         </h2>
         <p class="pricing-summary">{pricing.introduction}</p>
-        {pricing.demoMode && (
-          <p class="pricing-demo">{pricing.demoNotice}</p>
-        )}
+        {pricing.demoMode && <p class="pricing-demo">{pricing.demoNotice}</p>}
       </div>
       {/* Every complete scope includes its own adjacent inquiry link. */}
       <div class="pricing-examples">
@@ -40,7 +41,9 @@ import { pricing, visiblePricingExamples } from '@/content/pricing';
             {pricing.costFactors.heading}
           </h3>
           <ul class="pricing-factors">
-            {pricing.costFactors.items.map((factor) => <li>{factor}</li>)}
+            {pricing.costFactors.items.map((factor) => (
+              <li>{factor}</li>
+            ))}
           </ul>
         </div>
         <div>

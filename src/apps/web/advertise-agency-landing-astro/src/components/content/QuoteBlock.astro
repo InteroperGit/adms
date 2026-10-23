@@ -1,6 +1,6 @@
 ---
 // Render an editorial quotation without turning the article into a card grid.
-import type { QuoteBlock as Quote } from '@/types/content-blocks';
+import type { QuoteBlock as Quote } from "@/types/content-blocks";
 
 interface Props {
   block: Quote;
@@ -11,7 +11,12 @@ const { block } = Astro.props as Props;
 
 <figure class="content-quote">
   {/* The mark is visual punctuation and must stay out of the spoken quote. */}
-  <span class="quote-mark" aria-hidden="true">“</span>
+  <span
+    class="quote-mark"
+    aria-hidden="true"
+  >
+    “
+  </span>
   <blockquote>{block.text}</blockquote>
   {(block.author || block.source) && (
     <figcaption>

@@ -1,12 +1,12 @@
 // src/types/index.ts
 
 export { type Review } from "./review";
-export type { FaqApproval, FaqItem, FaqContent } from './faq';
+export type { FaqApproval, FaqItem, FaqContent } from "./faq";
 export {
   projectCategories,
   type Project,
   type ProjectCategory,
-} from './project';
+} from "./project";
 export type {
   Offer,
   Offers,
@@ -47,7 +47,7 @@ export type {
   WarrantyTerm,
   MaintenanceContent,
   ProductionAndGuaranteesContent,
-} from './production-and-guarantees';
+} from "./production-and-guarantees";
 
 export type {
   CarouselItem,
@@ -55,13 +55,13 @@ export type {
   CarouselContent,
   CarouselPresentation,
   CarouselFocalPoint,
-} from './image-carousel';
+} from "./image-carousel";
 export type {
   BusinessSolutionMedia,
   BusinessSolutionAttribution,
   BusinessSolutionItem,
   BusinessSolutionsContent,
-} from './business-solutions';
+} from "./business-solutions";
 export type {
   ChartBlock,
   ContentBlock,
@@ -78,4 +78,4 @@ export type {
   TableBlock,
   UnorderedListBlock,
   VideoBlock,
-} from './content-blocks';
+} from "./content-blocks";

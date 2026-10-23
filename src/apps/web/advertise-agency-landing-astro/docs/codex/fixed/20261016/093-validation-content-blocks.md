@@ -9,9 +9,9 @@
 ## Сценарии
 
 Проверить все 11 block types, discriminated union, block IDs, provenance,
-paragraph links, lists, tables, charts, content images, galleries, video,
-order forms, quotes и footnotes. Для каждого типа добавить valid, boundary,
-missing, unknown-key и unsafe-URL cases.
+paragraph links, lists, tables, charts, content images, galleries, video, order
+forms, quotes и footnotes. Для каждого типа добавить valid, boundary, missing,
+unknown-key и unsafe-URL cases.
 
 ## Готово, когда
 
@@ -22,7 +22,9 @@ Fixtures находятся в `tests/fixtures/content/`, schema output пров
 
 ## Implementation
 
-Added versioned content-block boundary fixtures and colocated coverage for all block schemas, discriminated unions, strict keys, IDs, provenance, media, tables, forms, and publication checks.
+Added versioned content-block boundary fixtures and colocated coverage for all
+block schemas, discriminated unions, strict keys, IDs, provenance, media,
+tables, forms, and publication checks.
 
 ## Verification
 

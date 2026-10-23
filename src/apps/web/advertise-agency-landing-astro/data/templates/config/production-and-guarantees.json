@@ -12,9 +12,7 @@
   ],
   "copyApproved": false,
   "approvalSource": null,
-  "pendingInputs": [
-    "TEST_PENDINGINPUTS"
-  ],
+  "pendingInputs": ["TEST_PENDINGINPUTS"],
   "productionOperations": [
     {
       "id": "TEST_ID",
@@ -50,12 +48,8 @@
       "coverage": "TEST_COVERAGE",
       "duration": "TEST_DURATION",
       "starts": "TEST_STARTS",
-      "conditions": [
-        "TEST_CONDITIONS"
-      ],
-      "exclusions": [
-        "TEST_EXCLUSIONS"
-      ],
+      "conditions": ["TEST_CONDITIONS"],
+      "exclusions": ["TEST_EXCLUSIONS"],
       "claimRoute": "TEST_CLAIMROUTE",
       "sourceType": "TEST_SOURCETYPE",
       "source": "TEST_SOURCE",
@@ -63,12 +57,8 @@
     }
   ],
   "maintenance": {
-    "scope": [
-      "TEST_SCOPE"
-    ],
-    "customerResponsibilities": [
-      "TEST_CUSTOMERRESPONSIBILITIES"
-    ],
+    "scope": ["TEST_SCOPE"],
+    "customerResponsibilities": ["TEST_CUSTOMERRESPONSIBILITIES"],
     "pricing": "TEST_PRICING",
     "requestRoute": "TEST_REQUESTROUTE",
     "approval": "TEST_APPROVAL"

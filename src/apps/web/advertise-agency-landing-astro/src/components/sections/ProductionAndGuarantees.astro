@@ -2,74 +2,78 @@
 // Present approved production evidence, warranty terms and service options.
 // Customer guidance stays visible while agency-specific evidence is pending.
 
-import Button from '@/components/ui/Button.astro';
-import Section from '@/components/ui/Section.astro';
-import { productionAndGuarantees } from '@/content/production-and-guarantees';
-import type { ProductionItem } from '@/types/production-and-guarantees';
+import Button from "@/components/ui/Button.astro";
+import Section from "@/components/ui/Section.astro";
+import { productionAndGuarantees } from "@/content/production-and-guarantees";
+import type { ProductionItem } from "@/types/production-and-guarantees";
 
 const content = productionAndGuarantees;
 const agencyCopyReady = content.copyApproved && !content.demoMode;
 const approvedItems = (items: typeof content.productionOperations) =>
-  agencyCopyReady ? items.filter((item) => item.approval === 'approved') : [];
+  agencyCopyReady ? items.filter((item) => item.approval === "approved") : [];
 const operations = approvedItems(content.productionOperations);
 const materials = approvedItems(content.materials);
 const checks = approvedItems(content.qualityChecks);
 const groups: Array<{ title: string; items: ProductionItem[] }> = [
-  { title: 'Производство', items: operations },
-  { title: 'Материалы', items: materials },
-  { title: 'Проверки качества', items: checks },
+  { title: "Производство", items: operations },
+  { title: "Материалы", items: materials },
+  { title: "Проверки качества", items: checks },
 ];
 const warranties = content.warrantyTerms.filter(
-  (term) => agencyCopyReady && term.approval === 'approved',
+  (term) => agencyCopyReady && term.approval === "approved",
 );
 const photos = content.photos.filter(
-  (photo) => agencyCopyReady && photo.approval === 'approved',
+  (photo) => agencyCopyReady && photo.approval === "approved",
 );
 ---
 
-  <Section
-    id="production-and-guarantees"
-    title={content.heading}
-    subtitle={content.introduction}
-    background="none"
-    ariaLabel="Гарантии и сопровождение заказа"
-  >
-    {/* Brief guarantees introduce the service before detailed terms. */}
-    <div class="production-guidance">
-      {content.guidance.map((item) => (
-        <article class="production-card" tabindex="0">
-          <span
-            class="production-card-icon"
-            style={{ '--production-icon': `url(${item.icon})` }}
-            aria-hidden="true"
-          ></span>
-          <h3>{item.title}</h3>
-          <p>{item.description}</p>
-        </article>
+<Section
+  id="production-and-guarantees"
+  title={content.heading}
+  subtitle={content.introduction}
+  background="none"
+  ariaLabel="Гарантии и сопровождение заказа"
+>
+  {/* Brief guarantees introduce the service before detailed terms. */}
+  <div class="production-guidance">
+    {content.guidance.map((item) => (
+      <article
+        class="production-card"
+        tabindex="0"
+      >
+        <span
+          class="production-card-icon"
+          style={{ "--production-icon": `url(${item.icon})` }}
+          aria-hidden="true"
+        ></span>
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+      </article>
+    ))}
+  </div>
+  {/* Keep approved evidence adjacent to the section introduction. */}
+  {photos.length > 0 && (
+    <div class="production-photos">
+      {photos.map((photo) => (
+        <figure class="production-photo">
+          <img
+            src={photo.src}
+            alt={photo.alt}
+            width={photo.width}
+            height={photo.height}
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>{photo.caption}</figcaption>
+        </figure>
       ))}
     </div>
-    {/* Keep approved evidence adjacent to the section introduction. */}
-    {photos.length > 0 && (
-      <div class="production-photos">
-        {photos.map((photo) => (
-          <figure class="production-photo">
-            <img
-              src={photo.src}
-              alt={photo.alt}
-              width={photo.width}
-              height={photo.height}
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>{photo.caption}</figcaption>
-          </figure>
-        ))}
-      </div>
-    )}
+  )}
 
-    {/* Use cards so each approved evidence item stays scannable. */}
-    <div class="production-groups">
-      {groups.map(({ title, items: groupItems }) => (
+  {/* Use cards so each approved evidence item stays scannable. */}
+  <div class="production-groups">
+    {groups.map(
+      ({ title, items: groupItems }) =>
         groupItems.length > 0 && (
           <section
             class="production-group"
@@ -78,7 +82,10 @@ const photos = content.photos.filter(
             <h3 id={`${title}-heading`}>{title}</h3>
             <div class="production-cards">
               {groupItems.map((item: ProductionItem) => (
-                <article class="production-card" tabindex="0">
+                <article
+                  class="production-card"
+                  tabindex="0"
+                >
                   <h4>{item.title}</h4>
                   <p>{item.description}</p>
                   <p class="production-evidence">{item.evidence}</p>
@@ -86,59 +93,90 @@ const photos = content.photos.filter(
               ))}
             </div>
           </section>
-        )
-      ))}
-    </div>
-
-    {/* Keep warranty scope and claim paths separate from component terms. */}
-    {warranties.length > 0 && (
-      <section class="warranty-group" aria-labelledby="warranty-heading">
-        <h3 id="warranty-heading">Гарантия</h3>
-        <div class="warranty-cards">
-          {warranties.map((term) => (
-            <article class="warranty-card" tabindex="0">
-              <h4>{term.title}</h4>
-              <dl>
-                <div><dt>Покрытие</dt><dd>{term.coverage}</dd></div>
-                <div><dt>Срок</dt><dd>{term.duration}</dd></div>
-                <div><dt>Начало</dt><dd>{term.starts}</dd></div>
-              </dl>
-              <h5>Условия</h5>
-              <ul>{term.conditions.map((item) => <li>{item}</li>)}</ul>
-              <h5>Исключения</h5>
-              <ul>{term.exclusions.map((item) => <li>{item}</li>)}</ul>
-              <p class="warranty-claim">{term.claimRoute}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+        ),
     )}
+  </div>
 
-    {/* Explain the approved maintenance scope and how a request is started. */}
-    {agencyCopyReady && content.maintenance.approval === 'approved' && (
-      <section class="maintenance-group" aria-labelledby="maintenance-heading">
-        <h3 id="maintenance-heading">Обслуживание</h3>
-        <ul>
-          {content.maintenance.scope.map((item) => <li>{item}</li>)}
-        </ul>
-        <h4>Что требуется от заказчика</h4>
-        <ul>
-          {content.maintenance.customerResponsibilities.map((item) => (
-            <li>{item}</li>
-          ))}
-        </ul>
-        <p>{content.maintenance.pricing}</p>
-        <p>{content.maintenance.requestRoute}</p>
-      </section>
-    )}
+  {/* Keep warranty scope and claim paths separate from component terms. */}
+  {warranties.length > 0 && (
+    <section
+      class="warranty-group"
+      aria-labelledby="warranty-heading"
+    >
+      <h3 id="warranty-heading">Гарантия</h3>
+      <div class="warranty-cards">
+        {warranties.map((term) => (
+          <article
+            class="warranty-card"
+            tabindex="0"
+          >
+            <h4>{term.title}</h4>
+            <dl>
+              <div>
+                <dt>Покрытие</dt>
+                <dd>{term.coverage}</dd>
+              </div>
+              <div>
+                <dt>Срок</dt>
+                <dd>{term.duration}</dd>
+              </div>
+              <div>
+                <dt>Начало</dt>
+                <dd>{term.starts}</dd>
+              </div>
+            </dl>
+            <h5>Условия</h5>
+            <ul>
+              {term.conditions.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <h5>Исключения</h5>
+            <ul>
+              {term.exclusions.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <p class="warranty-claim">{term.claimRoute}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
 
-    {/* Link to the native inquiry form for questions about approved terms. */}
-    <div class="production-action">
-      <Button href={content.inquiryHref} size="lg">
-        Задать вопрос
-      </Button>
-    </div>
-  </Section>
+  {/* Explain the approved maintenance scope and how a request is started. */}
+  {agencyCopyReady && content.maintenance.approval === "approved" && (
+    <section
+      class="maintenance-group"
+      aria-labelledby="maintenance-heading"
+    >
+      <h3 id="maintenance-heading">Обслуживание</h3>
+      <ul>
+        {content.maintenance.scope.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+      <h4>Что требуется от заказчика</h4>
+      <ul>
+        {content.maintenance.customerResponsibilities.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+      <p>{content.maintenance.pricing}</p>
+      <p>{content.maintenance.requestRoute}</p>
+    </section>
+  )}
+
+  {/* Link to the native inquiry form for questions about approved terms. */}
+  <div class="production-action">
+    <Button
+      href={content.inquiryHref}
+      size="lg"
+    >
+      Задать вопрос
+    </Button>
+  </div>
+</Section>
 
 <style>
   /* Keep approved workshop images in a stable responsive grid. */
@@ -218,7 +256,9 @@ const photos = content.photos.filter(
   .warranty-card:focus {
     border-color: var(--color-primary);
     background: color-mix(
-      in srgb, var(--color-primary) 8%, var(--color-base-100)
+      in srgb,
+      var(--color-primary) 8%,
+      var(--color-base-100)
     );
     box-shadow: inset 0 0 0 1px var(--color-primary);
   }
@@ -237,7 +277,9 @@ const photos = content.photos.filter(
     .warranty-card:hover {
       border-color: var(--color-primary);
       background: color-mix(
-        in srgb, var(--color-primary) 8%, var(--color-base-100)
+        in srgb,
+        var(--color-primary) 8%,
+        var(--color-base-100)
       );
       box-shadow: inset 0 0 0 1px var(--color-primary);
     }
@@ -269,7 +311,6 @@ const photos = content.photos.filter(
     -webkit-mask: var(--production-icon) center / contain no-repeat;
     mask: var(--production-icon) center / contain no-repeat;
   }
-
 
   /* Distinguish evidence references from the primary description. */
   .production-evidence {

@@ -3,8 +3,8 @@
 // The optional title overrides metadata only, not the visible heading.
 // Document sections retain their supplied order, dates and list content.
 
-import Layout from '@/layouts/Layout.astro';
-import type { LegalDocument } from '@/types';
+import Layout from "@/layouts/Layout.astro";
+import type { LegalDocument } from "@/types";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -18,12 +18,19 @@ const { document, title, showMobileBackLink = false } = Astro.props;
 ---
 
 {/* Document sections retain their supplied order, dates and list content. */}
-<Layout title={title || document.title} description={document.description}>
+<Layout
+  title={title || document.title}
+  description={document.description}
+>
   <div class="site-container site-section">
     <article class="legal-document">
       {/* The native home fallback also works without browser scripts. */}
       {showMobileBackLink && (
-        <a class="legal-back" href="/" data-legal-back>
+        <a
+          class="legal-back"
+          href="/"
+          data-legal-back
+        >
           <svg
             width="20"
             height="20"
@@ -70,12 +77,18 @@ const { document, title, showMobileBackLink = false } = Astro.props;
 <script>
   // Only same-site arrivals use history, preserving the previous page/anchor.
   // Direct/external visits retain the native home link, including without JS.
-  const back = document.querySelector<HTMLAnchorElement>('[data-legal-back]');
+  const back = document.querySelector<HTMLAnchorElement>("[data-legal-back]");
   if (back) {
-    back.addEventListener('click', (event) => {
+    back.addEventListener("click", (event) => {
       // Preserve opening the fallback link in another tab/window.
-      if (event.button !== 0 || event.ctrlKey || event.metaKey ||
-        event.shiftKey || event.altKey) return;
+      if (
+        event.button !== 0 ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return;
       if (!document.referrer || window.history.length < 2) return;
       try {
         if (new URL(document.referrer).origin !== window.location.origin) {

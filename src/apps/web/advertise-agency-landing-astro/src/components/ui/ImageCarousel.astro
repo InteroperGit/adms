@@ -1,17 +1,17 @@
 ---
 // Shared image carousel: static HTML first, instance-local enhancement later.
 // Callers own content/section layout; options only control optional features.
-import ImageCarouselSlide from './ImageCarouselSlide.astro';
-import CarouselControl from './CarouselControl.astro';
+import ImageCarouselSlide from "./ImageCarouselSlide.astro";
+import CarouselControl from "./CarouselControl.astro";
 import type {
   CarouselItem,
   CarouselOptions,
   CarouselPresentation,
-} from '@/types/image-carousel';
+} from "@/types/image-carousel";
 import {
   carouselItemsSchema,
   carouselOptionsSchema,
-} from '@/validation/image-carousel';
+} from "@/validation/image-carousel";
 
 interface Props {
   // IDs must be unique on the page; they namespace slides and controls.
@@ -20,7 +20,7 @@ interface Props {
   itemLabel?: string;
   slideIdPrefix?: string;
   items: Array<
-    Omit<CarouselItem, 'enabled' | 'presentation'> & {
+    Omit<CarouselItem, "enabled" | "presentation"> & {
       enabled?: boolean;
       presentation?: Partial<CarouselPresentation>;
     }
@@ -31,13 +31,13 @@ interface Props {
 const {
   id,
   label,
-  itemLabel = 'Изображение',
+  itemLabel = "Изображение",
   slideIdPrefix = `${id}-slide`,
   items: suppliedItems,
   options: suppliedOptions = {},
 } = Astro.props;
 if (!/^[a-zA-Z][\w-]*$/.test(id) || !label.trim()) {
-  throw new Error('ImageCarousel needs a unique HTML id and a label');
+  throw new Error("ImageCarousel needs a unique HTML id and a label");
 }
 const options = carouselOptionsSchema.parse(suppliedOptions);
 const items = carouselItemsSchema
@@ -65,13 +65,16 @@ const circles = multiple && options.circles;
     data-circles={circles}
     data-animation={options.animation}
     style={{
-      '--panel-ratio': options.aspectRatio,
-      '--image-fit': options.imageFit,
+      "--panel-ratio": options.aspectRatio,
+      "--image-fit": options.imageFit,
     }}
   >
     {/* Arrows and interactive/passive circles are independently optional. */}
     {(arrows || circles) && (
-      <div class="carousel-controls" hidden>
+      <div
+        class="carousel-controls"
+        hidden
+      >
         {arrows && (
           <CarouselControl
             direction="previous"
@@ -83,9 +86,9 @@ const circles = multiple && options.circles;
         {circles && (
           <div
             class="carousel-dots"
-            role={options.manualNavigation ? 'group' : undefined}
-            aria-label={options.manualNavigation ? 'Выбор изображения' : null}
-            aria-hidden={options.manualNavigation ? undefined : 'true'}
+            role={options.manualNavigation ? "group" : undefined}
+            aria-label={options.manualNavigation ? "Выбор изображения" : null}
+            aria-hidden={options.manualNavigation ? undefined : "true"}
           >
             {items.map((item, index) =>
               options.manualNavigation ? (
@@ -99,7 +102,10 @@ const circles = multiple && options.circles;
                   <span aria-hidden="true"></span>
                 </button>
               ) : (
-                <span class="carousel-dot" data-index={index}>
+                <span
+                  class="carousel-dot"
+                  data-index={index}
+                >
                   <span></span>
                 </span>
               ),
@@ -131,14 +137,18 @@ const circles = multiple && options.circles;
     </div>
     {/* Only manual changes need a polite announcement. */}
     {options.manualNavigation && (arrows || circles) && (
-      <span class="sr-only" role="status" aria-atomic="true"></span>
+      <span
+        class="sr-only"
+        role="status"
+        aria-atomic="true"
+      ></span>
     )}
   </image-carousel>
 )}
 
 <script>
   // Astro bundles this browser-only module once for all carousel instances.
-  import './image-carousel';
+  import "./image-carousel";
 </script>
 
 <style>
@@ -217,12 +227,12 @@ const circles = multiple && options.circles;
   }
 
   /* Place previous navigation inside the left image edge. */
-  .image-carousel :global(.carousel-arrow)[data-direction='-1'] {
+  .image-carousel :global(.carousel-arrow)[data-direction="-1"] {
     left: var(--control-inset);
   }
 
   /* Place next navigation inside the right image edge. */
-  .image-carousel :global(.carousel-arrow)[data-direction='1'] {
+  .image-carousel :global(.carousel-arrow)[data-direction="1"] {
     right: var(--control-inset);
   }
 
@@ -275,12 +285,12 @@ const circles = multiple && options.circles;
   }
 
   /* Static galleries separate images when no navigation is available. */
-  .image-carousel[data-layout='panel']:not([data-ready]) .carousel-list {
+  .image-carousel[data-layout="panel"]:not([data-ready]) .carousel-list {
     gap: 1rem;
   }
 
   /* Disabled animation also disables hover fades without hiding controls. */
-  .image-carousel[data-animation='false'] :global(.carousel-arrow) {
+  .image-carousel[data-animation="false"] :global(.carousel-arrow) {
     transition: none;
   }
 </style>

@@ -1,6 +1,7 @@
 import type {
-  ContentBlock, ContentImage,
-} from '../../src/types/content-blocks';
+  ContentBlock,
+  ContentImage,
+} from "../../src/types/content-blocks";
 
 /**
  * Convert the pre-ContentBlock project shape into the universal article
@@ -15,24 +16,20 @@ export function migrateProjectContent(
   // Lead media remains the catalogue thumbnail and precedes the explanation.
   const photos = toContentImages(input.photos);
   if (photos.length) {
-    blocks.push({ type: 'image-gallery', id: 'photos', images: photos });
+    blocks.push({ type: "image-gallery", id: "photos", images: photos });
   }
-  const addParagraph = (
-    id: string,
-    paragraphs: unknown,
-    heading?: string,
-  ) => {
+  const addParagraph = (id: string, paragraphs: unknown, heading?: string) => {
     if (!Array.isArray(paragraphs)) return;
     const values = paragraphs.filter(
-      (value): value is string => typeof value === 'string'
-        && value.trim().length > 0,
+      (value): value is string =>
+        typeof value === "string" && value.trim().length > 0,
     );
     if (values.length) {
       if (heading) {
-        blocks.push({ type: 'heading', level: 2, text: heading });
+        blocks.push({ type: "heading", level: 2, text: heading });
       }
       blocks.push({
-        type: 'paragraph',
+        type: "paragraph",
         id,
         paragraphs: values,
       });
@@ -41,83 +38,88 @@ export function migrateProjectContent(
   const addList = (id: string, values: unknown, heading: string) => {
     if (!Array.isArray(values)) return;
     const items = values.filter(
-      (value): value is string => typeof value === 'string'
-        && value.trim().length > 0,
+      (value): value is string =>
+        typeof value === "string" && value.trim().length > 0,
     );
     if (items.length) {
-      blocks.push({ type: 'heading', level: 2, text: heading });
-      blocks.push({ type: 'unordered-list', id, items });
+      blocks.push({ type: "heading", level: 2, text: heading });
+      blocks.push({ type: "unordered-list", id, items });
     }
   };
 
   const fullDescription = input.fullDescription;
-  if (typeof fullDescription === 'string' && fullDescription.trim()) {
-    addParagraph('overview', [fullDescription], 'О проекте');
+  if (typeof fullDescription === "string" && fullDescription.trim()) {
+    addParagraph("overview", [fullDescription], "О проекте");
   }
-  addParagraph('story', input.story, 'История проекта');
+  addParagraph("story", input.story, "История проекта");
   addList(
-    'expected-benefits', input.expectedBenefits, 'Ожидаемые преимущества',
+    "expected-benefits",
+    input.expectedBenefits,
+    "Ожидаемые преимущества",
   );
 
   const details = input.details;
-  if (details && typeof details === 'object') {
+  if (details && typeof details === "object") {
     const value = details as Record<string, unknown>;
     const task = value.customerTask;
-    if (typeof task === 'string' && task.trim()) {
-      addParagraph('customer-task', [task], 'Задача заказчика');
+    if (typeof task === "string" && task.trim()) {
+      addParagraph("customer-task", [task], "Задача заказчика");
     }
     const context = value.installationContext;
-    if (typeof context === 'string' && context.trim()) {
-      addParagraph('installation-context', [context], 'Условия размещения');
+    if (typeof context === "string" && context.trim()) {
+      addParagraph("installation-context", [context], "Условия размещения");
     }
-    addList('constraints', value.constraints, 'Условия монтажа');
-    addList('materials', value.materials, 'Материалы');
-    addList('included-work', value.includedWork, 'Состав работ');
+    addList("constraints", value.constraints, "Условия монтажа");
+    addList("materials", value.materials, "Материалы");
+    addList("included-work", value.includedWork, "Состав работ");
     if (Array.isArray(value.dimensions) && value.dimensions.length) {
       const rows = value.dimensions.map((dimension) => {
-        if (!dimension || typeof dimension !== 'object') {
-          throw new Error('Project dimension must be a measurement');
+        if (!dimension || typeof dimension !== "object") {
+          throw new Error("Project dimension must be a measurement");
         }
         const item = dimension as Record<string, unknown>;
-        if (typeof item.label !== 'string' || !item.label.trim()) {
-          throw new Error('Project dimension needs a label');
+        if (typeof item.label !== "string" || !item.label.trim()) {
+          throw new Error("Project dimension needs a label");
         }
         return { cells: [item.label, formatMeasure(item)] };
       });
-      blocks.push({ type: 'heading', level: 2, text: 'Размеры' });
+      blocks.push({ type: "heading", level: 2, text: "Размеры" });
       blocks.push({
-        type: 'table', id: 'dimensions',
+        type: "table",
+        id: "dimensions",
         columns: [
-          { key: 'name', label: 'Параметр' },
-          { key: 'value', label: 'Значение' },
+          { key: "name", label: "Параметр" },
+          { key: "value", label: "Значение" },
         ],
         rows,
       });
     }
     const timing = value.timing;
-    if (timing && typeof timing === 'object') {
+    if (timing && typeof timing === "object") {
       const timingValue = timing as Record<string, unknown>;
       const rows = Object.entries(timingValue).flatMap(([label, raw]) => {
-        if (raw && typeof raw === 'object') {
+        if (raw && typeof raw === "object") {
           const item = raw as Record<string, unknown>;
-          if (typeof item.value === 'number' && typeof item.unit === 'string') {
-            const basis = typeof item.basis === 'string'
-              ? ` (${item.basis})` : '';
-            return [{ cells: [timingLabel(label),
-              `${formatMeasure(item)}${basis}`] }];
+          if (typeof item.value === "number" && typeof item.unit === "string") {
+            const basis =
+              typeof item.basis === "string" ? ` (${item.basis})` : "";
+            return [
+              { cells: [timingLabel(label), `${formatMeasure(item)}${basis}`] },
+            ];
           }
         }
-        return typeof raw === 'string' && raw.trim()
-          ? [{ cells: [timingLabel(label), raw] }] : [];
+        return typeof raw === "string" && raw.trim()
+          ? [{ cells: [timingLabel(label), raw] }]
+          : [];
       });
       if (rows.length) {
-        blocks.push({ type: 'heading', level: 2, text: 'Сроки' });
+        blocks.push({ type: "heading", level: 2, text: "Сроки" });
         blocks.push({
-          type: 'table',
-          id: 'timing',
+          type: "table",
+          id: "timing",
           columns: [
-            { key: 'stage', label: 'Этап' },
-            { key: 'duration', label: 'Срок' },
+            { key: "stage", label: "Этап" },
+            { key: "duration", label: "Срок" },
           ],
           rows,
         });
@@ -125,36 +127,36 @@ export function migrateProjectContent(
     }
   }
 
-  const process = (key: 'manufacturing' | 'installation', heading: string) => {
+  const process = (key: "manufacturing" | "installation", heading: string) => {
     const value = input[key];
-    if (!value || typeof value !== 'object') return;
+    if (!value || typeof value !== "object") return;
     const section = value as Record<string, unknown>;
     addParagraph(key, section.paragraphs, heading);
     const images = toContentImages(section.photos);
     if (images.length) {
-      blocks.push({ type: 'image-gallery', id: `${key}-images`, images });
+      blocks.push({ type: "image-gallery", id: `${key}-images`, images });
     }
   };
-  process('manufacturing', 'Изготовление');
-  process('installation', 'Монтаж');
+  process("manufacturing", "Изготовление");
+  process("installation", "Монтаж");
 
-  if (details && typeof details === 'object') {
+  if (details && typeof details === "object") {
     const rows: { cells: string[] }[] = [];
     const value = details as Record<string, unknown>;
     for (const [label, raw] of Object.entries(value)) {
       // These values already have dedicated sections in the ordered stream.
-      if (label === 'customerTask' || label === 'installationContext') continue;
-      if (raw == null || typeof raw === 'object') continue;
+      if (label === "customerTask" || label === "installationContext") continue;
+      if (raw == null || typeof raw === "object") continue;
       rows.push({ cells: [label, String(raw)] });
     }
     if (rows.length) {
-      blocks.push({ type: 'heading', level: 2, text: 'Параметры проекта' });
+      blocks.push({ type: "heading", level: 2, text: "Параметры проекта" });
       blocks.push({
-        type: 'table',
-        id: 'details',
+        type: "table",
+        id: "details",
         columns: [
-          { key: 'name', label: 'Параметр' },
-          { key: 'value', label: 'Значение' },
+          { key: "name", label: "Параметр" },
+          { key: "value", label: "Значение" },
         ],
         rows,
       });
@@ -164,28 +166,28 @@ export function migrateProjectContent(
   const resultPhotos = toContentImages(input.resultPhotos);
   if (resultPhotos.length) {
     blocks.push({
-      type: 'image-gallery',
-      id: 'result-images',
-      caption: 'Результат',
+      type: "image-gallery",
+      id: "result-images",
+      caption: "Результат",
       images: resultPhotos,
     });
   }
 
-  if (typeof input.result === 'string' && input.result.trim()) {
-    blocks.push({ type: 'heading', level: 2, text: 'Результат' });
+  if (typeof input.result === "string" && input.result.trim()) {
+    blocks.push({ type: "heading", level: 2, text: "Результат" });
     blocks.push({
-      type: 'paragraph',
-      id: 'result',
+      type: "paragraph",
+      id: "result",
       paragraphs: [input.result],
     });
   }
-  if (input.category === 'led-letters') {
+  if (input.category === "led-letters") {
     blocks.push({
-      type: 'order-form',
-      id: 'order-form',
-      formId: 'led-letters',
-      context: 'project',
-      category: 'led-letters',
+      type: "order-form",
+      id: "order-form",
+      formId: "led-letters",
+      context: "project",
+      category: "led-letters",
     });
   }
   return blocks;
@@ -193,14 +195,22 @@ export function migrateProjectContent(
 
 /** Localize known legacy units without altering the underlying quantities. */
 function formatMeasure(item: Record<string, unknown>): string {
-  if (typeof item.value !== 'number' || !Number.isFinite(item.value)
-    || typeof item.unit !== 'string' || !item.unit.trim()) {
-    throw new Error('Project measurement needs a finite value and unit');
+  if (
+    typeof item.value !== "number" ||
+    !Number.isFinite(item.value) ||
+    typeof item.unit !== "string" ||
+    !item.unit.trim()
+  ) {
+    throw new Error("Project measurement needs a finite value and unit");
   }
   const units: Record<string, string> = {
-    m: 'м', cm: 'см', mm: 'мм', days: 'дн.', hours: 'ч.',
+    m: "м",
+    cm: "см",
+    mm: "мм",
+    days: "дн.",
+    hours: "ч.",
   };
-  const value = item.value.toLocaleString('ru-RU', {
+  const value = item.value.toLocaleString("ru-RU", {
     maximumFractionDigits: 20,
   });
   const unit = item.unit;
@@ -209,8 +219,10 @@ function formatMeasure(item: Record<string, unknown>): string {
 
 function timingLabel(label: string): string {
   const labels: Record<string, string> = {
-    production: 'Изготовление', design: 'Разработка макета',
-    installation: 'Монтаж', totalDelivery: 'Общий срок',
+    production: "Изготовление",
+    design: "Разработка макета",
+    installation: "Монтаж",
+    totalDelivery: "Общий срок",
   };
   return labels[label] ?? label;
 }
@@ -234,10 +246,10 @@ export function toUniversalProjectRecord(
     evidence: _evidence,
     ...metadata
   } = input;
-  if (typeof year === 'number' && Number.isInteger(year)) {
+  if (typeof year === "number" && Number.isInteger(year)) {
     metadata.date = `${year}-01-01`;
   }
-  if (typeof shortDescription === 'string') {
+  if (typeof shortDescription === "string") {
     metadata.description = shortDescription;
   }
   const existing = Array.isArray(input.content) ? input.content : [];
@@ -248,33 +260,45 @@ export function toUniversalProjectRecord(
 function toContentImages(value: unknown): ContentImage[] {
   if (!Array.isArray(value)) return [];
   return value.flatMap((item): ContentImage[] => {
-    if (!item || typeof item !== 'object') return [];
+    if (!item || typeof item !== "object") return [];
     const photo = item as Record<string, unknown>;
     if (
-      typeof photo.src !== 'string'
-      || typeof photo.alt !== 'string'
-      || typeof photo.width !== 'number'
-      || typeof photo.height !== 'number'
-    ) return [];
-    const approval = photo.approval && typeof photo.approval === 'object'
-      ? photo.approval as Record<string, unknown> : null;
-    return [{
-      src: photo.src,
-      alt: photo.alt,
-      width: photo.width,
-      height: photo.height,
-      ...(typeof photo.caption === 'string' ? { caption: photo.caption } : {}),
-      ...(typeof photo.source === 'string' ? {
-        provenance: {
-          source: photo.source,
-          ...(typeof photo.rights === 'string'
-            ? { rights: photo.rights } : {}),
-          ...(approval && typeof approval.approvedBy === 'string'
-            ? { approvedBy: approval.approvedBy } : {}),
-          ...(approval && typeof approval.approvedAt === 'string'
-            ? { approvedAt: approval.approvedAt } : {}),
-        },
-      } : {}),
-    }];
+      typeof photo.src !== "string" ||
+      typeof photo.alt !== "string" ||
+      typeof photo.width !== "number" ||
+      typeof photo.height !== "number"
+    )
+      return [];
+    const approval =
+      photo.approval && typeof photo.approval === "object"
+        ? (photo.approval as Record<string, unknown>)
+        : null;
+    return [
+      {
+        src: photo.src,
+        alt: photo.alt,
+        width: photo.width,
+        height: photo.height,
+        ...(typeof photo.caption === "string"
+          ? { caption: photo.caption }
+          : {}),
+        ...(typeof photo.source === "string"
+          ? {
+              provenance: {
+                source: photo.source,
+                ...(typeof photo.rights === "string"
+                  ? { rights: photo.rights }
+                  : {}),
+                ...(approval && typeof approval.approvedBy === "string"
+                  ? { approvedBy: approval.approvedBy }
+                  : {}),
+                ...(approval && typeof approval.approvedAt === "string"
+                  ? { approvedAt: approval.approvedAt }
+                  : {}),
+              },
+            }
+          : {}),
+      },
+    ];
   });
 }

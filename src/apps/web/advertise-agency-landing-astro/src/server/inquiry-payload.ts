@@ -1,6 +1,6 @@
 // Validate the existing browser payload before any queue or delivery action.
 // This pure module does not authorize consent, accept delivery or log data.
-export type InquiryKind = 'homepage' | 'lettering';
+export type InquiryKind = "homepage" | "lettering";
 
 export type InquiryValidation =
   | { valid: true; kind: InquiryKind; fields: Record<string, string> }
@@ -11,7 +11,7 @@ export interface InquiryValidationOptions {
   projectIds: readonly string[];
   // Homepage content may configure smaller limits than the hard ceilings.
   homepageLimits?: Partial<
-    Record<'name' | 'email' | 'phone' | 'message', number>
+    Record<"name" | "email" | "phone" | "message", number>
   >;
 }
 
@@ -35,21 +35,21 @@ const letteringLimits = {
   projectId: 100,
 };
 const uuid = new RegExp(
-  '^[\\da-f]{8}-[\\da-f]{4}-4[\\da-f]{3}-' + '[89ab][\\da-f]{3}-[\\da-f]{12}$',
-  'i',
+  "^[\\da-f]{8}-[\\da-f]{4}-4[\\da-f]{3}-" + "[89ab][\\da-f]{3}-[\\da-f]{12}$",
+  "i",
 );
 const email = new RegExp(
   [
     "^[a-z\\d.!#$%&'*+/=?^_`{|}~-]+@",
-    '[a-z\\d](?:[a-z\\d-]{0,61}[a-z\\d])?',
-    '(?:\\.[a-z\\d](?:[a-z\\d-]{0,61}[a-z\\d])?)*$',
-  ].join(''),
-  'i',
+    "[a-z\\d](?:[a-z\\d-]{0,61}[a-z\\d])?",
+    "(?:\\.[a-z\\d](?:[a-z\\d-]{0,61}[a-z\\d])?)*$",
+  ].join(""),
+  "i",
 );
 
 // Reject invalid dates instead of Date's normalization of e.g. 30 February.
 function calendarDate(value: string): boolean {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || value.startsWith('0000')) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || value.startsWith("0000")) {
     return false;
   }
   const date = new Date(`${value}T00:00:00Z`);
@@ -62,19 +62,19 @@ export function validateInquiryPayload(
   input: unknown,
   options: InquiryValidationOptions,
 ): InquiryValidation {
-  if (!input || typeof input !== 'object' || Array.isArray(input)) {
-    return { valid: false, errors: ['payload'] };
+  if (!input || typeof input !== "object" || Array.isArray(input)) {
+    return { valid: false, errors: ["payload"] };
   }
   const raw = input as Record<string, unknown>;
   // Presence of context selects the stricter service schema, including when
   // context is malformed; stripping it cannot produce a valid service order.
   const kind =
-    Object.hasOwn(raw, 'serviceId') || Object.hasOwn(raw, 'projectId')
-      ? 'lettering'
-      : 'homepage';
+    Object.hasOwn(raw, "serviceId") || Object.hasOwn(raw, "projectId")
+      ? "lettering"
+      : "homepage";
   const limits: Record<string, number> =
-    kind === 'lettering' ? letteringLimits : { ...commonLimits };
-  if (kind === 'homepage') {
+    kind === "lettering" ? letteringLimits : { ...commonLimits };
+  if (kind === "homepage") {
     for (const [field, ceiling] of Object.entries(commonLimits)) {
       const configured =
         options.homepageLimits?.[field as keyof typeof commonLimits];
@@ -84,7 +84,7 @@ export function validateInquiryPayload(
           configured < 1 ||
           configured > ceiling
         ) {
-          throw new Error('Invalid homepage validation limits');
+          throw new Error("Invalid homepage validation limits");
         }
         limits[field] = configured;
       }
@@ -98,7 +98,7 @@ export function validateInquiryPayload(
   const errors = new Set<string>();
   const fields: Record<string, string> = {};
   for (const [field, value] of Object.entries(raw)) {
-    if (!Object.hasOwn(allowed, field) || typeof value !== 'string') {
+    if (!Object.hasOwn(allowed, field) || typeof value !== "string") {
       errors.add(field);
       continue;
     }
@@ -113,36 +113,36 @@ export function validateInquiryPayload(
     fields[field] = value.trim();
   }
   const required =
-    kind === 'homepage' ? ['name', 'email', 'message'] : ['name', 'phone'];
+    kind === "homepage" ? ["name", "email", "message"] : ["name", "phone"];
   for (const field of required) {
     if (!fields[field]) errors.add(field);
   }
-  if (fields.consent !== 'on') errors.add('consent');
-  if (!uuid.test(fields.requestId ?? '')) errors.add('requestId');
-  if (fields.email && !email.test(fields.email)) errors.add('email');
+  if (fields.consent !== "on") errors.add("consent");
+  if (!uuid.test(fields.requestId ?? "")) errors.add("requestId");
+  if (fields.email && !email.test(fields.email)) errors.add("email");
   if (
     fields.phone &&
     (!/^\+?[\d\s().-]+$/.test(fields.phone) ||
-      !/^\d{7,15}$/.test(fields.phone.replace(/\D/g, '')))
+      !/^\d{7,15}$/.test(fields.phone.replace(/\D/g, "")))
   ) {
-    errors.add('phone');
+    errors.add("phone");
   }
-  if (kind === 'lettering') {
-    if (fields.serviceId !== 'svetovye-bukvy') errors.add('serviceId');
+  if (kind === "lettering") {
+    if (fields.serviceId !== "svetovye-bukvy") errors.add("serviceId");
     if (fields.projectId && !options.projectIds.includes(fields.projectId)) {
-      errors.add('projectId');
+      errors.add("projectId");
     }
     const choices = {
-      lighting: ['advice', 'front', 'halo', 'combined'],
-      installation: ['advice', 'yes', 'no'],
-      power: ['unknown', 'available', 'needed'],
-      contactMethod: ['phone', 'email'],
+      lighting: ["advice", "front", "halo", "combined"],
+      installation: ["advice", "yes", "no"],
+      power: ["unknown", "available", "needed"],
+      contactMethod: ["phone", "email"],
     };
     for (const [field, values] of Object.entries(choices)) {
-      if (!values.includes(fields[field] ?? '')) errors.add(field);
+      if (!values.includes(fields[field] ?? "")) errors.add(field);
     }
-    if (fields.contactMethod === 'email' && !fields.email) errors.add('email');
-    for (const field of ['widthCm', 'letterHeightCm', 'budget']) {
+    if (fields.contactMethod === "email" && !fields.email) errors.add("email");
+    for (const field of ["widthCm", "letterHeightCm", "budget"]) {
       const value = fields[field];
       // HTML number controls allow exponent notation and fractional values.
       if (
@@ -155,19 +155,19 @@ export function validateInquiryPayload(
       }
     }
     if (fields.deadline && !calendarDate(fields.deadline)) {
-      errors.add('deadline');
+      errors.add("deadline");
     }
     if (fields.fileLink) {
       try {
         const url = new URL(fields.fileLink);
         if (
-          !['https:', 'http:'].includes(url.protocol) ||
+          !["https:", "http:"].includes(url.protocol) ||
           url.username ||
           url.password
         )
-          errors.add('fileLink');
+          errors.add("fileLink");
       } catch {
-        errors.add('fileLink');
+        errors.add("fileLink");
       }
     }
   }

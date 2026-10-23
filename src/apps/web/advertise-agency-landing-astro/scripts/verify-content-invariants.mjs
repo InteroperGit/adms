@@ -1,16 +1,16 @@
 // Check JSON content invariants before the schema-backed Astro build.
 // This gives content editors a fast, dependency-free diagnostic command.
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir } from "node:fs/promises";
 
-const directory = 'data/content';
+const directory = "data/content";
 // Invalid fixtures and historical snapshots have dedicated regression tests.
 // Recursively inspect all authored production JSON, including new subfolders.
 async function productionFiles(path) {
   const files = [];
   for (const entry of await readdir(path, { withFileTypes: true })) {
-    if (entry.isDirectory() && entry.name !== 'fixtures') {
+    if (entry.isDirectory() && entry.name !== "fixtures") {
       files.push(...(await productionFiles(`${path}/${entry.name}`)));
-    } else if (entry.isFile() && entry.name.endsWith('.json')) {
+    } else if (entry.isFile() && entry.name.endsWith(".json")) {
       files.push(`${path}/${entry.name}`);
     }
   }
@@ -18,19 +18,19 @@ async function productionFiles(path) {
 }
 const files = await productionFiles(directory);
 const urlFields = new Set([
-  'avatar',
-  'endpoint',
-  'href',
-  'image',
-  'mapSrc',
-  'src',
+  "avatar",
+  "endpoint",
+  "href",
+  "image",
+  "mapSrc",
+  "src",
 ]);
 const errors = [];
 
 function visit(value, path) {
   if (Array.isArray(value)) {
     const keyed = value.filter(
-      (item) => item && typeof item === 'object' && 'id' in item,
+      (item) => item && typeof item === "object" && "id" in item,
     );
     const seen = new Map();
     keyed.forEach((item, index) => {
@@ -45,10 +45,10 @@ function visit(value, path) {
     value.forEach((item, index) => visit(item, `${path}[${index}]`));
     return;
   }
-  if (!value || typeof value !== 'object') return;
+  if (!value || typeof value !== "object") return;
   for (const [key, child] of Object.entries(value)) {
     const childPath = `${path}.${key}`;
-    if (urlFields.has(key) && typeof child === 'string' && child) {
+    if (urlFields.has(key) && typeof child === "string" && child) {
       if (/^[a-z]+:/i.test(child) && !/^https?:\/\//i.test(child)) {
         errors.push(`${childPath} uses an unsafe URL scheme`);
       }
@@ -57,11 +57,11 @@ function visit(value, path) {
       if (/[\u0000-\u0020\u007f\\]/.test(child)) {
         errors.push(`${childPath} contains control characters or spaces`);
       }
-      if (child.startsWith('//')) {
+      if (child.startsWith("//")) {
         errors.push(`${childPath} must not be protocol-relative`);
       }
       try {
-        const parsed = new URL(child, 'https://content.invalid');
+        const parsed = new URL(child, "https://content.invalid");
         if (parsed.username || parsed.password) {
           errors.push(`${childPath} contains URL credentials`);
         }
@@ -70,10 +70,10 @@ function visit(value, path) {
       }
     }
     if (
-      (key === 'width' ||
-        key === 'height' ||
-        key === 'imageWidth' ||
-        key === 'imageHeight') &&
+      (key === "width" ||
+        key === "height" ||
+        key === "imageWidth" ||
+        key === "imageHeight") &&
       (!Number.isInteger(child) || child <= 0)
     ) {
       errors.push(`${childPath} must be a positive integer`);
@@ -83,12 +83,12 @@ function visit(value, path) {
 }
 
 for (const file of files) {
-  const data = JSON.parse(await readFile(file, 'utf8'));
+  const data = JSON.parse(await readFile(file, "utf8"));
   visit(data, file);
 }
 
 if (errors.length) {
-  console.error(errors.join('\n'));
+  console.error(errors.join("\n"));
   process.exitCode = 1;
 } else {
   console.log(`Content invariants passed for ${files.length} files.`);

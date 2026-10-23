@@ -16,14 +16,15 @@
 
 ## Готово, когда
 
-Есть colocated tests с boundary fixtures и не менее 95% line/branch coverage
-для этих двух файлов. Не расширять задачу на domain schemas.
+Есть colocated tests с boundary fixtures и не менее 95% line/branch coverage для
+этих двух файлов. Не расширять задачу на domain schemas.
 
 Зависимость: 091.
 
 ## Implementation
 
-Added colocated boundary suites for shared schemas, uniqueness refinements, and parseContent diagnostics.
+Added colocated boundary suites for shared schemas, uniqueness refinements, and
+parseContent diagnostics.
 
 ## Verification
 

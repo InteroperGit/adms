@@ -1,7 +1,7 @@
 // Render real Astro output without executing browser scripts or fetching media.
-import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
-import { JSDOM } from 'jsdom';
+import { experimental_AstroContainer as AstroContainer } from "astro/container";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import { JSDOM } from "jsdom";
 
 interface DocumentOptions {
   props?: Record<string, unknown>;
@@ -17,7 +17,7 @@ export async function renderDocument(
   component: AstroComponentFactory | ((props: never) => unknown),
   options: DocumentOptions = {},
 ) {
-  const { site, url = 'https://request.test/', ...renderOptions } = options;
+  const { site, url = "https://request.test/", ...renderOptions } = options;
   const container = await AstroContainer.create({
     astroConfig: { site },
   });

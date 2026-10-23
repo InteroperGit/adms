@@ -1,20 +1,20 @@
-import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import { unified } from '@astrojs/markdown-remark';
-import tailwindcss from '@tailwindcss/vite';
-import remarkContentBlocks from './src/content/mdx-blocks.mjs';
+import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx";
+import { unified } from "@astrojs/markdown-remark";
+import tailwindcss from "@tailwindcss/vite";
+import remarkContentBlocks from "./src/content/mdx-blocks.mjs";
 // prettier-ignore
 import articleAcceptance
   from './scripts/lib/article-acceptance-integration.mjs';
 
 const productionUrl = process.env.PUBLIC_SITE_URL?.trim();
-const acceptance = process.env.CONTENT_ACCEPTANCE === 'true';
+const acceptance = process.env.CONTENT_ACCEPTANCE === "true";
 
 export default defineConfig({
   integrations: [mdx(), ...(acceptance ? [articleAcceptance()] : [])],
   ...(acceptance
     ? {
-        outDir: './output/playwright/task-080/dist',
+        outDir: "./output/playwright/task-080/dist",
       }
     : {}),
   markdown: {
@@ -25,7 +25,7 @@ export default defineConfig({
   },
   // Set the confirmed production origin in PUBLIC_SITE_URL at release time.
   site: productionUrl || undefined,
-  output: 'static',
+  output: "static",
   vite: {
     plugins: [tailwindcss()],
   },

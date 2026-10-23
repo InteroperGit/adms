@@ -3,10 +3,10 @@
 // Footer-local colors support a slate light footer and the dark theme.
 // Content and destinations come from the validated site configuration.
 
-import { site } from '@/content/site';
-import type { LegalItem } from '@/types';
-import ContactInfo from '@/components/ui/ContactInfo.astro';
-import Logo from '@/components/ui/Logo.astro';
+import { site } from "@/content/site";
+import type { LegalItem } from "@/types";
+import ContactInfo from "@/components/ui/ContactInfo.astro";
+import Logo from "@/components/ui/Logo.astro";
 ---
 
 {/* Content and destinations come from the validated site configuration. */}
@@ -26,12 +26,18 @@ import Logo from '@/components/ui/Logo.astro';
         </p>
       </div>
       {/* Legal navigation keeps the same native document links. */}
-      <nav aria-label="Правовая информация" class="min-w-0">
+      <nav
+        aria-label="Правовая информация"
+        class="min-w-0"
+      >
         <h2 class="text-base font-semibold mb-3">Информация</h2>
         <ul class="space-y-1">
           {site.legal.map((item: LegalItem) => (
             <li>
-              <a href={item.href} class="footer-link">
+              <a
+                href={item.href}
+                class="footer-link"
+              >
                 {item.label}
               </a>
             </li>
@@ -54,8 +60,7 @@ import Logo from '@/components/ui/Logo.astro';
     {/* End the shared footer with supplied copyright and the build year. */}
     <div class="footer-copyright border-t mt-10 pt-6 text-sm text-muted">
       <p>
-        © {new Date().getFullYear()} {site.logoText}.{' '}
-        {site.footer.copyright}.
+        © {new Date().getFullYear()} {site.logoText}. {site.footer.copyright}.
       </p>
     </div>
   </div>
@@ -77,7 +82,7 @@ import Logo from '@/components/ui/Logo.astro';
   }
 
   /* Retain the existing dark theme surface and divider. */
-  :global([data-theme='dark']) .site-footer {
+  :global([data-theme="dark"]) .site-footer {
     --footer-background: var(--color-base-200);
     --footer-divider: var(--color-base-300);
   }

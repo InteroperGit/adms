@@ -10,12 +10,11 @@
 
 ## Объём
 
-- Объединить проверки content blocks с
-  `src/validation/content-blocks.test.ts`.
+- Объединить проверки content blocks с `src/validation/content-blocks.test.ts`.
 - Распределить smoke-контракты и boundary cases по suite-файлам
   `business-solutions`, `faq`, `introduction`, `offers`, `order-inquiry`,
-  `ordering-process`, `pricing`, `production-and-guarantees`,
-  `project-catalog`, `projects`, `reviews`, `services` и `parse-content`.
+  `ordering-process`, `pricing`, `production-and-guarantees`, `project-catalog`,
+  `projects`, `reviews`, `services` и `parse-content`.
 - Перенести проверки `mediaSource` и uniqueness в
   `src/validation/shared.test.ts`.
 - Создать `src/validation/image-carousel.test.ts` для оставшихся проверок
@@ -25,15 +24,15 @@
 
 ## Зависимости
 
-Работа выполняется первой. Финальное удаление исходных файлов выполняется
-только в задаче 120 после проверки, что assertions не потеряны.
+Работа выполняется первой. Финальное удаление исходных файлов выполняется только
+в задаче 120 после проверки, что assertions не потеряны.
 
 ## Готово, когда
 
 - [x] Validation assertions находятся в suite-файлах рядом со схемами и
-  parser-модулями.
-- [x] Мигрированные validation cases удалены из `tests/unit`; block
-  publication coverage оставлена для задачи 119.
+      parser-модулями.
+- [x] Мигрированные validation cases удалены из `tests/unit`; block publication
+      coverage оставлена для задачи 119.
 - [x] Нет дублирующих test cases после слияния.
 - [x] Целевые suites проходят focused Vitest run: 18 файлов, 176 тестов.
 
@@ -52,11 +51,11 @@
 
 Рекомендуемая модель: `gpt-6-luna`; reasoning effort: `high`.
 
-Задача широкая по числу файлов, но структура каждого переноса локальна и
-заранее определена существующими suite-файлами. Высокий effort нужен для
-сверки, что при разрезании двух смешанных файлов не потеряны assertions и
-граничные случаи; Sol не нужен, пока не появляется новый общий harness или
-несогласованность между несколькими схемами.
+Задача широкая по числу файлов, но структура каждого переноса локальна и заранее
+определена существующими suite-файлами. Высокий effort нужен для сверки, что при
+разрезании двух смешанных файлов не потеряны assertions и граничные случаи; Sol
+не нужен, пока не появляется новый общий harness или несогласованность между
+несколькими схемами.
 
 Подзадачи:
 

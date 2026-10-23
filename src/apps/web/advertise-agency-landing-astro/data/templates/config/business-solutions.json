@@ -1,26 +1,16 @@
 {
   "heading": "TEST_HEADING",
-  "introduction": [
-    "TEST_INTRODUCTION"
-  ],
+  "introduction": ["TEST_INTRODUCTION"],
   "items": [
     {
       "id": "TEST_ID",
       "title": "TEST_TITLE",
-      "summary": [
-        "TEST_SUMMARY"
-      ],
-      "customerTask": [
-        "TEST_CUSTOMERTASK"
-      ],
-      "solution": [
-        "TEST_SOLUTION"
-      ],
+      "summary": ["TEST_SUMMARY"],
+      "customerTask": ["TEST_CUSTOMERTASK"],
+      "solution": ["TEST_SOLUTION"],
       "example": {
         "title": "TEST_TITLE",
-        "text": [
-          "TEST_TEXT"
-        ]
+        "text": ["TEST_TEXT"]
       },
       "inquiryLabel": "TEST_INQUIRYLABEL",
       "inquiryHref": "/test-destination",

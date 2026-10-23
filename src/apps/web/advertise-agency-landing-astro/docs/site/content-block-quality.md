@@ -10,8 +10,8 @@ Verified on 2026-10-13. Publication rules and authoring instructions are in
 - `node scripts/test-content-block-fixtures.mjs`: production Zod schemas and
   actual MDX compilation, all ten types, negative/cross-block cases.
 - `node scripts/test-publication-policy.mjs`: actual shared policy plus project
-  and service schemas; JSON/MDX, inherited/explicit approval, nested media rights,
-  draft/demo filters, published sitemap path membership and form gating.
+  and service schemas; JSON/MDX, inherited/explicit approval, nested media
+  rights, draft/demo filters, published sitemap path membership and form gating.
 - `node scripts/test-project-articles.mjs`: all 27 production project articles,
   metadata/media/evidence parity, emitted assets, demo SEO and draft visibility.
 - `node scripts/test-service-articles.mjs`: all five service articles, actual
@@ -36,34 +36,34 @@ Serve the isolated directory on loopback port 4322. Run Playwright CLI with
 fixture cases in both MDX/JSON at 375 and 1366 pixels: ten block types, DOM
 parity, published/demo robots, draft block/image exclusion, footnotes, Russian
 chart fallback/gallery names, production form gates, no horizontal overflow,
-lazy chart initialization, gallery keyboard navigation and focus return.
-It also checks the native table and gallery link without JavaScript.
-The gallery width ratio was 0.75, center offset 0 pixels, measured article CLS
-0 and page/console error count 0 in the controlled browser run. Screenshot:
+lazy chart initialization, gallery keyboard navigation and focus return. It also
+checks the native table and gallery link without JavaScript. The gallery width
+ratio was 0.75, center offset 0 pixels, measured article CLS 0 and page/console
+error count 0 in the controlled browser run. Screenshot:
 `output/playwright/task-081/blocks.png`.
 
 ## Size baseline and result
 
 Measurements use `node scripts/measure-article-assets.mjs`. Sizes are bytes;
-gzip is locally computed, not a claim about deployment compression. Initial
-JS includes inline scripts and their static imports, excluding lazy imports.
+gzip is locally computed, not a claim about deployment compression. Initial JS
+includes inline scripts and their static imports, excluding lazy imports.
 
-| Route | HTML before | HTML after | JS before | JS after |
-| --- | ---: | ---: | ---: | ---: |
-| `/projects/2/` | 58,450 | 59,354 | 9,782 | 9,802 |
-| `/services/svetovye-bukvy/` | 26,878 | 26,878 | 7,004 | 7,004 |
+| Route                       | HTML before | HTML after | JS before | JS after |
+| --------------------------- | ----------: | ---------: | --------: | -------: |
+| `/projects/2/`              |      58,450 |     59,354 |     9,782 |    9,802 |
+| `/services/svetovye-bukvy/` |      26,878 |     26,878 |     7,004 |    7,004 |
 
-Project HTML gzip: 12,187 → 12,292; service HTML gzip: 7,881 → 7,883.
-Initial JS gzip: project 4,308 → 4,343; service 3,182 → 3,182.
-The project increase comes from the demo disclosure and Russian gallery labels.
-No framework island or additional hydration was introduced.
+Project HTML gzip: 12,187 → 12,292; service HTML gzip: 7,881 → 7,883. Initial JS
+gzip: project 4,308 → 4,343; service 3,182 → 3,182. The project increase comes
+from the demo disclosure and Russian gallery labels. No framework island or
+additional hydration was introduced.
 
-The old statically imported chart bundle was 581,767 bytes (196,774 gzip).
-The new runtime is 553,377 bytes (186,213 gzip), requested only when an
-actual chart intersects the viewport. Browser requests confirm zero ECharts
-downloads on project/service/minimal pages without a chart. The fixture page
-with a chart has about 11.3 kB initial JS (5.1 kB gzip), plus the runtime after
-visibility. Its complete native data table is available before loading.
+The old statically imported chart bundle was 581,767 bytes (196,774 gzip). The
+new runtime is 553,377 bytes (186,213 gzip), requested only when an actual chart
+intersects the viewport. Browser requests confirm zero ECharts downloads on
+project/service/minimal pages without a chart. The fixture page with a chart has
+about 11.3 kB initial JS (5.1 kB gzip), plus the runtime after visibility. Its
+complete native data table is available before loading.
 
 Decision: retain the useful chart types and the explicit >500 kB build warning;
 do not raise the warning threshold. Defer this isolated runtime behind visible

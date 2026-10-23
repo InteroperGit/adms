@@ -1,27 +1,27 @@
 // @vitest-environment node
 // Offer contracts cover editorial defaults, media and CTA destinations.
-import { expect, it } from 'vitest';
-import fixtures from '../../tests/fixtures/content/unit-contracts.json';
-import { expectContentContract } from '../../tests/helpers/content-contract';
+import { expect, it } from "vitest";
+import fixtures from "../../tests/fixtures/content/unit-contracts.json";
+import { expectContentContract } from "../../tests/helpers/content-contract";
 import {
   offerFocalPointSchema,
   offerPresentationSchema,
   offerSchema,
   offersSchema,
   offerTextContrast,
-} from './offers';
+} from "./offers";
 
 const offer = fixtures.offers.items[0];
 
-it('enforces the offers root contract', () => {
-  expectContentContract(offersSchema, fixtures.offers, ['intervalMs']);
+it("enforces the offers root contract", () => {
+  expectContentContract(offersSchema, fixtures.offers, ["intervalMs"]);
 });
 
-it('parses offer exports and supplies presentation and timing defaults', () => {
+it("parses offer exports and supplies presentation and timing defaults", () => {
   expect(offerSchema.parse(offer)).toEqual(offer);
   expect(offerFocalPointSchema.parse({})).toEqual({ x: 50, y: 50 });
-  expect(offerPresentationSchema.parse({}).textColor).toBe('#ffffff');
-  expect(offerTextContrast('#ffffff', 'dark')).toBe(21);
+  expect(offerPresentationSchema.parse({}).textColor).toBe("#ffffff");
+  expect(offerTextContrast("#ffffff", "dark")).toBe(21);
   expect(
     offersSchema.parse({
       ...fixtures.offers,
@@ -34,42 +34,42 @@ it('parses offer exports and supplies presentation and timing defaults', () => {
   );
 });
 
-it.each(['', ' '])('allows image-only copy: %j', (description) => {
+it.each(["", " "])("allows image-only copy: %j", (description) => {
   expect(
-    offerSchema.safeParse({ ...offer, description, imageAlt: '' }).success,
+    offerSchema.safeParse({ ...offer, description, imageAlt: "" }).success,
   ).toBe(true);
 });
 
-it.each(['/asset.png', 'http://example.test/a', 'https://example.test/a'])(
-  'accepts media destination %s',
+it.each(["/asset.png", "http://example.test/a", "https://example.test/a"])(
+  "accepts media destination %s",
   (image) => {
     expect(offerSchema.safeParse({ ...offer, image }).success).toBe(true);
   },
 );
 
 it.each([
-  '//host/a',
-  '/bad path',
-  '/bad\\path',
-  '#image',
-  'https://user:pass@example.test/a',
-  'javascript:alert(1)',
-])('rejects unsafe image %s', (image) => {
+  "//host/a",
+  "/bad path",
+  "/bad\\path",
+  "#image",
+  "https://user:pass@example.test/a",
+  "javascript:alert(1)",
+])("rejects unsafe image %s", (image) => {
   expect(offerSchema.safeParse({ ...offer, image }).success).toBe(false);
 });
 
-it('checks CTA fragments, dimensions, contrast, IDs and strict keys', () => {
-  expect(offerSchema.safeParse({ ...offer, href: '#order' }).success).toBe(
+it("checks CTA fragments, dimensions, contrast, IDs and strict keys", () => {
+  expect(offerSchema.safeParse({ ...offer, href: "#order" }).success).toBe(
     true,
   );
   for (const change of [
-    { href: '#' },
-    { imageAlt: ' ' },
+    { href: "#" },
+    { imageAlt: " " },
     { imageWidth: 0 },
     { imageHeight: 1.5 },
     { extra: true },
     { id: 0 },
-    { presentation: { textColor: '#000000', overlay: 'dark' } },
+    { presentation: { textColor: "#000000", overlay: "dark" } },
   ]) {
     expect(offerSchema.safeParse({ ...offer, ...change }).success).toBe(false);
   }

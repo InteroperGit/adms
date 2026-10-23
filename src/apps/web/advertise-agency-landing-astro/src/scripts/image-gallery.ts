@@ -8,17 +8,17 @@ interface GalleryItem {
   caption?: string;
 }
 
-const slideClasses = ['gallery-image-slide-left', 'gallery-image-slide-right'];
+const slideClasses = ["gallery-image-slide-left", "gallery-image-slide-right"];
 
 // Cache full-size resources and intrinsic dimensions from the static tiles.
 function readItem(tile: HTMLAnchorElement): GalleryItem {
-  const source = tile.querySelector<HTMLImageElement>('img');
+  const source = tile.querySelector<HTMLImageElement>("img");
 
   return {
     src: tile.href,
-    alt: source?.alt ?? '',
-    width: Number(source?.getAttribute('width')) || 0,
-    height: Number(source?.getAttribute('height')) || 0,
+    alt: source?.alt ?? "",
+    width: Number(source?.getAttribute("width")) || 0,
+    height: Number(source?.getAttribute("height")) || 0,
     caption: source?.dataset.caption || undefined,
   };
 }
@@ -27,9 +27,9 @@ function readItem(tile: HTMLAnchorElement): GalleryItem {
 function markCurrent(elements: HTMLElement[], currentIndex: number): void {
   elements.forEach((element, index) => {
     if (index === currentIndex) {
-      element.setAttribute('aria-current', 'true');
+      element.setAttribute("aria-current", "true");
     } else {
-      element.removeAttribute('aria-current');
+      element.removeAttribute("aria-current");
     }
   });
 }
@@ -40,7 +40,7 @@ function wrapFocus(dialog: HTMLDialogElement, event: KeyboardEvent): void {
     dialog.querySelectorAll<HTMLElement>(
       'button:not([hidden]), [href], [tabindex]:not([tabindex="-1"])',
     ),
-  ).filter((element) => !element.hasAttribute('disabled'));
+  ).filter((element) => !element.hasAttribute("disabled"));
   const first = focusable[0];
   const last = focusable[focusable.length - 1];
   const target = event.shiftKey ? last : first;
@@ -55,29 +55,29 @@ function wrapFocus(dialog: HTMLDialogElement, event: KeyboardEvent): void {
 // Leave native image links intact if the required modal markup is missing.
 function initializeGallery(gallery: HTMLElement): void {
   const tiles = Array.from(
-    gallery.querySelectorAll<HTMLAnchorElement>('[data-gallery-open]'),
+    gallery.querySelectorAll<HTMLAnchorElement>("[data-gallery-open]"),
   );
   const dialog = gallery.querySelector<HTMLDialogElement>(
-    '[data-gallery-dialog]',
+    "[data-gallery-dialog]",
   );
-  const image = gallery.querySelector<HTMLImageElement>('[data-gallery-image]');
-  const caption = gallery.querySelector<HTMLElement>('[data-gallery-caption]');
+  const image = gallery.querySelector<HTMLImageElement>("[data-gallery-image]");
+  const caption = gallery.querySelector<HTMLElement>("[data-gallery-caption]");
   const announcement = gallery.querySelector<HTMLElement>(
-    '[data-gallery-announcement]',
+    "[data-gallery-announcement]",
   );
   const thumbnails = Array.from(
     gallery.querySelectorAll<HTMLButtonElement>(
-      '[data-gallery-lightbox-thumb]',
+      "[data-gallery-lightbox-thumb]",
     ),
   );
   const closeButton = gallery.querySelector<HTMLButtonElement>(
-    '[data-gallery-close]',
+    "[data-gallery-close]",
   );
   const previousButton = gallery.querySelector<HTMLButtonElement>(
-    '[data-gallery-previous]',
+    "[data-gallery-previous]",
   );
   const nextButton = gallery.querySelector<HTMLButtonElement>(
-    '[data-gallery-next]',
+    "[data-gallery-next]",
   );
 
   if (
@@ -96,14 +96,14 @@ function initializeGallery(gallery: HTMLElement): void {
   const items = tiles.map(readItem);
   let currentIndex = 0;
   let opener: HTMLElement | null = null;
-  let previousOverflow = '';
+  let previousOverflow = "";
 
   // Scroll only after opening: a closed dialog has no thumbnail geometry.
   const revealThumbnail = (): void => {
     if (dialog.open) {
       thumbnails[currentIndex]?.scrollIntoView({
-        block: 'nearest',
-        inline: 'nearest',
+        block: "nearest",
+        inline: "nearest",
       });
     }
   };
@@ -118,7 +118,7 @@ function initializeGallery(gallery: HTMLElement): void {
     image.alt = item.alt;
     image.width = item.width;
     image.height = item.height;
-    caption.textContent = item.caption ?? '';
+    caption.textContent = item.caption ?? "";
     caption.hidden = !item.caption;
     const position = currentIndex + 1;
     announcement.textContent = `Изображение ${position} из ${items.length}`;
@@ -137,7 +137,7 @@ function initializeGallery(gallery: HTMLElement): void {
     opener = tile;
     showImage(index);
     previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     dialog.showModal();
     revealThumbnail();
     closeButton.focus();
@@ -153,48 +153,48 @@ function initializeGallery(gallery: HTMLElement): void {
   previousButton.hidden = items.length < 2;
   nextButton.hidden = items.length < 2;
   tiles.forEach((tile, index) => {
-    tile.addEventListener('click', (event) => {
+    tile.addEventListener("click", (event) => {
       event.preventDefault();
       openGallery(index, tile);
     });
   });
   thumbnails.forEach((thumbnail, index) => {
-    thumbnail.addEventListener('click', () => showImage(index));
+    thumbnail.addEventListener("click", () => showImage(index));
   });
-  closeButton.addEventListener('click', closeGallery);
-  previousButton.addEventListener('click', () => showImage(currentIndex - 1));
-  nextButton.addEventListener('click', () => showImage(currentIndex + 1));
+  closeButton.addEventListener("click", closeGallery);
+  previousButton.addEventListener("click", () => showImage(currentIndex - 1));
+  nextButton.addEventListener("click", () => showImage(currentIndex + 1));
 
   // Pointer activation must not leave a sticky focus highlight on controls.
   [closeButton, previousButton, nextButton].forEach((button) => {
-    button.addEventListener('pointerup', () => button.blur());
+    button.addEventListener("pointerup", () => button.blur());
   });
 
   // Closing by button, backdrop or Escape shares the same cleanup path.
-  dialog.addEventListener('click', (event) => {
+  dialog.addEventListener("click", (event) => {
     if (event.target === dialog) {
       closeGallery();
     }
   });
-  dialog.addEventListener('cancel', (event) => {
+  dialog.addEventListener("cancel", (event) => {
     event.preventDefault();
     closeGallery();
   });
-  dialog.addEventListener('close', () => {
+  dialog.addEventListener("close", () => {
     document.body.style.overflow = previousOverflow;
     opener?.focus();
     opener = null;
   });
-  dialog.addEventListener('keydown', (event) => {
+  dialog.addEventListener("keydown", (event) => {
     switch (event.key) {
-      case 'Tab':
+      case "Tab":
         wrapFocus(dialog, event);
         break;
-      case 'ArrowLeft':
+      case "ArrowLeft":
         event.preventDefault();
         showImage(currentIndex - 1);
         break;
-      case 'ArrowRight':
+      case "ArrowRight":
         event.preventDefault();
         showImage(currentIndex + 1);
         break;
@@ -205,6 +205,6 @@ function initializeGallery(gallery: HTMLElement): void {
 // Astro bundles this entry once; each gallery keeps its own modal state.
 export function initializeImageGalleries(): void {
   document
-    .querySelectorAll<HTMLElement>('[data-gallery]')
+    .querySelectorAll<HTMLElement>("[data-gallery]")
     .forEach(initializeGallery);
 }

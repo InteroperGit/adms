@@ -7,9 +7,9 @@ export interface CarouselFocalPoint {
 export interface CarouselPresentation {
   fontSizeRem: number;
   textColor: string;
-  overlay: 'dark' | 'light';
-  horizontal: 'left' | 'center' | 'right';
-  vertical: 'top' | 'center' | 'bottom';
+  overlay: "dark" | "light";
+  horizontal: "left" | "center" | "right";
+  vertical: "top" | "center" | "bottom";
   focalPoint: CarouselFocalPoint;
   mobileFocalPoint?: CarouselFocalPoint;
 }
@@ -38,8 +38,8 @@ export interface CarouselOptions {
   descriptions: boolean;
   buttons: boolean;
   animation: boolean;
-  layout: 'full' | 'panel';
-  imageFit: 'cover' | 'contain';
+  layout: "full" | "panel";
+  imageFit: "cover" | "contain";
   aspectRatio: number;
   eagerFirst: boolean;
 }

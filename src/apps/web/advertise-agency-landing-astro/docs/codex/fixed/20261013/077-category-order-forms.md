@@ -1,7 +1,7 @@
 ﻿# 077. Реестр форм заказа по категориям
 
-Status: fixed. Created: 2026-10-12. Completed: 2026-10-13.
-Plan: [Универсальные блоки](../../plan/20261012_universal-content-blocks-plan.md).
+Status: fixed. Created: 2026-10-12. Completed: 2026-10-13. Plan:
+[Универсальные блоки](../../plan/20261012_universal-content-blocks-plan.md).
 Dependencies: 075, 076.
 
 ## Работы
@@ -17,4 +17,3 @@ Dependencies: 075, 076.
 - [x] Форма выбирается только разрешённым category/formId.
 - [x] Draft/demo не получают неподходящую production-форму.
 - [x] Существующие заявки и прямые ссылки на формы работают.
-

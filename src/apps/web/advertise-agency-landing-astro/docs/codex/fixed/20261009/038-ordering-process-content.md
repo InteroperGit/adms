@@ -6,16 +6,15 @@
 
 **Created:** 2026-10-08
 
-**Depends on:**
-Approved service, inquiry, production, and installation information from the
-agency.
+**Depends on:** Approved service, inquiry, production, and installation
+information from the agency.
 
 ## Goal
 
 Prepare truthful content for the ordering process section described in the
 [sales and SEO plan](../../plan/sales-and-seo-plan.md). Explain the customer
-journey in five steps: inquiry, measurements, design approval, production,
-and installation.
+journey in five steps: inquiry, measurements, design approval, production, and
+installation.
 
 ## Scope and acceptance
 
@@ -35,20 +34,20 @@ and installation.
 ## Evidence and handoff
 
 Record approved wording, open questions, and any source material in this task.
-Link the final content contract from the implementation task. Do not close
-this task until the agency has approved the claims required for publication.
+Link the final content contract from the implementation task. Do not close this
+task until the agency has approved the claims required for publication.
 
 ## Implementation — 2026-10-08
 
 - Added `data/content/ordering-process.json` with five ordered draft steps:
   inquiry, measurements, design approval, production, and installation.
 - Recorded customer inputs, agency responsibilities, and unresolved agency
-  questions for every step. No turnaround, warranty, price, or capability
-  claim is presented as approved.
+  questions for every step. No turnaround, warranty, price, or capability claim
+  is presented as approved.
 - Added typed content definitions, a strict Zod schema, and the shared parser
   loader in `src/types`, `src/validation`, and `src/content`.
-- Kept `copyApproved` false and added a draft notice and `pendingInputs` so
-  Task 039 can render the content without implying production acceptance.
+- Kept `copyApproved` false and added a draft notice and `pendingInputs` so Task
+  039 can render the content without implying production acceptance.
 
 ## Verification
 

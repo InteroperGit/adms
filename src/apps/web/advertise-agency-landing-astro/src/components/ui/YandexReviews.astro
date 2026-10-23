@@ -15,21 +15,16 @@ interface Props {
   };
 }
 
-const {
-  enabled,
-  organizationId,
-  companyName,
-  reviewsUrl,
-  placeholder,
-} = Astro.props;
+const { enabled, organizationId, companyName, reviewsUrl, placeholder } =
+  Astro.props;
 
 // Reject incomplete IDs instead of embedding another or missing organization.
 if (!/^[1-9]\d*$/.test(organizationId)) {
-  throw new Error('Yandex reviews require a numeric organization ID');
+  throw new Error("Yandex reviews require a numeric organization ID");
 }
 
-const widgetSrc = 'https://yandex.ru/maps-reviews-widget/'
-  + `${organizationId}?comments`;
+const widgetSrc =
+  "https://yandex.ru/maps-reviews-widget/" + `${organizationId}?comments`;
 ---
 
 {/* The reserved frame prevents layout shifts during lazy remote loading. */}

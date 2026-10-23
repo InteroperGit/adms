@@ -1,4 +1,4 @@
-import { z } from 'astro/zod';
+import { z } from "astro/zod";
 import type {
   ChartBlock,
   ContentBlock,
@@ -15,203 +15,244 @@ import type {
   TableBlock,
   UnorderedListBlock,
   VideoBlock,
-} from '../types/content-blocks';
-import { mediaSource, text } from './shared';
-import type { AssertContract, SameContract } from './shared';
-import { isValidOrderFormTuple } from '../content/order-form-registry';
-import { getPublicationIssues } from '../content/block-publication';
+} from "../types/content-blocks";
+import { mediaSource, text } from "./shared";
+import type { AssertContract, SameContract } from "./shared";
+import { isValidOrderFormTuple } from "../content/order-form-registry";
+import { getPublicationIssues } from "../content/block-publication";
 
-const blockId = z.string().regex(
-  /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-  'Use a stable kebab-case block id',
-).optional();
+const blockId = z
+  .string()
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a stable kebab-case block id")
+  .optional();
 
-export const provenance = z.object({
-  source: text,
-  rights: text.nullable().optional(),
-  approvedBy: text.nullable().optional(),
-  approvedAt: text.nullable().optional(),
-}).strict().superRefine((value, context) => {
-  const hasApprover = Boolean(value.approvedBy);
-  const hasApprovalDate = Boolean(value.approvedAt);
-  if (hasApprover !== hasApprovalDate) {
-    context.addIssue({
-      code: 'custom',
-      path: [hasApprover ? 'approvedAt' : 'approvedBy'],
-      message: 'Approval requires both approver and approval date',
-    });
-  }
-  if (value.approvedAt && !/^\d{4}-\d{2}-\d{2}$/.test(value.approvedAt)) {
-    context.addIssue({
-      code: 'custom',
-      path: ['approvedAt'],
-      message: 'Approval date must use YYYY-MM-DD format',
-    });
-  }
-});
+export const provenance = z
+  .object({
+    source: text,
+    rights: text.nullable().optional(),
+    approvedBy: text.nullable().optional(),
+    approvedAt: text.nullable().optional(),
+  })
+  .strict()
+  .superRefine((value, context) => {
+    const hasApprover = Boolean(value.approvedBy);
+    const hasApprovalDate = Boolean(value.approvedAt);
+    if (hasApprover !== hasApprovalDate) {
+      context.addIssue({
+        code: "custom",
+        path: [hasApprover ? "approvedAt" : "approvedBy"],
+        message: "Approval requires both approver and approval date",
+      });
+    }
+    if (value.approvedAt && !/^\d{4}-\d{2}-\d{2}$/.test(value.approvedAt)) {
+      context.addIssue({
+        code: "custom",
+        path: ["approvedAt"],
+        message: "Approval date must use YYYY-MM-DD format",
+      });
+    }
+  });
 
 const meta = {
   id: blockId,
   provenance: provenance.optional(),
-  status: z.enum(['draft', 'demo', 'published']).optional(),
+  status: z.enum(["draft", "demo", "published"]).optional(),
 };
 
-export const headingBlock = z.object({
-  ...meta,
-  type: z.literal('heading'),
-  level: z.union([
-    z.literal(1), z.literal(2), z.literal(3),
-    z.literal(4), z.literal(5), z.literal(6),
-  ]),
-  text,
-}).strict();
+export const headingBlock = z
+  .object({
+    ...meta,
+    type: z.literal("heading"),
+    level: z.union([
+      z.literal(1),
+      z.literal(2),
+      z.literal(3),
+      z.literal(4),
+      z.literal(5),
+      z.literal(6),
+    ]),
+    text,
+  })
+  .strict();
 
-export const paragraphBlock = z.object({
-  ...meta,
-  type: z.literal('paragraph'),
-  paragraphs: z.array(text).min(1),
-}).strict();
+export const paragraphBlock = z
+  .object({
+    ...meta,
+    type: z.literal("paragraph"),
+    paragraphs: z.array(text).min(1),
+  })
+  .strict();
 
-export const orderedListBlock = z.object({
-  ...meta,
-  type: z.literal('ordered-list'),
-  items: z.array(text).min(1),
-}).strict();
+export const orderedListBlock = z
+  .object({
+    ...meta,
+    type: z.literal("ordered-list"),
+    items: z.array(text).min(1),
+  })
+  .strict();
 
-export const unorderedListBlock = z.object({
-  ...meta,
-  type: z.literal('unordered-list'),
-  items: z.array(text).min(1),
-}).strict();
+export const unorderedListBlock = z
+  .object({
+    ...meta,
+    type: z.literal("unordered-list"),
+    items: z.array(text).min(1),
+  })
+  .strict();
 
 const column = z.object({ key: blockId.unwrap(), label: text }).strict();
 
-export const tableBlock = z.object({
-  ...meta,
-  type: z.literal('table'),
-  caption: text.optional(),
-  columns: z.array(column).min(1),
-  rows: z.array(z.object({ cells: z.array(text).min(1) }).strict()),
-}).strict().superRefine((value, context) => {
-  const width = value.columns.length;
-  value.rows.forEach((row, index) => {
-    if (row.cells.length !== width) {
-      context.addIssue({
-        code: 'custom',
-        path: ['rows', index, 'cells'],
-        message: 'Table rows must match the number of columns',
-      });
-    }
+export const tableBlock = z
+  .object({
+    ...meta,
+    type: z.literal("table"),
+    caption: text.optional(),
+    columns: z.array(column).min(1),
+    rows: z.array(z.object({ cells: z.array(text).min(1) }).strict()),
+  })
+  .strict()
+  .superRefine((value, context) => {
+    const width = value.columns.length;
+    value.rows.forEach((row, index) => {
+      if (row.cells.length !== width) {
+        context.addIssue({
+          code: "custom",
+          path: ["rows", index, "cells"],
+          message: "Table rows must match the number of columns",
+        });
+      }
+    });
   });
-});
 
-const chartPoint = z.object({
-  label: text,
-  value: z.number().finite(),
-}).strict();
+const chartPoint = z
+  .object({
+    label: text,
+    value: z.number().finite(),
+  })
+  .strict();
 
-export const chartBlock = z.object({
-  ...meta,
-  type: z.literal('chart'),
-  caption: text.optional(),
-  unit: text.optional(),
-  chartType: z.enum(['bar', 'line', 'pie']),
-  series: z.array(z.object({
-    name: text,
-    points: z.array(chartPoint).min(1),
-  }).strict()).min(1),
-}).strict();
+export const chartBlock = z
+  .object({
+    ...meta,
+    type: z.literal("chart"),
+    caption: text.optional(),
+    unit: text.optional(),
+    chartType: z.enum(["bar", "line", "pie"]),
+    series: z
+      .array(
+        z
+          .object({
+            name: text,
+            points: z.array(chartPoint).min(1),
+          })
+          .strict(),
+      )
+      .min(1),
+  })
+  .strict();
 
-const focalPoint = z.object({
-  x: z.number().min(0).max(100),
-  y: z.number().min(0).max(100),
-}).strict();
+const focalPoint = z
+  .object({
+    x: z.number().min(0).max(100),
+    y: z.number().min(0).max(100),
+  })
+  .strict();
 
-export const contentImage = z.object({
-  ...meta,
-  src: mediaSource,
-  alt: text,
-  width: z.number().int().positive(),
-  height: z.number().int().positive(),
-  caption: text.optional(),
-  kind: z.enum(['demo', 'installation']).optional(),
-  cropGuidance: text.optional(),
-  focalPoint: focalPoint.optional(),
-  mobileFocalPoint: focalPoint.optional(),
-}).strict();
+export const contentImage = z
+  .object({
+    ...meta,
+    src: mediaSource,
+    alt: text,
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    caption: text.optional(),
+    kind: z.enum(["demo", "installation"]).optional(),
+    cropGuidance: text.optional(),
+    focalPoint: focalPoint.optional(),
+    mobileFocalPoint: focalPoint.optional(),
+  })
+  .strict();
 
-export const imageBlock = contentImage.extend({
-  type: z.literal('image'),
-}).strict();
+export const imageBlock = contentImage
+  .extend({
+    type: z.literal("image"),
+  })
+  .strict();
 
-export const imageGalleryBlock = z.object({
-  ...meta,
-  type: z.literal('image-gallery'),
-  caption: text.optional(),
-  images: z.array(contentImage).min(1),
-}).strict();
+export const imageGalleryBlock = z
+  .object({
+    ...meta,
+    type: z.literal("image-gallery"),
+    caption: text.optional(),
+    images: z.array(contentImage).min(1),
+  })
+  .strict();
 
 const videoSource = mediaSource.refine((value) => {
   try {
-    const pathname = value.startsWith('/')
-      ? value.split('?')[0].split('#')[0]
+    const pathname = value.startsWith("/")
+      ? value.split("?")[0].split("#")[0]
       : new URL(value).pathname;
     return /\.(?:mp4|webm|ogg)$/i.test(pathname);
   } catch {
     return false;
   }
-}, 'Video source must use an MP4, WebM or Ogg file');
+}, "Video source must use an MP4, WebM or Ogg file");
 
-export const videoBlock = z.object({
-  ...meta,
-  type: z.literal('video'),
-  src: videoSource,
-  poster: mediaSource.optional(),
-  alt: text,
-  width: z.number().int().positive(),
-  height: z.number().int().positive(),
-  caption: text.optional(),
-  transcript: text.optional(),
-  kind: z.enum(['demo', 'installation']).optional(),
-}).strict();
+export const videoBlock = z
+  .object({
+    ...meta,
+    type: z.literal("video"),
+    src: videoSource,
+    poster: mediaSource.optional(),
+    alt: text,
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    caption: text.optional(),
+    transcript: text.optional(),
+    kind: z.enum(["demo", "installation"]).optional(),
+  })
+  .strict();
 
-export const orderFormBlock = z.object({
-  ...meta,
-  type: z.literal('order-form'),
-  formId: z.string(),
-  context: z.enum(['project', 'service']),
-  category: text.optional(),
-}).strict().superRefine((value, context) => {
-  if (!isValidOrderFormTuple(
-    value.context,
-    value.category,
-    value.formId,
-  )) {
-    context.addIssue({
-      code: 'custom',
-      path: ['formId'],
-      message: 'Choose a form registered for this context and category',
-    });
-  }
-});
+export const orderFormBlock = z
+  .object({
+    ...meta,
+    type: z.literal("order-form"),
+    formId: z.string(),
+    context: z.enum(["project", "service"]),
+    category: text.optional(),
+  })
+  .strict()
+  .superRefine((value, context) => {
+    if (!isValidOrderFormTuple(value.context, value.category, value.formId)) {
+      context.addIssue({
+        code: "custom",
+        path: ["formId"],
+        message: "Choose a form registered for this context and category",
+      });
+    }
+  });
 
-export const quoteBlock = z.object({
-  ...meta,
-  type: z.literal('quote'),
-  text,
-  author: text.optional(),
-  source: text.optional(),
-}).strict();
+export const quoteBlock = z
+  .object({
+    ...meta,
+    type: z.literal("quote"),
+    text,
+    author: text.optional(),
+    source: text.optional(),
+  })
+  .strict();
 
-export const footnoteBlock = z.object({
-  ...meta,
-  type: z.literal('footnote'),
-  text,
-  reference: text.optional(),
-  targetId: blockId,
-}).strict();
+export const footnoteBlock = z
+  .object({
+    ...meta,
+    type: z.literal("footnote"),
+    text,
+    reference: text.optional(),
+    targetId: blockId,
+  })
+  .strict();
 
-export const contentBlockSchema = z.discriminatedUnion('type', [
+export const contentBlockSchema = z.discriminatedUnion("type", [
   headingBlock,
   paragraphBlock,
   orderedListBlock,
@@ -226,11 +267,12 @@ export const contentBlockSchema = z.discriminatedUnion('type', [
   footnoteBlock,
 ]);
 
-export const contentBlocksSchema = z.array(contentBlockSchema)
+export const contentBlocksSchema = z
+  .array(contentBlockSchema)
   .superRefine((blocks, context) => {
     // Explicit approvals apply to MDX and JSON even on a demo owner page.
-    getPublicationIssues(blocks, 'demo').forEach(({ block, message }) => {
-      context.addIssue({ code: 'custom', path: [block], message });
+    getPublicationIssues(blocks, "demo").forEach(({ block, message }) => {
+      context.addIssue({ code: "custom", path: [block], message });
     });
     const ids = new Set<string>();
     const knownIds = new Set<string>();
@@ -238,8 +280,8 @@ export const contentBlocksSchema = z.array(contentBlockSchema)
       if (!block.id) return;
       if (ids.has(block.id)) {
         context.addIssue({
-          code: 'custom',
-          path: [index, 'id'],
+          code: "custom",
+          path: [index, "id"],
           message: `Duplicate block id: ${block.id}`,
         });
       }
@@ -247,11 +289,11 @@ export const contentBlocksSchema = z.array(contentBlockSchema)
       knownIds.add(block.id);
     });
     blocks.forEach((block, index) => {
-      if (block.type !== 'footnote' || !block.targetId) return;
+      if (block.type !== "footnote" || !block.targetId) return;
       if (!knownIds.has(block.targetId)) {
         context.addIssue({
-          code: 'custom',
-          path: [index, 'targetId'],
+          code: "custom",
+          path: [index, "targetId"],
           message: `Unknown footnote target: ${block.targetId}`,
         });
       }

@@ -3,37 +3,37 @@
 
 /** Own one instance's state, event listeners, observers, and rotation timer. */
 function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
-  const slides = [...carousel.querySelectorAll<HTMLElement>('.carousel-slide')];
+  const slides = [...carousel.querySelectorAll<HTMLElement>(".carousel-slide")];
   // Unsupported observers leave static content readable and unmodified.
   if (
     slides.length < 2 ||
-    typeof IntersectionObserver !== 'function' ||
-    typeof ResizeObserver !== 'function'
+    typeof IntersectionObserver !== "function" ||
+    typeof ResizeObserver !== "function"
   ) {
     return;
   }
-  const controls = carousel.querySelector<HTMLElement>('.carousel-controls');
-  const indicators = carousel.querySelector<HTMLElement>('.carousel-dots');
+  const controls = carousel.querySelector<HTMLElement>(".carousel-controls");
+  const indicators = carousel.querySelector<HTMLElement>(".carousel-dots");
   const status = carousel.querySelector<HTMLElement>('[role="status"]');
-  const dots = [...carousel.querySelectorAll<HTMLElement>('.carousel-dot')];
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const dots = [...carousel.querySelectorAll<HTMLElement>(".carousel-dot")];
+  const motion = matchMedia("(prefers-reduced-motion: reduce)");
   const abort = new AbortController();
   const { signal } = abort;
-  const autoplay = carousel.dataset.autoplay === 'true';
-  const manual = carousel.dataset.manual === 'true';
+  const autoplay = carousel.dataset.autoplay === "true";
+  const manual = carousel.dataset.manual === "true";
   const interval = Number(carousel.dataset.interval);
   let currentSlide = 0;
   let inViewport = false;
   let suspended = false;
   let hovered =
-    matchMedia('(hover: hover)').matches && carousel.matches(':hover');
+    matchMedia("(hover: hover)").matches && carousel.matches(":hover");
   let timer: ReturnType<typeof setTimeout> | undefined;
 
   // Nonmanual instances expose a static gallery when automatic rotation
   // is unavailable, so reduced motion never strands hidden images.
   const navigable =
     manual &&
-    (carousel.dataset.arrows === 'true' || carousel.dataset.circles === 'true');
+    (carousel.dataset.arrows === "true" || carousel.dataset.circles === "true");
   const enhanced = () => navigable || (autoplay && !motion.matches);
   const canRotate = () =>
     enhanced() &&
@@ -67,17 +67,17 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
     slides.forEach((slide, position) => {
       const inactive = ready && position !== currentSlide;
       if (inactive) {
-        slide.setAttribute('aria-hidden', 'true');
+        slide.setAttribute("aria-hidden", "true");
       } else {
-        slide.removeAttribute('aria-hidden');
+        slide.removeAttribute("aria-hidden");
       }
       slide.inert = inactive;
     });
     dots.forEach((dot, position) => {
       if (ready && position === currentSlide) {
-        dot.setAttribute('aria-current', 'true');
+        dot.setAttribute("aria-current", "true");
       } else {
-        dot.removeAttribute('aria-current');
+        dot.removeAttribute("aria-current");
       }
     });
     if (announce && status) {
@@ -90,17 +90,17 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
   // Control spacing follows actual indicator wrapping and font size.
   const reserveIndicators = () => {
     carousel.style.setProperty(
-      '--indicator-height',
+      "--indicator-height",
       `${indicators?.getBoundingClientRect().height ?? 0}px`,
     );
   };
   const updatePresentation = () => {
     if (enhanced()) {
-      carousel.dataset.ready = 'true';
-      carousel.setAttribute('aria-roledescription', 'карусель');
+      carousel.dataset.ready = "true";
+      carousel.setAttribute("aria-roledescription", "карусель");
     } else {
       delete carousel.dataset.ready;
-      carousel.removeAttribute('aria-roledescription');
+      carousel.removeAttribute("aria-roledescription");
     }
     selectSlide(currentSlide);
     if (controls) {
@@ -114,11 +114,11 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
   if (manual) {
     carousel
       .querySelectorAll<HTMLButtonElement>(
-        '.carousel-arrow, button.carousel-dot',
+        ".carousel-arrow, button.carousel-dot",
       )
       .forEach((button) => {
         button.addEventListener(
-          'click',
+          "click",
           () => {
             const index = button.dataset.direction
               ? currentSlide + Number(button.dataset.direction)
@@ -133,9 +133,9 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
 
   // Touch never latches hover; focused content is never auto-replaced.
   carousel.addEventListener(
-    'pointerenter',
+    "pointerenter",
     (event) => {
-      if (event.pointerType === 'touch') {
+      if (event.pointerType === "touch") {
         return;
       }
       hovered = true;
@@ -144,16 +144,16 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
     { signal },
   );
   carousel.addEventListener(
-    'pointerleave',
+    "pointerleave",
     () => {
       hovered = false;
       reconcileRotation();
     },
     { signal },
   );
-  carousel.addEventListener('focusin', reconcileRotation, { signal });
+  carousel.addEventListener("focusin", reconcileRotation, { signal });
   carousel.addEventListener(
-    'focusout',
+    "focusout",
     () => {
       queueMicrotask(() => {
         if (!signal.aborted) {
@@ -163,10 +163,10 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
     },
     { signal },
   );
-  document.addEventListener('visibilitychange', reconcileRotation, { signal });
-  motion.addEventListener('change', updatePresentation, { signal });
+  document.addEventListener("visibilitychange", reconcileRotation, { signal });
+  motion.addEventListener("change", updatePresentation, { signal });
   window.addEventListener(
-    'pagehide',
+    "pagehide",
     () => {
       suspended = true;
       reconcileRotation();
@@ -174,7 +174,7 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
     { signal },
   );
   window.addEventListener(
-    'pageshow',
+    "pageshow",
     () => {
       suspended = false;
       reconcileRotation();
@@ -194,10 +194,10 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
     visibility.disconnect();
     resize.disconnect();
     delete carousel.dataset.ready;
-    carousel.removeAttribute('aria-roledescription');
+    carousel.removeAttribute("aria-roledescription");
     slides.forEach((slide) => {
       slide.inert = false;
-      slide.removeAttribute('aria-hidden');
+      slide.removeAttribute("aria-hidden");
     });
     if (controls) {
       controls.hidden = true;
@@ -234,8 +234,8 @@ class ImageCarouselElement extends HTMLElement {
   }
 }
 
-if (!customElements.get('image-carousel')) {
-  customElements.define('image-carousel', ImageCarouselElement);
+if (!customElements.get("image-carousel")) {
+  customElements.define("image-carousel", ImageCarouselElement);
 }
 
 export {};

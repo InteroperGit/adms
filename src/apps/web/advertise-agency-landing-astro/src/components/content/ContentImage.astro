@@ -2,9 +2,9 @@
 // Shared responsive media for article figures, galleries and catalogue cards.
 // Detail media contains the whole image; thumbnail/service crops use authored
 // focal points. Captions belong to the enclosing figure or gallery link.
-import { Image } from 'astro:assets';
-import type { ContentImage } from '@/types/content-blocks';
-import { getContentImageMetadata } from './resolve-image';
+import { Image } from "astro:assets";
+import type { ContentImage } from "@/types/content-blocks";
+import { getContentImageMetadata } from "./resolve-image";
 
 interface Props {
   image: ContentImage;
@@ -15,47 +15,69 @@ interface Props {
 }
 
 const {
-  image, thumbnail = false, serviceCrop = false, priority = false,
+  image,
+  thumbnail = false,
+  serviceCrop = false,
+  priority = false,
 } = Astro.props;
 const original = getContentImageMetadata(image.src);
 const sourceWidth = original?.width ?? image.width;
-const widths = [...new Set([
-  ...[320, 640, 960, 1280].filter((width) => width < sourceWidth),
-  Math.min(sourceWidth, 1440),
-])].sort((a, b) => a - b);
+const widths = [
+  ...new Set([
+    ...[320, 640, 960, 1280].filter((width) => width < sourceWidth),
+    Math.min(sourceWidth, 1440),
+  ]),
+].sort((a, b) => a - b);
 const sizes = thumbnail
-  ? '(min-width: 80rem) 368px, (min-width: 48rem) 45vw, 92vw'
-  : '(min-width: 64rem) 896px, 94vw';
+  ? "(min-width: 80rem) 368px, (min-width: 48rem) 45vw, 92vw"
+  : "(min-width: 64rem) 896px, 94vw";
 const focalPoint = image.focalPoint ?? { x: 50, y: 50 };
 const mobilePoint = image.mobileFocalPoint ?? focalPoint;
 const attributes = {
-  alt: image.alt, width: image.width, height: image.height,
+  alt: image.alt,
+  width: image.width,
+  height: image.height,
   sizes,
-  loading: priority ? 'eager' as const : 'lazy' as const,
-  fetchpriority: priority ? 'high' as const : 'auto' as const,
-  decoding: 'async' as const,
-  class: 'content-media-image',
-  'data-caption': image.caption,
+  loading: priority ? ("eager" as const) : ("lazy" as const),
+  fetchpriority: priority ? ("high" as const) : ("auto" as const),
+  decoding: "async" as const,
+  class: "content-media-image",
+  "data-caption": image.caption,
 };
 ---
 
 {/* Reserve geometry and protect the subject when the image needs a crop. */}
 <div
-  class:list={['content-media-frame', {
-    'content-media-thumbnail': thumbnail,
-    'content-media-service': serviceCrop,
-  }]}
+  class:list={[
+    "content-media-frame",
+    {
+      "content-media-thumbnail": thumbnail,
+      "content-media-service": serviceCrop,
+    },
+  ]}
   data-image-state="loading"
   style={{
-    '--media-ratio': `${image.width} / ${image.height}`,
-    '--media-position': `${focalPoint.x}% ${focalPoint.y}%`,
-    '--mobile-media-position': `${mobilePoint.x}% ${mobilePoint.y}%`,
+    "--media-ratio": `${image.width} / ${image.height}`,
+    "--media-position": `${focalPoint.x}% ${focalPoint.y}%`,
+    "--mobile-media-position": `${mobilePoint.x}% ${mobilePoint.y}%`,
   }}
 >
-  {original
-    ? <Image src={original} widths={widths} {...attributes} />
-    : <img src={image.src} {...attributes} />}
-  <p class="content-media-error" role="status">
+  {original ? (
+    <Image
+      src={original}
+      widths={widths}
+      {...attributes}
+    />
+  ) : (
+    <img
+      src={image.src}
+      {...attributes}
+    />
+  )}
+  <p
+    class="content-media-error"
+    role="status"
+  >
     Изображение недоступно
   </p>
 </div>
@@ -85,7 +107,7 @@ const attributes = {
   }
 
   /* Expose a useful fallback while preserving the frame's intrinsic height. */
-  .content-media-frame[data-image-state='error'] .content-media-error {
+  .content-media-frame[data-image-state="error"] .content-media-error {
     display: block;
   }
 
@@ -127,18 +149,22 @@ const attributes = {
 
 <script>
   // Reflect native image events so failed media gets a readable fallback.
-  const frames = document.querySelectorAll<HTMLElement>('[data-image-state]');
+  const frames = document.querySelectorAll<HTMLElement>("[data-image-state]");
 
   frames.forEach((frame) => {
-    const image = frame.querySelector('img');
+    const image = frame.querySelector("img");
     if (!image) return;
     const update = () => {
-      frame.dataset.imageState = image.naturalWidth > 0 ? 'loaded' : 'error';
+      frame.dataset.imageState = image.naturalWidth > 0 ? "loaded" : "error";
     };
-    image.addEventListener('load', update, { once: true });
-    image.addEventListener('error', () => {
-      frame.dataset.imageState = 'error';
-    }, { once: true });
+    image.addEventListener("load", update, { once: true });
+    image.addEventListener(
+      "error",
+      () => {
+        frame.dataset.imageState = "error";
+      },
+      { once: true },
+    );
     if (image.complete) update();
   });
 </script>

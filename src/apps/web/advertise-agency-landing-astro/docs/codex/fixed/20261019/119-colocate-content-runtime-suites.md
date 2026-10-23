@@ -11,37 +11,35 @@
 
 - Из `blocks.test.ts` перенести publication filtering, demo и approval
   assertions в `src/content/block-publication.test.ts`.
-- Из `pricing-and-categories.test.ts` перенести price formatting и
-  visibility в `src/content/pricing-publication.test.ts`, а category lookup —
-  в `src/content/project-categories.test.ts`.
+- Из `pricing-and-categories.test.ts` перенести price formatting и visibility в
+  `src/content/pricing-publication.test.ts`, а category lookup — в
+  `src/content/project-categories.test.ts`.
 - Объединить `catalog.test.ts` с `src/scripts/project-catalog.test.ts`.
-- Объединить `inquiry-payload.test.ts` с
-  `src/server/inquiry-payload.test.ts`.
-- Сохранить shared JSON fixtures в `tests/fixtures/content/` и общие builders
-  в `tests/helpers/`.
+- Объединить `inquiry-payload.test.ts` с `src/server/inquiry-payload.test.ts`.
+- Сохранить shared JSON fixtures в `tests/fixtures/content/` и общие builders в
+  `tests/helpers/`.
 
 ## Зависимости
 
-Зависит от задачи 118 только в части общей проверки полного Vitest-набора;
-может выполняться после согласования целевой карты.
+Зависит от задачи 118 только в части общей проверки полного Vitest-набора; может
+выполняться после согласования целевой карты.
 
 ## Готово, когда
 
 - [x] Каждый assertion принадлежит одному source module.
 - [x] Colocated suites сохраняют прежние assertions и edge cases.
-- [x] Focused content, script и server suites проходят: 5 файлов,
-  223 теста.
+- [x] Focused content, script и server suites проходят: 5 файлов, 223 теста.
 
 ## Выполнение — 2026-10-19
 
-- Publication, catalog, pricing/category и inquiry payload assertions
-  объединены с suites в `src/content`, `src/scripts` и `src/server`.
-- Сохранены дополнительные проверки approval для всех block types,
-  nested demo media status и filtered catalog return URL.
+- Publication, catalog, pricing/category и inquiry payload assertions объединены
+  с suites в `src/content`, `src/scripts` и `src/server`.
+- Сохранены дополнительные проверки approval для всех block types, nested demo
+  media status и filtered catalog return URL.
 - Удалены четыре migrated suite-файла из `tests/unit`; осталась пустая
   директория для её final cleanup в задаче 120.
-- Проверка: focused run по пяти colocated suites — 223 теста прошли;
-  code-style check прошёл.
+- Проверка: focused run по пяти colocated suites — 223 теста прошли; code-style
+  check прошёл.
 
 ## Модель и оценка
 
@@ -59,5 +57,4 @@ publication rules для content. Sol оптимальнее как коорди
 - 119.c — pricing/category/block publication: `gpt-6-luna`, medium;
 - 119.d — merge review и полный focused run: `gpt-6.1-sol`, medium.
 
-Astra не требуется: новая архитектура тестового harness в задаче не
-планируется.
+Astra не требуется: новая архитектура тестового harness в задаче не планируется.

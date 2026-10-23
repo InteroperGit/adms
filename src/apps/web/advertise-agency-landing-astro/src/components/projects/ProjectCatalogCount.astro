@@ -6,9 +6,19 @@ interface Props {
 const { count } = Astro.props;
 ---
 
-<div class="catalog-count" data-catalog-count role="status" aria-live="polite">
+<div
+  class="catalog-count"
+  data-catalog-count
+  role="status"
+  aria-live="polite"
+>
   <span class="catalog-count__label">Найдено проектов</span>
-  <span class="catalog-count__value" data-catalog-count-value>{count}</span>
+  <span
+    class="catalog-count__value"
+    data-catalog-count-value
+  >
+    {count}
+  </span>
 </div>
 
 <style>

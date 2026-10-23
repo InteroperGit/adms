@@ -1,7 +1,7 @@
 ﻿---
 // Render the modal viewer and thumbnail rail for a nonempty parent gallery.
-import type { GalleryImage } from './image-gallery.types';
-import CarouselControl from '@/components/ui/CarouselControl.astro';
+import type { GalleryImage } from "./image-gallery.types";
+import CarouselControl from "@/components/ui/CarouselControl.astro";
 
 interface Props {
   images: GalleryImage[];
@@ -35,13 +35,16 @@ const firstImage = images[0]?.image;
     <img
       class="gallery-image"
       data-gallery-image
-      alt={firstImage?.alt ?? ''}
+      alt={firstImage?.alt ?? ""}
       width={firstImage?.width}
       height={firstImage?.height}
       loading="lazy"
       decoding="async"
     />
-    <figcaption class="gallery-caption" data-gallery-caption></figcaption>
+    <figcaption
+      class="gallery-caption"
+      data-gallery-caption
+    ></figcaption>
     <CarouselControl
       className="gallery-navigation gallery-next"
       direction="next"
@@ -63,7 +66,7 @@ const firstImage = images[0]?.image;
           class="gallery-lightbox-thumbnail"
           type="button"
           aria-label={`Показать изображение ${index + 1}`}
-          aria-current={index === 0 ? 'true' : undefined}
+          aria-current={index === 0 ? "true" : undefined}
           data-gallery-lightbox-thumb={index}
         >
           <img
@@ -330,13 +333,13 @@ const firstImage = images[0]?.image;
   }
 
   /* Highlight the thumbnail that owns the main viewer image. */
-  .gallery-lightbox-thumbnail[aria-current='true'] {
+  .gallery-lightbox-thumbnail[aria-current="true"] {
     border-color: white;
     opacity: 1;
   }
 
   /* Keep inactive thumbnails discoverable without competing with the image. */
-  .gallery-lightbox-thumbnail:not([aria-current='true']) {
+  .gallery-lightbox-thumbnail:not([aria-current="true"]) {
     opacity: 0.72;
   }
 

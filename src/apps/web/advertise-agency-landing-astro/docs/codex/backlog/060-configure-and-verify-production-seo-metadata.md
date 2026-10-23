@@ -10,7 +10,8 @@
 
 **Plan:** [Sales and SEO improvement plan](../plan/sales-and-seo-plan.md).
 
-**Depends on:** Task 050 and confirmed production hosting/domain; coordinate with 059.
+**Depends on:** Task 050 and confirmed production hosting/domain; coordinate
+with 059.
 
 ## Goal
 
@@ -25,8 +26,8 @@ Finish deployment SEO configuration using the existing metadata routes.
   routes; exclude demo/noindex/removed routes.
 - Verify canonical URLs, robots behavior, sitemap content/type, redirects, and
   accessible HTTPS responses on the deployed host; keep preview hosts safe.
-- Use the existing verify:release script and add focused checks only where
-  its current coverage misses publication or route consistency.
+- Use the existing verify:release script and add focused checks only where its
+  current coverage misses publication or route consistency.
 - Document environment setup, approved sharing assets if available, validation
   evidence, and rollback. Do not replace working SEO plumbing without need.
 
@@ -39,7 +40,7 @@ Finish deployment SEO configuration using the existing metadata routes.
 
 ## Execution notes
 
-Read project instructions, task-management guidance, and applicable rules
-before implementation. Record missing agency inputs or external access as
-dependencies. This task file authorizes no external publication or messages.
-Archive only after acceptance, with evidence and updated plan/status links.
+Read project instructions, task-management guidance, and applicable rules before
+implementation. Record missing agency inputs or external access as dependencies.
+This task file authorizes no external publication or messages. Archive only
+after acceptance, with evidence and updated plan/status links.

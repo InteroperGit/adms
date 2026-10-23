@@ -10,8 +10,8 @@
 
 ## Goal
 
-Show how a project is manufactured and installed through useful text and
-images on `src/pages/projects/[id].astro`, under the
+Show how a project is manufactured and installed through useful text and images
+on `src/pages/projects/[id].astro`, under the
 [sales and SEO plan](../../plan/sales-and-seo-plan.md).
 
 Read [project instructions](../../../../AGENTS.md),
@@ -22,8 +22,8 @@ Apply astro-best-practices and frontend-design during implementation.
 
 - Add optional `manufacturing` and `installation` content sections to the
   validated project contract. Use English field names and visible headings:
-  **Manufacturing** and **Installation**. Keep descriptive copy in Russian
-  to match the site's audience.
+  **Manufacturing** and **Installation**. Keep descriptive copy in Russian to
+  match the site's audience.
 - Each section supports substantial text and multiple images with alt text,
   captions, dimensions, and the existing media provenance fields.
 - Manufacturing explains material preparation, fabrication, lighting or
@@ -31,36 +31,36 @@ Apply astro-best-practices and frontend-design during implementation.
 - Installation explains site preparation, positioning, mounting, electrical
   connection where relevant, final checks, and handover to the customer.
 - Treat all case study content sections as optional. Omit absent, null, and
-  empty sections entirely, including headings, containers, and spacing.
-  Render supplied text or images even when the other content type is absent.
-  Validate meaningful content; do not render blank paragraphs or galleries.
+  empty sections entirely, including headings, containers, and spacing. Render
+  supplied text or images even when the other content type is absent. Validate
+  meaningful content; do not render blank paragraphs or galleries.
 - Preserve the current title, compact customer/year metadata, and direct
   transition to the lead image. Put the new sections in the case study body,
   with Manufacturing before Installation. Preserve existing inquiry links.
 - Populate both new sections for all three development projects with full,
-  distinct selling copy and suitable preview images so the complete layout
-  can be reviewed immediately. Explain concrete choices and customer value;
-  avoid generic filler, unsupported metrics, or invented completed work.
-- Keep development content within the existing non-approved data status.
-  Preview imagery and proposed copy do not establish actual agency work,
-  media rights, or publication approval. Do not add fabricated evidence.
-- Reuse the static image pipeline, reserved image geometry, responsive
-  layouts, and existing theme tokens. Support both themes and narrow screens
-  without client-side JavaScript. Do not add a carousel or hidden text.
+  distinct selling copy and suitable preview images so the complete layout can
+  be reviewed immediately. Explain concrete choices and customer value; avoid
+  generic filler, unsupported metrics, or invented completed work.
+- Keep development content within the existing non-approved data status. Preview
+  imagery and proposed copy do not establish actual agency work, media rights,
+  or publication approval. Do not add fabricated evidence.
+- Reuse the static image pipeline, reserved image geometry, responsive layouts,
+  and existing theme tokens. Support both themes and narrow screens without
+  client-side JavaScript. Do not add a carousel or hidden text.
 - Update the content guide with the new fields and omission behavior.
 
 ## Acceptance and verification
 
 - All three development pages show complete Manufacturing and Installation
   sections with readable text, images, and captions in the intended order.
-- Missing, null, and empty data produces no section heading, empty panel,
-  broken image, or leftover spacing. Check text-only and image-only cases.
+- Missing, null, and empty data produces no section heading, empty panel, broken
+  image, or leftover spacing. Check text-only and image-only cases.
 - Existing optional case study sections follow the same omission behavior;
   title, attribution, navigation, and inquiry actions remain usable.
 - Verify image loading, heading hierarchy, alt text, keyboard navigation,
   narrow/wide layouts, both themes, and no horizontal overflow.
-- Run `pnpm check`, `pnpm build`, and changed-source style/diff checks.
-  Record verification for [task 037](037-case-study-verification.md).
+- Run `pnpm check`, `pnpm build`, and changed-source style/diff checks. Record
+  verification for [task 037](037-case-study-verification.md).
 - Keep this task pending until implementation and verification are complete;
   archive according to the task-management rules after acceptance.
 
@@ -70,9 +70,9 @@ Apply astro-best-practices and frontend-design during implementation.
   copy for all three records. Reused local service illustrations, with explicit
   diagram captions and null rights/approval; no completed work was fabricated.
 - Added a shared static ProjectProcess component with a responsive text/image
-  layout. Text-only and image-only content renders without empty columns.
-  Images reuse ProjectPhoto and Astro variants, intrinsic geometry, and lazy
-  loading. English headings declare their language; no hydration was added.
+  layout. Text-only and image-only content renders without empty columns. Images
+  reuse ProjectPhoto and Astro variants, intrinsic geometry, and lazy loading.
+  English headings declare their language; no hydration was added.
 - Existing narrative, benefits, results, specifications, and timing now omit
   empty data. Details may be absent/null; empty lists and timing objects render
   no section. Empty reading/facts columns and whole overview containers vanish.
