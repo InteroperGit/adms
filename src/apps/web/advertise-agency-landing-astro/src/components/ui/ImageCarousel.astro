@@ -3,6 +3,7 @@
 // Callers own content/section layout; options only control optional features.
 import ImageCarouselSlide from "./ImageCarouselSlide.astro";
 import CarouselControl from "./CarouselControl.astro";
+import CarouselDots from "./CarouselDots.astro";
 import type {
   CarouselItem,
   CarouselOptions,
@@ -40,6 +41,8 @@ if (!/^[a-zA-Z][\w-]*$/.test(id) || !label.trim()) {
   throw new Error("ImageCarousel needs a unique HTML id and a label");
 }
 const options = carouselOptionsSchema.parse(suppliedOptions);
+// Add ten percent to the existing one-third panel height increase.
+const panelRatio = options.aspectRatio * (0.75 / 1.1);
 const items = carouselItemsSchema
   .parse(suppliedItems)
   .filter((item) => item.enabled);
@@ -49,7 +52,7 @@ const arrows = multiple && options.manualNavigation && options.arrows;
 const circles = multiple && options.circles;
 ---
 
-{/* Static slides survive missing scripts; optional controls start hidden. */}
+{/* The first slide renders immediately; optional controls start hidden. */}
 {options.enabled && items.length > 0 && (
   <image-carousel
     id={id}
@@ -65,7 +68,7 @@ const circles = multiple && options.circles;
     data-circles={circles}
     data-animation={options.animation}
     style={{
-      "--panel-ratio": options.aspectRatio,
+      "--panel-ratio": panelRatio,
       "--image-fit": options.imageFit,
     }}
   >
@@ -84,33 +87,12 @@ const circles = multiple && options.circles;
           />
         )}
         {circles && (
-          <div
-            class="carousel-dots"
-            role={options.manualNavigation ? "group" : undefined}
-            aria-label={options.manualNavigation ? "Выбор изображения" : null}
-            aria-hidden={options.manualNavigation ? undefined : "true"}
-          >
-            {items.map((item, index) =>
-              options.manualNavigation ? (
-                <button
-                  type="button"
-                  class="carousel-dot"
-                  data-index={index}
-                  aria-label={`Показать: ${itemName} ${index + 1}`}
-                  aria-controls={`${slideIdPrefix}-${item.id}`}
-                >
-                  <span aria-hidden="true"></span>
-                </button>
-              ) : (
-                <span
-                  class="carousel-dot"
-                  data-index={index}
-                >
-                  <span></span>
-                </span>
-              ),
-            )}
-          </div>
+          <CarouselDots
+            items={items}
+            itemName={itemName}
+            slideIdPrefix={slideIdPrefix}
+            manualNavigation={options.manualNavigation}
+          />
         )}
         {arrows && (
           <CarouselControl
@@ -155,16 +137,26 @@ const circles = multiple && options.circles;
   /* Anchor overlaid controls and share their spacing with slide content. */
   .image-carousel {
     display: block;
+    width: 100%;
     min-width: 0;
     position: relative;
-    --arrow-size: clamp(44px, 4vw, 56px);
-    --control-inset: clamp(0.5rem, 2vw, 1.5rem);
+    --arrow-size: clamp(112px, 10vw, 144px);
+    --dot-size: clamp(56px, 5vw, 72px);
+    --control-inset: clamp(0.5rem, 1vw, 0.75rem);
     --control-gap: clamp(12px, 1rem, 20px);
   }
 
   /* Stack enabled slides in editorial order. */
   .carousel-list {
     display: grid;
+  }
+
+  /* Hide inactive server-rendered slides before the client script runs. */
+  .image-carousel:not([data-ready])
+    :global(.carousel-slide[aria-hidden="true"]) {
+    grid-area: 1 / 1;
+    visibility: hidden;
+    pointer-events: none;
   }
 
   /* Overlay navigation without blocking pointer access to the slide. */
@@ -181,23 +173,8 @@ const circles = multiple && options.circles;
     display: none;
   }
 
-  /* Wrap item circles while preserving generous dot targets. */
-  .carousel-dots {
-    position: absolute;
-    bottom: var(--control-inset);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: max-content;
-    max-width: calc(100% - 2 * var(--control-inset));
-    pointer-events: auto;
-  }
-
   /* Make arrows and dots comfortably reachable with pointer or touch. */
-  .image-carousel :global(.carousel-arrow),
-  .carousel-dot {
+  .image-carousel :global(.carousel-arrow) {
     display: grid;
     place-items: center;
     width: var(--arrow-size);
@@ -208,22 +185,29 @@ const circles = multiple && options.circles;
     cursor: pointer;
   }
 
-  /* Center circular arrows at the edges with a solid image-independent base. */
+  /* Keep arrow targets open while giving the controls a larger hit area. */
   .image-carousel :global(.carousel-arrow) {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    color: #fff;
-    background: rgb(20 20 24 / 84%);
-    border: 1px solid var(--site-control-border);
-    pointer-events: auto;
-  }
-
-  /* Leave only the marker visible within each generous indicator target. */
-  .carousel-dot {
+    color: #e5e7eb;
     background: transparent;
     border: 0;
+    border-radius: 0;
+    filter: drop-shadow(0 0 2px #000);
+    pointer-events: auto;
+    transition:
+      color 160ms ease,
+      filter 160ms ease;
+  }
+
+  /* Brighten and lift the arrow on hover without adding a button fill. */
+  .image-carousel :global(.carousel-arrow:hover) {
     color: #fff;
+    background: transparent;
+    border: 0;
+    filter: drop-shadow(0 0 2px #000)
+      drop-shadow(0 0 6px rgb(255 255 255 / 75%));
   }
 
   /* Place previous navigation inside the left image edge. */
@@ -242,7 +226,10 @@ const circles = multiple && options.circles;
     .image-carousel :global(.carousel-arrow) {
       opacity: 0;
       pointer-events: none;
-      transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition:
+        opacity 280ms cubic-bezier(0.22, 1, 0.36, 1),
+        color 160ms ease,
+        filter 160ms ease;
     }
 
     /* Reveal controls for pointer presence and native keyboard focus. */
@@ -259,29 +246,6 @@ const circles = multiple && options.circles;
     .image-carousel :global(.carousel-arrow) {
       transition: none;
     }
-  }
-
-  /* Draw a circular position marker inside each generous target. */
-  .carousel-dot span {
-    width: 0.75rem;
-    height: 0.75rem;
-    border: 2px solid currentColor;
-    border-radius: 50%;
-    filter: drop-shadow(-1px 0 0 #000) drop-shadow(1px 0 0 #000)
-      drop-shadow(0 -1px 0 #000) drop-shadow(0 1px 0 #000);
-  }
-
-  /* Fill the current marker without changing any circle's radius. */
-  .carousel-dot[aria-current] span {
-    background: currentColor;
-  }
-
-  /* Passive circles show position without implying a click target. */
-  span.carousel-dot {
-    cursor: default;
-    pointer-events: none;
-    width: 1.75rem;
-    height: 2rem;
   }
 
   /* Static galleries separate images when no navigation is available. */

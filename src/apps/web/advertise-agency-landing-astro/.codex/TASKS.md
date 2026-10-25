@@ -1,14 +1,16 @@
-# Current task state — 2026-10-23
+# Current task state — 2026-10-25
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal.
 Detailed scope and verification belong to the linked task files.
 
 ## Active tasks
 
-No active tasks.
+- No active tasks.
 
 ## Recent completed work
 
+- [153 - Carousel](../docs/codex/fixed/20261025/153-image-carousel-full-width-controls.md): 12 E2E tests passed in Chromium, Firefox and WebKit.
+  Vite dev excludes output/ from watching and serving.
 - [135 — Адаптивность и геометрия](../docs/codex/fixed/20261023/135-e2e-responsive-and-media-failure.md)
   — завершено; 25 Chromium-тестов прошли, включая 24 адаптивные комбинации.
 - [134 — Пути без JavaScript](../docs/codex/fixed/20261023/134-e2e-without-javascript.md)

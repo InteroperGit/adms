@@ -86,6 +86,12 @@ const galleryMarker = isClose
     stroke-width: 1.8;
   }
 
+  /* Double the V glyph while keeping gallery arrows at their base size. */
+  .carousel-control-arrow.carousel-arrow svg {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
   /* Touch taps must not retain the mouse hover appearance. */
   @media (hover: hover) and (pointer: fine) {
     /* Invert the control colors when a mouse points at the button. */

@@ -4,12 +4,19 @@
 /** Own one instance's state, event listeners, observers, and rotation timer. */
 function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
   const slides = [...carousel.querySelectorAll<HTMLElement>(".carousel-slide")];
-  // Unsupported observers leave static content readable and unmodified.
+  // A single image never needs client-side carousel state.
+  if (slides.length < 2) {
+    return;
+  }
+  // Unsupported observers reveal the complete static gallery.
   if (
-    slides.length < 2 ||
     typeof IntersectionObserver !== "function" ||
     typeof ResizeObserver !== "function"
   ) {
+    slides.forEach((slide) => {
+      slide.removeAttribute("aria-hidden");
+      slide.inert = false;
+    });
     return;
   }
   const controls = carousel.querySelector<HTMLElement>(".carousel-controls");

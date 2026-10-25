@@ -41,6 +41,9 @@ it("filters slides and maps controls to enabled slide IDs", async () => {
 
   expect(carousel).toHaveAttribute("aria-label", "Selected work");
   expect(body.querySelectorAll(".carousel-slide")).toHaveLength(2);
+  expect(body.querySelector("#work-1")).not.toHaveAttribute("aria-hidden");
+  expect(body.querySelector("#work-3")).toHaveAttribute("aria-hidden", "true");
+  expect(body.querySelector("#work-3")).toHaveAttribute("inert");
   expect(body.querySelector("#work-1")).toBeInTheDocument();
   expect(body.querySelector("#work-2")).not.toBeInTheDocument();
   expect(body.querySelector("#work-3")).toBeInTheDocument();

@@ -1,0 +1,51 @@
+---
+// Render grouped carousel position controls for manual or automatic slides.
+import CarouselDot from "./CarouselDot.astro";
+import type { CarouselItem } from "@/types/image-carousel";
+
+interface Props {
+  // Only the enabled slides reach this navigation group.
+  items: Array<Pick<CarouselItem, "id">>;
+  // Keep each accessible button label aligned with the carousel wording.
+  itemName: string;
+  // Match each marker's controlled target to the rendered slide ID.
+  slideIdPrefix: string;
+  // Automatic-only indicators stay out of the accessibility tree.
+  manualNavigation: boolean;
+}
+
+const { items, itemName, slideIdPrefix, manualNavigation } = Astro.props;
+---
+
+{/* Group slide markers and announce their purpose for manual navigation. */}
+<div
+  class="carousel-dots"
+  role={manualNavigation ? "group" : undefined}
+  aria-label={manualNavigation ? "Выбор изображения" : undefined}
+  aria-hidden={manualNavigation ? undefined : "true"}
+>
+  {items.map((item, index) => (
+    <CarouselDot
+      index={index}
+      itemName={itemName}
+      slideId={slideIdPrefix + "-" + item.id}
+      manualNavigation={manualNavigation}
+    />
+  ))}
+</div>
+
+<style>
+  /* Place the group at the bottom center and allow markers to wrap. */
+  .carousel-dots {
+    position: absolute;
+    bottom: var(--control-inset);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: max-content;
+    max-width: calc(100% - 2 * var(--control-inset));
+    pointer-events: auto;
+  }
+</style>

@@ -1,0 +1,74 @@
+---
+// Render one selectable control or passive carousel position marker.
+interface Props {
+  // Keep the marker index consistent with the browser selection handler.
+  index: number;
+  // Use the same item wording in each accessible button label.
+  itemName: string;
+  // Manual navigation uses buttons; automatic-only dots remain passive.
+  manualNavigation: boolean;
+  // Associate each selectable dot with its corresponding slide.
+  slideId: string;
+}
+
+const { index, itemName, manualNavigation, slideId } = Astro.props;
+---
+
+{/* Keep manual markers keyboard-accessible and passive markers inert. */}
+{manualNavigation ? (
+  <button
+    type="button"
+    class="carousel-dot"
+    data-index={index}
+    aria-label={"Показать: " + itemName + " " + (index + 1)}
+    aria-controls={slideId}
+  >
+    <span aria-hidden="true"></span>
+  </button>
+) : (
+  <span
+    class="carousel-dot"
+    data-index={index}
+  >
+    <span></span>
+  </span>
+)}
+
+<style>
+  /* Give each position a generous touch and pointer target. */
+  .carousel-dot {
+    display: grid;
+    place-items: center;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    flex: 0 0 auto;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+  }
+
+  /* Draw a compact circular marker inside the larger target. */
+  .carousel-dot span {
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    filter: drop-shadow(-1px 0 0 #000) drop-shadow(1px 0 0 #000)
+      drop-shadow(0 -1px 0 #000) drop-shadow(0 1px 0 #000);
+  }
+
+  /* Fill the current marker without changing its circle radius. */
+  .carousel-dot[aria-current] span {
+    background: currentColor;
+  }
+
+  /* Passive indicators do not imply a click target. */
+  span.carousel-dot {
+    cursor: default;
+    pointer-events: none;
+    width: 1.75rem;
+    height: 2rem;
+  }
+</style>

@@ -5,6 +5,22 @@ import { expectThemeStyles } from "./theme-styles";
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 
+  test("carousel starts with only its first slide visible", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const carousel = page.locator("#offers-carousel");
+    const slides = carousel.locator(".carousel-slide");
+
+    await expect(slides).toHaveCount(3);
+    await expect(
+      carousel.locator(".carousel-slide:not([aria-hidden])"),
+    ).toHaveCount(1);
+    await expect(slides.nth(1)).toHaveCSS("visibility", "hidden");
+    await expect(slides.nth(2)).toHaveCSS("visibility", "hidden");
+  });
+
   for (const theme of ["light", "dark"] as const) {
     test(`system ${theme} renders the palette without JavaScript`, async ({
       page,

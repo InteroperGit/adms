@@ -28,5 +28,11 @@ export default defineConfig({
   output: "static",
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      fs: {
+        deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "**/output/**"],
+      },
+      watch: { ignored: ["**/output/**"] },
+    },
   },
 });

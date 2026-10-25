@@ -62,6 +62,7 @@ test("scopes arrow styles across layouts, themes and viewport sizes", async ({
   const carousel = page.locator("#offers-carousel");
   const carouselList = carousel.locator(".carousel-list");
   const arrow = carousel.locator(".carousel-arrow").first();
+  const nextArrow = carousel.locator('.carousel-arrow[data-direction="1"]');
   const outsidePosition = await page.locator("body").evaluate((body) => {
     const outsideArrow = document.createElement("div");
     outsideArrow.className = "carousel-arrow";
@@ -70,6 +71,69 @@ test("scopes arrow styles across layouts, themes and viewport sizes", async ({
   });
   await expect(carousel).toHaveAttribute("data-layout", "full");
   await expect(arrow).toHaveCSS("position", "absolute");
+  await expect(arrow).toHaveCSS("border-top-width", "0px");
+  await expect(arrow).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect
+    .poll(() =>
+      carousel.evaluate((element) =>
+        Math.round(element.getBoundingClientRect().width),
+      ),
+    )
+    .toBe(await page.evaluate(() => document.documentElement.clientWidth));
+  const panelWidth = await carousel.evaluate((element) => {
+    const section = element.parentElement;
+    if (!section) {
+      throw new Error("Carousel needs its section container");
+    }
+    element.dataset.layout = "panel";
+    section.style.width = "320px";
+    const width = element.getBoundingClientRect().width;
+    section.style.width = "";
+    return width;
+  });
+  expect(panelWidth).toBe(320);
+
+  await expect(arrow).toHaveCSS("width", "128px");
+  const iconWidth = await arrow
+    .locator("svg")
+    .evaluate((element) => Number.parseFloat(getComputedStyle(element).width));
+  expect(iconWidth).toBeGreaterThanOrEqual(43);
+  const leftInset = await arrow.evaluate(
+    (element) => element.getBoundingClientRect().left,
+  );
+  const rightInset = await nextArrow.evaluate(
+    (element) =>
+      document.documentElement.clientWidth -
+      element.getBoundingClientRect().right,
+  );
+  expect(leftInset).toBeGreaterThanOrEqual(7);
+  expect(leftInset).toBeLessThanOrEqual(13);
+  expect(rightInset).toBeGreaterThanOrEqual(7);
+  expect(rightInset).toBeLessThanOrEqual(13);
+
+  const carouselBounds = await carousel.boundingBox();
+  if (!carouselBounds) {
+    throw new Error("Carousel should have visible bounds");
+  }
+  const outsideY = carouselBounds.y + carouselBounds.height + 8;
+  await page.mouse.move(0, outsideY);
+  await expect(arrow).toHaveCSS("opacity", "0");
+  const restingFilter = await arrow.evaluate(
+    (element) => getComputedStyle(element).filter,
+  );
+  expect(restingFilter).not.toBe("none");
+  await carousel.hover();
+  await expect(arrow).toHaveCSS("opacity", "1");
+  await arrow.hover();
+  await expect(arrow).toHaveCSS("color", "rgb(255, 255, 255)");
+  const highlightedFilter = await arrow.evaluate(
+    (element) => getComputedStyle(element).filter,
+  );
+  expect(highlightedFilter).not.toBe(restingFilter);
+  await page.mouse.move(0, outsideY);
+  await expect(arrow).toHaveCSS("opacity", "0");
+  await expect(arrow).toHaveCSS("filter", restingFilter);
+
   await carousel.evaluate((element) => {
     element.dataset.layout = "panel";
     element.removeAttribute("data-ready");
@@ -99,7 +163,7 @@ test("scopes arrow styles across layouts, themes and viewport sizes", async ({
       const width = await arrow.evaluate((element) =>
         Number.parseFloat(getComputedStyle(element).width),
       );
-      expect(width).toBeGreaterThanOrEqual(44);
+      expect(width).toBeGreaterThanOrEqual(112);
     }
   }
 

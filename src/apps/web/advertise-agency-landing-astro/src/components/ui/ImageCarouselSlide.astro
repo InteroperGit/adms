@@ -48,11 +48,13 @@ const sizes =
   options.layout === "panel" ? "(min-width: 64rem) 40vw, 92vw" : "100vw";
 ---
 
-{/* Each static slide keeps its image and enabled content accessible. */}
+{/* Each slide renders its image and any enabled content. */}
 <article
   id={id}
   class="carousel-slide"
   aria-label={`${itemLabel} ${index + 1} из ${total}`}
+  aria-hidden={index > 0 ? "true" : undefined}
+  inert={index > 0 ? true : undefined}
   data-item-id={item.id}
   data-overlay={presentation.overlay}
   style={{
@@ -151,7 +153,7 @@ const sizes =
     position: relative;
     isolation: isolate;
     display: grid;
-    min-height: clamp(23rem, 36vw, 34rem);
+    min-height: clamp(33.734rem, 52.8vw, 49.866rem);
     background: #000;
     --description-backing: rgb(0 0 0 / 25%);
     --description-edge: #000;
@@ -300,7 +302,7 @@ const sizes =
   @media (max-width: 47rem) {
     /* Keep enough image height for narrow screens. */
     .carousel-slide {
-      min-height: 25rem;
+      min-height: min(36.666rem, calc(100svh - 7rem));
     }
 
     /* Apply the mobile focal-point override to the image. */
@@ -318,16 +320,23 @@ const sizes =
   @media (max-height: 30rem) and (min-width: 47.01rem) {
     /* Reduce reserved height in short landscape viewports. */
     .carousel-slide {
-      min-height: 20rem;
+      min-height: 29.334rem;
     }
   }
 
+  /* Fit tablet carousels below the compact header and within the viewport. */
+  @media (min-width: 47.01rem) and (max-width: 63.999rem) {
+    /* Reduce full slides when viewport height is the tighter dimension. */
+    :global(.image-carousel[data-layout="full"]) .carousel-slide {
+      min-height: min(clamp(33.734rem, 52.8vw, 49.866rem), calc(100svh - 7rem));
+    }
+  }
   /* Fit can preserve the full artwork or crop to a caller's focal point. */
   :global(.image-carousel) .carousel-background {
     object-fit: var(--image-fit);
   }
 
-  /* Inline panels use a consistent ratio rather than hero-sized heights. */
+  /* Taller panels keep the configured width-to-height relationship. */
   :global(.image-carousel[data-layout="panel"]) .carousel-slide {
     min-height: 0;
     aspect-ratio: var(--panel-ratio);
@@ -338,5 +347,38 @@ const sizes =
   :global(.image-carousel[data-layout="panel"]) .carousel-stage {
     padding: 1.5rem;
     width: 100%;
+  }
+  /* Keep panel carousels inside the remaining compact-screen viewport. */
+  @media (max-width: 63.999rem) {
+    /* Let the panel aspect ratio yield to the visible screen height. */
+    :global(.image-carousel[data-layout="panel"]) .carousel-slide {
+      max-height: calc(100svh - 7rem);
+    }
+  }
+  /* Align compact copy and preserve the full available text width. */
+  @media (max-width: 63.999rem) {
+    /* Keep text and actions left-aligned inside a small screen gutter. */
+    :global(.image-carousel) .carousel-stage {
+      padding-inline: clamp(1rem, 2vw, 1.5rem);
+      justify-items: start;
+    }
+
+    /* Let text use the carousel width instead of a narrow reading column. */
+    :global(.image-carousel) .carousel-stage .carousel-copy {
+      width: 100%;
+      max-width: none;
+      text-align: left;
+    }
+
+    /* Replace desktop arrow clearance with a compact horizontal inset. */
+    :global(.image-carousel[data-ready][data-arrows="true"]) .carousel-stage {
+      padding-inline: clamp(1rem, 2vw, 1.5rem);
+      justify-items: start;
+    }
+
+    /* Keep panel text aligned with the same compact side gutters. */
+    :global(.image-carousel[data-layout="panel"]) .carousel-stage {
+      padding-inline: clamp(1rem, 2vw, 1.5rem);
+    }
   }
 </style>
