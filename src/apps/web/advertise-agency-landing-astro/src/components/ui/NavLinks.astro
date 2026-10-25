@@ -139,6 +139,13 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
     box-shadow: none;
   }
 
+  /* Use a brighter label and a dark surface for the Max action in dark mode. */
+  :global([data-theme="dark"]) .max-contact {
+    background-color: #202c38;
+    border-color: #60a5fa;
+    color: #93c5fd;
+  }
+
   /* Invert the Max action colors only for a mouse pointer. */
   @media (hover: hover) and (pointer: fine) {
     /* Keep the hover state shadow-free while reversing its contrast. */
@@ -150,11 +157,24 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
     }
   }
 
+  @media (hover: hover) and (pointer: fine) {
+    /* Keep the dark-theme hover colors clear against the blue fill. */
+    :global([data-theme="dark"]) .max-contact:hover {
+      background-color: #2563eb;
+      border-color: #fff;
+      color: #fff;
+    }
+  }
+
   /* Retain a clear keyboard focus ring without adding a shadow. */
   .max-contact:focus-visible {
     outline: 2px solid #1688f5;
     outline-offset: 3px;
     box-shadow: none;
+  }
+
+  :global([data-theme="dark"]) .max-contact:focus-visible {
+    outline-color: #93c5fd;
   }
 
   /* Fill the drawer width with the supplied navigation list. */
