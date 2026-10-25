@@ -4,6 +4,9 @@
 // Preserve modal focus, Escape dismissal and same-page anchor navigation.
 
 import NavLinks from "@/components/ui/NavLinks.astro";
+import Button from "@/components/ui/Button.astro";
+import MaxLogo from "@/components/ui/MaxLogo.astro";
+import { icons } from "@/content/icons";
 import type { MenuItem } from "@/types";
 
 // Caller-supplied data and presentation options for this component.
@@ -13,6 +16,7 @@ export interface Props {
 }
 
 const { items, phone } = Astro.props;
+const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
 ---
 
 {/* Preserve modal focus, Escape dismissal and same-page anchor navigation. */}
@@ -21,17 +25,17 @@ const { items, phone } = Astro.props;
   aria-label="Меню сайта"
   class="bg-base-200 text-base-content"
 >
-  <div class="flex justify-end p-4 pb-0">
+  <div class="mobile-menu-close-row">
     <button
       type="button"
       data-menu-close
-      class="btn btn-ghost btn-circle"
+      class="btn btn-ghost btn-circle mobile-menu-close"
       aria-label="Закрыть меню"
       autofocus
     >
       <span
+        class="mobile-menu-close-icon"
         aria-hidden="true"
-        class="text-2xl"
       >
         ×
       </span>
@@ -42,26 +46,176 @@ const { items, phone } = Astro.props;
     variant="mobile"
     phone={phone}
   />
+  <hr class="mobile-menu-divider" />
+  <div
+    class="mobile-menu-actions"
+    role="group"
+    aria-label="Контакты"
+  >
+    <Button
+      href={phoneHref}
+      size="md"
+      class="mobile-menu-action"
+      aria-label="Позвонить"
+    >
+      <i
+        class:list={["fas", icons.phone]}
+        aria-hidden="true"
+      ></i>
+      <span>Позвонить</span>
+    </Button>
+    <Button
+      variant="secondary"
+      size="md"
+      href="https://max.ru/"
+      class="mobile-menu-action mobile-menu-max"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Написать в Макс"
+    >
+      <MaxLogo />
+      <span>Макс</span>
+    </Button>
+  </div>
 </dialog>
 
 <style>
   /* Bound the modal drawer to the viewport with scrollable content. */
   dialog {
     position: fixed;
-    inset: 0 auto 0 0;
+    inset: 1rem auto auto 1rem;
     margin: 0;
     padding: 0;
     border: 0;
     width: 18rem;
-    max-width: 100vw;
-    height: 100dvh;
-    max-height: 100dvh;
+    max-width: calc(100vw - 2rem);
+    height: calc(100dvh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    overflow: hidden;
+    border-radius: 1rem;
+    opacity: 0;
+    transform: translateX(calc(-100% - 1rem));
+    transition:
+      transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 180ms ease;
+  }
+
+  /* Show the drawer as a flex column and slide it in from the left. */
+  dialog[open] {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Start each opening outside the left edge for a reliable entrance. */
+  @starting-style {
+    dialog[open] {
+      opacity: 0;
+      transform: translateX(calc(-100% - 1rem));
+    }
+  }
+
+  /* Keep the enlarged close action separate from scrollable navigation. */
+  .mobile-menu-close-row {
+    display: flex;
+    flex: none;
+    justify-content: flex-end;
+    padding: 1rem 1rem 0;
+  }
+
+  /* Double the standard three-rem circular menu close target. */
+  .mobile-menu-close {
+    width: 6rem;
+    height: 6rem;
+    min-width: 6rem;
+    min-height: 6rem;
+    padding: 0;
+  }
+
+  /* Scale the close glyph with its doubled button target. */
+  .mobile-menu-close-icon {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  /* Let long navigation scroll without moving the footer actions. */
+  dialog > :global(nav[aria-label="Основная навигация"]) {
+    flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
+  }
+
+  /* Separate the contact row from navigation with a visible rule. */
+  .mobile-menu-divider {
+    flex: none;
+    width: calc(100% - 2rem);
+    margin: 0 1rem;
+    border: 0;
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Keep both contact actions aligned in one bottom row. */
+  .mobile-menu-actions {
+    display: grid;
+    flex: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  /* Match text size and alignment on the phone and Max buttons. */
+  .mobile-menu-actions :global(.mobile-menu-action) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
+    min-height: 3rem;
+    height: auto;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    white-space: normal;
+  }
+
+  /* Keep the Max contact white with the logo-color outline. */
+  .mobile-menu-actions :global(.mobile-menu-max) {
+    background-color: #fff;
+    border: 1px solid #1688f5;
+    color: #1688f5;
+    box-shadow: none;
+  }
+
+  /* Invert Max colors for pointer hover without adding a shadow. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Keep the mobile Max action white until the pointer hovers. */
+    .mobile-menu-actions :global(.mobile-menu-max:hover) {
+      background-color: #1688f5;
+      border-color: #fff;
+      color: #fff;
+      box-shadow: none;
+    }
+  }
+
+  /* Keep keyboard focus visible without adding a button shadow. */
+  .mobile-menu-actions :global(.mobile-menu-max:focus-visible) {
+    outline: 2px solid #1688f5;
+    outline-offset: 3px;
+    box-shadow: none;
   }
 
   /* Dim background content while modal navigation is open. */
   dialog::backdrop {
     background: rgb(0 0 0 / 40%);
+  }
+
+  /* Respect motion preferences for drawer entrance. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Open the drawer without motion for reduced-motion visitors. */
+    dialog {
+      transition: none;
+    }
   }
 
   /* Prevent background scrolling while the modal drawer is active. */

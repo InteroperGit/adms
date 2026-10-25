@@ -73,12 +73,21 @@ it("renders accessible dialog controls and supplied mobile links", async () => {
   expect(menu).not.toHaveAttribute("open");
   const close = getByRole(menu, "button", { hidden: true });
   expect(close).toHaveAttribute("aria-label", "Закрыть меню");
+  expect(close).toHaveClass("mobile-menu-close");
   expect(close).toHaveAttribute("autofocus");
   expect(menu.querySelector("a")).toHaveAttribute("href", "/#services");
-  expect(menu.querySelector('a[href^="tel:"]')).toHaveAttribute(
-    "href",
-    "tel:+79991234567",
+  const phoneAction = menu.querySelector('a[href^="tel:"]');
+  expect(phoneAction).toHaveAttribute("href", "tel:+79991234567");
+  expect(phoneAction).toHaveTextContent("Позвонить");
+  expect(phoneAction?.querySelector("i")).toHaveAttribute(
+    "aria-hidden",
+    "true",
   );
+  const maxAction = menu.querySelector('a[href="https://max.ru/"]');
+  expect(maxAction).toHaveAttribute("aria-label", "Написать в Макс");
+  expect(maxAction?.textContent?.trim()).toBe("Макс");
+  expect(menu.querySelector(".mobile-menu-divider")).not.toBeNull();
+  expect(menu.querySelectorAll(".mobile-menu-actions a")).toHaveLength(2);
 });
 
 it("opens, closes, updates expanded state and returns focus", async () => {

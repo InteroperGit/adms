@@ -13,11 +13,11 @@ const phone = "+7 900 123 45 67";
 const phoneHref = "tel:+79001234567";
 
 it.each([
-  ["desktop", "outline", "sm", phone],
-  ["mobile", "primary", "md", "Позвонить"],
+  ["desktop", 4, true],
+  ["mobile", 2, false],
 ] as const)(
-  "renders the %s navigation with one ordered list and contact actions",
-  async (variant, phoneVariant, phoneSize, phoneLabel) => {
+  "renders the %s navigation with its expected links",
+  async (variant, itemCount, hasContactActions) => {
     const body = await render(Component, { items, variant, phone });
     const nav = getByRole(body, "navigation", {
       name: "Основная навигация",
@@ -28,23 +28,28 @@ it.each([
     );
 
     expect(nav.querySelectorAll("ul")).toHaveLength(1);
-    expect(nav.querySelectorAll("li")).toHaveLength(4);
+    expect(nav.querySelectorAll("li")).toHaveLength(itemCount);
     expect(links.slice(0, 2).map((link) => link.getAttribute("href"))).toEqual(
       items.map((item) => item.href),
     );
-    expect(buttonLink).toHaveTextContent(phoneLabel);
-    expect(buttonLink).toHaveClass(`btn-${phoneVariant}`, `btn-${phoneSize}`);
-    expect(buttonLink).toHaveAttribute("href", phoneHref);
+    if (hasContactActions) {
+      expect(buttonLink).toHaveTextContent(phone);
+      expect(buttonLink).toHaveClass("btn-outline", "btn-sm");
+      expect(buttonLink).toHaveAttribute("href", phoneHref);
 
-    const maxLink = links.at(-1);
-    expect(maxLink).toHaveAttribute("href", "https://max.ru/");
-    expect(maxLink).toHaveAttribute("target", "_blank");
-    expect(maxLink).toHaveAttribute("rel", "noopener noreferrer");
-    expect(maxLink).toHaveAccessibleName("Написать в Макс");
+      const maxLink = links.at(-1);
+      expect(maxLink).toHaveAttribute("href", "https://max.ru/");
+      expect(maxLink).toHaveAttribute("target", "_blank");
+      expect(maxLink).toHaveAttribute("rel", "noopener noreferrer");
+      expect(maxLink).toHaveAccessibleName("Написать в Макс");
+    } else {
+      expect(buttonLink).toBeUndefined();
+      expect(nav.querySelector('a[href="https://max.ru/"]')).toBeNull();
+    }
   },
 );
 
-it("keeps contact actions and escapes item labels", async () => {
+it("leaves mobile contacts to the drawer and escapes item labels", async () => {
   const body = await render(Component, {
     items: [{ label: "<script>alert(1)</script>", href: "/safe/" }],
     variant: "mobile",
@@ -53,6 +58,6 @@ it("keeps contact actions and escapes item labels", async () => {
 
   expect(body.querySelector("script")).toBeNull();
   expect(body).toHaveTextContent("<script>alert(1)</script>");
-  expect(body.querySelectorAll('a[href="https://max.ru/"]')).toHaveLength(1);
-  expect(body.querySelector(`a[href="${phoneHref}"]`)).not.toBeNull();
+  expect(body.querySelectorAll('a[href="https://max.ru/"]')).toHaveLength(0);
+  expect(body.querySelector(`a[href="${phoneHref}"]`)).toBeNull();
 });

@@ -42,33 +42,33 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
         </a>
       </li>
     ))}
-    {/* The phone label and button treatment follow the active variant. */}
-    <li class="nav-item">
-      <Button
-        variant={isDesktop ? "outline" : "primary"}
-        size={isDesktop ? "sm" : "md"}
-        href={phoneHref}
-        class={isDesktop ? "header-phone" : "btn-block mt-4"}
-      >
-        {isDesktop ? phone : "Позвонить"}
-      </Button>
-    </li>
-    {/* Keep the Макс action after the phone action in both modes. */}
-    <li class="nav-item">
-      <a
-        href="https://max.ru/"
-        class:list={[
-          "max-contact",
-          isDesktop ? "btn btn-sm" : "btn btn-secondary btn-block mt-2",
-        ]}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Написать в Макс"
-      >
-        <MaxLogo />
-        <span>Написать в Макс</span>
-      </a>
-    </li>
+    {/* Keep desktop contact actions alongside the wide navigation links. */}
+    {isDesktop && (
+      <>
+        <li class="nav-item">
+          <Button
+            variant="outline"
+            size="sm"
+            href={phoneHref}
+            class="header-phone"
+          >
+            {phone}
+          </Button>
+        </li>
+        <li class="nav-item">
+          <a
+            href="https://max.ru/"
+            class="max-contact btn btn-sm"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Написать в Макс"
+          >
+            <MaxLogo />
+            <span>Написать в Макс</span>
+          </a>
+        </li>
+      </>
+    )}
   </ul>
 </nav>
 
