@@ -55,7 +55,8 @@ it("preserves focus across scroll and collapse states", async () => {
   });
   const { document } = dom.window;
   const host = document.querySelector<HTMLElement>("[data-action-rail-host]")!;
-  const rail = document.querySelector<HTMLElement>("[data-action-rail]")!;
+  const actionGroup =
+    document.querySelector<HTMLElement>(".action-rail-group")!;
   const collapse = document.querySelector<HTMLButtonElement>(
     "[data-action-rail-collapse]",
   )!;
@@ -86,7 +87,8 @@ it("preserves focus across scroll and collapse states", async () => {
   expect(host.hidden).toBe(false);
   collapse.click();
   expect(host.dataset.collapsed).toBe("true");
-  expect(rail.inert).toBe(true);
+  expect(actionGroup.inert).toBe(true);
+  expect(scrollTop).not.toHaveAttribute("inert");
   expect(document.activeElement).toBe(restore);
   expect(restore).toHaveAttribute("aria-expanded", "true");
 
@@ -102,7 +104,7 @@ it("preserves focus across scroll and collapse states", async () => {
   expect(host.dataset.collapsed).toBe("true");
 
   restore.click();
-  expect(rail.inert).toBe(false);
+  expect(actionGroup.inert).toBe(false);
   expect(document.activeElement).toBe(collapse);
   expect(collapse).toHaveAttribute("aria-expanded", "true");
 
