@@ -28,7 +28,8 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
     class:list={[
       "nav-list",
       {
-        "mobile-links menu p-4 bg-base-200 text-base-content gap-3": !isDesktop,
+        "mobile-links menu px-4 pt-2 pb-4 bg-base-200 text-base-content gap-3":
+          !isDesktop,
       },
     ]}
   >
@@ -166,10 +167,15 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
     list-style: none;
   }
 
-  /* Wrap long mobile labels while preserving target height. */
-  .mobile-links a {
+  /* Balance vertical space around labels inside each mobile menu row. */
+  .mobile-links .nav-item > a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 2.75rem;
+    padding-block: 0.75rem;
+    border-radius: 0;
     white-space: normal;
     overflow-wrap: anywhere;
-    min-height: 2.75rem;
   }
 </style>
