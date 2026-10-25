@@ -5,10 +5,13 @@ Detailed scope and verification belong to the linked task files.
 
 ## Active tasks
 
-- No active tasks.
+None currently.
 
 ## Recent completed work
 
+- [154 — Scroll-triggered action rail](../docs/codex/fixed/20261025/154-scroll-triggered-action-rail.md):
+  upper contact controls and a separate lower return-to-top action; focused
+  tests and project checks passed.
 - [153 - Carousel](../docs/codex/fixed/20261025/153-image-carousel-full-width-controls.md): 12 E2E tests passed in Chromium, Firefox and WebKit.
   Vite dev excludes output/ from watching and serving.
 - [135 — Адаптивность и геометрия](../docs/codex/fixed/20261023/135-e2e-responsive-and-media-failure.md)

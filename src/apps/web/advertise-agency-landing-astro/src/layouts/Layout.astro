@@ -6,6 +6,7 @@
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import CookieBanner from "@/components/CookieBanner.astro";
+import ActionRail from "@/components/ui/ActionRail.astro";
 import ThemeInit from "@/components/ui/ThemeInit.astro";
 import { site } from "@/content/site";
 import "/src/styles/global.css";
@@ -128,5 +129,6 @@ const canonicalURL = Astro.site
     {/* Shared legal/contact content follows every page. */}
     <Footer />
     <CookieBanner />
+    <ActionRail />
   </body>
 </html>

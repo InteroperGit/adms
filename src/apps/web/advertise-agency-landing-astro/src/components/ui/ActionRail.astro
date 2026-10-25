@@ -1,0 +1,553 @@
+---
+// Keep direct contact and page navigation available during long visits.
+// Email and phone destinations come from the validated site configuration.
+
+import { site } from "@/content/site";
+import { actionRail } from "@/content/action-rail";
+
+const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
+---
+
+{/* Keep persistent actions in a named navigation landmark. */}
+<nav
+  class="action-rail-host"
+  aria-label="Быстрые действия"
+  style={`--action-rail-reminder-interval: ${reminderInterval}`}
+  data-action-rail-host
+  hidden
+>
+  {/* Group contact controls above the separated return-to-top action. */}
+  <div
+    id="quick-actions"
+    class="action-rail"
+    data-action-rail
+  >
+    <div class="action-rail-group">
+      {/* Collapse actions without moving keyboard focus to hidden controls. */}
+      <button
+        class="action-rail-button action-rail-button-collapse"
+        type="button"
+        aria-label="Свернуть панель действий"
+        data-tooltip="Свернуть меню"
+        aria-controls="quick-actions"
+        aria-expanded="true"
+        data-action-rail-collapse
+      >
+        <i
+          class="fas fa-chevron-right"
+          aria-hidden="true"
+        ></i>
+      </button>
+      {/* Keep chat visible until a destination or handler is configured. */}
+      <button
+        class="action-rail-button action-rail-button-chat"
+        type="button"
+        aria-label="Чат"
+        data-tooltip="Чат"
+      >
+        <i
+          class="fas fa-comment action-rail-chat-icon"
+          aria-hidden="true"
+        >
+          <span class="action-rail-chat-typing">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </i>
+      </button>
+      {/* Let visitors start a callback by calling the configured phone. */}
+      <a
+        class="action-rail-button action-rail-button-call"
+        href={`tel:${site.phone.replace(/\s/g, "")}`}
+        aria-label="Позвонить нам"
+        data-tooltip="Позвонить нам"
+      >
+        {/* Expand paired rings around the phone on each reminder cycle. */}
+        <span
+          class="action-rail-call-wave action-rail-call-wave-first"
+          aria-hidden="true"
+        ></span>
+        <span
+          class="action-rail-call-wave action-rail-call-wave-second"
+          aria-hidden="true"
+        ></span>
+        <i
+          class="fas fa-phone action-rail-call-icon"
+          aria-hidden="true"
+        ></i>
+      </a>
+    </div>
+    {/* Separate page navigation from direct contact actions. */}
+    <div class="action-rail-bottom">
+      <button
+        class="action-rail-button action-rail-button-top"
+        type="button"
+        aria-label="Вернуться наверх"
+        data-tooltip="Вернуться наверх"
+        data-action-rail-top
+      >
+        <i
+          class="fas fa-arrow-up"
+          aria-hidden="true"
+        ></i>
+      </button>
+    </div>
+  </div>
+  {/* Keep a separate, reachable control when the main rail is collapsed. */}
+  <button
+    class="action-rail-button action-rail-restore"
+    type="button"
+    aria-label="Развернуть панель действий"
+    data-tooltip="Развернуть меню"
+    aria-controls="quick-actions"
+    aria-expanded="false"
+    data-action-rail-restore
+  >
+    <i
+      class="fas fa-chevron-left"
+      aria-hidden="true"
+    ></i>
+  </button>
+</nav>
+
+<script>
+  const host = document.querySelector<HTMLElement>("[data-action-rail-host]");
+  const rail = document.querySelector<HTMLElement>("[data-action-rail]");
+  const collapse = document.querySelector<HTMLButtonElement>(
+    "[data-action-rail-collapse]",
+  );
+  const restore = document.querySelector<HTMLButtonElement>(
+    "[data-action-rail-restore]",
+  );
+  const scrollTop = document.querySelector<HTMLButtonElement>(
+    "[data-action-rail-top]",
+  );
+  const topFocusTarget = document.querySelector<HTMLElement>(".header-brand");
+
+  if (host && rail && collapse && restore && scrollTop) {
+    const updateVisibility = () => {
+      const atTop = window.scrollY <= 160;
+      if (atTop && host.contains(document.activeElement)) {
+        topFocusTarget?.focus();
+      }
+      host.hidden = atTop;
+    };
+
+    const setCollapsed = (collapsed: boolean) => {
+      host.dataset.collapsed = String(collapsed);
+      rail.inert = collapsed;
+      collapse.setAttribute("aria-expanded", String(!collapsed));
+      restore.setAttribute("aria-expanded", String(collapsed));
+    };
+
+    collapse.addEventListener("click", () => {
+      setCollapsed(true);
+      restore.focus();
+    });
+    restore.addEventListener("click", () => {
+      setCollapsed(false);
+      collapse.focus();
+    });
+    scrollTop.addEventListener("click", () => {
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      window.scrollTo({
+        top: 0,
+        behavior: reducedMotion ? "instant" : "smooth",
+      });
+    });
+
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("pageshow", updateVisibility);
+    document.addEventListener("focusout", updateVisibility);
+    updateVisibility();
+  }
+</script>
+
+<style>
+  /* Stretch the rail between safe screen insets for separated action groups. */
+  .action-rail-host {
+    position: fixed;
+    z-index: 40;
+    top: max(0.75rem, env(safe-area-inset-top));
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    right: max(0.75rem, env(safe-area-inset-right));
+    width: 3.25rem;
+    pointer-events: none;
+  }
+
+  /* Let the collapsed panel leave the viewport while preserving its opener. */
+  .action-rail-host[data-collapsed="true"] .action-rail {
+    transform: translateX(calc(100% + 0.75rem));
+    visibility: hidden;
+  }
+
+  /* Keep the rail compact and themed without covering a large content area. */
+  .action-rail {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 3.25rem;
+    pointer-events: auto;
+    transition:
+      transform 180ms ease,
+      visibility 180ms ease;
+  }
+
+  /* Stack contact actions with consistent button dimensions. */
+  .action-rail-group {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  /* Anchor return-to-top separately at the lower edge of the viewport. */
+  .action-rail-bottom {
+    display: grid;
+  }
+
+  /* Make every icon control a stable, generously sized target. */
+  .action-rail-button {
+    --action-color: var(--color-base-content);
+    --action-content: var(--color-base-100);
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 1px solid var(--action-color);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    color: var(--color-base-content);
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: var(--shadow-panel);
+  }
+
+  /* Distinguish the three contact actions with their requested fills. */
+  .action-rail-button-chat {
+    --action-color: #1e40af;
+    --action-content: #fff;
+    --chat-typing-interval: var(--action-rail-reminder-interval);
+  }
+
+  /* Keep the collapse action black against the page. */
+  .action-rail-button-collapse {
+    --action-color: #000;
+    --action-content: #fff;
+  }
+
+  /* Mark the phone action with a contrasting green fill. */
+  .action-rail-button-call {
+    --action-color: #166534;
+    --action-content: #fff;
+    --call-reminder-interval: var(--action-rail-reminder-interval);
+  }
+
+  /* Give return-to-top a separate dark orange fill. */
+  .action-rail-button-top {
+    --action-color: #9a3412;
+    --action-content: #fff;
+  }
+
+  /* Increase blue and green contrast against the dark page surface. */
+  :global([data-theme="dark"]) .action-rail-button-chat {
+    --action-color: #60a5fa;
+    --action-content: #18212b;
+  }
+
+  :global([data-theme="dark"]) .action-rail-button-call {
+    --action-color: #4ade80;
+    --action-content: #18212b;
+  }
+
+  :global([data-theme="dark"]) .action-rail-button-top {
+    --action-color: #fb923c;
+    --action-content: #18212b;
+  }
+
+  /* Keep phone rings visible beyond the button surface during a pulse. */
+  .action-rail-call-wave {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    border: 2px solid var(--action-color);
+    border-radius: 50%;
+    animation: action-rail-call-wave var(--call-reminder-interval) ease-out
+      infinite;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Offset the second ring to make each call reminder look like a wave. */
+  .action-rail-call-wave-second {
+    animation-delay: 150ms;
+  }
+
+  /* Overlay three typing dots inside the chat bubble. */
+  .action-rail-chat-icon {
+    position: relative;
+  }
+
+  .action-rail-chat-typing {
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    display: flex;
+    gap: 1px;
+    transform: translate(-50%, -50%);
+  }
+
+  .action-rail-chat-typing span {
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: var(--color-base-100);
+    animation: action-rail-chat-type-first var(--chat-typing-interval) linear
+      infinite;
+    opacity: 0;
+  }
+
+  /* Reveal each dot in sequence during the configured reminder cycle. */
+  .action-rail-chat-typing span:nth-child(2) {
+    animation-name: action-rail-chat-type-second;
+  }
+
+  .action-rail-chat-typing span:nth-child(3) {
+    animation-name: action-rail-chat-type-third;
+  }
+
+  /* Keep the phone icon above its expanding reminder rings. */
+  .action-rail-call-icon {
+    z-index: 1;
+    animation: action-rail-call-shake var(--call-reminder-interval) ease-in-out
+      infinite;
+  }
+
+  /* Pause reminder motion while the caller control is actively targeted. */
+  .action-rail-button-call:hover .action-rail-call-wave {
+    animation: none;
+    opacity: 0;
+  }
+
+  /* Stop the icon shake while the phone action is hovered. */
+  .action-rail-button-call:hover .action-rail-call-icon {
+    animation: none;
+  }
+
+  /* Keep chat idle while its action is hovered, matching the call control. */
+  .action-rail-button-chat:hover .action-rail-chat-typing span {
+    animation: none;
+    opacity: 0;
+  }
+
+  /* Match each action icon to its assigned hover fill before interaction. */
+  .action-rail-button-chat,
+  .action-rail-button-collapse,
+  .action-rail-button-call,
+  .action-rail-button-top {
+    color: var(--action-color);
+  }
+
+  /* Keep collapse and restore icons white against dark-theme surfaces. */
+  :global([data-theme="dark"]) .action-rail-button-collapse,
+  :global([data-theme="dark"]) .action-rail-restore {
+    color: #fff;
+    border-color: #fff;
+  }
+
+  /* Apply the assigned action color only while the pointer hovers. */
+  .action-rail-button:hover {
+    border-color: var(--action-color);
+    background: var(--action-color);
+    color: var(--action-content);
+  }
+
+  /* Preserve the white edge of collapse controls during dark-theme hover. */
+  :global([data-theme="dark"]) .action-rail-button-collapse:hover,
+  :global([data-theme="dark"]) .action-rail-restore:hover {
+    border-color: #fff;
+  }
+
+  /* Keep each button's label hidden until pointer or keyboard interaction. */
+  .action-rail-button[data-tooltip]::after {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 0.5rem);
+    z-index: 2;
+    width: max-content;
+    max-width: calc(100vw - 5rem);
+    padding: 0.375rem 0.625rem;
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    color: var(--color-base-content);
+    content: attr(data-tooltip);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    text-align: right;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+    visibility: hidden;
+  }
+
+  /* Show the action name beside its hovered or keyboard-focused control. */
+  .action-rail-button[data-tooltip]:hover::after,
+  .action-rail-button[data-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Match the caption to its assigned button color during hover. */
+  .action-rail-button[data-tooltip]:hover::after {
+    border-color: var(--action-color);
+    background: var(--action-color);
+    color: var(--action-content);
+  }
+
+  /* Keep a clear focus ring visible beyond each compact control. */
+  .action-rail-button:focus-visible {
+    z-index: 1;
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Place the reopen target beside the rail only while it is collapsed. */
+  .action-rail-restore {
+    position: absolute;
+    top: 0;
+    right: 0;
+    --action-color: #000;
+    --action-content: #fff;
+    border: 1px solid var(--action-color);
+    background: var(--color-base-100);
+    box-shadow: var(--shadow-panel);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Keep the restore target interactive while the main rail moves away. */
+  .action-rail-host[data-collapsed="true"] .action-rail-restore {
+    pointer-events: auto;
+  }
+
+  /* Keep the reopen control reachable after the main rail leaves the screen. */
+  .action-rail-host[data-collapsed="true"] .action-rail-restore {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Keep all controls inside narrow viewports with smaller edge spacing. */
+  @media (max-width: 30rem) {
+    /* Keep the tall rail inside compact and notched screen edges. */
+    .action-rail-host {
+      right: max(0.5rem, env(safe-area-inset-right));
+    }
+  }
+
+  /* Remove rail motion when visitors request reduced animation. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Make collapse and restore immediate under reduced-motion settings. */
+    .action-rail,
+    .action-rail-restore,
+    .action-rail-button[data-tooltip]::after,
+    .action-rail-chat-typing span,
+    .action-rail-call-wave,
+    .action-rail-call-icon {
+      transition: none;
+      animation: none;
+    }
+
+    /* Leave a still typing indicator when motion is reduced. */
+    .action-rail-chat-typing span {
+      opacity: 1;
+    }
+  }
+
+  /* Ring outward and fade during a short portion of each configured cycle. */
+  @keyframes action-rail-call-wave {
+    0%,
+    0.5%,
+    100% {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+
+    1% {
+      opacity: 0.7;
+    }
+
+    3% {
+      opacity: 0;
+      transform: scale(1.55);
+    }
+  }
+
+  /* Give the phone a brief shake, then leave it still until the next cycle. */
+  @keyframes action-rail-call-shake {
+    0%,
+    1.5%,
+    100% {
+      transform: rotate(0);
+    }
+
+    0.25%,
+    0.75% {
+      transform: rotate(-14deg);
+    }
+
+    0.5%,
+    1% {
+      transform: rotate(14deg);
+    }
+  }
+
+  @keyframes action-rail-chat-type-first {
+    0%,
+    0.5%,
+    100% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+
+    0.75%,
+    1.25% {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+  }
+
+  @keyframes action-rail-chat-type-second {
+    0%,
+    1%,
+    100% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+
+    1.25%,
+    1.75% {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+  }
+
+  @keyframes action-rail-chat-type-third {
+    0%,
+    1.5%,
+    100% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+
+    1.75%,
+    2.25% {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+  }
+</style>
