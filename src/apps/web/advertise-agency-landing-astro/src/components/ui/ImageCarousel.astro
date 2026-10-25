@@ -143,16 +143,16 @@ const circles = multiple && options.circles;
     --arrow-size: clamp(112px, 10vw, 144px);
     --dot-size: clamp(56px, 5vw, 72px);
     --control-inset: clamp(0.5rem, 1vw, 0.75rem);
-    --arrow-inset: clamp(0.125rem, 0.5vw, 0.25rem);
+    --arrow-inset: clamp(1rem, 1.5vw, 1.5rem);
     --arrow-icon-shift: 0px;
     --control-gap: clamp(12px, 1rem, 20px);
   }
 
-  /* Tighten arrow placement further for mobile carousel controls. */
+  /* Keep mobile controls inset while bringing them near the edges. */
   @media (max-width: 63.999rem) {
-    /* Keep the hit area at the edge and pull the visible glyph outward. */
+    /* Preserve a small gap for the hit area and align its glyph outward. */
     .image-carousel {
-      --arrow-inset: clamp(0.0625rem, 0.25vw, 0.125rem);
+      --arrow-inset: clamp(0.5rem, 1.25vw, 0.75rem);
       --arrow-icon-shift: clamp(2.75rem, 11.8vw, 2.875rem);
     }
 
