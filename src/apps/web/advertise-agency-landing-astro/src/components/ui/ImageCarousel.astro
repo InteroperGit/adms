@@ -167,6 +167,14 @@ const circles = multiple && options.circles;
     }
   }
 
+  /* Give tablet controls more breathing room than phone controls. */
+  @media (min-width: 30.01rem) and (max-width: 63.999rem) {
+    /* Use a medium inset between the phone and desktop sizes. */
+    .image-carousel {
+      --arrow-inset: clamp(1rem, 2vw, 1.25rem);
+    }
+  }
+
   /* Stack enabled slides in editorial order. */
   .carousel-list {
     display: grid;
