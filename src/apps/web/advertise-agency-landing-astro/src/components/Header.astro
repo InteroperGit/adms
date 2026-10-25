@@ -5,6 +5,7 @@
 
 import { site } from "@/content/site";
 import NavLinks from "@/components/ui/NavLinks.astro";
+import MobileHeaderContacts from "@/components/ui/MobileHeaderContacts.astro";
 import MobileMenuDialog from "@/components/ui/MobileMenuDialog.astro";
 import Settings from "@/components/ui/Settings.astro";
 import Logo from "@/components/ui/Logo.astro";
@@ -58,6 +59,11 @@ import Logo from "@/components/ui/Logo.astro";
       </button>
     </div>
   </div>
+  {/* Keep key contact actions visible below the mobile header row. */}
+  <MobileHeaderContacts
+    phone={site.phone}
+    address={site.address}
+  />
   <MobileMenuDialog
     items={site.menu}
     phone={site.phone}

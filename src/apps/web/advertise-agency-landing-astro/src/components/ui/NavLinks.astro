@@ -132,6 +132,28 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
     height: auto;
     min-height: var(--size);
     padding-block: 0.25rem;
+    background-color: #fff;
+    border: 1px solid #1688f5;
+    color: #1688f5;
+    box-shadow: none;
+  }
+
+  /* Invert the Max action colors only for a mouse pointer. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Keep the hover state shadow-free while reversing its contrast. */
+    .max-contact:hover {
+      background-color: #1688f5;
+      border-color: #fff;
+      color: #fff;
+      box-shadow: none;
+    }
+  }
+
+  /* Retain a clear keyboard focus ring without adding a shadow. */
+  .max-contact:focus-visible {
+    outline: 2px solid #1688f5;
+    outline-offset: 3px;
+    box-shadow: none;
   }
 
   /* Fill the drawer width with the supplied navigation list. */

@@ -143,7 +143,28 @@ const circles = multiple && options.circles;
     --arrow-size: clamp(112px, 10vw, 144px);
     --dot-size: clamp(56px, 5vw, 72px);
     --control-inset: clamp(0.5rem, 1vw, 0.75rem);
+    --arrow-inset: clamp(0.125rem, 0.5vw, 0.25rem);
+    --arrow-icon-shift: 0px;
     --control-gap: clamp(12px, 1rem, 20px);
+  }
+
+  /* Tighten arrow placement further for mobile carousel controls. */
+  @media (max-width: 63.999rem) {
+    /* Keep the hit area at the edge and pull the visible glyph outward. */
+    .image-carousel {
+      --arrow-inset: clamp(0.0625rem, 0.25vw, 0.125rem);
+      --arrow-icon-shift: clamp(2.75rem, 11.8vw, 2.875rem);
+    }
+
+    /* Place the left chevron a few pixels inside the carousel edge. */
+    .image-carousel :global(.carousel-arrow[data-direction="-1"] svg) {
+      transform: translateX(calc(-1 * var(--arrow-icon-shift)));
+    }
+
+    /* Place the right chevron a few pixels inside the carousel edge. */
+    .image-carousel :global(.carousel-arrow[data-direction="1"] svg) {
+      transform: translateX(var(--arrow-icon-shift));
+    }
   }
 
   /* Stack enabled slides in editorial order. */
@@ -212,12 +233,12 @@ const circles = multiple && options.circles;
 
   /* Place previous navigation inside the left image edge. */
   .image-carousel :global(.carousel-arrow)[data-direction="-1"] {
-    left: var(--control-inset);
+    left: var(--arrow-inset);
   }
 
   /* Place next navigation inside the right image edge. */
   .image-carousel :global(.carousel-arrow)[data-direction="1"] {
-    right: var(--control-inset);
+    right: var(--arrow-inset);
   }
 
   /* Hide mouse arrows without removing their keyboard destinations. */

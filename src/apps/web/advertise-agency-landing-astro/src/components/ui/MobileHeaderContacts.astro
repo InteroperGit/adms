@@ -1,0 +1,151 @@
+---
+// Render phone, messenger and address actions below the mobile header row.
+// The shared header supplies validated contact values and site destinations.
+
+import Button from "@/components/ui/Button.astro";
+import MaxLogo from "@/components/ui/MaxLogo.astro";
+import { icons } from "@/content/icons";
+
+// Keep these destinations derived from the shared contact data.
+interface Props {
+  phone: string;
+  address: string;
+}
+
+const { phone, address } = Astro.props;
+const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
+const [addressCity = address, ...addressParts] = address.split(",");
+const addressDetails = addressParts.join(",").trim();
+---
+
+{/* Place the most-used contact actions directly below the mobile header. */}
+<nav
+  class="mobile-header-contacts site-container"
+  aria-label="Быстрые контакты"
+>
+  <Button
+    href={phoneHref}
+    size="sm"
+    class="mobile-header-action mobile-header-phone"
+    aria-label="Позвонить"
+  >
+    <i
+      class:list={["fas", icons.phone]}
+      aria-hidden="true"
+    ></i>
+  </Button>
+  <Button
+    variant="secondary"
+    size="sm"
+    href="https://max.ru/"
+    class="mobile-header-action max-contact"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Написать в Макс"
+  >
+    <MaxLogo />
+  </Button>
+  <Button
+    variant="ghost"
+    size="sm"
+    href="/#contacts"
+    class="mobile-header-address"
+    aria-label={address}
+    title={address}
+  >
+    <span class="mobile-header-address-text">
+      <span class="mobile-header-address-city">{addressCity.trim()}</span>
+      {addressDetails && (
+        <span class="mobile-header-address-details">{addressDetails}</span>
+      )}
+    </span>
+  </Button>
+</nav>
+
+<style>
+  /* Keep the call and messenger links in a compact two-column row. */
+  .mobile-header-contacts {
+    --mobile-contact-control-size: 2.75rem;
+    display: grid;
+    grid-template-columns: repeat(2, var(--mobile-contact-control-size)) minmax(
+        0,
+        1fr
+      );
+    gap: 0.5rem;
+    padding-block: 0.25rem 0.75rem;
+  }
+
+  /* Keep both icon actions square and large enough for touch input. */
+  .mobile-header-contacts :global(.mobile-header-action) {
+    display: grid;
+    place-items: center;
+    width: var(--mobile-contact-control-size);
+    height: var(--mobile-contact-control-size);
+    min-width: var(--mobile-contact-control-size);
+    min-height: var(--mobile-contact-control-size);
+    padding: 0;
+  }
+
+  /* Match the standalone Max action to its blue logo without shadows. */
+  .mobile-header-contacts :global(.max-contact) {
+    background-color: #fff;
+    border: 1px solid #1688f5;
+    color: #1688f5;
+    box-shadow: none;
+  }
+
+  /* Keep keyboard focus distinct without adding a button shadow. */
+  .mobile-header-contacts :global(.max-contact:focus-visible) {
+    outline: 2px solid #1688f5;
+    outline-offset: 3px;
+    box-shadow: none;
+  }
+
+  /* Invert the Max button only when a mouse can hover. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Reverse the white and blue colors without adding a shadow. */
+    .mobile-header-contacts :global(.max-contact:hover) {
+      background-color: #1688f5;
+      border-color: #fff;
+      color: #fff;
+      box-shadow: none;
+    }
+  }
+
+  /* Keep the address aligned beside the two square contact actions. */
+  .mobile-header-address {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    height: auto;
+    padding-inline: 0.4rem;
+    white-space: normal;
+  }
+
+  /* Wrap the full address inside its narrow column without clipping. */
+  .mobile-header-address-text {
+    display: block;
+    min-width: 0;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+  }
+
+  /* Keep the city on one line and start the remaining address below. */
+  .mobile-header-address-city,
+  .mobile-header-address-details {
+    display: block;
+    overflow-wrap: anywhere;
+  }
+
+  /* Hide the compact contact section when desktop navigation is available. */
+  @media (min-width: 64rem) {
+    /* Avoid duplicating contact actions beside the desktop navigation. */
+    .mobile-header-contacts {
+      display: none;
+    }
+  }
+</style>
