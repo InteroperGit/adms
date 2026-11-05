@@ -120,31 +120,50 @@ const sizes =
     grid-area: 1 / 1;
   }
 
+  /* Keep the active image above the previous image during a crossfade. */
+  :global(.image-carousel[data-ready]) .carousel-slide:not([aria-hidden]) {
+    z-index: 2;
+    visibility: visible;
+    opacity: 1;
+  }
+
   /* Reserve hidden slide geometry without exposing content or links. */
   :global(.image-carousel[data-ready]) .carousel-slide[aria-hidden="true"] {
     visibility: hidden;
     pointer-events: none;
+    opacity: 0;
   }
 
-  /* Fade selected content only when animation and motion are enabled. */
+  /* Keep an opaque backdrop until the new image completely covers it. */
+  :global(.image-carousel[data-ready]) .carousel-slide[data-exiting] {
+    z-index: 1;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* Crossfade images from their current opacity, including rapid changes. */
   @media (prefers-reduced-motion: no-preference) {
-    /* Animate only visible slides and preserve their layout geometry. */
+    /* Keep this duration aligned with outgoing-state cleanup in the script. */
     :global(.image-carousel[data-ready][data-animation="true"])
-      .carousel-slide:not([aria-hidden]) {
-      animation: carousel-reveal 160ms ease-out;
-    }
-  }
-
-  /* Reveal slide content without reflow. */
-  @keyframes carousel-reveal {
-    /* Start the reveal with transparent content. */
-    from {
-      opacity: 0;
+      .carousel-slide {
+      transition: opacity 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    /* Finish the reveal at the normal opacity. */
-    to {
-      opacity: 1;
+    /* Zoom only artwork; the slide clips it without moving text or controls. */
+    :global(.image-carousel[data-ready][data-animation="true"])
+      .carousel-background {
+      transform: scale(1.035);
+      transition: transform 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    /* Selected and outgoing artwork settle at their natural crop. */
+    :global(.image-carousel[data-ready][data-animation="true"])
+      .carousel-slide:not([aria-hidden])
+      .carousel-background,
+    :global(.image-carousel[data-ready][data-animation="true"])
+      .carousel-slide[data-exiting]
+      .carousel-background {
+      transform: scale(1);
     }
   }
 
@@ -152,6 +171,7 @@ const sizes =
   .carousel-slide {
     position: relative;
     isolation: isolate;
+    overflow: hidden;
     display: grid;
     min-height: clamp(33.734rem, 52.8vw, 49.866rem);
     background: #000;

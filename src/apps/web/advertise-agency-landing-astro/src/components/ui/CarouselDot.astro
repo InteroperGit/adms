@@ -35,7 +35,7 @@ const { index, itemName, manualNavigation, slideId } = Astro.props;
 )}
 
 <style>
-  /* Give each position a generous touch and pointer target. */
+  /* Keep every marker keyboard and touch target at least 44px wide. */
   .carousel-dot {
     display: grid;
     place-items: center;
@@ -49,26 +49,43 @@ const { index, itemName, manualNavigation, slideId } = Astro.props;
     border: 0;
   }
 
-  /* Draw a compact circular marker inside the larger target. */
+  /* Draw a compact, fully filled marker inside the hit area. */
   .carousel-dot span {
-    width: 0.75rem;
-    height: 0.75rem;
-    border: 2px solid currentColor;
-    border-radius: 50%;
-    filter: drop-shadow(-1px 0 0 #000) drop-shadow(1px 0 0 #000)
-      drop-shadow(0 -1px 0 #000) drop-shadow(0 1px 0 #000);
-  }
-
-  /* Fill the current marker without changing its circle radius. */
-  .carousel-dot[aria-current] span {
+    width: 0.625rem;
+    height: 0.625rem;
     background: currentColor;
+    border-radius: 50%;
+    opacity: 0.68;
+    filter: drop-shadow(0 0 2px #000);
+    transition:
+      opacity 220ms ease,
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* Passive indicators do not imply a click target. */
+  /* Emphasize the current marker without changing the hit-area geometry. */
+  .carousel-dot[aria-current] span {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  /* Keep passive indicators compact while preserving their visual rhythm. */
   span.carousel-dot {
     cursor: default;
     pointer-events: none;
-    width: 1.75rem;
-    height: 2rem;
+    width: var(--dot-size);
+    height: var(--dot-size);
+  }
+
+  /* Disable indicator motion when the carousel animation option is off. */
+  :global(.image-carousel[data-animation="false"]) .carousel-dot span {
+    transition: none;
+  }
+
+  /* Honor reduced-motion preferences for indicator state changes. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Make the selected state immediate without removing the state itself. */
+    .carousel-dot span {
+      transition: none;
+    }
   }
 </style>

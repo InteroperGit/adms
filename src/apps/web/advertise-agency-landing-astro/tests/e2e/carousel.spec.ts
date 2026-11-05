@@ -25,6 +25,22 @@ test("manual controls select and announce slides", async ({ page }) => {
   await page.keyboard.press("Enter");
   await expect(slides.nth(1)).not.toHaveAttribute("aria-hidden", "true");
   await expect(dots.nth(1)).toHaveAttribute("aria-current", "true");
+  await expect(slides.nth(0)).toHaveAttribute("data-exiting", "true");
+  await expect
+    .poll(() =>
+      slides
+        .nth(0)
+        .evaluate((slide) => getComputedStyle(slide).transitionDuration),
+    )
+    .toBe("0.9s");
+  await expect
+    .poll(() =>
+      slides
+        .nth(1)
+        .evaluate((slide) => getComputedStyle(slide).transitionDuration),
+    )
+    .toBe("0.9s");
+  await expect(slides.nth(0)).not.toHaveAttribute("data-exiting", "true");
   await expect(status).toContainText("2 из 3");
 
   await carousel.locator('[data-direction="-1"]').click();

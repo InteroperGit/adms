@@ -46,7 +46,7 @@ function carouselMarkup() {
   return `
     <image-carousel data-autoplay="true" data-interval="1000"
       data-manual="true" data-arrows="true" data-circles="true"
-      data-item-label="Slide">
+      data-animation="true" data-item-label="Slide">
       <div class="carousel-controls"><button class="carousel-arrow"
         data-direction="1">Next</button></div>
       <div class="carousel-dots">
@@ -135,6 +135,40 @@ it("keeps slide selection independent for each carousel instance", async () => {
   expect(firstSlides[1]).not.toHaveAttribute("aria-hidden");
   expect(secondSlides[0]).not.toHaveAttribute("aria-hidden");
   expect(secondSlides[1]).toHaveAttribute("aria-hidden", "true");
+});
+
+it("clears the outgoing slide after the crossfade", async () => {
+  vi.useFakeTimers();
+  vi.stubGlobal("IntersectionObserver", ObserverMock);
+  vi.stubGlobal("ResizeObserver", ObserverMock);
+  vi.stubGlobal("matchMedia", () => matchMedia());
+  vi.resetModules();
+  await import("./image-carousel");
+  document.body.innerHTML = carouselMarkup();
+  const carousel = document.querySelector<HTMLElement>("image-carousel")!;
+  const slides = carousel.querySelectorAll<HTMLElement>(".carousel-slide");
+
+  carousel
+    .querySelector<HTMLButtonElement>('.carousel-dot[data-index="1"]')
+    ?.click();
+
+  expect(slides[0]).toHaveAttribute("data-exiting", "true");
+  expect(slides[0]).toHaveAttribute("aria-hidden", "true");
+  expect(slides[0].inert).toBe(true);
+  expect(slides[1]).not.toHaveAttribute("aria-hidden");
+
+  carousel
+    .querySelector<HTMLButtonElement>('.carousel-dot[data-index="0"]')
+    ?.click();
+
+  expect(slides[0]).not.toHaveAttribute("data-exiting");
+  expect(slides[1]).toHaveAttribute("data-exiting", "true");
+  expect(slides[0]).not.toHaveAttribute("aria-hidden");
+  expect(slides[1]).toHaveAttribute("aria-hidden", "true");
+
+  vi.advanceTimersByTime(900);
+
+  expect(slides[1]).not.toHaveAttribute("data-exiting");
 });
 
 it("rotates with fake time and pauses while hovered or hidden", async () => {

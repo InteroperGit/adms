@@ -109,7 +109,7 @@ it("renders runtime options and independent control settings", async () => {
   expect(carousel).toHaveAttribute("data-circles", "true");
   expect(carousel).toHaveStyle({
     "--image-fit": "contain",
-    "--panel-ratio": "1.5",
+    "--panel-ratio": String(1.5 * (0.75 / 1.1)),
   });
   expect(body.querySelectorAll(".carousel-dot")).toHaveLength(2);
   expect(body.querySelector(".carousel-arrow")).toBeNull();

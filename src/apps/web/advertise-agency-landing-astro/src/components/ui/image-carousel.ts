@@ -35,15 +35,19 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
   let hovered =
     matchMedia("(hover: hover)").matches && carousel.matches(":hover");
   let timer: ReturnType<typeof setTimeout> | undefined;
+  const transitionTimers = new Map<
+    HTMLElement,
+    ReturnType<typeof setTimeout>
+  >();
 
   // Nonmanual instances expose a static gallery when automatic rotation
   // is unavailable, so reduced motion never strands hidden images.
   const navigable =
     manual &&
     (carousel.dataset.arrows === "true" || carousel.dataset.circles === "true");
-  const enhanced = () => navigable || (autoplay && !motion.matches);
+  const shouldEnhance = () => navigable || (autoplay && !motion.matches);
   const canRotate = () =>
-    enhanced() &&
+    shouldEnhance() &&
     autoplay &&
     !motion.matches &&
     !hovered &&
@@ -67,10 +71,39 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
     }, interval);
   };
 
+  // Apply one selection snapshot to slides, indicators and the live region.
   // Hidden slides retain sizing but cannot expose content or tab stops.
-  const selectSlide = (index: number, announce = false) => {
-    currentSlide = (index + slides.length) % slides.length;
-    const ready = enhanced();
+  const clearExiting = (slide: HTMLElement) => {
+    const transitionTimer = transitionTimers.get(slide);
+    if (transitionTimer) {
+      clearTimeout(transitionTimer);
+      transitionTimers.delete(slide);
+    }
+    slide.removeAttribute("data-exiting");
+  };
+  const clearTransitions = () => {
+    transitionTimers.forEach((transitionTimer) =>
+      clearTimeout(transitionTimer),
+    );
+    transitionTimers.clear();
+    slides.forEach((slide) => slide.removeAttribute("data-exiting"));
+  };
+  const applySelection = (
+    ready: boolean,
+    announce = false,
+    outgoingIndex?: number,
+  ) => {
+    const animate =
+      ready &&
+      carousel.dataset.animation === "true" &&
+      !motion.matches &&
+      outgoingIndex !== undefined &&
+      outgoingIndex !== currentSlide;
+    if (animate) {
+      clearExiting(slides[currentSlide]);
+    } else {
+      clearTransitions();
+    }
     slides.forEach((slide, position) => {
       const inactive = ready && position !== currentSlide;
       if (inactive) {
@@ -79,6 +112,14 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
         slide.removeAttribute("aria-hidden");
       }
       slide.inert = inactive;
+      if (animate && position === outgoingIndex) {
+        slide.setAttribute("data-exiting", "true");
+        const transitionTimer = setTimeout(() => {
+          slide.removeAttribute("data-exiting");
+          transitionTimers.delete(slide);
+        }, 900);
+        transitionTimers.set(slide, transitionTimer);
+      }
     });
     dots.forEach((dot, position) => {
       if (ready && position === currentSlide) {
@@ -94,6 +135,23 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
     }
   };
 
+  // Selection owns only the current index; presentation updates reuse the same
+  // snapshot so motion changes cannot leave slides and indicators out of sync.
+  const selectSlide = (index: number, announce = false) => {
+    const outgoingIndex = currentSlide;
+    const nextSlide = (index + slides.length) % slides.length;
+    if (nextSlide === currentSlide) {
+      if (announce && status) {
+        status.textContent =
+          `${carousel.dataset.itemLabel} ` +
+          `${currentSlide + 1} РёР· ${slides.length}`;
+      }
+      return;
+    }
+    currentSlide = nextSlide;
+    applySelection(shouldEnhance(), announce, outgoingIndex);
+  };
+
   // Control spacing follows actual indicator wrapping and font size.
   const reserveIndicators = () => {
     carousel.style.setProperty(
@@ -102,16 +160,17 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
     );
   };
   const updatePresentation = () => {
-    if (enhanced()) {
+    const ready = shouldEnhance();
+    if (ready) {
       carousel.dataset.ready = "true";
       carousel.setAttribute("aria-roledescription", "карусель");
     } else {
       delete carousel.dataset.ready;
       carousel.removeAttribute("aria-roledescription");
     }
-    selectSlide(currentSlide);
+    applySelection(ready);
     if (controls) {
-      controls.hidden = !enhanced();
+      controls.hidden = !ready;
     }
     reserveIndicators();
     reconcileRotation();
@@ -198,6 +257,7 @@ function initializeCarousel(carousel: HTMLElement): (() => void) | undefined {
   const cleanup = () => {
     abort.abort();
     clearTimeout(timer);
+    clearTransitions();
     visibility.disconnect();
     resize.disconnect();
     delete carousel.dataset.ready;
