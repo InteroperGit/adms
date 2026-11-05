@@ -14,13 +14,13 @@ import Logo from "@/components/ui/Logo.astro";
 {/* Keep focused or expanded controls visible while scrolling. */}
 <header
   data-auto-hide-header
-  class="sticky top-0 z-40 bg-base-100/80 backdrop-blur-md shadow-panel"
+  class="site-header sticky top-0 z-40"
 >
   <div class="header-layout site-container">
     <div class="header-brand-wrap">
       <a
         href="/"
-        class="header-brand text-2xl font-bold text-brand"
+        class="header-brand text-2xl font-bold"
       >
         <Logo />
         <span>{site.logoText}</span>
@@ -71,13 +71,27 @@ import Logo from "@/components/ui/Logo.astro";
 </header>
 
 <style>
+  /* Give the sticky surface a translucent theme-aware boundary. */
+  .site-header {
+    background-color: var(--color-base-100);
+    background-color: color-mix(
+      in srgb,
+      var(--color-base-100) 94%,
+      transparent
+    );
+    border-bottom: 1px solid var(--color-base-300);
+    box-shadow: var(--shadow-panel);
+    backdrop-filter: blur(12px);
+  }
+
   /* Wrap navigation within the shared header container. */
   .header-layout {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 0.25rem 1rem;
-    padding-block: 0.5rem;
+    min-height: 4rem;
+    padding-block: 0.625rem;
   }
 
   /* Let brand text shrink beside header controls. */
@@ -91,12 +105,37 @@ import Logo from "@/components/ui/Logo.astro";
     flex: none;
   }
 
+  /* Give the native menu opener a stable, theme-aware touch surface. */
+  .header-menu-wrap button {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    border: 1px solid var(--color-base-300);
+    color: var(--color-base-content);
+    background-color: var(--color-base-100);
+  }
+
+  /* Use the secondary surface to distinguish pointer feedback. */
+  .header-menu-wrap button:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background-color: var(--color-base-200);
+  }
+
+  /* Keep keyboard focus clear against the translucent header surface. */
+  .header-menu-wrap button:focus-visible {
+    outline: var(--site-focus-ring);
+    outline-offset: 3px;
+  }
+
   /* Keep the butterfly aligned with the wrapping brand label. */
   .header-brand {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     max-width: 100%;
+    color: var(--color-primary);
   }
 
   /* Allow the brand label to shrink inside its link. */
@@ -169,6 +208,9 @@ import Logo from "@/components/ui/Logo.astro";
 <script>
   const header = document.querySelector<HTMLElement>("[data-auto-hide-header]");
   if (header) {
+    const overlaySelector = "dialog[open], [data-settings-open]";
+    const hasOpenOverlay = () => header.querySelector(overlaySelector) !== null;
+
     // Measure the rendered header so anchor targets clear it at any text size.
     const setClearance = () => {
       document.documentElement.style.setProperty(
@@ -229,7 +271,7 @@ import Logo from "@/components/ui/Logo.astro";
       if (
         y <= header.offsetHeight ||
         header.contains(document.activeElement) ||
-        header.querySelector("dialog[open], [data-settings-open]")
+        hasOpenOverlay()
       ) {
         reveal();
         return;
@@ -262,7 +304,7 @@ import Logo from "@/components/ui/Logo.astro";
     window.addEventListener("pageshow", reveal);
     // Opening a drawer or settings panel overrides scroll-driven hiding.
     new MutationObserver(() => {
-      if (header.querySelector("dialog[open], [data-settings-open]")) reveal();
+      if (hasOpenOverlay()) reveal();
     }).observe(header, {
       attributes: true,
       attributeFilter: ["open", "data-settings-open"],

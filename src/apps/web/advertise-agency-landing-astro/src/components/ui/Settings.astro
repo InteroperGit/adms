@@ -62,7 +62,7 @@ import ThemeToggle from "./ThemeToggle.astro";
   /* Reserve settings space beside the navigation controls. */
   .theme-settings {
     flex: none;
-    margin-inline: 0.5rem;
+    margin-inline: 0;
   }
   /* Center the compact gear in a generous pointer target. */
   .settings-trigger {
@@ -104,11 +104,11 @@ import ThemeToggle from "./ThemeToggle.astro";
     color: var(--color-primary-content);
     border-color: var(--color-primary);
   }
-  /* Preserve the requested black hover surface in explicit light mode. */
+  /* Use the neutral token for a strong hover surface in every theme. */
   :global([data-theme="light"]) .settings-trigger:hover .settings-surface {
-    background: #000;
-    color: #fff;
-    border-color: #000;
+    background: var(--color-neutral);
+    color: var(--color-neutral-content);
+    border-color: var(--color-neutral);
   }
   /* Keep keyboard focus visible above adjacent controls and surfaces. */
   .settings-trigger:focus-visible {

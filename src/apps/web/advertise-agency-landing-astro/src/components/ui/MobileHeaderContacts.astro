@@ -19,8 +19,9 @@ const addressDetails = addressParts.join(",").trim();
 ---
 
 {/* Place the most-used contact actions directly below the mobile header. */}
-<nav
+<div
   class="mobile-header-contacts site-container"
+  role="group"
   aria-label="Быстрые контакты"
 >
   <Button
@@ -60,7 +61,7 @@ const addressDetails = addressParts.join(",").trim();
       )}
     </span>
   </Button>
-</nav>
+</div>
 
 <style>
   /* Keep the call and messenger links in a compact two-column row. */
@@ -72,7 +73,7 @@ const addressDetails = addressParts.join(",").trim();
         1fr
       );
     gap: 0.5rem;
-    padding-block: 0.25rem 0.75rem;
+    padding-block: 0.5rem 0.875rem;
   }
 
   /* Keep both icon actions square and large enough for touch input. */
@@ -88,49 +89,27 @@ const addressDetails = addressParts.join(",").trim();
 
   /* Match the standalone Max action to its blue logo without shadows. */
   .mobile-header-contacts :global(.max-contact) {
-    background-color: #fff;
-    border: 1px solid #1688f5;
-    color: #1688f5;
+    background-color: var(--site-messenger-surface);
+    border: 1px solid var(--site-messenger-border);
+    color: var(--site-messenger-content);
     box-shadow: none;
-  }
-
-  :global([data-theme="dark"]) .mobile-header-contacts :global(.max-contact) {
-    background-color: #202c38;
-    border-color: #60a5fa;
-    color: #93c5fd;
   }
 
   /* Keep keyboard focus distinct without adding a button shadow. */
   .mobile-header-contacts :global(.max-contact:focus-visible) {
-    outline: 2px solid #1688f5;
+    outline: 2px solid var(--site-messenger-focus);
     outline-offset: 3px;
     box-shadow: none;
-  }
-
-  :global([data-theme="dark"])
-    .mobile-header-contacts
-    :global(.max-contact:focus-visible) {
-    outline-color: #93c5fd;
   }
 
   /* Invert the Max button only when a mouse can hover. */
   @media (hover: hover) and (pointer: fine) {
     /* Reverse the white and blue colors without adding a shadow. */
     .mobile-header-contacts :global(.max-contact:hover) {
-      background-color: #1688f5;
-      border-color: #fff;
-      color: #fff;
+      background-color: var(--site-messenger-hover);
+      border-color: var(--site-messenger-hover);
+      color: var(--site-messenger-hover-content);
       box-shadow: none;
-    }
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    :global([data-theme="dark"])
-      .mobile-header-contacts
-      :global(.max-contact:hover) {
-      background-color: #2563eb;
-      border-color: #fff;
-      color: #fff;
     }
   }
 

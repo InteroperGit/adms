@@ -25,6 +25,14 @@
   --color-base-content: #18222d;
   --site-muted: #526170;
   --site-control-border: #687787;
+  --site-messenger-mark: #1688f5;
+  --site-messenger-mark-content: #ffffff;
+  --site-messenger-surface: #ffffff;
+  --site-messenger-border: #075985;
+  --site-messenger-content: #075985;
+  --site-messenger-hover: #0c4a6e;
+  --site-messenger-hover-content: #ffffff;
+  --site-messenger-focus: #075985;
 }
 
 /* DaisyUI emits explicit dark and the no-JS system fallback from this source.
@@ -50,6 +58,14 @@
   --color-base-content: #edf2f7;
   --site-muted: #bdc8d4;
   --site-control-border: #8798aa;
+  --site-messenger-mark: #60a5fa;
+  --site-messenger-mark-content: #ffffff;
+  --site-messenger-surface: #202c38;
+  --site-messenger-border: #93c5fd;
+  --site-messenger-content: #93c5fd;
+  --site-messenger-hover: #2563eb;
+  --site-messenger-hover-content: #ffffff;
+  --site-messenger-focus: #93c5fd;
   --shadow-panel: 0 4px 16px rgb(0 0 0 / 18%);
   --shadow-elevated: 0 8px 28px rgb(0 0 0 / 24%);
 }

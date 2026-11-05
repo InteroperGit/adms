@@ -196,9 +196,9 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
 
   /* Keep the Max contact white with the logo-color outline. */
   .mobile-menu-actions :global(.mobile-menu-max) {
-    background-color: #fff;
-    border: 1px solid #1688f5;
-    color: #1688f5;
+    background-color: var(--site-messenger-surface);
+    border: 1px solid var(--site-messenger-border);
+    color: var(--site-messenger-content);
     box-shadow: none;
   }
 
@@ -206,16 +206,16 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
   @media (hover: hover) and (pointer: fine) {
     /* Keep the mobile Max action white until the pointer hovers. */
     .mobile-menu-actions :global(.mobile-menu-max:hover) {
-      background-color: #1688f5;
-      border-color: #fff;
-      color: #fff;
+      background-color: var(--site-messenger-hover);
+      border-color: var(--site-messenger-hover);
+      color: var(--site-messenger-hover-content);
       box-shadow: none;
     }
   }
 
   /* Keep keyboard focus visible without adding a button shadow. */
   .mobile-menu-actions :global(.mobile-menu-max:focus-visible) {
-    outline: 2px solid #1688f5;
+    outline: 2px solid var(--site-messenger-focus);
     outline-offset: 3px;
     box-shadow: none;
   }

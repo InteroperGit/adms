@@ -163,11 +163,11 @@ const themes = [
     border-color: var(--color-primary);
   }
 
-  /* Preserve the requested black hover treatment in explicit light mode. */
+  /* Use the neutral token for a strong hover surface in every theme. */
   :global([data-theme="light"]) input:not(:checked):hover + .theme-icon {
-    background: #000;
-    color: #fff;
-    border-color: #000;
+    background: var(--color-neutral);
+    color: var(--color-neutral-content);
+    border-color: var(--color-neutral);
   }
 
   /* Avoid implying a different selection when hovering the current choice. */
