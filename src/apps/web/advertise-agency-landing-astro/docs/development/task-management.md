@@ -2,6 +2,11 @@
 
 [Documentation index](../../README.md)
 
+Model selection and delegation are governed by
+[model routing](model-routing.md). Read it before splitting a task between the
+primary agent and subagents; task files should record any real escalation and
+its evidence.
+
 ## Purpose
 
 This document describes **where the agent should store task files, plans, and
