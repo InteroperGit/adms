@@ -22,10 +22,12 @@ const contacts = site.menu.find((item) => item.href === "/#contacts");
   background="default"
   class="opening"
 >
+  <h2 class="site-section-title opening-section-title">
+    {site.sections.about.title}
+  </h2>
   {/* Copy and images share a desktop row, then stack in reading order. */}
   <div class:list={["opening-row", { "opening-with-images": hasImages }]}>
     <div class="opening-introduction">
-      <h2 class="site-section-title">{site.sections.about.title}</h2>
       <p class="opening-lead">{about.description1}</p>
       <p class="opening-detail">{about.description2}</p>
       <div class="opening-actions">
@@ -103,13 +105,12 @@ const contacts = site.menu.find((item) => item.href === "/#contacts");
     overflow-wrap: anywhere;
   }
 
-  /* Align the agency heading with its introduction copy. */
-  .site-section-title {
-    text-align: left;
+  /* Place the section heading above both copy and supporting media. */
+  .opening-section-title {
     margin-bottom: 1.5rem;
   }
 
-  /* Give the lead paragraph a stronger readable type scale. */
+  /* Keep the first description as regular body copy. */
   .opening-lead {
     font-size: clamp(1.25rem, 2.4vw, 1.875rem);
     line-height: 1.45;

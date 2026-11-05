@@ -1,4 +1,4 @@
-# Current task state — 2026-10-25
+# Current task state — 2026-11-05
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal.
 Detailed scope and verification belong to the linked task files.
@@ -9,6 +9,7 @@ None currently.
 
 ## Recent completed work
 
+- [158 — Унифицировать заголовки и подзаголовки секций](../docs/codex/fixed/20261105/158-unify-section-headings-and-subtitles.md): общие центрированные заголовки и подзаголовки секций; проверки завершены.
 - [155 — Services section visual, UX and code improvement](../docs/codex/fixed/20261105/155-improve-services-section-visual-ux-and-code.md): shared catalog card, public service images and responsive card UX completed.
 - [154 — Scroll-triggered action rail](../docs/codex/fixed/20261025/154-scroll-triggered-action-rail.md):
   upper contact controls and a separate lower return-to-top action; focused

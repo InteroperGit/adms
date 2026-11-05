@@ -21,7 +21,9 @@ import { pricing, visiblePricingExamples } from "@/content/pricing";
         >
           {pricing.heading}
         </h2>
-        <p class="pricing-summary">{pricing.introduction}</p>
+        <p class="site-section-subtitle pricing-summary">
+          {pricing.introduction}
+        </p>
         {pricing.demoMode && <p class="pricing-demo">{pricing.demoNotice}</p>}
       </div>
       {/* Every complete scope includes its own adjacent inquiry link. */}
@@ -58,30 +60,28 @@ import { pricing, visiblePricingExamples } from "@/content/pricing";
 )}
 
 <style>
-  /* Align the section introduction with example photos and specifications. */
+  /* Center the pricing heading and subtitle above the examples. */
   .pricing-introduction {
-    max-width: var(--site-reading-width);
-    margin-bottom: 2rem;
+    max-width: 60ch;
+    margin: 0 auto 2.5rem;
+    text-align: center;
     overflow-wrap: anywhere;
   }
 
-  /* Keep this comparison section's title on the common left reading edge. */
-  .pricing .site-section-title {
-    text-align: left;
-  }
-
-  /* Introduce the dataset without competing with individual prices. */
+  /* Keep the demo notice close to the shared pricing subtitle. */
   .pricing-summary {
-    color: var(--site-muted);
-    font-size: 1.125rem;
+    margin-bottom: 1rem;
   }
 
   /* Keep the fictional-content notice prominent above all example amounts. */
   .pricing-demo {
     margin-top: 1rem;
+    margin-inline: auto;
+    max-width: 60ch;
     padding-left: 1rem;
     border-left: 3px solid var(--color-primary);
     font-weight: 600;
+    text-align: left;
   }
 
   /* Separate shared estimate guidance from the final example. */

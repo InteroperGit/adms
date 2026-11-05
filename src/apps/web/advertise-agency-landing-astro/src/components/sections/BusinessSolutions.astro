@@ -12,11 +12,9 @@ import { businessSolutions } from "@/content/business-solutions";
 <Section
   id="business-solutions"
   title={businessSolutions.heading}
+  subtitle={businessSolutions.introduction}
   ariaLabel={businessSolutions.heading}
 >
-  <div class="solutions-introduction">
-    <p>{businessSolutions.introduction}</p>
-  </div>
   <div class="solutions-list">
     {businessSolutions.items.map((item) => (
       <article
@@ -82,14 +80,6 @@ import { businessSolutions } from "@/content/business-solutions";
 </Section>
 
 <style>
-  /* Keep the opening copy readable and aligned with the solution cards. */
-  .solutions-introduction {
-    max-width: var(--site-reading-width);
-    margin: 0 auto 2.5rem;
-    color: var(--site-muted);
-    overflow-wrap: anywhere;
-  }
-
   /* Stack each business type so its complete example stays together. */
   .solutions-list {
     display: grid;

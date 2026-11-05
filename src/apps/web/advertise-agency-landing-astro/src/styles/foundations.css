@@ -61,14 +61,17 @@ html {
     font-weight: 700;
     text-align: center;
     margin-bottom: 1rem;
+    overflow-wrap: anywhere;
   }
 
   /* Keep supporting section copy readable and centered. */
   .site-section-subtitle {
     color: var(--site-muted);
     text-align: center;
-    max-width: var(--site-reading-width);
+    max-width: 60ch;
     margin: 0 auto 3rem;
+    font-size: 1.125rem;
+    overflow-wrap: anywhere;
   }
 
   /* Give shared buttons the site's field radius and emphasis. */

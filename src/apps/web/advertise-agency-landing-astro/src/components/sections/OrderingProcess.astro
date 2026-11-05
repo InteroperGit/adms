@@ -21,7 +21,9 @@ import { orderingProcess } from "@/content/ordering-process";
       >
         {orderingProcess.heading}
       </h2>
-      <p class="ordering-summary">{orderingProcess.introduction}</p>
+      <p class="site-section-subtitle ordering-summary">
+        {orderingProcess.introduction}
+      </p>
     </div>
 
     {/* Native list semantics preserve the customer's five-step sequence. */}
@@ -85,7 +87,7 @@ import { orderingProcess } from "@/content/ordering-process";
 <style>
   /* Keep the heading readable above the five process cards. */
   .ordering-introduction {
-    max-width: var(--site-reading-width);
+    max-width: 60ch;
     margin-inline: auto;
     margin-bottom: 2rem;
     text-align: center;
@@ -94,8 +96,7 @@ import { orderingProcess } from "@/content/ordering-process";
 
   /* Keep the process introduction distinct from the card details. */
   .ordering-summary {
-    color: var(--site-muted);
-    font-size: 1.125rem;
+    margin-bottom: 0;
   }
 
   /* Use a native ordered list while laying cards out responsively. */
