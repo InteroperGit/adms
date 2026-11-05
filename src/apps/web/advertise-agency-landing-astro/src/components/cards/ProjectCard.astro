@@ -1,13 +1,13 @@
 ---
-// Render one project with reserved image space and concise project copy.
-// Project metadata supplies image alternatives, dimensions and destination.
+// Adapt project evidence and category data to the shared card presentation.
+// Draft images stay hidden according to the shared content publication rules.
 
-import type { Project } from "@/types";
-import ContentImage from "@/components/content/ContentImage.astro";
+import Card from "@/components/cards/Card.astro";
 import { getProjectCategory } from "@/content/project-categories";
 import { getVisibleBlocks } from "@/content/block-publication";
+import type { Project } from "@/types/project";
 
-// Caller-supplied data and presentation options for this component.
+// Caller supplies a validated project record from the content layer.
 export interface Props {
   project: Project;
 }
@@ -16,152 +16,24 @@ const { project } = Astro.props;
 const photo = getVisibleBlocks(project.content).find(
   (block) => block.type === "image" || block.type === "image-gallery",
 );
-const thumbnail = photo?.type === "image" ? photo : photo?.images[0];
+const image = photo
+  ? photo.type === "image"
+    ? photo
+    : photo.images[0]
+  : undefined;
 const category = getProjectCategory(project.category);
+const metadata = `${project.client}${project.date ? `, ${project.date}` : ""}`;
 ---
 
-<article class="project-card">
-  {/* Missing photos produce text-only cards without changing copy. */}
-  {thumbnail && (
-    <ContentImage
-      image={thumbnail}
-      thumbnail
-    />
-  )}
-  {/* Keep only the title, metadata, summary and detail action in the copy. */}
-  <div class="project-copy">
-    {category && (
-      <span
-        class="project-category"
-        style={`--category-background: ${category.color}; --category-text:
-          ${category.textColor}`}
-      >
-        {category.label}
-      </span>
-    )}
-    <h3>{project.title}</h3>
-    <p class="project-client">
-      {project.client}
-      {project.date !== undefined && `, ${project.date}`}
-    </p>
-    <p class="project-summary">{project.description}</p>
-    <a
-      class="project-link"
-      href={`/projects/${project.id}/`}
-      data-project-link
-    >
-      Подробнее<span class="sr-only">: {project.title}</span>
-      <svg
-        aria-hidden="true"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-      >
-        <path d="m9 5 7 7-7 7" />
-      </svg>
-    </a>
-  </div>
-</article>
-
-<style>
-  /* Keep each project in a shrinkable framed column. */
-  .project-card {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    background: var(--color-base-100);
-    border: 1px solid var(--color-base-300);
-    border-radius: var(--radius-field);
-    transition:
-      border-color 180ms ease,
-      background-color 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  /* Highlight the complete card when a pointer rests on it. */
-  .project-card:hover,
-  .project-card:focus-within {
-    border-color: var(--color-primary);
-    background-color: var(--color-base-200);
-    box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 10%);
-  }
-
-  /* Let project copy grow while keeping its action at the end. */
-  .project-copy {
-    min-width: 0;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: clamp(1rem, 2vw, 1.5rem);
-    overflow-wrap: anywhere;
-  }
-
-  /* Maintain the card heading hierarchy without oversized lettering. */
-  h3 {
-    font-size: 1.25rem;
-    line-height: 1.35;
-    font-weight: 700;
-  }
-
-  /* Identify the case category with a compact, high-contrast oval. */
-  .project-category {
-    align-self: flex-start;
-    max-width: 100%;
-    padding: 0.35rem 0.75rem;
-    color: var(--category-text);
-    background-color: var(--category-background);
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    line-height: 1.3;
-    overflow-wrap: anywhere;
-  }
-
-  /* Distinguish client metadata with readable muted text. */
-  .project-client {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-  }
-
-  /* Keep summary copy at the shared body reading rhythm. */
-  .project-summary {
-    line-height: 1.6;
-    color: var(--color-base-content);
-  }
-
-  /* Anchor the underlined detail action at the card bottom. */
-  .project-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: fit-content;
-    min-height: 44px;
-    margin-top: auto;
-    padding-block: 0.5rem;
-    color: var(--color-primary);
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-  }
-
-  /* Keep the directional symbol from shrinking with text. */
-  .project-link svg {
-    flex-shrink: 0;
-  }
-
-  /* Provide pointer feedback while retaining the themed foreground. */
-  .project-link:hover {
-    text-decoration-thickness: 2px;
-  }
-
-  /* Remove motion for users who ask for reduced animation. */
-  @media (prefers-reduced-motion: reduce) {
-    .project-card {
-      transition: none;
-    }
-  }
-</style>
+{/* Keep project routing, attribution context and category metadata intact. */}
+<Card
+  title={project.title}
+  titleId={`project-${project.id}`}
+  description={project.description}
+  href={`/projects/${project.id}/`}
+  image={image}
+  category={category}
+  metadata={metadata}
+  actionName={`Подробнее: ${project.title}`}
+  projectLink
+/>

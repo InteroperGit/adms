@@ -9,6 +9,7 @@ None currently.
 
 ## Recent completed work
 
+- [155 — Services section visual, UX and code improvement](../docs/codex/fixed/20261105/155-improve-services-section-visual-ux-and-code.md): shared catalog card, public service images and responsive card UX completed.
 - [154 — Scroll-triggered action rail](../docs/codex/fixed/20261025/154-scroll-triggered-action-rail.md):
   upper contact controls and a separate lower return-to-top action; focused
   tests and project checks passed.

@@ -33,9 +33,9 @@ it("renders text-only copy, category and named detail action", async () => {
   const link = getByRole(body, "link", { name: "Подробнее: Sample project" });
   expect(link).toHaveAttribute("href", "/projects/42/");
   expect(link).toHaveAttribute("data-project-link");
-  expect(link.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
-  expect(body.querySelector(".project-category")).toHaveTextContent("Sample");
-  expect(body.querySelector(".project-client")).toHaveTextContent(
+  expect(link.querySelector("svg")).toBeNull();
+  expect(body.querySelector(".catalog-category")).toHaveTextContent("Sample");
+  expect(body.querySelector(".catalog-client")).toHaveTextContent(
     /^Sample client$/,
   );
   expect(body).toHaveTextContent("Summary");
@@ -59,11 +59,11 @@ it("selects a visible image after drafts and empty galleries", async () => {
   expect(photo).toHaveAttribute("width", "800");
   expect(photo).toHaveAttribute("height", "600");
   expect(photo).toHaveAttribute("loading", "lazy");
-  expect(photo.parentElement).toHaveClass("content-media-thumbnail");
+  expect(photo.parentElement).toHaveClass("content-media-service");
   expect(photo.parentElement).toHaveAttribute("data-image-state", "loading");
   expect(body.querySelectorAll("img")).toHaveLength(1);
-  expect(body.querySelector(".project-category")).toBeNull();
-  expect(body.querySelector(".project-client")).toHaveTextContent(
+  expect(body.querySelector(".catalog-category")).toBeNull();
+  expect(body.querySelector(".catalog-client")).toHaveTextContent(
     "Sample client, 2026-10-15",
   );
 });
@@ -89,7 +89,10 @@ it("omits media when every supplied image is a draft", async () => {
   item.content = [{ ...image, status: "draft" }];
   const body = await render(ProjectCard, { project: item });
   expect(body.querySelector("img, .content-media-frame")).toBeNull();
-  expect(getByRole(body, "link")).toHaveAttribute("href", "/projects/42/");
+  expect(body.querySelector(".catalog-action")).toHaveAttribute(
+    "href",
+    "/projects/42/",
+  );
 });
 
 it("escapes project copy while keeping the stable detail URL", async () => {
@@ -102,5 +105,8 @@ it("escapes project copy while keeping the stable detail URL", async () => {
   expect(body).toHaveTextContent(item.title);
   expect(body).toHaveTextContent(item.client);
   expect(body).toHaveTextContent(item.description);
-  expect(getByRole(body, "link")).toHaveAttribute("href", "/projects/42/");
+  expect(body.querySelector(".catalog-action")).toHaveAttribute(
+    "href",
+    "/projects/42/",
+  );
 });

@@ -23,7 +23,7 @@ const { items = visibleServices } = Astro.props;
     aria-labelledby="services-heading"
   >
     <div class="site-container">
-      <div class="services-introduction">
+      <header class="services-introduction">
         <h2
           id="services-heading"
           class="site-section-title"
@@ -34,7 +34,7 @@ const { items = visibleServices } = Astro.props;
         {services.demoMode && (
           <p class="services-demo">{services.demoNotice}</p>
         )}
-      </div>
+      </header>
       {/*
         Cards share the filtered catalog order without client-side rendering.
       */}
@@ -62,6 +62,8 @@ const { items = visibleServices } = Astro.props;
 
   /* Explain the catalog without competing with its individual categories. */
   .services-summary {
+    max-width: 60ch;
+    margin: 0;
     color: var(--site-muted);
     font-size: 1.125rem;
   }
@@ -77,23 +79,8 @@ const { items = visibleServices } = Astro.props;
   /* Keep each service fully readable in a narrow single-column layout. */
   .services-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem 2rem;
-  }
-
-  /* Pair photos once there is room for two useful reading columns. */
-  @media (min-width: 42rem) {
-    /* Let long service names wrap within their own grid cell. */
-    .services-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  /* Present the catalog compactly on wide desktop screens. */
-  @media (min-width: 68rem) {
-    /* Three columns preserve readable text within the shared container. */
-    .services-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    align-items: stretch;
+    gap: clamp(1.5rem, 3vw, 2rem);
   }
 </style>

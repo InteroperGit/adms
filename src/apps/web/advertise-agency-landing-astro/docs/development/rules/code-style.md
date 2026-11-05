@@ -9,6 +9,13 @@ target, so `pnpm check:style` remains the strict line-length check.
 At the end of each task, run `pnpm format:check` in the same final verification
 pass as the relevant tests.
 
+## Git commits
+
+Every commit must contain a clear subject and a detailed body. The body must
+explain what changed, why the change was needed, its user or technical impact,
+and which verification commands were run. Do not use vague messages such as
+`fix`, `changes` or `update` without describing the actual work.
+
 ## Conditional blocks
 
 Always wrap if, else, and else if bodies in braces, including one-line branches.

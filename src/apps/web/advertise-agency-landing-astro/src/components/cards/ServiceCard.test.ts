@@ -14,7 +14,14 @@ it("labels the article and preserves its title link and copy", async () => {
   const body = await render(ServiceCard, { service: item });
   expect(getByRole(body, "article")).toHaveAccessibleName(item.name);
   expect(getByRole(body, "heading", { level: 3 })).toHaveTextContent(item.name);
-  expect(getByRole(body, "link")).toHaveAttribute("href", item.href);
+  expect(body.querySelector(".catalog-title a")).toHaveAttribute(
+    "href",
+    item.href,
+  );
+  expect(getByRole(body, "link", { name: /Подробнее/ })).toHaveAttribute(
+    "href",
+    item.href,
+  );
   expect(body).toHaveTextContent(item.description);
   const image = getByRole(body, "img", { name: item.image!.alt });
   expect(image).toHaveAttribute("src", item.image!.src);
@@ -22,8 +29,9 @@ it("labels the article and preserves its title link and copy", async () => {
   expect(image).toHaveAttribute("height", String(item.image!.height));
   expect(image).toHaveAttribute("loading", "lazy");
   expect(image).toHaveAttribute("decoding", "async");
+  expect(image.parentElement).toHaveClass("content-media-service");
   expect(image.parentElement?.getAttribute("style")).toContain(
-    "--mobile-focal-point:1% 1%",
+    "--mobile-media-position:1% 1%",
   );
 });
 
@@ -32,7 +40,7 @@ it("omits the photo frame and link for a text-only service", async () => {
   item.image = null;
   delete item.href;
   const body = await render(ServiceCard, { service: item });
-  expect(body.querySelector("img, .service-photo, a")).toBeNull();
+  expect(body.querySelector("img, .content-media-frame, a")).toBeNull();
   expect(getByRole(body, "heading")).toHaveTextContent(item.name);
   expect(body).toHaveTextContent(item.description);
 });
@@ -47,7 +55,10 @@ it("renders service copy with a native destination", async () => {
   expect(body.querySelector("script, b")).toBeNull();
   expect(body).toHaveTextContent(item.name);
   expect(body).toHaveTextContent(item.description);
-  expect(getByRole(body, "link")).toHaveAttribute("href", item.href);
+  expect(body.querySelector(".catalog-title a")).toHaveAttribute(
+    "href",
+    item.href,
+  );
 });
 
 it("builds responsive sources for a bundled image", async () => {
@@ -56,7 +67,7 @@ it("builds responsive sources for a bundled image", async () => {
   const body = await render(ServiceCard, { service: item });
   const image = getByRole(body, "img");
   expect(image.getAttribute("srcset")).toContain("320w");
-  expect(image.getAttribute("sizes")).toContain("380px");
+  expect(image.getAttribute("sizes")).toContain("368px");
   expect(image).toHaveAttribute("alt", item.image!.alt);
 });
 

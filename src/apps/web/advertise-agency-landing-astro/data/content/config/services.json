@@ -1,0 +1,169 @@
+{
+  "heading": "Наши услуги",
+  "introduction": "Выберите направление наружной рекламы для вашего проекта.",
+  "copyApproved": false,
+  "items": [
+    {
+      "id": "svetovye-bukvy",
+      "name": "Световые буквы",
+      "description":
+  "Сделайте название заметным. Обсудим размер букв и подсветку фасада.",
+      "claimSource": "site.json description; about.json description1",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/images/carousel/storefront.webp",
+        "alt": "Объёмные световые буквы над входом в магазин.",
+        "width": 1081,
+        "height": 646,
+        "source": "CC0 Houston storefront photo; source in docs/site/offers-carousel.md",
+        "projectContext": "Stock photo for a service category; not agency work",
+        "publicationPermission": "CC0 1.0; source in docs/site/offers-carousel.md",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/svetovye-bukvy/",
+      "article": {
+        "format": "mdx",
+        "entry": "svetovye-bukvy"
+      }
+    },
+    {
+      "id": "vyveski",
+      "name": "Вывески",
+      "description":
+  "Помогите клиентам найти вход. Подберём формат и расположение вывески.",
+      "claimSource": "site.json description; introduction.json summary",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/images/carousel/storefront.webp",
+        "alt": "Фасад магазина с крупной вывеской над входом.",
+        "width": 1081,
+        "height": 646,
+        "source": "CC0 Houston storefront photo; source in docs/site/offers-carousel.md",
+        "projectContext": "Stock photo for a service category; not agency work",
+        "publicationPermission": "CC0 1.0; source in docs/site/offers-carousel.md",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/vyveski/",
+      "article": {
+        "format": "mdx",
+        "entry": "vyveski"
+      }
+    },
+    {
+      "id": "neon",
+      "name": "Неон",
+      "description":
+  "Световой акцент для интерьера. Обсудим надпись, цвет и размер неона.",
+      "claimSource": "site.json description; about.json description2",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/images/carousel/neon-sign.webp",
+        "alt": "Неоновая вывеска в интерьере заведения.",
+        "width": 1100,
+        "height": 733,
+        "source": "CC0 Neon Sign photo by Alex Knight",
+        "projectContext": "Stock photo for a service category; not agency work",
+        "publicationPermission": "CC0 1.0; source in docs/site/offers-carousel.md",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/neon/",
+      "article": {
+        "format": "mdx",
+        "entry": "neon"
+      }
+    },
+    {
+      "id": "obyomnye-konstruktsii",
+      "name": "Объёмные конструкции",
+      "description":
+  "Добавьте объём вашему знаку. Обсудим форму, размер и размещение.",
+      "claimSource": "about.json description1",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/images/carousel/storefront.webp",
+        "alt": "Объёмные буквы и подсветка на фасаде магазина.",
+        "width": 1081,
+        "height": 646,
+        "source": "CC0 Houston storefront photo; source in docs/site/offers-carousel.md",
+        "projectContext": "Stock photo for a service category; not agency work",
+        "publicationPermission": "CC0 1.0; source in docs/site/offers-carousel.md",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/obyomnye-konstruktsii/",
+      "article": {
+        "format": "mdx",
+        "entry": "obyomnye-konstruktsii"
+      }
+    },
+    {
+      "id": "montazh",
+      "name": "Монтаж",
+      "description":
+  "Подготовьте вывеску к монтажу. Обсудим крепления и доступ на объект.",
+      "claimSource": "about.json description1; introduction.json summary",
+      "confirmed": false,
+      "copyApproved": false,
+      "image": {
+        "src": "/images/carousel/storefront.webp",
+        "alt": "Фасад магазина после оформления входной зоны.",
+        "width": 1081,
+        "height": 646,
+        "source": "CC0 Houston storefront photo; source in docs/site/offers-carousel.md",
+        "projectContext": "Stock photo for a service category; not agency work",
+        "publicationPermission": "CC0 1.0; source in docs/site/offers-carousel.md",
+        "approved": false,
+        "desktopFocalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "mobileFocalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "href": "/services/montazh/",
+      "article": {
+        "format": "mdx",
+        "entry": "montazh"
+      }
+    }
+  ],
+  "demoMode": true,
+  "demoNotice": "Тестовые тексты и иллюстрации. Это не работы агентства."
+}

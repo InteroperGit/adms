@@ -8,7 +8,7 @@ it("renders featured projects and the complete catalogue action", async () => {
   const body = await render(Component, {});
   expect(Component).toBeDefined();
   expect(getByRole(body, "heading", { level: 2 })).toBeInTheDocument();
-  expect(body.querySelectorAll(".project-card").length).toBeLessThanOrEqual(3);
+  expect(body.querySelectorAll(".catalog-card").length).toBeLessThanOrEqual(3);
   expect(getByRole(body, "link", { name: /все проекты/i })).toHaveAttribute(
     "href",
     "/projects/",

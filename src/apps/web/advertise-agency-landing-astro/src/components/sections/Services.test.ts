@@ -18,12 +18,12 @@ it("renders the visible service collection in source order", async () => {
   });
   expect(Component).toBeDefined();
   expect(getByRole(body, "heading", { level: 2 })).toBeInTheDocument();
-  expect(body.querySelectorAll(".service-card")).toHaveLength(2);
-  expect(body.querySelectorAll(".service-title a")[0]).toHaveAttribute(
+  expect(body.querySelectorAll(".catalog-card")).toHaveLength(2);
+  expect(body.querySelectorAll(".catalog-title a")[0]).toHaveAttribute(
     "href",
     "/one/",
   );
-  expect(body.querySelectorAll(".service-title a")[1]).toHaveAttribute(
+  expect(body.querySelectorAll(".catalog-title a")[1]).toHaveAttribute(
     "href",
     "/two/",
   );

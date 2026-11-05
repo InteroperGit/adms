@@ -12,6 +12,8 @@ interface Props {
   serviceCrop?: boolean;
   /** Only the first article image is eager; catalogue media remains lazy. */
   priority?: boolean;
+  /** Let catalog cards request the same responsive image widths. */
+  sizes?: string;
 }
 
 const {
@@ -19,6 +21,7 @@ const {
   thumbnail = false,
   serviceCrop = false,
   priority = false,
+  sizes: requestedSizes,
 } = Astro.props;
 const original = getContentImageMetadata(image.src);
 const sourceWidth = original?.width ?? image.width;
@@ -28,9 +31,11 @@ const widths = [
     Math.min(sourceWidth, 1440),
   ]),
 ].sort((a, b) => a - b);
-const sizes = thumbnail
-  ? "(min-width: 80rem) 368px, (min-width: 48rem) 45vw, 92vw"
-  : "(min-width: 64rem) 896px, 94vw";
+const sizes =
+  requestedSizes ??
+  (thumbnail
+    ? "(min-width: 80rem) 368px, (min-width: 48rem) 45vw, 92vw"
+    : "(min-width: 64rem) 896px, 94vw");
 const focalPoint = image.focalPoint ?? { x: 50, y: 50 };
 const mobilePoint = image.mobileFocalPoint ?? focalPoint;
 const attributes = {
