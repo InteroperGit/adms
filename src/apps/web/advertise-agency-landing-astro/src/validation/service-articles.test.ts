@@ -4,6 +4,7 @@ import fixture from "../../tests/fixtures/content/unit-contracts.json";
 import {
   serviceArticleSourceSchema,
   serviceArticleSchema,
+  serviceArticleMetadataSchema,
 } from "./service-articles";
 
 it("parses valid article metadata and JSON fallback content", () => {
@@ -53,6 +54,30 @@ it("rejects empty content, unapproved copy and unknown metadata", () => {
       ...service.article,
       reason: "Fallback",
       extra: true,
+    }).success,
+  ).toBe(false);
+});
+
+it("rejects legacy fields, surplus metadata and blank fallback reasons", () => {
+  const article = fixture.services.items[0].article;
+  for (const field of ["lead", "sections", "inquiry"]) {
+    expect(
+      serviceArticleSchema.safeParse({ ...article, [field]: [] }).success,
+    ).toBe(false);
+  }
+  expect(
+    serviceArticleMetadataSchema.safeParse({
+      title: "Fixture",
+      description: "Fixture",
+      approved: false,
+      extra: true,
+    }).success,
+  ).toBe(false);
+  expect(
+    serviceArticleSourceSchema.safeParse({
+      format: "json",
+      ...article,
+      reason: " ",
     }).success,
   ).toBe(false);
 });

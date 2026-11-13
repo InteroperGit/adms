@@ -27,9 +27,8 @@ pnpm test:e2e
 
 [Test rules](testing.md) define placement, isolation and evidence limits. For
 content/compiler changes also run the affected `test:content-catalog`,
-`test:content-blocks`, `test:service-articles`, `test:project-articles` and
-`test:publication-policy` scripts. Build before checks that consume built
-output. Do not change runtime content to make tests pass.
+`test:content-blocks` and `test:publication-policy` scripts. Build before checks
+that consume built output. Do not change runtime content to make tests pass.
 
 For documentation-only changes check formatting, local links/anchors, stale
 paths and the final diff. Do not add application tests for prose changes. Keep

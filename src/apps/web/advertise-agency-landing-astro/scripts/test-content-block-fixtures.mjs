@@ -42,6 +42,19 @@ for (const name of ["minimal", "project", "service"]) {
   const { content } = await compileMdx(await readFile(path, "utf8"), path);
   contentBlocksSchema.parse(content);
 }
+// Authored MDX cannot execute code or bypass block validation.
+for (const body of [
+  'import Evil from "evil";\n\nHello.',
+  "{alert(1)}",
+  "<script>alert(1)</script>",
+  "<ImageBlock block={dangerous()} />",
+  "## Empty heading",
+  "3. A list starting at three",
+  '<ImageStackBlock block=\'{"type":"image-stack","images":[]}\' />',
+  '<ImageBlock block=\'{"type":"quote","text":"Wrong"}\' />',
+]) {
+  await assert.rejects(() => compileMdx(`---\ntitle: Test\n---\n\n${body}\n`));
+}
 const types = new Set(valid.map((block) => block.type));
 const expected = new Set([
   "heading",

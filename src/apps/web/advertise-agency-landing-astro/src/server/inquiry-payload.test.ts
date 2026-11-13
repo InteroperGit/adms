@@ -70,6 +70,7 @@ it(
       kind: "lettering",
       fields,
     });
+    expect(validate(fields, { projectIds: [] }).valid).toBe(true);
     expect(validate({ ...homepage, phone: "" }, options)).toEqual({
       valid: true,
       kind: "homepage",
@@ -267,6 +268,7 @@ it.each(["8", "9", "a", "b"])(
 
 it.each([
   "missing-at.test",
+  "a@@example.test",
   "a b@example.test",
   "a@-bad.test",
   "a@bad-.test",
@@ -274,18 +276,21 @@ it.each([
   "a@",
   "@example.test",
   "a@" + "b".repeat(64),
+  "a@example." + "b".repeat(64),
 ])("rejects email %j", (email) => rejects({ ...homepage, email }, "email"));
 
-it.each(["A+tag@EXAMPLE.test", "a@localhost", "a@" + "b".repeat(63) + ".test"])(
-  "accepts supported email %j",
-  (email) => {
-    expect(validate({ ...homepage, email }, options)).toEqual({
-      valid: true,
-      kind: "homepage",
-      fields: { ...homepage, email },
-    });
-  },
-);
+it.each([
+  "A+tag@EXAMPLE.test",
+  "a@localhost",
+  "a@" + "b".repeat(63),
+  "a@" + "b".repeat(63) + ".test",
+])("accepts supported email %j", (email) => {
+  expect(validate({ ...homepage, email }, options)).toEqual({
+    valid: true,
+    kind: "homepage",
+    fields: { ...homepage, email },
+  });
+});
 
 it.each([
   "123456",

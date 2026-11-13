@@ -88,6 +88,7 @@ it("rejects unknown categories, dates, metadata and malformed sources", () => {
     { format: "mdx", entry: "" },
     { format: "html", entry: "sample" },
     { format: "json", reason: "", content },
+    { format: "json", reason: " ", content },
     { format: "json", reason: "Fallback", content, extra: true },
   ]) {
     expect(projectArticleSourceSchema.safeParse(article).success).toBe(false);
@@ -95,6 +96,16 @@ it("rejects unknown categories, dates, metadata and malformed sources", () => {
   expect(
     projectArticleMetadataSchema.safeParse({ projectId: -1 }).success,
   ).toBe(false);
+});
+
+it("rejects legacy fields on authored project records", () => {
+  const article = { format: "mdx", entry: "sample" };
+  for (const field of ["photos", "details", "story", "shortDescription"]) {
+    expect(
+      projectRecordsSchema.safeParse([{ ...metadata, article, [field]: [] }])
+        .success,
+    ).toBe(false);
+  }
 });
 
 it("rejects duplicate record IDs and duplicate resolved IDs", () => {

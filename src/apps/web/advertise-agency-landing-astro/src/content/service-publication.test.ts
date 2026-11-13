@@ -45,9 +45,13 @@ it("requires approved article content and an existing route", () => {
   expect(getVisibleServices(content)).toEqual([service]);
   expect(getPublishedServicePaths(content)).toEqual([service.href]);
   service.href = undefined;
+  expect(getVisibleServices(content)).toEqual([service]);
   expect(getPublishedServicePaths(content)).toEqual([]);
+  service.href = "/services/sample/";
   service.article.approved = false;
   expect(isServiceArticlePublished(content, service)).toBe(false);
+  expect(getVisibleServices(content)).toEqual([service]);
+  expect(getPublishedServicePaths(content)).toEqual([]);
   service.article.approved = true;
   service.article.content = [];
   expect(isServiceArticlePublished(content, service)).toBe(false);

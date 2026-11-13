@@ -14,6 +14,13 @@ test("chart canvas survives resize and its data table opens", async ({
   const canvas = chart.locator("canvas");
   await expect(canvas).toBeVisible();
 
+  await page.evaluate(() => {
+    window.dispatchEvent(
+      new PageTransitionEvent("pagehide", { persisted: true }),
+    );
+  });
+  await expect(canvas).toBeVisible();
+
   const canvasWidth = async (): Promise<number> =>
     (await canvas.boundingBox())?.width ?? 0;
   await expect.poll(canvasWidth).toBeGreaterThan(0);

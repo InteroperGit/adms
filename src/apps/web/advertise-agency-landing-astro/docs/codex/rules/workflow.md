@@ -97,6 +97,15 @@ compact if it grows larger.
 
 ## Servers and generated files
 
+Keep only maintained, reusable tooling and its required helpers in `scripts/`.
+Create one-off migrations, probes and task-specific scripts in ignored
+`output/<task>/`; never force-add them to Git. Promote a helper into `scripts/`
+only when it has a current reusable purpose, reproducible inputs and a clear
+invocation or caller. Permanent tooling must not load source code from output.
+Before removing old scripts, trace their callers and preserve any unique
+regression checks in maintained tests. Absence from package scripts alone does
+not prove that a script is unused or broken.
+
 Start background development with `pnpm dev --background`
 (`astro dev --background`); manage with `pnpm astro dev status`, `logs`, `stop`.
 Default address is `http://localhost:4321`; use the actual port from output. Use

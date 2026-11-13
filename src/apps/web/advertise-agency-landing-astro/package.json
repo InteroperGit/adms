@@ -27,8 +27,6 @@
     "generate:content": "node scripts/generate-content-catalog.mjs",
     "test:content-catalog": "node scripts/test-content-catalog.mjs",
     "test:content-blocks": "node scripts/test-content-block-fixtures.mjs",
-    "test:service-articles": "node scripts/test-service-articles.mjs",
-    "test:project-articles": "node scripts/test-project-articles.mjs",
     "test:publication-policy": "node scripts/test-publication-policy.mjs",
     "test:clean-temp": "node --test scripts/clean-temp.test.mjs",
     "verify:quality": "node scripts/verify-built-quality.mjs",

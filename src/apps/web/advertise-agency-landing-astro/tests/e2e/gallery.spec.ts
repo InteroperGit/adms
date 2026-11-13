@@ -1,6 +1,30 @@
 // Browser contracts for the project gallery dialog and focus return.
 import { expect, test } from "./fixtures";
 
+test.describe("touch gallery", () => {
+  test.use({ hasTouch: true, viewport: { width: 375, height: 812 } });
+
+  test("touch controls work with reduced motion", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/projects/1/");
+    const gallery = page.locator("[data-gallery]");
+    const dialog = gallery.locator("[data-gallery-dialog]");
+    const tile = gallery.locator(".gallery-tile").first();
+    await tile.tap();
+    await expect(dialog).toBeVisible();
+    await dialog.locator("[data-gallery-next]").tap();
+    const image = gallery.locator("[data-gallery-image]");
+    await expect(image).toHaveAttribute("alt", "Two");
+    const durations = await image.evaluate((node) =>
+      getComputedStyle(node).animationDuration.split(",").map(parseFloat),
+    );
+    expect(durations.every((duration) => duration <= 0.01)).toBe(true);
+    await dialog.locator("[data-gallery-close]").tap();
+    await expect(dialog).toBeHidden();
+    await expect(tile).toBeFocused();
+  });
+});
+
 test("gallery navigation wraps and returns focus to the first tile", async ({
   page,
 }) => {
@@ -11,6 +35,7 @@ test("gallery navigation wraps and returns focus to the first tile", async ({
 
   await gallery.locator(".gallery-tile").first().click();
   await expect(dialog).toBeVisible();
+  await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
   await gallery.locator("[data-gallery-next]").click();
   await expect(image).toHaveAttribute("alt", "Two");
   await gallery.locator("[data-gallery-previous]").click();
@@ -23,6 +48,7 @@ test("gallery navigation wraps and returns focus to the first tile", async ({
 
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
+  await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
   await expect(gallery.locator(".gallery-tile").first()).toBeFocused();
 });
 
@@ -134,6 +160,11 @@ test("gallery keyboard controls keep focus inside the native dialog", async ({
   ).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(dialog.locator("[data-gallery-close]")).toBeFocused();
+
+  await page.mouse.click(1, 1);
+  await expect(dialog).toBeHidden();
+  await expect(gallery.locator(".gallery-tile").first()).toBeFocused();
+  await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
 });
 
 for (const scenario of [

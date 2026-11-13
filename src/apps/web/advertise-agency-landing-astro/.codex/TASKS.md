@@ -1,6 +1,6 @@
 # Codex Task Handoff
 
-Updated: 2026-11-13
+Updated: 2026-11-14
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal.
 Detailed scope and verification belong to the linked task files.
@@ -10,6 +10,9 @@ Detailed scope and verification belong to the linked task files.
 None currently.
 
 ## Recent completed work
+
+- [160 - Optimize scripts](../docs/codex/tasks/fixed/20261114/160-optimize-maintained-scripts.md): implemented;
+  19 maintained scripts; formatting/E2E limitations recorded.
 
 - [159 ? Compact development rules](../docs/codex/tasks/fixed/20261113/159-compact-and-restructure-project-rules.md): implemented; known E2E/format failures recorded.
 

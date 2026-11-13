@@ -5,6 +5,23 @@ const routes = ["/", "/projects/", "/projects/1/", "/services/neon/"];
 const widths = [320, 375, 1440];
 const themes = ["light", "dark"] as const;
 
+for (const colorScheme of themes) {
+  test(`article reflows at 200% text in ${colorScheme}`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.emulateMedia({ colorScheme });
+    await page.goto("/projects/1/");
+    await page.evaluate(() => {
+      document.documentElement.style.fontSize = "200%";
+    });
+    await expect(page.locator("article")).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth + 1,
+      ),
+    ).toBe(true);
+  });
+}
+
 for (const route of routes) {
   for (const width of widths) {
     for (const colorScheme of themes) {

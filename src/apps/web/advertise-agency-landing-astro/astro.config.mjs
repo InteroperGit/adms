@@ -3,20 +3,11 @@ import mdx from "@astrojs/mdx";
 import { unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import remarkContentBlocks from "./src/content/mdx-blocks.mjs";
-// prettier-ignore
-import articleAcceptance
-  from './scripts/lib/article-acceptance-integration.mjs';
 
 const productionUrl = process.env.PUBLIC_SITE_URL?.trim();
-const acceptance = process.env.CONTENT_ACCEPTANCE === "true";
 
 export default defineConfig({
-  integrations: [mdx(), ...(acceptance ? [articleAcceptance()] : [])],
-  ...(acceptance
-    ? {
-        outDir: "./output/playwright/task-080/dist",
-      }
-    : {}),
+  integrations: [mdx()],
   markdown: {
     processor: unified({
       remarkPlugins: [remarkContentBlocks],

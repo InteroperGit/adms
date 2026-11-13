@@ -1,6 +1,19 @@
 // Linkification must preserve every input character and reject unsafe URLs.
 import { expect, it } from "vitest";
+import fixtures from "../../tests/fixtures/content/paragraph-links.json";
 import { paragraphLinks } from "./paragraph-links";
+
+it.each(fixtures)(
+  "preserves fixture text and safe destinations: $input",
+  (fixture) => {
+    const input = fixture.input.join("");
+    const segments = paragraphLinks(input);
+    expect(segments.map((segment) => segment.text).join("")).toBe(input);
+    expect(
+      segments.filter((segment) => segment.href).map((segment) => segment.href),
+    ).toEqual(fixture.links);
+  },
+);
 
 it.each([
   "",

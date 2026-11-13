@@ -32,26 +32,6 @@ export default defineConfig(
     languageOptions: { globals: globals.browser },
   },
   {
-    files: [
-      "scripts/verify-*-browser.js",
-      "scripts/verify-task-*.js",
-      "scripts/verify-visual-blocks.js",
-    ],
-    languageOptions: { globals: globals.browser },
-    rules: {
-      // CLI files intentionally export a bare callback for run-code.
-      "@typescript-eslint/no-unused-expressions": "off",
-    },
-  },
-  {
-    files: ["scripts/verify-browser-coverage.js"],
-    languageOptions: { globals: globals.browser },
-    rules: {
-      // Playwright CLI evaluates this file as a callback expression.
-      "@typescript-eslint/no-unused-expressions": "off",
-    },
-  },
-  {
     files: ["**/*.astro"],
     processor: "astro/client-side-ts",
     languageOptions: { parserOptions: { parser: ts.parser } },

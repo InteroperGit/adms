@@ -48,3 +48,27 @@ it("rejects duplicate IDs, empty lists and unknown keys", () => {
     false,
   );
 });
+
+it.each([
+  { extra: true },
+  { id: "Invalid ID" },
+  { question: " " },
+  { answer: [] },
+  { answer: [" "] },
+  {
+    approval: { state: "approved", source: null, approvedBy: null },
+  },
+])("rejects invalid FAQ item fields: %j", (fields) => {
+  const source = structuredClone(fixture.faq);
+  const item = { ...source.items[0], ...fields };
+  expect(faqSchema.safeParse({ ...source, items: [item] }).success).toBe(false);
+});
+
+it("keeps FAQ inquiry links on the local inquiry section", () => {
+  expect(
+    faqSchema.safeParse({
+      ...fixture.faq,
+      inquiryHref: "https://example.invalid/",
+    }).success,
+  ).toBe(false);
+});

@@ -6,7 +6,9 @@
       "id": "svetovye-bukvy",
       "confirmed": true,
       "copyApproved": true,
-      "image": { "approved": true },
+      "image": {
+        "approved": true
+      },
       "article": {
         "approved": true,
         "content": [
@@ -46,8 +48,14 @@
         {
           "name": "E2E series",
           "points": [
-            { "label": "Alpha", "value": 10 },
-            { "label": "Beta", "value": 20 }
+            {
+              "label": "Alpha",
+              "value": 10
+            },
+            {
+              "label": "Beta",
+              "value": 20
+            }
           ]
         }
       ]
@@ -65,6 +73,71 @@
         "source": "Synthetic E2E fixture",
         "rights": "Synthetic test source; no external media"
       }
+    },
+    {
+      "type": "table",
+      "id": "e2e-table",
+      "caption": "E2E comparison",
+      "columns": [
+        {
+          "key": "column-1",
+          "label": "Column 1"
+        },
+        {
+          "key": "column-2",
+          "label": "Column 2"
+        },
+        {
+          "key": "column-3",
+          "label": "Column 3"
+        },
+        {
+          "key": "column-4",
+          "label": "Column 4"
+        },
+        {
+          "key": "column-5",
+          "label": "Column 5"
+        },
+        {
+          "key": "column-6",
+          "label": "Column 6"
+        },
+        {
+          "key": "column-7",
+          "label": "Column 7"
+        },
+        {
+          "key": "column-8",
+          "label": "Column 8"
+        }
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Row one 1",
+            "Row one 2",
+            "Row one 3",
+            "Row one 4",
+            "Row one 5",
+            "Row one 6",
+            "Row one 7",
+            "Row one 8"
+          ]
+        },
+        {
+          "cells": [
+            "Row two 1",
+            "Row two 2",
+            "Row two 3",
+            "Row two 4",
+            "Row two 5",
+            "Row two 6",
+            "Row two 7",
+            "Row two 8"
+          ]
+        }
+      ]
     }
   ]
 }
