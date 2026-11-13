@@ -227,5 +227,5 @@ Restored Picsum images failed to decode in a fresh verification browser. Local
 diagrams loaded, but the restored remote images cannot be considered verified
 production photos. Genuine agency evidence/rights and real inquiry delivery
 remain outstanding. See the
-[verification record](../codex/fixed/20261007/037-case-study-verification.md)
+[verification record](../codex/tasks/fixed/20261007/037-case-study-verification.md)
 and `output/playwright/task-037/` for scope, results and limitations.

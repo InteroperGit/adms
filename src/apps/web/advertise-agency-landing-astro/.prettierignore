@@ -1,5 +1,6 @@
 node_modules/
 .codex/
+docs/codex/tasks/
 .agents/
 .astro/
 .git/

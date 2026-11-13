@@ -35,11 +35,10 @@ mobile menu and cookie preference banner.
 ## Agent references
 
 - [Project instructions](AGENTS.md)
-- [Improvement plan](docs/codex/plan/20261001_222426_plan.md)
-- [Hot offers carousel plan](docs/codex/plan/20261005_044149_plan.md)
-- [Pending tasks](docs/codex/todo/)
-- [Backlog tasks](docs/codex/backlog/)
-- [Completed tasks](docs/codex/fixed/)
+- [Pending tasks](docs/codex/tasks/todo/)
+- [Backlog tasks](docs/codex/tasks/backlog/)
+- [Completed tasks](docs/codex/tasks/fixed/)
+- [Todo tasks](docs/codex/tasks/todo/)
 
 Agents should read the project instructions and task-management guide before
 working on tasks.

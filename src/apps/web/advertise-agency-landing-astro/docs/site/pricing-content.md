@@ -1,6 +1,6 @@
 # Pricing content handoff
 
-Task: [032](../codex/fixed/20261007/032-pricing-content-and-examples.md)
+Task: [032](../codex/tasks/fixed/20261007/032-pricing-content-and-examples.md)
 
 ## Current demonstration dataset
 
@@ -39,12 +39,12 @@ copy under that notice.
 Use `pricing.inquiryLabel` for native links to `/#order-inquiry`. Delivery is
 disabled in the existing form; link activation does not prove receipt. Task 032
 adds data and loaders. Completed
-[task 033](../codex/fixed/20261007/033-pricing-examples-section.md) renders
-`PricingExamples.astro` directly after Projects and before Reviews, using
-`PricingExample.astro` for each complete scope. No new menu entry is added.
-Genuine current/historical prices display context and their reference date;
-optional genuine project links are separate from inquiry actions. Empty eligible
-collections omit the section. The section adds no client script.
+[task 033](../codex/tasks/fixed/20261007/033-pricing-examples-section.md)
+renders `PricingExamples.astro` directly after Projects and before Reviews,
+using `PricingExample.astro` for each complete scope. No new menu entry is
+added. Genuine current/historical prices display context and their reference
+date; optional genuine project links are separate from inquiry actions. Empty
+eligible collections omit the section. The section adds no client script.
 
 ## Contract and validation
 
@@ -110,7 +110,7 @@ production work and does not block this task's demo completion.
 
 ## Demo verification
 
-[Task 034](../codex/fixed/20261007/034-pricing-examples-verification.md)
+[Task 034](../codex/tasks/fixed/20261007/034-pricing-examples-verification.md)
 completed on 2026-10-07. Six light/dark responsive cases, enlarged text, local
 images, keyboard/inquiry links, both no-JavaScript system themes,
 catalog/dated-price fixtures, and 29 surrounding regression checks passed.

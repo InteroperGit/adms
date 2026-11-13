@@ -17,7 +17,8 @@
 |   |-- validation/           # Schemas, helpers and source-aware parser
 |   |-- styles/               # Global entry, tokens, themes and foundations
 |   `-- types/                # Plain shared domain contracts
-|-- docs/codex/               # Plans, pending tasks, and completed tasks
+|-- docs/codex/
+|   `-- tasks/                # Plans, pending tasks, and completed tasks
 |-- astro.config.mjs          # Static output and Tailwind Vite plugin
 |-- package.json
 `-- pnpm-lock.yaml

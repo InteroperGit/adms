@@ -82,7 +82,7 @@ try {
   draftSection.approval = raw.approval;
   assert.deepEqual(getPublishedFaqItems(faqSchema.parse(draftSection)), []);
   const note = await readFile(
-    "docs/codex/fixed/20261009/044-faq-content.md",
+    "docs/codex/tasks/fixed/20261009/044-faq-content.md",
     "utf8",
   );
   const answers = note.split(/^### /m).slice(1, 10);

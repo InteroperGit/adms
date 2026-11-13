@@ -110,8 +110,8 @@ preferences/no-JS/navigation diagnostic passed 54/54 executions across all three
 browsers using `--workers=1`, with unchanged timeouts and assertions. This does
 not replace a fresh full parallel matrix result.
 
-See [task 140](../codex/fixed/20261020/140-refactor-global-css.md) for the 20
-visual comparisons across routes, themes and viewports, retained traces and
+See [task 140](../codex/tasks/fixed/20261020/140-refactor-global-css.md) for the
+20 visual comparisons across routes, themes and viewports, retained traces and
 unrelated TypeScript gate failures. Artifacts live under
 `output/playwright/task-140/`.
 

@@ -1,6 +1,6 @@
 # Services content handoff
 
-Task: [027](../codex/fixed/20261007/027-services-content-and-images.md)
+Task: [027](../codex/tasks/fixed/20261007/027-services-content-and-images.md)
 
 ## Editing and publication
 

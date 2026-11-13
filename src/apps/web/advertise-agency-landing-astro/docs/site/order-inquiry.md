@@ -131,7 +131,7 @@ local form checks; no delivery endpoint was enabled.
 
 ## Server validation prerequisite - 2026-10-09
 
-[Task 051](../codex/fixed/20261009/051-enable-and-verify-inquiry-delivery.md)
+[Task 051](../codex/tasks/fixed/20261009/051-enable-and-verify-inquiry-delivery.md)
 adds [a dependency-free payload validator](../../src/server/inquiry-payload.ts).
 It accepts the existing flat JSON payloads for both forms, checks each form's
 actual required fields and limits, validates consent and UUID retry identity,

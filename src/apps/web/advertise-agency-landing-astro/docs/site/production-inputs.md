@@ -130,9 +130,10 @@ approved sources remain pending. Task 051 can use this list to obtain missing
 inputs; no live delivery is authorized here.
 
 [task-050]:
-  ../codex/fixed/20261009/050-confirm-production-business-and-legal-inputs.md
-[task-051]: ../codex/fixed/20261009/051-enable-and-verify-inquiry-delivery.md
-[task-022]: ../codex/fixed/20261006/022-order-inquiry-form-section.md
+  ../codex/tasks/fixed/20261009/050-confirm-production-business-and-legal-inputs.md
+[task-051]:
+  ../codex/tasks/fixed/20261009/051-enable-and-verify-inquiry-delivery.md
+[task-022]: ../codex/tasks/fixed/20261006/022-order-inquiry-form-section.md
 [site]: ../../data/content/config/site.json
 [introduction]: ../../data/content/config/introduction.json
 [privacy]: ../../data/content/config/legal/privacy-policy.json
