@@ -11,6 +11,8 @@ None currently.
 
 ## Recent completed work
 
+- [159 ? Compact development rules](../docs/codex/tasks/fixed/20261113/159-compact-and-restructure-project-rules.md): implemented; known E2E/format failures recorded.
+
 - [158 — Section headings](../docs/codex/tasks/fixed/20261105/158-unify-section-headings-and-subtitles.md): complete.
 - [155 — Services section](../docs/codex/tasks/fixed/20261105/155-improve-services-section-visual-ux-and-code.md): complete.
 
@@ -20,4 +22,4 @@ None currently.
 - Active tasks: `docs/codex/tasks/todo/`
 - Deferred tasks: `docs/codex/tasks/backlog/`
 - Completed tasks: `docs/codex/tasks/fixed/yyyyMMdd/`
-- Project rules: `AGENTS.md` and `docs/rules/development/task-management.md`
+- Project rules: `AGENTS.md` and `docs/rules/workflow.md`

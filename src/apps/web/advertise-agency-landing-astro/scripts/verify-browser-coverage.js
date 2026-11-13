@@ -3,7 +3,9 @@
 async (page) => {
   const checks = [];
   const check = (condition, label) => {
-    if (!condition) throw new Error(label);
+    if (!condition) {
+      throw new Error(label);
+    }
     checks.push(label);
   };
   const home = "http://localhost:4321/";

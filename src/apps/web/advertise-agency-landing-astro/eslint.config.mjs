@@ -44,7 +44,7 @@ export default defineConfig(
     },
   },
   {
-    files: ["docs/development/browser-coverage.js"],
+    files: ["scripts/verify-browser-coverage.js"],
     languageOptions: { globals: globals.browser },
     rules: {
       // Playwright CLI evaluates this file as a callback expression.
