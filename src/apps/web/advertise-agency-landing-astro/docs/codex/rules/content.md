@@ -9,8 +9,8 @@ copy in components or TypeScript objects. Regression inputs belong in
 personal data, credentials and private approval records out of fixtures and
 version control.
 
-Initialize sites from [safe templates](../../data/templates/manifest.json) into
-an empty destination. The manifest is the authoritative file list. Keep
+Initialize sites from [safe templates](../../../data/templates/manifest.json)
+into an empty destination. The manifest is the authoritative file list. Keep
 templates generic: no live content, customer identities, real destinations or
 finished advertising copy. Replace placeholders before publication. JSON stays
 plain JSON, without comments or invented annotation fields. Copying starter MDX
@@ -19,14 +19,15 @@ does not validate it; validate and compile the generated site separately. Run
 
 ## Contracts and validation
 
-[Domain types](../../src/types/) and [strict schemas](../../src/validation/)
-define fields, defaults and cross-field constraints. Consult them instead of
-maintaining parallel field inventories. Change types, schemas, authored inputs
-and consumers together. Preserve compile-time checks in both assignability
-directions, including optional keys; compare parsed output when defaults apply.
-Preserve stable record identities, references and editorial ordering.
+[Domain types](../../../src/types/) and
+[strict schemas](../../../src/validation/) define fields, defaults and
+cross-field constraints. Consult them instead of maintaining parallel field
+inventories. Change types, schemas, authored inputs and consumers together.
+Preserve compile-time checks in both assignability directions, including
+optional keys; compare parsed output when defaults apply. Preserve stable record
+identities, references and editorial ordering.
 
-Use validated [content loaders](../../src/content/) and source-aware errors.
+Use validated [content loaders](../../../src/content/) and source-aware errors.
 Validate all records, including disabled or unpublished inputs. Keep validation
 server-side and domain contracts independent of content and schema execution;
 follow [architecture](architecture.md). Do not silently discard unknown fields
@@ -41,8 +42,8 @@ dimensions, permission or delivery. Review those separately.
 
 ## Restricted article authoring
 
-Use the [MDX compiler](../../src/content/mdx-blocks.mjs) and
-[block schema](../../src/validation/content-blocks.ts) as the authoritative
+Use the [MDX compiler](../../../src/content/mdx-blocks.mjs) and
+[block schema](../../../src/validation/content-blocks.ts) as the authoritative
 syntax and component allowlist. Treat authored MDX as restricted data: reject
 executable expressions, imports/exports, arbitrary HTML/JSX and unsupported
 markup. Do not strip unsupported content silently or let authored data choose
@@ -68,12 +69,12 @@ results. Do not invent customer attribution, specifications, guarantees or
 rights.
 
 Use the existing owner and nested publication policies in
-[content helpers](../../src/content/) rather than independent visibility checks.
-Owner approval cannot bypass block, image or other nested approval requirements.
-Omitted nested status inherits owner requirements; it does not mean unrestricted
-publication. Explicitly published content requires provenance even on an
-unapproved owner. Media rights are independent of copy approval, and gallery
-approval does not approve each image.
+[content helpers](../../../src/content/) rather than independent visibility
+checks. Owner approval cannot bypass block, image or other nested approval
+requirements. Omitted nested status inherits owner requirements; it does not
+mean unrestricted publication. Explicitly published content requires provenance
+even on an unapproved owner. Media rights are independent of copy approval, and
+gallery approval does not approve each image.
 
 Draft content stays out of public output. Approved owners containing drafts must
 fail validation rather than quietly publish an incomplete approved article.

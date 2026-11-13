@@ -1,4 +1,4 @@
-// Playwright CLI run-code file; see docs/rules/verification.md.
+// Playwright CLI run-code file; see docs/codex/rules/verification.md.
 async (page) => {
   const origin = "http://127.0.0.1:54382";
   const output = "output/playwright/vcb-02";

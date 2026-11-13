@@ -6,10 +6,10 @@ mobile menu and cookie preference banner.
 
 ## Documentation
 
-Start with the [rules index](docs/rules/index.md): required instructions and
-reading routes for documentation, Astro/UI, content, API and release work. Topic
-guides cover development, testing and release; schemas, templates and source
-code own detailed field and component contracts.
+Start with the [rules index](docs/codex/rules/index.md): required instructions
+and reading routes for documentation, Astro/UI, content, API and release work.
+Topic guides cover development, testing and release; schemas, templates and
+source code own detailed field and component contracts.
 
 ## Agent references
 
@@ -19,4 +19,4 @@ code own detailed field and component contracts.
 - [Completed tasks](docs/codex/tasks/fixed/)
 
 Agents should read the project instructions and
-[workflow](docs/rules/workflow.md) before working on tasks.
+[workflow](docs/codex/rules/workflow.md) before working on tasks.

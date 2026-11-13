@@ -5,14 +5,15 @@ Keep runtime content in `data/content/` and versioned test fixtures in
 `src/`.
 
 Before making a change, follow the scenario-specific reading route in the
-[rules index](docs/rules/index.md), including style and sound notifications.
+[rules index](docs/codex/rules/index.md), including style and sound
+notifications.
 
 ## Model and agent routing
 
 Use the least expensive model that can complete the current step reliably. Model
 choice is a routing decision for each step, not a permanent assignment for the
 whole task. Follow
-[model routing](docs/rules/workflow.md#working-context-and-models) for the
+[model routing](docs/codex/rules/workflow.md#working-context-and-models) for the
 default model, reasoning effort, delegation and escalation rules.
 
 - Use **Luna** for scoped edits, focused tests, documentation, triage,
