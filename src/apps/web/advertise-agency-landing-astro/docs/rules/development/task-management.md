@@ -55,8 +55,8 @@ project-root/
   phases.  
   This helps break large tasks into manageable parts.
 
-- **`docs/codex/tasks/`** — suitable for the strict "Plan-Todo-Learn" protocol, where
-  each file type has its own purpose and naming rules.
+- **`docs/codex/tasks/`** — suitable for the strict "Plan-Todo-Learn" protocol,
+  where each file type has its own purpose and naming rules.
 
 - **Avoid synchronized folders.** Do not store agent working files in
   `Documents`, `Desktop`, OneDrive, or other synchronized folders.  
@@ -130,21 +130,63 @@ The file name must match the agent name in the TOML file:
 
 1. Before starting work, check for files in `.codex/`, `harness/`, and
    `docs/codex/tasks/`.
-2. If creating a new task, place it in `docs/codex/tasks/todo/` or `harness/build/`
-   depending on the task type.
+2. If creating a new task, place it in `docs/codex/tasks/todo/` or
+   `harness/build/` depending on the task type.
 3. If the task belongs to the current active session, update `.codex/TASKS.md`.
 4. When naming files, strictly follow the rules in Section 2.
 5. Do not create task files in the project root, except for `AGENTS.md`,
    `GOALS.md`, `PLANS.md`, and `PROMPTS.md`.
-6. If unsure where a file belongs, ask the user or use `docs/codex/tasks/` as a safe
-   default.
+6. If unsure where a file belongs, ask the user or use `docs/codex/tasks/` as a
+   safe default.
 7. After completing and verifying a task, mark it completed, record its changes
    and verification results, and move it from `docs/codex/tasks/todo/` to
-   `docs/codex/tasks/fixed/yyyyMMdd/`. Use the completion date in the project's local
-   timezone (for example, `20261001`), creating the date folder if needed.
+   `docs/codex/tasks/fixed/yyyyMMdd/`. Use the completion date in the project's
+   local timezone (for example, `20261001`), creating the date folder if needed.
    Preserve its numbered filename and update relative links in the moved task
    and links and status in the corresponding plan. Pending tasks remain in
    `todo/`.
+
+### Task authoring requirements
+
+When creating a task, use the `grilling` skill to resolve its goal, scope,
+constraints, dependencies, and acceptance criteria before writing the task. Find
+repository facts yourself; ask the user only for decisions that cannot be
+inferred. Use the `ponytail` skill to keep the scope and proposed solution to
+the smallest complete outcome.
+
+Record the planned execution model and participants in each task. Follow
+[model routing](model-routing.md), including the model and reasoning effort for
+each distinct work step when routing changes. Name the primary agent and any
+delegated participants with their assigned steps and models. If no delegation is
+planned, say that the primary agent will complete the task without subagents.
+Record a later model escalation and its evidence in the task file.
+
+Add an actionable checklist to each task, using Markdown checkboxes. Include the
+applicable instruction and skill review, implementation steps, required
+verification and acceptance checks, and task archival or handoff updates. Tailor
+checklist items to the task; do not add inapplicable checks or weaken project
+quality gates.
+
+Use this compact outline where it fits the task:
+
+```markdown
+## Skills
+
+- `grilling`: resolve scope and acceptance criteria
+- `ponytail`: keep the solution minimal and complete
+
+## Model and participants
+
+- Primary: <agent>, `<model>`, <effort>; <assigned steps>
+- Delegation: <agent/model/steps, or "none">
+
+## Checklist
+
+- [ ] Review applicable instructions and skills
+- [ ] Complete the scoped implementation
+- [ ] Run required verification and confirm acceptance criteria
+- [ ] Record results and archive or update the handoff
+```
 
 ### `TASKS.md` handoff policy
 
@@ -166,11 +208,11 @@ under 80 lines; compact it when it grows beyond that size.
 
 ## Backlog handling
 
-Tasks explicitly deferred by the user belong in `docs/codex/tasks/backlog/`. Keep
-their numbered filenames, implementation evidence and outstanding acceptance
-inputs. Update plan/status links when moving between backlog, todo and fixed. On
-2026-10-10 the user moved tasks 052–066 to backlog, including the previously
-archived tasks 052–053.
+Tasks explicitly deferred by the user belong in `docs/codex/tasks/backlog/`.
+Keep their numbered filenames, implementation evidence and outstanding
+acceptance inputs. Update plan/status links when moving between backlog, todo
+and fixed. On 2026-10-10 the user moved tasks 052–066 to backlog, including the
+previously archived tasks 052–053.
 
 ## 4. Prohibited
 
@@ -184,17 +226,17 @@ archived tasks 052–053.
 
 ## 5. Quick Reference
 
-| File Type         | Folder                       | Example Name                                     |
-| ----------------- | ---------------------------- | ------------------------------------------------ |
-| Active tasks      | `.codex/`                    | `TASKS.md`                                       |
-| Development phase | `harness/build/`             | `phase-01-create-list.md`                        |
+| File Type         | Folder                             | Example Name                                     |
+| ----------------- | ---------------------------------- | ------------------------------------------------ |
+| Active tasks      | `.codex/`                          | `TASKS.md`                                       |
+| Development phase | `harness/build/`                   | `phase-01-create-list.md`                        |
 | Plan              | `docs/codex/tasks/plan/`           | `20231027_100000_plan.md`                        |
 | Current task      | `docs/codex/tasks/todo/`           | `001-feature.md`                                 |
 | Completed task    | `docs/codex/tasks/fixed/yyyyMMdd/` | `20261001/001-feature.md` (relative to `fixed/`) |
-| Postmortem        | `docs/codex/tasks/learn/`    | `20231027_110000_learn.md`                       |
-| Custom agent      | `.codex/agents/`             | `scaffolder.toml`                                |
-| Skill             | `.codex/skills/`             | `database-migration.md`                          |
-| User prompt       | `.codex/prompts/`            | `create-prompt.md`                               |
+| Postmortem        | `docs/codex/tasks/learn/`          | `20231027_110000_learn.md`                       |
+| Custom agent      | `.codex/agents/`                   | `scaffolder.toml`                                |
+| Skill             | `.codex/skills/`                   | `database-migration.md`                          |
+| User prompt       | `.codex/prompts/`                  | `create-prompt.md`                               |
 
 ---
 

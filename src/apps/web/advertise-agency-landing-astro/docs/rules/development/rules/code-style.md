@@ -11,10 +11,20 @@ pass as the relevant tests.
 
 ## Git commits
 
-Every commit must contain a clear subject and a detailed body. The body must
-explain what changed, why the change was needed, its user or technical impact,
-and which verification commands were run. Do not use vague messages such as
-`fix`, `changes` or `update` without describing the actual work.
+Use this format for every commit message:
+
+```text
+<type>: <title>
+
+<description>
+```
+
+Choose a type that describes the change: `feat`, `fix`, `docs`, `style`,
+`refactor`, `perf`, `test`, `build`, `ci`, `chore` or `revert`. Write a concise,
+specific title after the type; do not end it with a period. Use the description
+to explain what changed, why it was needed, its user or technical impact, and
+which verification commands were run. Do not use vague titles such as `fix`,
+`changes` or `update` without describing the actual work.
 
 ## Conditional blocks
 
