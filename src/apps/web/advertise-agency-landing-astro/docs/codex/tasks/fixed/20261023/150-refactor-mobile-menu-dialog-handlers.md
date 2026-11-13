@@ -36,7 +36,7 @@ history, временный tabindex и отложенное восстанов�
   изменённых файлов. Проверить Escape и возврат фокуса в браузере с реальным
   dialog, а не только в jsdom.
 - Записать результаты и архивировать задачу по
-  `docs/development/task-management.md`.
+  `docs/rules/development/task-management.md`.
 
 ## Результаты проверки
 

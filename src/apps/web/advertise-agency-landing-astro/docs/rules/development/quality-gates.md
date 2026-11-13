@@ -29,5 +29,5 @@ semantics and cumulative-layout-shift basics in the generated output.
 Static checks cannot prove color contrast over remote images, keyboard focus in
 all states, screen-reader speech, native 200% zoom, touch behavior, field
 performance, or real-world Core Web Vitals. Continue the Playwright viewport
-matrix and deployed-host audits documented in `docs/site/design-verification.md`
+matrix and deployed-host audits documented in `docs/rules/site/design-verification.md`
 for those checks.

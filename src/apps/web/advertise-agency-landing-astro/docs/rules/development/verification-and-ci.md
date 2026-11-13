@@ -74,7 +74,7 @@ matrix contains 234 executions across Chromium, Firefox and WebKit. On
 diagnostic run `pnpm test:e2e --repeat-each=2` completed 468 executions and
 reported 415 passed and 53 failed.
 
-The failures are recorded in `docs/development/browser-coverage.md` and in the
+The failures are recorded in `docs/rules/development/browser-coverage.md` and in the
 retained Playwright traces. They include the video 404 fallback staying in
 `loading`, homepage horizontal overflow across responsive widths and themes, and
 order-sensitive Firefox/WebKit navigation, carousel, theme and inquiry timing

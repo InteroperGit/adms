@@ -72,8 +72,8 @@ footnote targets, demo/published policy и существующие page metadat
 ## Зависимости
 
 Основано на VCB-04—VCB-15 и завершённых задачах 075–082. После реализации
-обновить ссылки на контракт в `docs/site/articles.md`,
-`docs/site/service-articles.md` и плане universal content blocks.
+обновить ссылки на контракт в `docs/rules/site/articles.md`,
+`docs/rules/site/service-articles.md` и плане universal content blocks.
 
 ## Реализация
 

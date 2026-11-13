@@ -18,7 +18,7 @@ Create offers.json, validation and a typed export following existing
 conventions. Cover settings, interval limits, unique stable IDs, ordered enabled
 items, safe links and positive image dimensions. Keep publication disabled until
 approved offer copy/artwork exists; do not invent promotions. Start
-docs/site/offers-carousel.md with configuration and asset-handoff instructions,
+docs/rules/site/offers-carousel.md with configuration and asset-handoff instructions,
 linked from README.
 
 ## Acceptance

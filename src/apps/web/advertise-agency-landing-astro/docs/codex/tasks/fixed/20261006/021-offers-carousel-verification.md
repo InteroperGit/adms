@@ -112,7 +112,7 @@ Optional swipe remains deferred to a separate future task.
 
 ## Acceptance
 
-Finalize `docs/site/offers-carousel.md` with current editing instructions,
+Finalize `docs/rules/site/offers-carousel.md` with current editing instructions,
 behavior, durable results, source rights/content handoff and check limits.
 Reconcile stale opaque-backing and historical navigation descriptions with the
 actual component; keep historical results clearly labeled. Earlier task checks

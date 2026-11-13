@@ -20,7 +20,7 @@
   `dist/`. Полное удаление `output/` выбирается отдельно флагом `--all`.
 - Добавлены команды `clean:temp`, `clean:temp:apply`, `clean:temp:output` и
   `clean:temp:output:apply` в `package.json`.
-- Описаны команды и границы удаления в `docs/development/cleanup.md`;
+- Описаны команды и границы удаления в `docs/rules/development/cleanup.md`;
   руководство настройки ссылается на эту документацию.
 - Добавлены пять проверок очистки в `scripts/clean-temp.test.mjs`.
 

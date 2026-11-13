@@ -51,7 +51,7 @@ use Playwright for browser verification.
   Confirm dark mode retains its intended footer presentation.
 - Run `pnpm check`, `pnpm build`, and diff checks; record results, sampled
   contrast ratios, browser evidence, and any verification limitations.
-- Update relevant footer/theme notes in `docs/site/design-system.md` if the
+- Update relevant footer/theme notes in `docs/rules/site/design-system.md` if the
   final footer introduces new documented colors or usage conventions.
 
 ## Completion
@@ -88,5 +88,5 @@ verification results under the task-management guide.
   styles became unavailable during build verification; final browser checks used
   the refreshed server. No frame-by-frame paint recording, native browser zoom
   or screen-reader speech verification was performed.
-- Updated `docs/site/design-system.md`. No corresponding plan references task
+- Updated `docs/rules/site/design-system.md`. No corresponding plan references task
   030, so no plan links require adjustment.

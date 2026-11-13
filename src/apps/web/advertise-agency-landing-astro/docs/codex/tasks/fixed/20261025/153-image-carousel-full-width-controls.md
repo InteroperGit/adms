@@ -43,7 +43,7 @@ Carousel.
 - Пройти colocated component/client suites и существующие E2E-проверки Carousel.
   Выполнить `pnpm check`, `pnpm check:style` и `pnpm format:check`.
 - Записать фактические результаты проверок и изменённые файлы; после приёмки
-  архивировать задачу согласно `docs/development/task-management.md`.
+  архивировать задачу согласно `docs/rules/development/task-management.md`.
 
 ## Результат
 

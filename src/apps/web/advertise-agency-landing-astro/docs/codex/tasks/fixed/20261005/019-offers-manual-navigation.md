@@ -45,7 +45,7 @@ This avoids Tailwind's `hidden` display rule removing reserved geometry. No
 height measurements, carousel package, autoplay or swipe. Short fade respects
 reduced motion. A separate wrapping control row stays clear of all copy/CTAs.
 
-Updated `docs/site/offers-carousel.md` with behavior and verification, corrected
+Updated `docs/rules/site/offers-carousel.md` with behavior and verification, corrected
 stale opacity notes against existing CSS, and updated the carousel plan.
 Original `data/content/offers.json` restored byte-for-byte after fixtures:
 `enabled: true`, `autoplay: true`, `intervalMs: 7000`; two enabled demo offers.

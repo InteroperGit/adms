@@ -33,7 +33,7 @@ content и схемы в `src/` менять только если найден�
 
 ## Требования к реализации
 
-- Сначала прочитать `AGENTS.md`, `docs/development/rules/` и текущие схемы
+- Сначала прочитать `AGENTS.md`, `docs/rules/development/rules/` и текущие схемы
   `src/validation/projects.ts`, `src/content/block-publication.ts`.
 - Согласовать fixtures с типом `Project`: `id`, `category`, `status`, `title`,
   `client`, `date`, `attribution`, `description`, optional `evidence`,

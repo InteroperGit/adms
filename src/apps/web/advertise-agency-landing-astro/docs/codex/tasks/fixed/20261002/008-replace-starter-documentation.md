@@ -47,6 +47,6 @@ approved agency asset is available.
 - Generated footer wording remained unchanged. Primary-agent diff review and
   `git diff --check` passed.
 - Subsequent user-requested organization makes README a documentation index.
-  Detailed guides now live in `docs/development/`, `docs/site/`, and
-  `docs/development/task-management.md`; the original instructions are preserved
+  Detailed guides now live in `docs/rules/development/`, `docs/rules/site/`, and
+  `docs/rules/development/task-management.md`; the original instructions are preserved
   there.

@@ -119,6 +119,6 @@ color and surface treatment only where contrast or hierarchy needs it.
 - `pnpm build` passed with 39 pages generated.
 - Changed-file Prettier check and `git diff --check` passed for 8 changed files.
   Repository-wide `pnpm format:check` remains blocked by three pre-existing
-  formatted files: `AGENTS.md`, `docs/development/model-routing.md` and
-  `docs/development/task-management.md`.
+  formatted files: `AGENTS.md`, `docs/rules/development/model-routing.md` and
+  `docs/rules/development/task-management.md`.
 - Browser evidence is saved under `output/playwright/task-157/`.

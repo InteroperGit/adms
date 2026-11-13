@@ -11,7 +11,7 @@ starting. Consult the relevant Astro component, styling, and image guides.
 
 **Files:** `src/components/sections/Contacts.astro`,
 `src/components/ui/ContactInfo.astro`, `data/content/site.json`,
-`src/types/site.ts`, fallback image asset, and relevant `docs/site/` guides.
+`src/types/site.ts`, fallback image asset, and relevant `docs/rules/site/` guides.
 
 ## Requested changes
 
@@ -68,8 +68,8 @@ this task unless a concrete conflict emerges; record any deferred item.
 ## Documentation
 
 Document the map toggle, fallback asset fields, and rebuild requirement in
-`docs/site/content.md` or a focused contact-settings guide linked from README.
-Update the external-resource notes in `docs/site/deployment-and-assets.md` and
+`docs/rules/site/content.md` or a focused contact-settings guide linked from README.
+Update the external-resource notes in `docs/rules/site/deployment-and-assets.md` and
 cookie-preference documentation to explain that map loading follows this
 configuration flag, not the saved cookie-banner choice.
 

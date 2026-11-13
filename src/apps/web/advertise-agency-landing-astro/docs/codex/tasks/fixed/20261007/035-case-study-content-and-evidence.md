@@ -38,7 +38,7 @@ Prepare content for Expanded case studies in the
   where practical; omitted routes must have no dangling public links.
 - Audit pricing-link validation against actual generated project destinations.
 - Document editing, evidence, publication rules, and missing agency inputs in
-  `docs/site/` for [task 036](036-expanded-case-study-pages.md).
+  `docs/rules/site/` for [task 036](036-expanded-case-study-pages.md).
 
 ## Acceptance and verification
 

@@ -9,7 +9,7 @@
 размеры, позиционирование и hover-видимость зависят только от общего имени
 класса, а не от принадлежности этому компоненту. В связанном `image-carousel.ts`
 есть ветви `if` без фигурных скобок, запрещённые
-`docs/development/rules/code-style.md`.
+`docs/rules/development/rules/code-style.md`.
 
 Рабочие файлы: эти два файла и их соседние тесты. Контракты CarouselControl и
 ImageCarouselSlide сохраняются.
@@ -35,7 +35,7 @@ ImageCarouselSlide сохраняются.
   существующий E2E-сценарий карусели, `pnpm check` и линтер изменённых файлов.
   Проверить full/panel, светлую и тёмную темы, desktop/mobile и reduced motion.
 - Записать результаты и архивировать задачу по
-  `docs/development/task-management.md`.
+  `docs/rules/development/task-management.md`.
 
 ## Результаты проверки
 

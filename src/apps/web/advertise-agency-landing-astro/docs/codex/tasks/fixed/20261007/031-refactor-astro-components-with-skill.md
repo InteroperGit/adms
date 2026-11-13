@@ -104,7 +104,7 @@ whose resulting geometry is unchanged. ThemeInit remains inline in the document
 head, and inquiry inputs remain protected before initialization. No
 dependencies, frameworks or public component APIs were added.
 
-Updated component conventions in `docs/development/project-structure.md`. The
+Updated component conventions in `docs/rules/development/project-structure.md`. The
 existing Astro skill/readability rules added before this task are retained.
 
 ## Verification results

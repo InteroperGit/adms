@@ -86,7 +86,7 @@ Verify in Chrome:
 
 Record browser scripts/results/screenshots under ignored
 `output/playwright/task-019a/`. Run `pnpm check`, `pnpm build` and diff checks;
-update `docs/site/offers-carousel.md`. Restore original JSON/publication
+update `docs/rules/site/offers-carousel.md`. Restore original JSON/publication
 settings after temporary fixtures. Record changed files, checks and limits, then
 archive by actual completion date and update the plan. No commit or deployment
 implied.
@@ -104,7 +104,7 @@ implied.
   persistent bottom padding protects against dots. ResizeObserver adjusts
   clearance for wrapped indicators without measuring slides. Shared grid height
   and JSON copy positions remain. No autoplay or carousel dependency added.
-- Updated `docs/site/offers-carousel.md` and the carousel plan. Original JSON
+- Updated `docs/rules/site/offers-carousel.md` and the carousel plan. Original JSON
   bytes restored after fixtures, including enabled/autoplay true, 7000ms and two
   enabled demos. No publication configuration change remains.
 

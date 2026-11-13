@@ -20,4 +20,4 @@ None currently.
 - Active tasks: `docs/codex/tasks/todo/`
 - Deferred tasks: `docs/codex/tasks/backlog/`
 - Completed tasks: `docs/codex/tasks/fixed/yyyyMMdd/`
-- Project rules: `AGENTS.md` and `docs/development/task-management.md`
+- Project rules: `AGENTS.md` and `docs/rules/development/task-management.md`

@@ -40,7 +40,7 @@ deployment is implied.
 ## Implementation and verification — 2026-10-06
 
 Changed `src/components/sections/OffersCarousel.astro` and
-`docs/site/offers-carousel.md`. Configured autoplay uses one resettable timeout
+`docs/rules/site/offers-carousel.md`. Configured autoplay uses one resettable timeout
 and an explicit requested state. Added an accessible circular pause/play button,
 reserved dot/copy clearance and placed controls before slides in keyboard order.
 Hover, focus, document/viewport visibility, reduced motion and page lifecycle

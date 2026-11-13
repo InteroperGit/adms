@@ -6,7 +6,7 @@
 
 ## Обязательные правила
 
-Сначала прочитай `AGENTS.md` и `docs/development/rules/*.md`. Для чтения Astro
+Сначала прочитай `AGENTS.md` и `docs/rules/development/rules/*.md`. Для чтения Astro
 используй обязательный `astro-best-practices`. Один запуск выполняет только эту
 задачу. Production-код не менять. Если новый сценарий выявляет дефект, верни
 воспроизведение координатору; не ослабляй проверку. При незавершённой проверке
@@ -24,8 +24,8 @@ dev server не нужен. Команды выполняются из корн�
 - `playwright.config.ts`
 - `package.json`
 - `.github/workflows/quality.yml`
-- `docs/development/browser-coverage.md`
-- `docs/development/verification-and-ci.md`
+- `docs/rules/development/browser-coverage.md`
+- `docs/rules/development/verification-and-ci.md`
 
 Другие задачи и весь план не нужны для исполнения этого шага.
 
@@ -35,8 +35,8 @@ dev server не нужен. Команды выполняются из корн�
 
 ## Изменить или удалить
 
-- `docs/development/browser-coverage.md`
-- `docs/development/verification-and-ci.md`
+- `docs/rules/development/browser-coverage.md`
+- `docs/rules/development/verification-and-ci.md`
 
 Это полный разрешённый список изменений. Статусы плана, TASKS и перенос в fixed
 после приёмки оформляет координатор, чтобы не было конфликтов.
@@ -77,7 +77,7 @@ pnpm test:e2e
 ```
 
 Проверка запускается после изменений. Если браузеры ещё не установлены, следуй
-`docs/development/browser-coverage.md`; не обходи permissions. Не запускай
+`docs/rules/development/browser-coverage.md`; не обходи permissions. Не запускай
 параллельно другой e2e процесс на порту 4327.
 
 ## Готово, когда

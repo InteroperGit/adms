@@ -1,4 +1,4 @@
-﻿# Simplify offers to description and CTA over the background
+# Simplify offers to description and CTA over the background
 
 **Status:** Completed — 2026-10-05 (Europe/Moscow)
 
@@ -136,7 +136,7 @@ restored byte-for-byte.
 
 Changed files for this task: src/components/sections/OffersCarousel.astro,
 src/types/offer.ts, src/types/index.ts, src/validation/offers.ts,
-data/content/offers.json, docs/site/offers-carousel.md, docs/site/content.md,
+data/content/offers.json, docs/rules/site/offers-carousel.md, docs/rules/site/content.md,
 carousel plan and this archived task. Existing task 018/018a work was preserved.
 
 Verification:

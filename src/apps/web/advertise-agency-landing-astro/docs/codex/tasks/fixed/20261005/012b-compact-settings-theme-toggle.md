@@ -98,7 +98,7 @@ caption. Keep Russian accessible names available to assistive technology.
   mobile/desktop screenshots in both themes; check functional
   icons/borders/focus contrast at least 3:1. Record actual browser-zoom coverage
   separately from viewport/text simulations.
-- Run `pnpm check` and `pnpm build`. Update `docs/site/themes.md` and relevant
+- Run `pnpm check` and `pnpm build`. Update `docs/rules/site/themes.md` and relevant
   design documentation to describe the component split and icon-only
   presentation. Record changed files, results and limitations; archive under the
   actual completion date and update the plan after verification. No commit or

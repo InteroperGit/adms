@@ -5,14 +5,14 @@ Keep runtime content in `data/content/` and versioned test fixtures in
 `src/`.
 
 Before making a change, read the applicable
-[development rules](docs/development/rules/), especially code style, Astro,
+[development rules](docs/rules/development/rules/), especially code style, Astro,
 development-server, and sound-notification guidance.
 
 ## Model and agent routing
 
 Use the least expensive model that can complete the current step reliably.
 Model choice is a routing decision for each step, not a permanent assignment
-for the whole task. Follow [model routing](docs/development/model-routing.md)
+for the whole task. Follow [model routing](docs/rules/development/model-routing.md)
 for the default model, reasoning effort, delegation and escalation rules.
 
 - Use **Luna** for scoped edits, focused tests, documentation, triage,

@@ -1,4 +1,4 @@
-﻿# 094 — Playwright smoke и E2E
+# 094 — Playwright smoke и E2E
 
 ## Цель
 
@@ -19,7 +19,7 @@ Smoke-flow запускается существующей инфраструк�
 
 ## Выполнение — 2026-10-15
 
-Расширен существующий `docs/development/browser-coverage.js` flow. Добавлены
+Расширен существующий `docs/rules/development/browser-coverage.js` flow. Добавлены
 проверки первоначального и циклического focus поведения mobile menu, поиска,
 фильтра, browser back, responsive service route, media fallback и mobile
 landmark. Существующие проверки cookie/theme persistence, reduced-motion

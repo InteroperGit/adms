@@ -14,7 +14,7 @@
 - Обновить `test:unit` в `package.json` так, чтобы команда запускала colocated
   pure logic suites и не дублировала `test:components`.
 - Проверить workflow `.github/workflows/quality.yml`, документацию
-  `docs/development/verification-and-ci.md` и связанные ссылки на `tests/unit`.
+  `docs/rules/development/verification-and-ci.md` и связанные ссылки на `tests/unit`.
 - Оставить Vitest include для `tests/**` ради integration/e2e discovery и
   fixture-independent test helpers.
 

@@ -40,7 +40,7 @@ versioned fixtures РІ `tests/fixtures/content/`.
 - РћСЃС‚Р°РІРёС‚СЊ РІСЂРµРјРµРЅРЅС‹Рµ E2E-РґР°РЅРЅС‹Рµ РІ
   `output/playwright/content/`; РЅРµ СЃРјРµС€РёРІР°С‚СЊ РёС… СЃ versioned
   fixtures.
-- РћР±РЅРѕРІРёС‚СЊ `docs/site/`, README Рё РєРѕРјРјРµРЅС‚Р°СЂРёРё,
+- РћР±РЅРѕРІРёС‚СЊ `docs/rules/site/`, README Рё РєРѕРјРјРµРЅС‚Р°СЂРёРё,
   РєРѕС‚РѕСЂС‹Рµ РѕРїРёСЃС‹РІР°СЋС‚ `data/content/fixtures/` РєР°Рє
   РїРѕСЃС‚РѕСЏРЅРЅРѕРµ РјРµСЃС‚Рѕ С…СЂР°РЅРµРЅРёСЏ fixtures.
 - РџСЂРѕРІРµСЂРёС‚СЊ, С‡С‚Рѕ production loaders РїРѕ-РїСЂРµР¶РЅРµРјСѓ
@@ -77,7 +77,7 @@ snapshots РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ СЏРІРЅРѕ РѕР±
 ## Р—Р°РІРёСЃРёРјРѕСЃС‚Рё
 
 РЎРІСЏР·Р°РЅРѕ СЃ РїСЂР°РІРёР»Р°РјРё runtime content boundary РІ `AGENTS.md`,
-`docs/site/content.md` Рё `docs/development/verification-and-ci.md`.
+`docs/rules/site/content.md` Рё `docs/rules/development/verification-and-ci.md`.
 
 ## Verification
 

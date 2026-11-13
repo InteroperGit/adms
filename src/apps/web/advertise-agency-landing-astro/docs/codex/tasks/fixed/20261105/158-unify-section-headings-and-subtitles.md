@@ -94,6 +94,6 @@
   hint о deprecated `z.number().finite()` в `src/validation/content-blocks.ts`.
 - `pnpm exec prettier --check` для всех изменённых файлов: пройдено.
 - `pnpm format:check`: не пройдено из-за существующих предупреждений формата в
-  `AGENTS.md`, `docs/development/model-routing.md` и
-  `docs/development/task-management.md`; изменённые файлы проверены отдельно.
+  `AGENTS.md`, `docs/rules/development/model-routing.md` и
+  `docs/rules/development/task-management.md`; изменённые файлы проверены отдельно.
 - `git diff --check`: пройдено.

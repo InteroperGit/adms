@@ -14,7 +14,7 @@ required Astro guides.
 
 Capture screenshots of all six routes before changes. Compare service-led and
 work-led opening concepts against available media and record the selected
-direction in docs/site/design-system.md. Implement shared spacing, container,
+direction in docs/rules/site/design-system.md. Implement shared spacing, container,
 typography, radii, shadow and semantic light/dark tokens with Tailwind
 4/DaisyUI. Assess a licensed Cyrillic-capable locally hosted font; preserve a
 system fallback. Measure text and control contrast, including orange action
@@ -34,7 +34,7 @@ authorized by this task.
   spacing, typography, radii, restrained shadows, focus styling and
   reduced-motion rules. Replaced fixed gray/translucent text where required.
 - Documented service-led direction and token system in
-  `docs/site/design-system.md`, linked from README. Assessed licensed Cyrillic
+  `docs/rules/site/design-system.md`, linked from README. Assessed licensed Cyrillic
   Manrope; retained system fonts rather than downloading an unneeded font asset.
 - Preserved content, routes, hidden homepage h1, map configuration and
   interaction scripts. Theme toggle remains task 012.

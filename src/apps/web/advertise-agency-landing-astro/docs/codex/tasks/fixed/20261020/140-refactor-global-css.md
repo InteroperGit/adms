@@ -26,7 +26,7 @@
 2. Тёмная палитра и две тени продублированы в `[data-theme='dark']`
    (`global.css:61`) и в системном fallback `:root:not([data-theme])`
    (`global.css:81`). В каждом блоке по 16 custom properties.
-   `docs/site/themes.md` прямо требует менять обе копии. Исправление только
+   `docs/rules/site/themes.md` прямо требует менять обе копии. Исправление только
    одной копии приведёт к разному оформлению с JS и без JS.
 3. Встроенные темы DaisyUI включены через `@plugin`, а проектные значения
    переопределяются отдельно вне CSS layers. Это два источника тематических
@@ -110,8 +110,8 @@ plugin; проверить результат production-сборки.
 8. Проверить scrollbar и `.no-scrollbar`; удалить только подтверждённо
    неиспользуемые правила. Отформатировать изменённый CSS по правилам проекта,
    пояснить назначение модулей, селекторов и media queries.
-9. Обновить `docs/site/design-system.md`, `docs/site/themes.md` и
-   `docs/development/project-structure.md`: источники токенов, порядок
+9. Обновить `docs/rules/site/design-system.md`, `docs/rules/site/themes.md` и
+   `docs/rules/development/project-structure.md`: источники токенов, порядок
    подключения, правила добавления общего/локального CSS. Удалить требование
    вручную синхронизировать два dark-блока.
 
@@ -135,7 +135,7 @@ plugin; проверить результат production-сборки.
   размеры/отступы, кнопки, Settings, Footer, контентные блоки, якорная навигация
   и скроллбары. Нет новых визуальных отличий и overflow.
 - Пройдены `pnpm check`, `pnpm build`, проверка форматирования изменённого CSS и
-  обязательные проверки из `docs/development/verification-and-ci.md`. Выполнены
+  обязательные проверки из `docs/rules/development/verification-and-ci.md`. Выполнены
   затронутые E2E specs в Chromium, Firefox и WebKit:
 
   ```sh
@@ -144,7 +144,7 @@ plugin; проверить результат production-сборки.
     tests/e2e/navigation.spec.ts tests/e2e/carousel.spec.ts
   ```
 
-- Учтены уже описанные сбои из `docs/development/browser-coverage.md` и
+- Учтены уже описанные сбои из `docs/rules/development/browser-coverage.md` и
   `verification-and-ci.md`: записать исходный результат и отделить существующие
   сбои от регрессий рефакторинга. Не объявлять проверки успешными по старым
   отчётам.

@@ -33,7 +33,7 @@ photography or invented customer identities.
 - Implemented by subagent task_009 and reviewed by the primary agent.
 - No approved imagery was found in the application or repository's tracked image
   inventory. Retained current placeholder sources and documented all three
-  missing project photos and three reviewer portraits in `docs/site/media.md`,
+  missing project photos and three reviewer portraits in `docs/rules/site/media.md`,
   linked from README and content/deployment guides.
 - Added validated alternative text and intrinsic dimensions to project/review
   JSON records. Alternative text identifies demonstration media without implying

@@ -32,7 +32,7 @@
 - Выполнить `pnpm exec vitest run src/components/ui/Button.test.ts`, проверки
   типов проекта, `pnpm check` и линтер изменённых файлов.
 - Записать результаты и архивировать задачу по
-  `docs/development/task-management.md`.
+  `docs/rules/development/task-management.md`.
 
 ## Результат
 

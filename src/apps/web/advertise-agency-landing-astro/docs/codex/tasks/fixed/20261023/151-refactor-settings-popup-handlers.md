@@ -35,7 +35,7 @@ ThemeToggle и opener мобильного меню.
   проверить popup на узком экране, при увеличении масштаба и клавиатурном
   открытии; панель должна оставаться в пределах viewport.
 - Записать результаты и архивировать задачу по
-  `docs/development/task-management.md`.
+  `docs/rules/development/task-management.md`.
 
 ## Результаты проверки
 

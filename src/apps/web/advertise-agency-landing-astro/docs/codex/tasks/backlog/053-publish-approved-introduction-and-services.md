@@ -107,7 +107,7 @@ approval flag remains false and explicit demo mode stays enabled.
 Latest image follow-up: Introduction now uses its own CC0 photo of dimensional
 storefront lettering, cropped to focus on the sign and entrance. Local asset:
 `src/assets/introduction/storefront-sign.webp` (1200 × 900). Author, source,
-license and Sharp processing are recorded in `docs/site/content.md`. It no
+license and Sharp processing are recorded in `docs/rules/site/content.md`. It no
 longer shares a photograph with OfferCarousel. This is a licensed photograph,
 not an AI-generated image or an agency portfolio record.
 

@@ -76,7 +76,7 @@ unapproved media to improve presentation.
 Reuse prior task evidence as background, but rerun integrated behavior that
 changed. Keep screenshots/scripts under ignored `output/playwright/task-016/`;
 put a durable results matrix, findings/fixes and limitations in
-`docs/site/design-verification.md` with a README link. Update
+`docs/rules/site/design-verification.md` with a README link. Update
 design-system/themes/media documentation only where final behavior changed.
 Distinguish unresolved code regressions from unavailable native
 zoom/browser/screen-reader checks and pending agency inputs.

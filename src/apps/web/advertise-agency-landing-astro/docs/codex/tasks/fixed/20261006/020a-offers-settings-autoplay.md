@@ -37,7 +37,7 @@ changes retain the concise polite position status.
 Keep overlay arrows and centered standalone dots. Remove the horizontal space
 reserved specifically for the deleted button while retaining necessary arrow,
 dot and copy clearance. Zero/one items remain omitted/static; no-JavaScript
-offers retain their stacked native links. Update `docs/site/offers-carousel.md`
+offers retain their stacked native links. Update `docs/rules/site/offers-carousel.md`
 to describe the new configuration and automatic resume rules.
 
 ## Acceptance

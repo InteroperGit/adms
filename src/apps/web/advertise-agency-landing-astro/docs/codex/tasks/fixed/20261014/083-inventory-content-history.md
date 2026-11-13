@@ -124,12 +124,12 @@ their public exports. The direct scripts are:
 - `scripts/fixtures/article-acceptance.astro` plus its integration helper.
 
 The repository-wide search finds 50 Markdown files containing a `data/content`
-path. The primary handoff documents are `docs/site/content.md`,
-`docs/site/articles.md`, `docs/site/service-articles.md`,
-`docs/site/case-studies.md`, `docs/site/media.md`,
-`docs/site/production-inputs.md`, `docs/site/metadata.md`,
-`docs/development/content-contracts.md`, and
-`docs/development/project-structure.md`. Other historical, planning, backlog,
+path. The primary handoff documents are `docs/rules/site/content.md`,
+`docs/rules/site/articles.md`, `docs/rules/site/service-articles.md`,
+`docs/rules/site/case-studies.md`, `docs/rules/site/media.md`,
+`docs/rules/site/production-inputs.md`, `docs/rules/site/metadata.md`,
+`docs/rules/development/content-contracts.md`, and
+`docs/rules/development/project-structure.md`. Other historical, planning, backlog,
 and verification files are identified by:
 
 ```powershell

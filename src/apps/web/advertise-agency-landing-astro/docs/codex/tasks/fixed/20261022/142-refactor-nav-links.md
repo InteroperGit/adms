@@ -16,7 +16,7 @@
 
 ## Реализация
 
-- Прочитать `AGENTS.md`, правила `docs/development/rules/` и навык
+- Прочитать `AGENTS.md`, правила `docs/rules/development/rules/` и навык
   `astro-best-practices`. Для контекста открыть `Header.astro`,
   `MobileMenuDialog.astro`, `Button.astro` и `tests/helpers/render.ts`.
 - Сохранить props `items`, `variant: 'desktop' | 'mobile'`, `phone`. В
@@ -50,7 +50,7 @@
   desktop/mobile на 1280 и 390 px, длинные подписи, светлую и тёмную темы.
   Результаты записать в задаче. Не ослаблять assertions.
 - После выполнения архивировать задачу по правилам
-  `docs/development/task-management.md` и обновить `.codex/TASKS.md`.
+  `docs/rules/development/task-management.md` и обновить `.codex/TASKS.md`.
 
 ## Результат
 

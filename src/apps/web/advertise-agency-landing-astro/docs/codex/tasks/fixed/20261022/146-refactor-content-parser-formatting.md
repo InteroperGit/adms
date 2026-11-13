@@ -29,7 +29,7 @@
 - Запустить colocated suite `src/validation/parse-content.test.ts`,
   `pnpm check:style` и ESLint для изменённого файла.
 - После выполнения архивировать задачу по правилам
-  `docs/development/task-management.md`.
+  `docs/rules/development/task-management.md`.
 
 ## Выполнение
 

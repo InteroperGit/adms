@@ -11,7 +11,7 @@
   оставить `data/templates/` отслеживаемым.
 - Добавить pre-commit/CI scan, который блокирует `data/content/` и значения из
   denylist.
-- Обновить README, `docs/site/content.md`, setup, deployment и quality gates.
+- Обновить README, `docs/rules/site/content.md`, setup, deployment и quality gates.
 - Добавить проверки `git ls-files`, шаблонов, generator manifest и clean clone.
 - Зафиксировать порядок публикации внешнего контента и rollback.
 

@@ -6,8 +6,8 @@
 
 ## Изменения
 
-- Обновить `docs/development/verification-and-ci.md` и
-  `docs/development/components.md`.
+- Обновить `docs/rules/development/verification-and-ci.md` и
+  `docs/rules/development/components.md`.
 - Описать правило `Component.astro` рядом с `Component.test.ts`.
 - Проверить `.github/workflows/quality.yml` и focused commands.
 - Обновить coverage include и пороги после полного набора тестов.

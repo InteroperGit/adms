@@ -1,4 +1,4 @@
-// Playwright CLI run-code file; see docs/site/content-block-visual-matrix.md.
+// Playwright CLI run-code file; see docs/rules/site/content-block-visual-matrix.md.
 async (page) => {
   const origin = "http://127.0.0.1:54382";
   const output = "output/playwright/vcb-02";

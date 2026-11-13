@@ -11,8 +11,8 @@
 
 ## Основания и текущее состояние
 
-План составлен по `AGENTS.md`, правилам `docs/development/rules/`,
-`docs/development/components.md`, `docs/development/verification-and-ci.md`,
+План составлен по `AGENTS.md`, правилам `docs/rules/development/rules/`,
+`docs/rules/development/components.md`, `docs/rules/development/verification-and-ci.md`,
 документации форм, тем, cookie banner и content contracts, а также по
 `astro-best-practices/SKILL.md`.
 

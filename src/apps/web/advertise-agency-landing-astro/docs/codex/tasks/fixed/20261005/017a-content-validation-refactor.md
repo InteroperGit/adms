@@ -87,8 +87,8 @@ fields without disguising schema output or input defaults. Offer-specific URL
 security remains local to offers validation; shared project/review media
 behavior is preserved.
 
-Updated `docs/site/content.md`, `docs/development/project-structure.md` and
-`docs/site/offers-carousel.md` with ownership, import direction and coordinated
+Updated `docs/rules/site/content.md`, `docs/rules/development/project-structure.md` and
+`docs/rules/site/offers-carousel.md` with ownership, import direction and coordinated
 field-edit instructions. Migrated the ignored task-017 helper to current paths
 and added ignored task-017a regression/contract helpers under
 `output/playwright/task-017a/`. Updated the carousel plan and archived this task

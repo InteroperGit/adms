@@ -54,7 +54,7 @@
   блокировки pointer/keyboard interaction.
 - `pnpm test`, `pnpm check`, `pnpm build` и соответствующие browser checks
   проходят.
-- Обновлены `docs/development/components.md` и design-system документация с
+- Обновлены `docs/rules/development/components.md` и design-system документация с
   описанием правила применения волны и исключения `OffersCarousel`.
 
 ## Зависимости

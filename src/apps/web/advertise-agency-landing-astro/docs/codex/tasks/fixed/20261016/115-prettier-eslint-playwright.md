@@ -13,7 +13,7 @@ E2E-тестов для локальной разработки и CI.
 - `pnpm check` запускает Astro check и собственную проверку стиля.
 - Unit/component/integration-тесты работают на Vitest.
 - Browser smoke реализован через Playwright CLI в
-  `docs/development/browser-coverage.js`; локального test runner нет.
+  `docs/rules/development/browser-coverage.js`; локального test runner нет.
 - Предыдущая браузерная приёмка ограничена Chromium. См.
   [задачу 094](../../fixed/20261015/094-playwright-smoke-and-e2e.md).
 

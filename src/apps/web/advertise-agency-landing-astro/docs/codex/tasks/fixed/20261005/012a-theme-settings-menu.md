@@ -127,7 +127,7 @@ dismissal with `MobileMenuDialog.astro`.
   recognizable. Record actual results and limitations, distinguishing automated
   checks from screen-reader testing. Whole-site redesign verification remains
   task 016.
-- Run `pnpm check` and `pnpm build`. Update `docs/site/themes.md` and relevant
+- Run `pnpm check` and `pnpm build`. Update `docs/rules/site/themes.md` and relevant
   design documentation for the new control. Record changed files, browser
   evidence and limitations in this task; archive under the actual completion
   date and update the plan only after verification. No commit or deployment is
