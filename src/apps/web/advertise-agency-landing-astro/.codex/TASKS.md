@@ -21,6 +21,9 @@ None currently.
 
 ## Task index
 
+- Content migration: tasks 161–170 in backlog; execution not started.
+  Start with baseline 161; preserve a working site after each task.
+  [Migration plan](../docs/codex/tasks/plan/20261114_site-content-structure-migration-plan.md)
 - Plans and UI decisions: [component review](../docs/codex/tasks/plan/20261022-ui-components-review.md)
 - Active tasks: `docs/codex/tasks/todo/`
 - Deferred tasks: `docs/codex/tasks/backlog/`

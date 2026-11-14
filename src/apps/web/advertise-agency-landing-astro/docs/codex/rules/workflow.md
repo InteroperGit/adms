@@ -11,12 +11,19 @@ observable outcome, constraints, callers and acceptance checks; find repository
 facts yourself. Ask only for missing decisions that cannot be inferred. Respect
 explicit exclusions such as task files, deployment or external messages.
 
+During task execution, post a brief commentary update before each action or
+tightly related batch of actions, naming what you are doing. After each batch,
+report material findings, changes and the next step. Do not leave work
+unexplained in the development log.
+
 Prefer the smallest complete change using existing conventions and installed
 capabilities. Do not add abstractions, dependencies or configuration without a
-current need. Update all affected callers, tests, types and documentation; keep
-unrelated user changes intact. Treat runtime data, secrets and irreversible
-operations as explicit boundaries. Finish with [verification](verification.md);
-use [release](release.md) only when publishing or changing deployment behavior.
+current need. Before making changes beyond the task's requirements, describe
+them and wait for the user's confirmation. Update all affected callers, tests,
+types and documentation; keep unrelated user changes intact. Treat runtime data,
+secrets and irreversible operations as explicit boundaries. Finish with
+[verification](verification.md); use [release](release.md) only when publishing
+or changing deployment behavior.
 
 ## Working context and models
 
