@@ -1,0 +1,78 @@
+---
+import type { MenuItem } from "@/types";
+
+interface Props {
+  items: MenuItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav
+  class="desktop-navigation"
+  aria-label="Основная навигация"
+>
+  <ul>
+    {items.map((item) => (
+      <li>
+        <a href={item.href}>{item.label}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  /* Keep desktop navigation orange with high-contrast white labels. */
+  .desktop-navigation {
+    display: none;
+    min-height: 3rem;
+    color: var(--site-navigation-content);
+    background: var(--site-navigation-background);
+  }
+
+  /* Constrain links to the same measure as the header content. */
+  .desktop-navigation ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 0.25rem 0;
+    max-width: 80rem;
+    min-height: 3rem;
+    margin: 0 auto;
+    padding: 0.25rem 0;
+    list-style: none;
+  }
+
+  /* Keep each configured destination a clear touch and focus target. */
+  .desktop-navigation a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: inherit;
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+  }
+
+  .desktop-navigation a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
+  }
+
+  /* Maintain a strong focus indicator on the inverted row. */
+  .desktop-navigation a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  /* Show navigation on tablet and desktop layouts. */
+  @media (min-width: 48rem) {
+    .desktop-navigation {
+      display: block;
+    }
+  }
+</style>

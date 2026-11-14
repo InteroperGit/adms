@@ -1,0 +1,127 @@
+---
+// Render the mobile navigation trigger used by the shared header.
+import { Menu, X } from "@lucide/astro";
+---
+
+<div class="header-menu-wrap">
+  <button
+    type="button"
+    id="mobile-menu-open"
+    class="btn btn-ghost btn-circle"
+    aria-label="Открыть меню"
+    aria-controls="mobile-menu"
+    aria-expanded="false"
+    aria-haspopup="dialog"
+  >
+    <span
+      class="header-menu-icons"
+      aria-hidden="true"
+    >
+      <Menu
+        class="header-menu-icon header-menu-burger"
+        size={24}
+      />
+      <X
+        class="header-menu-icon header-menu-close"
+        size={24}
+      />
+    </span>
+  </button>
+</div>
+
+<style>
+  /* Keep the mobile opener fixed at the end of the header row. */
+  .header-menu-wrap {
+    flex: none;
+  }
+
+  /* Give the menu trigger a stable, theme-aware touch surface. */
+  button {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-field);
+    color: var(--color-primary);
+    background-color: var(--color-base-100);
+  }
+
+  /* Layer both glyphs in the same stable button position. */
+  .header-menu-icons {
+    display: grid;
+    place-items: center;
+  }
+
+  /* Animate the menu glyph without changing the trigger dimensions. */
+  .header-menu-icon {
+    grid-area: 1 / 1;
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+  }
+
+  /* Keep the close glyph hidden until the drawer is open. */
+  .header-menu-close {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.7);
+  }
+
+  /* Crossfade the burger into a close glyph while the drawer is open. */
+  button[aria-expanded="true"] .header-menu-burger {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.7);
+  }
+
+  /* Bring the close glyph into the burger's place while open. */
+  button[aria-expanded="true"] .header-menu-close {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  /* Invert the menu trigger only where a desktop pointer is available. */
+  @media (min-width: 48rem) and (hover: hover) and (pointer: fine) {
+    /* Give desktop pointer users the shared inverted button feedback. */
+    button:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary-content);
+      background: var(--color-primary);
+    }
+  }
+
+  /* Keep mobile burger colors steady while the pointer is over or on it. */
+  @media (max-width: 47.999rem) {
+    /* Prevent default button styles from changing mobile control colors. */
+    button:hover,
+    button:active {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: var(--color-base-100);
+      box-shadow: none;
+    }
+  }
+
+  /* Keep the opener colors unchanged while the close glyph is active. */
+  button[aria-expanded="true"],
+  button[aria-expanded="true"]:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-base-100);
+  }
+
+  /* Keep keyboard focus clear against the header surface. */
+  button:focus-visible {
+    outline: var(--site-focus-ring);
+    outline-offset: 3px;
+  }
+
+  /* Keep icon state changes immediate for reduced-motion visitors. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Avoid animating the two overlapping menu glyphs. */
+    .header-menu-icon {
+      transition: none;
+    }
+  }
+</style>

@@ -68,12 +68,14 @@ Desktop, OneDrive or another synchronized folder.
 
 - `.codex/{agents,skills,prompts}/`: custom agent TOML basename matches its
   name.
-- `docs/codex/tasks/{plan,todo,backlog,learn}/`: plans, active tasks, explicitly
-  deferred work and lessons. Number task names with leading zeros in execution
-  order (`001-feature.md`); structured Plan-Todo-Learn records use
+- `docs/codex/tasks/{plan,todo,backlog,learn}/`: plans, active tasks, queued
+  tasks and lessons. Create every task in `backlog`; move it to `todo` when
+  execution begins. Number task names with leading zeros in execution order
+  (`001-feature.md`); structured Plan-Todo-Learn records use
   `YYYYMMDD_HHMMSS_<type>.md` (e.g. `20231027_100000_plan.md`).
-- Completed tasks: `docs/codex/tasks/fixed/yyyyMMdd/`, preserving the numbered
-  filename and completion date in Europe/Moscow. Pending tasks remain in todo.
+- Move tasks into `docs/codex/tasks/fixed/yyyyMMdd/` only when the user
+  explicitly requests it. Preserve the numbered filename and use the completion
+  date in Europe/Moscow.
 - Optional phases: `harness/build/phase-01-name.md`; context:
   `harness/context/`.
 - Auxiliary names: descriptive lowercase hyphenated slugs, `.md` for Markdown;
@@ -90,10 +92,10 @@ implementation, required checks/acceptance and archival/handoff. Do not add
 inapplicable checks or weaken gates. Suggested sections: Skills, Model and
 participants, Checklist.
 
-After verified acceptance record changes/results, archive and update relative
-links and plan status. Explicitly deferred tasks keep filename, evidence and
-outstanding inputs when moved to backlog; update references on every move. User
-instructions can exclude task edits/archival for a session.
+After verified acceptance record changes/results and update relative links and
+plan status. Explicitly deferred tasks keep filename, evidence and outstanding
+inputs when moved to backlog; update references on every move. User instructions
+can exclude task edits for a session.
 
 `.codex/TASKS.md` is current state, not a journal: active links with short
 status/next action, blockers, resume constraints/decisions, optionally a useful

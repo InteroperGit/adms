@@ -1,3 +1,4 @@
+// Verify the nonmodal mobile drawer, trigger toggle and native link behavior.
 // @vitest-environment node
 import { readFileSync } from "node:fs";
 import { afterEach, expect, it, vi } from "vitest";
@@ -14,204 +15,162 @@ const source = readFileSync(
 const script = source.match(/<script>([\s\S]*?)<\/script>/)?.[1];
 const windows: JSDOM[] = [];
 const props = {
-  items: [{ label: "Services", href: "/#services" }],
-  phone: "+7 999 123 45 67",
+  items: [
+    { label: "Services", href: "/#services" },
+    { label: "Projects", href: "/projects/" },
+  ],
 };
 
 afterEach(() => {
   windows.splice(0).forEach((dom) => dom.window.close());
 });
 
-// Run actual script; mock only native modal APIs missing from jsdom.
 async function setup(openerPresent = true, menuPresent = true) {
   const body = await render(MobileMenuDialog, props);
   const openerMarkup = openerPresent
-    ? '<button id="mobile-menu-open" aria-expanded="false">Menu</button>'
+    ? '<header data-auto-hide-header><div class="header-layout">' +
+      '<button id="mobile-menu-open" aria-expanded="false">Menu</button>' +
+      "</div></header>"
     : "";
   const dom = new JSDOM(
     openerMarkup +
       (menuPresent ? body.innerHTML : "") +
-      '<section id="services">Services section</section>',
+      '<section id="services">Services section</section>' +
+      '<button id="outside">Outside</button>',
     { url: "https://example.test/", runScripts: "outside-only" },
   );
   windows.push(dom);
   const { document } = dom.window;
-  const menu = document.querySelector("dialog")!;
-  const opener =
-    document.querySelector<HTMLButtonElement>("#mobile-menu-open")!;
+  const menu = document.querySelector<HTMLDialogElement>("dialog");
+  const opener = document.querySelector<HTMLButtonElement>("#mobile-menu-open");
+
   if (menu) {
-    menu.showModal = vi.fn(() => {
+    menu.show = vi.fn(() => {
       menu.open = true;
-      menu.querySelector<HTMLElement>("[autofocus]")?.focus();
+      menu.querySelector<HTMLAnchorElement>("a[href]")?.focus();
     });
     menu.close = vi.fn(() => {
       menu.open = false;
       menu.dispatchEvent(new dom.window.Event("close"));
     });
-    vi.spyOn(menu, "getBoundingClientRect").mockReturnValue({
-      left: 0,
-      top: 0,
-      right: 288,
-      bottom: 600,
-      width: 288,
-      height: 600,
-      x: 0,
-      y: 0,
-      toJSON: () => ({}),
-    });
   }
-  expect(script).toBeTruthy();
-  dom.window.eval(transpile(script!));
+  if (!script) throw new Error("Mobile menu script was not found");
+  dom.window.eval(transpile(script));
   return { dom, document, menu, opener };
 }
 
-it("renders accessible dialog controls and supplied mobile links", async () => {
+it("renders only supplied links with icons and themed separators", async () => {
   const body = await render(MobileMenuDialog, props);
   const menu = getByRole(body, "dialog", { hidden: true });
+  const nav = menu.querySelector("nav");
+
   expect(menu).toHaveAttribute("id", "mobile-menu");
-  expect(menu).toHaveAttribute("aria-label", "Меню сайта");
   expect(menu).not.toHaveAttribute("open");
-  const close = getByRole(menu, "button", { hidden: true });
-  expect(close).toHaveAttribute("aria-label", "Закрыть меню");
-  expect(close).toHaveClass("mobile-menu-close");
-  expect(close).toHaveAttribute("autofocus");
-  expect(menu.querySelector("a")).toHaveAttribute("href", "/#services");
-  const phoneAction = menu.querySelector('a[href^="tel:"]');
-  expect(phoneAction).toHaveAttribute("href", "tel:+79991234567");
-  expect(phoneAction).toHaveTextContent("Позвонить");
-  expect(phoneAction?.querySelector("i")).toHaveAttribute(
-    "aria-hidden",
-    "true",
+  expect(menu.querySelectorAll("a")).toHaveLength(props.items.length);
+  expect(menu.querySelectorAll(".mobile-link-icon")).toHaveLength(
+    props.items.length,
   );
-  const maxAction = menu.querySelector('a[href="https://max.ru/"]');
-  expect(maxAction).toHaveAttribute("aria-label", "Написать в Макс");
-  expect(maxAction?.textContent?.trim()).toBe("Макс");
-  expect(menu.querySelector(".mobile-menu-divider")).not.toBeNull();
-  expect(menu.querySelectorAll(".mobile-menu-actions a")).toHaveLength(2);
+  expect(menu.querySelectorAll(".mobile-link-divider")).toHaveLength(
+    props.items.length - 1,
+  );
+  expect(nav?.querySelector("[href='/projects/']")).toBeInTheDocument();
+  expect(menu.querySelector("[data-menu-close]")).toBeNull();
+  expect(menu.querySelector(".mobile-menu-actions")).toBeNull();
+  expect(menu.querySelector(".mobile-menu-divider")).toBeNull();
 });
 
-it("opens, closes, updates expanded state and returns focus", async () => {
+it("opens and closes from the same trigger with animated state", async () => {
   const { document, menu, opener } = await setup();
-  fireEvent.click(opener);
-  expect(menu.showModal).toHaveBeenCalledOnce();
-  expect(menu.open).toBe(true);
+  expect(menu).not.toBeNull();
+  expect(opener).not.toBeNull();
+
+  fireEvent.click(opener!);
+  expect(menu!.show).toHaveBeenCalledOnce();
+  expect(menu!.open).toBe(true);
   expect(opener).toHaveAttribute("aria-expanded", "true");
-  expect(document.activeElement).toBe(menu.querySelector("button"));
-  fireEvent.click(menu.querySelector("button")!);
-  expect(menu.open).toBe(false);
+  expect(opener).toHaveAttribute("aria-label", "Закрыть меню");
+  expect(document.querySelector("header")).toHaveAttribute(
+    "data-mobile-menu-open",
+    "",
+  );
+  expect(document.activeElement).toBe(menu!.querySelector("a"));
+
+  fireEvent.click(opener!);
+  expect(menu!.close).toHaveBeenCalledOnce();
+  expect(menu!.open).toBe(false);
   expect(opener).toHaveAttribute("aria-expanded", "false");
+  expect(opener).toHaveAttribute("aria-label", "Открыть меню");
   expect(document.activeElement).toBe(opener);
 });
 
-it("allows native Escape and handles its close event", async () => {
-  const { dom, menu, opener } = await setup();
-  fireEvent.click(opener);
-  const escape = new dom.window.KeyboardEvent("keydown", {
-    key: "Escape",
-    bubbles: true,
-    cancelable: true,
-  });
-  expect(menu.dispatchEvent(escape)).toBe(true);
-  const cancel = new dom.window.Event("cancel", { cancelable: true });
-  expect(menu.dispatchEvent(cancel)).toBe(true);
-  // jsdom does not implement the browser's default Escape action.
-  menu.close();
-  expect(opener).toHaveAttribute("aria-expanded", "false");
-  expect(dom.window.document.activeElement).toBe(opener);
+it("closes on Escape and restores trigger focus", async () => {
+  const { dom, document, menu, opener } = await setup();
+  fireEvent.click(opener!);
+  fireEvent.keyDown(menu!, { key: "Escape" });
+
+  expect(menu!.close).toHaveBeenCalledOnce();
+  expect(menu!.open).toBe(false);
+  expect(document.activeElement).toBe(opener);
+  dom.window.close();
 });
 
-it("wraps focus only at the first and last controls", async () => {
+it("removes pointer focus from the menu trigger after closing", async () => {
   const { document, menu, opener } = await setup();
-  fireEvent.click(opener);
-  const controls = menu.querySelectorAll<HTMLElement>("button, a[href]");
-  const first = controls[0]!;
-  const last = controls[controls.length - 1]!;
-  first.focus();
-  expect(fireEvent.keyDown(first, { key: "Tab", shiftKey: true })).toBe(false);
-  expect(document.activeElement).toBe(last);
-  expect(fireEvent.keyDown(last, { key: "Tab" })).toBe(false);
-  expect(document.activeElement).toBe(first);
-  controls[1]!.focus();
-  expect(fireEvent.keyDown(controls[1]!, { key: "Tab" })).toBe(true);
+  fireEvent.click(opener!, { detail: 1 });
+  fireEvent.click(opener!, { detail: 1 });
+
+  expect(menu!.open).toBe(false);
+  expect(document.activeElement).not.toBe(opener);
 });
 
-it.each([
-  [300, 200],
-  [-1, 200],
-  [100, -1],
-  [100, 601],
-])("dismisses backdrop clicks at %i, %i", async (clientX, clientY) => {
+it("dismisses outside clicks without stealing their focus", async () => {
+  const { document, menu, opener } = await setup();
+  const outside = document.querySelector<HTMLButtonElement>("#outside")!;
+  fireEvent.click(opener!);
+  outside.focus();
+  fireEvent.pointerDown(outside);
+
+  expect(menu!.close).toHaveBeenCalledOnce();
+  expect(menu!.open).toBe(false);
+  expect(document.activeElement).toBe(outside);
+});
+
+it("closes same-page links and focuses their section", async () => {
+  const { document, menu, opener } = await setup();
+  const section = document.getElementById("services")!;
+  fireEvent.click(opener!);
+  const link = menu!.querySelector<HTMLAnchorElement>("a[href]")!;
+  link.addEventListener("click", (event) => event.preventDefault());
+  fireEvent.click(link);
+
+  expect(menu!.open).toBe(false);
+  expect(document.activeElement).toBe(section);
+  expect(section).toHaveAttribute("tabindex", "-1");
+});
+
+it("preserves modified navigation without closing", async () => {
   const { menu, opener } = await setup();
-  fireEvent.click(opener);
-  fireEvent.click(menu, { clientX, clientY });
-  expect(menu.open).toBe(false);
+  fireEvent.click(opener!);
+  const link = menu!.querySelector<HTMLAnchorElement>("a[href]")!;
+  link.addEventListener("click", (event) => event.preventDefault());
+  fireEvent.click(link, { ctrlKey: true });
+
+  expect(menu!.open).toBe(true);
+  expect(menu!.close).not.toHaveBeenCalled();
 });
 
-it("keeps inside clicks open", async () => {
-  const { menu, opener } = await setup();
-  fireEvent.click(opener);
-  fireEvent.click(menu, { clientX: 100, clientY: 100 });
-  fireEvent.click(menu.querySelector("nav")!);
-  expect(menu.open).toBe(true);
-});
-
-it.each([null, "0"])(
-  "focuses hash sections with tabindex %s",
-  async (index) => {
-    const { document, menu, opener } = await setup();
-    const section = document.getElementById("services")!;
-    if (index !== null) section.setAttribute("tabindex", index);
-    fireEvent.click(opener);
-    const link = menu.querySelector("a")!;
-    link.addEventListener("click", (event) => event.preventDefault());
-    fireEvent.click(link);
-    expect(menu.open).toBe(false);
-    expect(document.activeElement).toBe(section);
-    expect(section).toHaveAttribute("tabindex", index ?? "-1");
-    opener.focus();
-    expect(section.getAttribute("tabindex")).toBe(index);
-  },
-);
-
-it.each(["ctrlKey", "metaKey", "shiftKey", "altKey"])(
-  "preserves modified navigation with %s",
-  async (modifier) => {
-    const { menu, opener } = await setup();
-    fireEvent.click(opener);
-    const link = menu.querySelector("a")!;
-    link.addEventListener("click", (event) => event.preventDefault());
-    fireEvent.click(link, { [modifier]: true });
-    expect(menu.open).toBe(true);
-    expect(menu.close).not.toHaveBeenCalled();
-  },
-);
-
-it.each(["/projects/", "/#missing", "tel:+79991234567"])(
-  "closes without focusing a section for %s",
-  async (href) => {
-    const { document, menu, opener } = await setup();
-    const link = menu.querySelector("a")!;
-    link.href = href;
-    link.addEventListener("click", (event) => event.preventDefault());
-    fireEvent.click(opener);
-    fireEvent.click(link);
-    expect(menu.open).toBe(false);
-    expect(document.activeElement).toBe(opener);
-  },
-);
-
-it("closes on resize only when the opener disappears", async () => {
+it("closes when the responsive layout hides its opener", async () => {
   const { dom, menu, opener } = await setup();
-  const rects = vi.spyOn(opener, "getClientRects");
+  const rects = vi.spyOn(opener!, "getClientRects");
   rects.mockReturnValue([{}] as unknown as DOMRectList);
-  fireEvent.click(opener);
+  fireEvent.click(opener!);
   dom.window.dispatchEvent(new dom.window.Event("resize"));
-  expect(menu.open).toBe(true);
+  expect(menu!.open).toBe(true);
+
   rects.mockReturnValue([] as unknown as DOMRectList);
   dom.window.dispatchEvent(new dom.window.Event("resize"));
-  expect(menu.open).toBe(false);
-  dom.window.dispatchEvent(new dom.window.Event("resize"));
-  expect(menu.close).toHaveBeenCalledOnce();
+  expect(menu!.close).toHaveBeenCalledOnce();
+  expect(menu!.open).toBe(false);
 });
 
 it.each([
@@ -221,5 +180,5 @@ it.each([
 ])("ignores missing elements (opener %s, menu %s)", async (opener, menu) => {
   const result = await setup(opener, menu);
   if (result.opener) fireEvent.click(result.opener);
-  if (result.menu) expect(result.menu.showModal).not.toHaveBeenCalled();
+  if (result.menu) expect(result.menu.show).not.toHaveBeenCalled();
 });

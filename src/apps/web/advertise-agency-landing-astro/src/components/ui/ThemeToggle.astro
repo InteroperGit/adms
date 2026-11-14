@@ -1,9 +1,9 @@
 ---
 // Render accessible native radios for light, dark and system preferences.
 // ThemeInit owns persistence and synchronizes selection after DOM readiness.
-// System is the markup default; icon-only controls retain hidden names.
+// System is the markup default; each choice shows its accessible name.
 
-// Local decorative symbols accompany the accessible Russian radio names.
+// Local decorative symbols accompany the Russian radio names.
 const themes = [
   {
     value: "light",
@@ -25,7 +25,7 @@ const themes = [
 ];
 ---
 
-{/* System is the markup default; icon-only controls retain hidden names. */}
+{/* System is the markup default; each choice shows its accessible name. */}
 <fieldset>
   <legend class="sr-only">Тема оформления</legend>
   <span
@@ -66,7 +66,7 @@ const themes = [
               />
             )}
           </svg>
-          <span class="sr-only">{theme.label}</span>
+          <span class="theme-option-label">{theme.label}</span>
         </span>
       </label>
     ))}
@@ -84,8 +84,15 @@ const themes = [
     min-width: 0;
   }
 
-  /* Keep the preference label legible beside compact icons. */
+  /* Give the preference heading more emphasis than the option labels. */
   .theme-label {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  /* Keep each theme name visible beside its icon at every viewport size. */
+  .theme-option-label {
+    display: inline;
     font-size: 0.875rem;
     font-weight: 600;
   }
@@ -118,10 +125,13 @@ const themes = [
 
   /* Draw a compact themed surface inside each full-height target. */
   .theme-icon {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 44px;
+    gap: 0.5rem;
+    padding-inline: 0.75rem;
     border: 1px solid var(--site-control-border);
     color: var(--color-base-content);
     background: var(--color-base-100);
@@ -185,5 +195,57 @@ const themes = [
   /* Raise the focused target so neighboring surfaces do not cover its ring. */
   .theme-option:focus-within {
     z-index: 1;
+  }
+
+  /* Stack and name all theme choices for comfortable mobile selection. */
+  @media (max-width: 47.999rem) {
+    /* Give the preference label its own readable row above the choices. */
+    fieldset {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 0.5rem;
+      width: min(100%, 22rem);
+    }
+
+    /* Keep the enlarged preference heading on narrow touch layouts. */
+    .theme-label {
+      font-size: 1.125rem;
+    }
+
+    /* Arrange the full-width theme choices in a vertical stack. */
+    .theme-options {
+      flex-direction: column;
+      gap: 0.375rem;
+      width: 100%;
+    }
+
+    /* Make each named choice a full-width, touch-sized row. */
+    .theme-option {
+      width: 100%;
+      min-height: 48px;
+    }
+
+    /* Align each theme icon and its larger text on the same row. */
+    .theme-icon {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.75rem;
+      width: 100%;
+      height: 48px;
+      padding-inline: 0.75rem;
+      border-radius: var(--radius-field);
+    }
+
+    /* Restore full borders when choices no longer touch each other. */
+    .theme-option + .theme-option .theme-icon {
+      border-left-width: 1px;
+    }
+
+    /* Enlarge the visible choice names beside the mobile theme icons. */
+    .theme-option-label {
+      font-size: 1rem;
+      font-weight: 600;
+    }
   }
 </style>

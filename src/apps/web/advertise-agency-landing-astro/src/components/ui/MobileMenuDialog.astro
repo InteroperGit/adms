@@ -1,326 +1,111 @@
 ---
-// Render and enhance the native modal navigation drawer on small screens.
-// Callers supply menu items and phone; Header supplies the opener element.
-// Preserve modal focus, Escape dismissal and same-page anchor navigation.
-
+// Render a full-height mobile navigation drawer below the first header row.
 import NavLinks from "@/components/ui/NavLinks.astro";
-import Button from "@/components/ui/Button.astro";
-import MaxLogo from "@/components/ui/MaxLogo.astro";
-import { icons } from "@/content/icons";
 import type { MenuItem } from "@/types";
 
-// Caller-supplied data and presentation options for this component.
-export interface Props {
+interface Props {
   items: MenuItem[];
-  phone: string;
 }
 
-const { items, phone } = Astro.props;
-const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
+const { items } = Astro.props;
 ---
 
-{/* Preserve modal focus, Escape dismissal and same-page anchor navigation. */}
 <dialog
   id="mobile-menu"
   aria-label="Меню сайта"
-  class="bg-base-200 text-base-content"
+  class="mobile-menu-dialog"
 >
-  <div class="mobile-menu-close-row">
-    <button
-      type="button"
-      data-menu-close
-      class="mobile-menu-close"
-      aria-label="Закрыть меню"
-      autofocus
-    >
-      <span
-        class="mobile-menu-close-icon"
-        aria-hidden="true"
-      >
-        ×
-      </span>
-    </button>
-  </div>
   <NavLinks
     items={items}
     variant="mobile"
-    phone={phone}
   />
-  <hr class="mobile-menu-divider" />
-  <div
-    class="mobile-menu-actions"
-    role="group"
-    aria-label="Контакты"
-  >
-    <Button
-      href={phoneHref}
-      size="md"
-      class="mobile-menu-action"
-      aria-label="Позвонить"
-    >
-      <i
-        class:list={["fas", icons.phone]}
-        aria-hidden="true"
-      ></i>
-      <span>Позвонить</span>
-    </Button>
-    <Button
-      variant="secondary"
-      size="md"
-      href="https://max.ru/"
-      class="mobile-menu-action mobile-menu-max"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Написать в Макс"
-    >
-      <MaxLogo />
-      <span>Макс</span>
-    </Button>
-  </div>
 </dialog>
 
 <style>
-  /* Bound the modal drawer to the viewport with scrollable content. */
+  /* Fill the viewport below the persistent first header row. */
   dialog {
     position: fixed;
-    inset: 0.5rem;
-    margin: 0;
-    padding: 0;
-    border: 0;
+    z-index: 50;
+    inset: var(--site-header-first-row-height, 4rem) 0 0;
     width: auto;
     max-width: none;
-    height: calc(100dvh - 1rem);
-    max-height: calc(100dvh - 1rem);
+    height: auto;
+    max-height: none;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
-    border-radius: 0.5rem;
+    border: 0;
+    border-radius: 0;
+    color: var(--color-base-content);
+    background: var(--color-base-100);
     opacity: 0;
-    transform: translateX(calc(-100% - 0.5rem));
+    transform: translateY(-0.5rem);
     transition:
-      transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 180ms ease;
+      display 180ms allow-discrete,
+      opacity 180ms ease,
+      transform 180ms ease;
   }
 
-  /* Show the drawer as a flex column and slide it in from the left. */
+  /* Keep the drawer scrollable while preserving full-height coverage. */
   dialog[open] {
     display: flex;
     flex-direction: column;
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 
-  /* Start each opening outside the left edge for a reliable entrance. */
+  /* Animate the first rendered frame instead of flashing at full opacity. */
   @starting-style {
     dialog[open] {
       opacity: 0;
-      transform: translateX(calc(-100% - 0.5rem));
+      transform: translateY(-0.5rem);
     }
   }
 
-  /* Keep the enlarged close action separate from scrollable navigation. */
-  .mobile-menu-close-row {
-    display: flex;
-    flex: none;
-    justify-content: flex-end;
-  }
-
-  /* Keep a large hit target while showing only the close glyph. */
-  .mobile-menu-close {
-    display: grid;
-    place-items: center;
-    width: 6rem;
-    height: 6rem;
-    min-width: 6rem;
-    min-height: 6rem;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: inherit;
-    border-radius: 0;
-    cursor: pointer;
-    appearance: none;
-  }
-
-  /* Keep pointer hover free of visual button feedback. */
-  .mobile-menu-close:hover {
-    background: transparent;
-    box-shadow: none;
-    filter: none;
-    transform: none;
-  }
-
-  /* Scale the close glyph with its doubled button target. */
-  .mobile-menu-close-icon {
-    font-size: 3rem;
-    line-height: 1;
-  }
-
-  /* Let long navigation scroll without moving the footer actions. */
-  dialog > :global(nav[aria-label="Основная навигация"]) {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
-  }
-
-  /* Separate the contact row from navigation with a visible rule. */
-  .mobile-menu-divider {
-    flex: none;
-    width: calc(100% - 2rem);
-    margin: 0 1rem;
-    border: 0;
-    border-top: 1px solid var(--color-base-300);
-  }
-
-  /* Keep both contact actions aligned in one bottom row. */
-  .mobile-menu-actions {
-    display: grid;
-    flex: none;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
-    padding: 1rem;
-  }
-
-  /* Match text size and alignment on the phone and Max buttons. */
-  .mobile-menu-actions :global(.mobile-menu-action) {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    min-width: 0;
-    min-height: 3rem;
-    height: auto;
-    padding: 0.5rem;
-    font-size: 0.875rem;
-    white-space: normal;
-  }
-
-  /* Keep the Max contact white with the logo-color outline. */
-  .mobile-menu-actions :global(.mobile-menu-max) {
-    background-color: var(--site-messenger-surface);
-    border: 1px solid var(--site-messenger-border);
-    color: var(--site-messenger-content);
-    box-shadow: none;
-  }
-
-  /* Invert Max colors for pointer hover without adding a shadow. */
-  @media (hover: hover) and (pointer: fine) {
-    /* Keep the mobile Max action white until the pointer hovers. */
-    .mobile-menu-actions :global(.mobile-menu-max:hover) {
-      background-color: var(--site-messenger-hover);
-      border-color: var(--site-messenger-hover);
-      color: var(--site-messenger-hover-content);
-      box-shadow: none;
-    }
-  }
-
-  /* Keep keyboard focus visible without adding a button shadow. */
-  .mobile-menu-actions :global(.mobile-menu-max:focus-visible) {
-    outline: 2px solid var(--site-messenger-focus);
-    outline-offset: 3px;
-    box-shadow: none;
-  }
-
-  /* Dim background content while modal navigation is open. */
-  dialog::backdrop {
-    background: rgb(0 0 0 / 40%);
-  }
-
-  /* Respect motion preferences for drawer entrance. */
+  /* Respect reduced-motion preferences when the drawer changes state. */
   @media (prefers-reduced-motion: reduce) {
-    /* Open the drawer without motion for reduced-motion visitors. */
+    /* Keep menu visibility immediate for reduced-motion visitors. */
     dialog {
       transition: none;
     }
-  }
-
-  /* Prevent background scrolling while the modal drawer is active. */
-  :global(body:has(#mobile-menu[open])) {
-    overflow: hidden;
   }
 </style>
 
 <script>
   const opener = document.querySelector<HTMLButtonElement>("#mobile-menu-open");
   const menu = document.querySelector<HTMLDialogElement>("#mobile-menu");
+  const header = document.querySelector<HTMLElement>("[data-auto-hide-header]");
 
-  // Enhance only when the shared header and native dialog are both present.
+  if (menu && menu.parentElement !== document.body) {
+    document.body.append(menu);
+  }
+
+  // Keep the header trigger available while the drawer is open and nonmodal.
   if (opener && menu) {
-    // Open the native modal before exposing its expanded state.
-    const openMenu = () => {
-      menu.showModal();
-      opener.setAttribute("aria-expanded", "true");
+    let restoreOpenerFocus = true;
+
+    // Close without stealing focus when an outside pointer action continues.
+    const closeMenu = (restoreFocus = true) => {
+      restoreOpenerFocus = restoreFocus;
+      if (menu.open) {
+        menu.close();
+      }
     };
 
-    const closeMenu = () => {
-      menu.close();
-    };
-
-    // Restore opener focus when native close, including Escape, completes.
+    // Synchronize the animated icon and header visibility with drawer state.
     const handleMenuClose = () => {
       opener.setAttribute("aria-expanded", "false");
-      // Safari does not focus buttons on pointer activation automatically.
-      opener.focus({ preventScroll: true });
+      opener.setAttribute("aria-label", "Открыть меню");
+      header?.removeAttribute("data-mobile-menu-open");
+      if (restoreOpenerFocus) {
+        opener.focus({ preventScroll: true });
+      } else if (document.activeElement === opener) {
+        opener.blur();
+      }
+      restoreOpenerFocus = true;
     };
 
-    // Wrap Tab at the modal boundaries and leave other keys to the dialog.
-    const handleMenuKeydown = (event: KeyboardEvent) => {
-      if (event.key !== "Tab") {
-        return;
-      }
-
-      const controls = menu.querySelectorAll<HTMLElement>("button, a[href]");
-      const first = controls[0];
-      const last = controls[controls.length - 1];
-
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last?.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first?.focus();
-      }
-    };
-
-    // Dismiss clicks on the backdrop without closing for inside clicks.
-    const handleBackdropClick = (event: MouseEvent) => {
-      if (event.target !== menu) {
-        return;
-      }
-
-      const bounds = menu.getBoundingClientRect();
-      const outsideBounds =
-        event.clientX < bounds.left ||
-        event.clientX > bounds.right ||
-        event.clientY < bounds.top ||
-        event.clientY > bounds.bottom;
-
-      if (outsideBounds) {
-        closeMenu();
-      }
-    };
-
-    // Add a temporary focus target only when the section lacks tabindex.
-    const makeSectionTemporarilyFocusable = (section: HTMLElement) => {
-      if (section.hasAttribute("tabindex")) {
-        return;
-      }
-
-      section.setAttribute("tabindex", "-1");
-      const removeTemporaryTabindex = () => {
-        section.removeAttribute("tabindex");
-      };
-      section.addEventListener("blur", removeTemporaryTabindex, { once: true });
-    };
-
-    // Register after handleMenuClose so section focus wins after close.
-    const focusSectionAfterClose = (section: HTMLElement) => {
-      const handleClosedSectionFocus = () => {
-        section.focus({ preventScroll: true });
-      };
-      menu.addEventListener("close", handleClosedSectionFocus, { once: true });
-    };
-
-    // Preserve modifiers and the existing same-page path/hash navigation.
+    // Preserve native links and close before navigating to their destination.
     const handleMenuLinkClick = (
       event: MouseEvent,
       link: HTMLAnchorElement,
@@ -330,50 +115,86 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
       }
 
       const destination = new URL(link.href);
-      const isSamePageHash =
+      const samePageHash =
         destination.pathname === location.pathname && destination.hash;
 
-      if (!isSamePageHash) {
-        closeMenu();
+      if (!samePageHash) {
+        closeMenu(false);
         return;
       }
 
       event.preventDefault();
       history.pushState(null, "", destination.pathname + destination.hash);
-
       const sectionId = decodeURIComponent(destination.hash.slice(1));
       const section = document.getElementById(sectionId);
 
       if (section) {
-        makeSectionTemporarilyFocusable(section);
-        // The close event restores opener focus before focusing this section.
-        focusSectionAfterClose(section);
+        if (!section.hasAttribute("tabindex")) {
+          section.setAttribute("tabindex", "-1");
+          section.addEventListener(
+            "blur",
+            () => section.removeAttribute("tabindex"),
+            { once: true },
+          );
+        }
+        menu.addEventListener(
+          "close",
+          () => section.focus({ preventScroll: true }),
+          { once: true },
+        );
+        closeMenu(false);
+        return;
       }
 
-      closeMenu();
+      closeMenu(true);
     };
 
-    // Close the drawer when desktop layout hides the opener.
-    const closeMenuWhenOpenerDisappears = () => {
-      if (menu.open && opener.getClientRects().length === 0) {
-        closeMenu();
+    // Let the same header control open and close the nonmodal drawer.
+    opener.addEventListener("click", (event: MouseEvent) => {
+      if (menu.open) {
+        closeMenu(event.detail === 0);
+        return;
       }
-    };
 
-    opener.addEventListener("click", openMenu);
+      menu.show();
+      opener.setAttribute("aria-expanded", "true");
+      opener.setAttribute("aria-label", "Закрыть меню");
+      header?.setAttribute("data-mobile-menu-open", "");
+      menu.querySelector<HTMLAnchorElement>("a[href]")?.focus();
+    });
+
+    // Escape closes the nonmodal drawer and restores its opener focus.
+    menu.addEventListener("keydown", (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu(true);
+      }
+    });
+
+    // Outside pointer actions keep their native target and focus behavior.
+    document.addEventListener("pointerdown", (event: PointerEvent) => {
+      if (
+        menu.open &&
+        event.target instanceof Node &&
+        !menu.contains(event.target) &&
+        !opener.contains(event.target)
+      ) {
+        closeMenu(false);
+      }
+    });
+
     menu.addEventListener("close", handleMenuClose);
-    menu.addEventListener("keydown", handleMenuKeydown);
-    menu
-      .querySelector("[data-menu-close]")
-      ?.addEventListener("click", closeMenu);
-    menu.addEventListener("click", handleBackdropClick);
-
-    menu.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+    menu.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
       link.addEventListener("click", (event) => {
         handleMenuLinkClick(event, link);
       });
     });
 
-    window.addEventListener("resize", closeMenuWhenOpenerDisappears);
+    // Close if responsive layout removes the menu trigger from view.
+    window.addEventListener("resize", () => {
+      if (menu.open && opener.getClientRects().length === 0) {
+        closeMenu(false);
+      }
+    });
   }
 </script>

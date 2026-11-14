@@ -23,7 +23,7 @@ function fixture(headerLeft = 0, headerTop = 0) {
     "<header><div data-theme-settings>" +
       '<button data-settings-trigger aria-expanded="false"></button>' +
       "<div data-settings-panel hidden>" +
-      '<input type="radio" value="system" checked></div>' +
+      '<input type="radio" value="system" checked data-theme-radio></div>' +
       '</div></header><button id="outside"></button>' +
       '<button id="mobile-menu-open"></button>',
     { runScripts: "outside-only" },
@@ -157,5 +157,40 @@ it("supports keyboard focus, Escape and focus-boundary dismissal", async () => {
     .querySelector("#mobile-menu-open")
     ?.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true }));
   expect(panel.hidden).toBe(true);
+  expect(trigger.getAttribute("aria-expanded")).toBe("false");
+  expect(
+    dom.window.document
+      .querySelector("[data-theme-settings]")
+      ?.hasAttribute("data-settings-open"),
+  ).toBe(false);
+  dom.window.close();
+});
+
+it("closes theme settings without selecting the trigger", async () => {
+  const { dom, panel, trigger } = fixture();
+  await runSettingsScript(dom);
+  trigger.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true }));
+  const radio = panel.querySelector<HTMLInputElement>("input")!;
+  radio.dispatchEvent(new dom.window.Event("change", { bubbles: true }));
+
+  expect(panel.hidden).toBe(true);
+  expect(trigger.getAttribute("aria-expanded")).toBe("false");
+  expect(dom.window.document.activeElement).not.toBe(trigger);
+  dom.window.close();
+});
+
+it("clears pointer focus when the settings panel closes", async () => {
+  const { dom, panel, trigger } = fixture();
+  await runSettingsScript(dom);
+  trigger.dispatchEvent(
+    new dom.window.MouseEvent("click", { bubbles: true, detail: 1 }),
+  );
+  trigger.focus();
+  trigger.dispatchEvent(
+    new dom.window.MouseEvent("click", { bubbles: true, detail: 1 }),
+  );
+
+  expect(panel.hidden).toBe(true);
+  expect(dom.window.document.activeElement).not.toBe(trigger);
   dom.window.close();
 });

@@ -1,0 +1,91 @@
+---
+// Render the validated site phone as a responsive direct-call header action.
+import { Phone } from "@lucide/astro";
+
+interface Props {
+  phone: string;
+}
+
+const { phone } = Astro.props;
+const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
+---
+
+<a
+  class="header-call"
+  href={phoneHref}
+  aria-label={`Позвонить: ${phone}`}
+>
+  <span class="header-call-icon">
+    <Phone
+      size={20}
+      aria-hidden="true"
+    />
+  </span>
+  <span>{phone}</span>
+</a>
+
+<style>
+  /* Keep the call action hidden until the header has room for its label. */
+  .header-call {
+    display: none;
+    flex: none;
+    place-items: center;
+    width: max-content;
+    height: 2.75rem;
+    min-width: 2.75rem;
+    padding-inline: 1rem;
+    gap: 1rem;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-field);
+    color: var(--color-primary-content);
+    background: var(--color-primary);
+  }
+
+  /* Circle the phone glyph using the same theme color as its stroke. */
+  .header-call-icon {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: none;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+  }
+
+  /* Keep the local phone glyph sized within its circular frame. */
+  .header-call-icon svg {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* Keep the entire phone number visible without wrapping. */
+  .header-call span {
+    white-space: nowrap;
+  }
+
+  /* Keep keyboard focus visible on the direct call control. */
+  .header-call:focus-visible {
+    outline: var(--site-focus-ring);
+    outline-offset: 3px;
+  }
+
+  /* Invert the call colors on pointer hover. */
+  .header-call:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-base-100);
+  }
+
+  /* Show a larger phone action on tablet and desktop layouts. */
+  @media (min-width: 48rem) {
+    /* Keep the phone number aligned with the other header controls. */
+    .header-call {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 3.25rem;
+      min-width: 3.25rem;
+    }
+  }
+</style>

@@ -23,6 +23,16 @@
   --color-base-200: #f3f5f7;
   --color-base-300: #dce2e8;
   --color-base-content: #18222d;
+  --site-navigation-background: var(--color-primary);
+  --site-navigation-content: #ffffff;
+  --site-navigation-button: var(--color-primary);
+  --site-navigation-button-hover: color-mix(
+    in srgb,
+    var(--color-primary) 85%,
+    #ffffff
+  );
+  --site-navigation-button-glow: 0 0 10px
+    color-mix(in srgb, var(--color-primary) 55%, transparent);
   --site-muted: #526170;
   --site-control-border: #687787;
   --site-messenger-mark: #1688f5;
@@ -56,6 +66,16 @@
   --color-base-200: #202c38;
   --color-base-300: #354555;
   --color-base-content: #edf2f7;
+  --site-navigation-background: var(--color-primary);
+  --site-navigation-content: #000000;
+  --site-navigation-button: var(--color-primary);
+  --site-navigation-button-hover: color-mix(
+    in srgb,
+    var(--color-primary) 85%,
+    #ffffff
+  );
+  --site-navigation-button-glow: 0 0 10px
+    color-mix(in srgb, var(--color-primary) 55%, transparent);
   --site-muted: #bdc8d4;
   --site-control-border: #8798aa;
   --site-messenger-mark: #60a5fa;

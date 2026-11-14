@@ -95,7 +95,22 @@ it("composes navigation, settings, menu, and brand children", async () => {
     site.logoText,
   );
   expect(navs).toHaveLength(2);
-  expect(navs[0]?.classList.contains("desktop-nav")).toBe(true);
+  expect(navs[0]?.classList.contains("desktop-navigation")).toBe(true);
+  expect(header?.querySelector(".header-address")).toHaveTextContent(
+    site.address,
+  );
+  expect(
+    header?.querySelector(".header-address .lucide-map-pin"),
+  ).not.toBeNull();
+  expect(header?.querySelector(".header-call")).toHaveAttribute(
+    "href",
+    `tel:${site.phone.replace(/\s/g, "")}`,
+  );
+  expect(header?.querySelector(".header-call .lucide-phone")).not.toBeNull();
+  expect(
+    header?.querySelector("#mobile-menu-open .lucide-menu"),
+  ).not.toBeNull();
+  expect(settings?.querySelector(".lucide-settings")).not.toBeNull();
   expect(
     navs.map((nav) =>
       [...nav.querySelectorAll("a")].map((link) => [

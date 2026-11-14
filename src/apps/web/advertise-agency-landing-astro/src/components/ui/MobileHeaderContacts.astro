@@ -3,8 +3,7 @@
 // The shared header supplies validated contact values and site destinations.
 
 import Button from "@/components/ui/Button.astro";
-import MaxLogo from "@/components/ui/MaxLogo.astro";
-import { icons } from "@/content/icons";
+import { MessageCircle, Phone } from "@lucide/astro";
 
 // Keep these destinations derived from the shared contact data.
 interface Props {
@@ -30,21 +29,25 @@ const addressDetails = addressParts.join(",").trim();
     class="mobile-header-action mobile-header-phone"
     aria-label="Позвонить"
   >
-    <i
-      class:list={["fas", icons.phone]}
+    <Phone
+      size={20}
       aria-hidden="true"
-    ></i>
+    />
   </Button>
   <Button
     variant="secondary"
     size="sm"
-    href="https://max.ru/"
-    class="mobile-header-action max-contact"
-    target="_blank"
-    rel="noopener noreferrer"
+    href="/#contacts"
+    class="mobile-header-action contact-open-action"
+    data-contact-menu-opener
+    aria-controls="contact-menu"
+    aria-expanded="false"
     aria-label="Написать в Макс"
   >
-    <MaxLogo />
+    <MessageCircle
+      size={20}
+      aria-hidden="true"
+    />
   </Button>
   <Button
     variant="ghost"
@@ -72,8 +75,10 @@ const addressDetails = addressParts.join(",").trim();
         0,
         1fr
       );
+    align-items: center;
     gap: 0.5rem;
-    padding-block: 0.5rem 0.875rem;
+    padding-block: 0.75rem;
+    background: var(--color-primary);
   }
 
   /* Keep both icon actions square and large enough for touch input. */
@@ -85,32 +90,52 @@ const addressDetails = addressParts.join(",").trim();
     min-width: var(--mobile-contact-control-size);
     min-height: var(--mobile-contact-control-size);
     padding: 0;
+    border: 1px solid var(--site-navigation-button);
+    border-radius: var(--radius-field);
+    color: var(--site-navigation-button);
+    background: #ffffff;
   }
 
   /* Match the standalone Max action to its blue logo without shadows. */
-  .mobile-header-contacts :global(.max-contact) {
-    background-color: var(--site-messenger-surface);
-    border: 1px solid var(--site-messenger-border);
-    color: var(--site-messenger-content);
+  .mobile-header-contacts :global(.contact-open-action) {
+    background-color: #ffffff;
+    border: 1px solid var(--site-navigation-button);
+    border-radius: var(--radius-field);
+    color: var(--site-navigation-button);
     box-shadow: none;
+  }
+
+  .mobile-header-contacts :global(.mobile-header-phone) {
+    border-color: var(--site-navigation-button);
+    color: var(--site-navigation-button);
+    background-color: #ffffff;
+    box-shadow: none;
+    filter: none;
   }
 
   /* Keep keyboard focus distinct without adding a button shadow. */
-  .mobile-header-contacts :global(.max-contact:focus-visible) {
-    outline: 2px solid var(--site-messenger-focus);
+  .mobile-header-contacts :global(.contact-open-action:focus-visible) {
+    outline: var(--site-focus-ring);
     outline-offset: 3px;
-    box-shadow: none;
   }
 
-  /* Invert the Max button only when a mouse can hover. */
+  /* Invert every mobile header action to the primary theme colors. */
   @media (hover: hover) and (pointer: fine) {
-    /* Reverse the white and blue colors without adding a shadow. */
-    .mobile-header-contacts :global(.max-contact:hover) {
-      background-color: var(--site-messenger-hover);
-      border-color: var(--site-messenger-hover);
-      color: var(--site-messenger-hover-content);
-      box-shadow: none;
+    /* Keep the contact row's hover treatment consistent across actions. */
+    .mobile-header-contacts :global(.mobile-header-action:hover),
+    .mobile-header-contacts :global(.mobile-header-address:hover),
+    .mobile-header-contacts :global(.contact-open-action:hover) {
+      background-color: #ffffff;
+      border-color: var(--site-navigation-button-hover);
+      color: var(--site-navigation-button-hover);
+      box-shadow: var(--site-navigation-button-glow);
     }
+  }
+
+  /* Keep the chat mark compact inside the square contact opener. */
+  .mobile-header-contacts :global(.contact-open-action svg) {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 
   /* Keep the address aligned beside the two square contact actions. */
@@ -123,6 +148,9 @@ const addressDetails = addressParts.join(",").trim();
     min-height: 44px;
     height: auto;
     padding-inline: 0.4rem;
+    border: 0;
+    color: var(--site-navigation-content);
+    background: transparent;
     white-space: normal;
   }
 
@@ -142,8 +170,8 @@ const addressDetails = addressParts.join(",").trim();
     overflow-wrap: anywhere;
   }
 
-  /* Hide the compact contact section when desktop navigation is available. */
-  @media (min-width: 64rem) {
+  /* Hide the compact contact section on tablet and desktop layouts. */
+  @media (min-width: 48rem) {
     /* Avoid duplicating contact actions beside the desktop navigation. */
     .mobile-header-contacts {
       display: none;

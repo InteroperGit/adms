@@ -7,7 +7,9 @@ Detailed scope and verification belong to the linked task files.
 
 ## Active tasks
 
-None currently.
+- [171 - Header navigation and contact menu](../docs/codex/tasks/todo/171-header-navigation-and-contact-menu.md):
+  todo; header and responsive contact UI implemented; callback activation awaits
+  approved delivery and contact values.
 
 ## Recent completed work
 

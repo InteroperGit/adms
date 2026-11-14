@@ -1,14 +1,18 @@
 ---
 // Render shared navigation, brand and settings with a scroll-aware header.
-// Site content supplies links; the mobile dialog owns its focus handling.
+// Site content supplies links; the mobile drawer owns its focus handling.
 // Keep focused or expanded controls visible while scrolling.
 
 import { site } from "@/content/site";
-import NavLinks from "@/components/ui/NavLinks.astro";
+import DesktopNavigation from "@/components/ui/DesktopNavigation.astro";
+import ContactMenu from "@/components/ui/ContactMenu.astro";
+import HeaderAddress from "@/components/ui/HeaderAddress.astro";
+import HeaderCall from "@/components/ui/HeaderCall.astro";
 import MobileHeaderContacts from "@/components/ui/MobileHeaderContacts.astro";
 import MobileMenuDialog from "@/components/ui/MobileMenuDialog.astro";
 import Settings from "@/components/ui/Settings.astro";
-import Logo from "@/components/ui/Logo.astro";
+import HeaderBrand from "@/components/ui/HeaderBrand.astro";
+import HeaderMenuOpener from "@/components/ui/HeaderMenuOpener.astro";
 ---
 
 {/* Keep focused or expanded controls visible while scrolling. */}
@@ -17,61 +21,24 @@ import Logo from "@/components/ui/Logo.astro";
   class="site-header sticky top-0 z-40"
 >
   <div class="header-layout site-container">
-    <div class="header-brand-wrap">
-      <a
-        href="/"
-        class="header-brand text-2xl font-bold"
-      >
-        <Logo />
-        <span>{site.logoText}</span>
-      </a>
-    </div>
-    {/* Show wide navigation beside independently sized controls. */}
-    <NavLinks
-      items={site.menu}
-      variant="desktop"
-      phone={site.phone}
-    />
+    <HeaderBrand />
+    <HeaderAddress address={site.address} />
+    <HeaderCall phone={site.phone} />
+    <ContactMenu phone={site.phone} />
     <Settings />
-    {/* The opener names the native modal drawer rendered below. */}
-    <div class="header-menu-wrap">
-      <button
-        type="button"
-        id="mobile-menu-open"
-        class="btn btn-ghost btn-circle"
-        aria-label="Открыть меню"
-        aria-controls="mobile-menu"
-        aria-expanded="false"
-        aria-haspopup="dialog"
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          aria-hidden="true"
-        >
-          <path d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
+    <HeaderMenuOpener />
   </div>
   {/* Keep key contact actions visible below the mobile header row. */}
+  <DesktopNavigation items={site.menu} />
   <MobileHeaderContacts
     phone={site.phone}
     address={site.address}
   />
-  <MobileMenuDialog
-    items={site.menu}
-    phone={site.phone}
-  />
+  <MobileMenuDialog items={site.menu} />
 </header>
 
 <style>
-  /* Give the sticky surface a translucent theme-aware boundary. */
+  /* Keep the sticky header themed without a strip below mobile navigation. */
   .site-header {
     background-color: var(--color-base-100);
     background-color: color-mix(
@@ -79,8 +46,8 @@ import Logo from "@/components/ui/Logo.astro";
       var(--color-base-100) 94%,
       transparent
     );
-    border-bottom: 1px solid var(--color-base-300);
-    box-shadow: var(--shadow-panel);
+    border-bottom: 0;
+    box-shadow: none;
     backdrop-filter: blur(12px);
   }
 
@@ -88,71 +55,59 @@ import Logo from "@/components/ui/Logo.astro";
   .header-layout {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 0.25rem 1rem;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
     min-height: 4rem;
     padding-block: 0.625rem;
   }
 
-  /* Let brand text shrink beside header controls. */
-  .header-brand-wrap {
-    flex: 1 1 12rem;
-    min-width: 0;
-  }
-
-  /* Reserve the mobile opener without flex shrink. */
-  .header-menu-wrap {
+  /* Reserve contact controls for desktop while mobile has its own row. */
+  .header-layout :global(.contact-menu) {
+    display: none;
     flex: none;
   }
 
-  /* Give the native menu opener a stable, theme-aware touch surface. */
-  .header-menu-wrap button {
-    width: 2.75rem;
-    min-width: 2.75rem;
-    height: 2.75rem;
-    min-height: 2.75rem;
-    border: 1px solid var(--color-base-300);
-    color: var(--color-base-content);
-    background-color: var(--color-base-100);
-  }
-
-  /* Use the secondary surface to distinguish pointer feedback. */
-  .header-menu-wrap button:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    background-color: var(--color-base-200);
-  }
-
-  /* Keep keyboard focus clear against the translucent header surface. */
-  .header-menu-wrap button:focus-visible {
-    outline: var(--site-focus-ring);
-    outline-offset: 3px;
-  }
-
-  /* Keep the butterfly aligned with the wrapping brand label. */
-  .header-brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    max-width: 100%;
-    color: var(--color-primary);
-  }
-
-  /* Allow the brand label to shrink inside its link. */
-  .header-brand span {
-    min-width: 0;
-  }
-
-  /* Fit the brand beside settings and the opener on the smallest screens. */
-  @media (max-width: 374px) {
-    /* Reduce brand lettering without shrinking its native home link. */
-    .header-brand {
-      font-size: 1.125rem;
+  @media (min-width: 48rem) and (hover: hover) and (pointer: fine) {
+    .header-layout :global(.settings-trigger:hover .settings-surface),
+    .header-layout :global([data-contact-menu-opener]:hover) {
+      border-color: var(--color-primary);
+      color: var(--color-primary-content);
+      background: var(--color-primary);
     }
   }
 
-  /* Reserve room for settings and the mobile opener below desktop width. */
-  @media (max-width: 63.999rem) {
+  /* Show compact header controls from tablet width upward. */
+  @media (min-width: 48rem) {
+    .header-layout {
+      min-height: 5rem;
+    }
+
+    .header-layout :global(.theme-settings),
+    .header-layout :global([data-contact-menu-opener]) {
+      width: 3.25rem;
+      height: 3.25rem;
+      min-height: 3.25rem;
+    }
+
+    .header-layout :global(.settings-trigger),
+    .header-layout :global(.settings-surface),
+    .header-layout :global(.contact-menu-opener) {
+      width: 3.25rem;
+      height: 3.25rem;
+      min-height: 3.25rem;
+    }
+
+    .header-layout :global(.contact-menu) {
+      display: block;
+    }
+
+    :global(.header-menu-wrap) {
+      display: none;
+    }
+  }
+
+  /* Reserve room for settings and the mobile opener on narrow screens. */
+  @media (max-width: 47.999rem) {
     /* Keep compact controls at the end of the wrapping header row. */
     .header-layout {
       justify-content: flex-end;
@@ -160,22 +115,25 @@ import Logo from "@/components/ui/Logo.astro";
     }
 
     /* Allow the brand column to contract beside the mobile controls. */
-    .header-brand-wrap {
+    :global(.header-brand-wrap) {
       flex: 1 1 8rem;
       min-width: 0;
+      display: flex;
+      justify-content: flex-start;
+      margin-inline-end: auto;
     }
 
     /* Break long brand labels instead of forcing horizontal overflow. */
-    .header-brand {
+    :global(.header-brand) {
       overflow-wrap: anywhere;
     }
   }
 
-  /* Replace the drawer opener with wide navigation at desktop width. */
+  /* Give desktop controls room for the full address. */
   @media (min-width: 64rem) {
-    /* Hide the opener while desktop navigation is available. */
-    .header-menu-wrap {
-      display: none;
+    /* Give desktop controls one aligned row above the separate navigation. */
+    .header-layout {
+      flex-wrap: nowrap;
     }
   }
 
@@ -191,7 +149,8 @@ import Logo from "@/components/ui/Logo.astro";
 
   /* Keep keyboard focus visible above adjacent controls and surfaces. */
   header:focus-within,
-  header:has(dialog[open]),
+  header[data-mobile-menu-open],
+  header[data-contact-menu-open],
   header:has([data-settings-open]) {
     transform: translateY(0);
   }
@@ -209,13 +168,21 @@ import Logo from "@/components/ui/Logo.astro";
   const header = document.querySelector<HTMLElement>("[data-auto-hide-header]");
   if (header) {
     const overlaySelector = "dialog[open], [data-settings-open]";
-    const hasOpenOverlay = () => header.querySelector(overlaySelector) !== null;
+    const hasOpenOverlay = () =>
+      header.hasAttribute("data-mobile-menu-open") ||
+      header.hasAttribute("data-contact-menu-open") ||
+      header.querySelector(overlaySelector) !== null;
 
     // Measure the rendered header so anchor targets clear it at any text size.
     const setClearance = () => {
+      const firstRow = header.querySelector<HTMLElement>(".header-layout");
       document.documentElement.style.setProperty(
         "--site-header-clearance",
         `${header.offsetHeight + 16}px`,
+      );
+      document.documentElement.style.setProperty(
+        "--site-header-first-row-height",
+        `${firstRow?.offsetHeight ?? 64}px`,
       );
     };
     setClearance();
@@ -307,7 +274,12 @@ import Logo from "@/components/ui/Logo.astro";
       if (hasOpenOverlay()) reveal();
     }).observe(header, {
       attributes: true,
-      attributeFilter: ["open", "data-settings-open"],
+      attributeFilter: [
+        "open",
+        "data-settings-open",
+        "data-contact-menu-open",
+        "data-mobile-menu-open",
+      ],
       subtree: true,
     });
   }
