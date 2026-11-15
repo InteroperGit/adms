@@ -1,6 +1,8 @@
 # 174 - Create Link component and migrate anchors
 
-**Status:** implemented; verification follow-up pending
+**Status:** implemented; archived at the user's request
+
+**Archived:** 2026-11-16
 
 **Priority:** normal
 

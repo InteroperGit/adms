@@ -3,10 +3,30 @@
 // An href selects an anchor; otherwise type defaults to button.
 // Variant/size default to primary/md; rest attributes and slot pass through.
 
-import type { ButtonProps } from "./button-props";
+import type { HTMLAttributes } from "astro/types";
 
 // The href property selects which native element callers may configure.
-export type Props = ButtonProps;
+type StyleProps = {
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "link";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+};
+
+// Links use anchor attributes and do not accept button type values.
+type AnchorProps = Omit<HTMLAttributes<"a">, "class" | "href" | "type"> &
+  StyleProps & {
+    href: string;
+    type?: never;
+  };
+
+// Buttons retain native type values and form-related attributes.
+type NativeButtonProps = Omit<HTMLAttributes<"button">, "class" | "type"> &
+  StyleProps & {
+    href?: never;
+    type?: HTMLAttributes<"button">["type"];
+  };
+
+export type Props = AnchorProps | NativeButtonProps;
 
 const {
   variant = "primary",

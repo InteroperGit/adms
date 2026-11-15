@@ -33,8 +33,12 @@ UI task 171 is archived; delivery is deferred to task 173.
   backlog; scope recorded; implementation not started.
 - [173 - Callback delivery](../docs/codex/tasks/backlog/173-enable-callback-delivery.md):
   backlog; connection deferred by the user; keep delivery disabled.
-- [174 - Link component and anchor migration](../docs/codex/tasks/todo/174-create-link-component-and-migrate-anchors.md):
-  implemented; E2E follow-up records one WebKit video fallback failure.
+- [174 - Link component and anchor migration](../docs/codex/tasks/fixed/20261116/174-create-link-component-and-migrate-anchors.md):
+  archived; E2E follow-up records one WebKit video fallback failure.
+- Test backlog 175-186 covers missing colocated Astro component suites,
+  gallery runtime behavior, content exports, async aggregates, route handlers
+  and shared type contracts. Start with 175-179 for component/runtime work,
+  then 180-186 for TypeScript, content boundaries and smoke-test refactors.
 - Content migration: tasks 161–170 in backlog; execution not started. Start with
   baseline 161; preserve a working site after each task.
   [Migration plan](../docs/codex/tasks/plan/20261114_site-content-structure-migration-plan.md)
@@ -44,3 +48,18 @@ UI task 171 is archived; delivery is deferred to task 173.
 - Deferred tasks: `docs/codex/tasks/backlog/`
 - Completed tasks: `docs/codex/tasks/fixed/yyyyMMdd/`
 - Project rules: `AGENTS.md` and `docs/codex/rules/workflow.md`
+
+## Test backlog
+
+- 175: `docs/codex/tasks/backlog/175-card-component-tests.md`
+- 176: `docs/codex/tasks/backlog/176-carousel-indicator-component-tests.md`
+- 177: `docs/codex/tasks/backlog/177-header-small-component-tests.md`
+- 178: `docs/codex/tasks/backlog/178-gallery-renderer-component-tests.md`
+- 179: `docs/codex/tasks/backlog/179-image-gallery-runtime-tests.md`
+- 180: `docs/codex/tasks/backlog/180-simple-content-export-tests.md`
+- 181: `docs/codex/tasks/backlog/181-content-copy-export-tests-a.md`
+- 182: `docs/codex/tasks/backlog/182-content-copy-export-tests-b.md`
+- 183: `docs/codex/tasks/backlog/183-async-content-aggregate-tests.md`
+- 184: `docs/codex/tasks/backlog/184-content-collection-and-route-tests.md`
+- 185: `docs/codex/tasks/backlog/185-shared-type-contract-tests.md`
+- 186: `docs/codex/tasks/backlog/186-logo-component-test-refactor.md`

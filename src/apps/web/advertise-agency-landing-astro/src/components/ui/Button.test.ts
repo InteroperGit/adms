@@ -2,6 +2,7 @@
 import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
 import Button from "./Button.astro";
+import type { Props as ButtonProps } from "./Button.astro";
 import { render } from "../../../tests/helpers/render";
 
 it("defaults to a native primary medium button with slot content", async () => {
@@ -89,4 +90,53 @@ it("renders an anchor with href and accessible label", async () => {
   expect(link).toHaveAttribute("href", "/contact");
   expect(link).toHaveAttribute("aria-label", "Contact");
   expect(link).toHaveTextContent("Contact");
+});
+
+it("keeps native anchor and button props type-safe", () => {
+  const linkProps = {
+    href: "/contact",
+    class: "contract-link",
+    target: "_blank",
+    rel: "noopener",
+    tabindex: 0,
+    "aria-label": "Contact",
+    "data-action": "contact",
+  } satisfies ButtonProps;
+
+  const nativeButtonProps = {
+    type: "submit",
+    disabled: true,
+    form: "inquiry-form",
+    name: "intent",
+    value: "send",
+    tabindex: 0,
+    "aria-pressed": "false",
+  } satisfies ButtonProps;
+
+  expect(linkProps.href).toBe("/contact");
+  expect(nativeButtonProps.type).toBe("submit");
+
+  const invalidButtonType = {
+    // @ts-expect-error Button type accepts only native button values.
+    type: "primary",
+  } satisfies ButtonProps;
+  const invalidLinkType = {
+    href: "/contact",
+    // @ts-expect-error Links do not accept button type values.
+    type: "submit",
+  } satisfies ButtonProps;
+  const invalidLinkAttribute = {
+    href: "/contact",
+    // @ts-expect-error Anchors do not accept button-only attributes.
+    disabled: true,
+  } satisfies ButtonProps;
+  const misspelledAttribute = {
+    // @ts-expect-error Native attributes reject misspelled names.
+    lable: "Contact",
+  } satisfies ButtonProps;
+
+  void invalidButtonType;
+  void invalidLinkType;
+  void invalidLinkAttribute;
+  void misspelledAttribute;
 });
