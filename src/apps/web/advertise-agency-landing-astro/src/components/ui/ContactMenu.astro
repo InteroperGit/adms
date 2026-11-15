@@ -1,7 +1,8 @@
 ---
-import { orderInquiry } from "@/content/order-inquiry";
+// Keep contact choices separate from the unavailable callback request.
 import { site } from "@/content/site";
-import { MessageCircle, PhoneCall } from "@lucide/astro";
+import { orderInquiry } from "@/content/order-inquiry";
+import { MessageCircle, PhoneCall, X } from "@lucide/astro";
 
 const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
 ---
@@ -85,20 +86,28 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
         Telegram
       </a>
     </section>
-    <section
-      data-callback-form
-      hidden
-    >
+  </dialog>
+  <dialog
+    id="callback-dialog"
+    class="callback-dialog"
+    aria-labelledby="callback-title"
+  >
+    <section data-callback-form>
       <button
         type="button"
-        data-callback-back
+        class="callback-close"
+        data-callback-close
+        aria-label="Закрыть форму"
       >
-        Назад
+        <X
+          size={24}
+          aria-hidden="true"
+        />
       </button>
-      <h2>Обратный звонок</h2>
+      <h2 id="callback-title">Обратный звонок</h2>
       <p>{orderInquiry.feedback.unavailable}</p>
       <form>
-        <fieldset disabled>
+        <fieldset>
           <label for="callback-name">Имя</label>
           <input
             id="callback-name"
@@ -124,13 +133,13 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
           </label>
         </fieldset>
         <button
+          class="callback-submit"
           type="submit"
           disabled
         >
           Отправить
         </button>
       </form>
-      <a href={phoneHref}>{site.phone}</a>
     </section>
   </dialog>
 </div>
@@ -265,7 +274,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
     gap: 0.75rem;
   }
 
-  /* Keep the disabled fields aligned without a browser fieldset frame. */
+  /* Keep editable callback fields aligned without a fieldset frame. */
   [data-callback-form] fieldset {
     display: grid;
     gap: 0.5rem;
@@ -276,8 +285,80 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
   /* Keep callback inputs large enough and allow their labels to wrap. */
   [data-callback-form] input:not([type="checkbox"]) {
     min-width: 0;
+    width: 100%;
     min-height: 2.75rem;
-    padding: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid var(--color-base-content);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    color: var(--color-base-content);
+  }
+
+  /* Keep the callback request in its own full-screen modal surface. */
+  #callback-dialog {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: max(1rem, env(safe-area-inset-top)) 1rem
+      max(1rem, env(safe-area-inset-bottom));
+    overflow: auto;
+    border: 0;
+    border-radius: 0;
+    background: color-mix(in srgb, var(--color-base-content) 35%, transparent);
+    transform: none;
+  }
+
+  /* Center the form within the full-screen overlay and preserve edge space. */
+  #callback-dialog[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  /* Separate the form from the dimmed page with a readable, padded surface. */
+  #callback-dialog [data-callback-form] {
+    position: relative;
+    width: min(100%, 32rem);
+    min-width: 0;
+    padding: 1.5rem;
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    box-shadow: var(--shadow-panel);
+  }
+
+  /* Reserve space beside the title for the close target. */
+  #callback-dialog h2 {
+    padding-inline-end: 2.75rem;
+  }
+
+  /* Keep the icon-only dismissal target at the form's upper-right corner. */
+  #callback-dialog .callback-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border: 0;
+  }
+
+  /* Keep deferred submission prominent while retaining its disabled state. */
+  #callback-dialog .callback-submit:disabled {
+    justify-content: center;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-field);
+    background: var(--color-primary);
+    color: var(--color-primary-content);
+    font-weight: 600;
+    cursor: not-allowed;
+    opacity: 1;
   }
 
   /* Align the consent check with its wrapped text. */
@@ -338,30 +419,50 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
   }
 
   /* Lock page scrolling while the modal mobile sheet is open. */
-  :global(body:has(#contact-menu:modal)) {
+  :global(body:has(#contact-menu:modal, #callback-dialog:modal)) {
     overflow: hidden;
   }
 </style>
 
 <script>
   const dialog = document.querySelector<HTMLDialogElement>("#contact-menu");
+  const callbackDialog =
+    document.querySelector<HTMLDialogElement>("#callback-dialog");
   const openers = document.querySelectorAll<HTMLElement>(
     "[data-contact-menu-opener]",
   );
   const options = dialog?.querySelector<HTMLElement>("[data-contact-options]");
-  const callback = dialog?.querySelector<HTMLElement>("[data-callback-form]");
+  let openCallbackAfterClose = false;
 
   if (dialog && dialog.parentElement !== document.body) {
     document.body.append(dialog);
   }
+  if (callbackDialog && callbackDialog.parentElement !== document.body) {
+    document.body.append(callbackDialog);
+  }
 
-  if (dialog && options && callback && openers.length) {
+  if (dialog && callbackDialog && options && openers.length) {
     let activeOpener: HTMLElement | null = null;
     const close = () => dialog.close();
+
+    // Allow local input while delivery is deferred; never send a native GET.
+    callbackDialog
+      .querySelector("form")
+      ?.addEventListener("submit", (event) => {
+        event.preventDefault();
+      });
 
     dialog
       .querySelector("[data-contact-menu-close]")
       ?.addEventListener("click", close);
+
+    // Nonmodal desktop dialogs need an explicit Escape dismissal path.
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        close();
+      }
+    });
 
     openers.forEach((opener) => {
       opener.addEventListener("click", (event) => {
@@ -372,7 +473,6 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
         }
         activeOpener = opener;
         options.hidden = false;
-        callback.hidden = true;
         opener.setAttribute(
           "aria-label",
           dialog.getAttribute("aria-label") ?? "Contact options",
@@ -392,17 +492,14 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
     dialog
       .querySelector("[data-callback-start]")
       ?.addEventListener("click", () => {
-        options.hidden = true;
-        callback.hidden = false;
-        callback.querySelector<HTMLElement>("[data-callback-back]")?.focus();
+        openCallbackAfterClose = true;
+        close();
       });
 
-    dialog
-      .querySelector("[data-callback-back]")
+    callbackDialog
+      .querySelector("[data-callback-close]")
       ?.addEventListener("click", () => {
-        callback.hidden = true;
-        options.hidden = false;
-        dialog.querySelector<HTMLElement>("[data-callback-start]")?.focus();
+        callbackDialog.close();
       });
 
     dialog.addEventListener("click", (event) => {
@@ -437,6 +534,18 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
       openers.forEach((opener) =>
         opener.setAttribute("aria-expanded", "false"),
       );
+      if (openCallbackAfterClose) {
+        openCallbackAfterClose = false;
+        callbackDialog.showModal();
+        callbackDialog
+          .querySelector<HTMLElement>("[data-callback-close]")
+          ?.focus();
+        return;
+      }
+      activeOpener?.focus({ preventScroll: true });
+    });
+
+    callbackDialog.addEventListener("close", () => {
       activeOpener?.focus({ preventScroll: true });
     });
   }

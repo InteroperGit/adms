@@ -139,7 +139,10 @@ const { items } = Astro.props;
         }
         menu.addEventListener(
           "close",
-          () => section.focus({ preventScroll: true }),
+          () => {
+            section.focus({ preventScroll: true });
+            section.scrollIntoView();
+          },
           { once: true },
         );
         closeMenu(false);

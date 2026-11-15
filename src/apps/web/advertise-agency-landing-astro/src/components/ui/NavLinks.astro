@@ -49,8 +49,10 @@ const mobileIcons = {
 
       return (
         <li class="nav-item">
+          {/* Include mobile links in WebKit's native keyboard traversal. */}
           <a
             href={item.href}
+            tabindex={isDesktop ? undefined : 0}
             class:list={[{ "section-link link link-hover": isDesktop }]}
           >
             {!isDesktop && (

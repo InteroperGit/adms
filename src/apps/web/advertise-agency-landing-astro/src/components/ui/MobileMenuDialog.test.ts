@@ -136,16 +136,19 @@ it("dismisses outside clicks without stealing their focus", async () => {
 });
 
 it("closes same-page links and focuses their section", async () => {
-  const { document, menu, opener } = await setup();
+  const { dom, document, menu, opener } = await setup();
   const section = document.getElementById("services")!;
+  section.scrollIntoView = vi.fn();
   fireEvent.click(opener!);
   const link = menu!.querySelector<HTMLAnchorElement>("a[href]")!;
   link.addEventListener("click", (event) => event.preventDefault());
   fireEvent.click(link);
 
   expect(menu!.open).toBe(false);
+  expect(dom.window.location.hash).toBe("#services");
   expect(document.activeElement).toBe(section);
   expect(section).toHaveAttribute("tabindex", "-1");
+  expect(section.scrollIntoView).toHaveBeenCalledOnce();
 });
 
 it("preserves modified navigation without closing", async () => {

@@ -61,7 +61,20 @@ test("same-page menu hash links close and focus their sections", async ({
   await page.locator('#mobile-menu a[href="/#contacts"]').click();
   await expect(page).toHaveURL(/\/#contacts$/);
   await expect(page.locator("#mobile-menu")).toBeHidden();
-  await expect(page.locator("#contacts")).toBeFocused();
+  const contacts = page.locator("#contacts");
+  await expect(contacts).toBeFocused();
+  // Browsers can adjust the final offset as lazy content changes its height.
+  // The destination must enter the viewport without the header covering it.
+  await expect
+    .poll(() =>
+      contacts.evaluate((element) => {
+        const top = element.getBoundingClientRect().top;
+        const header = document.querySelector("[data-auto-hide-header]");
+        const headerBottom = header?.getBoundingClientRect().bottom ?? 0;
+        return top >= Math.max(0, headerBottom) && top < window.innerHeight;
+      }),
+    )
+    .toBe(true);
 });
 
 test("menu links navigate from a secondary page to home sections", async ({
@@ -171,9 +184,39 @@ test("desktop contacts preserve choices and control alignment", async ({
   await page.goto("/");
   await page.locator('[data-cookie-choice="declined"]').click();
 
-  await expect(page.locator(".header-address")).toBeVisible();
+  const address = page.locator(".header-address");
+  await expect(address).toBeVisible();
+  await expect(address).toHaveAttribute("href", "/#contacts");
+  const supportsFineHover = await page.evaluate(
+    () =>
+      matchMedia("(min-width: 48rem) and (hover: hover) and (pointer: fine)")
+        .matches,
+  );
+  await address.hover();
+  if (supportsFineHover) {
+    await expect(address).toHaveCSS("text-decoration-line", "underline");
+  }
+  await address.click();
+  await expect(page).toHaveURL(/\/#contacts$/);
   await expect(page.locator(".desktop-navigation")).toBeVisible();
-  await expect(page.locator(".header-call")).toContainText("TEST_PHONE");
+  const call = page.locator(".header-call");
+  await expect(call).toContainText("TEST_PHONE");
+  const callColors = await call.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { background: style.backgroundColor, color: style.color };
+  });
+  const addressBounds = await address.boundingBox();
+  const callBounds = await call.boundingBox();
+  expect(
+    callBounds!.x - (addressBounds!.x + addressBounds!.width),
+  ).toBeGreaterThanOrEqual(24);
+  await call.hover();
+  await expect(call).toHaveCSS(
+    "filter",
+    supportsFineHover ? "brightness(1.12)" : "none",
+  );
+  await expect(call).toHaveCSS("background-color", callColors.background);
+  await expect(call).toHaveCSS("color", callColors.color);
   const settingsTrigger = page.locator("[data-settings-trigger]");
   const settingsPanel = page.locator("[data-settings-panel]");
   await settingsTrigger.click();
@@ -198,11 +241,36 @@ test("desktop contacts preserve choices and control alignment", async ({
   await expect(dialog).toBeVisible();
   await expect(dialog.locator("[data-contact-options] a")).toHaveCount(3);
   await dialog.locator("[data-callback-start]").click();
-  await expect(dialog.locator("[data-callback-form]")).toBeVisible();
-  await expect(dialog.locator('[type="submit"]')).toBeDisabled();
+  await expect(dialog).toBeHidden();
+  await expect(opener).toHaveAttribute("aria-expanded", "false");
+  const callback = page.locator("#callback-dialog");
+  await expect(callback).toBeVisible();
+  await expect(callback).toHaveAccessibleName("Обратный звонок");
+  expect(await callback.evaluate((element) => element.matches(":modal"))).toBe(
+    true,
+  );
+  await expect(callback.locator('[type="submit"]')).toBeDisabled();
+  const callbackBounds = await callback.boundingBox();
+  expect(callbackBounds?.x).toBe(0);
+  expect(callbackBounds?.y).toBe(0);
+  expect(callbackBounds?.width).toBe(1440);
+  expect(callbackBounds?.height).toBe(900);
+  await page.keyboard.press("Escape");
+  await expect(callback).toBeHidden();
+  await expect(opener).toBeFocused();
+  await opener.click();
+  await expect(dialog).toBeVisible();
+  await expect(callback).toBeHidden();
+  await expect(dialog.locator("[data-contact-options]")).toBeVisible();
+  await dialog.locator("[data-callback-start]").click();
+  await expect(callback).toBeVisible();
+  await callback.locator("[data-callback-close]").click();
+  await expect(callback).toBeHidden();
+  await expect(opener).toBeFocused();
+  await opener.click();
+  await expect(dialog).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
-  await expect(opener).toBeFocused();
 });
 
 test("tablet header has navigation and a nonmodal contact menu", async ({
@@ -213,7 +281,38 @@ test("tablet header has navigation and a nonmodal contact menu", async ({
   await page.locator('[data-cookie-choice="declined"]').click();
 
   await expect(page.locator(".desktop-navigation")).toBeVisible();
-  await expect(page.locator(".header-call")).toContainText("TEST_PHONE");
+  const address = page.locator(".header-address");
+  await expect(address).toBeVisible();
+  await expect(address).toHaveAttribute("href", "/#contacts");
+  const supportsFineHover = await page.evaluate(
+    () =>
+      matchMedia("(min-width: 48rem) and (hover: hover) and (pointer: fine)")
+        .matches,
+  );
+  await address.hover();
+  if (supportsFineHover) {
+    await expect(address).toHaveCSS("text-decoration-line", "underline");
+  }
+  await address.click();
+  await expect(page).toHaveURL(/\/#contacts$/);
+  const call = page.locator(".header-call");
+  await expect(call).toContainText("TEST_PHONE");
+  const callColors = await call.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { background: style.backgroundColor, color: style.color };
+  });
+  const addressBounds = await address.boundingBox();
+  const callBounds = await call.boundingBox();
+  expect(
+    callBounds!.x - (addressBounds!.x + addressBounds!.width),
+  ).toBeGreaterThanOrEqual(24);
+  await call.hover();
+  await expect(call).toHaveCSS(
+    "filter",
+    supportsFineHover ? "brightness(1.12)" : "none",
+  );
+  await expect(call).toHaveCSS("background-color", callColors.background);
+  await expect(call).toHaveCSS("color", callColors.color);
   const opener = page.locator(".header-layout [data-contact-menu-opener]");
   await opener.click();
   const menu = page.locator("#contact-menu");
@@ -248,6 +347,72 @@ test("mobile contact opener presents a full-width sheet", async ({ page }) => {
   expect(bounds?.x).toBe(0);
   expect(bounds?.width).toBe(375);
   await expect(dialog.locator("[data-contact-options] a")).toHaveCount(3);
+  await dialog.locator("[data-callback-start]").click();
+  await expect(dialog).toBeHidden();
+  await expect(opener).toHaveAttribute("aria-expanded", "false");
+  const callbackDialog = page.locator("#callback-dialog");
+  await expect(callbackDialog).toBeVisible();
+  expect(
+    await callbackDialog.evaluate((element) => element.matches(":modal")),
+  ).toBe(true);
+  const callbackBounds = await callbackDialog.boundingBox();
+  expect(callbackBounds?.x).toBe(0);
+  expect(callbackBounds?.y).toBe(0);
+  expect(callbackBounds?.width).toBe(375);
+  expect(callbackBounds?.height).toBe(800);
+  const formSurface = callbackDialog.locator("[data-callback-form]");
+  const formBounds = await formSurface.boundingBox();
+  expect(formBounds!.x).toBeGreaterThan(0);
+  expect(formBounds!.y).toBeGreaterThan(0);
+  expect(formBounds!.x + formBounds!.width).toBeLessThan(375);
+  expect(formBounds!.y + formBounds!.height).toBeLessThan(800);
+  const name = callbackDialog.getByLabel("Имя", { exact: true });
+  await name.fill("Visitor");
+  await expect(name).toHaveValue("Visitor");
+  const phone = callbackDialog.getByLabel("Телефон", { exact: true });
+  await phone.fill("+7 900 123-45-67");
+  await expect(phone).toHaveValue("+7 900 123-45-67");
+  await expect(callbackDialog.locator('a[href^="tel:"]')).toHaveCount(0);
+  const submit = callbackDialog.locator('[type="submit"]');
+  await expect(submit).toBeDisabled();
+  const submitColors = await submit.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      background: style.backgroundColor,
+      color: style.color,
+      border: style.borderColor,
+    };
+  });
+  const themeColors = await callbackDialog.evaluate(() => {
+    const probe = document.createElement("span");
+    probe.style.position = "absolute";
+    probe.style.visibility = "hidden";
+    probe.style.color = "var(--color-primary)";
+    document.body.append(probe);
+    const primary = getComputedStyle(probe).color;
+    probe.style.color = "var(--color-primary-content)";
+    const content = getComputedStyle(probe).color;
+    probe.remove();
+    return {
+      primary,
+      content,
+    };
+  });
+  expect(submitColors.background).toBe(themeColors.primary);
+  expect(submitColors.color).toBe(themeColors.content);
+  expect(submitColors.border).toBe(themeColors.primary);
+  const closeButton = callbackDialog.getByRole("button", {
+    name: "Закрыть форму",
+  });
+  await expect(closeButton.locator(".lucide-x")).toBeVisible();
+  const closeBounds = await closeButton.boundingBox();
+  expect(closeBounds!.x).toBeGreaterThan(formBounds!.x + formBounds!.width / 2);
+  expect(closeBounds!.y).toBeLessThan(formBounds!.y + 20);
+  await page.keyboard.press("Escape");
+  await expect(callbackDialog).toBeHidden();
+  await expect(opener).toBeFocused();
+  await opener.click();
+  await expect(dialog).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
   await expect(opener).toBeFocused();

@@ -70,13 +70,6 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
     outline-offset: 3px;
   }
 
-  /* Invert the call colors on pointer hover. */
-  .header-call:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    background: var(--color-base-100);
-  }
-
   /* Show a larger phone action on tablet and desktop layouts. */
   @media (min-width: 48rem) {
     /* Keep the phone number aligned with the other header controls. */
@@ -86,6 +79,14 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
       justify-content: center;
       height: 3.25rem;
       min-width: 3.25rem;
+    }
+  }
+
+  /* Limit pointer feedback to tablet and desktop devices with a mouse. */
+  @media (min-width: 48rem) and (hover: hover) and (pointer: fine) {
+    /* Brighten the call control without changing its theme colors. */
+    .header-call:hover {
+      filter: brightness(1.12);
     }
   }
 </style>

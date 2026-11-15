@@ -1,6 +1,6 @@
 // Build deterministic versioned fixtures, then let Playwright own preview.
 import { spawn } from "node:child_process";
-import { cp, mkdir, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { preview } from "astro";
 
@@ -74,7 +74,34 @@ function run(args) {
     });
   });
 }
-await run(["build", "--config", "scripts/e2e.config.mjs"]);
+// Astro writes importer maps to root .astro despite a separate cacheDir.
+const sharedAstroFiles = [
+  resolve(".astro/content-assets.mjs"),
+  resolve(".astro/content-modules.mjs"),
+];
+const originalAstroFiles = new Map();
+for (const file of sharedAstroFiles) {
+  try {
+    originalAstroFiles.set(file, await readFile(file));
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
+  }
+}
+
+try {
+  await run(["build", "--config", "scripts/e2e.config.mjs"]);
+} finally {
+  for (const file of sharedAstroFiles) {
+    const original = originalAstroFiles.get(file);
+    if (original) {
+      await writeFile(file, original);
+    } else {
+      await rm(file, { force: true });
+    }
+  }
+}
 // The API avoids the CLI daemon and leaves existing preview servers alone.
 const server = await preview({
   configFile: "scripts/e2e.config.mjs",
