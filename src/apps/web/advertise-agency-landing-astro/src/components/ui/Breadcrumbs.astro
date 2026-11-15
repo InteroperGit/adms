@@ -2,6 +2,7 @@
 // Render ancestor links followed by the nonlinked current page label.
 // Callers supply ordered items and current text; destinations stay native.
 // The current item exposes aria-current without becoming another link.
+import Link from "@/components/ui/Link.astro";
 
 interface Item {
   label: string;
@@ -27,12 +28,12 @@ const { items, current } = Astro.props;
   <ol>
     {items.map((item) => (
       <li>
-        <a
+        <Link
           {...item.attributes}
           href={item.href}
         >
           {item.label}
-        </a>
+        </Link>
       </li>
     ))}
     {/* The current page is a label, not a redundant link. */}
@@ -74,7 +75,7 @@ const { items, current } = Astro.props;
   }
 
   /* Retain a persistent underline and room to target native links. */
-  a {
+  :global(a) {
     display: inline-block;
     padding-block: 0.5rem;
     text-decoration: underline;

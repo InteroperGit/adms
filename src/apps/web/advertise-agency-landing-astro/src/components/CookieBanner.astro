@@ -2,6 +2,7 @@
 // Offer a dismissible cookie choice and remember it when storage permits.
 // Reserve space only while the fixed banner is visible.
 // Native policy links remain available beside the two local choices.
+import Link from "@/components/ui/Link.astro";
 ---
 
 {/* Native policy links remain available beside the two local choices. */}
@@ -18,19 +19,19 @@
   <div class="site-container cookie-layout">
     <p class="text-sm">
       Мы используем файлы cookie. Продолжая, вы соглашаетесь с{" "}
-      <a
+      <Link
         href="/privacy-policy"
         class="link link-primary"
       >
         Политикой конфиденциальности
-      </a>{" "}
+      </Link>{" "}
       и{" "}
-      <a
+      <Link
         href="/terms-of-use"
         class="link link-primary"
       >
         Согласием на обработку
-      </a>
+      </Link>
       .
     </p>
     {/* Both choices dismiss locally; persistence is best effort. */}

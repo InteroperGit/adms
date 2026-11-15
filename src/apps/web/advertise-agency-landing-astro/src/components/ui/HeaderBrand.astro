@@ -1,16 +1,18 @@
 ---
 import { site } from "@/content/site";
 import Logo from "@/components/ui/Logo.astro";
+import Link from "@/components/ui/Link.astro";
 ---
 
 <div class="header-brand-wrap">
-  <a
+  <Link
+    underline={false}
     href="/"
     class="header-brand text-2xl font-bold"
   >
     <Logo />
     <span>{site.logoText}</span>
-  </a>
+  </Link>
 </div>
 
 <style>
@@ -19,7 +21,7 @@ import Logo from "@/components/ui/Logo.astro";
     min-width: 0;
   }
 
-  .header-brand {
+  :global(.header-brand) {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -27,12 +29,12 @@ import Logo from "@/components/ui/Logo.astro";
     color: var(--color-primary);
   }
 
-  .header-brand span {
+  :global(.header-brand span) {
     min-width: 0;
   }
 
   @media (max-width: 374px) {
-    .header-brand {
+    :global(.header-brand) {
       font-size: 1.125rem;
       overflow-wrap: anywhere;
     }

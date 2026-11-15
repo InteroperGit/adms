@@ -71,6 +71,9 @@ it("renders four contact choices with local social assets", async () => {
     body.querySelector<HTMLDialogElement>("#callback-dialog")!;
   expect(callbackDialog).toHaveAttribute("aria-labelledby", "callback-title");
   expect(callbackDialog.querySelector("#callback-title")).toBeInTheDocument();
+  expect(
+    callbackDialog.querySelector('.callback-consent a[href="/privacy-policy"]'),
+  ).toHaveTextContent("политикой конфиденциальности");
   expect(dialog.querySelector('a[href="https://vk.com/"] img')).toHaveAttribute(
     "src",
     "/icons/social/vk.svg",

@@ -25,6 +25,10 @@ secrets and irreversible operations as explicit boundaries. Finish with
 [verification](verification.md); use [release](release.md) only when publishing
 or changing deployment behavior.
 
+Run only focused checks directly related to the change while implementing.
+Run the full verification gates in `verification.md` only when the user
+explicitly asks to run the tests or full verification after implementation.
+
 ## Working context and models
 
 Read the task and applicable rules; search before loading files. Reuse evidence
@@ -86,11 +90,15 @@ Desktop, OneDrive or another synchronized folder.
 
 Use `grilling` before task authoring to settle goal, scope, constraints,
 dependencies and acceptance, and `ponytail` for the smallest complete outcome.
-Record primary and workers, model/effort per distinct step or explicitly no
-delegation. Add an actionable checklist: applicable instructions/skills,
-implementation, required checks/acceptance and archival/handoff. Do not add
-inapplicable checks or weaken gates. Suggested sections: Skills, Model and
-participants, Checklist.
+Use a standalone `## Scope` section followed immediately by a standalone
+`## Execution` section. Scope defines the work boundary and constraints.
+Execution records applicable skills, primary and worker participants,
+model/effort per distinct step or explicitly no delegation, and an actionable
+checklist for instructions, implementation, focused checks, acceptance and
+handoff/archive. Keep execution details out of Scope and do not merge the two
+sections. Do not add inapplicable checks or weaken gates. Follow
+[testing](testing.md) for required colocated unit tests. Run full verification
+only when the user explicitly requests it after implementation.
 
 After verified acceptance record changes/results and update relative links and
 plan status. Explicitly deferred tasks keep filename, evidence and outstanding

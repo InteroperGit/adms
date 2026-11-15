@@ -7,6 +7,7 @@ import {
 } from "@/content/article-context";
 import LedLettersForm from "@/components/forms/LedLettersForm.astro";
 import OrderFormContainer from "./OrderFormContainer.astro";
+import Link from "@/components/ui/Link.astro";
 
 interface Props {
   block: OrderForm;
@@ -31,18 +32,18 @@ const sectionId = block.id ?? `order-form-${block.formId}`;
     title="Обсудить проект"
     description="Расскажите о задаче, и мы поможем подготовить запрос."
   >
-    <a
+    <Link
       class="inquiry-link"
       href="/#order-inquiry"
     >
       Открыть форму запроса
-    </a>
+    </Link>
   </OrderFormContainer>
 )}
 
 <style>
   /* Keep the general fallback visible and reachable without JavaScript. */
-  .inquiry-link {
+  :global(.inquiry-link) {
     display: inline-block;
     min-height: 44px;
     padding-block: 0.5rem;

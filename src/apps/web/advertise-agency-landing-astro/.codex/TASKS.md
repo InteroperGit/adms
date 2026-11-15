@@ -7,7 +7,9 @@ scope and verification belong to the linked task files.
 
 ## Active tasks
 
-No active tasks. UI task 171 is archived; delivery is deferred to task 173.
+Task 174 is implemented; verification follow-up is pending the user's explicit
+request to run the full checks.
+UI task 171 is archived; delivery is deferred to task 173.
 
 ## Recent completed work
 
@@ -31,6 +33,8 @@ No active tasks. UI task 171 is archived; delivery is deferred to task 173.
   backlog; scope recorded; implementation not started.
 - [173 - Callback delivery](../docs/codex/tasks/backlog/173-enable-callback-delivery.md):
   backlog; connection deferred by the user; keep delivery disabled.
+- [174 - Link component and anchor migration](../docs/codex/tasks/todo/174-create-link-component-and-migrate-anchors.md):
+  implemented; E2E follow-up records one WebKit video fallback failure.
 - Content migration: tasks 161–170 in backlog; execution not started. Start with
   baseline 161; preserve a working site after each task.
   [Migration plan](../docs/codex/tasks/plan/20261114_site-content-structure-migration-plan.md)

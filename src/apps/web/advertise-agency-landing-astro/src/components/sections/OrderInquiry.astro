@@ -6,6 +6,7 @@
 import Section from "@/components/ui/Section.astro";
 import { orderInquiry as content } from "@/content/order-inquiry";
 import { site } from "@/content/site";
+import Link from "@/components/ui/Link.astro";
 
 const smartCaptchaSiteKey =
   import.meta.env.PUBLIC_YANDEX_SMARTCAPTCHA_SITE_KEY ?? "";
@@ -147,12 +148,12 @@ const privacy = site.legal.find((item) => item.href === "/privacy-policy");
               {content.consent.label} <span aria-hidden="true">*</span>
             </span>
           </label>
-          <a
+          <Link
             class="inquiry-link"
             href={privacy?.href ?? "/privacy-policy"}
           >
             {content.privacyLabel}
-          </a>
+          </Link>
           <p
             id="inquiry-consent-error"
             class="inquiry-error"
@@ -331,7 +332,7 @@ const privacy = site.legal.find((item) => item.href === "/privacy-policy");
   }
 
   /* Align the related privacy link with the consent text. */
-  .inquiry-link {
+  :global(.inquiry-link) {
     display: flex;
     align-items: center;
     width: fit-content;

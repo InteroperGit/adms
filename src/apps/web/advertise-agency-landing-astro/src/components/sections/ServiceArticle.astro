@@ -6,6 +6,7 @@
 import Layout from "@/layouts/Layout.astro";
 import ContentBlocks from "@/components/content/ContentBlocks.astro";
 import Button from "@/components/ui/Button.astro";
+import Link from "@/components/ui/Link.astro";
 import { services, visibleServices } from "@/content/services";
 import { isServiceArticlePublished } from "@/content/service-publication";
 
@@ -35,12 +36,12 @@ const catalogLabel = visibleServices.length ? "Все услуги" : "На гл
   noindex={demo}
 >
   <article class="site-container service-article">
-    <a
+    <Link
       class="service-back"
       href={catalogHref}
     >
       {catalogLabel}
-    </a>
+    </Link>
     <div class="service-heading">
       <h1>{service.name}</h1>
 
@@ -62,12 +63,12 @@ const catalogLabel = visibleServices.length ? "Все услуги" : "На гл
         aria-label="Действия по услуге"
       >
         <Button href="/#order-inquiry">Обсудить проект</Button>
-        <a
+        <Link
           class="service-back"
           href={catalogHref}
         >
           {catalogLabel}
-        </a>
+        </Link>
       </nav>
     </div>
   </article>
@@ -81,7 +82,7 @@ const catalogLabel = visibleServices.length ? "Все услуги" : "На гл
   }
 
   /* Make return navigation recognizable and easy to activate. */
-  .service-back {
+  :global(.service-back) {
     display: inline-block;
     min-height: 2.75rem;
     padding-block: 0.5rem;

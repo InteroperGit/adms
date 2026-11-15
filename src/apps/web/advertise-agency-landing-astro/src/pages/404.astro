@@ -2,6 +2,7 @@
 // Render a static, noindex recovery page for unknown routes.
 // Navigation stays available without client-side JavaScript or redirects.
 import Button from "@/components/ui/Button.astro";
+import Link from "@/components/ui/Link.astro";
 import Layout from "@/layouts/Layout.astro";
 import { visibleServices } from "@/content/services";
 ---
@@ -54,14 +55,14 @@ import { visibleServices } from "@/content/services";
         <ul class="not-found-links__list">
           {visibleServices.length > 0 && (
             <li>
-              <a href="/#services">Услуги</a>
+              <Link href="/#services">Услуги</Link>
             </li>
           )}
           <li>
-            <a href="/projects/">Проекты</a>
+            <Link href="/projects/">Проекты</Link>
           </li>
           <li>
-            <a href="/#contacts">Контакты</a>
+            <Link href="/#contacts">Контакты</Link>
           </li>
         </ul>
       </nav>
@@ -148,7 +149,7 @@ import { visibleServices } from "@/content/services";
   }
 
   /* Preserve the shared focus treatment while keeping links easy to scan. */
-  .not-found-links__list a {
+  .not-found-links__list :global(a) {
     display: inline-flex;
     align-items: center;
     min-height: 44px;

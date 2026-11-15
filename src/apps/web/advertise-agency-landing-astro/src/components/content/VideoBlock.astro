@@ -1,6 +1,7 @@
 ---
 // Render authored video with stable geometry, native controls and a fallback.
 import type { VideoBlock as VideoContent } from "@/types/content-blocks";
+import Link from "@/components/ui/Link.astro";
 
 interface Props {
   block: VideoContent;
@@ -33,7 +34,7 @@ const mime =
       type={mime}
     />
     <p class="video-native-fallback">
-      Видео недоступно. <a href={block.src}>Открыть видео</a>.
+      Видео недоступно. <Link href={block.src}>Открыть видео</Link>.
     </p>
   </video>
   {/* Network failures get a readable status with reserved space. */}
@@ -41,7 +42,7 @@ const mime =
     class="video-error"
     role="status"
   >
-    Видео недоступно. <a href={block.src}>Открыть видео</a>.
+    Видео недоступно. <Link href={block.src}>Открыть видео</Link>.
   </p>
   {block.caption && <figcaption>{block.caption}</figcaption>}
   {block.transcript && (

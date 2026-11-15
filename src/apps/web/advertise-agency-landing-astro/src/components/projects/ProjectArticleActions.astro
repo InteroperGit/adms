@@ -1,5 +1,6 @@
 ---
 // Keep native return/contact actions and restore the last catalogue location.
+import Link from "@/components/ui/Link.astro";
 interface Props {
   contactLabel: string;
 }
@@ -11,19 +12,19 @@ const { contactLabel } = Astro.props;
   aria-label="Действия проекта"
   class="project-actions"
 >
-  <a
+  <Link
     class="project-link"
     href="/projects/"
     data-project-catalog-return
   >
     Вернуться к проектам
-  </a>
-  <a
+  </Link>
+  <Link
     class="project-link"
     href="/#contacts"
   >
     {contactLabel}
-  </a>
+  </Link>
 </nav>
 
 <script>
@@ -60,7 +61,7 @@ const { contactLabel } = Astro.props;
   }
 
   /* Secondary actions remain underlined and keyboard reachable. */
-  .project-link {
+  :global(.project-link) {
     display: flex;
     align-items: center;
     min-height: 44px;

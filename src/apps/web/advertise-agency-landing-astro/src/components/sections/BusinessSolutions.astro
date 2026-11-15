@@ -5,6 +5,7 @@
 import Button from "@/components/ui/Button.astro";
 import ImageCarousel from "@/components/ui/ImageCarousel.astro";
 import Section from "@/components/ui/Section.astro";
+import Link from "@/components/ui/Link.astro";
 import { businessSolutions } from "@/content/business-solutions";
 ---
 
@@ -62,7 +63,7 @@ import { businessSolutions } from "@/content/business-solutions";
               {item.attribution.evidence}
             </p>
             {item.attribution.href && (
-              <a href={item.attribution.href}>Смотреть проект</a>
+              <Link href={item.attribution.href}>Смотреть проект</Link>
             )}
           </div>
         )}
@@ -158,7 +159,7 @@ import { businessSolutions } from "@/content/business-solutions";
   }
 
   /* Retain a visible cue for an available project evidence link. */
-  .solution-attribution a {
+  .solution-attribution :global(a) {
     display: inline-block;
     margin-top: 0.5rem;
     color: var(--color-primary);

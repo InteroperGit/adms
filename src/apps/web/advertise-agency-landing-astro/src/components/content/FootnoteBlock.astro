@@ -1,6 +1,7 @@
 ---
 // Display a secondary note with a native fragment link to its article target.
 import type { FootnoteBlock as Footnote } from "@/types/content-blocks";
+import Link from "@/components/ui/Link.astro";
 
 interface Props {
   block: Footnote;
@@ -17,13 +18,13 @@ const { block } = Astro.props as Props;
   {block.reference && <strong>{block.reference}</strong>}
   <span class="footnote-text">{block.text}</span>
   {block.targetId && (
-    <a
+    <Link
       class="footnote-backlink"
       href={`#${block.targetId}`}
       aria-label="Вернуться к месту в статье"
     >
       К разделу
-    </a>
+    </Link>
   )}
 </aside>
 
@@ -50,7 +51,7 @@ const { block } = Astro.props as Props;
   }
 
   /* Keep the native return link discoverable without requiring a script. */
-  .footnote-backlink {
+  :global(.footnote-backlink) {
     flex-shrink: 0;
     color: var(--content-block-accent);
     text-decoration: underline;

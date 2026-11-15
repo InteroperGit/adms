@@ -1,6 +1,7 @@
 ---
 // Render the validated site address as a map-linked header action.
 import { MapPin } from "@lucide/astro";
+import Link from "@/components/ui/Link.astro";
 
 interface Props {
   address: string;
@@ -9,7 +10,8 @@ interface Props {
 const { address } = Astro.props;
 ---
 
-<a
+<Link
+  underline
   class="header-address"
   href="/#contacts"
 >
@@ -18,11 +20,11 @@ const { address } = Astro.props;
     aria-hidden="true"
   />
   <span>{address}</span>
-</a>
+</Link>
 
 <style>
   /* Reserve the address for layouts with room beside the brand. */
-  .header-address {
+  :global(.header-address) {
     display: none;
     min-width: 0;
     margin-inline-start: auto;
@@ -31,21 +33,21 @@ const { address } = Astro.props;
   }
 
   /* Keep the map mark fixed while the address text wraps. */
-  .header-address svg {
+  :global(.header-address svg) {
     flex: none;
     width: 1.25rem;
     height: 1.25rem;
   }
 
   /* Allow long addresses to wrap inside the available header space. */
-  .header-address span {
+  :global(.header-address span) {
     min-width: 0;
   }
 
   /* Show the address beside the brand on tablet and desktop layouts. */
   @media (min-width: 48rem) {
     /* Keep the address group close to the actions that follow it. */
-    .header-address {
+    :global(.header-address) {
       display: inline-flex;
       align-items: center;
       justify-content: flex-end;
@@ -59,7 +61,7 @@ const { address } = Astro.props;
   /* Give wide desktop layouts more room for the full address. */
   @media (min-width: 64rem) {
     /* Keep the address from competing with the header controls. */
-    .header-address {
+    :global(.header-address) {
       flex-basis: 24rem;
     }
   }
@@ -67,7 +69,7 @@ const { address } = Astro.props;
   /* Underline the contact destination only for precise pointer devices. */
   @media (min-width: 48rem) and (hover: hover) and (pointer: fine) {
     /* Make the linked address visibly respond to mouse hover. */
-    .header-address:hover {
+    :global(.header-address:hover) {
       text-decoration: underline;
       text-underline-offset: 0.2em;
     }

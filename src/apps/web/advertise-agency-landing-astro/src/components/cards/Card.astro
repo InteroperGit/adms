@@ -3,6 +3,7 @@
 // Domain components pass validated copy, media, metadata and native routes.
 
 import ContentImage from "@/components/content/ContentImage.astro";
+import Link from "@/components/ui/Link.astro";
 import type { ContentImage as ContentImageData } from "@/types/content-blocks";
 
 // Callers supply one card's presentation-ready content.
@@ -59,19 +60,28 @@ const {
       id={titleId}
       class="catalog-title"
     >
-      {href ? <a href={href}>{title}</a> : title}
+      {href ? (
+        <Link
+          href={href}
+          underline={false}
+        >
+          {title}
+        </Link>
+      ) : (
+        title
+      )}
     </h3>
     {metadata && <p class="catalog-client">{metadata}</p>}
     <p class="catalog-description">{description}</p>
     {href && (
-      <a
+      <Link
         class="catalog-action"
         href={href}
         aria-label={actionName}
         data-project-link={projectLink ? true : undefined}
       >
         {actionLabel}
-      </a>
+      </Link>
     )}
   </div>
 </article>
@@ -152,7 +162,7 @@ const {
   }
 
   /* Distinguish title links through focus and the separate detail action. */
-  .catalog-title a {
+  .catalog-title :global(a) {
     color: var(--color-base-content);
     text-decoration: none;
   }
@@ -174,7 +184,7 @@ const {
   }
 
   /* Give the native detail link a persistent cue and touch-sized target. */
-  .catalog-action {
+  :global(.catalog-action) {
     display: inline-flex;
     align-items: center;
     align-self: flex-start;

@@ -1,6 +1,7 @@
 ---
 // Render the validated site phone as a responsive direct-call header action.
 import { Phone } from "@lucide/astro";
+import Link from "@/components/ui/Link.astro";
 
 interface Props {
   phone: string;
@@ -10,7 +11,8 @@ const { phone } = Astro.props;
 const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
 ---
 
-<a
+<Link
+  underline={false}
   class="header-call"
   href={phoneHref}
   aria-label={`Позвонить: ${phone}`}
@@ -22,11 +24,11 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
     />
   </span>
   <span>{phone}</span>
-</a>
+</Link>
 
 <style>
   /* Keep the call action hidden until the header has room for its label. */
-  .header-call {
+  :global(.header-call) {
     display: none;
     flex: none;
     place-items: center;
@@ -42,7 +44,7 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
   }
 
   /* Circle the phone glyph using the same theme color as its stroke. */
-  .header-call-icon {
+  :global(.header-call-icon) {
     display: grid;
     place-items: center;
     width: 2.25rem;
@@ -53,19 +55,19 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
   }
 
   /* Keep the local phone glyph sized within its circular frame. */
-  .header-call-icon svg {
+  :global(.header-call-icon svg) {
     flex: none;
     width: 1.25rem;
     height: 1.25rem;
   }
 
   /* Keep the entire phone number visible without wrapping. */
-  .header-call span {
+  :global(.header-call span) {
     white-space: nowrap;
   }
 
   /* Keep keyboard focus visible on the direct call control. */
-  .header-call:focus-visible {
+  :global(.header-call:focus-visible) {
     outline: var(--site-focus-ring);
     outline-offset: 3px;
   }
@@ -73,7 +75,7 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
   /* Show a larger phone action on tablet and desktop layouts. */
   @media (min-width: 48rem) {
     /* Keep the phone number aligned with the other header controls. */
-    .header-call {
+    :global(.header-call) {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -85,7 +87,7 @@ const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
   /* Limit pointer feedback to tablet and desktop devices with a mouse. */
   @media (min-width: 48rem) and (hover: hover) and (pointer: fine) {
     /* Brighten the call control without changing its theme colors. */
-    .header-call:hover {
+    :global(.header-call:hover) {
       filter: brightness(1.12);
     }
   }

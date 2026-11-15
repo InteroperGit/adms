@@ -37,7 +37,7 @@ it("renders ellipses, middle pages, and a last-page boundary", async () => {
   const links = [...body.querySelectorAll<HTMLAnchorElement>("a")];
 
   expect(nav?.querySelectorAll('[aria-hidden="true"]')).toHaveLength(2);
-  expect(links.map((link) => link.textContent)).toEqual([
+  expect(links.map((link) => link.textContent?.trim())).toEqual([
     "←",
     "1",
     "4",

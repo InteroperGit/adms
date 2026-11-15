@@ -1,6 +1,7 @@
 ---
 // Embed live Yandex reviews and keep a direct link outside the remote frame.
 // Callers must supply the numeric ID from the agency's Yandex Maps profile.
+import Link from "@/components/ui/Link.astro";
 
 interface Props {
   enabled: boolean;
@@ -50,7 +51,7 @@ const widgetSrc =
   )}
   {/* Remain usable if Yandex is unavailable or blocked by the browser. */}
   <p class="yandex-reviews-link">
-    <a
+    <Link
       class="link link-primary"
       href={reviewsUrl}
       target="_blank"
@@ -58,7 +59,7 @@ const widgetSrc =
     >
       Читать отзывы на Яндекс Картах
       <span class="sr-only">(откроется в новой вкладке)</span>
-    </a>
+    </Link>
   </p>
 </div>
 

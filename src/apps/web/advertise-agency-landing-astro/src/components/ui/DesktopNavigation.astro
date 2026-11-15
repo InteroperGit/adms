@@ -1,5 +1,6 @@
 ---
 import type { MenuItem } from "@/types";
+import Link from "@/components/ui/Link.astro";
 
 interface Props {
   items: MenuItem[];
@@ -15,7 +16,7 @@ const { items } = Astro.props;
   <ul>
     {items.map((item) => (
       <li>
-        <a href={item.href}>{item.label}</a>
+        <Link href={item.href}>{item.label}</Link>
       </li>
     ))}
   </ul>
@@ -45,7 +46,7 @@ const { items } = Astro.props;
   }
 
   /* Keep each configured destination a clear touch and focus target. */
-  .desktop-navigation a {
+  .desktop-navigation :global(a) {
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
@@ -57,14 +58,14 @@ const { items } = Astro.props;
     text-decoration: none;
   }
 
-  .desktop-navigation a:hover {
+  .desktop-navigation :global(a:hover) {
     text-decoration: underline;
     text-decoration-thickness: 2px;
     text-underline-offset: 0.3em;
   }
 
   /* Maintain a strong focus indicator on the inverted row. */
-  .desktop-navigation a:focus-visible {
+  .desktop-navigation :global(a:focus-visible) {
     outline: 2px solid currentColor;
     outline-offset: 3px;
   }

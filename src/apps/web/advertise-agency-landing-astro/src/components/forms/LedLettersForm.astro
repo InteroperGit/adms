@@ -3,6 +3,7 @@
 // Reuse the configured receipt-based delivery handler; no fake success state.
 import { orderInquiry } from "@/content/order-inquiry";
 import OrderFormContainer from "@/components/content/OrderFormContainer.astro";
+import Link from "@/components/ui/Link.astro";
 
 const smartCaptchaSiteKey =
   import.meta.env.PUBLIC_YANDEX_SMARTCAPTCHA_SITE_KEY ?? "";
@@ -311,8 +312,8 @@ const groups = [
             <span>Согласен на обработку персональных данных *</span>
           </label>
           <p class="legal-links">
-            <a href="/privacy-policy">Политика конфиденциальности</a>
-            <a href="/terms-of-use">Согласие на обработку</a>
+            <Link href="/privacy-policy">Политика конфиденциальности</Link>
+            <Link href="/terms-of-use">Согласие на обработку</Link>
           </p>
           <p
             id={`${prefix}-consent-error`}
@@ -353,7 +354,7 @@ const groups = [
       >
         {submission.enabled ? "" : "Отправка пока недоступна."}
       </p>
-      <a href="/#contacts">Связаться с агентством</a>
+      <Link href="/#contacts">Связаться с агентством</Link>
       <noscript>
         Для отправки включите JavaScript или свяжитесь с агентством.
       </noscript>
@@ -525,7 +526,7 @@ const groups = [
   }
 
   /* Underlines identify native destinations without JavaScript. */
-  a {
+  :global(a) {
     color: var(--color-primary);
     text-decoration: underline;
     text-underline-offset: 0.2em;

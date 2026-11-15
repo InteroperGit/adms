@@ -1,4 +1,5 @@
 ---
+import Link from "@/components/ui/Link.astro";
 type PaginationItem = number | "ellipsis";
 
 interface Props {
@@ -24,15 +25,16 @@ const { items, currentPage, pageCount, pageHref, pageSize } = Astro.props;
       class="catalog-pagination__pages"
       data-catalog-pages
     >
-      <a
+      <Link
         class="catalog-pagination__link catalog-pagination__direction"
+        underline={false}
         href={currentPage === 1 ? undefined : pageHref(currentPage - 1)}
         aria-label="Previous page"
         aria-disabled={currentPage === 1 ? "true" : undefined}
         tabindex={currentPage === 1 ? -1 : undefined}
       >
         &larr;
-      </a>
+      </Link>
       {items.map((item) =>
         item === "ellipsis" ? (
           <span
@@ -42,8 +44,9 @@ const { items, currentPage, pageCount, pageHref, pageSize } = Astro.props;
             &hellip;
           </span>
         ) : (
-          <a
+          <Link
             class="catalog-pagination__link"
+            underline={false}
             href={pageHref(item)}
             aria-label={
               item === 1
@@ -55,18 +58,19 @@ const { items, currentPage, pageCount, pageHref, pageSize } = Astro.props;
             aria-current={item === currentPage ? "page" : undefined}
           >
             {item}
-          </a>
+          </Link>
         ),
       )}
-      <a
+      <Link
         class="catalog-pagination__link catalog-pagination__direction"
+        underline={false}
         href={currentPage === pageCount ? undefined : pageHref(currentPage + 1)}
         aria-label="Next page"
         aria-disabled={currentPage === pageCount ? "true" : undefined}
         tabindex={currentPage === pageCount ? -1 : undefined}
       >
         &rarr;
-      </a>
+      </Link>
     </div>
   </div>
 </nav>

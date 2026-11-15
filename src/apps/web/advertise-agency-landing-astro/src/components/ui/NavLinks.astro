@@ -5,9 +5,10 @@
 import type { MenuItem } from "@/types";
 import Button from "@/components/ui/Button.astro";
 import MaxLogo from "@/components/ui/MaxLogo.astro";
+import Link from "@/components/ui/Link.astro";
 import {
   FolderKanban,
-  Link,
+  Link as LinkIcon,
   MapPin,
   Star,
   UsersRound,
@@ -45,12 +46,14 @@ const mobileIcons = {
     ]}
   >
     {items.map((item, index) => {
-      const Icon = mobileIcons[item.href as keyof typeof mobileIcons] ?? Link;
+      const Icon =
+        mobileIcons[item.href as keyof typeof mobileIcons] ?? LinkIcon;
 
       return (
         <li class="nav-item">
           {/* Include mobile links in WebKit's native keyboard traversal. */}
-          <a
+          <Link
+            underline={false}
             href={item.href}
             tabindex={isDesktop ? undefined : 0}
             class:list={[{ "section-link link link-hover": isDesktop }]}
@@ -63,7 +66,7 @@ const mobileIcons = {
               />
             )}
             <span>{item.label}</span>
-          </a>
+          </Link>
           {!isDesktop && index < items.length - 1 && (
             <hr
               class="mobile-link-divider"
@@ -87,7 +90,8 @@ const mobileIcons = {
           </Button>
         </li>
         <li class="nav-item">
-          <a
+          <Link
+            underline={false}
             href="https://max.ru/"
             class="max-contact btn btn-sm"
             target="_blank"
@@ -96,7 +100,7 @@ const mobileIcons = {
           >
             <MaxLogo />
             <span>Написать в Макс</span>
-          </a>
+          </Link>
         </li>
       </>
     )}
@@ -139,7 +143,7 @@ const mobileIcons = {
   }
 
   /* Keep section links wrappable with generous native targets. */
-  .section-link {
+  :global(.section-link) {
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
@@ -155,7 +159,7 @@ const mobileIcons = {
   }
 
   /* Align the Макс mark and label as a single compact contact action. */
-  .max-contact {
+  :global(.max-contact) {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -172,7 +176,7 @@ const mobileIcons = {
   /* Invert the Max action colors only for a mouse pointer. */
   @media (hover: hover) and (pointer: fine) {
     /* Keep the hover state shadow-free while reversing its contrast. */
-    .max-contact:hover {
+    :global(.max-contact:hover) {
       background-color: var(--site-messenger-hover);
       border-color: var(--site-messenger-hover);
       color: var(--site-messenger-hover-content);
@@ -181,7 +185,7 @@ const mobileIcons = {
   }
 
   /* Retain a clear keyboard focus ring without adding a shadow. */
-  .max-contact:focus-visible {
+  :global(.max-contact:focus-visible) {
     outline: 2px solid var(--site-messenger-focus);
     outline-offset: 3px;
     box-shadow: none;
@@ -208,7 +212,7 @@ const mobileIcons = {
   }
 
   /* Make each mobile destination a large icon and label touch target. */
-  .mobile-links .nav-item > a {
+  .mobile-links .nav-item > :global(a) {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -239,7 +243,7 @@ const mobileIcons = {
   }
 
   /* Give mobile links a subtle theme hover without hiding their labels. */
-  .mobile-links .nav-item > a:hover {
+  .mobile-links .nav-item > :global(a:hover) {
     color: var(--color-base-content);
     background: color-mix(
       in srgb,

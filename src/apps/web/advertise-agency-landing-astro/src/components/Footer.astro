@@ -7,6 +7,7 @@ import { site } from "@/content/site";
 import type { LegalItem } from "@/types";
 import ContactInfo from "@/components/ui/ContactInfo.astro";
 import Logo from "@/components/ui/Logo.astro";
+import Link from "@/components/ui/Link.astro";
 ---
 
 {/* Content and destinations come from the validated site configuration. */}
@@ -14,13 +15,13 @@ import Logo from "@/components/ui/Logo.astro";
   <div class="site-container">
     <div class="footer-grid">
       <div class="min-w-0">
-        <a
+        <Link
           href="/"
           class="footer-brand flex items-center gap-2 font-bold text-brand"
         >
           <Logo size="footer" />
           <span class="min-w-0">{site.logoText}</span>
-        </a>
+        </Link>
         <p class="text-sm text-muted max-w-xs mt-2">
           {site.footer.description}
         </p>
@@ -34,12 +35,12 @@ import Logo from "@/components/ui/Logo.astro";
         <ul class="space-y-1">
           {site.legal.map((item: LegalItem) => (
             <li>
-              <a
+              <Link
                 href={item.href}
                 class="footer-link"
               >
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -103,7 +104,7 @@ import Logo from "@/components/ui/Logo.astro";
   }
 
   /* Keep the home link and butterfly within the available width. */
-  .footer-brand {
+  :global(.footer-brand) {
     width: fit-content;
     max-width: 100%;
     font-size: clamp(1.5rem, 2.5vw, 1.875rem);
@@ -119,6 +120,17 @@ import Logo from "@/components/ui/Logo.astro";
     color: var(--footer-link);
   }
 
+  /* Keep footer contact links plain until the visitor hovers them. */
+  .site-footer :global(.contact-action) {
+    text-decoration: none;
+  }
+
+  /* Retain the contact underline as a clear pointer affordance. */
+  .site-footer :global(.contact-action:hover) {
+    text-decoration: underline;
+    text-underline-offset: calc(0.2em + 1px);
+  }
+
   /* Make keyboard focus visible independently of link and brand colors. */
   .site-footer :global(a:focus-visible) {
     outline: 2px solid var(--footer-focus);
@@ -131,16 +143,17 @@ import Logo from "@/components/ui/Logo.astro";
   }
 
   /* Retain the legal links' generous targets and underline affordance. */
-  .footer-link {
+  :global(.footer-link) {
     display: flex;
     align-items: center;
     min-height: 44px;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    text-decoration: none;
   }
 
   /* Reinforce hover without changing the readable foreground. */
-  .footer-link:hover {
+  :global(.footer-link:hover) {
+    text-decoration: underline;
+    text-underline-offset: calc(0.2em + 1px);
     text-decoration-thickness: 2px;
   }
 

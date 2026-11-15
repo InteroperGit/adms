@@ -2,6 +2,7 @@
 // Render plain paragraphs without embedding structural headings.
 import type { ParagraphBlock as Paragraph } from "@/types/content-blocks";
 import { paragraphLinks } from "@/content/paragraph-links";
+import Link from "@/components/ui/Link.astro";
 
 interface Props {
   block: Paragraph;
@@ -16,7 +17,11 @@ const { block } = Astro.props as Props;
   {block.paragraphs.map((paragraph: ParagraphText) => (
     <p>
       {paragraphLinks(paragraph).map((segment) =>
-        segment.href ? <a href={segment.href}>{segment.text}</a> : segment.text,
+        segment.href ? (
+          <Link href={segment.href}>{segment.text}</Link>
+        ) : (
+          segment.text
+        ),
       )}
     </p>
   ))}
@@ -43,7 +48,7 @@ const { block } = Astro.props as Props;
   }
 
   /* Underlines identify links without depending on theme color alone. */
-  .content-paragraph a {
+  .content-paragraph :global(a) {
     color: var(--content-block-accent);
     text-decoration: underline;
     text-decoration-thickness: 0.08em;
@@ -52,12 +57,12 @@ const { block } = Astro.props as Props;
   }
 
   /* Strengthen hover feedback without moving surrounding text. */
-  .content-paragraph a:hover {
+  .content-paragraph :global(a:hover) {
     text-decoration-thickness: 0.14em;
   }
 
   /* Keep multiline URL links visible during keyboard navigation. */
-  .content-paragraph a:focus-visible {
+  .content-paragraph :global(a:focus-visible) {
     outline: var(--content-block-focus-ring);
     outline-offset: 3px;
     border-radius: 0.125rem;

@@ -4,6 +4,7 @@
 // Explicit demo mode exposes drafts without changing agency approvals.
 
 import Section from "@/components/ui/Section.astro";
+import Link from "@/components/ui/Link.astro";
 import { faq } from "@/content/faq";
 import { getVisibleFaqItems } from "@/content/faq-publication";
 
@@ -34,12 +35,12 @@ const items = getVisibleFaqItems(faq);
         ))}
       </div>
       {/* A native inquiry link offers a project-specific conversation. */}
-      <a
+      <Link
         class="faq-inquiry"
         href={faq.inquiryHref}
       >
         {faq.inquiryLabel}
-      </a>
+      </Link>
     </div>
   </Section>
 )}
@@ -112,7 +113,7 @@ const items = getVisibleFaqItems(faq);
   }
 
   /* A wrapping native link remains distinct and usable at enlarged sizes. */
-  .faq-inquiry {
+  :global(.faq-inquiry) {
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
@@ -125,7 +126,7 @@ const items = getVisibleFaqItems(faq);
   }
 
   /* Keep the inquiry destination apparent during keyboard navigation. */
-  .faq-inquiry:focus-visible {
+  :global(.faq-inquiry:focus-visible) {
     outline: 2px solid var(--color-primary);
     outline-offset: 4px;
   }

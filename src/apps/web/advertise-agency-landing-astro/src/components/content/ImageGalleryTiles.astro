@@ -1,7 +1,8 @@
-﻿---
+---
 // Render responsive native image links; the parent owns lightbox enhancement.
 import type { GalleryImage } from "./image-gallery.types";
 import ContentImage from "./ContentImage.astro";
+import Link from "@/components/ui/Link.astro";
 
 interface Props {
   images: GalleryImage[];
@@ -15,8 +16,9 @@ const { images, priority = false } = Astro.props;
 {/* Native links preserve access to each full-size image without JavaScript. */}
 <div class="gallery-grid">
   {images.map(({ image, src }, index) => (
-    <a
+    <Link
       class="gallery-tile"
+      underline={false}
       href={src}
       data-gallery-open={index}
       aria-current={index === 0 ? "true" : undefined}
@@ -26,7 +28,7 @@ const { images, priority = false } = Astro.props;
         thumbnail
         priority={index === 0 && priority}
       />
-    </a>
+    </Link>
   ))}
 </div>
 
@@ -41,7 +43,7 @@ const { images, priority = false } = Astro.props;
   }
 
   /* Make each whole tile a large, stable target for lightbox activation. */
-  .gallery-tile {
+  :global(.gallery-tile) {
     position: relative;
     display: block;
     min-width: 0;
@@ -55,7 +57,7 @@ const { images, priority = false } = Astro.props;
   }
 
   /* Give the first photo two adjacent places in the wide layout. */
-  .gallery-tile:first-child {
+  :global(.gallery-tile:first-child) {
     grid-column: span 2;
   }
 
@@ -76,7 +78,7 @@ const { images, priority = false } = Astro.props;
   }
 
   /* Keep the image target clear during keyboard navigation. */
-  .gallery-tile:focus-visible {
+  :global(.gallery-tile:focus-visible) {
     outline: 3px solid var(--content-block-accent);
     outline-offset: 3px;
   }
@@ -84,13 +86,13 @@ const { images, priority = false } = Astro.props;
   /* Highlight tiles only on devices that can hover precisely. */
   @media (hover: hover) and (pointer: fine) {
     /* Mark the hovered tile with a clear inset brand outline. */
-    .gallery-tile:hover {
+    :global(.gallery-tile:hover) {
       outline: 3px solid var(--color-primary);
       outline-offset: -3px;
     }
 
     /* Bring the hovered image forward with a slight zoom and dim. */
-    .gallery-tile:hover :global(.content-media-image) {
+    :global(.gallery-tile:hover .content-media-image) {
       transform: scale(1.035);
       filter: brightness(0.92);
     }
@@ -98,7 +100,7 @@ const { images, priority = false } = Astro.props;
 
   /* Remove hover animation when visitors prefer reduced motion. */
   @media (prefers-reduced-motion: reduce) {
-    .gallery-tile :global(.content-media-image) {
+    :global(.gallery-tile .content-media-image) {
       transition: none;
     }
   }
@@ -119,7 +121,7 @@ const { images, priority = false } = Astro.props;
       gap: 0.75rem;
     }
 
-    .gallery-tile:first-child {
+    :global(.gallery-tile:first-child) {
       grid-column: auto;
     }
   }

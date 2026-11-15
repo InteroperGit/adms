@@ -4,6 +4,7 @@
 
 import { site } from "@/content/site";
 import { actionRail } from "@/content/action-rail";
+import Link from "@/components/ui/Link.astro";
 
 const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
 ---
@@ -57,8 +58,9 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
         </i>
       </button>
       {/* Let visitors start a callback by calling the configured phone. */}
-      <a
+      <Link
         class="action-rail-button action-rail-button-call"
+        underline={false}
         href={`tel:${site.phone.replace(/\s/g, "")}`}
         aria-label="Позвонить нам"
         data-tooltip="Позвонить нам"
@@ -76,7 +78,7 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
           class="fas fa-phone action-rail-call-icon"
           aria-hidden="true"
         ></i>
-      </a>
+      </Link>
     </div>
     {/* Separate page navigation from direct contact actions. */}
     <div class="action-rail-bottom">
@@ -208,7 +210,7 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
   }
 
   /* Make every icon control a stable, generously sized target. */
-  .action-rail-button {
+  :global(.action-rail-button) {
     --action-color: var(--color-base-content);
     --action-content: var(--color-base-100);
     position: relative;
@@ -228,43 +230,43 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
   }
 
   /* Distinguish the three contact actions with their requested fills. */
-  .action-rail-button-chat {
+  :global(.action-rail-button-chat) {
     --action-color: #1e40af;
     --action-content: #fff;
     --chat-typing-interval: var(--action-rail-reminder-interval);
   }
 
   /* Keep the collapse action black against the page. */
-  .action-rail-button-collapse {
+  :global(.action-rail-button-collapse) {
     --action-color: #000;
     --action-content: #fff;
   }
 
   /* Mark the phone action with a contrasting green fill. */
-  .action-rail-button-call {
+  :global(.action-rail-button-call) {
     --action-color: #166534;
     --action-content: #fff;
     --call-reminder-interval: var(--action-rail-reminder-interval);
   }
 
   /* Give return-to-top a separate dark orange fill. */
-  .action-rail-button-top {
+  :global(.action-rail-button-top) {
     --action-color: #9a3412;
     --action-content: #fff;
   }
 
   /* Increase blue and green contrast against the dark page surface. */
-  :global([data-theme="dark"]) .action-rail-button-chat {
+  :global([data-theme="dark"] .action-rail-button-chat) {
     --action-color: #60a5fa;
     --action-content: #18212b;
   }
 
-  :global([data-theme="dark"]) .action-rail-button-call {
+  :global([data-theme="dark"] .action-rail-button-call) {
     --action-color: #4ade80;
     --action-content: #18212b;
   }
 
-  :global([data-theme="dark"]) .action-rail-button-top {
+  :global([data-theme="dark"] .action-rail-button-top) {
     --action-color: #fb923c;
     --action-content: #18212b;
   }
@@ -328,52 +330,52 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
   }
 
   /* Pause reminder motion while the caller control is actively targeted. */
-  .action-rail-button-call:hover .action-rail-call-wave {
+  :global(.action-rail-button-call:hover) .action-rail-call-wave {
     animation: none;
     opacity: 0;
   }
 
   /* Stop the icon shake while the phone action is hovered. */
-  .action-rail-button-call:hover .action-rail-call-icon {
+  :global(.action-rail-button-call:hover) .action-rail-call-icon {
     animation: none;
   }
 
   /* Keep chat idle while its action is hovered, matching the call control. */
-  .action-rail-button-chat:hover .action-rail-chat-typing span {
+  :global(.action-rail-button-chat:hover) .action-rail-chat-typing span {
     animation: none;
     opacity: 0;
   }
 
   /* Match each action icon to its assigned hover fill before interaction. */
-  .action-rail-button-chat,
-  .action-rail-button-collapse,
-  .action-rail-button-call,
-  .action-rail-button-top {
+  :global(.action-rail-button-chat),
+  :global(.action-rail-button-collapse),
+  :global(.action-rail-button-call),
+  :global(.action-rail-button-top) {
     color: var(--action-color);
   }
 
   /* Keep collapse and restore icons white against dark-theme surfaces. */
-  :global([data-theme="dark"]) .action-rail-button-collapse,
-  :global([data-theme="dark"]) .action-rail-restore {
+  :global([data-theme="dark"] .action-rail-button-collapse),
+  :global([data-theme="dark"] .action-rail-restore) {
     color: #fff;
     border-color: #fff;
   }
 
   /* Apply the assigned action color only while the pointer hovers. */
-  .action-rail-button:hover {
+  :global(.action-rail-button:hover) {
     border-color: var(--action-color);
     background: var(--action-color);
     color: var(--action-content);
   }
 
   /* Preserve the white edge of collapse controls during dark-theme hover. */
-  :global([data-theme="dark"]) .action-rail-button-collapse:hover,
-  :global([data-theme="dark"]) .action-rail-restore:hover {
+  :global([data-theme="dark"] .action-rail-button-collapse:hover),
+  :global([data-theme="dark"] .action-rail-restore:hover) {
     border-color: #fff;
   }
 
   /* Keep each button's label hidden until pointer or keyboard interaction. */
-  .action-rail-button[data-tooltip]::after {
+  :global(.action-rail-button[data-tooltip]::after) {
     position: absolute;
     top: 50%;
     right: calc(100% + 0.5rem);
@@ -396,8 +398,8 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
   }
 
   /* Show the action name beside its hovered or keyboard-focused control. */
-  .action-rail-button[data-tooltip]:hover::after,
-  .action-rail-button[data-tooltip]:focus-visible::after {
+  :global(.action-rail-button[data-tooltip]:hover::after),
+  :global(.action-rail-button[data-tooltip]:focus-visible::after) {
     opacity: 1;
     visibility: visible;
   }
@@ -405,20 +407,20 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
   /* Keep hover and focus labels off compact mobile and tablet screens. */
   @media (max-width: 63.999rem) {
     /* Avoid sticky touch hover states and extra labels on narrow screens. */
-    .action-rail-button[data-tooltip]::after {
+    :global(.action-rail-button[data-tooltip]::after) {
       display: none;
     }
   }
 
   /* Match the caption to its assigned button color during hover. */
-  .action-rail-button[data-tooltip]:hover::after {
+  :global(.action-rail-button[data-tooltip]:hover::after) {
     border-color: var(--action-color);
     background: var(--action-color);
     color: var(--action-content);
   }
 
   /* Keep a clear focus ring visible beyond each compact control. */
-  .action-rail-button:focus-visible {
+  :global(.action-rail-button:focus-visible) {
     z-index: 1;
     outline: 2px solid var(--color-primary);
     outline-offset: 3px;
@@ -452,7 +454,7 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
   /* Hide the phone action when desktop navigation takes over. */
   @media (min-width: 64rem) {
     /* Remove the hidden link from the visual and keyboard focus order. */
-    .action-rail-button-call {
+    :global(.action-rail-button-call) {
       display: none;
     }
   }
@@ -469,7 +471,7 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
   @media (prefers-reduced-motion: reduce) {
     /* Make collapse and restore immediate under reduced-motion settings. */
     .action-rail-restore,
-    .action-rail-button[data-tooltip]::after,
+    :global(.action-rail-button[data-tooltip]::after),
     .action-rail-chat-typing span,
     .action-rail-call-wave,
     .action-rail-call-icon {

@@ -4,6 +4,7 @@
 // The class prop adds caller styling; icons are decorative, not labels.
 
 import { icons } from "@/content/icons";
+import Link from "@/components/ui/Link.astro";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
@@ -52,12 +53,12 @@ const {
         ]}
         aria-hidden="true"
       ></i>
-      <a
+      <Link
         href={`tel:${phone.replace(/\s/g, "")}`}
         class="contact-action"
       >
         {phone}
-      </a>
+      </Link>
     </div>
   )}
   {/* Use a native mail link without intercepting its behavior. */}
@@ -71,12 +72,12 @@ const {
         ]}
         aria-hidden="true"
       ></i>
-      <a
+      <Link
         href={`mailto:${email}`}
         class="contact-action"
       >
         {email}
-      </a>
+      </Link>
     </div>
   )}
   {/* Keep weekend details subordinate to the supplied opening hours. */}
@@ -100,7 +101,7 @@ const {
 
 <style>
   /* Keep native contact links readable and easy to target. */
-  .contact-action {
+  :global(.contact-action) {
     display: flex;
     align-items: center;
     min-width: 0;
@@ -112,12 +113,12 @@ const {
   }
 
   /* Provide pointer feedback while retaining the themed foreground. */
-  .contact-action:hover {
+  :global(.contact-action:hover) {
     text-decoration-thickness: 2px;
   }
 
   /* Keep keyboard focus visible above adjacent controls and surfaces. */
-  .contact-action:focus-visible {
+  :global(.contact-action:focus-visible) {
     outline: 2px solid currentColor;
     outline-offset: 4px;
   }

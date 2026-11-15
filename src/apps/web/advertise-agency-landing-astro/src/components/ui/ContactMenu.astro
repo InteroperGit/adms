@@ -3,8 +3,13 @@
 import { site } from "@/content/site";
 import { orderInquiry } from "@/content/order-inquiry";
 import { MessageCircle, PhoneCall, X } from "@lucide/astro";
+import Link from "@/components/ui/Link.astro";
 
-const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
+const privacyPhrase = "политикой конфиденциальности";
+const callbackConsentLabel = orderInquiry.consent.label.replace(
+  privacyPhrase,
+  "",
+);
 ---
 
 <div class="contact-menu">
@@ -43,7 +48,8 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
         />
         Обратный звонок
       </button>
-      <a
+      <Link
+        underline={false}
         href="https://vk.com/"
         target="_blank"
         rel="noopener noreferrer"
@@ -56,8 +62,9 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
           loading="lazy"
         />
         ВКонтакте
-      </a>
-      <a
+      </Link>
+      <Link
+        underline={false}
         href="https://max.ru/"
         target="_blank"
         rel="noopener noreferrer"
@@ -70,8 +77,9 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
           loading="lazy"
         />
         MAX
-      </a>
-      <a
+      </Link>
+      <Link
+        underline={false}
         href="https://t.me/"
         target="_blank"
         rel="noopener noreferrer"
@@ -84,7 +92,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
           loading="lazy"
         />
         Telegram
-      </a>
+      </Link>
     </section>
   </dialog>
   <dialog
@@ -123,14 +131,24 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
             autocomplete="tel"
             required
           />
-          <label class="callback-consent">
+          <div class="callback-consent">
             <input
               type="checkbox"
+              id="callback-consent"
               name="consent"
               required
+              aria-labelledby="callback-consent-text"
             />
-            {orderInquiry.consent.label}
-          </label>
+            <span id="callback-consent-text">
+              <label for="callback-consent">{callbackConsentLabel}</label>
+              <Link
+                class="callback-consent-policy"
+                href="/privacy-policy"
+              >
+                {privacyPhrase}
+              </Link>
+            </span>
+          </div>
         </fieldset>
         <button
           class="callback-submit"
@@ -175,7 +193,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
 
   /* Keep keyboard focus visible across both panel layouts. */
   .contact-menu-opener:focus-visible,
-  dialog a:focus-visible,
+  dialog :global(a:focus-visible),
   dialog button:focus-visible,
   dialog input:focus-visible {
     outline: var(--site-focus-ring);
@@ -234,7 +252,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
   }
 
   /* Keep actions easy to scan and large enough for touch input. */
-  [data-contact-options] a,
+  [data-contact-options] :global(a),
   [data-contact-options] button,
   [data-callback-form] > button,
   [data-callback-form] form > button {
@@ -253,7 +271,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
     font-size: 1.125rem;
   }
 
-  [data-contact-options] a:hover,
+  [data-contact-options] :global(a:hover),
   [data-contact-options] button:hover,
   [data-callback-form] > button:hover,
   [data-callback-form] form > button:hover {
@@ -330,9 +348,28 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
     box-shadow: var(--shadow-panel);
   }
 
-  /* Reserve space beside the title for the close target. */
-  #callback-dialog h2 {
+  /* Set the callback heading apart from the form fields. */
+  #callback-dialog #callback-title {
+    margin: 0 0 1rem;
     padding-inline-end: 2.75rem;
+    padding-block-end: 0.75rem;
+    border-bottom: 2px solid
+      color-mix(in srgb, var(--color-primary) 38%, transparent);
+    color: var(--color-primary);
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  /* Present the unavailable notice as a distinct, readable status. */
+  #callback-dialog [data-callback-form] > p {
+    margin: 0 0 1rem;
+    padding: 0.75rem;
+    border-inline-start: 3px solid var(--color-accent);
+    border-radius: 0 var(--radius-field) var(--radius-field) 0;
+    background: color-mix(in srgb, var(--color-accent) 10%, var(--color-base-100));
+    color: var(--color-base-content);
+    font-weight: 600;
   }
 
   /* Keep the icon-only dismissal target at the form's upper-right corner. */
@@ -347,6 +384,17 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
     min-height: 2.75rem;
     padding: 0;
     border: 0;
+    color: var(--color-base-content);
+    background: transparent;
+  }
+
+  #callback-dialog .callback-close:hover {
+    color: var(--color-primary);
+    background: transparent;
+  }
+
+  #callback-dialog .callback-close:hover svg {
+    stroke-width: 2.5;
   }
 
   /* Keep deferred submission prominent while retaining its disabled state. */
@@ -363,10 +411,32 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, "")}`;
 
   /* Align the consent check with its wrapped text. */
   .callback-consent {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    align-items: start;
     gap: 0.5rem;
     padding-block: 0.5rem;
+  }
+
+  /* Keep the linked policy phrase inline with the consent sentence. */
+  #callback-consent-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep only the checkbox's lead-in text inside its native label. */
+  #callback-consent-text label {
+    display: inline;
+  }
+
+  /* Keep the policy destination recognizable in every link state. */
+  #callback-consent-text :global(.callback-consent-policy),
+  #callback-consent-text :global(.callback-consent-policy:hover),
+  #callback-consent-text :global(.callback-consent-policy:visited),
+  #callback-consent-text :global(.callback-consent-policy:focus-visible),
+  #callback-consent-text :global(.callback-consent-policy:active) {
+    color: var(--color-primary);
+    text-decoration: underline;
   }
 
   /* Keep the checkbox itself a comfortable pointer target. */

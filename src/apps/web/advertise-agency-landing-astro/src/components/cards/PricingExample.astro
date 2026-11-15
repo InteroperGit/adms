@@ -5,6 +5,7 @@
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import Button from "@/components/ui/Button.astro";
+import Link from "@/components/ui/Link.astro";
 import { formatPricingPrice } from "@/content/pricing-publication";
 import type { PricingExample } from "@/types/pricing";
 
@@ -142,12 +143,12 @@ const referenceDate = price.asOf
         {inquiryLabel}
       </Button>
       {example.href && (
-        <a
+        <Link
           class="pricing-project"
           href={example.href}
         >
           Подробнее о проекте
-        </a>
+        </Link>
       )}
     </div>
   </div>
@@ -283,7 +284,7 @@ const referenceDate = price.asOf
   }
 
   /* Give genuine project destinations a persistent native link cue. */
-  .pricing-project {
+  :global(.pricing-project) {
     color: var(--color-primary);
     text-decoration: underline;
     text-underline-offset: 0.2em;
