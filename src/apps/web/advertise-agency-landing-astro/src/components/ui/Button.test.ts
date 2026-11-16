@@ -130,6 +130,11 @@ it("keeps native anchor and button props type-safe", () => {
     // @ts-expect-error Anchors do not accept button-only attributes.
     disabled: true,
   } satisfies ButtonProps;
+  const invalidButtonAnchorAttribute = {
+    type: "submit",
+    // @ts-expect-error Native buttons do not accept anchor targets.
+    target: "_blank",
+  } satisfies ButtonProps;
   const misspelledAttribute = {
     // @ts-expect-error Native attributes reject misspelled names.
     lable: "Contact",
@@ -138,5 +143,6 @@ it("keeps native anchor and button props type-safe", () => {
   void invalidButtonType;
   void invalidLinkType;
   void invalidLinkAttribute;
+  void invalidButtonAnchorAttribute;
   void misspelledAttribute;
 });
