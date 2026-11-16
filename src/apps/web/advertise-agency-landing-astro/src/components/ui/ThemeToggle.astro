@@ -197,6 +197,35 @@ const themes = [
     z-index: 1;
   }
 
+  /* Expand the desktop choices into the space freed by their heading. */
+  @media (min-width: 48rem) {
+    /* Keep all options within the viewport while providing room to expand. */
+    fieldset {
+      width: min(28rem, calc(100vw - 64px));
+    }
+
+    /* Hide redundant context while the labelled choices remain visible. */
+    .theme-label {
+      display: none;
+    }
+
+    /* Let the theme row occupy the available fieldset width. */
+    .theme-options {
+      flex: 1;
+    }
+
+    /* Give each theme choice an equal share of the desktop row. */
+    .theme-option {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Fill each enlarged radio target with its visible surface. */
+    .theme-icon {
+      width: 100%;
+    }
+  }
+
   /* Stack and name all theme choices for comfortable mobile selection. */
   @media (max-width: 47.999rem) {
     /* Give the preference label its own readable row above the choices. */

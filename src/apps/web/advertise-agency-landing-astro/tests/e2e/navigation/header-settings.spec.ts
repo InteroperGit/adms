@@ -89,6 +89,25 @@ test("mobile menu shows themed links without contact action buttons", async ({
   await expect(firstLink).toHaveCSS("color", "rgb(237, 242, 247)");
 });
 
+test("desktop settings expand theme choices without a heading", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await page.locator('[data-cookie-choice="declined"]').click();
+  await page.locator("[data-settings-trigger]").click();
+
+  const panel = page.locator("[data-settings-panel]");
+  await expect(panel.locator(".theme-label")).toBeHidden();
+  const widths = await panel
+    .locator(".theme-option")
+    .evaluateAll((options) =>
+      options.map((option) => Math.round(option.getBoundingClientRect().width)),
+    );
+  expect(new Set(widths).size).toBe(1);
+  expect(widths[0]).toBeGreaterThan(120);
+});
+
 test("tablet header has navigation and a nonmodal contact menu", async ({
   page,
 }) => {
