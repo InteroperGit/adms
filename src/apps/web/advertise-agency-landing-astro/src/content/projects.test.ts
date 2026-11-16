@@ -67,10 +67,7 @@ it("resolves article formats and hides draft categories", async () => {
   expect(render).toHaveBeenCalledOnce();
 });
 
-it.each([
-  { entries: [] },
-  { entries: [{ id: "1", data: { projectId: 2 } }] },
-])(
+it.each([{ entries: [] }, { entries: [{ id: "1", data: { projectId: 2 } }] }])(
   "rejects absent or mismatched MDX without fallback %#",
   async ({ entries }) => {
     const { result, render } = load([record(1, "mdx")], entries);
