@@ -7,7 +7,11 @@ import fixture from "../fixtures/content/content-blocks.json";
 import type { ContentBlock } from "../../src/types/content-blocks";
 import type { Project } from "../../src/types/project";
 import type { ServicesContent } from "../../src/types/services";
-import ProjectDetail from "../../src/pages/projects/[id].astro";
+import ProjectDetail, {
+  getStaticPaths as getProjectStaticPaths,
+} from "../../src/pages/projects/[id].astro";
+import type { APIContext } from "astro";
+import { getVisibleProjects } from "../../src/content/project-publication";
 import ServicePage, {
   getStaticPaths as getServiceStaticPaths,
 } from "../../src/pages/services/[id].astro";
@@ -24,7 +28,19 @@ import {
 
 const overrides = vi.hoisted(() => ({
   services: undefined as ServicesContent | undefined,
+  projects: undefined as Project[] | undefined,
 }));
+
+vi.mock("@/content/projects", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("../../src/content/projects")>();
+  return {
+    ...actual,
+    get projects() {
+      return overrides.projects ?? actual.projects;
+    },
+  };
+});
 
 vi.mock("@/content/services", async (importOriginal) => {
   const actual =
@@ -44,6 +60,7 @@ vi.mock("@/content/services", async (importOriginal) => {
 
 beforeEach(() => {
   overrides.services = undefined;
+  overrides.projects = undefined;
 });
 
 it("composes service content and fallback actions", async () => {
@@ -302,6 +319,215 @@ it.each(serviceRoutes)(
     ).toBeNull();
     expect(
       document.querySelector('.service-actions a[href="/#order-inquiry"]'),
+    ).toBeInTheDocument();
+  },
+);
+
+it.each([
+  { state: "approved", projectIndex: true, serviceIndex: true },
+  { state: "draft", projectIndex: false, serviceIndex: false },
+  { state: "demo", projectIndex: false, serviceIndex: false },
+  { state: "nested-demo", projectIndex: false, serviceIndex: false },
+  { state: "empty", projectIndex: true, serviceIndex: false },
+])(
+  "aligns $state static routes, metadata and sitemap publication",
+  async ({ state, projectIndex, serviceIndex }) => {
+    let blocks = cloneFixture(routeFixture.publishedBlocks) as ContentBlock[];
+    if (state === "empty") {
+      blocks = [];
+    } else if (state === "nested-demo") {
+      blocks.push({
+        type: "image-gallery",
+        images: [
+          {
+            src: "/media/visible-demo.jpg",
+            alt: "Visible nested demonstration",
+            width: 400,
+            height: 300,
+            status: "demo",
+          },
+          {
+            src: "/media/withheld.jpg",
+            alt: "Withheld nested draft",
+            width: 400,
+            height: 300,
+            status: "draft",
+          },
+        ],
+      });
+    } else if (state === "demo") {
+      blocks = cloneFixture(routeFixture.demoBlocks) as ContentBlock[];
+    }
+    const project = buildProject({
+      id: 81,
+      status:
+        state === "draft" ? "draft" : state === "demo" ? "demo" : "published",
+      content: blocks,
+    });
+    // Match the real loader boundary: drafts never reach route generation.
+    overrides.projects = getVisibleProjects([project]);
+    overrides.services = approvedServices();
+    const service = overrides.services.items[0];
+    service.article.content = cloneFixture(blocks);
+    service.article.approved = state !== "draft";
+    overrides.services.items = [
+      service,
+      {
+        ...cloneFixture(service),
+        id: "without-route",
+        href: undefined,
+      },
+    ];
+    const projectPaths = getProjectStaticPaths();
+    expect(projectPaths).toEqual(
+      state === "draft"
+        ? []
+        : [
+            {
+              params: { id: "81" },
+              props: { project },
+            },
+          ],
+    );
+    expect(getServiceStaticPaths()).toEqual([
+      {
+        params: { id: service.id },
+        props: { service },
+      },
+    ]);
+    const expectedPaths = [];
+    if (state !== "draft") {
+      const document = await renderDocument(ProjectDetail, {
+        props: projectPaths[0].props,
+        url: "https://request.test/projects/81/?tracking=1",
+        site: "https://production.test/",
+      });
+      expectCanonical(document, "/projects/81/");
+      expectMetadata(
+        document,
+        `${project.title} | ${site.logoText}`,
+        project.description,
+        !projectIndex,
+      );
+      expect(document.querySelector("main")).not.toHaveTextContent(
+        "Withheld draft article copy",
+      );
+      expect(
+        document.querySelector('img[alt="Withheld nested draft"]'),
+      ).toBeNull();
+      if (state === "nested-demo") {
+        expect(
+          document.querySelector('img[alt="Visible nested demonstration"]'),
+        ).toBeInTheDocument();
+      }
+      if (projectIndex) {
+        expectedPaths.push("/projects/81/");
+      }
+    }
+    const document = await renderDocument(ServicePage, {
+      props: getServiceStaticPaths()[0].props,
+      url: `https://request.test/services/${service.id}/?tracking=1`,
+      site: "https://production.test/",
+    });
+    expectCanonical(document, `/services/${service.id}/`);
+    expectMetadata(
+      document,
+      `${service.article.title} | ${site.logoText}`,
+      service.article.description,
+      !serviceIndex,
+    );
+    expect(document.querySelector(".service-demo") !== null).toBe(
+      !serviceIndex,
+    );
+    expect(
+      document.querySelector('img[alt="Withheld nested draft"]'),
+    ).toBeNull();
+    expect(document.querySelector("main")).not.toHaveTextContent(
+      "Withheld draft article copy",
+    );
+    if (state === "nested-demo") {
+      expect(
+        document.querySelector('img[alt="Visible nested demonstration"]'),
+      ).toBeInTheDocument();
+    }
+    if (serviceIndex) {
+      expectedPaths.push(service.href!);
+    }
+    // The endpoint captures paths at build-time module evaluation.
+    vi.resetModules();
+    const { GET } = await import("../../src/pages/sitemap.xml");
+    const response = await GET({
+      site: new URL("https://production.test/"),
+    } as APIContext);
+    const xml = await response.text();
+    const articleLocations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
+      .map((match) => new URL(match[1]).pathname)
+      .filter(
+        (path) =>
+          path.startsWith("/services/") || /^\/projects\/\d+\/$/.test(path),
+      );
+    expect(articleLocations).toEqual(expectedPaths);
+  },
+);
+
+it.each(["project", "service"] as const)(
+  "propagates %s ownership through rich article composition",
+  async (kind) => {
+    const category = kind === "project" ? "led-letters" : "svetovye-bukvy";
+    const blocks = cloneFixture(fixture) as ContentBlock[];
+    blocks.push({
+      type: "order-form",
+      id: "owner-form",
+      formId: "led-letters",
+      context: kind,
+      category,
+    });
+    let document: Document;
+    if (kind === "project") {
+      document = await renderDocument(ProjectDetail, {
+        props: {
+          project: buildProject({
+            id: 82,
+            status: "published",
+            category: "led-letters",
+            content: blocks,
+          }),
+        },
+      });
+    } else {
+      overrides.services = approvedServices();
+      const service = overrides.services.items.find(
+        (item) => item.id === category,
+      )!;
+      service.article.content = blocks;
+      document = await renderDocument(ServicePage, { props: { service } });
+    }
+    const article = document.querySelector("main article")!;
+    expect(
+      article.querySelector('a[href="https://example.test/guide"]'),
+    ).toBeInTheDocument();
+    expect(article.querySelector('a[href^="javascript:"]')).toBeNull();
+    expect(article.querySelector(".content-image img")).toHaveAttribute(
+      "src",
+      "/media/fixture.jpg",
+    );
+    expect(
+      article.querySelector('.content-media-error[role="status"]'),
+    ).toBeInTheDocument();
+    expect(article.querySelector(".video-native-fallback a")).toHaveAttribute(
+      "href",
+      "/media/fixture.mp4",
+    );
+    expect(article.querySelector(".video-transcript")).toHaveTextContent(
+      "Fixture transcript",
+    );
+    const form = article.querySelector("#owner-form")!;
+    expect(form.querySelector(`[name="${kind}Id"]`)).toHaveValue(
+      kind === "project" ? "82" : category,
+    );
+    expect(form.querySelector("[data-led-letters]")).toBeInTheDocument();
+    expect(
+      article.querySelector('a[href="/#order-inquiry"]'),
     ).toBeInTheDocument();
   },
 );
