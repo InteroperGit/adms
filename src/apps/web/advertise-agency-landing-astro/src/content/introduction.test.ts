@@ -1,7 +1,6 @@
-// Introduction parsing preserves optional media and supplies its demo default.
+// Preserve optional media and the demo default.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from
-  "../../tests/fixtures/content/site/config/introduction.json";
+import fixture from "@/data/content/config/introduction.json";
 import { introduction } from "./introduction";
 
 afterEach(() => {

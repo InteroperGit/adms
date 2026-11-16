@@ -1,7 +1,6 @@
-// The business-solutions export joins copy and preserves source item order.
+// Preserve joined business copy and item order.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from
-  "../../tests/fixtures/content/site/config/business-solutions.json";
+import fixture from "@/data/content/config/business-solutions.json";
 import { businessSolutions } from "./business-solutions";
 
 afterEach(() => {

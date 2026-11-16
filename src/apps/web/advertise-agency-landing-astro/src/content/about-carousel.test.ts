@@ -1,7 +1,6 @@
-// The carousel export preserves its authored IDs and applies schema defaults.
+// Preserve carousel IDs and schema defaults.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from
-  "../../tests/fixtures/content/site/config/about-carousel.json";
+import fixture from "@/data/content/config/about-carousel.json";
 import { aboutCarousel } from "./about-carousel";
 
 afterEach(() => {
