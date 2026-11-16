@@ -1,6 +1,6 @@
 # 176 - Add carousel indicator component tests
 
-**Status:** todo
+**Status:** fixed
 
 **Priority:** normal
 
@@ -44,21 +44,21 @@ Update these checkboxes during execution using the
   and multiple items.
 - [x] Run `pnpm test -- src/components/ui/CarouselDot.test.ts
   src/components/ui/CarouselDots.test.ts`.
-- [ ] Run `pnpm verify:component-tests` and review the complete diff.
-- [ ] Record changed files, verification commands/results and resolved review
+- [x] Run `pnpm verify:component-tests` and review the complete diff.
+- [x] Record changed files, verification commands/results and resolved review
   findings in this task's handoff; reconcile all checkboxes before completion.
 
 ## Acceptance
 
-- [ ] Manual buttons expose labels, aria-controls and index markers.
-- [ ] Passive indicators are noninteractive and have the expected aria-hidden
+- [x] Manual buttons expose labels, aria-controls and index markers.
+- [x] Passive indicators are noninteractive and have the expected aria-hidden
   state.
-- [ ] Group labels, slide IDs, item order and empty lists are covered.
-- [ ] Both source files have matching colocated suites with observable HTML
+- [x] Group labels, slide IDs, item order and empty lists are covered.
+- [x] Both source files have matching colocated suites with observable HTML
   assertions.
-- [ ] Manual dots are keyboard controls with stable labels and target IDs;
+- [x] Manual dots are keyboard controls with stable labels and target IDs;
   passive dots are not exposed as controls.
-- [ ] Focused tests and component colocation verification pass.
+- [x] Focused tests and component colocation verification pass.
 
 ## Dependencies
 
@@ -80,3 +80,11 @@ None. Keep runtime behavior unchanged.
   793 tests); `pnpm exec vitest run src/components/ui/CarouselDot.test.ts
   src/components/ui/CarouselDots.test.ts` passed (2 files, 5 tests); and
   `pnpm verify:component-tests` passed. No implementation edits were needed.
+- Review: Luna high worker reported no findings; changed-file style check
+  passed. The rendered labels asserted by the suite are `Показать: slide 3`
+  and `Выбор изображения`.
+- Commit: Luna high worker committed the verified task changes as
+  `478cabec` (`test: cover carousel indicator render contracts`). The staged
+  diff check passed; only the two suites and this task file were committed.
+- Worker IDs (Luna high): `/root/task176_impl`, `/root/task176_test`,
+  `/root/task176_review`, `/root/task176_commit`.
