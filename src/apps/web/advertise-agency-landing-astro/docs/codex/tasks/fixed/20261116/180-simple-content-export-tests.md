@@ -1,6 +1,6 @@
 # 180 - Test simple content exports
 
-**Status:** todo
+**Status:** fixed
 
 **Priority:** normal
 
@@ -78,6 +78,10 @@ Update these checkboxes during execution using the
 - Review: Luna high worker `/root/task180_review` reported no findings.
 - Worker IDs (Luna high): `/root/task180_impl`, `/root/task180_test`,
   `/root/task180_repair`, `/root/task180_retest`, `/root/task180_review`.
+- Commit: Luna high worker `/root/task180_commit` committed the verified task
+  changes as `1eb42924` (`test: cover simple content export contracts`). The
+  staged diff check passed; only the five suites and this task file were
+  committed.
 
 ## Acceptance
 
