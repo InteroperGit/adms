@@ -45,7 +45,7 @@ Respect sound notifications.
 - [x] Execute and accept [199](../fixed/20261116/199-integration-project-catalog-contracts.md).
 - [x] Execute and accept [200](../fixed/20261116/200-integration-articles-content-and-crawlers.md).
 - [x] Execute and accept [201](../fixed/20261116/201-integration-inquiry-and-fallback-contracts.md).
-- [ ] Execute and accept [202](../backlog/202-integration-measured-runtime-optimization.md).
+- [x] Execute and accept [202](../fixed/20261116/202-integration-measured-runtime-optimization.md).
 - [ ] Execute and accept [203](../backlog/203-integration-final-acceptance-and-handoff.md).
 - [ ] Before each child, move it backlog -> todo and update references.
 - [ ] Repair failures and resolve both checklists before advancing.

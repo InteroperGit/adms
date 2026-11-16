@@ -10,7 +10,7 @@
 
 **Parent:** [195](../todo/195-automate-integration-test-improvements.md)
 
-**Dependency:** [202](202-integration-measured-runtime-optimization.md)
+**Dependency:** [202](../fixed/20261116/202-integration-measured-runtime-optimization.md)
 
 ## Goal
 
