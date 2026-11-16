@@ -112,14 +112,39 @@ Desktop, OneDrive or another synchronized folder.
 Use `grilling` before task authoring to settle goal, scope, constraints,
 dependencies and acceptance, and `ponytail` for the smallest complete outcome.
 Use a standalone `## Scope` section followed immediately by a standalone
-`## Execution` section. Scope defines the work boundary and constraints.
-Execution records applicable skills, primary and worker participants,
-model/effort per distinct step or explicitly no delegation, and an actionable
-checklist for instructions, implementation, focused checks, acceptance and
-handoff/archive. Keep execution details out of Scope and do not merge the two
-sections. Do not add inapplicable checks or weaken gates. Follow
-[testing](testing.md) for required colocated unit tests. Run full verification
-only when the user explicitly requests it after implementation.
+`## Execution` section. Scope defines the work boundary and constraints. Write
+every Scope requirement as a Markdown bullet (`- `), with one distinct
+requirement or constraint per item. Do not bury requirements in prose
+paragraphs; wrap continuation lines under their bullet. Keep execution and
+acceptance checkboxes in their respective sections. Execution records applicable
+skills, primary and worker participants, model/effort per distinct step or
+explicitly no delegation, and an actionable checklist for instructions,
+implementation, focused checks, acceptance and handoff/archive. Keep execution
+details out of Scope and do not merge the two sections. Do not add inapplicable
+checks or weaken gates. Follow [testing](testing.md) for required colocated unit
+tests. Run full verification only when the user explicitly requests it after
+implementation.
+
+### Task header and role routing
+
+Immediately below every task title, before status, dates and body sections, list
+planned role assignments as Markdown bullets. Always include executor, tester
+and reviewer; add coordinator, security, accessibility or other roles only when
+the task needs them. Every role must state the model name, exact model ID and
+reasoning effort (`low`, `medium`, `high` or `xhigh`). Example:
+
+- **Executor:** Luna (`gpt-6-luna`), reasoning: `medium`.
+- **Tester:** Luna (`gpt-6-luna`), reasoning: `medium`.
+- **Reviewer:** Luna (`gpt-6-luna`), reasoning: `medium`.
+
+Choose each assignment using Working context and models above, according to that
+role's actual work. Do not assign a larger model solely for review. These are
+planned settings, not evidence of models already used or a mandate to spawn
+separate agents. One agent may perform several roles sequentially. Keep routing
+in Execution consistent with the header; explain conditional escalations there.
+Record actual models, effort, checks and any justified routing changes in
+Handoff. Update header assignments when the plan changes. Apply this header when
+creating or revising tasks, including backlog tasks.
 
 ### Task checklists
 
