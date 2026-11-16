@@ -19,7 +19,15 @@ import ProjectCatalogPagination
 import type { ContentBlock } from "../../src/types/content-blocks";
 import type { Project } from "../../src/types/project";
 import ProjectsIndex from "../../src/pages/projects/index.astro";
-import ProjectPage from "../../src/pages/projects/page/[page].astro";
+// prettier-ignore
+import {
+  getStaticPaths as getProjectStaticPaths,
+} from "../../src/pages/projects/[id].astro";
+import ProjectPage, {
+  getStaticPaths as getProjectPageStaticPaths,
+} from "../../src/pages/projects/page/[page].astro";
+import { projectCatalogSettings } from "../../src/content/project-catalog";
+import { getVisibleProjects } from "../../src/content/project-publication";
 import { site } from "../../src/content/site";
 import { render, renderDocument } from "../helpers/render";
 import { buildProject, cloneFixture } from "../helpers/fixtures";
@@ -117,6 +125,7 @@ function catalogProjects(count = 3): Project[] {
 const catalogRoutes = [
   { component: ProjectsIndex, path: "/projects/", page: 1 },
   { component: ProjectPage, path: "/projects/page/2/", page: 2 },
+  { component: ProjectPage, path: "/projects/page/3/", page: 3 },
 ];
 
 it.each(catalogRoutes)(
@@ -126,7 +135,7 @@ it.each(catalogRoutes)(
     const document = await renderDocument(component, {
       url:
         `https://request.test${path}?q=sign&category=sample` +
-        `${page === 2 ? "&page=99" : ""}#results`,
+        `${page > 1 ? "&page=99" : ""}#results`,
       params: page === 2 ? { page: "2" } : {},
       site: "https://production.test/",
     });
@@ -172,12 +181,38 @@ it.each(catalogRoutes)(
       "href",
       "/projects/page/3/?q=sign&category=sample#results",
     );
-    expect(
-      pagination.querySelector('a[aria-label="Next page"]'),
-    ).toHaveAttribute(
-      "href",
-      "/projects/page/" + `${current + 1}/?q=sign&category=sample#results`,
-    );
+    if (current === 1) {
+      expect(
+        pagination.querySelector('a[aria-label="Previous page"]'),
+      ).toHaveAttribute("aria-disabled", "true");
+    }
+    if (current === 2) {
+      expect(
+        pagination.querySelector('a[aria-label="Previous page"]'),
+      ).toHaveAttribute(
+        "href",
+        "/projects/?q=sign&category=sample#results",
+      );
+    }
+    if (current < 3) {
+      expect(
+        pagination.querySelector('a[aria-label="Next page"]'),
+      ).toHaveAttribute(
+        "href",
+        "/projects/page/" + `${current + 1}/?q=sign&category=sample#results`,
+      );
+    }
+    if (current === 3) {
+      expect(
+        pagination.querySelector('a[aria-label="Next page"]'),
+      ).toHaveAttribute("aria-disabled", "true");
+      expect(
+        pagination.querySelector('a[aria-label="Previous page"]'),
+      ).toHaveAttribute(
+        "href",
+        "/projects/page/2/?q=sign&category=sample#results",
+      );
+    }
   },
 );
 
@@ -201,6 +236,67 @@ it.each(catalogRoutes)(
     expect(document.querySelector('link[rel="canonical"]')).toBeNull();
   },
 );
+
+it("aligns public project routes, cards, count and categories", async () => {
+  const records = [
+    buildProject({
+      id: 10,
+      status: "published",
+      category: "sample",
+      content: cloneFixture(routeFixture.publishedBlocks) as ContentBlock[],
+    }),
+    buildProject({ id: 11, status: "demo", category: "other", content: [] }),
+    buildProject({
+      id: 12,
+      status: "published",
+      category: undefined,
+      content: cloneFixture(routeFixture.demoBlocks) as ContentBlock[],
+    }),
+    buildProject({ id: 13, status: "draft", category: "other" }),
+  ];
+  const publicProjects = getVisibleProjects(records);
+  overrides.projects = publicProjects;
+
+  const projectPaths = getProjectStaticPaths();
+  expect(projectPaths.map(({ params }) => params.id)).toEqual(
+    publicProjects.map(({ id }) => String(id)),
+  );
+  expect(projectPaths.map(({ props }) => props.project.status)).toEqual([
+    "published",
+    "demo",
+    "published",
+  ]);
+
+  const pagePaths = getProjectPageStaticPaths();
+  const pageCount = Math.ceil(
+    publicProjects.length / projectCatalogSettings.pageSize,
+  );
+  expect(pagePaths.map(({ params }) => params.page)).toEqual(
+    Array.from({ length: pageCount - 1 }, (_, index) => String(index + 2)),
+  );
+
+  const document = await renderDocument(ProjectsIndex, {
+    url: "https://request.test/projects/",
+    site: "https://production.test/",
+  });
+  const expectedPaths = publicProjects.map(({ id }) => `/projects/${id}/`);
+  expect(document.querySelectorAll("[data-project-card]")).toHaveLength(
+    publicProjects.length,
+  );
+  expect(document.querySelector("[data-catalog-count]")).toHaveTextContent(
+    String(publicProjects.length),
+  );
+  expect(
+    [...document.querySelectorAll("[data-project-link]")].map((link) =>
+      link.getAttribute("href"),
+    ),
+  ).toEqual(expectedPaths);
+  expect(
+    [...document.querySelectorAll("#project-category option")].map((option) =>
+      option.getAttribute("value"),
+    ),
+  ).toEqual(["", "sample", "other"]);
+});
 
 it.each([
   { query: "0", current: 1 },
