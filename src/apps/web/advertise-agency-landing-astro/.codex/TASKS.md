@@ -29,6 +29,10 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Task index
 
+- [188 - E2E refactor automation](../docs/codex/tasks/todo/188-automate-e2e-refactor.md):
+  active; orchestrates E2E baseline, organization, inquiry setup, measured
+  optimization and regression. Running child tasks 189-194 in order.
+
 - [172 - Action rail and persistent chat](../docs/codex/tasks/todo/172-action-rail-visibility-and-chat.md):
   implemented by Luna; await user decision before improvements.
 - [173](../docs/codex/tasks/backlog/173-enable-callback-delivery.md): backlog;
