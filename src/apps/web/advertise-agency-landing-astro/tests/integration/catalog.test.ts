@@ -189,10 +189,7 @@ it.each(catalogRoutes)(
     if (current === 2) {
       expect(
         pagination.querySelector('a[aria-label="Previous page"]'),
-      ).toHaveAttribute(
-        "href",
-        "/projects/?q=sign&category=sample#results",
-      );
+      ).toHaveAttribute("href", "/projects/?q=sign&category=sample#results");
     }
     if (current < 3) {
       expect(
