@@ -79,6 +79,9 @@ assertions but is otherwise independent.
   changed-file style check passed.
 - Worker IDs (Luna high): `/root/task178_impl`, `/root/task178_test`,
   `/root/task178_review`.
+- Final verification formatting repair: normalized
+  `ImageGalleryLightbox.test.ts`. Its suite passed in the 12-file/43-test
+  focused rerun and the full 136-file/867-test run; `pnpm check:style` passed.
 - Commit: Luna high worker `/root/task178_commit` committed the verified task
   changes as `cf5ee52bd194b4ad19874b7fa3f0a216718e5010`
   (`test: cover gallery renderer contracts`). The staged diff check passed;

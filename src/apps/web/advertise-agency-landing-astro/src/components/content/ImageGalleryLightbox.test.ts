@@ -32,9 +32,7 @@ it("renders labeled controls and thumbnail choices", async () => {
   const dialog = body.querySelector("[data-gallery-dialog]");
   const image = body.querySelector(".gallery-image");
   const thumbnails = [
-    ...body.querySelectorAll<HTMLButtonElement>(
-      ".gallery-lightbox-thumbnail",
-    ),
+    ...body.querySelectorAll<HTMLButtonElement>(".gallery-lightbox-thumbnail"),
   ];
 
   expect(dialog).toHaveAttribute("aria-label", "Галерея изображений");
@@ -57,10 +55,7 @@ it("renders labeled controls and thumbnail choices", async () => {
   expect(body.querySelector("[data-gallery-caption]")).toBeInTheDocument();
   expect(body.querySelector("[aria-live='polite']")).toBeInTheDocument();
   expect(thumbnails).toHaveLength(2);
-  expect(thumbnails[0]).toHaveAttribute(
-    "aria-label",
-    "Показать изображение 1",
-  );
+  expect(thumbnails[0]).toHaveAttribute("aria-label", "Показать изображение 1");
   expect(thumbnails[0]).toHaveAttribute("aria-current", "true");
   expect(thumbnails[1]).not.toHaveAttribute("aria-current");
   expect(thumbnails[0].querySelector("img")).toHaveAttribute(
