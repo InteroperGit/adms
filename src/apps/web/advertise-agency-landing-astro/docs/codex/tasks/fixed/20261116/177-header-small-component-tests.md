@@ -1,6 +1,6 @@
 # 177 - Test the small header components
 
-**Status:** todo
+**Status:** fixed
 
 **Priority:** normal
 
@@ -79,3 +79,7 @@ depend on task 173; callback delivery remains disabled.
   passed.
 - Worker IDs (Luna high): `/root/task177_impl`, `/root/task177_test`,
   `/root/task177_review`.
+- Commit: Luna high worker committed the verified task changes as
+  `187a33bd` (`test: cover compact header component contracts`). The staged
+  diff check passed; only the two suites and this task file were committed.
+- Commit worker: `/root/task177_commit` (Luna high).
