@@ -25,9 +25,9 @@ secrets and irreversible operations as explicit boundaries. Finish with
 [verification](verification.md); use [release](release.md) only when publishing
 or changing deployment behavior.
 
-Run only focused checks directly related to the change while implementing.
-Run the full verification gates in `verification.md` only when the user
-explicitly asks to run the tests or full verification after implementation.
+Run only focused checks directly related to the change while implementing. Run
+the full verification gates in `verification.md` only when the user explicitly
+asks to run the tests or full verification after implementation.
 
 When exact or version-sensitive information about a library or framework is
 needed, use the configured Context7 MCP tools. Resolve the library with
@@ -84,9 +84,16 @@ Desktop, OneDrive or another synchronized folder.
   execution begins. Number task names with leading zeros in execution order
   (`001-feature.md`); structured Plan-Todo-Learn records use
   `YYYYMMDD_HHMMSS_<type>.md` (e.g. `20231027_100000_plan.md`).
-- Move tasks into `docs/codex/tasks/fixed/yyyyMMdd/` only when the user
-  explicitly requests it. Preserve the numbered filename and use the completion
-  date in Europe/Moscow.
+- During automatic task execution, move each task from `backlog` to `todo`
+  before implementation starts. After all execution and acceptance checklist
+  items are resolved, required checks pass and review findings are addressed,
+  automatically move it to `docs/codex/tasks/fixed/yyyyMMdd/`. No separate
+  confirmation is required for these transitions. Keep unfinished or blocked
+  tasks in `todo` with their remaining work recorded.
+- Outside automatic execution, move tasks to `fixed` only when the user
+  explicitly requests it. On every move, preserve the numbered filename, update
+  the task status, relative links, plan references and `.codex/TASKS.md`. Use
+  the completion date in Europe/Moscow for the `fixed` directory.
 - Optional phases: `harness/build/phase-01-name.md`; context:
   `harness/context/`.
 - Auxiliary names: descriptive lowercase hyphenated slugs, `.md` for Markdown;
@@ -106,6 +113,26 @@ handoff/archive. Keep execution details out of Scope and do not merge the two
 sections. Do not add inapplicable checks or weaken gates. Follow
 [testing](testing.md) for required colocated unit tests. Run full verification
 only when the user explicitly requests it after implementation.
+
+### Task checklists
+
+Every task must contain Markdown checkboxes (`- [ ]`) for execution steps and
+observable acceptance criteria. Include implementation, applicable checks,
+review and handoff so the lists make completion verifiable. Keep distinct
+outcomes in separate items; name the affected files, behavior or check.
+
+Update the task file as work progresses: mark an item `- [x]` only after its
+work is complete and verified. Record supporting files, commands and results in
+the task handoff; for delegated work include the worker and stage. Running a
+command alone does not complete a passing-check item. Reopen checked items when
+later changes invalidate their evidence or a check fails again.
+
+Leave failed, blocked and unperformed items unchecked and record the reason and
+next action. For conditional items, record why they do not apply before marking
+them resolved. Never silently delete or weaken a criterion to close a task. A
+task is complete only when every execution and acceptance item is resolved,
+required checks pass and review findings are addressed. Reconcile both lists
+before reporting completion or moving the task to `fixed`.
 
 After verified acceptance record changes/results and update relative links and
 plan status. Explicitly deferred tasks keep filename, evidence and outstanding
