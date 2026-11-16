@@ -5,7 +5,6 @@ import { getByRole } from "@testing-library/dom";
 import Header from "../../src/components/Header.astro";
 import Homepage from "../../src/pages/index.astro";
 import CookieBanner from "../../src/components/CookieBanner.astro";
-import fixture from "../fixtures/content/content-blocks.json";
 import type { ServicesContent } from "../../src/types/services";
 import type { LegalDocument } from "../../src/types/legal";
 import Layout from "../../src/layouts/Layout.astro";
@@ -19,7 +18,7 @@ import { privacyPolicy, termsOfUse } from "../../src/content/legal";
 import { render, renderDocument } from "../helpers/render";
 import routeFixture from "../fixtures/content/page-routes.json";
 import {
-  expectPage,
+  expectPage as expectDocumentContract,
   expectMetadata,
   expectCanonical,
 } from "../helpers/page-contract";
@@ -76,6 +75,71 @@ beforeEach(() => {
   overrides.hideOffers = false;
 });
 
+function expectPage(document: Document) {
+  expectDocumentContract(document);
+
+  const header = document.querySelector("header[data-auto-hide-header]");
+  const footer = document.querySelector("footer.site-footer");
+  const settingsTrigger = header?.querySelector("[data-settings-trigger]");
+  const settingsPanel = header?.querySelector("[data-settings-panel]");
+  const menuOpener = header?.querySelector("#mobile-menu-open");
+  const mobileMenu = header?.querySelector("#mobile-menu");
+  const actionRail = document.querySelector("[data-action-rail-host]");
+  const cookieBanner = document.querySelector("#cookie-banner");
+
+  expect(header).toBeInTheDocument();
+  expect(footer).toBeInTheDocument();
+  expect(settingsTrigger).toHaveAttribute(
+    "aria-controls",
+    "theme-settings-panel",
+  );
+  expect(settingsPanel).toHaveAttribute("id", "theme-settings-panel");
+  expect(settingsPanel).toHaveAttribute("hidden");
+  expect(menuOpener).toHaveAttribute("aria-controls", "mobile-menu");
+  expect(mobileMenu).toHaveAttribute("id", "mobile-menu");
+  expect(actionRail).toBeInTheDocument();
+  expect(actionRail?.querySelector("#quick-actions")).toBeInTheDocument();
+  expect(
+    actionRail?.querySelector("[data-action-rail-collapse]"),
+  ).toHaveAttribute("aria-controls", "quick-actions");
+  expect(
+    actionRail?.querySelector("[data-action-rail-restore]"),
+  ).toHaveAttribute("aria-controls", "quick-actions");
+  expect(cookieBanner).toHaveAttribute("hidden");
+  expect(cookieBanner?.querySelectorAll("[data-cookie-choice]")).toHaveLength(
+    2,
+  );
+  expect(
+    [...(footer?.querySelectorAll("nav a") ?? [])].map((link) =>
+      link.getAttribute("href"),
+    ),
+  ).toEqual(site.legal.map((item) => item.href));
+
+  const ids = [...document.querySelectorAll("[id]")].map(
+    (element) => element.id,
+  );
+  expect(new Set(ids).size).toBe(ids.length);
+}
+
+function expectHomeFragmentsResolve(document: Document) {
+  const documentUrl = new URL(document.URL);
+  const links = [...document.querySelectorAll<HTMLAnchorElement>("a[href]")];
+
+  for (const link of links) {
+    const target = new URL(link.href);
+    if (
+      target.origin !== documentUrl.origin ||
+      target.pathname !== documentUrl.pathname ||
+      !target.hash
+    ) {
+      continue;
+    }
+
+    const id = decodeURIComponent(target.hash.slice(1));
+    expect(document.getElementById(id)).toBeInTheDocument();
+  }
+}
+
 it("composes header navigation and settings", async () => {
   const body = await render(Header);
 
@@ -91,6 +155,11 @@ it("composes header navigation and settings", async () => {
     getByRole(body, "navigation", { name: /Основная/ }),
   ).toBeInTheDocument();
   expect(body.querySelector("[data-theme-settings]")).toBeInTheDocument();
+  expect(body.querySelector("[data-settings-trigger]")).toHaveAttribute(
+    "aria-controls",
+    "theme-settings-panel",
+  );
+  expect(body.querySelector("[data-settings-panel]")).toHaveAttribute("hidden");
 });
 
 it("composes homepage sections in editorial order", async () => {
@@ -116,6 +185,34 @@ it("composes homepage sections in editorial order", async () => {
   expect(body.querySelector("#faq")).toBeNull();
   expect(body.querySelector("h1")).toBeInTheDocument();
   expect(body.querySelector("[data-inquiry]")).toBeInTheDocument();
+  expect(new Set(sections).size).toBe(sections.length);
+});
+
+it("omits optional homepage sections when their content is empty", async () => {
+  overrides.hideOffers = true;
+  overrides.services = { ...services, items: [] };
+  const document = await renderDocument(Homepage, {
+    url: "https://request.test/",
+    site: "https://production.test/",
+  });
+  expectPage(document);
+  expectHomeFragmentsResolve(document);
+  const sections = [...document.querySelectorAll("main section[id]")].map(
+    (section) => section.id,
+  );
+
+  expect(sections).toEqual([
+    "introduction",
+    "about",
+    "projects",
+    "ordering-process",
+    "production-and-guarantees",
+    "reviews",
+    "business-solutions",
+    "contacts",
+    "order-inquiry",
+  ]);
+  expect(new Set(sections).size).toBe(sections.length);
 });
 
 it("composes cookie choices and legal links", async () => {
@@ -125,6 +222,15 @@ it("composes cookie choices and legal links", async () => {
   expect(body.querySelectorAll("[data-cookie-choice]")).toHaveLength(2);
   expect(body.querySelector('a[href="/privacy-policy"]')).toBeInTheDocument();
   expect(body.querySelector('a[href="/terms-of-use"]')).toBeInTheDocument();
+  expect(body.querySelector("#cookie-banner")).toHaveAttribute("hidden");
+  expect(body.querySelector('[data-cookie-choice="declined"]')).toHaveAttribute(
+    "type",
+    "button",
+  );
+  expect(body.querySelector('[data-cookie-choice="accepted"]')).toHaveAttribute(
+    "type",
+    "button",
+  );
 });
 
 it("renders layout defaults without a production URL", async () => {
@@ -187,6 +293,11 @@ it("renders legal layout dates, lists and ordered sections", async () => {
   expect(
     [...document.querySelectorAll("main li")].map((node) => node.textContent),
   ).toEqual(["First condition", "Second condition"]);
+  expect(
+    [...document.querySelectorAll("main section > p")].map(
+      (node) => node.textContent,
+    ),
+  ).toEqual(["First legal paragraph", "Second legal paragraph"]);
   expect(document.querySelector("[data-legal-back]")).toBeNull();
 });
 
@@ -240,7 +351,35 @@ it.each(legalRoutes)(
     expect(document.querySelectorAll("main h2")).toHaveLength(
       content.sections.length,
     );
-    expect(Boolean(document.querySelector("[data-legal-back]"))).toBe(back);
+    expect(
+      [...document.querySelectorAll("main article > section > h2")].map(
+        (heading) => heading.textContent,
+      ),
+    ).toEqual(content.sections.map((section) => section.heading));
+    expect(
+      [...document.querySelectorAll("main article > section > p")].map(
+        (paragraph) => paragraph.textContent,
+      ),
+    ).toEqual(
+      content.sections
+        .filter((section) => section.content)
+        .map((section) => section.content),
+    );
+    if (content.effectiveDate) {
+      expect(document.querySelector(".legal-date")).toHaveTextContent(
+        content.effectiveDate,
+      );
+    } else {
+      expect(document.querySelector(".legal-date")).toBeNull();
+    }
+    if (back) {
+      expect(document.querySelector("[data-legal-back]")).toHaveAttribute(
+        "href",
+        "/",
+      );
+    } else {
+      expect(document.querySelector("[data-legal-back]")).toBeNull();
+    }
   },
 );
 
@@ -275,6 +414,7 @@ it.each([false, true])(
     expectPage(document);
     expectMetadata(document, site.logoText, site.description);
     expectCanonical(document, "/");
+    expectHomeFragmentsResolve(document);
     const sections = [...document.querySelectorAll("main section[id]")].map(
       (section) => section.id,
     );
@@ -324,6 +464,15 @@ it.each([false, true])(
     );
     expect(document.querySelector('main a[href="/"]')).toHaveTextContent(
       "На главную",
+    );
+    const recovery = document.querySelector(".not-found-page");
+    expect(recovery).toHaveAttribute("aria-labelledby", "not-found-title");
+    expect(
+      document.getElementById(recovery!.getAttribute("aria-labelledby")!),
+    ).toBe(document.querySelector("main h1"));
+    expect(document.querySelector(".not-found-status")).toHaveAttribute(
+      "aria-hidden",
+      "true",
     );
     const links = [...document.querySelectorAll(".not-found-links a")].map(
       (link) => link.getAttribute("href"),
