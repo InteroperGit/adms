@@ -1,6 +1,6 @@
 # 179 - Test the image gallery browser module
 
-**Status:** todo
+**Status:** fixed
 
 **Priority:** high
 
@@ -96,3 +96,7 @@ independent of full E2E gallery coverage.
   confirmed cleanup coverage; changed-file style check passed.
 - Worker IDs (Luna high): `/root/task179_impl`, `/root/task179_test`,
   `/root/task179_review`.
+- Commit: Luna high worker `/root/task179_commit` committed the verified task
+  changes as `09065577bc9d4384e73fcb347b51f49c3438e458`
+  (`test: cover image gallery runtime`). The staged diff check passed; only
+  the test suite and task file were committed.
