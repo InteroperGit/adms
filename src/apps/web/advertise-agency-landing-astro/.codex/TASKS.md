@@ -29,6 +29,11 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Task index
 
+- [195 - Integration test automation](../docs/codex/tasks/fixed/20261116/195-automate-integration-test-improvements.md):
+  complete; children 196-203 accepted and committed separately. Integration:
+  73/73 passed; focused static gates passed. Timing and full-verification
+  limits are recorded in parent 195. Remaining roles used Luna High.
+
 - [188 - E2E refactor automation](../docs/codex/tasks/fixed/20261116/188-automate-e2e-refactor.md):
   complete; all E2E refactor tasks 189-194 passed acceptance. Final run:
   309/309 across Chromium, Firefox and WebKit; baseline contracts preserved.

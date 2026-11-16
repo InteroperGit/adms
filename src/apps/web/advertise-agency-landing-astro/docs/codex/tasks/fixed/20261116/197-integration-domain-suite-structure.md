@@ -8,7 +8,7 @@
 
 **Created:** 2026-11-16
 
-**Parent:** [195](../../todo/195-automate-integration-test-improvements.md)
+**Parent:** [195](195-automate-integration-test-improvements.md)
 
 **Dependency:** [196](196-integration-baseline-and-coverage-map.md)
 

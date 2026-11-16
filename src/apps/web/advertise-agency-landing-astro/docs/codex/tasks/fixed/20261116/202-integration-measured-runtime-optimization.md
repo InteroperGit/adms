@@ -8,9 +8,9 @@
 
 **Created:** 2026-11-16
 
-**Parent:** [195](../../todo/195-automate-integration-test-improvements.md)
+**Parent:** [195](195-automate-integration-test-improvements.md)
 
-**Dependency:** [201](../fixed/20261116/201-integration-inquiry-and-fallback-contracts.md)
+**Dependency:** [201](201-integration-inquiry-and-fallback-contracts.md)
 
 ## Goal
 

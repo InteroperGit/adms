@@ -8,9 +8,9 @@
 
 **Created:** 2026-11-16
 
-**Parent:** [195](../../todo/195-automate-integration-test-improvements.md)
+**Parent:** [195](195-automate-integration-test-improvements.md)
 
-**Dependency:** [200](../fixed/20261116/200-integration-articles-content-and-crawlers.md)
+**Dependency:** [200](200-integration-articles-content-and-crawlers.md)
 
 ## Goal
 

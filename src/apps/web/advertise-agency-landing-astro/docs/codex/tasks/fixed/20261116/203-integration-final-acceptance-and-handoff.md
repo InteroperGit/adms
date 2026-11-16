@@ -8,9 +8,9 @@
 
 **Created:** 2026-11-16
 
-**Parent:** [195](../../todo/195-automate-integration-test-improvements.md)
+**Parent:** [195](195-automate-integration-test-improvements.md)
 
-**Dependency:** [202](../fixed/20261116/202-integration-measured-runtime-optimization.md)
+**Dependency:** [202](202-integration-measured-runtime-optimization.md)
 
 ## Goal
 
