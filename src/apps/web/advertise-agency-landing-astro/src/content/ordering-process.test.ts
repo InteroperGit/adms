@@ -1,7 +1,6 @@
-// Ordering-process export preserves editorial steps without approval claims.
+// Preserve editorial steps without approval claims.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from
-  "../../tests/fixtures/content/site/config/ordering-process.json";
+import fixture from "@/data/content/config/ordering-process.json";
 import { orderingProcess } from "./ordering-process";
 
 afterEach(() => {

@@ -1,7 +1,6 @@
-// Inquiry export validation stays separate from browser submission behavior.
+// Keep export validation separate from browser submission.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from
-  "../../tests/fixtures/content/site/config/order-inquiry.json";
+import fixture from "@/data/content/config/order-inquiry.json";
 import { orderInquiry } from "./order-inquiry";
 
 afterEach(() => {

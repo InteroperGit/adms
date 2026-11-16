@@ -109,3 +109,7 @@ Task 180 is a useful test pattern; no runtime dependency is introduced.
 - Worker IDs (Luna high): `/root/task182_impl`, `/root/task182_test`,
   `/root/task182_repair`, `/root/task182_retest`, `/root/task182_review`.
 - Commit worker: `/root/task182_commit` (Luna high).
+- Final verification formatting repair normalized the order-inquiry,
+  ordering-process, production-and-guarantees and reviews suites. All four
+  passed in the 12-file/43-test focused rerun and full 136-file/867-test run;
+  style passed.

@@ -9,9 +9,7 @@ afterEach(() => {
 });
 
 it("exports review IDs and authored copy in source order", () => {
-  expect(reviews.map(({ id }) => id)).toEqual(
-    fixture.map(({ id }) => id),
-  );
+  expect(reviews.map(({ id }) => id)).toEqual(fixture.map(({ id }) => id));
   expect(reviews[0]).toEqual(fixture[0]);
 });
 

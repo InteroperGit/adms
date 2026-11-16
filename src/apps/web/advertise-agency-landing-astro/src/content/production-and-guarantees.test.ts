@@ -1,13 +1,10 @@
-// This export preserves draft guidance; publication is checked by its caller.
+// Preserve draft guidance; its caller checks publication.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from
-  "../../tests/fixtures/content/site/config/production-and-guarantees.json";
+import fixture from "@/data/content/config/production-and-guarantees.json";
 import { productionAndGuarantees } from "./production-and-guarantees";
 
 afterEach(() => {
-  vi.doUnmock(
-    "@/data/content/config/production-and-guarantees.json",
-  );
+  vi.doUnmock("@/data/content/config/production-and-guarantees.json");
   vi.resetModules();
 });
 
@@ -34,10 +31,9 @@ it("rejects a warranty missing required content", async () => {
     return missingCoverage;
   });
   vi.resetModules();
-  vi.doMock(
-    "@/data/content/config/production-and-guarantees.json",
-    () => ({ default: { ...fixture, warrantyTerms } }),
-  );
+  vi.doMock("@/data/content/config/production-and-guarantees.json", () => ({
+    default: { ...fixture, warrantyTerms },
+  }));
 
   await expect(import("./production-and-guarantees")).rejects.toThrow(
     "Invalid content in data/content/config/production-and-guarantees.json",
@@ -49,10 +45,9 @@ it("rejects an unsupported warranty source type", async () => {
     index === 0 ? { ...term, sourceType: "unknown" } : term,
   );
   vi.resetModules();
-  vi.doMock(
-    "@/data/content/config/production-and-guarantees.json",
-    () => ({ default: { ...fixture, warrantyTerms } }),
-  );
+  vi.doMock("@/data/content/config/production-and-guarantees.json", () => ({
+    default: { ...fixture, warrantyTerms },
+  }));
 
   await expect(import("./production-and-guarantees")).rejects.toThrow(
     "Invalid content in data/content/config/production-and-guarantees.json",
