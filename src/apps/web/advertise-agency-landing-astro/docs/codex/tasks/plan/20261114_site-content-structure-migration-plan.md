@@ -1,6 +1,10 @@
 # Миграция структуры контента сайта
 
-Date: 2026-11-14. Status: planned.
+Date: 2026-11-14. Updated: 2026-11-17. Status: in progress; baseline complete.
+
+Мастер автоматической серии:
+[204](../todo/204-automate-content-migration-161-170.md).
+Создание мастера не запускает миграцию.
 
 ## Цель
 
@@ -30,9 +34,10 @@ data/templates/
     lists/
 ```
 
-Корень тестового пакета — `tests/fixtures/content/site/`.
-Он зеркалит runtime: новые JSON лежат под `site/site/{settings,sections,
-pages,lists}/` относительно `tests/fixtures/content/`.
+Site fixtures — `tests/fixtures/content/site/`. Новые JSON лежат прямо
+в его `settings/`, `sections/`, `pages/` и `lists/`, без вложенного site.
+Runtime `site/*` соответствует fixtures `site/*`, а переходный `config/*` —
+fixtures `site/config/*` относительно `tests/fixtures/content/`.
 Article fixtures остаются в
 `tests/fixtures/content/articles/`.
 
@@ -76,9 +81,12 @@ configuration, даже если внутри есть `items` (например
 
 ## Последовательность задач
 
-Подготовлены задачи в backlog; выполнение ещё не начато.
+Серия запущена через задачу
+[204](../todo/204-automate-content-migration-161-170.md).
+Задача 161 принята; следующий шаг — tooling в задаче 162.
 
-- [161 — Исходное состояние миграции](../backlog/161-content-migration-baseline.md) — MIG-000.
+- [161 — Исходное состояние миграции](../fixed/20261117/161-content-migration-baseline.md)
+  — MIG-000.
 - [162 — Подготовка tooling и полных шаблонов](../backlog/162-content-migration-tooling.md) — MIG-001.
 - [163 — Перенос общих настроек](../backlog/163-content-migration-settings.md) — MIG-002.
 - [164 — Перенос базовых секций](../backlog/164-content-migration-primary-sections.md) — MIG-003.
@@ -118,8 +126,11 @@ configuration, даже если внутри есть `items` (например
 - обновить `scripts/verify-content-boundaries.mjs`, чтобы на переходных шагах
   принимать только `config/**` и `site/**`, но сохранять denylist, уникальность
   outputs, количество записей и требования к starter articles;
-- обновить `scripts/prepare-ci-content.mjs`, чтобы CI копировал весь
-  `tests/fixtures/content/site/` в `data/content/`, а не только `config/`;
+- обновить CI/E2E provisioning: manifest output `config/*` читать из
+  `tests/fixtures/content/site/config/*`, а `site/*` из
+  `tests/fixtures/content/site/*`; записывать по runtime output без изменений;
+- не копировать весь fixture root: scenario/type-contract fixtures
+  не должны попадать в runtime; отказывать при непустом destination;
 - добавить безопасный action-rail template и manifest entry;
 - подготовить aliases для обоих путей, используя только synthetic fixtures;
 - изменить fixture `scripts/test-content-catalog.mjs` на вложенный пример
@@ -136,7 +147,8 @@ configuration, даже если внутри есть `items` (например
 ### MIG-002 — settings
 
 **Перенести:** `site.json`, `icons.json` в `site/settings/` одновременно в
-`data/content/`, `data/templates/` и `tests/fixtures/content/site/`.
+`data/content/` и `data/templates/`; в fixtures конечные файлы лежат
+в `tests/fixtures/content/site/settings/`.
 
 **Обновить:** `src/content/site.ts`, `src/content/icons.ts`,
 `vitest.config.ts`, `tsconfig.type-contracts.json`, прямые mocks/imports в
@@ -247,7 +259,9 @@ E2E for catalog navigation and inquiry validation.
   `articles/**`;
 - повторить inventory/hash audit и убедиться, что содержимое JSON не изменено.
 
-**Приёмка:** полный набор из `docs/codex/rules/verification.md` в указанном
+**Приёмка:** focused checks, boundary/content audit и runtime build.
+Полный verification только по явному запросу пользователя после реализации;
+без него записать ограничение. При таком запросе выполнить набор из `docs/codex/rules/verification.md` в указанном
 порядке, включая `pnpm format:check`, `pnpm lint`, `pnpm verify:boundaries`,
 `pnpm verify:content`, `pnpm check`, `pnpm test:types`,
 `pnpm verify:component-tests`, `pnpm test`, coverage gates, `pnpm build`,
@@ -284,6 +298,7 @@ E2E for catalog navigation and inquiry validation.
   contracts, publication tooling и финальные gates.
 - Перед каждым переносом: проверить зависимости, сделать dry-run inventory,
   затем выполнить write-операцию только после успешной проверки источников.
+- После каждой принятой задачи: отдельный локальный коммит до следующей.
 - После каждой задачи: `git diff --check`, просмотр полного diff, `rg` старых
   путей в изменённых файлах, focused checks из задачи и как минимум `pnpm
   build`. Не считать E2E или build заменой `verify:content`/`verify:boundaries`.
