@@ -100,3 +100,6 @@ independent of full E2E gallery coverage.
   changes as `09065577bc9d4384e73fcb347b51f49c3438e458`
   (`test: cover image gallery runtime`). The staged diff check passed; only
   the test suite and task file were committed.
+- Final verification formatting repair normalized `image-gallery.test.ts`.
+  The suite passed in the 12-file/43-test focused rerun and the full
+  136-file/867-test run; `pnpm check:style` passed.

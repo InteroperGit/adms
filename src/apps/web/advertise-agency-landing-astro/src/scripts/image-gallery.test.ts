@@ -25,8 +25,10 @@ function renderGallery(imageCount = 3, withDialog = true): HTMLElement {
         <figcaption data-gallery-caption></figcaption>
         <button data-gallery-next>Next</button>
         <p data-gallery-announcement></p>
-        ${Array.from({ length: imageCount }, (_, index) =>
-          `<button data-gallery-lightbox-thumb="${index}"></button>`,
+        ${Array.from(
+          { length: imageCount },
+          (_, index) =>
+            `<button data-gallery-lightbox-thumb="${index}"></button>`,
         ).join("")}
       </dialog>`,
     );
@@ -125,7 +127,7 @@ describe("initializeImageGalleries", () => {
       "aria-current",
     );
     expect(
-      gallery.querySelectorAll('[data-gallery-lightbox-thumb][aria-current]'),
+      gallery.querySelectorAll("[data-gallery-lightbox-thumb][aria-current]"),
     ).toHaveLength(1);
 
     if (index === 1) {
@@ -206,11 +208,14 @@ describe("initializeImageGalleries", () => {
     const gallery = renderGallery(1);
     initializeImageGalleries();
 
-    expect(
-      gallery.querySelector("[data-gallery-previous]"),
-    ).toHaveProperty("hidden", true);
-    expect(gallery.querySelector("[data-gallery-next]"))
-      .toHaveProperty("hidden", true);
+    expect(gallery.querySelector("[data-gallery-previous]")).toHaveProperty(
+      "hidden",
+      true,
+    );
+    expect(gallery.querySelector("[data-gallery-next]")).toHaveProperty(
+      "hidden",
+      true,
+    );
   });
 
   it("wraps forward and backward Tab at the dialog boundaries", () => {
