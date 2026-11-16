@@ -1,6 +1,6 @@
 # 181 - Test content copy exports A
 
-**Status:** todo
+**Status:** fixed
 
 **Priority:** normal
 
@@ -88,3 +88,7 @@ dependency is required.
 - Review: Luna high worker `/root/task181_review` reported no findings.
 - Worker IDs (Luna high): `/root/task181_impl`, `/root/task181_test`,
   `/root/task181_review`.
+- Commit: Luna high worker `/root/task181_commit` committed the verified task
+  changes as `a374dfc4` (`test: cover content copy export contracts`). The
+  staged diff check passed; only the five suites and this task file were
+  committed.
