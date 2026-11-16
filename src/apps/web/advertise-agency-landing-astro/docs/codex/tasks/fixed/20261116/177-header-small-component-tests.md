@@ -83,3 +83,6 @@ depend on task 173; callback delivery remains disabled.
   `187a33bd` (`test: cover compact header component contracts`). The staged
   diff check passed; only the two suites and this task file were committed.
 - Commit worker: `/root/task177_commit` (Luna high).
+- Final verification formatting repair: normalized `MobileHeaderContacts.test.ts`.
+  Its suite passed in the 12-file/43-test focused rerun and the full 136-file/
+  867-test run; `pnpm check:style` passed.

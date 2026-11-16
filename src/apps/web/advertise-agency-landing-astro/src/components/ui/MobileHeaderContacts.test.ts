@@ -49,14 +49,17 @@ it.each([
   expect(addressLink).toHaveAttribute("href", "/#contacts");
   expect(addressLink).toHaveAccessibleName();
   expect(addressLink).toHaveAttribute("title", fixture.address);
-  expect(addressLink?.querySelector(".mobile-header-address-city"))
-    .toHaveTextContent(fixture.city);
+  expect(
+    addressLink?.querySelector(".mobile-header-address-city"),
+  ).toHaveTextContent(fixture.city);
 
   if (fixture.details) {
-    expect(addressLink?.querySelector(".mobile-header-address-details"))
-      .toHaveTextContent(fixture.details);
+    expect(
+      addressLink?.querySelector(".mobile-header-address-details"),
+    ).toHaveTextContent(fixture.details);
   } else {
-    expect(addressLink?.querySelector(".mobile-header-address-details"))
-      .toBeNull();
+    expect(
+      addressLink?.querySelector(".mobile-header-address-details"),
+    ).toBeNull();
   }
 });
