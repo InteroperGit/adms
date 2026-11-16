@@ -89,7 +89,7 @@ test("mobile menu shows themed links without contact action buttons", async ({
   await expect(firstLink).toHaveCSS("color", "rgb(237, 242, 247)");
 });
 
-test("desktop settings expand theme choices without a heading", async ({
+test("desktop settings show the heading above expanded theme choices", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -98,11 +98,18 @@ test("desktop settings expand theme choices without a heading", async ({
   await page.locator("[data-settings-trigger]").click();
 
   const panel = page.locator("[data-settings-panel]");
-  await expect(panel.locator(".theme-label")).toBeHidden();
+  const heading = panel.locator(".theme-label");
+  await expect(heading).toBeVisible();
+  const headingBounds = await heading.boundingBox();
+  const options = panel.locator(".theme-option");
+  const firstOptionBounds = await options.first().boundingBox();
+  expect(headingBounds!.y + headingBounds!.height).toBeLessThan(
+    firstOptionBounds!.y,
+  );
   const widths = await panel
     .locator(".theme-option")
-    .evaluateAll((options) =>
-      options.map((option) => Math.round(option.getBoundingClientRect().width)),
+    .evaluateAll((items) =>
+      items.map((item) => Math.round(item.getBoundingClientRect().width)),
     );
   expect(new Set(widths).size).toBe(1);
   expect(widths[0]).toBeGreaterThan(120);

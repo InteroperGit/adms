@@ -201,17 +201,16 @@ const themes = [
   @media (min-width: 48rem) {
     /* Keep all options within the viewport while providing room to expand. */
     fieldset {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 0.5rem;
       width: min(28rem, calc(100vw - 64px));
     }
 
-    /* Hide redundant context while the labelled choices remain visible. */
-    .theme-label {
-      display: none;
-    }
-
-    /* Let the theme row occupy the available fieldset width. */
+    /* Let the theme row use the full width below its visible heading. */
     .theme-options {
       flex: 1;
+      width: 100%;
     }
 
     /* Give each theme choice an equal share of the desktop row. */
