@@ -1,6 +1,6 @@
 // Browser contracts for inquiry delivery failure, retry and fallback.
-import { type Page } from "@playwright/test";
 import { expect, test } from "../fixtures";
+import { fillInquiry, setMainInquiryEnabled } from "../support/inquiry";
 
 type FailureResponse =
   | { name: string; json: Record<string, unknown> }
@@ -12,22 +12,6 @@ const failureResponses: FailureResponse[] = [
   { name: "empty receipt", json: { accepted: true, receiptId: "" } },
   { name: "invalid JSON", body: "{invalid-json" },
 ];
-
-function disableInquiry(html: string): string {
-  const marker = /(<form\b[^>]*\bdata-inquiry\b[^>]*\bdata-enabled=")true(")/;
-  return html.replace(marker, "$1false$2");
-}
-
-async function fillInquiry(
-  page: Page,
-  message = "Synthetic inquiry",
-): Promise<void> {
-  const form = page.locator("#order-inquiry form");
-  await form.locator('[name="name"]').fill("Synthetic visitor");
-  await form.locator('[name="email"]').fill("visitor@example.test");
-  await form.locator('[name="message"]').fill(message);
-  await form.locator('[name="consent"]').check();
-}
 
 test("inquiry retries errors and resets after receipt", async ({ page }) => {
   const requests: Record<string, string>[] = [];
@@ -54,21 +38,14 @@ test("inquiry retries errors and resets after receipt", async ({ page }) => {
   await expect(form.locator('[role="status"]')).toHaveText("TEST_SUCCESS");
   await expect(form.locator('[role="status"]')).toBeFocused();
   await expect(form.locator('[name="name"]')).toHaveValue("");
-  expect(requests).toHaveLength(2);
+  await expect.poll(() => requests.length).toBe(2);
   expect(requests[0].requestId).toBe(requests[1].requestId);
 });
 
 test("unavailable delivery stays disabled and explains fallback", async ({
   page,
 }) => {
-  await page.route("**/", async (route) => {
-    const response = await route.fetch();
-    const html = await response.text();
-    await route.fulfill({
-      response,
-      body: disableInquiry(html),
-    });
-  });
+  await setMainInquiryEnabled(page, false);
   await page.goto("/");
   const form = page.locator("#order-inquiry form");
   await expect(form.locator('[type="submit"]')).toBeDisabled();
@@ -164,13 +141,13 @@ for (const response of failureResponses) {
 
     await submit.click();
     await expect(form.locator('[role="status"]')).toHaveText("TEST_FAILURE");
-    expect(requests).toHaveLength(2);
+    await expect.poll(() => requests.length).toBe(2);
     expect(requests[0].requestId).toBe(requests[1].requestId);
 
     await form.locator('[name="message"]').fill("Changed inquiry");
     await submit.click();
     await expect(form.locator('[role="status"]')).toHaveText("TEST_FAILURE");
-    expect(requests).toHaveLength(3);
+    await expect.poll(() => requests.length).toBe(3);
     expect(requests[2].requestId).not.toBe(requests[0].requestId);
   });
 }
@@ -193,7 +170,7 @@ test("successful delivery assigns a new ID to a new inquiry", async ({
   await form.locator('[type="submit"]').click();
   await expect(form.locator('[role="status"]')).toHaveText("TEST_SUCCESS");
   await expect(form.locator('[role="status"]')).toBeFocused();
-  await fillInquiry(page, "Second inquiry");
+  await fillInquiry(page, { message: "Second inquiry" });
   await form.locator('[type="submit"]').click();
   await expect(form.locator('[role="status"]')).toHaveText("TEST_SUCCESS");
   await expect(form.locator('[role="status"]')).toBeFocused();

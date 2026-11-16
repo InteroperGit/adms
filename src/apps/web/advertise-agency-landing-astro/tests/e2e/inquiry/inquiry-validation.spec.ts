@@ -1,6 +1,7 @@
 // Browser contracts for accessible inquiry validation and correction.
 import { type Page } from "@playwright/test";
 import { expect, test } from "../fixtures";
+import { fillInquiry, setMainInquiryEnabled } from "../support/inquiry";
 
 async function setupInquiry(page: Page): Promise<Array<unknown>> {
   const requests: Array<unknown> = [];
@@ -11,14 +12,7 @@ async function setupInquiry(page: Page): Promise<Array<unknown>> {
       json: { accepted: true, receiptId: "validation-receipt" },
     });
   });
-  await page.route("**/", async (route) => {
-    const response = await route.fetch();
-    const html = await response.text();
-    await route.fulfill({
-      response,
-      body: html.replace('data-enabled="false"', 'data-enabled="true"'),
-    });
-  });
+  await setMainInquiryEnabled(page, true);
   return requests;
 }
 
@@ -44,12 +38,9 @@ test("empty inquiry focuses the first error without sending", async ({
 test("invalid email blocks a partially completed inquiry", async ({ page }) => {
   const requests = await setupInquiry(page);
   await page.goto("/");
+  await fillInquiry(page, { email: "wrong" });
   const form = page.locator("#order-inquiry form");
-  await form.locator('[name="name"]').fill("Synthetic visitor");
   const email = form.locator('[name="email"]');
-  await email.fill("wrong");
-  await form.locator('[name="message"]').fill("Synthetic inquiry");
-  await form.locator('[name="consent"]').check();
 
   await form.locator('[type="submit"]').click();
   await expect(email).toBeFocused();
