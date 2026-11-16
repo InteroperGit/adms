@@ -29,6 +29,13 @@ Run only focused checks directly related to the change while implementing.
 Run the full verification gates in `verification.md` only when the user
 explicitly asks to run the tests or full verification after implementation.
 
+When exact or version-sensitive information about a library or framework is
+needed, use the configured Context7 MCP tools. Resolve the library with
+`resolve-library-id`, then query its official documentation with `query-docs`;
+prefer the version installed in this repository and record any material API or
+compatibility decision in the task handoff. Use repository source and tests for
+local behavior; do not use Context7 as a substitute for inspecting this code.
+
 ## Working context and models
 
 Read the task and applicable rules; search before loading files. Reuse evidence

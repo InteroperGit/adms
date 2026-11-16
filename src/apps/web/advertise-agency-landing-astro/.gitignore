@@ -38,3 +38,4 @@ data/content-runtime/
 .env.*.local
 .secrets/
 release-export/
+.codex/config.toml

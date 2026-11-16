@@ -489,6 +489,12 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
     pointer-events: none;
   }
 
+  /* Keep the reopen border visible on dark surfaces after base styling. */
+  :global([data-theme="dark"] .action-rail-restore) {
+    color: #fff;
+    border-color: #fff;
+  }
+
   /* Keep the restore target interactive while the main rail moves away. */
   .action-rail-host[data-collapsed="true"] .action-rail-restore {
     pointer-events: auto;
