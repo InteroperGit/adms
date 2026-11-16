@@ -210,6 +210,7 @@ const themes = [
     /* Let the theme row use the full width below its visible heading. */
     .theme-options {
       flex: 1;
+      gap: 0.5rem;
       width: 100%;
     }
 
@@ -268,6 +269,17 @@ const themes = [
     /* Restore full borders when choices no longer touch each other. */
     .theme-option + .theme-option .theme-icon {
       border-left-width: 1px;
+    }
+
+    /* Keep each separated choice visually distinct. */
+    .theme-options .theme-icon {
+      border-radius: var(--radius-field);
+    }
+
+    /* Give the outer choices full corners beside the new gaps. */
+    .theme-options .theme-option:first-child .theme-icon,
+    .theme-options .theme-option:last-child .theme-icon {
+      border-radius: var(--radius-field);
     }
 
     /* Enlarge the visible choice names beside the mobile theme icons. */

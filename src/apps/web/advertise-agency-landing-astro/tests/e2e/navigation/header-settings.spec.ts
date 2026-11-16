@@ -113,6 +113,14 @@ test("desktop settings show the heading above expanded theme choices", async ({
     );
   expect(new Set(widths).size).toBe(1);
   expect(widths[0]).toBeGreaterThan(120);
+  const bounds = await options.evaluateAll((items) =>
+    items.map((item) => {
+      const { left, right } = item.getBoundingClientRect();
+      return { left, right };
+    }),
+  );
+  expect(Math.round(bounds[1].left - bounds[0].right)).toBe(8);
+  expect(Math.round(bounds[2].left - bounds[1].right)).toBe(8);
 });
 
 test("tablet header has navigation and a nonmodal contact menu", async ({
