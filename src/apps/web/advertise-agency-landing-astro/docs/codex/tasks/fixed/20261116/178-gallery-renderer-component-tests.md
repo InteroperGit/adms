@@ -1,6 +1,6 @@
 # 178 - Test the gallery renderer components
 
-**Status:** todo
+**Status:** fixed
 
 **Priority:** normal
 
@@ -79,3 +79,7 @@ assertions but is otherwise independent.
   changed-file style check passed.
 - Worker IDs (Luna high): `/root/task178_impl`, `/root/task178_test`,
   `/root/task178_review`.
+- Commit: Luna high worker `/root/task178_commit` committed the verified task
+  changes as `cf5ee52bd194b4ad19874b7fa3f0a216718e5010`
+  (`test: cover gallery renderer contracts`). The staged diff check passed;
+  only both suites and this task file were committed.
