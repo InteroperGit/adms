@@ -1,5 +1,5 @@
 // Mobile navigation and focus browser contracts.
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 test("mobile drawer opens below header and returns focus on Escape", async ({
   page,

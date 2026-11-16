@@ -1,6 +1,6 @@
 // Browser contracts for inquiry delivery failure, retry and fallback.
 import { type Page } from "@playwright/test";
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 type FailureResponse =
   | { name: string; json: Record<string, unknown> }

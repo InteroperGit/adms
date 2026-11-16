@@ -1,5 +1,5 @@
 // Browser contracts for catalog pagination links and history.
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 test("pagination links navigate, reload and select the current page", async ({
   page,

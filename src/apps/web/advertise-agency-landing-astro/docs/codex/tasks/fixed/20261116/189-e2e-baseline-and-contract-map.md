@@ -20,7 +20,7 @@ Preserve unrelated changes. No new dependencies or automatic commits.
 
 ## Execution
 
-Parent: [188](../todo/188-automate-e2e-refactor.md).
+Parent: [188](../../todo/188-automate-e2e-refactor.md).
 Read AGENTS.md, rules index, workflow, code-style, testing and verification.
 Skills: ponytail; playwright for browser diagnosis.
 Primary owns integration and acceptance; no delegation by default.

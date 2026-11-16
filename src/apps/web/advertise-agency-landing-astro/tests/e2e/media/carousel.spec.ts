@@ -1,5 +1,5 @@
 // Browser contracts for manual carousel controls and reduced motion.
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 test("manual controls select and announce slides", async ({ page }) => {
   await page.goto("/");

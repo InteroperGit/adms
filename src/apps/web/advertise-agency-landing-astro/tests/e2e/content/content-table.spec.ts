@@ -1,5 +1,5 @@
 // Comparison data has one accessible view and a keyboard scroll fallback.
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 for (const javaScriptEnabled of [true, false]) {
   test.describe(`comparison with JavaScript ${javaScriptEnabled}`, () => {

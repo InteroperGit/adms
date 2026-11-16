@@ -1,5 +1,5 @@
 // Browser contracts for the project gallery dialog and focus return.
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 test.describe("touch gallery", () => {
   test.use({ hasTouch: true, viewport: { width: 375, height: 812 } });

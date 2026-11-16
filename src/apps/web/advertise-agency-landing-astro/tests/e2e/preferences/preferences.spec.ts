@@ -1,6 +1,9 @@
 // Browser contracts for cookie consent and theme persistence.
-import { expect, test } from "./fixtures";
-import { expectDocumentFocus, expectThemeStyles } from "./theme-styles";
+import { expect, test } from "../fixtures";
+import {
+  expectDocumentFocus,
+  expectThemeStyles,
+} from "../support/theme-styles";
 
 test("accepted cookie consent persists across reload and navigation", async ({
   page,

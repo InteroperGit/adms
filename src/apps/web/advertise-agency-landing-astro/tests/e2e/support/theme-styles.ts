@@ -1,6 +1,6 @@
 // Check rendered theme colors and utility output, independently of data-theme.
 import type { Page } from "@playwright/test";
-import { expect } from "./fixtures";
+import { expect } from "../fixtures";
 
 export type SiteTheme = "light" | "dark";
 

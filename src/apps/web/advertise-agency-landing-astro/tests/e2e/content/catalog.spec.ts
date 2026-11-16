@@ -1,5 +1,5 @@
 // Browser contracts for catalog search, filtering and pagination.
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 test("catalog search, filter, pagination and history share URL state", async ({
   page,

@@ -1,6 +1,6 @@
 // Browser contracts for accessible inquiry validation and correction.
 import { type Page } from "@playwright/test";
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 async function setupInquiry(page: Page): Promise<Array<unknown>> {
   const requests: Array<unknown> = [];

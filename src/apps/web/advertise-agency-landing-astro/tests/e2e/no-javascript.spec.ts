@@ -1,6 +1,6 @@
 // Browser contracts for native navigation and no-JavaScript fallbacks.
 import { expect, test } from "./fixtures";
-import { expectThemeStyles } from "./theme-styles";
+import { expectThemeStyles } from "./support/theme-styles";
 
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });

@@ -1,6 +1,6 @@
 // Exercise the published fixture's lettering form on its service route.
 import { type Locator, type Page } from "@playwright/test";
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 type InquiryPayload = Record<string, unknown>;
 

@@ -29,8 +29,8 @@ Record actual models/effort; escalate on concrete evidence only.
 - [x] Move 188 from backlog to todo and update status, links and TASKS.md.
 - [x] Execute [189](../fixed/20261116/189-e2e-baseline-and-contract-map.md)
   and accept its evidence.
-- [ ] Execute [190](../backlog/190-e2e-domain-directory-structure.md) and
-  accept its evidence.
+- [x] Execute [190](../fixed/20261116/190-e2e-domain-directory-structure.md)
+  and accept its evidence.
 - [ ] Execute [191](../backlog/191-e2e-navigation-suite-split.md) and accept
   its evidence.
 - [ ] Execute [192](../backlog/192-e2e-inquiry-shared-setup.md) and accept

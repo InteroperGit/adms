@@ -1,5 +1,5 @@
 // Browser contracts for chart enhancement and failed video media.
-import { expect, test } from "./fixtures";
+import { expect, test } from "../fixtures";
 
 const chartRuntimePattern = /\/chart-runtime[^/]*\.js(?:\?.*)?$/;
 
