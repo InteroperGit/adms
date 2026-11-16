@@ -111,6 +111,10 @@ the sitemap. Existing route integration tests remain complementary.
   the video 404 fallback did not observe its fulfilled request, and the
   desktop contact alignment case timed out. Neither failure involves route
   generation or the renamed tests.
+- Final verification formatting repair normalized `content.config.test.ts`.
+  It passed in the 12-file/43-test focused rerun and the full 136-file/867-test
+  run; `pnpm check:style` passed. The underscore-prefixed page test names are
+  still required to keep Astro from creating test routes.
 - Independent post-repair verification: `pnpm exec vitest run
   src/pages/_robots.txt.test.ts src/pages/_sitemap.xml.test.ts` passed (2 files,
   6 tests); `pnpm build` generated 39 routes without test routes;

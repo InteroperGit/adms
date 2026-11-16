@@ -32,12 +32,10 @@ function option(collection: unknown, key: string): unknown {
 
 it("registers article collections with their metadata schemas", async () => {
   const { collections } = await import("./content.config");
-  const { projectArticleMetadataSchema } = await import(
-    "./validation/projects"
-  );
-  const { serviceArticleMetadataSchema } = await import(
-    "./validation/service-articles"
-  );
+  const { projectArticleMetadataSchema } =
+    await import("./validation/projects");
+  const { serviceArticleMetadataSchema } =
+    await import("./validation/service-articles");
   const names = Object.keys(collections);
 
   expect(names).toHaveLength(3);
