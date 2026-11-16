@@ -35,8 +35,8 @@ Record actual models/effort; escalate on concrete evidence only.
   and accept its evidence.
 - [x] Execute [192](../fixed/20261116/192-e2e-inquiry-shared-setup.md)
   and accept its evidence.
-- [ ] Execute [193](../backlog/193-e2e-measured-runtime-optimization.md) and
-  accept its evidence.
+- [x] Execute [193](../fixed/20261116/193-e2e-measured-runtime-optimization.md)
+  and accept its evidence.
 - [ ] Execute [194](../backlog/194-e2e-regression-and-handoff.md) and accept
   its evidence.
 - [ ] Before each child starts, move backlog -> todo and update references.
