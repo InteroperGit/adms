@@ -1,0 +1,82 @@
+# 176 - Add carousel indicator component tests
+
+**Status:** todo
+
+**Priority:** normal
+
+**Created:** 2026-11-15
+
+**Scope:** `src/components/ui/CarouselDot.astro`,
+`src/components/ui/CarouselDots.astro`
+
+## Goal
+
+Add colocated tests for the manual and passive carousel indicator branches,
+including the ID and accessibility relationships consumed by the carousel
+runtime.
+
+## Scope
+
+- Add `CarouselDot.test.ts` and `CarouselDots.test.ts` beside their sources.
+- Cover manual button output, labels, `aria-controls`, index markers, passive
+  noninteractive output, group labeling, `aria-hidden`, item order and empty
+  item lists.
+- Assert the child component receives the expected slide IDs; do not test CSS
+  pixels or duplicate `ImageCarousel` integration scenarios.
+- Do not alter the public props or carousel runtime.
+
+## Execution
+
+- Skills: `astro-best-practices`, `ponytail`.
+- Primary executor: Luna, medium.
+- Delegation: none.
+
+### Checklist
+
+Update these checkboxes during execution using the
+[task checklist rules](../../rules/workflow.md#task-checklists).
+
+- [x] Read the rules index and inspect `CarouselControl`, `ImageCarousel` and
+  the
+  existing carousel tests.
+- [x] Add focused render tests for manual and automatic-only modes, including
+  zero
+  and multiple items.
+- [x] Run `pnpm test -- src/components/ui/CarouselDot.test.ts
+  src/components/ui/CarouselDots.test.ts`.
+- [ ] Run `pnpm verify:component-tests` and review the complete diff.
+- [ ] Record changed files, verification commands/results and resolved review
+  findings in this task's handoff; reconcile all checkboxes before completion.
+
+## Acceptance
+
+- [ ] Manual buttons expose labels, aria-controls and index markers.
+- [ ] Passive indicators are noninteractive and have the expected aria-hidden
+  state.
+- [ ] Group labels, slide IDs, item order and empty lists are covered.
+- [ ] Both source files have matching colocated suites with observable HTML
+  assertions.
+- [ ] Manual dots are keyboard controls with stable labels and target IDs;
+  passive dots are not exposed as controls.
+- [ ] Focused tests and component colocation verification pass.
+
+## Dependencies
+
+None. Keep runtime behavior unchanged.
+
+## Handoff
+
+- Implementation: Luna high worker added `CarouselDot.test.ts` and
+  `CarouselDots.test.ts`; no runtime source changed.
+- Initial `pnpm test -- src/components/ui/CarouselDot.test.ts
+  src/components/ui/CarouselDots.test.ts` ran the full suite and failed only
+  the two new manual-label expectations because the source literals are
+  mojibake while rendered labels are valid Russian. Updated expectations to
+  match rendered `Показать: slide 3` and `Выбор изображения`.
+- `pnpm exec vitest run src/components/ui/CarouselDot.test.ts
+  src/components/ui/CarouselDots.test.ts` passed (2 files, 5 tests).
+- Independent test stage: `pnpm test -- src/components/ui/CarouselDot.test.ts
+  src/components/ui/CarouselDots.test.ts` passed the full suite (110 files,
+  793 tests); `pnpm exec vitest run src/components/ui/CarouselDot.test.ts
+  src/components/ui/CarouselDots.test.ts` passed (2 files, 5 tests); and
+  `pnpm verify:component-tests` passed. No implementation edits were needed.
