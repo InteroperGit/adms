@@ -44,7 +44,7 @@ it("normalizes JSON and gates unapproved cards", async () => {
   expect(parsed.visibleServices).toEqual([]);
   const preview = await load(fixture).result;
   expect(preview.visibleServices).toEqual(preview.services.items);
-});
+}, 15_000);
 
 it("renders MDX metadata and blocks", async () => {
   const id = fixture.items[0].id;

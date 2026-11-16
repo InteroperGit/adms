@@ -43,10 +43,7 @@ it("supports the underline opt-out", async () => {
 });
 
 it("preserves anchors without an href value", async () => {
-  const body = await render(
-    Link,
-    { href: undefined, "aria-disabled": "true" },
-  );
+  const body = await render(Link, { href: undefined, "aria-disabled": "true" });
   const link = body.querySelector("a");
 
   expect(link).not.toHaveAttribute("href");

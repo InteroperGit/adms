@@ -34,9 +34,9 @@ pages, read and apply `astro-best-practices` for architecture, a11y, performance
 and styling. If unavailable, report it rather than claiming application.
 Explicit user/project instructions take precedence. Keep static content in
 Astro, browser JavaScript minimal and styles scoped unless shared conventions
-require otherwise; follow [architecture](architecture.md).
-Keep component props types in the component source. Do not create a separate
-props module for a single component; shared domain types belong in `src/types/`.
+require otherwise; follow [architecture](architecture.md). Keep component props
+types in the component source. Do not create a separate props module for a
+single component; shared domain types belong in `src/types/`.
 
 Consult the relevant official guide before related work:
 [routing/middleware](https://docs.astro.build/en/guides/routing/),
