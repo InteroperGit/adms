@@ -168,6 +168,8 @@ import HeaderMenuOpener from "@/components/ui/HeaderMenuOpener.astro";
   const header = document.querySelector<HTMLElement>("[data-auto-hide-header]");
   if (header) {
     const overlaySelector = "dialog[open], [data-settings-open]";
+    const hideThreshold = 24;
+    const revealThreshold = 48;
     const hasOpenOverlay = () =>
       header.hasAttribute("data-mobile-menu-open") ||
       header.hasAttribute("data-contact-menu-open") ||
@@ -222,6 +224,7 @@ import HeaderMenuOpener from "@/components/ui/HeaderMenuOpener.astro";
     const reveal = () => {
       header.dataset.hidden = "false";
       distance = 0;
+      direction = 0;
     };
 
     // Clamp overscroll and keep active header interactions on screen.
@@ -249,7 +252,8 @@ import HeaderMenuOpener from "@/components/ui/HeaderMenuOpener.astro";
       if (nextDirection !== direction) distance = 0;
       direction = nextDirection;
       distance += Math.abs(delta);
-      if (distance >= 12) {
+      const threshold = nextDirection > 0 ? hideThreshold : revealThreshold;
+      if (distance >= threshold) {
         header.dataset.hidden = delta > 0 ? "true" : "false";
         distance = 0;
       }

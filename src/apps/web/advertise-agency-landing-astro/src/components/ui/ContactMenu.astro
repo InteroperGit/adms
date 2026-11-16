@@ -200,19 +200,19 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
     outline-offset: 3px;
   }
 
-  /* Position desktop choices as a compact dropdown beside its opener. */
+  /* Position desktop choices beside the opener using its measured anchor. */
   dialog {
     position: fixed;
     z-index: 50;
-    inset: calc(var(--site-header-clearance, 5rem) - 0.5rem) 1rem auto auto;
+    inset: auto 1rem auto auto;
     width: min(24rem, calc(100vw - 2rem));
     max-width: none;
     max-height: min(80dvh, 42rem);
     margin: 0;
     padding: 1.25rem;
     overflow: auto;
-    border: 1px solid var(--color-base-300);
-    border-radius: 0.375rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-field);
     color: var(--color-base-content);
     background: var(--color-base-100);
     box-shadow: var(--shadow-panel);
@@ -367,7 +367,11 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
     padding: 0.75rem;
     border-inline-start: 3px solid var(--color-accent);
     border-radius: 0 var(--radius-field) var(--radius-field) 0;
-    background: color-mix(in srgb, var(--color-accent) 10%, var(--color-base-100));
+    background: color-mix(
+      in srgb,
+      var(--color-accent) 10%,
+      var(--color-base-100)
+    );
     color: var(--color-base-content);
     font-weight: 600;
   }
@@ -515,6 +519,24 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
     let activeOpener: HTMLElement | null = null;
     const close = () => dialog.close();
 
+    // Match the settings popup's vertical anchor on desktop and tablet.
+    const placeDialog = () => {
+      if (!activeOpener || !dialog.open) {
+        return;
+      }
+      if (window.matchMedia("(max-width: 47.999rem)").matches) {
+        dialog.style.removeProperty("top");
+        dialog.style.removeProperty("right");
+        return;
+      }
+      const anchor = activeOpener.getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const viewportRight =
+        (viewport?.offsetLeft ?? 0) + (viewport?.width ?? window.innerWidth);
+      dialog.style.top = `${anchor.bottom + 8}px`;
+      dialog.style.right = `${viewportRight - anchor.right}px`;
+    };
+
     // Allow local input while delivery is deferred; never send a native GET.
     callbackDialog
       .querySelector("form")
@@ -556,6 +578,7 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
         } else {
           dialog.show();
         }
+        placeDialog();
       });
     });
 
@@ -618,5 +641,8 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
     callbackDialog.addEventListener("close", () => {
       activeOpener?.focus({ preventScroll: true });
     });
+    window.addEventListener("resize", placeDialog);
+    window.visualViewport?.addEventListener("resize", placeDialog);
+    window.visualViewport?.addEventListener("scroll", placeDialog);
   }
 </script>

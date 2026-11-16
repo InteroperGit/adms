@@ -132,7 +132,7 @@ it("composes navigation, settings, menu, and brand children", async () => {
   expect(ResizeObserverMock.instances).toHaveLength(0);
 });
 
-it("measures the header and hides on downward scrolling", async () => {
+it("uses separate hide and reveal thresholds while scrolling", async () => {
   const state = await fixture();
   const { dom, header, frames } = state;
   expect(
@@ -150,6 +150,11 @@ it("measures the header and hides on downward scrolling", async () => {
   expect(header.dataset.hidden).toBe("true");
 
   Object.defineProperty(dom.window, "scrollY", { value: 100 });
+  dom.window.dispatchEvent(new dom.window.Event("scroll"));
+  state.flushFrame();
+  expect(header.dataset.hidden).toBe("true");
+
+  Object.defineProperty(dom.window, "scrollY", { value: 72 });
   dom.window.dispatchEvent(new dom.window.Event("scroll"));
   state.flushFrame();
   expect(header.dataset.hidden).toBe("false");

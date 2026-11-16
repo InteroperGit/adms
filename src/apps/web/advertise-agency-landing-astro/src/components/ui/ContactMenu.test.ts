@@ -89,14 +89,20 @@ it("renders four contact choices with local social assets", async () => {
 });
 
 it("opens a separate disabled callback modal", async () => {
-  const { dialog, callbackDialog, openers } = await setup();
+  const { dom, dialog, callbackDialog, openers } = await setup();
   const opener = openers[0]!;
+  Object.defineProperty(dom.window, "innerWidth", { value: 1024 });
+  Object.defineProperty(opener, "getBoundingClientRect", {
+    value: () => ({ bottom: 120, right: 200 }),
+  });
   const callback = callbackDialog.querySelector<HTMLElement>(
     "[data-callback-form]",
   )!;
 
   fireEvent.click(opener);
   expect(dialog.show).toHaveBeenCalledOnce();
+  expect(dialog.style.top).toBe("128px");
+  expect(dialog.style.right).toBe("824px");
   expect(opener).toHaveAttribute("aria-expanded", "true");
   fireEvent.click(dialog.querySelector("[data-callback-start]")!);
 

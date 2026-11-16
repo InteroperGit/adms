@@ -20,15 +20,24 @@ it("renders labeled chat, phone, collapse, and return actions", async () => {
   const rail = body.querySelector<HTMLElement>("#quick-actions");
 
   expect(rail).not.toBeNull();
-  expect(body.querySelector("nav[data-action-rail-host]")).toHaveAttribute(
+  expect(body.querySelector("nav[data-action-rail-host]")).not.toHaveAttribute(
     "hidden",
   );
   expect(body.querySelector("[data-action-rail-host]")).toHaveStyle(
     "--action-rail-reminder-interval: 30s",
   );
-  body.querySelector("[data-action-rail-host]")?.removeAttribute("hidden");
   const chat = getByRole(body, "button", { name: "Чат" });
   expect(chat).toHaveClass("action-rail-button-chat");
+  expect(chat).toHaveClass("action-rail-chat-fixed");
+  expect(chat).toHaveAttribute("data-action-rail-chat");
+  expect(chat.closest("nav")).toBeNull();
+  expect(chat.querySelector(".lucide-message-circle")).toHaveAttribute(
+    "stroke-width",
+    "2.5",
+  );
+  expect(chat.querySelectorAll(".action-rail-chat-typing span")).toHaveLength(
+    3,
+  );
   expect(chat).not.toHaveAttribute("onclick");
   expect(chat).not.toHaveAttribute("href");
   expect(chat).toHaveAttribute("data-tooltip", "Чат");
@@ -43,10 +52,10 @@ it("renders labeled chat, phone, collapse, and return actions", async () => {
   expect(getByRole(body, "button", { name: "Вернуться наверх" })).toHaveClass(
     "action-rail-button-top",
   );
-  expect(body.querySelectorAll('i[aria-hidden="true"]')).toHaveLength(5);
+  expect(body.querySelectorAll('i[aria-hidden="true"]')).toHaveLength(4);
 });
 
-it("preserves focus across scroll and collapse states", async () => {
+it("keeps rail visible across collapse and focus", async () => {
   if (!script) throw new Error("Action rail script was not found");
   const body = await render(ActionRail);
   const dom = new JSDOM(body.innerHTML, {
@@ -55,6 +64,10 @@ it("preserves focus across scroll and collapse states", async () => {
   });
   const { document } = dom.window;
   const host = document.querySelector<HTMLElement>("[data-action-rail-host]")!;
+  const header = document.createElement("header");
+  header.dataset.autoHideHeader = "";
+  header.dataset.hidden = "false";
+  document.body.append(header);
   const actionGroup =
     document.querySelector<HTMLElement>(".action-rail-group")!;
   const collapse = document.querySelector<HTMLButtonElement>(
@@ -66,10 +79,6 @@ it("preserves focus across scroll and collapse states", async () => {
   const scrollTop = document.querySelector<HTMLButtonElement>(
     "[data-action-rail-top]",
   )!;
-  const brand = document.createElement("a");
-  brand.className = "header-brand";
-  brand.href = "/";
-  document.body.append(brand);
   Object.defineProperty(dom.window, "scrollY", {
     configurable: true,
     writable: true,
@@ -81,10 +90,20 @@ it("preserves focus across scroll and collapse states", async () => {
   dom.window.scrollTo = vi.fn();
   dom.window.eval(transpile(script, { target: 9 }));
 
-  expect(host.hidden).toBe(true);
-  Object.defineProperty(dom.window, "scrollY", { value: 200 });
-  dom.window.dispatchEvent(new dom.window.Event("scroll"));
   expect(host.hidden).toBe(false);
+  expect(host.style.getPropertyValue("--action-rail-header-offset")).toBe(
+    "var(--site-header-clearance, 5rem)",
+  );
+  header.dataset.hidden = "true";
+  header.dispatchEvent(new dom.window.Event("transitionend"));
+  expect(host.style.getPropertyValue("--action-rail-header-offset")).toBe(
+    "0px",
+  );
+  header.dataset.hidden = "false";
+  header.dispatchEvent(new dom.window.Event("transitionend"));
+  expect(host.style.getPropertyValue("--action-rail-header-offset")).toBe(
+    "var(--site-header-clearance, 5rem)",
+  );
   collapse.click();
   expect(host.dataset.collapsed).toBe("true");
   expect(actionGroup.inert).toBe(true);
@@ -92,13 +111,6 @@ it("preserves focus across scroll and collapse states", async () => {
   expect(document.activeElement).toBe(restore);
   expect(restore).toHaveAttribute("aria-expanded", "true");
 
-  Object.defineProperty(dom.window, "scrollY", { value: 0 });
-  dom.window.dispatchEvent(new dom.window.Event("scroll"));
-  expect(host.hidden).toBe(true);
-  expect(host.dataset.collapsed).toBe("true");
-  expect(document.activeElement).toBe(brand);
-
-  Object.defineProperty(dom.window, "scrollY", { value: 200 });
   dom.window.dispatchEvent(new dom.window.Event("scroll"));
   expect(host.hidden).toBe(false);
   expect(host.dataset.collapsed).toBe("true");
@@ -114,9 +126,6 @@ it("preserves focus across scroll and collapse states", async () => {
     top: 0,
     behavior: "instant",
   });
-  Object.defineProperty(dom.window, "scrollY", { value: 0 });
-  dom.window.dispatchEvent(new dom.window.Event("scroll"));
-  expect(host.hidden).toBe(true);
-  expect(document.activeElement).toBe(brand);
+  expect(host.hidden).toBe(false);
   dom.window.close();
 });

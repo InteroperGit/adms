@@ -1,6 +1,6 @@
 # Codex Task Handoff
 
-Updated: 2026-11-15
+Updated: 2026-11-16
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal. Detailed
 scope and verification belong to the linked task files.
@@ -29,10 +29,10 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Task index
 
-- [172 - Action rail and persistent chat](../docs/codex/tasks/backlog/172-action-rail-visibility-and-chat.md):
-  backlog; scope recorded; implementation not started.
-- [173 - Callback delivery](../docs/codex/tasks/backlog/173-enable-callback-delivery.md):
-  backlog; connection deferred by the user; keep delivery disabled.
+- [172 - Action rail and persistent chat](../docs/codex/tasks/todo/172-action-rail-visibility-and-chat.md):
+  implemented by Luna; await user decision before improvements.
+- [173](../docs/codex/tasks/backlog/173-enable-callback-delivery.md): backlog;
+  awaiting owner decisions; keep delivery disabled.
 - [174 - Link component and anchor migration](../docs/codex/tasks/fixed/20261116/174-create-link-component-and-migrate-anchors.md):
   archived; E2E follow-up records one WebKit video fallback failure.
 - Test backlog 175-186 covers missing colocated Astro component suites,
