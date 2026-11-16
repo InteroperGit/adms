@@ -529,7 +529,7 @@ it.each([false, true])(
       site: "https://production.test/",
     });
     expectPage(document);
-    expectMetadata(document, `Главная | ${site.logoText}`, site.description);
+    expectMetadata(document, site.logoText, site.description);
     expectCanonical(document, "/");
     const sections = [...document.querySelectorAll("main section[id]")].map(
       (section) => section.id,

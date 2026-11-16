@@ -19,7 +19,10 @@ export interface Props {
 }
 
 const { title, description = site.description, noindex = false } = Astro.props;
-const pageTitle = title ? `${title} | ${site.logoText}` : site.title;
+const pageTitle =
+  title && title !== site.logoText
+    ? `${title} | ${site.logoText}`
+    : (title ?? site.title);
 // Astro.site is undefined until a verified production URL is configured.
 const canonicalURL = Astro.site
   ? new URL(Astro.url.pathname, Astro.site)

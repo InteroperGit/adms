@@ -4,6 +4,7 @@
 // Each section owns its content and any narrowly scoped browser behavior.
 
 import Layout from "@/layouts/Layout.astro";
+import { site } from "@/content/site";
 import About from "@/components/sections/About.astro";
 import Services from "@/components/sections/Services.astro";
 import Introduction from "@/components/sections/Introduction.astro";
@@ -22,7 +23,7 @@ import OrderInquiry from "@/components/sections/OrderInquiry.astro";
 ---
 
 {/* Each section owns its content and any narrowly scoped browser behavior. */}
-<Layout title="Главная">
+<Layout title={site.logoText}>
   <div class="homepage-sections">
     {/* Optional offers precede the primary service heading. */}
     <OffersCarousel />
