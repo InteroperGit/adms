@@ -31,8 +31,8 @@ Record actual models/effort; escalate on concrete evidence only.
   and accept its evidence.
 - [x] Execute [190](../fixed/20261116/190-e2e-domain-directory-structure.md)
   and accept its evidence.
-- [ ] Execute [191](../backlog/191-e2e-navigation-suite-split.md) and accept
-  its evidence.
+- [x] Execute [191](../fixed/20261116/191-e2e-navigation-suite-split.md)
+  and accept its evidence.
 - [ ] Execute [192](../backlog/192-e2e-inquiry-shared-setup.md) and accept
   its evidence.
 - [ ] Execute [193](../backlog/193-e2e-measured-runtime-optimization.md) and
