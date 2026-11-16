@@ -16,8 +16,8 @@ boundaries and generated crawler routes.
 
 ## Scope
 
-- Add `src/content.config.test.ts`, `src/pages/robots.txt.test.ts` and
-  `src/pages/sitemap.xml.test.ts`.
+- Add `src/content.config.test.ts` and underscore-prefixed route suites:
+  `src/pages/_robots.txt.test.ts` and `src/pages/_sitemap.xml.test.ts`.
 - Verify collection names/loaders, E2E fixture root selection and metadata
   schemas without depending on generated declarations.
 - Verify robots behavior with and without a configured site, XML content type,
@@ -69,8 +69,8 @@ the sitemap. Existing route integration tests remain complementary.
 
 ## Handoff
 
-- Added `src/content.config.test.ts`, `src/pages/robots.txt.test.ts` and
-  `src/pages/sitemap.xml.test.ts`; no route, collection, schema or runtime
+- Added `src/content.config.test.ts`, `src/pages/_robots.txt.test.ts` and
+  `src/pages/_sitemap.xml.test.ts`; no route, collection, schema or runtime
   content code changed.
 - Focused suites passed: 3 files, 8 tests.
 - `pnpm test:types` passed.
@@ -99,3 +99,20 @@ the sitemap. Existing route integration tests remain complementary.
 - Worker IDs (Luna high): `/root/task184_impl`, `/root/task184_test`,
   `/root/task184_review`.
 - Commit worker: `/root/task184_commit` (Luna high).
+- Final verification found Astro attempted to prerender the original
+  route test files as generated pages, importing Vitest outside a test suite.
+  Astro ignores underscore-prefixed files in `src/pages`, so route tests use
+  `_robots.txt.test.ts` and `_sitemap.xml.test.ts` while staying beside their
+  handlers. No route or runtime code changed.
+- Repair verification: the renamed robots/sitemap suites passed (2 files,
+  6 tests); Prettier and `pnpm check:style` passed. `pnpm build` passed and
+  generated only the intended `/robots.txt` and `/sitemap.xml` routes.
+- `pnpm test:e2e` completed with 304 passed and two existing WebKit failures:
+  the video 404 fallback did not observe its fulfilled request, and the
+  desktop contact alignment case timed out. Neither failure involves route
+  generation or the renamed tests.
+- Independent post-repair verification: `pnpm exec vitest run
+  src/pages/_robots.txt.test.ts src/pages/_sitemap.xml.test.ts` passed (2 files,
+  6 tests); `pnpm build` generated 39 routes without test routes;
+  `pnpm verify:quality` passed for all 39 built routes. Confirmed `dist`
+  contains `robots.txt` and `sitemap.xml` and no `.test` artifacts.
