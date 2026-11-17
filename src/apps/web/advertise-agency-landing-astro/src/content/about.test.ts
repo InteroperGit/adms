@@ -1,6 +1,6 @@
 // The about export preserves its versioned fixture content.
 import { expect, it } from "vitest";
-import fixture from "../../tests/fixtures/content/site/config/about.json";
+import fixture from "../../tests/fixtures/content/site/sections/about.json";
 import { about } from "./about";
 
 it("exports the authored descriptions, stats and icon", () => {

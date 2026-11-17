@@ -1,4 +1,4 @@
-import actionRailData from "@/data/content/config/action-rail.json";
+import actionRailData from "@/data/content/site/sections/action-rail.json";
 import { actionRailConfigSchema } from "@/validation/action-rail";
 import type { ActionRailConfig } from "@/types/action-rail";
 

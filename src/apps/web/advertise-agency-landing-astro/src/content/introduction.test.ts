@@ -1,10 +1,10 @@
 // Preserve optional media and the demo default.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from "@/data/content/config/introduction.json";
+import fixture from "@/data/content/site/sections/introduction.json";
 import { introduction } from "./introduction";
 
 afterEach(() => {
-  vi.doUnmock("@/data/content/config/introduction.json");
+  vi.doUnmock("@/data/content/site/sections/introduction.json");
   vi.resetModules();
 });
 
@@ -16,7 +16,7 @@ it("exports authored introduction copy and photo values", () => {
 
 it("defaults demo mode and accepts an absent photo", async () => {
   vi.resetModules();
-  vi.doMock("@/data/content/config/introduction.json", () => ({
+  vi.doMock("@/data/content/site/sections/introduction.json", () => ({
     default: { ...fixture, demoMode: undefined, photo: null },
   }));
 
@@ -27,7 +27,7 @@ it("defaults demo mode and accepts an absent photo", async () => {
 
 it("rejects an unsupported action at the export boundary", async () => {
   vi.resetModules();
-  vi.doMock("@/data/content/config/introduction.json", () => ({
+  vi.doMock("@/data/content/site/sections/introduction.json", () => ({
     default: {
       ...fixture,
       action: { ...fixture.action, href: "/unsupported" },
@@ -35,6 +35,6 @@ it("rejects an unsupported action at the export boundary", async () => {
   }));
 
   await expect(import("./introduction")).rejects.toThrow(
-    "Invalid content in data/content/config/introduction.json",
+    "Invalid content in data/content/site/sections/introduction.json",
   );
 });

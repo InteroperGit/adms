@@ -12,19 +12,19 @@
       "output": "articles/services/starter-service.mdx"
     },
     {
-      "path": "config/about-carousel.json",
+      "path": "site/sections/about-carousel.json",
       "kind": "json",
-      "output": "config/about-carousel.json"
+      "output": "site/sections/about-carousel.json"
     },
     {
-      "path": "config/about.json",
+      "path": "site/sections/about.json",
       "kind": "json",
-      "output": "config/about.json"
+      "output": "site/sections/about.json"
     },
     {
-      "path": "config/action-rail.json",
+      "path": "site/sections/action-rail.json",
       "kind": "json",
-      "output": "config/action-rail.json"
+      "output": "site/sections/action-rail.json"
     },
     {
       "path": "config/business-solutions.json",
@@ -42,9 +42,9 @@
       "output": "site/settings/icons.json"
     },
     {
-      "path": "config/introduction.json",
+      "path": "site/sections/introduction.json",
       "kind": "json",
-      "output": "config/introduction.json"
+      "output": "site/sections/introduction.json"
     },
     {
       "path": "config/legal/privacy-policy.json",
