@@ -50,8 +50,9 @@ UI task 171 is archived; delivery is deferred to task 173.
   then 180-186 for TypeScript, content boundaries and smoke-test refactors.
 - [187 - Orchestrate test backlog 175-186](../docs/codex/tasks/fixed/20261116/187-automate-test-backlog-175-186.md):
   complete; tasks 175-186 and all final verification gates passed.
-- [204](../docs/codex/tasks/todo/204-automate-content-migration-161-170.md):
-  active; 161-169 accepted and archived separately; task 170 is next.
+- [204 - Content migration automation](../docs/codex/tasks/fixed/20261117/204-automate-content-migration-161-170.md):
+  complete; tasks 161-170 have separate commits. Full Vitest: 881/881;
+  build: 39 pages; Chromium E2E: 22/22. Full verification was not requested.
 - Content migration: task 169 moved pages and normalized JSON filenames to
   camelCase with 30 SHA-256 matches; focused tests, isolated provisioning,
   E2E, check and build passed.

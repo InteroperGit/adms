@@ -5,9 +5,9 @@
 - **Tester:** Luna (`gpt-6-luna`), reasoning: `medium`.
 - **Reviewer:** Luna (`gpt-6-luna`), reasoning: `medium`.
 
-Дата: 2026-11-16. Статус: todo. Выполнение начато.
+Дата: 2026-11-17. Статус: complete. Выполнение начато.
 
-План: [миграция контента](../plan/20261114_site-content-structure-migration-plan.md).
+План: [миграция контента](../../plan/20261114_site-content-structure-migration-plan.md).
 
 ## Scope
 
@@ -15,7 +15,7 @@
   после каждой задачи и все ограничения дочерних задач.
 - Перенести JSON из config в site/settings, sections, pages и lists.
 - Fixtures хранить в `tests/fixtures/content/site/{settings,sections,pages,lists}`
-  без вложенного site; legacy fixtures временно остаются в site/config.
+  без вложенного site; итоговая структура не содержит `config/`.
 - Имена JSON в `data/` использовать в стиле camelCase `fileName.json`;
   site fixtures именовать синхронно. Project catalog page — `projects.json`.
 - Сохранить runtime в `data/content/`, fixtures в `tests/fixtures/content/`,
@@ -45,73 +45,94 @@ inquiries/design читать при затрагивании соответст
 - [x] При запуске перенести мастер-задачу backlog → todo и обновить индекс.
 - [x] Проверить Git status, существующие изменения, доступность runtime,
       игнорирование output и предусловия 161; не присваивать чужие изменения.
-- [x] Выполнить [161 — baseline](../fixed/20261117/161-content-migration-baseline.md).
-- [x] Выполнить [162 — tooling](../fixed/20261117/162-content-migration-tooling.md).
-- [x] Выполнить [163 — settings](../fixed/20261117/163-content-migration-settings.md).
-- [x] Выполнить [164 — primary sections](../fixed/20261117/164-content-migration-primary-sections.md).
-- [x] Выполнить [165 — home sections](../fixed/20261117/165-content-migration-home-sections.md).
-- [x] Выполнить [166 — commercial sections](../fixed/20261117/166-content-migration-commercial-sections.md).
-- [x] Выполнить [167 — primary lists](../fixed/20261117/167-content-migration-primary-lists.md).
-- [x] Выполнить [168 — supporting lists](../fixed/20261117/168-content-migration-supporting-lists.md).
-- [x] Выполнить [169 — pages](../fixed/20261117/169-content-migration-pages.md).
-- [ ] Выполнить [170 — cleanup](../backlog/170-content-migration-remove-config.md).
-- [ ] Для каждого шага до реализации перенести его backlog → todo;
+- [x] Выполнить [161 — baseline](161-content-migration-baseline.md).
+- [x] Выполнить [162 — tooling](162-content-migration-tooling.md).
+- [x] Выполнить [163 — settings](163-content-migration-settings.md).
+- [x] Выполнить [164 — primary sections](164-content-migration-primary-sections.md).
+- [x] Выполнить [165 — home sections](165-content-migration-home-sections.md).
+- [x] Выполнить [166 — commercial sections](166-content-migration-commercial-sections.md).
+- [x] Выполнить [167 — primary lists](167-content-migration-primary-lists.md).
+- [x] Выполнить [168 — supporting lists](168-content-migration-supporting-lists.md).
+- [x] Выполнить [169 — pages](169-content-migration-pages.md).
+- [x] Выполнить [170 — cleanup](170-content-migration-remove-config.md).
+- [x] Для каждого шага до реализации перенести его backlog → todo;
       после выполнения всех Execution/Acceptance, focused checks и review
       перенести в fixed/yyyyMMdd по Europe/Moscow и исправить входящие ссылки,
       план и `.codex/TASKS.md`.
-- [ ] После приёмки каждого шага создать отдельный локальный коммит
+- [x] После приёмки каждого шага создать отдельный локальный коммит
       с его изменениями и task records; только затем начинать следующий.
-- [ ] Перед каждым переносом сохранить свежие backup и SHA-256 в ignored
+- [x] Перед каждым переносом сохранить свежие backup и SHA-256 в ignored
       `output/content-migration/`; проверить пути и отказаться от перезаписи.
 - [x] В 162 обеспечить отказ CI provisioning при непустом destination;
       покрыть mixed layout, неизвестные пути, duplicate outputs и отсутствие
       runtime fallback. Проверять provisioning в изолированном checkout.
-- [ ] Обновлять существующие colocated tests loaders и компонентов,
+- [x] Обновлять существующие colocated tests loaders и компонентов,
       type-contract fixtures, mocks и assertions вместе с каждым переносом.
-- [ ] Использовать актуальные integration suites:
+- [x] Использовать актуальные integration suites:
       `shell-home-legal`, `catalog`, `articles-content`, `crawler-routes`,
       `inquiry` в `tests/integration/`; E2E находятся в доменных каталогах
       `tests/e2e/{navigation,content,inquiry,media,preferences}/`.
-- [ ] После каждого шага выполнить затронутые focused tests, boundary/content
+- [x] После каждого шага выполнить затронутые focused tests, boundary/content
       checks, content regression scripts и runtime build; не ослаблять
       coverage, a11y, assertions, schemas, isolation или publication gates.
-- [ ] Полный verification выполнить только при явном запросе пользователя
+- [x] Полный verification выполнить только при явном запросе пользователя
       после реализации, в порядке verification.md. Без запроса явно записать
       отсутствие полного прогона; запрос не подразумевается запуском серии.
-- [ ] При сбое проверок, hash mismatch, неизвестном файле или невозможности
+- [x] При сбое проверок, hash mismatch, неизвестном файле или невозможности
       безопасного коммита остановить серию до следующего шага; оставить текущую
       задачу в todo, записать доказательства, блокер и точку возобновления.
-- [ ] При возобновлении перечитать индекс и фактические пути, проверить
+- [x] При возобновлении перечитать индекс и фактические пути, проверить
       принятые коммиты и hashes; продолжить с первой незавершённой задачи.
-- [ ] Выполнить итоговый review, сверить оба checklist каждой задачи,
+- [x] Выполнить итоговый review, сверить оба checklist каждой задачи,
       обновить план/индекс, архивировать мастер-задачу и создать её коммит.
 
 ## Acceptance
 
-- [ ] Все десять дочерних задач приняты, архивированы и имеют отдельные коммиты.
-- [ ] Runtime/template/fixture JSON используют конечную структуру без config
+- [x] Все десять дочерних задач приняты, архивированы и имеют отдельные коммиты.
+- [x] Runtime/template/fixture JSON используют конечную структуру без config
       и двойных копий; manifest содержит 20 JSON и прежние 2 MDX entries.
-- [ ] Runtime hash audit подтверждает неизменность payload относительно
+- [x] Runtime hash audit подтверждает неизменность payload относительно
       свежих snapshots; MDX и редакторские данные сохранены.
-- [ ] Loaders, aliases, provisioning, mocks и diagnostics используют новые пути;
+- [x] Loaders, aliases, provisioning, mocks и diagnostics используют новые пути;
       чистый CI, runtime build и isolated fixture E2E работают.
-- [ ] Сохранены проверки задач 175–203, пользовательские сценарии и границы
+- [x] Сохранены проверки задач 175–203, пользовательские сценарии и границы
       publication/consent; внешняя доставка замокана.
-- [ ] Все применимые проверки проходят; полный verification имеет результаты
+- [x] Все применимые проверки проходят; полный verification имеет результаты
       либо явно зафиксирован как не запрошенный и не выполненный.
-- [ ] План и индекс содержат фактическое состояние и рабочие ссылки;
+- [x] План и индекс содержат фактическое состояние и рабочие ссылки;
       нет неразрешённых review findings и незавершённых дочерних checklist.
 
 ## Handoff
 
-Создана 2026-11-16. Серия активна; 161–169 приняты и архивированы в отдельных
-локальных commits. В задаче 169 перенесены pages/order-inquiry, все JSON в
-`data/` и зеркальных site fixtures приведены к camelCase; 30 snapshot hashes
-совпали. Focused checks, isolated provisioning, E2E, check и build прошли.
-Следующая — 170, удаление legacy config aliases и итоговая приёмка. 162
-подготовила tooling для смешанных content paths; CI/E2E работают на isolated
-fixtures без перезаписи authored runtime. Full verification остаётся до явного
-запроса после серии.
+Завершена 2026-11-17. Дочерние задачи 161–170 приняты, перемещены в
+`docs/codex/tasks/fixed/20261117/` и имеют отдельные локальные commits:
+`1e28c5eb`, `4683bc19`, `353038d1`, `d4cfb3be`, `ad3152f9`, `b3194ee3`,
+`54c6f56a`, `b278812a`, `72e10342`, `22db19d5`. Все десять дочерних
+Execution/Acceptance checklists завершены. JSON в runtime/templates/site
+fixtures находятся в конечной структуре, используют camelCase; страница
+каталога проектов — `site/pages/projects.json`, список —
+`site/lists/projects.json`. Manifest содержит 20 JSON и 2 MDX.
+
+Перенесённые authored JSON/MDX и page payload сверялись с локальными
+snapshots; task 169 подтвердил 30 SHA-256 совпадений. В task 170 Git blob
+прежнего tracked `config/services.json` совпал с runtime `site/lists/services.json`
+(`6bc6d2112e7ec5e3d097f26fdff88a0eedd32393`). Runtime файлы не включались в
+commits; удаление старого tracked path остаётся в рабочей копии. Изменения
+task 172 и 173 остались вне migration commits.
+
+Итоговые проверки: полный Vitest — 139 файлов/881 тест; `test:content-catalog`,
+`test:types`, `test:content-blocks`, `test:publication-policy`,
+`verify:boundaries`, `verify:content`, `check` (0 errors), `build` (39 страниц),
+Chromium E2E (22/22), изолированный CI provisioning без authored runtime,
+Prettier для изменённых исходников и `git diff --check`. `verify:external`
+пропущен согласно региональному ограничению. Полный verification pipeline из
+`verification.md` не запрашивался после реализации и не запускался; эти
+результаты не заявляются как полный pipeline. Известны прежние Zod deprecation
+hint и Vite chunk warning >500 kB.
+
+Node `26.13.1` и pnpm `10.7.0` доступны; pnpm `TEMP`/`TMP` направлялись в
+ignored workspace output. Snapshots и isolated scratch evidence находятся в
+ignored `output/task-204/`. Push, deploy и реальные доставки не выполнялись.
 Node `26.13.1` и pnpm `10.7.0` доступны; для pnpm `TEMP`/`TMP`
 направлялись в ignored workspace output. Baseline содержит 52 runtime
 JSON/MDX; исходный audit и per-task snapshots сохранены. Runtime перемещается

@@ -3,7 +3,7 @@
 Date: 2026-11-14. Updated: 2026-11-17. Status: complete.
 
 Мастер автоматической серии:
-[204](../todo/204-automate-content-migration-161-170.md).
+[204](../fixed/20261117/204-automate-content-migration-161-170.md).
 Создание мастера не запускает миграцию.
 
 ## Цель
@@ -81,7 +81,7 @@ configuration, даже если внутри есть `items` (например
 ## Последовательность задач
 
 Серия запущена через задачу
-[204](../todo/204-automate-content-migration-161-170.md).
+[204](../fixed/20261117/204-automate-content-migration-161-170.md).
 Задачи 161–170 приняты; серия завершена.
 
 - [161 — Исходное состояние миграции](../fixed/20261117/161-content-migration-baseline.md)
