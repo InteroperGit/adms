@@ -7,7 +7,6 @@
     "noUnusedParameters": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@/data/content/config/*": ["./tests/fixtures/content/site/config/*"],
       "@/data/content/site/settings/*": [
         "./tests/fixtures/content/site/settings/*"
       ],

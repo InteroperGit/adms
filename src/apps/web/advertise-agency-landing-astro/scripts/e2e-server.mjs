@@ -32,12 +32,10 @@ for (const entry of validateContentManifest(templates)) {
       "utf8",
     ),
   );
-  if (
-    ["config/order-inquiry.json", "site/pages/orderInquiry.json"].includes(path)
-  ) {
+  if (path === "site/pages/orderInquiry.json") {
     value.submission.enabled = true;
   }
-  if (["config/services.json", "site/lists/services.json"].includes(path)) {
+  if (path === "site/lists/services.json") {
     value.demoMode = overrides.services.demoMode;
     value.copyApproved = overrides.services.copyApproved;
     const itemOverride = overrides.services.item;
@@ -50,7 +48,7 @@ for (const entry of validateContentManifest(templates)) {
     service.image = { ...service.image, ...itemOverride.image };
     service.article = { ...service.article, ...itemOverride.article };
   }
-  if (["config/projects.json", "site/lists/projects.json"].includes(path)) {
+  if (path === "site/lists/projects.json") {
     const project = value.find((item) => item.id === 1);
     if (!project) throw new Error("E2E project not found: 1");
     project.article.content.push(...overrides.projectBlocks);

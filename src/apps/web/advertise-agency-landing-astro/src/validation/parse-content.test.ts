@@ -34,21 +34,23 @@ describe("parseContent", () => {
       parseContent(
         schema,
         { title: "", count: 0 },
-        "data/content/config/example.json",
+        "data/content/site/settings/example.json",
       ),
-    ).toThrow(/Invalid content in data\/content\/config\/example\.json:\n/);
+    ).toThrow(
+      /Invalid content in data\/content\/site\/settings\/example\.json:\n/,
+    );
     expect(() =>
       parseContent(
         schema,
         { title: "", count: 0 },
-        "data/content/config/example.json",
+        "data/content/site/settings/example.json",
       ),
     ).toThrow(/title:/);
     expect(() =>
       parseContent(
         schema,
         { title: "", count: 0 },
-        "data/content/config/example.json",
+        "data/content/site/settings/example.json",
       ),
     ).toThrow(/count:/);
   });

@@ -13,7 +13,11 @@ import { prepareCiContent } from "./prepare-ci-content.mjs";
 const manifest = {
   schemaVersion: "1.0.0",
   files: [
-    { path: "config/site.json", kind: "json", output: "config/site.json" },
+    {
+      path: "site/settings/site.json",
+      kind: "json",
+      output: "site/settings/site.json",
+    },
     {
       path: "site/sections/about.json",
       kind: "json",
@@ -28,7 +32,7 @@ const manifest = {
 };
 
 async function createSource(root, files) {
-  await mkdir(join(root, "config"), { recursive: true });
+  await mkdir(join(root, "site/settings"), { recursive: true });
   await mkdir(join(root, "site/sections"), { recursive: true });
   await mkdir(join(root, "articles"), { recursive: true });
   await writeFile(
@@ -55,7 +59,7 @@ const workspace = await mkdtemp(join(tmpdir(), "content-catalog-"));
 try {
   const complete = join(workspace, "complete");
   await createSource(complete, {
-    "config/site.json": JSON.stringify({
+    "site/settings/site.json": JSON.stringify({
       title: "PLACEHOLDER_TITLE",
       image: "media/example.webp",
     }),
@@ -64,7 +68,7 @@ try {
   });
   const output = join(workspace, "output");
   await generateContentCatalog(complete, output);
-  const first = await readFile(join(output, "config/site.json"), "utf8");
+  const first = await readFile(join(output, "site/settings/site.json"), "utf8");
   assert.equal(
     first,
     '{\n  "title": "PLACEHOLDER_TITLE",\n' +
@@ -128,7 +132,7 @@ try {
 
   const forbidden = join(workspace, "forbidden");
   await createSource(forbidden, {
-    "config/site.json": JSON.stringify({ apiKey: "DO_NOT_COMMIT" }),
+    "site/settings/site.json": JSON.stringify({ apiKey: "DO_NOT_COMMIT" }),
     "site/sections/about.json": JSON.stringify({ title: "ABOUT_TITLE" }),
     "articles/service.mdx": "# TEST_ARTICLE",
   });
@@ -140,32 +144,46 @@ try {
   const productionManifest = JSON.parse(
     await readFile("data/templates/manifest.json", "utf8"),
   );
-  const mixedManifest = structuredClone(productionManifest);
-  const legacyPath = "config/legal/privacy-policy.json";
-  const canonicalPath = "site/pages/legal/privacyPolicy.json";
-  const mixedEntry = mixedManifest.files.find(
-    (item) => item.path === canonicalPath,
+  assert.equal(
+    validateContentManifest(productionManifest),
+    productionManifest.files,
   );
-  mixedEntry.path = legacyPath;
-  mixedEntry.output = legacyPath;
-  assert.equal(validateContentManifest(mixedManifest), mixedManifest.files);
   assert.equal(
     fixtureSourcePath({ path: "site/settings/site.json" }),
     "site/settings/site.json",
   );
 
-  const duplicateDomain = structuredClone(productionManifest);
-  duplicateDomain.files.push({
-    path: "config/about.json",
-    kind: "json",
-    output: "config/about.json",
-  });
+  const legacyManifest = structuredClone(productionManifest);
+  const legacyEntry = legacyManifest.files.find(
+    (entry) => entry.kind === "json",
+  );
+  legacyEntry.path = "config/site.json";
+  legacyEntry.output = legacyEntry.path;
   assert.throws(
-    () => validateContentManifest(duplicateDomain),
-    /duplicate content domain/,
+    () => validateContentManifest(legacyManifest),
+    /unknown JSON path/,
   );
 
-  const unknownPath = structuredClone(mixedManifest);
+  const hyphenatedManifest = structuredClone(productionManifest);
+  const renamedEntry = hyphenatedManifest.files.find(
+    (entry) => entry.path === "site/pages/projects.json",
+  );
+  renamedEntry.path = "site/pages/project-catalog.json";
+  renamedEntry.output = renamedEntry.path;
+  assert.throws(
+    () => validateContentManifest(hyphenatedManifest),
+    /JSON filename must use camelCase/,
+  );
+
+  const duplicatePath = structuredClone(productionManifest);
+  duplicatePath.files.push({
+    path: "site/sections/about.json",
+    kind: "json",
+    output: "site/sections/about.json",
+  });
+  assert.throws(() => validateContentManifest(duplicatePath), /duplicate path/);
+
+  const unknownPath = structuredClone(productionManifest);
   unknownPath.files.find((entry) => entry.kind === "json").path =
     "site/unapproved/unknown.json";
   assert.throws(
@@ -179,47 +197,17 @@ try {
   await cp("tests/fixtures/content/site", join(fixtureRoot, "site"), {
     recursive: true,
   });
-  const legacyTemplate = join(templateRoot, legacyPath);
-  const legacyFixture = join(fixtureRoot, `site/${legacyPath}`);
   const settingsPath = "site/settings/site.json";
   const migratedSettingsFixture = join(fixtureRoot, settingsPath);
-  await mkdir(join(templateRoot, "config/legal"), { recursive: true });
-  await mkdir(join(fixtureRoot, "site/config/legal"), { recursive: true });
   await mkdir(join(templateRoot, "site/settings"), { recursive: true });
   await mkdir(join(fixtureRoot, "site/settings"), { recursive: true });
-  await cp(join(templateRoot, canonicalPath), legacyTemplate);
-  await cp(join(fixtureRoot, canonicalPath), legacyFixture);
-  const mixedTemplateManifest = JSON.parse(
-    await readFile(join(templateRoot, "manifest.json"), "utf8"),
-  );
-  const legacyEntry = mixedTemplateManifest.files.find(
-    (entry) => entry.path === canonicalPath,
-  );
-  legacyEntry.path = legacyPath;
-  legacyEntry.output = legacyPath;
-  assert.ok(
-    mixedTemplateManifest.files.some(
-      (entry) => entry.path === settingsPath && entry.output === settingsPath,
-    ),
-  );
-  await writeFile(
-    join(templateRoot, "manifest.json"),
-    `${JSON.stringify(mixedTemplateManifest, null, 2)}\n`,
-  );
-
   const ciOutput = join(workspace, "ci-content");
   await prepareCiContent({ templateRoot, fixtureRoot, outputRoot: ciOutput });
-  assert.equal(
-    await readFile(join(ciOutput, legacyPath), "utf8"),
-    await readFile(legacyFixture, "utf8"),
-  );
   assert.equal(
     await readFile(join(ciOutput, "site/settings/site.json"), "utf8"),
     await readFile(migratedSettingsFixture, "utf8"),
   );
   await expectAbsent(join(ciOutput, "site/site/settings/site.json"));
-  await expectAbsent(join(ciOutput, "site/config/site.json"));
-  await expectAbsent(join(ciOutput, "config/site.json"));
   assert.equal(
     await readFile(join(ciOutput, "type-contracts/about.ts")).catch(() => null),
     null,

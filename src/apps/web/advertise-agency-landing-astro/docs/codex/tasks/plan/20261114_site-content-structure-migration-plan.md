@@ -1,6 +1,6 @@
 # Миграция структуры контента сайта
 
-Date: 2026-11-14. Updated: 2026-11-17. Status: in progress; baseline complete.
+Date: 2026-11-14. Updated: 2026-11-17. Status: complete.
 
 Мастер автоматической серии:
 [204](../todo/204-automate-content-migration-161-170.md).
@@ -34,10 +34,10 @@ data/templates/
     lists/
 ```
 
-Site fixtures — `tests/fixtures/content/site/`. Новые JSON лежат прямо
-в его `settings/`, `sections/`, `pages/` и `lists/`, без вложенного site.
-Runtime `site/*` соответствует fixtures `site/*`, а переходный `config/*` —
-fixtures `site/config/*` относительно `tests/fixtures/content/`.
+Site fixtures — `tests/fixtures/content/site/`. JSON лежат прямо в его
+`settings/`, `sections/`, `pages/` и `lists/`, без вложенного site. Runtime,
+templates и fixtures используют одинаковые относительные пути и camelCase
+имена JSON.
 Article fixtures остаются в
 `tests/fixtures/content/articles/`.
 
@@ -46,9 +46,9 @@ Article fixtures остаются в
 | Конечный каталог | Файлы |
 | --- | --- |
 | `site/settings/` | `site.json`, `icons.json` |
-| `site/sections/` | `about.json`, `about-carousel.json`, `action-rail.json`, `business-solutions.json`, `faq.json`, `introduction.json`, `offers.json`, `ordering-process.json`, `pricing.json`, `production-and-guarantees.json` |
-| `site/pages/` | `legal/privacy-policy.json`, `legal/terms-of-use.json`, `project-catalog.json`, `order-inquiry.json` |
-| `site/lists/` | `services.json`, `projects.json`, `reviews.json`, `project-categories.json` |
+| `site/sections/` | `about.json`, `aboutCarousel.json`, `actionRail.json`, `businessSolutions.json`, `faq.json`, `introduction.json`, `offers.json`, `orderingProcess.json`, `pricing.json`, `productionAndGuarantees.json` |
+| `site/pages/` | `legal/privacyPolicy.json`, `legal/termsOfUse.json`, `projects.json`, `orderInquiry.json` |
+| `site/lists/` | `services.json`, `projects.json`, `reviews.json`, `projectCategories.json` |
 | `articles/` | существующие MDX без переименования и изменения содержимого |
 
 `sections/` означает данные, которые описывают секцию и её presentation/content
@@ -73,9 +73,8 @@ configuration, даже если внутри есть `items` (например
 - Компоненты не получают прямой доступ к JSON. Они продолжают импортировать
   `@/content/*`; компонентные изменения ограничиваются обновлением найденных
   прямых путей и проверкой существующих render contracts.
-- До финального шага допускается только смешанная переходная раскладка:
-  перенесённые записи лежат в `site/`, ещё не перенесённые — в `config/`.
-  Дублирование одного файла под обоими путями запрещено.
+- Конечная структура не содержит `config/`; JSON basenames используют
+  camelCase, включая отдельные `pages/projects.json` и `lists/projects.json`.
 - Исторические документы в `docs/codex/tasks/fixed/` не переписываются;
   поддерживаемые README, scripts и актуальные планы получают новые пути.
 
@@ -83,7 +82,7 @@ configuration, даже если внутри есть `items` (например
 
 Серия запущена через задачу
 [204](../todo/204-automate-content-migration-161-170.md).
-Задачи 161–169 приняты; следующая — удаление legacy config aliases и итоговая приёмка в задаче 170.
+Задачи 161–170 приняты; серия завершена.
 
 - [161 — Исходное состояние миграции](../fixed/20261117/161-content-migration-baseline.md)
   — MIG-000.
@@ -95,7 +94,7 @@ configuration, даже если внутри есть `items` (например
 - [167 — Перенос каталогов услуг и проектов](../fixed/20261117/167-content-migration-primary-lists.md) — MIG-006.
 - [168 — Перенос отзывов и категорий](../fixed/20261117/168-content-migration-supporting-lists.md) — MIG-007.
 - [169 — Перенос данных страниц и формы](../fixed/20261117/169-content-migration-pages.md) — MIG-008.
-- [170 — Удаление config и итоговая приёмка](../backlog/170-content-migration-remove-config.md) — MIG-009.
+- [170 — Удаление config и итоговая приёмка](../fixed/20261117/170-content-migration-remove-config.md) — MIG-009.
 
 Выполнять строго по порядку. Каждая задача должна заканчиваться отдельным
 коммитом/результатом, чтобы при остановке оставалась рабочая смешанная схема.
@@ -313,8 +312,8 @@ E2E for catalog navigation and inquiry validation.
 
 - [x] Для каждой MIG-задачи создан отдельный файл в
   `docs/codex/tasks/backlog/` с scope, зависимостями и acceptance commands.
-- [ ] После выполнения задачи её task file архивирован в
+- [x] После выполнения задачи её task file архивирован в
   `docs/codex/tasks/fixed/yyyyMMdd/`, а `.codex/TASKS.md` обновлён.
-- [ ] После MIG-009 в рабочем runtime/template/fixture дереве нет `config/`;
+- [x] После MIG-009 в рабочем runtime/template/fixture дереве нет `config/`;
   manifest, CI provisioning, E2E, loaders, tests и документация используют
   одну конечную структуру.
