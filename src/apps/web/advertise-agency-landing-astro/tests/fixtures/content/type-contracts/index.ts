@@ -226,7 +226,7 @@ export type VideoBlock = AssertContract<
   SameContract<Public.VideoBlock, contentBlocks.VideoBlock>
 >;
 
-import { projectCategories } from "@/types";
+import { projectCategories } from "@/content/project-categories";
 export const categories =
   projectCategories satisfies project.ProjectCategoryConfig[];
 // @ts-expect-error Barrel exports preserve the draft/public union.

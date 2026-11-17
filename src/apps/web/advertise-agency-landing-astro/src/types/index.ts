@@ -2,10 +2,10 @@
 
 export { type Review } from "./review";
 export type { FaqApproval, FaqItem, FaqContent } from "./faq";
-export {
-  projectCategories,
-  type Project,
-  type ProjectCategory,
+export type {
+  Project,
+  ProjectCategory,
+  ProjectCategoryConfig,
 } from "./project";
 export type {
   Offer,

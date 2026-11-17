@@ -5,7 +5,7 @@ import { parseContent } from "../validation/parse-content";
 import {
   getPublishedPricingExamples,
   getVisiblePricingExamples,
-} from "./pricing-publication";
+} from "../validation/policies/pricing-publication";
 
 // Genuine prices may link only to generated, approved agency case routes.
 // Demo destinations exist for previews but cannot substantiate real prices.
@@ -21,4 +21,4 @@ export const pricing = parseContent(
 
 export const publishedPricingExamples = getPublishedPricingExamples(pricing);
 export const visiblePricingExamples = getVisiblePricingExamples(pricing);
-export { formatPricingPrice } from "./pricing-publication";
+export { formatPricingPrice } from "../validation/policies/pricing-publication";

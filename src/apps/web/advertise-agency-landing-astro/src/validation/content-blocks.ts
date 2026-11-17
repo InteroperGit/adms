@@ -18,8 +18,8 @@ import type {
 } from "../types/content-blocks";
 import { mediaSource, text } from "./shared";
 import type { AssertContract, SameContract } from "./shared";
-import { isValidOrderFormTuple } from "../content/order-form-registry";
-import { getPublicationIssues } from "../content/block-publication";
+import { isValidOrderFormTuple } from "./policies/order-form-registry";
+import { getPublicationIssues } from "./policies/block-publication";
 
 const blockId = z
   .string()

@@ -1,7 +1,7 @@
 // Preview visibility must never promote an unapproved photograph.
 import { expect, it } from "vitest";
-import { buildContract } from "../../tests/helpers/fixtures";
-import type { IntroductionContent } from "../types/introduction";
+import { buildContract } from "../../../tests/helpers/fixtures";
+import type { IntroductionContent } from "../../types/introduction";
 import { getVisibleIntroductionPhoto } from "./introduction-publication";
 
 it.each([false, true])(

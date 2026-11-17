@@ -11,7 +11,10 @@ import ProjectDetail, {
   getStaticPaths as getProjectStaticPaths,
 } from "../../src/pages/projects/[id].astro";
 import type { APIContext } from "astro";
-import { getVisibleProjects } from "../../src/content/project-publication";
+// prettier-ignore
+import {
+  getVisibleProjects,
+} from "../../src/validation/policies/project-publication";
 import ServicePage, {
   getStaticPaths as getServiceStaticPaths,
 } from "../../src/pages/services/[id].astro";
@@ -46,7 +49,7 @@ vi.mock("@/content/services", async (importOriginal) => {
   const actual =
     await importOriginal<typeof import("../../src/content/services")>();
   const { getVisibleServices } =
-    await import("../../src/content/service-publication");
+    await import("../../src/validation/policies/service-publication");
   return {
     ...actual,
     get services() {

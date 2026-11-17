@@ -1,7 +1,7 @@
 // Editorial gates must preserve safe visibility and independent media review.
 import { expect, it } from "vitest";
-import { buildContentBlocks } from "../../tests/helpers/fixtures";
-import type { ContentBlock } from "../types/content-blocks";
+import { buildContentBlocks } from "../../../tests/helpers/fixtures";
+import type { ContentBlock } from "../../types/content-blocks";
 import {
   assertPublicationPolicy,
   getPublicationIssues,

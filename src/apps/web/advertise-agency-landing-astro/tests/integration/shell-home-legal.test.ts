@@ -33,7 +33,7 @@ vi.mock("@/content/services", async (importOriginal) => {
   const actual =
     await importOriginal<typeof import("../../src/content/services")>();
   const { getVisibleServices } =
-    await import("../../src/content/service-publication");
+    await import("../../src/validation/policies/service-publication");
   return {
     ...actual,
     get services() {

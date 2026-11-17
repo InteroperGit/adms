@@ -3,14 +3,19 @@
 import { expect, it } from "vitest";
 import fixtures from "../../tests/fixtures/content/unit-contracts.json";
 import { expectContentContract } from "../../tests/helpers/content-contract";
+import { projectCategories } from "../content/project-categories";
 import {
+  createProjectSchemas,
   projectArticleMetadataSchema,
   projectArticleSourceSchema,
+} from "./projects";
+
+const {
   projectMetadataSchema,
   projectRecordsSchema,
   projectSchema,
   projectsSchema,
-} from "./projects";
+} = createProjectSchemas(projectCategories.map(({ slug }) => slug));
 
 const { content, ...metadata } = fixtures.project;
 const form = {

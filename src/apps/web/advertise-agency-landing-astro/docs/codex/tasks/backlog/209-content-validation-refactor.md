@@ -6,7 +6,7 @@
 
 **Статус:** backlog. Создано: 2026-11-17.
 **Мастер:** [205](../todo/205-content-refactor-master.md).
-**Зависимость:** [208](208-content-module-migration.md), принять до начала
+**Зависимость:** [208](../fixed/20261117/208-content-module-migration.md), принять до начала
 этой задачи.
 
 ## Scope

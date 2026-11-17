@@ -3,8 +3,14 @@
 import type { APIRoute } from "astro";
 import { projects } from "@/content/projects";
 import { services } from "@/content/services";
-import { getPublishedServicePaths } from "@/content/service-publication";
-import { getPublishedProjectPaths } from "@/content/project-publication";
+// prettier-ignore
+import {
+  getPublishedServicePaths,
+} from "@/validation/policies/service-publication";
+// prettier-ignore
+import {
+  getPublishedProjectPaths,
+} from "@/validation/policies/project-publication";
 
 const paths = [
   "/",

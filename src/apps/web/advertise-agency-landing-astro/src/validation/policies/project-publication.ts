@@ -1,8 +1,5 @@
-import {
-  projectCategories,
-  type Project,
-  type ProjectCategory,
-} from "../types/project";
+import { type Project, type ProjectCategory } from "../../types/project";
+import type { ProjectCategoryConfig } from "../../types/project";
 import { hasDemoBlocks } from "./block-publication";
 
 /** Page status alone cannot promote a visible demo block into a real case. */
@@ -27,9 +24,12 @@ export function getPublishedProjectPaths(records: Project[]): string[] {
  * Unclassified projects remain in the all-projects collection and are not
  * silently assigned to the fallback category.
  */
-export function getAvailableProjectCategories(records: Project[]) {
+export function getAvailableProjectCategories(
+  records: Project[],
+  categories: ProjectCategoryConfig[],
+) {
   const used = new Set<ProjectCategory>(
     records.flatMap((project) => (project.category ? [project.category] : [])),
   );
-  return projectCategories.filter(({ slug }) => used.has(slug));
+  return categories.filter(({ slug }) => used.has(slug));
 }

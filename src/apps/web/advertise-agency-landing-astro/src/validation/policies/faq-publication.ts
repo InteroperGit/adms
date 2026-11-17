@@ -1,4 +1,4 @@
-import type { FaqApproval, FaqContent } from "../types/faq";
+import type { FaqApproval, FaqContent } from "../../types/faq";
 
 function isApproved(approval: FaqApproval) {
   return (

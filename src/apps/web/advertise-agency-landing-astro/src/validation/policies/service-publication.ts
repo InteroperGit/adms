@@ -1,4 +1,4 @@
-import type { Service, ServicesContent } from "../types/services";
+import type { Service, ServicesContent } from "../../types/services";
 import { getVisibleBlocks, hasDemoBlocks } from "./block-publication";
 
 /** Share the agency publication decision across cards and article metadata. */

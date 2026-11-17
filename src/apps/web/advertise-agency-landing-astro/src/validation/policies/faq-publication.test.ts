@@ -1,7 +1,7 @@
 // Section approval and each answer approval are independent publication gates.
 import { expect, it } from "vitest";
-import { buildContract } from "../../tests/helpers/fixtures";
-import { faqSchema } from "../validation/faq";
+import { buildContract } from "../../../tests/helpers/fixtures";
+import { faqSchema } from "../faq";
 import { getPublishedFaqItems, getVisibleFaqItems } from "./faq-publication";
 
 const approval = {

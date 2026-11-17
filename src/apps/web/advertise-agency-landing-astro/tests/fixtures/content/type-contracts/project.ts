@@ -37,7 +37,10 @@ export const categoryConfig = {
   textColor: "#ffffff",
 } satisfies Domain.ProjectCategoryConfig;
 
-import { getProjectCategory, projectCategories } from "@/types/project";
+import {
+  getProjectCategory,
+  projectCategories,
+} from "@/content/project-categories";
 export const categories =
   projectCategories satisfies Domain.ProjectCategoryConfig[];
 export const found = getProjectCategory(category) satisfies

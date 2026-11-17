@@ -1,7 +1,7 @@
 // Cards and articles share approvals, with stricter article indexing gates.
 import { expect, it } from "vitest";
-import { buildContract } from "../../tests/helpers/fixtures";
-import { createServicesSchema } from "../validation/services";
+import { buildContract } from "../../../tests/helpers/fixtures";
+import { createServicesSchema } from "../services";
 import {
   getPublishedServicePaths,
   getVisibleServices,

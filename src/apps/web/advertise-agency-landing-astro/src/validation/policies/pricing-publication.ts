@@ -1,4 +1,4 @@
-import type { PricingContent, PricingPrice } from "../types/pricing";
+import type { PricingContent, PricingPrice } from "../../types/pricing";
 
 /** Agency publication always excludes fictional amounts, even after edits. */
 export function getPublishedPricingExamples(content: PricingContent) {

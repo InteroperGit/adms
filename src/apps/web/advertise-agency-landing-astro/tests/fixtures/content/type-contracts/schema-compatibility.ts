@@ -15,7 +15,7 @@ import type { pricingSchema } from "@/validation/pricing";
 // prettier-ignore
 import type { productionAndGuaranteesSchema }
   from '@/validation/production-and-guarantees';
-import type { projectSchema } from "@/validation/projects";
+import type { createProjectSchemas } from "@/validation/projects";
 import type { reviewSchema } from "@/validation/reviews";
 import type { servicesSchema } from "@/validation/services";
 
@@ -59,7 +59,10 @@ export type Production = AssertContract<
   >
 >;
 export type Project = AssertContract<
-  SameContract<z.output<typeof projectSchema>, Domain.Project>
+  SameContract<
+    z.output<ReturnType<typeof createProjectSchemas>["projectSchema"]>,
+    Domain.Project
+  >
 >;
 export type Review = AssertContract<
   SameContract<z.output<typeof reviewSchema>, Domain.Review>

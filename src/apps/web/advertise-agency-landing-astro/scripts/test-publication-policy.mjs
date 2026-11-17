@@ -5,21 +5,27 @@ import { moduleURL } from "./lib/import-typescript.mjs";
 import { compileMdx } from "./lib/compile-mdx.mjs";
 
 const policy = await import(
-  await moduleURL("src/content/block-publication.ts")
+  await moduleURL("src/validation/policies/block-publication.ts")
 );
 const { contentBlocksSchema } = await import(
   await moduleURL("src/validation/content-blocks.ts")
 );
 const projects = await import(await moduleURL("src/validation/projects.ts"));
+const { projectCategories } = await import(
+  await moduleURL("src/content/project-categories.ts")
+);
+const projectSchemas = projects.createProjectSchemas(
+  projectCategories.map(({ slug }) => slug),
+);
 const projectPolicy = await import(
-  await moduleURL("src/content/project-publication.ts")
+  await moduleURL("src/validation/policies/project-publication.ts")
 );
 const services = await import(await moduleURL("src/validation/services.ts"));
 const servicePolicy = await import(
-  await moduleURL("src/content/service-publication.ts")
+  await moduleURL("src/validation/policies/service-publication.ts")
 );
 const { getArticleFormRegistration } = await import(
-  await moduleURL("src/content/article-context.ts")
+  await moduleURL("src/validation/policies/article-context.ts")
 );
 const fixture = JSON.parse(
   await readFile("tests/fixtures/content/publication.json", "utf8"),
@@ -45,7 +51,7 @@ const records = JSON.parse(
 );
 const { article: _source, ...metadata } = records[0];
 const project = { ...metadata, status: "published", content: approved };
-projects.projectSchema.parse(project);
+projectSchemas.projectSchema.parse(project);
 assert.deepEqual(policy.getPublicationIssues(approved, "published"), []);
 assert.equal(projectPolicy.isProjectPublished(project), true);
 
@@ -58,7 +64,7 @@ const components = {
 };
 async function check(blocks, valid, status = "published") {
   const value = { ...project, status, content: blocks };
-  assert.equal(projects.projectSchema.safeParse(value).success, valid);
+  assert.equal(projectSchemas.projectSchema.safeParse(value).success, valid);
   // Literal attributes use the same production normalization as authored MDX.
   const source = blocks
     .map((block) => {
@@ -68,7 +74,7 @@ async function check(blocks, valid, status = "published") {
     .join("\n\n");
   const result = await compileMdx(`---\nprojectId: 1\n---\n\n${source}`);
   assert.equal(
-    projects.projectSchema.safeParse({
+    projectSchemas.projectSchema.safeParse({
       ...value,
       content: result.content,
     }).success,

@@ -1,4 +1,4 @@
-import type { ProjectCategory } from "./project-categories";
+import type { ProjectCategory } from "../../types/project";
 
 /** Only explicitly registered categories may select a specialized form. */
 export type OrderFormContext = "project" | "service";

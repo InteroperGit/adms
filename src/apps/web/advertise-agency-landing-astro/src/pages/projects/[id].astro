@@ -12,7 +12,7 @@ import ProjectArticleActions from
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 import type { Project } from "@/types/project";
-import { isProjectPublished } from "@/content/project-publication";
+import { isProjectPublished } from "@/validation/policies/project-publication";
 
 export function getStaticPaths() {
   return projects.map((project) => ({

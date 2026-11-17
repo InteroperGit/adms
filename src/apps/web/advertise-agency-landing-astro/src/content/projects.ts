@@ -1,15 +1,23 @@
 import data from "@/data/content/site/lists/projects.json";
 import { getCollection, render } from "astro:content";
-import { projectsSchema, projectRecordsSchema } from "../validation/projects";
+import { createProjectSchemas } from "../validation/projects";
+import { projectCategories } from "./project-categories";
 import { parseContent } from "../validation/parse-content";
 import {
   getAvailableProjectCategories,
   getVisibleProjects,
-} from "./project-publication";
-import { assertPublicationPolicy } from "./block-publication";
+} from "../validation/policies/project-publication";
+// prettier-ignore
+import {
+  assertPublicationPolicy,
+} from "../validation/policies/block-publication";
+
+const projectSchemas = createProjectSchemas(
+  projectCategories.map(({ slug }) => slug),
+);
 
 const records = parseContent(
-  projectRecordsSchema,
+  projectSchemas.projectRecordsSchema,
   data,
   "data/content/site/lists/projects.json",
 );
@@ -35,7 +43,7 @@ const resolved = await Promise.all(
   }),
 );
 export const projectRecords = parseContent(
-  projectsSchema,
+  projectSchemas.projectsSchema,
   resolved,
   "data/content/site/lists/projects.json",
 );
@@ -47,5 +55,7 @@ projectRecords.forEach((project) =>
   ),
 );
 export const projects = getVisibleProjects(projectRecords);
-export const availableProjectCategories =
-  getAvailableProjectCategories(projects);
+export const availableProjectCategories = getAvailableProjectCategories(
+  projects,
+  projectCategories,
+);

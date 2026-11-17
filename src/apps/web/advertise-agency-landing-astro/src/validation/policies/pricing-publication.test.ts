@@ -1,7 +1,7 @@
 // Fictional prices stay separate from approved current and historical prices.
 import { expect, it } from "vitest";
-import { buildContract } from "../../tests/helpers/fixtures";
-import { pricingSchema } from "../validation/pricing";
+import { buildContract } from "../../../tests/helpers/fixtures";
+import { pricingSchema } from "../pricing";
 import {
   formatPricingPrice,
   getPublishedPricingExamples,

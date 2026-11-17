@@ -1,6 +1,6 @@
 // Authored form references cannot override page-owned publication or category.
 import { expect, it } from "vitest";
-import type { OrderFormBlock } from "../types/content-blocks";
+import type { OrderFormBlock } from "../../types/content-blocks";
 import {
   type ArticleContext,
   getArticleFormRegistration,

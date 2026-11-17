@@ -1,5 +1,5 @@
 // Page-owned context is passed by composition, never read from authored MDX.
-import type { OrderFormBlock } from "../types/content-blocks";
+import type { OrderFormBlock } from "../../types/content-blocks";
 import { getOrderFormRegistration } from "./order-form-registry";
 
 export type ArticleContext =

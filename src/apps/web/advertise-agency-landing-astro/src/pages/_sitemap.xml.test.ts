@@ -11,10 +11,10 @@ const published = vi.hoisted(() => ({
 
 vi.mock("@/content/projects", () => ({ projects: [] }));
 vi.mock("@/content/services", () => ({ services: {} }));
-vi.mock("@/content/project-publication", () => ({
+vi.mock("@/validation/policies/project-publication", () => ({
   getPublishedProjectPaths: () => published.projects,
 }));
-vi.mock("@/content/service-publication", () => ({
+vi.mock("@/validation/policies/service-publication", () => ({
   getPublishedServicePaths: () => published.services,
 }));
 

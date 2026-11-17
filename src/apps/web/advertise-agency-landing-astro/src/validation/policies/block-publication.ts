@@ -3,7 +3,7 @@ import type {
   ContentBlock,
   ContentBlockMeta,
   ContentImage,
-} from "../types/content-blocks";
+} from "../../types/content-blocks";
 
 export type ArticlePublication = "draft" | "demo" | "published";
 

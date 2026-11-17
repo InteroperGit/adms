@@ -8,7 +8,10 @@ import ContentBlocks from "@/components/content/ContentBlocks.astro";
 import Button from "@/components/ui/Button.astro";
 import Link from "@/components/ui/Link.astro";
 import { services, visibleServices } from "@/content/services";
-import { isServiceArticlePublished } from "@/content/service-publication";
+// prettier-ignore
+import {
+  isServiceArticlePublished,
+} from "@/validation/policies/service-publication";
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {

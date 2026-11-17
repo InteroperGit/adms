@@ -11,8 +11,8 @@ import {
   serviceArticleSourceSchema,
 } from "./service-articles";
 import type { AssertContract, SameContract } from "./shared";
-import { getPublicationIssues } from "../content/block-publication";
-import { isServicePublished } from "../content/service-publication";
+import { getPublicationIssues } from "./policies/block-publication";
+import { isServicePublished } from "./policies/service-publication";
 
 const focalPoint = z
   .object({

@@ -1,7 +1,7 @@
 // Visible demos have public destinations but cannot enter the indexable map.
 import { expect, it } from "vitest";
-import { buildProject } from "../../tests/helpers/fixtures";
-import { projectCategories } from "./project-categories";
+import { buildProject } from "../../../tests/helpers/fixtures";
+import { projectCategories } from "../../content/project-categories";
 import {
   getAvailableProjectCategories,
   getPublishedProjectPaths,
@@ -30,9 +30,14 @@ it("returns represented categories without assigning a fallback", () => {
   const category = projectCategories[0];
   const classified = buildProject({ category: category.slug });
   const unclassified = buildProject({ category: undefined });
-  expect(getAvailableProjectCategories([])).toEqual([]);
-  expect(getAvailableProjectCategories([unclassified])).toEqual([]);
+  expect(getAvailableProjectCategories([], projectCategories)).toEqual([]);
   expect(
-    getAvailableProjectCategories([classified, unclassified, classified]),
+    getAvailableProjectCategories([unclassified], projectCategories),
+  ).toEqual([]);
+  expect(
+    getAvailableProjectCategories(
+      [classified, unclassified, classified],
+      projectCategories,
+    ),
   ).toEqual([category]);
 });

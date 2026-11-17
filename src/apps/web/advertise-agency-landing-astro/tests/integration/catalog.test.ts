@@ -27,7 +27,11 @@ import ProjectPage, {
   getStaticPaths as getProjectPageStaticPaths,
 } from "../../src/pages/projects/page/[page].astro";
 import { projectCatalogSettings } from "../../src/content/project-catalog";
-import { getVisibleProjects } from "../../src/content/project-publication";
+import { projectCategories } from "../../src/content/project-categories";
+// prettier-ignore
+import {
+  getVisibleProjects,
+} from "../../src/validation/policies/project-publication";
 import { site } from "../../src/content/site";
 import { render, renderDocument } from "../helpers/render";
 import { buildProject, cloneFixture } from "../helpers/fixtures";
@@ -46,7 +50,7 @@ vi.mock("@/content/projects", async (importOriginal) => {
   const actual =
     await importOriginal<typeof import("../../src/content/projects")>();
   const { getAvailableProjectCategories } =
-    await import("../../src/content/project-publication");
+    await import("../../src/validation/policies/project-publication");
   return {
     ...actual,
     get projects() {
@@ -55,6 +59,7 @@ vi.mock("@/content/projects", async (importOriginal) => {
     get availableProjectCategories() {
       return getAvailableProjectCategories(
         overrides.projects ?? actual.projects,
+        projectCategories,
       );
     },
   };

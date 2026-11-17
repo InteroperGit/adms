@@ -1,12 +1,4 @@
-﻿import {
-  getProjectCategory,
-  projectCategories,
-} from "../content/project-categories";
-import type {
-  ProjectCategory,
-  ProjectCategoryConfig,
-} from "../content/project-categories";
-import type { ContentBlock } from "./content-blocks";
+﻿import type { ContentBlock } from "./content-blocks";
 
 export interface ProjectApproval {
   source: string;
@@ -22,8 +14,14 @@ export interface ProjectEvidence {
   attribution: ProjectApproval | null;
 }
 
-export { getProjectCategory, projectCategories };
-export type { ProjectCategory, ProjectCategoryConfig };
+export type ProjectCategory = string;
+
+export interface ProjectCategoryConfig {
+  slug: ProjectCategory;
+  label: string;
+  color: string;
+  textColor: string;
+}
 
 /**
  * Catalog and SEO metadata for a project article.

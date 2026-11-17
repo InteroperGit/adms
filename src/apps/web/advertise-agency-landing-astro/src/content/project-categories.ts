@@ -1,5 +1,6 @@
 import data from "@/data/content/site/lists/projectCategories.json";
 import { z } from "astro/zod";
+import type { ProjectCategory, ProjectCategoryConfig } from "@/types/project";
 
 const cssColor = z
   .string()
@@ -33,15 +34,6 @@ const categoriesSchema = z
       seen.add(category.slug);
     });
   });
-
-export type ProjectCategory = (typeof data)[number]["slug"];
-
-export interface ProjectCategoryConfig {
-  slug: ProjectCategory;
-  label: string;
-  color: string;
-  textColor: string;
-}
 
 /** One validated source for category labels and badge colors. */
 export const projectCategories = categoriesSchema.parse(
