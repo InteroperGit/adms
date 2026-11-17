@@ -39,7 +39,7 @@ import Link from "@/components/ui/Link.astro";
       <button
         type="button"
         data-cookie-choice="accepted"
-        class="btn btn-success site-button"
+        class="btn btn-success site-button cookie-choice--accepted"
       >
         Все куки
       </button>
@@ -53,7 +53,7 @@ import Link from "@/components/ui/Link.astro";
       <button
         type="button"
         data-cookie-choice="declined"
-        class="btn btn-error site-button"
+        class="btn btn-error site-button cookie-choice--declined"
       >
         Отказаться
       </button>
@@ -64,6 +64,11 @@ import Link from "@/components/ui/Link.astro";
 <style>
   /* Keep the confirmation panel near the lower-right screen corner. */
   .cookie-banner {
+    --cookie-accepted-background: var(--color-success);
+    --cookie-declined-background: var(--color-error);
+    --cookie-choice-content: var(--color-base-content);
+    --cookie-site-background: var(--color-base-100);
+    --cookie-site-border: var(--site-control-border);
     right: 1rem;
     bottom: 1rem;
     left: auto;
@@ -75,6 +80,22 @@ import Link from "@/components/ui/Link.astro";
     overflow-y: auto;
     overscroll-behavior: contain;
     border-radius: 0.5rem;
+  }
+
+  /* Use the dark surface palette for the neutral choice. */
+  :global([data-theme="dark"]) .cookie-banner {
+    --cookie-accepted-background: color-mix(
+      in srgb,
+      var(--color-success) 40%,
+      var(--color-base-200)
+    );
+    --cookie-declined-background: color-mix(
+      in srgb,
+      var(--color-error) 45%,
+      var(--color-base-200)
+    );
+    --cookie-site-background: var(--color-base-200);
+    --cookie-site-border: var(--color-base-300);
   }
 
   /* Keep copy above the choices in a compact, readable panel. */
@@ -104,11 +125,28 @@ import Link from "@/components/ui/Link.astro";
     padding-block: 0.5rem;
   }
 
-  /* Keep the site-only choice visibly white in both page themes. */
+  /* Keep the site-only choice on a theme-matched neutral surface. */
   .cookie-choice--site {
-    border: 1px solid #cbd5e1;
-    background: #ffffff;
-    color: #172b36;
+    border: 1px solid var(--cookie-site-border);
+    background: var(--cookie-site-background);
+    color: var(--color-base-content);
+  }
+
+  /* Keep the action colors distinct against both theme surfaces. */
+  .cookie-choice--accepted,
+  .cookie-choice--declined {
+    border-color: transparent;
+    color: var(--cookie-choice-content);
+  }
+
+  /* Preserve the green success meaning while following the active theme. */
+  .cookie-choice--accepted {
+    background: var(--cookie-accepted-background);
+  }
+
+  /* Preserve the red refusal meaning while following the active theme. */
+  .cookie-choice--declined {
+    background: var(--cookie-declined-background);
   }
 
   .cookie-mobile-break {
@@ -161,7 +199,16 @@ import Link from "@/components/ui/Link.astro";
         return;
       }
       const footerBottom = footer.getBoundingClientRect().bottom;
-      const bottomOffset = Math.max(8, window.innerHeight - footerBottom + 8);
+      const mobileNav =
+        document.querySelector<HTMLElement>(".mobile-bottom-nav");
+      const navClearance = mobileNav
+        ? window.innerHeight - mobileNav.getBoundingClientRect().top
+        : 0;
+      const bottomOffset = Math.max(
+        8,
+        window.innerHeight - footerBottom + 8,
+        navClearance + 8,
+      );
       banner.style.setProperty("--cookie-bottom-offset", `${bottomOffset}px`);
     };
 

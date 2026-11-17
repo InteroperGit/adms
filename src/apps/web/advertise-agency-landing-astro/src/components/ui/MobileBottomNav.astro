@@ -1,0 +1,122 @@
+---
+// Keep the most-used section links available at the bottom of mobile pages.
+import { FolderKanban, MapPin, Star, Wrench } from "@lucide/astro";
+import { visibleServices } from "@/content/services";
+import Link from "@/components/ui/Link.astro";
+
+const items = [
+  ...(visibleServices.length > 0
+    ? [{ label: "Услуги", href: "/#services", Icon: Wrench }]
+    : []),
+  { label: "Проекты", href: "/#projects", Icon: FolderKanban },
+  { label: "Отзывы", href: "/#reviews", Icon: Star },
+  { label: "Контакты", href: "/#contacts", Icon: MapPin },
+];
+---
+
+{/* Keep the supplied section links in one thumb-friendly navigation row. */}
+<nav
+  class="mobile-bottom-nav"
+  aria-label="Мобильная навигация"
+>
+  <ul>
+    {items.map(({ label, href, Icon }) => (
+      <li>
+        <Link
+          href={href}
+          underline={false}
+          class="mobile-bottom-nav-link"
+        >
+          <Icon
+            size={22}
+            aria-hidden="true"
+          />
+          <span>{label}</span>
+        </Link>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  /* Reserve a stable clearance for the bar and the device safe area. */
+  :global(:root) {
+    --site-mobile-bottom-nav-clearance: calc(
+      3.75rem + max(0.25rem, env(safe-area-inset-bottom))
+    );
+  }
+
+  /* Hide the bar whenever wider site navigation is present. */
+  .mobile-bottom-nav {
+    display: none;
+  }
+
+  @media (max-width: 47.999rem) {
+    /* Keep page content scrollable above the fixed bottom navigation. */
+    :global(body) {
+      padding-block-end: var(--site-mobile-bottom-nav-clearance);
+    }
+
+    /* Match the reference bar while respecting notched-device insets. */
+    .mobile-bottom-nav {
+      position: fixed;
+      display: block;
+      z-index: 45;
+      inset-inline: 0;
+      bottom: 0;
+      box-sizing: border-box;
+      min-height: var(--site-mobile-bottom-nav-clearance);
+      padding: 0.25rem max(0.5rem, env(safe-area-inset-left))
+        max(0.25rem, env(safe-area-inset-bottom))
+        max(0.5rem, env(safe-area-inset-right));
+      border-top: 1px solid var(--color-base-300);
+      background: var(--color-base-100);
+      box-shadow: 0 -4px 14px rgb(24 34 45 / 8%);
+    }
+
+    /* Give each section the same stable share of the available width. */
+    .mobile-bottom-nav ul {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      height: 100%;
+    }
+
+    /* Keep labels readable and all four navigation targets touch-sized. */
+    .mobile-bottom-nav-link {
+      display: flex;
+      min-width: 0;
+      min-height: 3.5rem;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      padding-inline: 0.125rem;
+      color: var(--color-base-content);
+      font-size: 0.75rem;
+      line-height: 1.2;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .mobile-bottom-nav-link svg {
+      width: 1.375rem;
+      height: 1.375rem;
+      flex: none;
+    }
+
+    /* Keep pointer feedback aligned with the current theme accent. */
+    @media (hover: hover) and (pointer: fine) {
+      .mobile-bottom-nav-link:hover {
+        color: var(--color-primary);
+      }
+    }
+
+    /* Keep keyboard focus visible above the fixed bar's edge. */
+    .mobile-bottom-nav-link:focus-visible {
+      border-radius: var(--radius-field);
+      outline: var(--site-focus-ring);
+      outline-offset: -2px;
+    }
+  }
+</style>

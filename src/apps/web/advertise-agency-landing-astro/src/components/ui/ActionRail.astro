@@ -222,6 +222,20 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
     pointer-events: auto;
   }
 
+  /* Keep the chat control above the persistent mobile section navigation. */
+  @media (max-width: 47.999rem) {
+    .action-rail-host {
+      bottom: calc(
+        var(--site-mobile-bottom-nav-clearance, 4rem) +
+          max(0.75rem, env(safe-area-inset-bottom)) + 4.25rem
+      );
+    }
+
+    .action-rail-chat-fixed {
+      bottom: calc(var(--site-mobile-bottom-nav-clearance, 4rem) + 0.5rem);
+    }
+  }
+
   /* Stack contact actions with consistent button dimensions. */
   .action-rail-group {
     display: grid;

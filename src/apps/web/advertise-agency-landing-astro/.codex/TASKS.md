@@ -1,6 +1,6 @@
 # Codex Task Handoff
 
-Updated: 2026-11-17
+Updated: 2026-11-18
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal. Detailed
 scope and verification belong to the linked task files.
@@ -12,6 +12,9 @@ request to run the full checks.
 UI task 171 is archived; delivery is deferred to task 173.
 Task [212](../docs/codex/tasks/todo/212-responsive-agency-footer.md) is
 implemented and accepted; focused tests and responsive theme checks passed.
+Task [213](../docs/codex/tasks/todo/213-mobile-bottom-navigation.md) is
+implemented and browser-checked; `pnpm check` fails in `@emnapi`, and colocated
+component tests remain outstanding.
 
 ## Recent completed work
 
