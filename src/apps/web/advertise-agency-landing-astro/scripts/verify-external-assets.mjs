@@ -11,7 +11,7 @@ const sourceFiles = [
   "data/content/config/projects.json",
   "data/content/config/reviews.json",
   "data/content/site/settings/site.json",
-  "data/content/config/offers.json",
+  "data/content/site/sections/offers.json",
   "src/layouts/Layout.astro",
 ];
 const expectedTypes = [

@@ -1,10 +1,10 @@
 // Preserve joined business copy and item order.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from "@/data/content/config/business-solutions.json";
+import fixture from "@/data/content/site/sections/business-solutions.json";
 import { businessSolutions } from "./business-solutions";
 
 afterEach(() => {
-  vi.doUnmock("@/data/content/config/business-solutions.json");
+  vi.doUnmock("@/data/content/site/sections/business-solutions.json");
   vi.resetModules();
 });
 
@@ -24,11 +24,11 @@ it("exports normalized solution copy in authored order", () => {
 
 it("rejects malformed solution data at the export boundary", async () => {
   vi.resetModules();
-  vi.doMock("@/data/content/config/business-solutions.json", () => ({
+  vi.doMock("@/data/content/site/sections/business-solutions.json", () => ({
     default: { ...fixture, items: fixture.items.slice(0, 3) },
   }));
 
   await expect(import("./business-solutions")).rejects.toThrow(
-    "Invalid content in data/content/config/business-solutions.json",
+    "Invalid content in data/content/site/sections/business-solutions.json",
   );
 });

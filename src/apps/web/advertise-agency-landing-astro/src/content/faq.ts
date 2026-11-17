@@ -1,4 +1,4 @@
-import data from "@/data/content/config/faq.json";
+import data from "@/data/content/site/sections/faq.json";
 import { faqSchema } from "../validation/faq";
 import { parseContent } from "../validation/parse-content";
 
@@ -6,5 +6,5 @@ import { parseContent } from "../validation/parse-content";
 export const faq = parseContent(
   faqSchema,
   data,
-  "data/content/config/faq.json",
+  "data/content/site/sections/faq.json",
 );

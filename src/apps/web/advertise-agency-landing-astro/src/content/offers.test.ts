@@ -1,10 +1,10 @@
 // Offer exports preserve authored order and derive enabled items consistently.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from "../../tests/fixtures/content/site/config/offers.json";
+import fixture from "@/data/content/site/sections/offers.json";
 import { enabledOffers, offers } from "./offers";
 
 afterEach(() => {
-  vi.doUnmock("@/data/content/config/offers.json");
+  vi.doUnmock("@/data/content/site/sections/offers.json");
   vi.resetModules();
 });
 
@@ -18,7 +18,7 @@ it("exports normalized offers with source IDs and order", () => {
 
 it("filters disabled offers without reordering enabled items", async () => {
   vi.resetModules();
-  vi.doMock("@/data/content/config/offers.json", () => ({
+  vi.doMock("@/data/content/site/sections/offers.json", () => ({
     default: {
       ...fixture,
       items: fixture.items.map((item, index) => ({
@@ -35,11 +35,11 @@ it("filters disabled offers without reordering enabled items", async () => {
 
 it("rejects an invalid offer interval at the export boundary", async () => {
   vi.resetModules();
-  vi.doMock("@/data/content/config/offers.json", () => ({
+  vi.doMock("@/data/content/site/sections/offers.json", () => ({
     default: { ...fixture, intervalMs: 4999 },
   }));
 
   await expect(import("./offers")).rejects.toThrow(
-    "Invalid content in data/content/config/offers.json",
+    "Invalid content in data/content/site/sections/offers.json",
   );
 });

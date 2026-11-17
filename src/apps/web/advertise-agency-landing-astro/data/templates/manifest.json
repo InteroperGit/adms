@@ -27,14 +27,14 @@
       "output": "site/sections/action-rail.json"
     },
     {
-      "path": "config/business-solutions.json",
+      "path": "site/sections/business-solutions.json",
       "kind": "json",
-      "output": "config/business-solutions.json"
+      "output": "site/sections/business-solutions.json"
     },
     {
-      "path": "config/faq.json",
+      "path": "site/sections/faq.json",
       "kind": "json",
-      "output": "config/faq.json"
+      "output": "site/sections/faq.json"
     },
     {
       "path": "site/settings/icons.json",
@@ -57,9 +57,9 @@
       "output": "config/legal/terms-of-use.json"
     },
     {
-      "path": "config/offers.json",
+      "path": "site/sections/offers.json",
       "kind": "json",
-      "output": "config/offers.json"
+      "output": "site/sections/offers.json"
     },
     {
       "path": "config/order-inquiry.json",
@@ -67,9 +67,9 @@
       "output": "config/order-inquiry.json"
     },
     {
-      "path": "config/ordering-process.json",
+      "path": "site/sections/ordering-process.json",
       "kind": "json",
-      "output": "config/ordering-process.json"
+      "output": "site/sections/ordering-process.json"
     },
     {
       "path": "config/pricing.json",

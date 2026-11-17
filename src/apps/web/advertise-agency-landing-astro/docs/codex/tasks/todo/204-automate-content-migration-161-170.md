@@ -47,7 +47,7 @@ inquiries/design читать при затрагивании соответст
 - [x] Выполнить [162 — tooling](../fixed/20261117/162-content-migration-tooling.md).
 - [x] Выполнить [163 — settings](../fixed/20261117/163-content-migration-settings.md).
 - [x] Выполнить [164 — primary sections](../fixed/20261117/164-content-migration-primary-sections.md).
-- [ ] Выполнить [165 — home sections](../backlog/165-content-migration-home-sections.md).
+- [x] Выполнить [165 — home sections](../fixed/20261117/165-content-migration-home-sections.md).
 - [ ] Выполнить [166 — commercial sections](../backlog/166-content-migration-commercial-sections.md).
 - [ ] Выполнить [167 — primary lists](../backlog/167-content-migration-primary-lists.md).
 - [ ] Выполнить [168 — supporting lists](../backlog/168-content-migration-supporting-lists.md).
@@ -102,7 +102,7 @@ inquiries/design читать при затрагивании соответст
 
 ## Handoff
 
-Создана 2026-11-16. Серия активна; 161–164 приняты и архивированы в отдельных
+Создана 2026-11-16. Серия активна; 161–165 приняты и архивированы в отдельных
 локальных commits. 162 выполнила tooling для смешанных content paths; CI/E2E
 работают на isolated fixtures без перезаписи authored runtime. Full verification
 остаётся до явного запроса после серии.
