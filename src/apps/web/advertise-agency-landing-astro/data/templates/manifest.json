@@ -72,14 +72,14 @@
       "output": "site/sections/ordering-process.json"
     },
     {
-      "path": "config/pricing.json",
+      "path": "site/sections/pricing.json",
       "kind": "json",
-      "output": "config/pricing.json"
+      "output": "site/sections/pricing.json"
     },
     {
-      "path": "config/production-and-guarantees.json",
+      "path": "site/sections/production-and-guarantees.json",
       "kind": "json",
-      "output": "config/production-and-guarantees.json"
+      "output": "site/sections/production-and-guarantees.json"
     },
     {
       "path": "config/project-catalog.json",

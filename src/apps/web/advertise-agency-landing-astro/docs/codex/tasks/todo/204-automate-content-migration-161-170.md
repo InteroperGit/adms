@@ -48,7 +48,7 @@ inquiries/design читать при затрагивании соответст
 - [x] Выполнить [163 — settings](../fixed/20261117/163-content-migration-settings.md).
 - [x] Выполнить [164 — primary sections](../fixed/20261117/164-content-migration-primary-sections.md).
 - [x] Выполнить [165 — home sections](../fixed/20261117/165-content-migration-home-sections.md).
-- [ ] Выполнить [166 — commercial sections](../backlog/166-content-migration-commercial-sections.md).
+- [x] Выполнить [166 — commercial sections](../fixed/20261117/166-content-migration-commercial-sections.md).
 - [ ] Выполнить [167 — primary lists](../backlog/167-content-migration-primary-lists.md).
 - [ ] Выполнить [168 — supporting lists](../backlog/168-content-migration-supporting-lists.md).
 - [ ] Выполнить [169 — pages](../backlog/169-content-migration-pages.md).
@@ -102,10 +102,12 @@ inquiries/design читать при затрагивании соответст
 
 ## Handoff
 
-Создана 2026-11-16. Серия активна; 161–165 приняты и архивированы в отдельных
-локальных commits. 162 выполнила tooling для смешанных content paths; CI/E2E
-работают на isolated fixtures без перезаписи authored runtime. Full verification
-остаётся до явного запроса после серии.
+Создана 2026-11-16. Серия активна; 161–166 приняты и архивированы в отдельных
+локальных commits. Задача 166 переместила pricing и production/guarantees в
+site/sections; шесть snapshot hashes совпали, focused checks, build и catalog
+E2E прошли. Следующая — 167, services/projects. 162 подготовила tooling для
+смешанных content paths; CI/E2E работают на isolated fixtures без перезаписи
+authored runtime. Full verification остаётся до явного запроса после серии.
 Node `26.13.1` и pnpm `10.7.0` доступны; для pnpm `TEMP`/`TMP`
 направлялись в ignored workspace output. Baseline содержит 52 runtime
 JSON/MDX; все SHA-256 совпадают со snapshot. Content/boundary, loader,

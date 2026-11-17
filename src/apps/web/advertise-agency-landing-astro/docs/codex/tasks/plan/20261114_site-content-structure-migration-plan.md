@@ -83,7 +83,7 @@ configuration, даже если внутри есть `items` (например
 
 Серия запущена через задачу
 [204](../todo/204-automate-content-migration-161-170.md).
-Задачи 161–165 приняты; следующая — pricing и production sections в задаче 166.
+Задачи 161–166 приняты; выполняется перенос каталогов services и projects в задаче 167.
 
 - [161 — Исходное состояние миграции](../fixed/20261117/161-content-migration-baseline.md)
   — MIG-000.
@@ -91,7 +91,7 @@ configuration, даже если внутри есть `items` (например
 - [163 — Перенос общих настроек](../fixed/20261117/163-content-migration-settings.md) — MIG-002.
 - [164 — Перенос базовых секций](../fixed/20261117/164-content-migration-primary-sections.md) — MIG-003.
 - [165 — Перенос остальных секций главной](../fixed/20261117/165-content-migration-home-sections.md) — MIG-004.
-- [166 — Перенос цен и гарантий](../backlog/166-content-migration-commercial-sections.md) — MIG-005.
+- [166 — Перенос цен и гарантий](../fixed/20261117/166-content-migration-commercial-sections.md) — MIG-005.
 - [167 — Перенос каталогов услуг и проектов](../backlog/167-content-migration-primary-lists.md) — MIG-006.
 - [168 — Перенос отзывов и категорий](../backlog/168-content-migration-supporting-lists.md) — MIG-007.
 - [169 — Перенос данных страниц и формы](../backlog/169-content-migration-pages.md) — MIG-008.

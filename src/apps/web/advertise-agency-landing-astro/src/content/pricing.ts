@@ -1,4 +1,4 @@
-import data from "@/data/content/config/pricing.json";
+import data from "@/data/content/site/sections/pricing.json";
 import { projects } from "./projects";
 import { createPricingSchema } from "../validation/pricing";
 import { parseContent } from "../validation/parse-content";
@@ -16,7 +16,7 @@ export const pricing = parseContent(
       .map((project) => `/projects/${project.id}`),
   ),
   data,
-  "data/content/config/pricing.json",
+  "data/content/site/sections/pricing.json",
 );
 
 export const publishedPricingExamples = getPublishedPricingExamples(pricing);

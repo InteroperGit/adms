@@ -1,10 +1,21 @@
 // Preserve draft guidance; its caller checks publication.
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from "@/data/content/config/production-and-guarantees.json";
 import { productionAndGuarantees } from "./production-and-guarantees";
 
+const fixture = JSON.parse(
+  await readFile(
+    resolve(
+      "tests/fixtures/content/site/sections/" +
+        "production-and-guarantees.json",
+    ),
+    "utf8",
+  ),
+) as typeof productionAndGuarantees;
+
 afterEach(() => {
-  vi.doUnmock("@/data/content/config/production-and-guarantees.json");
+  vi.doUnmock("@/data/content/site/sections/production-and-guarantees.json");
   vi.resetModules();
 });
 
@@ -31,12 +42,16 @@ it("rejects a warranty missing required content", async () => {
     return missingCoverage;
   });
   vi.resetModules();
-  vi.doMock("@/data/content/config/production-and-guarantees.json", () => ({
-    default: { ...fixture, warrantyTerms },
-  }));
+  vi.doMock(
+    "@/data/content/site/sections/production-and-guarantees.json",
+    () => ({
+      default: { ...fixture, warrantyTerms },
+    }),
+  );
 
   await expect(import("./production-and-guarantees")).rejects.toThrow(
-    "Invalid content in data/content/config/production-and-guarantees.json",
+    "Invalid content in data/content/site/sections/" +
+      "production-and-guarantees.json",
   );
 });
 
@@ -45,11 +60,15 @@ it("rejects an unsupported warranty source type", async () => {
     index === 0 ? { ...term, sourceType: "unknown" } : term,
   );
   vi.resetModules();
-  vi.doMock("@/data/content/config/production-and-guarantees.json", () => ({
-    default: { ...fixture, warrantyTerms },
-  }));
+  vi.doMock(
+    "@/data/content/site/sections/production-and-guarantees.json",
+    () => ({
+      default: { ...fixture, warrantyTerms },
+    }),
+  );
 
   await expect(import("./production-and-guarantees")).rejects.toThrow(
-    "Invalid content in data/content/config/production-and-guarantees.json",
+    "Invalid content in data/content/site/sections/" +
+      "production-and-guarantees.json",
   );
 });

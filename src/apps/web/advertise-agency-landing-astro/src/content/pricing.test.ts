@@ -1,10 +1,10 @@
 // Pricing links accept published project destinations only.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from "../../tests/fixtures/content/site/config/pricing.json";
+import fixture from "@/data/content/site/sections/pricing.json";
 
 afterEach(() => {
   vi.doUnmock("./projects");
-  vi.doUnmock("@/data/content/config/pricing.json");
+  vi.doUnmock("@/data/content/site/sections/pricing.json");
   vi.resetModules();
 });
 
@@ -22,7 +22,9 @@ function load(status: string, linked = false) {
       },
     });
   }
-  vi.doMock("@/data/content/config/pricing.json", () => ({ default: data }));
+  vi.doMock("@/data/content/site/sections/pricing.json", () => ({
+    default: data,
+  }));
   return import("./pricing");
 }
 
