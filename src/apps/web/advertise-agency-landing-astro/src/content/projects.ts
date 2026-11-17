@@ -1,4 +1,4 @@
-import data from "@/data/content/config/projects.json";
+import data from "@/data/content/site/lists/projects.json";
 import { getCollection, render } from "astro:content";
 import { projectsSchema, projectRecordsSchema } from "../validation/projects";
 import { parseContent } from "../validation/parse-content";
@@ -11,7 +11,7 @@ import { assertPublicationPolicy } from "./block-publication";
 const records = parseContent(
   projectRecordsSchema,
   data,
-  "data/content/config/projects.json",
+  "data/content/site/lists/projects.json",
 );
 const entries = await getCollection("projectArticles");
 const articleById = new Map(entries.map((entry) => [entry.id, entry]));
@@ -37,7 +37,7 @@ const resolved = await Promise.all(
 export const projectRecords = parseContent(
   projectsSchema,
   resolved,
-  "data/content/config/projects.json",
+  "data/content/site/lists/projects.json",
 );
 projectRecords.forEach((project) =>
   assertPublicationPolicy(

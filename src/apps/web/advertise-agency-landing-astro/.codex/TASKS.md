@@ -51,9 +51,9 @@ UI task 171 is archived; delivery is deferred to task 173.
 - [187 - Orchestrate test backlog 175-186](../docs/codex/tasks/fixed/20261116/187-automate-test-backlog-175-186.md):
   complete; tasks 175-186 and all final verification gates passed.
 - [204](../docs/codex/tasks/todo/204-automate-content-migration-161-170.md):
-  active; 161-166 accepted and archived separately; task 167 is next.
-- Content migration: task 166 moved pricing and guarantee sections with six
-  SHA-256 matches; focused content, component, integration, E2E, check and build passed.
+  active; 161-167 accepted and archived separately; task 168 is next.
+- Content migration: task 167 moved services/projects with six SHA-256 matches;
+  focused content, component, integration, isolated provisioning, E2E, check and build passed.
   Skip external asset reachability checks per the user's regional-access note.
   [Migration plan](../docs/codex/tasks/plan/20261114_site-content-structure-migration-plan.md)
 - Plans and UI decisions:

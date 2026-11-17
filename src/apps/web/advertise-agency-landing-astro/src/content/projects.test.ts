@@ -5,7 +5,7 @@ import { projectCategories } from "./project-categories";
 
 afterEach(() => {
   vi.doUnmock("astro:content");
-  vi.doUnmock("@/data/content/config/projects.json");
+  vi.doUnmock("@/data/content/site/lists/projects.json");
   vi.resetModules();
 });
 
@@ -31,7 +31,7 @@ function load(records: unknown[], entries: unknown[] = []) {
       content: [{ type: "paragraph", paragraphs: ["Rendered MDX"] }],
     },
   }));
-  vi.doMock("@/data/content/config/projects.json", () => ({
+  vi.doMock("@/data/content/site/lists/projects.json", () => ({
     default: records,
   }));
   vi.doMock("astro:content", () => ({

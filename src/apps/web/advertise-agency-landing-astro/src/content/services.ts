@@ -1,4 +1,4 @@
-import data from "@/data/content/config/services.json";
+import data from "@/data/content/site/lists/services.json";
 import { getCollection, render } from "astro:content";
 import {
   createServiceRecordsSchema,
@@ -17,7 +17,7 @@ const servicePaths = data.items.flatMap((item) =>
 const records = parseContent(
   createServiceRecordsSchema(servicePaths),
   data,
-  "data/content/config/services.json",
+  "data/content/site/lists/services.json",
 );
 const entries = await getCollection("serviceArticles");
 const articleById = new Map(entries.map((entry) => [entry.id, entry]));
@@ -51,7 +51,7 @@ const items = await Promise.all(
 export const services = parseContent(
   createServicesSchema(servicePaths),
   { ...records, items },
-  "data/content/config/services.json",
+  "data/content/site/lists/services.json",
 );
 services.items.forEach((service) =>
   assertPublicationPolicy(

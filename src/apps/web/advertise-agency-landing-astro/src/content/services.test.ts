@@ -1,6 +1,6 @@
 // Service aggregate imports resolve authored articles and gate public cards.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from "../../tests/fixtures/content/site/config/services.json";
+import fixture from "../../tests/fixtures/content/site/lists/services.json";
 
 const collection = vi.hoisted(() => ({ entries: [] as unknown[] }));
 vi.mock("astro:content", () => ({
@@ -13,15 +13,17 @@ vi.mock("astro:content", () => ({
 }));
 
 afterEach(() => {
-  vi.doUnmock("@/data/content/config/services.json");
+  vi.doUnmock("@/data/content/site/lists/services.json");
   vi.resetModules();
 });
 
 function load(data: unknown, entries: unknown[] = []) {
   vi.resetModules();
-  vi.doUnmock("@/data/content/config/services.json");
+  vi.doUnmock("@/data/content/site/lists/services.json");
   collection.entries = entries;
-  vi.doMock("@/data/content/config/services.json", () => ({ default: data }));
+  vi.doMock("@/data/content/site/lists/services.json", () => ({
+    default: data,
+  }));
   return { result: import("./services") };
 }
 

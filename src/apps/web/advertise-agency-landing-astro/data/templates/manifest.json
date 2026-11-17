@@ -92,9 +92,9 @@
       "output": "config/project-categories.json"
     },
     {
-      "path": "config/projects.json",
+      "path": "site/lists/projects.json",
       "kind": "json",
-      "output": "config/projects.json"
+      "output": "site/lists/projects.json"
     },
     {
       "path": "config/reviews.json",
@@ -102,9 +102,9 @@
       "output": "config/reviews.json"
     },
     {
-      "path": "config/services.json",
+      "path": "site/lists/services.json",
       "kind": "json",
-      "output": "config/services.json"
+      "output": "site/lists/services.json"
     },
     {
       "path": "site/settings/site.json",

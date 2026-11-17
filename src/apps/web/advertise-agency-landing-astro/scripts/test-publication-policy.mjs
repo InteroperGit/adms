@@ -41,7 +41,7 @@ const approved = base.map((block) => ({
     : {}),
 }));
 const records = JSON.parse(
-  await readFile("data/content/config/projects.json", "utf8"),
+  await readFile("data/content/site/lists/projects.json", "utf8"),
 );
 const { article: _source, ...metadata } = records[0];
 const project = { ...metadata, status: "published", content: approved };
@@ -221,7 +221,7 @@ assert.deepEqual(
 );
 
 const catalog = JSON.parse(
-  await readFile("data/content/config/services.json", "utf8"),
+  await readFile("data/content/site/lists/services.json", "utf8"),
 );
 const paths = catalog.items.map((item) => item.href);
 const service = {
