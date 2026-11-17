@@ -1,6 +1,6 @@
 // The icon export keeps all configured registry keys and values.
 import { expect, it } from "vitest";
-import fixture from "../../tests/fixtures/content/site/config/icons.json";
+import fixture from "../../tests/fixtures/content/site/settings/icons.json";
 import { icons } from "./icons";
 
 it("exports the configured top-level and nested icon keys", () => {

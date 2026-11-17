@@ -10,7 +10,7 @@ const sourceFiles = [
   "data/content/config/introduction.json",
   "data/content/config/projects.json",
   "data/content/config/reviews.json",
-  "data/content/config/site.json",
+  "data/content/site/settings/site.json",
   "data/content/config/offers.json",
   "src/layouts/Layout.astro",
 ];

@@ -143,7 +143,6 @@ try {
   const mixedManifest = structuredClone(productionManifest);
   for (const [from, to] of [
     ["config/about.json", "site/sections/about.json"],
-    ["config/site.json", "site/settings/site.json"],
   ]) {
     const entry = mixedManifest.files.find((item) => item.path === from);
     entry.path = to;
@@ -183,7 +182,6 @@ try {
   const migratedTemplate = join(templateRoot, "site/sections/about.json");
   const migratedFixture = join(fixtureRoot, "site/sections/about.json");
   const settingsPath = "site/settings/site.json";
-  const migratedSettingsTemplate = join(templateRoot, settingsPath);
   const migratedSettingsFixture = join(fixtureRoot, settingsPath);
   await mkdir(join(templateRoot, "site/sections"), { recursive: true });
   await mkdir(join(fixtureRoot, "site/sections"), { recursive: true });
@@ -191,10 +189,7 @@ try {
   await mkdir(join(fixtureRoot, "site/settings"), { recursive: true });
   await cp(join(templateRoot, "config/about.json"), migratedTemplate);
   await cp(join(fixtureRoot, "site/config/about.json"), migratedFixture);
-  await cp(join(templateRoot, "config/site.json"), migratedSettingsTemplate);
-  await cp(join(fixtureRoot, "site/config/site.json"), migratedSettingsFixture);
   await rm(join(templateRoot, "config/about.json"));
-  await rm(join(templateRoot, "config/site.json"));
   const mixedTemplateManifest = JSON.parse(
     await readFile(join(templateRoot, "manifest.json"), "utf8"),
   );
@@ -203,11 +198,11 @@ try {
   );
   migratedAbout.path = "site/sections/about.json";
   migratedAbout.output = migratedAbout.path;
-  const migratedSettings = mixedTemplateManifest.files.find(
-    (entry) => entry.path === "config/site.json",
+  assert.ok(
+    mixedTemplateManifest.files.some(
+      (entry) => entry.path === settingsPath && entry.output === settingsPath,
+    ),
   );
-  migratedSettings.path = settingsPath;
-  migratedSettings.output = migratedSettings.path;
   await writeFile(
     join(templateRoot, "manifest.json"),
     `${JSON.stringify(mixedTemplateManifest, null, 2)}\n`,

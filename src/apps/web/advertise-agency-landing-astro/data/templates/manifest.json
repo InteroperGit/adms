@@ -37,9 +37,9 @@
       "output": "config/faq.json"
     },
     {
-      "path": "config/icons.json",
+      "path": "site/settings/icons.json",
       "kind": "json",
-      "output": "config/icons.json"
+      "output": "site/settings/icons.json"
     },
     {
       "path": "config/introduction.json",
@@ -107,9 +107,9 @@
       "output": "config/services.json"
     },
     {
-      "path": "config/site.json",
+      "path": "site/settings/site.json",
       "kind": "json",
-      "output": "config/site.json"
+      "output": "site/settings/site.json"
     }
   ],
   "placeholders": {

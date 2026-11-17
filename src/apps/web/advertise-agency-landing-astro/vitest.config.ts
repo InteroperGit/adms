@@ -11,6 +11,9 @@ export default getViteConfig({
       "@/data/content/config": fileURLToPath(
         new URL("./tests/fixtures/content/site/config", import.meta.url),
       ),
+      "@/data/content/site/settings": fileURLToPath(
+        new URL("./tests/fixtures/content/site/settings", import.meta.url),
+      ),
       "@/data/content/site": fileURLToPath(
         new URL("./tests/fixtures/content/site", import.meta.url),
       ),

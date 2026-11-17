@@ -1,6 +1,6 @@
 // The services menu entry follows the visible service aggregate.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from "../../tests/fixtures/content/site/config/site.json";
+import fixture from "../../tests/fixtures/content/site/settings/site.json";
 
 afterEach(() => {
   vi.doUnmock("./services");
