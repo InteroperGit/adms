@@ -50,7 +50,7 @@ inquiries/design читать при затрагивании соответст
 - [x] Выполнить [165 — home sections](../fixed/20261117/165-content-migration-home-sections.md).
 - [x] Выполнить [166 — commercial sections](../fixed/20261117/166-content-migration-commercial-sections.md).
 - [x] Выполнить [167 — primary lists](../fixed/20261117/167-content-migration-primary-lists.md).
-- [ ] Выполнить [168 — supporting lists](../backlog/168-content-migration-supporting-lists.md).
+- [x] Выполнить [168 — supporting lists](../fixed/20261117/168-content-migration-supporting-lists.md).
 - [ ] Выполнить [169 — pages](../backlog/169-content-migration-pages.md).
 - [ ] Выполнить [170 — cleanup](../backlog/170-content-migration-remove-config.md).
 - [ ] Для каждого шага до реализации перенести его backlog → todo;
@@ -102,13 +102,13 @@ inquiries/design читать при затрагивании соответст
 
 ## Handoff
 
-Создана 2026-11-16. Серия активна; 161–167 приняты и архивированы в отдельных
-локальных commits. Задача 167 переместила services/projects в site/lists;
-шесть snapshot hashes совпали, focused checks, isolated provisioning, build и
-catalog/gallery E2E прошли. Следующая — 168, reviews/project categories. 162
-подготовила tooling для смешанных content paths; CI/E2E работают на isolated
-fixtures без перезаписи authored runtime. Full verification остаётся до явного
-запроса после серии.
+Создана 2026-11-16. Серия активна; 161–168 приняты и архивированы в отдельных
+локальных commits. Задача 168 переместила reviews и project categories в
+site/lists; шесть snapshot hashes совпали, focused checks, isolated
+provisioning, build и catalog E2E прошли. Следующая — 169, pages/order form.
+162 подготовила tooling для смешанных content paths; CI/E2E работают на
+isolated fixtures без перезаписи authored runtime. Full verification остаётся
+до явного запроса после серии.
 Node `26.13.1` и pnpm `10.7.0` доступны; для pnpm `TEMP`/`TMP`
 направлялись в ignored workspace output. Baseline содержит 52 runtime
 JSON/MDX; все SHA-256 совпадают со snapshot. Content/boundary, loader,

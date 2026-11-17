@@ -87,9 +87,9 @@
       "output": "config/project-catalog.json"
     },
     {
-      "path": "config/project-categories.json",
+      "path": "site/lists/project-categories.json",
       "kind": "json",
-      "output": "config/project-categories.json"
+      "output": "site/lists/project-categories.json"
     },
     {
       "path": "site/lists/projects.json",
@@ -97,9 +97,9 @@
       "output": "site/lists/projects.json"
     },
     {
-      "path": "config/reviews.json",
+      "path": "site/lists/reviews.json",
       "kind": "json",
-      "output": "config/reviews.json"
+      "output": "site/lists/reviews.json"
     },
     {
       "path": "site/lists/services.json",

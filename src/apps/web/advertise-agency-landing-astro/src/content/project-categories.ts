@@ -1,4 +1,4 @@
-import data from "@/data/content/config/project-categories.json";
+import data from "@/data/content/site/lists/project-categories.json";
 import { z } from "astro/zod";
 
 const cssColor = z

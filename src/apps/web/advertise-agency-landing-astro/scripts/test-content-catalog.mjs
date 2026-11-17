@@ -142,7 +142,7 @@ try {
   );
   const mixedManifest = structuredClone(productionManifest);
   for (const [from, to] of [
-    ["config/reviews.json", "site/lists/reviews.json"],
+    ["config/project-catalog.json", "site/pages/project-catalog.json"],
   ]) {
     const entry = mixedManifest.files.find((item) => item.path === from);
     entry.path = to;
@@ -179,24 +179,30 @@ try {
   await cp("tests/fixtures/content/site", join(fixtureRoot, "site"), {
     recursive: true,
   });
-  const migratedTemplate = join(templateRoot, "site/lists/reviews.json");
-  const migratedFixture = join(fixtureRoot, "site/lists/reviews.json");
+  const migratedTemplate = join(
+    templateRoot,
+    "site/pages/project-catalog.json",
+  );
+  const migratedFixture = join(fixtureRoot, "site/pages/project-catalog.json");
   const settingsPath = "site/settings/site.json";
   const migratedSettingsFixture = join(fixtureRoot, settingsPath);
-  await mkdir(join(templateRoot, "site/lists"), { recursive: true });
-  await mkdir(join(fixtureRoot, "site/lists"), { recursive: true });
+  await mkdir(join(templateRoot, "site/pages"), { recursive: true });
+  await mkdir(join(fixtureRoot, "site/pages"), { recursive: true });
   await mkdir(join(templateRoot, "site/settings"), { recursive: true });
   await mkdir(join(fixtureRoot, "site/settings"), { recursive: true });
-  await cp(join(templateRoot, "config/reviews.json"), migratedTemplate);
-  await cp(join(fixtureRoot, "site/config/reviews.json"), migratedFixture);
-  await rm(join(templateRoot, "config/reviews.json"));
+  await cp(join(templateRoot, "config/project-catalog.json"), migratedTemplate);
+  await cp(
+    join(fixtureRoot, "site/config/project-catalog.json"),
+    migratedFixture,
+  );
+  await rm(join(templateRoot, "config/project-catalog.json"));
   const mixedTemplateManifest = JSON.parse(
     await readFile(join(templateRoot, "manifest.json"), "utf8"),
   );
   const migratedEntry = mixedTemplateManifest.files.find(
-    (entry) => entry.path === "config/reviews.json",
+    (entry) => entry.path === "config/project-catalog.json",
   );
-  migratedEntry.path = "site/lists/reviews.json";
+  migratedEntry.path = "site/pages/project-catalog.json";
   migratedEntry.output = migratedEntry.path;
   assert.ok(
     mixedTemplateManifest.files.some(
@@ -211,7 +217,7 @@ try {
   const ciOutput = join(workspace, "ci-content");
   await prepareCiContent({ templateRoot, fixtureRoot, outputRoot: ciOutput });
   assert.equal(
-    await readFile(join(ciOutput, "site/lists/reviews.json"), "utf8"),
+    await readFile(join(ciOutput, "site/pages/project-catalog.json"), "utf8"),
     await readFile(migratedFixture, "utf8"),
   );
   assert.equal(

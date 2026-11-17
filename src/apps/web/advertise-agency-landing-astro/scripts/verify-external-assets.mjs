@@ -9,7 +9,7 @@ const sourceFiles = [
   "data/content/site/sections/about-carousel.json",
   "data/content/site/sections/introduction.json",
   "data/content/site/lists/projects.json",
-  "data/content/config/reviews.json",
+  "data/content/site/lists/reviews.json",
   "data/content/site/settings/site.json",
   "data/content/site/sections/offers.json",
   "src/layouts/Layout.astro",
