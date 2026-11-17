@@ -6,7 +6,7 @@ import { preview } from "astro";
 import {
   fixtureSourcePath,
   validateContentManifest,
-} from "./lib/content-manifest.mjs";
+} from "./lib/contentManifest.mjs";
 
 const root = resolve("output/playwright/content");
 const templates = JSON.parse(
@@ -106,7 +106,7 @@ for (const file of sharedAstroFiles) {
 }
 
 try {
-  await run(["build", "--config", "scripts/e2e.config.mjs"]);
+  await run(["build", "--config", "scripts/e2eConfig.mjs"]);
 } finally {
   for (const file of sharedAstroFiles) {
     const original = originalAstroFiles.get(file);
@@ -119,7 +119,7 @@ try {
 }
 // The API avoids the CLI daemon and leaves existing preview servers alone.
 const server = await preview({
-  configFile: "scripts/e2e.config.mjs",
+  configFile: "scripts/e2eConfig.mjs",
   server: { host: "127.0.0.1", port: 4327 },
 });
 for (const signal of ["SIGTERM", "SIGINT"]) {

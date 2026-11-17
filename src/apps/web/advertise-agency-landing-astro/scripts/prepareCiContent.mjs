@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import {
   fixtureSourcePath,
   validateContentManifest,
-} from "./lib/content-manifest.mjs";
+} from "./lib/contentManifest.mjs";
 
 export async function prepareCiContent({
   templateRoot = "data/templates",

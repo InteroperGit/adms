@@ -236,7 +236,7 @@ async function main() {
   const force = process.argv.includes("--force");
   if (sourceIndex < 0 || outputIndex < 0) {
     fail(
-      "usage: node scripts/generate-content-catalog.mjs " +
+      "usage: node scripts/generateContentCatalog.mjs " +
         "--source <dir> --output <dir>",
     );
   }

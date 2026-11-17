@@ -2,7 +2,7 @@
 import { execFileSync } from "node:child_process";
 import { readdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
-import { validateContentManifest } from "./lib/content-manifest.mjs";
+import { validateContentManifest } from "./lib/contentManifest.mjs";
 
 const root = resolve(".");
 const templateRoot = resolve("data/templates");

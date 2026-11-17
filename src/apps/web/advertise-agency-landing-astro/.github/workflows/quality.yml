@@ -29,7 +29,7 @@ jobs:
           cache-dependency-path: |
             src/apps/web/advertise-agency-landing-astro/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
-      - run: node scripts/prepare-ci-content.mjs
+      - run: node scripts/prepareCiContent.mjs
       - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm verify:boundaries

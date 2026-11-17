@@ -2,20 +2,29 @@
 
 ## File names
 
-Use `camelCase` for source, test, fixture, helper, type and E2E spec filenames
-under `src/` and `tests/`, retaining suffixes such as `.test.ts`, `.spec.ts` and
-`.types.ts`. Name reusable Astro components and layouts in `PascalCase` with the
-`.astro` extension. A colocated test for a PascalCase Astro component keeps the
-component basename so it remains directly paired with its source.
+Use `camelCase` for source, test, fixture, helper, type, script and E2E spec
+filenames, retaining suffixes such as `.test.ts`, `.spec.ts` and `.types.ts`.
+Use `kebab-case` for directory names. Name reusable Astro components and layouts
+in `PascalCase` with the `.astro` extension. A colocated test for a PascalCase
+Astro component keeps the component basename so it remains directly paired with
+its source. Sibling filenames must also remain distinct when compared without
+case.
 
 Astro page filenames define public routes; preserve route-derived names such as
 `privacy-policy.astro`, `terms-of-use.astro`, dynamic `[id].astro` segments and
 the special sitemap endpoint. Preserve fixture paths that mirror template
 outputs or public content IDs, including the starter article and project `1`
-fixtures. Preserve `src/assets` filenames referenced by externally supplied
-runtime content. These names are data or route contracts, not local naming
-choices. Standard tool configuration files also keep their conventional names.
-Sibling filenames must also remain distinct when compared without case.
+fixtures. Use kebab-case for article slugs, public assets, images and fonts;
+preserve established content paths referenced by runtime data. Structured JSON
+fixtures follow camelCase, while authored article filenames follow their public
+slug. Use kebab-case for Markdown documentation. These names can be data or
+route contracts, not local naming choices. Standard tool configuration files
+also keep their conventional names. Generated files follow their generator.
+
+In `scripts/`, use action-first camelCase names such as `verifyContent.mjs` or
+`prepareCiContent.mjs`. Preserve `.mjs` for existing Node ESM scripts and use
+the established camel-case form for acronyms, such as `Mdx`, `Ci`, `Url` and
+`E2e`. Keep reusable subdirectories in kebab-case.
 
 Code lines, including indentation, markup, scripts, styles, configuration and
 examples, must be <=80 characters. Wrap with valid syntax. Prettier

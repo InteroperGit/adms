@@ -6,9 +6,9 @@ import { join } from "node:path";
 import {
   fixtureSourcePath,
   validateContentManifest,
-} from "./lib/content-manifest.mjs";
-import { generateContentCatalog } from "./generate-content-catalog.mjs";
-import { prepareCiContent } from "./prepare-ci-content.mjs";
+} from "./lib/contentManifest.mjs";
+import { generateContentCatalog } from "./generateContentCatalog.mjs";
+import { prepareCiContent } from "./prepareCiContent.mjs";
 
 const manifest = {
   schemaVersion: "1.0.0",

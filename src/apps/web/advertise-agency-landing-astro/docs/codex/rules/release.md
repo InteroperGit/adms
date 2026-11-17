@@ -4,10 +4,10 @@
 
 Runtime content is supplied outside Git. Initialize a new catalogue only into an
 empty destination with
-`node scripts/generate-content-catalog.mjs --source data/templates --output <content-directory>`.
+`node scripts/generateContentCatalog.mjs --source data/templates --output <content-directory>`.
 Before deliberate replacement/`--force`, retain a verified backup and SHA-256
 manifest. Never overwrite deployment data to run tests. The CI-only
-`scripts/prepare-ci-content.mjs` requires `CI=true` and refuses an existing
+`scripts/prepareCiContent.mjs` requires `CI=true` and refuses an existing
 runtime directory.
 
 Use package engine requirements and a lockfile installation; keep CI and hosting

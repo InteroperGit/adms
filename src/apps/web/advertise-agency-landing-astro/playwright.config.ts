@@ -23,7 +23,7 @@ export default defineConfig({
     { name: "webkit", use: { ...devices["Desktop Safari"] } },
   ],
   webServer: {
-    command: "node scripts/e2e-server.mjs",
+    command: "node scripts/e2eServer.mjs",
     url: "http://127.0.0.1:4327",
     timeout: 180_000,
     reuseExistingServer: false,

@@ -1,8 +1,8 @@
 // Exercise production policy and owner schemas through both JSON and MDX.
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { moduleURL } from "./lib/import-typescript.mjs";
-import { compileMdx } from "./lib/compile-mdx.mjs";
+import { moduleURL } from "./lib/importTypescript.mjs";
+import { compileMdx } from "./lib/compileMdx.mjs";
 
 const policy = await import(
   await moduleURL("src/validation/policies/blockPublication.ts")

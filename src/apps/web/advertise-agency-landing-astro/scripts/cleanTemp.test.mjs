@@ -10,7 +10,7 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { afterEach, test } from "node:test";
-import { cleanTemporaryFiles } from "./clean-temp.mjs";
+import { cleanTemporaryFiles } from "./cleanTemp.mjs";
 
 const temporaryRoots = [];
 

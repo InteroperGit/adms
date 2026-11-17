@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { moduleURL } from "./lib/import-typescript.mjs";
-import { compileMdx } from "./lib/compile-mdx.mjs";
+import { moduleURL } from "./lib/importTypescript.mjs";
+import { compileMdx } from "./lib/compileMdx.mjs";
 
 const { contentBlocksSchema } = await import(
   await moduleURL("src/validation/contentBlocks.ts")
