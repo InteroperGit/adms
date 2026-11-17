@@ -6,7 +6,7 @@ import { join } from "node:path";
 const root = new URL("..", import.meta.url);
 const timeoutMs = 10_000;
 const sourceFiles = [
-  "data/content/site/sections/about-carousel.json",
+  "data/content/site/sections/aboutCarousel.json",
   "data/content/site/sections/introduction.json",
   "data/content/site/lists/projects.json",
   "data/content/site/lists/reviews.json",

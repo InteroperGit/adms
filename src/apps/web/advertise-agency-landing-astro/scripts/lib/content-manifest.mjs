@@ -1,35 +1,33 @@
-const siteOutputs = new Map([
-  ["about-carousel.json", "site/sections/about-carousel.json"],
-  ["about.json", "site/sections/about.json"],
-  ["action-rail.json", "site/sections/action-rail.json"],
-  ["business-solutions.json", "site/sections/business-solutions.json"],
-  ["faq.json", "site/sections/faq.json"],
-  ["introduction.json", "site/sections/introduction.json"],
-  ["offers.json", "site/sections/offers.json"],
-  ["ordering-process.json", "site/sections/ordering-process.json"],
-  ["pricing.json", "site/sections/pricing.json"],
+const legacyJsonPaths = new Map([
+  ["config/about-carousel.json", "site/sections/aboutCarousel.json"],
+  ["config/about.json", "site/sections/about.json"],
+  ["config/action-rail.json", "site/sections/actionRail.json"],
+  ["config/business-solutions.json", "site/sections/businessSolutions.json"],
+  ["config/faq.json", "site/sections/faq.json"],
+  ["config/introduction.json", "site/sections/introduction.json"],
+  ["config/offers.json", "site/sections/offers.json"],
+  ["config/ordering-process.json", "site/sections/orderingProcess.json"],
+  ["config/pricing.json", "site/sections/pricing.json"],
   [
-    "production-and-guarantees.json",
-    "site/sections/production-and-guarantees.json",
+    "config/production-and-guarantees.json",
+    "site/sections/productionAndGuarantees.json",
   ],
-  ["icons.json", "site/settings/icons.json"],
-  ["site.json", "site/settings/site.json"],
-  ["legal/privacy-policy.json", "site/pages/legal/privacy-policy.json"],
-  ["legal/terms-of-use.json", "site/pages/legal/terms-of-use.json"],
-  ["order-inquiry.json", "site/pages/order-inquiry.json"],
-  ["project-catalog.json", "site/pages/project-catalog.json"],
-  ["project-categories.json", "site/lists/project-categories.json"],
-  ["projects.json", "site/lists/projects.json"],
-  ["reviews.json", "site/lists/reviews.json"],
-  ["services.json", "site/lists/services.json"],
+  ["config/icons.json", "site/settings/icons.json"],
+  ["config/site.json", "site/settings/site.json"],
+  ["config/legal/privacy-policy.json", "site/pages/legal/privacyPolicy.json"],
+  ["config/legal/terms-of-use.json", "site/pages/legal/termsOfUse.json"],
+  ["config/order-inquiry.json", "site/pages/orderInquiry.json"],
+  ["config/project-catalog.json", "site/pages/projects.json"],
+  ["config/project-categories.json", "site/lists/projectCategories.json"],
+  ["config/projects.json", "site/lists/projects.json"],
+  ["config/reviews.json", "site/lists/reviews.json"],
+  ["config/services.json", "site/lists/services.json"],
 ]);
 
-const jsonPaths = new Map(
-  [...siteOutputs].flatMap(([name, target]) => [
-    [`config/${name}`, target],
-    [target, target],
-  ]),
-);
+const jsonPaths = new Map([
+  ...legacyJsonPaths,
+  ...[...legacyJsonPaths.values()].map((path) => [path, path]),
+]);
 const mdxPaths = new Set([
   "articles/projects/1.mdx",
   "articles/services/starter-service.mdx",

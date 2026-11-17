@@ -1,4 +1,4 @@
-import data from "@/data/content/site/sections/production-and-guarantees.json";
+import data from "@/data/content/site/sections/productionAndGuarantees.json";
 import { parseContent } from "../validation/parse-content";
 // prettier-ignore
 import { productionAndGuaranteesSchema } from
@@ -8,5 +8,5 @@ import { productionAndGuaranteesSchema } from
 export const productionAndGuarantees = parseContent(
   productionAndGuaranteesSchema,
   data,
-  "data/content/site/sections/production-and-guarantees.json",
+  "data/content/site/sections/productionAndGuarantees.json",
 );

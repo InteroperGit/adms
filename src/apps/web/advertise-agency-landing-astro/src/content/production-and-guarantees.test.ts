@@ -7,15 +7,14 @@ import { productionAndGuarantees } from "./production-and-guarantees";
 const fixture = JSON.parse(
   await readFile(
     resolve(
-      "tests/fixtures/content/site/sections/" +
-        "production-and-guarantees.json",
+      "tests/fixtures/content/site/sections/" + "productionAndGuarantees.json",
     ),
     "utf8",
   ),
 ) as typeof productionAndGuarantees;
 
 afterEach(() => {
-  vi.doUnmock("@/data/content/site/sections/production-and-guarantees.json");
+  vi.doUnmock("@/data/content/site/sections/productionAndGuarantees.json");
   vi.resetModules();
 });
 
@@ -43,7 +42,7 @@ it("rejects a warranty missing required content", async () => {
   });
   vi.resetModules();
   vi.doMock(
-    "@/data/content/site/sections/production-and-guarantees.json",
+    "@/data/content/site/sections/productionAndGuarantees.json",
     () => ({
       default: { ...fixture, warrantyTerms },
     }),
@@ -51,7 +50,7 @@ it("rejects a warranty missing required content", async () => {
 
   await expect(import("./production-and-guarantees")).rejects.toThrow(
     "Invalid content in data/content/site/sections/" +
-      "production-and-guarantees.json",
+      "productionAndGuarantees.json",
   );
 });
 
@@ -61,7 +60,7 @@ it("rejects an unsupported warranty source type", async () => {
   );
   vi.resetModules();
   vi.doMock(
-    "@/data/content/site/sections/production-and-guarantees.json",
+    "@/data/content/site/sections/productionAndGuarantees.json",
     () => ({
       default: { ...fixture, warrantyTerms },
     }),
@@ -69,6 +68,6 @@ it("rejects an unsupported warranty source type", async () => {
 
   await expect(import("./production-and-guarantees")).rejects.toThrow(
     "Invalid content in data/content/site/sections/" +
-      "production-and-guarantees.json",
+      "productionAndGuarantees.json",
   );
 });

@@ -4,7 +4,7 @@ import fixture from "../../tests/fixtures/content/project-categories.json";
 import { getProjectCategory, projectCategories } from "./project-categories";
 
 afterEach(() => {
-  vi.doUnmock("@/data/content/site/lists/project-categories.json");
+  vi.doUnmock("@/data/content/site/lists/projectCategories.json");
   vi.resetModules();
 });
 
@@ -28,7 +28,7 @@ it.each(
   ].map((data) => ({ data })),
 )("rejects invalid registry data: $data", async ({ data }) => {
   vi.resetModules();
-  vi.doMock("@/data/content/site/lists/project-categories.json", () => ({
+  vi.doMock("@/data/content/site/lists/projectCategories.json", () => ({
     default: data,
   }));
   await expect(import("./project-categories")).rejects.toThrow();
@@ -36,7 +36,7 @@ it.each(
 
 it("reports duplicate slugs at the offending registry index", async () => {
   vi.resetModules();
-  vi.doMock("@/data/content/site/lists/project-categories.json", () => ({
+  vi.doMock("@/data/content/site/lists/projectCategories.json", () => ({
     default: [fixture[0], fixture[0]],
   }));
   await expect(import("./project-categories")).rejects.toMatchObject({

@@ -141,13 +141,13 @@ try {
     await readFile("data/templates/manifest.json", "utf8"),
   );
   const mixedManifest = structuredClone(productionManifest);
-  for (const [from, to] of [
-    ["config/project-catalog.json", "site/pages/project-catalog.json"],
-  ]) {
-    const entry = mixedManifest.files.find((item) => item.path === from);
-    entry.path = to;
-    entry.output = to;
-  }
+  const legacyPath = "config/legal/privacy-policy.json";
+  const canonicalPath = "site/pages/legal/privacyPolicy.json";
+  const mixedEntry = mixedManifest.files.find(
+    (item) => item.path === canonicalPath,
+  );
+  mixedEntry.path = legacyPath;
+  mixedEntry.output = legacyPath;
   assert.equal(validateContentManifest(mixedManifest), mixedManifest.files);
   assert.equal(
     fixtureSourcePath({ path: "site/settings/site.json" }),
@@ -179,31 +179,24 @@ try {
   await cp("tests/fixtures/content/site", join(fixtureRoot, "site"), {
     recursive: true,
   });
-  const migratedTemplate = join(
-    templateRoot,
-    "site/pages/project-catalog.json",
-  );
-  const migratedFixture = join(fixtureRoot, "site/pages/project-catalog.json");
+  const legacyTemplate = join(templateRoot, legacyPath);
+  const legacyFixture = join(fixtureRoot, `site/${legacyPath}`);
   const settingsPath = "site/settings/site.json";
   const migratedSettingsFixture = join(fixtureRoot, settingsPath);
-  await mkdir(join(templateRoot, "site/pages"), { recursive: true });
-  await mkdir(join(fixtureRoot, "site/pages"), { recursive: true });
+  await mkdir(join(templateRoot, "config/legal"), { recursive: true });
+  await mkdir(join(fixtureRoot, "site/config/legal"), { recursive: true });
   await mkdir(join(templateRoot, "site/settings"), { recursive: true });
   await mkdir(join(fixtureRoot, "site/settings"), { recursive: true });
-  await cp(join(templateRoot, "config/project-catalog.json"), migratedTemplate);
-  await cp(
-    join(fixtureRoot, "site/config/project-catalog.json"),
-    migratedFixture,
-  );
-  await rm(join(templateRoot, "config/project-catalog.json"));
+  await cp(join(templateRoot, canonicalPath), legacyTemplate);
+  await cp(join(fixtureRoot, canonicalPath), legacyFixture);
   const mixedTemplateManifest = JSON.parse(
     await readFile(join(templateRoot, "manifest.json"), "utf8"),
   );
-  const migratedEntry = mixedTemplateManifest.files.find(
-    (entry) => entry.path === "config/project-catalog.json",
+  const legacyEntry = mixedTemplateManifest.files.find(
+    (entry) => entry.path === canonicalPath,
   );
-  migratedEntry.path = "site/pages/project-catalog.json";
-  migratedEntry.output = migratedEntry.path;
+  legacyEntry.path = legacyPath;
+  legacyEntry.output = legacyPath;
   assert.ok(
     mixedTemplateManifest.files.some(
       (entry) => entry.path === settingsPath && entry.output === settingsPath,
@@ -217,8 +210,8 @@ try {
   const ciOutput = join(workspace, "ci-content");
   await prepareCiContent({ templateRoot, fixtureRoot, outputRoot: ciOutput });
   assert.equal(
-    await readFile(join(ciOutput, "site/pages/project-catalog.json"), "utf8"),
-    await readFile(migratedFixture, "utf8"),
+    await readFile(join(ciOutput, legacyPath), "utf8"),
+    await readFile(legacyFixture, "utf8"),
   );
   assert.equal(
     await readFile(join(ciOutput, "site/settings/site.json"), "utf8"),

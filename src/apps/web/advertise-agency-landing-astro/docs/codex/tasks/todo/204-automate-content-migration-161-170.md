@@ -16,6 +16,8 @@
 - Перенести JSON из config в site/settings, sections, pages и lists.
 - Fixtures хранить в `tests/fixtures/content/site/{settings,sections,pages,lists}`
   без вложенного site; legacy fixtures временно остаются в site/config.
+- Имена JSON в `data/` использовать в стиле camelCase `fileName.json`;
+  site fixtures именовать синхронно. Project catalog page — `projects.json`.
 - Сохранить runtime в `data/content/`, fixtures в `tests/fixtures/content/`,
   loaders, validators и typed exports в `src/`.
 - Сохранить JSON payload, MDX, approvals, IDs, ordering, public exports,
@@ -51,7 +53,7 @@ inquiries/design читать при затрагивании соответст
 - [x] Выполнить [166 — commercial sections](../fixed/20261117/166-content-migration-commercial-sections.md).
 - [x] Выполнить [167 — primary lists](../fixed/20261117/167-content-migration-primary-lists.md).
 - [x] Выполнить [168 — supporting lists](../fixed/20261117/168-content-migration-supporting-lists.md).
-- [ ] Выполнить [169 — pages](../backlog/169-content-migration-pages.md).
+- [x] Выполнить [169 — pages](../fixed/20261117/169-content-migration-pages.md).
 - [ ] Выполнить [170 — cleanup](../backlog/170-content-migration-remove-config.md).
 - [ ] Для каждого шага до реализации перенести его backlog → todo;
       после выполнения всех Execution/Acceptance, focused checks и review
@@ -102,20 +104,20 @@ inquiries/design читать при затрагивании соответст
 
 ## Handoff
 
-Создана 2026-11-16. Серия активна; 161–168 приняты и архивированы в отдельных
-локальных commits. Задача 168 переместила reviews и project categories в
-site/lists; шесть snapshot hashes совпали, focused checks, isolated
-provisioning, build и catalog E2E прошли. Следующая — 169, pages/order form.
-162 подготовила tooling для смешанных content paths; CI/E2E работают на
-isolated fixtures без перезаписи authored runtime. Full verification остаётся
-до явного запроса после серии.
+Создана 2026-11-16. Серия активна; 161–169 приняты и архивированы в отдельных
+локальных commits. В задаче 169 перенесены pages/order-inquiry, все JSON в
+`data/` и зеркальных site fixtures приведены к camelCase; 30 snapshot hashes
+совпали. Focused checks, isolated provisioning, E2E, check и build прошли.
+Следующая — 170, удаление legacy config aliases и итоговая приёмка. 162
+подготовила tooling для смешанных content paths; CI/E2E работают на isolated
+fixtures без перезаписи authored runtime. Full verification остаётся до явного
+запроса после серии.
 Node `26.13.1` и pnpm `10.7.0` доступны; для pnpm `TEMP`/`TMP`
 направлялись в ignored workspace output. Baseline содержит 52 runtime
-JSON/MDX; все SHA-256 совпадают со snapshot. Content/boundary, loader,
-integration, build и focused Chromium E2E gates прошли. Один запуск
-`verify:external` дал 403 для части `picsum.photos` и timeout для `t.me`;
-по указанию пользователя внешнюю доступность из РФ далее не проверять.
-Runtime не менялся; task 162 добавила synthetic fixtures и templates. Полный
-verification не запрошен. Перед каждым переносом сохранять свежие hashes.
-Откат требует согласованного возврата исходников и ignored runtime из свежей
-копии; одного Git revert недостаточно.
+JSON/MDX; исходный audit и per-task snapshots сохранены. Runtime перемещается
+только локально и не включается в commits. `data/content/config/services.json`
+был tracked до серии и остаётся unstaged deletion после переноса; изменения
+173 и ранее существовавшая правка 172 также не входят в migration commits.
+`verify:external` пропущен по просьбе пользователя о региональной недоступности.
+Полный verification не запрошен. Каждый перенос сверяется со свежим SHA-256;
+Git revert без восстановления ignored runtime недостаточен.

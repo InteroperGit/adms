@@ -1,10 +1,10 @@
 // Preserve editorial steps without approval claims.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from "@/data/content/site/sections/ordering-process.json";
+import fixture from "@/data/content/site/sections/orderingProcess.json";
 import { orderingProcess } from "./ordering-process";
 
 afterEach(() => {
-  vi.doUnmock("@/data/content/site/sections/ordering-process.json");
+  vi.doUnmock("@/data/content/site/sections/orderingProcess.json");
   vi.resetModules();
 });
 
@@ -27,12 +27,12 @@ it("rejects a step missing required description", async () => {
     return missingDescription;
   });
   vi.resetModules();
-  vi.doMock("@/data/content/site/sections/ordering-process.json", () => ({
+  vi.doMock("@/data/content/site/sections/orderingProcess.json", () => ({
     default: { ...fixture, steps },
   }));
 
   await expect(import("./ordering-process")).rejects.toThrow(
-    "Invalid content in data/content/site/sections/ordering-process.json",
+    "Invalid content in data/content/site/sections/orderingProcess.json",
   );
 });
 
@@ -41,11 +41,11 @@ it("rejects a malformed step ID at the export boundary", async () => {
     index === 0 ? { ...step, id: "INVALID ID" } : step,
   );
   vi.resetModules();
-  vi.doMock("@/data/content/site/sections/ordering-process.json", () => ({
+  vi.doMock("@/data/content/site/sections/orderingProcess.json", () => ({
     default: { ...fixture, steps },
   }));
 
   await expect(import("./ordering-process")).rejects.toThrow(
-    "Invalid content in data/content/site/sections/ordering-process.json",
+    "Invalid content in data/content/site/sections/orderingProcess.json",
   );
 });

@@ -83,7 +83,7 @@ configuration, даже если внутри есть `items` (например
 
 Серия запущена через задачу
 [204](../todo/204-automate-content-migration-161-170.md).
-Задачи 161–168 приняты; выполняется перенос данных страниц и формы в задаче 169.
+Задачи 161–169 приняты; следующая — удаление legacy config aliases и итоговая приёмка в задаче 170.
 
 - [161 — Исходное состояние миграции](../fixed/20261117/161-content-migration-baseline.md)
   — MIG-000.
@@ -94,7 +94,7 @@ configuration, даже если внутри есть `items` (например
 - [166 — Перенос цен и гарантий](../fixed/20261117/166-content-migration-commercial-sections.md) — MIG-005.
 - [167 — Перенос каталогов услуг и проектов](../fixed/20261117/167-content-migration-primary-lists.md) — MIG-006.
 - [168 — Перенос отзывов и категорий](../fixed/20261117/168-content-migration-supporting-lists.md) — MIG-007.
-- [169 — Перенос данных страниц и формы](../backlog/169-content-migration-pages.md) — MIG-008.
+- [169 — Перенос данных страниц и формы](../fixed/20261117/169-content-migration-pages.md) — MIG-008.
 - [170 — Удаление config и итоговая приёмка](../backlog/170-content-migration-remove-config.md) — MIG-009.
 
 Выполнять строго по порядку. Каждая задача должна заканчиваться отдельным

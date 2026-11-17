@@ -1,9 +1,9 @@
-import data from "@/data/content/config/order-inquiry.json";
+import data from "@/data/content/site/pages/orderInquiry.json";
 import { orderInquirySchema } from "../validation/order-inquiry";
 import { parseContent } from "../validation/parse-content";
 
 export const orderInquiry = parseContent(
   orderInquirySchema,
   data,
-  "data/content/config/order-inquiry.json",
+  "data/content/site/pages/orderInquiry.json",
 );

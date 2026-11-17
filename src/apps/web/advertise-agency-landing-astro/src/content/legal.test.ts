@@ -1,7 +1,7 @@
 // Legal exports preserve their separate privacy and terms documents.
 import { expect, it } from "vitest";
-import privacyFixture from "@/data/content/config/legal/privacy-policy.json";
-import termsFixture from "@/data/content/config/legal/terms-of-use.json";
+import privacyFixture from "@/data/content/site/pages/legal/privacyPolicy.json";
+import termsFixture from "@/data/content/site/pages/legal/termsOfUse.json";
 import { privacyPolicy, termsOfUse } from "./legal";
 
 it("pairs each legal export with its matching authored document", () => {

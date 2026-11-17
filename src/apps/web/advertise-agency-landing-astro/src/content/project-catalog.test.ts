@@ -1,6 +1,6 @@
 // Catalog export provides a positive integral pagination size.
 import { expect, it } from "vitest";
-import fixture from "@/data/content/config/project-catalog.json";
+import fixture from "@/data/content/site/pages/projects.json";
 import { projectCatalogSettings } from "./project-catalog";
 
 it("exports the configured positive page size", () => {

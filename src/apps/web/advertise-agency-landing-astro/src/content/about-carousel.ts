@@ -1,10 +1,10 @@
 // About owns its image list and per-instance feature configuration.
-import data from "@/data/content/site/sections/about-carousel.json";
+import data from "@/data/content/site/sections/aboutCarousel.json";
 import { carouselContentSchema } from "@/validation/image-carousel";
 import { parseContent } from "@/validation/parse-content";
 
 export const aboutCarousel = parseContent(
   carouselContentSchema,
   data,
-  "data/content/site/sections/about-carousel.json",
+  "data/content/site/sections/aboutCarousel.json",
 );

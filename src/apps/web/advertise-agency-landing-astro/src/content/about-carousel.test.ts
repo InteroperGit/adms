@@ -1,10 +1,10 @@
 // Preserve carousel IDs and schema defaults.
 import { afterEach, expect, it, vi } from "vitest";
-import fixture from "@/data/content/site/sections/about-carousel.json";
+import fixture from "@/data/content/site/sections/aboutCarousel.json";
 import { aboutCarousel } from "./about-carousel";
 
 afterEach(() => {
-  vi.doUnmock("@/data/content/site/sections/about-carousel.json");
+  vi.doUnmock("@/data/content/site/sections/aboutCarousel.json");
   vi.resetModules();
 });
 
@@ -25,7 +25,7 @@ it("exports authored carousel items with normalized presentation", () => {
 
 it("rejects malformed carousel data at the export boundary", async () => {
   vi.resetModules();
-  vi.doMock("@/data/content/site/sections/about-carousel.json", () => ({
+  vi.doMock("@/data/content/site/sections/aboutCarousel.json", () => ({
     default: {
       ...fixture,
       items: [{ ...fixture.items[0], href: "/incomplete-link" }],
@@ -33,6 +33,6 @@ it("rejects malformed carousel data at the export boundary", async () => {
   }));
 
   await expect(import("./about-carousel")).rejects.toThrow(
-    "Invalid content in data/content/site/sections/about-carousel.json",
+    "Invalid content in data/content/site/sections/aboutCarousel.json",
   );
 });

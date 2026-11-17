@@ -33,9 +33,7 @@ for (const entry of validateContentManifest(templates)) {
     ),
   );
   if (
-    ["config/order-inquiry.json", "site/pages/order-inquiry.json"].includes(
-      path,
-    )
+    ["config/order-inquiry.json", "site/pages/orderInquiry.json"].includes(path)
   ) {
     value.submission.enabled = true;
   }

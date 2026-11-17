@@ -12,9 +12,9 @@
       "output": "articles/services/starter-service.mdx"
     },
     {
-      "path": "site/sections/about-carousel.json",
+      "path": "site/sections/aboutCarousel.json",
       "kind": "json",
-      "output": "site/sections/about-carousel.json"
+      "output": "site/sections/aboutCarousel.json"
     },
     {
       "path": "site/sections/about.json",
@@ -22,14 +22,14 @@
       "output": "site/sections/about.json"
     },
     {
-      "path": "site/sections/action-rail.json",
+      "path": "site/sections/actionRail.json",
       "kind": "json",
-      "output": "site/sections/action-rail.json"
+      "output": "site/sections/actionRail.json"
     },
     {
-      "path": "site/sections/business-solutions.json",
+      "path": "site/sections/businessSolutions.json",
       "kind": "json",
-      "output": "site/sections/business-solutions.json"
+      "output": "site/sections/businessSolutions.json"
     },
     {
       "path": "site/sections/faq.json",
@@ -47,14 +47,14 @@
       "output": "site/sections/introduction.json"
     },
     {
-      "path": "config/legal/privacy-policy.json",
+      "path": "site/pages/legal/privacyPolicy.json",
       "kind": "json",
-      "output": "config/legal/privacy-policy.json"
+      "output": "site/pages/legal/privacyPolicy.json"
     },
     {
-      "path": "config/legal/terms-of-use.json",
+      "path": "site/pages/legal/termsOfUse.json",
       "kind": "json",
-      "output": "config/legal/terms-of-use.json"
+      "output": "site/pages/legal/termsOfUse.json"
     },
     {
       "path": "site/sections/offers.json",
@@ -62,14 +62,14 @@
       "output": "site/sections/offers.json"
     },
     {
-      "path": "config/order-inquiry.json",
+      "path": "site/pages/orderInquiry.json",
       "kind": "json",
-      "output": "config/order-inquiry.json"
+      "output": "site/pages/orderInquiry.json"
     },
     {
-      "path": "site/sections/ordering-process.json",
+      "path": "site/sections/orderingProcess.json",
       "kind": "json",
-      "output": "site/sections/ordering-process.json"
+      "output": "site/sections/orderingProcess.json"
     },
     {
       "path": "site/sections/pricing.json",
@@ -77,19 +77,19 @@
       "output": "site/sections/pricing.json"
     },
     {
-      "path": "site/sections/production-and-guarantees.json",
+      "path": "site/sections/productionAndGuarantees.json",
       "kind": "json",
-      "output": "site/sections/production-and-guarantees.json"
+      "output": "site/sections/productionAndGuarantees.json"
     },
     {
-      "path": "config/project-catalog.json",
+      "path": "site/pages/projects.json",
       "kind": "json",
-      "output": "config/project-catalog.json"
+      "output": "site/pages/projects.json"
     },
     {
-      "path": "site/lists/project-categories.json",
+      "path": "site/lists/projectCategories.json",
       "kind": "json",
-      "output": "site/lists/project-categories.json"
+      "output": "site/lists/projectCategories.json"
     },
     {
       "path": "site/lists/projects.json",
