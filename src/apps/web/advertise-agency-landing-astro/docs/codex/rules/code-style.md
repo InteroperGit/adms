@@ -15,6 +15,7 @@ outputs or public content IDs, including the starter article and project `1`
 fixtures. Preserve `src/assets` filenames referenced by externally supplied
 runtime content. These names are data or route contracts, not local naming
 choices. Standard tool configuration files also keep their conventional names.
+Sibling filenames must also remain distinct when compared without case.
 
 Code lines, including indentation, markup, scripts, styles, configuration and
 examples, must be <=80 characters. Wrap with valid syntax. Prettier
