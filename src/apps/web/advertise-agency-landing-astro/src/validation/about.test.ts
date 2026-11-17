@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import fixture from "../../tests/fixtures/content/site/sections/about.json";
-import { expectContentContract } from "../../tests/helpers/content-contract";
+import { expectContentContract } from "../../tests/helpers/contentContract";
 import { aboutSchema } from "./about";
 
 it("enforces the about content contract", () => {

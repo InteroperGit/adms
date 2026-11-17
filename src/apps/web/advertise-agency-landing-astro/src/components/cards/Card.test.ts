@@ -2,7 +2,7 @@
 import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
 import Card from "./Card.astro";
-import type { ContentImage } from "@/types/content-blocks";
+import type { ContentImage } from "@/types/contentBlocks";
 import { render } from "../../../tests/helpers/render";
 
 const baseProps = {

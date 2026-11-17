@@ -1,5 +1,21 @@
 # Code style and Astro
 
+## File names
+
+Use `camelCase` for source, test, fixture, helper, type and E2E spec filenames
+under `src/` and `tests/`, retaining suffixes such as `.test.ts`, `.spec.ts` and
+`.types.ts`. Name reusable Astro components and layouts in `PascalCase` with the
+`.astro` extension. A colocated test for a PascalCase Astro component keeps the
+component basename so it remains directly paired with its source.
+
+Astro page filenames define public routes; preserve route-derived names such as
+`privacy-policy.astro`, `terms-of-use.astro`, dynamic `[id].astro` segments and
+the special sitemap endpoint. Preserve fixture paths that mirror template
+outputs or public content IDs, including the starter article and project `1`
+fixtures. Preserve `src/assets` filenames referenced by externally supplied
+runtime content. These names are data or route contracts, not local naming
+choices. Standard tool configuration files also keep their conventional names.
+
 Code lines, including indentation, markup, scripts, styles, configuration and
 examples, must be <=80 characters. Wrap with valid syntax. Prettier
 `printWidth: 80` is a target; `pnpm check:style` enforces the hard limit on

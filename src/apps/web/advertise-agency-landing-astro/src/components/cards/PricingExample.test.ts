@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { getByRole, getAllByRole } from "@testing-library/dom";
 import PricingExample from "./PricingExample.astro";
 import { pricingSchema } from "../../../src/validation/pricing";
-import fixtures from "../../../tests/fixtures/content/unit-contracts.json";
+import fixtures from "../../../tests/fixtures/content/unitContracts.json";
 import { render } from "../../../tests/helpers/render";
 
 const example = () => pricingSchema.parse(fixtures.pricing).items[0];

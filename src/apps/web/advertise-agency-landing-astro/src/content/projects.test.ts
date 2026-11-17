@@ -1,7 +1,7 @@
 // Resolve articles before applying public project and category views.
 import { afterEach, expect, it, vi } from "vitest";
 import { buildProject } from "../../tests/helpers/fixtures";
-import { projectCategories } from "./project-categories";
+import { projectCategories } from "./projectCategories";
 
 afterEach(() => {
   vi.doUnmock("astro:content");

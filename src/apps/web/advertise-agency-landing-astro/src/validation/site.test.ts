@@ -1,8 +1,8 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import fixture from "../../tests/fixtures/content/site/settings/site.json";
-import { expectContentContract } from "../../tests/helpers/content-contract";
-import { parseContent } from "./parse-content";
+import { expectContentContract } from "../../tests/helpers/contentContract";
+import { parseContent } from "./parseContent";
 import { siteSchema } from "./site";
 
 it("enforces the site settings contract", () => {

@@ -2,8 +2,8 @@
 // Boundary tests for FAQ copy and approval rules.
 import { expect, it } from "vitest";
 import type { z } from "astro/zod";
-import fixture from "../../tests/fixtures/content/unit-contracts.json";
-import { expectContentContract } from "../../tests/helpers/content-contract";
+import fixture from "../../tests/fixtures/content/unitContracts.json";
+import { expectContentContract } from "../../tests/helpers/contentContract";
 import { faqSchema } from "./faq";
 
 it("enforces the FAQ root contract", () => {

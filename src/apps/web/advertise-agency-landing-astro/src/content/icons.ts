@@ -1,7 +1,7 @@
 // src/content/icons.ts
 import iconsData from "@/data/content/site/settings/icons.json";
 import type { Icons } from "@/types";
-import { parseContent } from "@/validation/parse-content";
+import { parseContent } from "@/validation/parseContent";
 import { iconsSchema } from "@/validation/icons";
 
 export const icons: Icons = parseContent(

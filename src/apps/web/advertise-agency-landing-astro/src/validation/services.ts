@@ -9,10 +9,10 @@ import { mediaSource, text, uniqueValues } from "./shared";
 import {
   serviceArticleSchema,
   serviceArticleSourceSchema,
-} from "./service-articles";
+} from "./serviceArticles";
 import type { AssertContract, SameContract } from "./shared";
-import { getPublicationIssues } from "./policies/block-publication";
-import { isServicePublished } from "./policies/service-publication";
+import { getPublicationIssues } from "./policies/blockPublication";
+import { isServicePublished } from "./policies/servicePublication";
 
 const focalPoint = z
   .object({

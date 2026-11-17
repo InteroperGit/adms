@@ -2,7 +2,7 @@
 import privacyData from "@/data/content/site/pages/legal/privacyPolicy.json";
 import termsData from "@/data/content/site/pages/legal/termsOfUse.json";
 import type { LegalDocument } from "@/types";
-import { parseContent } from "@/validation/parse-content";
+import { parseContent } from "@/validation/parseContent";
 import { legalDocumentSchema } from "@/validation/legal";
 
 export const privacyPolicy: LegalDocument = parseContent(

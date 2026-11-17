@@ -40,7 +40,7 @@ export const categoryConfig = {
 import {
   getProjectCategory,
   projectCategories,
-} from "@/content/project-categories";
+} from "@/content/projectCategories";
 export const categories =
   projectCategories satisfies Domain.ProjectCategoryConfig[];
 export const found = getProjectCategory(category) satisfies

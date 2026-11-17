@@ -16,7 +16,7 @@ import ProjectCatalogEmpty
 // prettier-ignore
 import ProjectCatalogPagination
   from '../../src/components/projects/ProjectCatalogPagination.astro';
-import type { ContentBlock } from "../../src/types/content-blocks";
+import type { ContentBlock } from "../../src/types/contentBlocks";
 import type { Project } from "../../src/types/project";
 import ProjectsIndex from "../../src/pages/projects/index.astro";
 // prettier-ignore
@@ -26,21 +26,21 @@ import {
 import ProjectPage, {
   getStaticPaths as getProjectPageStaticPaths,
 } from "../../src/pages/projects/page/[page].astro";
-import { projectCatalogSettings } from "../../src/content/project-catalog";
-import { projectCategories } from "../../src/content/project-categories";
+import { projectCatalogSettings } from "../../src/content/projectCatalog";
+import { projectCategories } from "../../src/content/projectCategories";
 // prettier-ignore
 import {
   getVisibleProjects,
-} from "../../src/validation/policies/project-publication";
+} from "../../src/validation/policies/projectPublication";
 import { site } from "../../src/content/site";
 import { render, renderDocument } from "../helpers/render";
 import { buildProject, cloneFixture } from "../helpers/fixtures";
-import routeFixture from "../fixtures/content/page-routes.json";
+import routeFixture from "../fixtures/content/pageRoutes.json";
 import {
   expectPage,
   expectMetadata,
   expectCanonical,
-} from "../helpers/page-contract";
+} from "../helpers/pageContract";
 
 const overrides = vi.hoisted(() => ({
   projects: undefined as Project[] | undefined,
@@ -50,7 +50,7 @@ vi.mock("@/content/projects", async (importOriginal) => {
   const actual =
     await importOriginal<typeof import("../../src/content/projects")>();
   const { getAvailableProjectCategories } =
-    await import("../../src/validation/policies/project-publication");
+    await import("../../src/validation/policies/projectPublication");
   return {
     ...actual,
     get projects() {

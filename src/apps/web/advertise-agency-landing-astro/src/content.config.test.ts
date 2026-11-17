@@ -35,7 +35,7 @@ it("registers article collections with their metadata schemas", async () => {
   const { projectArticleMetadataSchema } =
     await import("./validation/projects");
   const { serviceArticleMetadataSchema } =
-    await import("./validation/service-articles");
+    await import("./validation/serviceArticles");
   const names = Object.keys(collections);
 
   expect(names).toHaveLength(3);

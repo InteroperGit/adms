@@ -1,7 +1,7 @@
 // src/content/site.ts
 import siteData from "@/data/content/site/settings/site.json";
 import type { SiteConfig } from "@/types/site";
-import { parseContent } from "@/validation/parse-content";
+import { parseContent } from "@/validation/parseContent";
 import { siteSchema } from "@/validation/site";
 import { visibleServices } from "./services";
 

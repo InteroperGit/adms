@@ -17,11 +17,11 @@ export type { MenuItem, LegalItem, SectionContent, SiteConfig } from "./site";
 export { type LegalSection, type LegalDocument } from "./legal";
 export type { Stat, AboutContent } from "./about";
 export type { Icons } from "./icons";
-export type { OrderInquiryContent, InquiryField } from "./order-inquiry";
+export type { OrderInquiryContent, InquiryField } from "./orderInquiry";
 export type {
   OrderingProcessContent,
   OrderingProcessStep,
-} from "./ordering-process";
+} from "./orderingProcess";
 export type {
   IntroductionContent,
   IntroductionPhoto,
@@ -47,7 +47,7 @@ export type {
   WarrantyTerm,
   MaintenanceContent,
   ProductionAndGuaranteesContent,
-} from "./production-and-guarantees";
+} from "./productionAndGuarantees";
 
 export type {
   CarouselItem,
@@ -55,13 +55,13 @@ export type {
   CarouselContent,
   CarouselPresentation,
   CarouselFocalPoint,
-} from "./image-carousel";
+} from "./imageCarousel";
 export type {
   BusinessSolutionMedia,
   BusinessSolutionAttribution,
   BusinessSolutionItem,
   BusinessSolutionsContent,
-} from "./business-solutions";
+} from "./businessSolutions";
 export type {
   ChartBlock,
   ContentBlock,
@@ -78,4 +78,4 @@ export type {
   TableBlock,
   UnorderedListBlock,
   VideoBlock,
-} from "./content-blocks";
+} from "./contentBlocks";

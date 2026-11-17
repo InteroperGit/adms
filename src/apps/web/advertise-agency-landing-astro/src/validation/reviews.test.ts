@@ -1,8 +1,8 @@
 // @vitest-environment node
 // Boundary tests for review identity, copy and avatar media.
 import { expect, it } from "vitest";
-import fixture from "../../tests/fixtures/content/unit-contracts.json";
-import { expectContentContract } from "../../tests/helpers/content-contract";
+import fixture from "../../tests/fixtures/content/unitContracts.json";
+import { expectContentContract } from "../../tests/helpers/contentContract";
 import { reviewsSchema } from "./reviews";
 
 it("enforces the reviews root contract", () => {

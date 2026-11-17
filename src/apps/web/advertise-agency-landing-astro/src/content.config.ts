@@ -1,7 +1,7 @@
 // Collections validate metadata; the service loader validates compiled blocks.
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { serviceArticleMetadataSchema } from "./validation/service-articles";
+import { serviceArticleMetadataSchema } from "./validation/serviceArticles";
 import { projectArticleMetadataSchema } from "./validation/projects";
 
 // E2E builds load only synthetic articles, never deployment content.

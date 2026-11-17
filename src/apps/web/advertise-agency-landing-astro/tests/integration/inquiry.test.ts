@@ -4,16 +4,16 @@ import { afterEach, expect, it, vi } from "vitest";
 import OrderInquiry from "../../src/components/sections/OrderInquiry.astro";
 import OrderFormBlock from "../../src/components/content/OrderFormBlock.astro";
 import ContactMenu from "../../src/components/ui/ContactMenu.astro";
-import type { OrderInquiryContent } from "../../src/types/order-inquiry";
+import type { OrderInquiryContent } from "../../src/types/orderInquiry";
 import { render } from "../helpers/render";
 
 const inquiryConfig = vi.hoisted(() => ({
   enabled: false,
 }));
 
-vi.mock("@/content/order-inquiry", async (importOriginal) => {
+vi.mock("@/content/orderInquiry", async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import("@/content/order-inquiry")>();
+    await importOriginal<typeof import("@/content/orderInquiry")>();
   return {
     ...actual,
     get orderInquiry(): OrderInquiryContent {

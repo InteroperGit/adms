@@ -3,7 +3,7 @@
 import { expect, it } from "vitest";
 import { buildProject } from "../../../tests/helpers/fixtures";
 import { render } from "../../../tests/helpers/render";
-import { projectCategories } from "@/content/project-categories";
+import { projectCategories } from "@/content/projectCategories";
 import Component from "./ProjectCatalogGrid.astro";
 
 const firstCategory = projectCategories[0];

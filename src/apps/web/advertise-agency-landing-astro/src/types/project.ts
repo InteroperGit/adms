@@ -1,4 +1,4 @@
-﻿import type { ContentBlock } from "./content-blocks";
+﻿import type { ContentBlock } from "./contentBlocks";
 
 export interface ProjectApproval {
   source: string;

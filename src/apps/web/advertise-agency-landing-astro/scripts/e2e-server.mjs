@@ -13,7 +13,7 @@ const templates = JSON.parse(
   await readFile("data/templates/manifest.json", "utf8"),
 );
 const overrides = JSON.parse(
-  await readFile("tests/fixtures/content/e2e-overrides.json", "utf8"),
+  await readFile("tests/fixtures/content/e2eOverrides.json", "utf8"),
 );
 for (const entry of validateContentManifest(templates)) {
   const path = entry.output ?? entry.path;

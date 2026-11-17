@@ -4,11 +4,11 @@ import { moduleURL } from "./lib/import-typescript.mjs";
 import { compileMdx } from "./lib/compile-mdx.mjs";
 
 const { contentBlocksSchema } = await import(
-  await moduleURL("src/validation/content-blocks.ts")
+  await moduleURL("src/validation/contentBlocks.ts")
 );
 
-const validPath = "tests/fixtures/content/content-blocks.valid.json";
-const invalidPath = "tests/fixtures/content/content-blocks.invalid.json";
+const validPath = "tests/fixtures/content/contentBlocks.valid.json";
+const invalidPath = "tests/fixtures/content/contentBlocks.invalid.json";
 const valid = JSON.parse(await readFile(validPath, "utf8"));
 const invalid = JSON.parse(await readFile(invalidPath, "utf8"));
 const validImage = valid.find((block) => block.type === "image");

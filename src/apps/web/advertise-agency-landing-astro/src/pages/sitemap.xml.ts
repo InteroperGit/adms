@@ -6,11 +6,11 @@ import { services } from "@/content/services";
 // prettier-ignore
 import {
   getPublishedServicePaths,
-} from "@/validation/policies/service-publication";
+} from "@/validation/policies/servicePublication";
 // prettier-ignore
 import {
   getPublishedProjectPaths,
-} from "@/validation/policies/project-publication";
+} from "@/validation/policies/projectPublication";
 
 const paths = [
   "/",

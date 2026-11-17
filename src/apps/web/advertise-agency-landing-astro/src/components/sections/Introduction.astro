@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button.astro";
 import { introduction as content } from "@/content/introduction";
 // prettier-ignore
 import { getVisibleIntroductionPhoto } from
-  '@/validation/policies/introduction-publication';
+  '@/validation/policies/introductionPublication';
 
 // Resolve optional bundled media at build time and reject missing assets.
 const originals = import.meta.glob<ImageMetadata>(

@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
 import ProjectCard from "./ProjectCard.astro";
 import type { Project } from "../../../src/types/project";
-import type { ImageBlock } from "../../../src/types/content-blocks";
+import type { ImageBlock } from "../../../src/types/contentBlocks";
 import { render } from "../../../tests/helpers/render";
 
 const image: ImageBlock = {

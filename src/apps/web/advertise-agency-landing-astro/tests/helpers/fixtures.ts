@@ -1,7 +1,7 @@
 // Shared builders for stable, schema-shaped test data.
-import contracts from "../fixtures/content/unit-contracts.json";
-import blocks from "../fixtures/content/content-blocks.json";
-import type { ContentBlock } from "../../src/types/content-blocks";
+import contracts from "../fixtures/content/unitContracts.json";
+import blocks from "../fixtures/content/contentBlocks.json";
+import type { ContentBlock } from "../../src/types/contentBlocks";
 import type { Project } from "../../src/types/project";
 
 type JsonValue =

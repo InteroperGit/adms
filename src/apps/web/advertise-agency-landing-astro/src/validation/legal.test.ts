@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import fixture from "@/data/content/site/pages/legal/privacyPolicy.json";
-import { expectContentContract } from "../../tests/helpers/content-contract";
+import { expectContentContract } from "../../tests/helpers/contentContract";
 import { legalDocumentSchema } from "./legal";
 
 it("enforces legal document and optional list contracts", () => {

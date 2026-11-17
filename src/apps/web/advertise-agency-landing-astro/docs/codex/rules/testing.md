@@ -10,10 +10,12 @@ appropriate static checks, not new tests for the sake of coverage.
 
 - Pure logic: tests beside source; run `pnpm test:unit`.
 - Every Astro component and application TypeScript source module has a colocated
-  unit-test file named `<source-basename>.test.ts` in the same directory. Add or
-  update that test with the source change and keep assertions synchronized with
-  its public behavior and failure cases. This rule excludes test files,
-  declaration files and generated files.
+  unit-test file in the same directory. For camelCase TypeScript modules, name
+  it `<source-basename>.test.ts`; for PascalCase Astro components, retain the
+  component basename in `<Component>.test.ts`. Add or update that test with the
+  source change and keep assertions synchronized with its public behavior and
+  failure cases. This rule excludes test files, declaration files and generated
+  files.
 - Components: matching-basename colocated tests; `pnpm test:components`.
   `pnpm verify:component-tests` prevents tests returning to `tests/components`.
 - Integration: `tests/integration/`, for composition and cross-module contracts.

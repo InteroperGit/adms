@@ -4,16 +4,16 @@ import {
   createServiceRecordsSchema,
   createServicesSchema,
 } from "../validation/services";
-import { serviceArticleSchema } from "../validation/service-articles";
-import { parseContent } from "../validation/parse-content";
+import { serviceArticleSchema } from "../validation/serviceArticles";
+import { parseContent } from "../validation/parseContent";
 import {
   getVisibleServices,
   isServicePublished,
-} from "../validation/policies/service-publication";
+} from "../validation/policies/servicePublication";
 // prettier-ignore
 import {
   assertPublicationPolicy,
-} from "../validation/policies/block-publication";
+} from "../validation/policies/blockPublication";
 
 // The dynamic route is backed by catalog IDs, so route validation can happen
 // without importing or scanning page modules and without a loader cycle.

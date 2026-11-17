@@ -1,8 +1,8 @@
 // @vitest-environment node
 // Boundary tests for the introduction content contract.
 import { expect, it } from "vitest";
-import fixture from "../../tests/fixtures/content/unit-contracts.json";
-import { expectContentContract } from "../../tests/helpers/content-contract";
+import fixture from "../../tests/fixtures/content/unitContracts.json";
+import { expectContentContract } from "../../tests/helpers/contentContract";
 import { introductionSchema } from "./introduction";
 
 it("enforces the introduction root contract", () => {

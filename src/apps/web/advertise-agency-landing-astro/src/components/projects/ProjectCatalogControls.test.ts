@@ -2,7 +2,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import { render } from "../../../tests/helpers/render";
-import { projectCategories } from "@/content/project-categories";
+import { projectCategories } from "@/content/projectCategories";
 import Component from "./ProjectCatalogControls.astro";
 
 it("renders labeled search and category filters from config", async () => {

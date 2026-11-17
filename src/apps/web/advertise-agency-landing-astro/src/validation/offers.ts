@@ -12,12 +12,12 @@ import {
   safeCarouselUrl as safeOfferUrl,
   carouselFocalPointSchema as offerFocalPointSchema,
   carouselPresentationSchema as offerPresentationSchema,
-} from "./image-carousel";
+} from "./imageCarousel";
 export {
   carouselFocalPointSchema as offerFocalPointSchema,
   carouselPresentationSchema as offerPresentationSchema,
   carouselTextContrast as offerTextContrast,
-} from "./image-carousel";
+} from "./imageCarousel";
 
 export const offerSchema = z
   .object({

@@ -17,7 +17,7 @@ import ProjectCatalogEmpty from
 import ProjectCatalogPagination from
   '@/components/projects/ProjectCatalogPagination.astro';
 import { availableProjectCategories, projects } from "@/content/projects";
-import { projectCatalogSettings } from "@/content/project-catalog";
+import { projectCatalogSettings } from "@/content/projectCatalog";
 const catalogProjects = projects;
 const pageSize = projectCatalogSettings.pageSize;
 const staticPageCount = Math.ceil(catalogProjects.length / pageSize);
@@ -126,7 +126,7 @@ const staticPaginationItems = getPaginationItems(
   </div>
 </Layout>
 
-<script src="../../scripts/project-catalog.ts"></script>
+<script src="../../scripts/projectCatalog.ts"></script>
 
 <style>
   /* Keep the catalogue content aligned with the shared page container. */

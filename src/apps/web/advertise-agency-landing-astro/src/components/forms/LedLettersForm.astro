@@ -1,7 +1,7 @@
 ---
 // A single service request form with common contacts and lettering details.
 // Reuse the configured receipt-based delivery handler; no fake success state.
-import { orderInquiry } from "@/content/order-inquiry";
+import { orderInquiry } from "@/content/orderInquiry";
 import OrderFormContainer from "@/components/content/OrderFormContainer.astro";
 import Link from "@/components/ui/Link.astro";
 
@@ -363,7 +363,7 @@ const groups = [
 </OrderFormContainer>
 
 <script>
-  import { initializeInquiry } from "./order-inquiry";
+  import { initializeInquiry } from "./orderInquiry";
 
   // Install validation before enabling configured submission.
   document

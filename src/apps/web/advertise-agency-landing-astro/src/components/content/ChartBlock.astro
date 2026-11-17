@@ -1,6 +1,6 @@
 ---
 // Render a responsive chart with a semantic, expandable data fallback.
-import type { ChartBlock as ChartBlockType } from "@/types/content-blocks";
+import type { ChartBlock as ChartBlockType } from "@/types/contentBlocks";
 
 interface Props {
   block: ChartBlockType;
@@ -263,7 +263,7 @@ const labels = [
   const elements = document.querySelectorAll<HTMLElement>("[data-chart]");
   const enhance = async (element: HTMLElement) => {
     try {
-      const { renderChart } = await import("@/scripts/chart-runtime");
+      const { renderChart } = await import("@/scripts/chartRuntime");
       renderChart(element);
       element
         .closest<HTMLElement>("[data-chart-figure]")

@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import mdx from "@astrojs/mdx";
 import { unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
-import remarkContentBlocks from "./src/content/mdx-blocks.mjs";
+import remarkContentBlocks from "./src/content/mdxBlocks.mjs";
 
 const productionUrl = process.env.PUBLIC_SITE_URL?.trim();
 const contentRoot =

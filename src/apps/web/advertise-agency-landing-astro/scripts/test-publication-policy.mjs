@@ -5,33 +5,33 @@ import { moduleURL } from "./lib/import-typescript.mjs";
 import { compileMdx } from "./lib/compile-mdx.mjs";
 
 const policy = await import(
-  await moduleURL("src/validation/policies/block-publication.ts")
+  await moduleURL("src/validation/policies/blockPublication.ts")
 );
 const { contentBlocksSchema } = await import(
-  await moduleURL("src/validation/content-blocks.ts")
+  await moduleURL("src/validation/contentBlocks.ts")
 );
 const projects = await import(await moduleURL("src/validation/projects.ts"));
 const { projectCategories } = await import(
-  await moduleURL("src/content/project-categories.ts")
+  await moduleURL("src/content/projectCategories.ts")
 );
 const projectSchemas = projects.createProjectSchemas(
   projectCategories.map(({ slug }) => slug),
 );
 const projectPolicy = await import(
-  await moduleURL("src/validation/policies/project-publication.ts")
+  await moduleURL("src/validation/policies/projectPublication.ts")
 );
 const services = await import(await moduleURL("src/validation/services.ts"));
 const servicePolicy = await import(
-  await moduleURL("src/validation/policies/service-publication.ts")
+  await moduleURL("src/validation/policies/servicePublication.ts")
 );
 const { getArticleFormRegistration } = await import(
-  await moduleURL("src/validation/policies/article-context.ts")
+  await moduleURL("src/validation/policies/articleContext.ts")
 );
 const fixture = JSON.parse(
   await readFile("tests/fixtures/content/publication.json", "utf8"),
 );
 const base = JSON.parse(
-  await readFile("tests/fixtures/content/content-blocks.valid.json", "utf8"),
+  await readFile("tests/fixtures/content/contentBlocks.valid.json", "utf8"),
 );
 const approved = base.map((block) => ({
   ...block,

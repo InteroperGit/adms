@@ -1,8 +1,8 @@
 // @vitest-environment node
 // Offer contracts cover editorial defaults, media and CTA destinations.
 import { expect, it } from "vitest";
-import fixtures from "../../tests/fixtures/content/unit-contracts.json";
-import { expectContentContract } from "../../tests/helpers/content-contract";
+import fixtures from "../../tests/fixtures/content/unitContracts.json";
+import { expectContentContract } from "../../tests/helpers/contentContract";
 import {
   offerFocalPointSchema,
   offerPresentationSchema,

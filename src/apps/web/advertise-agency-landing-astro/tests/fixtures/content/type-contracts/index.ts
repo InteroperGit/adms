@@ -54,14 +54,14 @@ export type AboutContent = AssertContract<
 >;
 import type * as icons from "@/types/icons";
 export type Icons = AssertContract<SameContract<Public.Icons, icons.Icons>>;
-import type * as orderInquiry from "@/types/order-inquiry";
+import type * as orderInquiry from "@/types/orderInquiry";
 export type OrderInquiryContent = AssertContract<
   SameContract<Public.OrderInquiryContent, orderInquiry.OrderInquiryContent>
 >;
 export type InquiryField = AssertContract<
   SameContract<Public.InquiryField, orderInquiry.InquiryField>
 >;
-import type * as orderingProcess from "@/types/ordering-process";
+import type * as orderingProcess from "@/types/orderingProcess";
 export type OrderingProcessContent = AssertContract<
   SameContract<
     Public.OrderingProcessContent,
@@ -113,7 +113,7 @@ export type PricingExample = AssertContract<
 export type PricingContent = AssertContract<
   SameContract<Public.PricingContent, pricing.PricingContent>
 >;
-import type * as production from "@/types/production-and-guarantees";
+import type * as production from "@/types/productionAndGuarantees";
 export type ProductionApproval = AssertContract<
   SameContract<Public.ProductionApproval, production.ProductionApproval>
 >;
@@ -135,7 +135,7 @@ export type ProductionAndGuaranteesContent = AssertContract<
     production.ProductionAndGuaranteesContent
   >
 >;
-import type * as imageCarousel from "@/types/image-carousel";
+import type * as imageCarousel from "@/types/imageCarousel";
 export type CarouselItem = AssertContract<
   SameContract<Public.CarouselItem, imageCarousel.CarouselItem>
 >;
@@ -151,7 +151,7 @@ export type CarouselPresentation = AssertContract<
 export type CarouselFocalPoint = AssertContract<
   SameContract<Public.CarouselFocalPoint, imageCarousel.CarouselFocalPoint>
 >;
-import type * as businessSolutions from "@/types/business-solutions";
+import type * as businessSolutions from "@/types/businessSolutions";
 export type BusinessSolutionMedia = AssertContract<
   SameContract<
     Public.BusinessSolutionMedia,
@@ -176,7 +176,7 @@ export type BusinessSolutionsContent = AssertContract<
     businessSolutions.BusinessSolutionsContent
   >
 >;
-import type * as contentBlocks from "@/types/content-blocks";
+import type * as contentBlocks from "@/types/contentBlocks";
 export type ChartBlock = AssertContract<
   SameContract<Public.ChartBlock, contentBlocks.ChartBlock>
 >;
@@ -226,7 +226,7 @@ export type VideoBlock = AssertContract<
   SameContract<Public.VideoBlock, contentBlocks.VideoBlock>
 >;
 
-import { projectCategories } from "@/content/project-categories";
+import { projectCategories } from "@/content/projectCategories";
 export const categories =
   projectCategories satisfies project.ProjectCategoryConfig[];
 // @ts-expect-error Barrel exports preserve the draft/public union.

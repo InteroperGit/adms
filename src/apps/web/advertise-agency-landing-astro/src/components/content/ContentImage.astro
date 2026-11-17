@@ -3,8 +3,8 @@
 // Detail media contains the whole image; thumbnail/service crops use authored
 // focal points. Captions belong to the enclosing figure or gallery link.
 import { Image } from "astro:assets";
-import type { ContentImage } from "@/types/content-blocks";
-import { getContentImageMetadata } from "./resolve-image";
+import type { ContentImage } from "@/types/contentBlocks";
+import { getContentImageMetadata } from "./resolveImage";
 
 interface Props {
   image: ContentImage;

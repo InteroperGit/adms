@@ -42,8 +42,8 @@ dimensions, permission or delivery. Review those separately.
 
 ## Restricted article authoring
 
-Use the [MDX compiler](../../../src/content/mdx-blocks.mjs) and
-[block schema](../../../src/validation/content-blocks.ts) as the authoritative
+Use the [MDX compiler](../../../src/content/mdxBlocks.mjs) and
+[block schema](../../../src/validation/contentBlocks.ts) as the authoritative
 syntax and component allowlist. Treat authored MDX as restricted data: reject
 executable expressions, imports/exports, arbitrary HTML/JSX and unsupported
 markup. Do not strip unsupported content silently or let authored data choose

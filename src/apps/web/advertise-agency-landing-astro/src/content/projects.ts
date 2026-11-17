@@ -1,16 +1,16 @@
 import data from "@/data/content/site/lists/projects.json";
 import { getCollection, render } from "astro:content";
 import { createProjectSchemas } from "../validation/projects";
-import { projectCategories } from "./project-categories";
-import { parseContent } from "../validation/parse-content";
+import { projectCategories } from "./projectCategories";
+import { parseContent } from "../validation/parseContent";
 import {
   getAvailableProjectCategories,
   getVisibleProjects,
-} from "../validation/policies/project-publication";
+} from "../validation/policies/projectPublication";
 // prettier-ignore
 import {
   assertPublicationPolicy,
-} from "../validation/policies/block-publication";
+} from "../validation/policies/blockPublication";
 
 const projectSchemas = createProjectSchemas(
   projectCategories.map(({ slug }) => slug),

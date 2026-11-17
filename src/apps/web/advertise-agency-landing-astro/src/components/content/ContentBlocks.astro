@@ -1,12 +1,12 @@
 ---
 // One ordered article renderer for normalized MDX and explicit JSON fallback.
 // Only the page supplies owner context; authors cannot enable production forms.
-import type { ContentBlock } from "@/types/content-blocks";
-import type { ArticleContext } from "@/validation/policies/article-context";
+import type { ContentBlock } from "@/types/contentBlocks";
+import type { ArticleContext } from "@/validation/policies/articleContext";
 import {
   getVisibleBlocks,
   hasDemoBlocks,
-} from "@/validation/policies/block-publication";
+} from "@/validation/policies/blockPublication";
 import ChartBlock from "./ChartBlock.astro";
 import FootnoteBlock from "./FootnoteBlock.astro";
 import HeadingBlock from "./HeadingBlock.astro";

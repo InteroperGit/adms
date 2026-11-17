@@ -1,8 +1,5 @@
 // Offers keep their content contract while sharing carousel presentation.
-import type {
-  CarouselFocalPoint,
-  CarouselPresentation,
-} from "./image-carousel";
+import type { CarouselFocalPoint, CarouselPresentation } from "./imageCarousel";
 export type OfferFocalPoint = CarouselFocalPoint;
 export type OfferPresentation = CarouselPresentation;
 

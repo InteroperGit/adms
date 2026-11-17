@@ -6,7 +6,7 @@
 import Section from "@/components/ui/Section.astro";
 import Link from "@/components/ui/Link.astro";
 import { faq } from "@/content/faq";
-import { getVisibleFaqItems } from "@/validation/policies/faq-publication";
+import { getVisibleFaqItems } from "@/validation/policies/faqPublication";
 
 // Outside demo mode, only approved section copy and answers are displayed.
 const items = getVisibleFaqItems(faq);

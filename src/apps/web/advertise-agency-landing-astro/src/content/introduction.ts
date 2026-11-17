@@ -1,6 +1,6 @@
 import data from "@/data/content/site/sections/introduction.json";
 import { introductionSchema } from "../validation/introduction";
-import { parseContent } from "../validation/parse-content";
+import { parseContent } from "../validation/parseContent";
 
 export const introduction = parseContent(
   introductionSchema,

@@ -1,13 +1,13 @@
 ﻿import { z } from "astro/zod";
 import type { ProjectCategory } from "../types/project";
 import type { Project } from "../types/project";
-import { contentBlocksSchema } from "./content-blocks";
+import { contentBlocksSchema } from "./contentBlocks";
 import { text, id, uniqueIds } from "./shared";
 import type { AssertContract, SameContract } from "./shared";
 import {
   getPublicationIssues,
   getVisibleBlocks,
-} from "./policies/block-publication";
+} from "./policies/blockPublication";
 
 /** Public contract: metadata plus one ordered content block stream. */
 const approval = z

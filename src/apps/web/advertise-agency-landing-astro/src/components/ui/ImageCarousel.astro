@@ -8,11 +8,11 @@ import type {
   CarouselItem,
   CarouselOptions,
   CarouselPresentation,
-} from "@/types/image-carousel";
+} from "@/types/imageCarousel";
 import {
   carouselItemsSchema,
   carouselOptionsSchema,
-} from "@/validation/image-carousel";
+} from "@/validation/imageCarousel";
 
 interface Props {
   // IDs must be unique on the page; they namespace slides and controls.
@@ -130,7 +130,7 @@ const circles = multiple && options.circles;
 
 <script>
   // Astro bundles this browser-only module once for all carousel instances.
-  import "./image-carousel";
+  import "./imageCarousel";
 </script>
 
 <style>

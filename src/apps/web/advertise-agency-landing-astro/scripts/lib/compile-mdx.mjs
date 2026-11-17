@@ -7,7 +7,7 @@ import {
   parseFrontmatter,
   unified,
 } from "@astrojs/markdown-remark";
-import remarkContentBlocks from "../../src/content/mdx-blocks.mjs";
+import remarkContentBlocks from "../../src/content/mdxBlocks.mjs";
 
 const processor = unified({
   remarkPlugins: [remarkContentBlocks],

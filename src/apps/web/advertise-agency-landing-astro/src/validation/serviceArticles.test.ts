@@ -1,0 +1,83 @@
+// Boundary tests for MDX and JSON service article sources.
+import { expect, it } from "vitest";
+import fixture from "../../tests/fixtures/content/unitContracts.json";
+import {
+  serviceArticleSourceSchema,
+  serviceArticleSchema,
+  serviceArticleMetadataSchema,
+} from "./serviceArticles";
+
+it("parses valid article metadata and JSON fallback content", () => {
+  const service = fixture.services.items[0];
+  expect(serviceArticleSchema.parse(service.article).title).toBe("Sample");
+  expect(
+    serviceArticleSourceSchema.parse({
+      format: "json",
+      ...service.article,
+      reason: "Fallback",
+    }).format,
+  ).toBe("json");
+});
+
+it("parses stable MDX entries and rejects malformed entry names", () => {
+  expect(
+    serviceArticleSourceSchema.parse({
+      format: "mdx",
+      entry: "sample-article",
+    }).format,
+  ).toBe("mdx");
+  expect(
+    serviceArticleSourceSchema.safeParse({
+      format: "mdx",
+      entry: "Bad Entry",
+    }).success,
+  ).toBe(false);
+});
+
+it("rejects empty content, unapproved copy and unknown metadata", () => {
+  const service = fixture.services.items[0];
+  expect(
+    serviceArticleSchema.safeParse({
+      ...service.article,
+      content: [],
+    }).success,
+  ).toBe(false);
+  expect(
+    serviceArticleSchema.safeParse({
+      ...service.article,
+      approved: "yes",
+    }).success,
+  ).toBe(false);
+  expect(
+    serviceArticleSourceSchema.safeParse({
+      format: "json",
+      ...service.article,
+      reason: "Fallback",
+      extra: true,
+    }).success,
+  ).toBe(false);
+});
+
+it("rejects legacy fields, surplus metadata and blank fallback reasons", () => {
+  const article = fixture.services.items[0].article;
+  for (const field of ["lead", "sections", "inquiry"]) {
+    expect(
+      serviceArticleSchema.safeParse({ ...article, [field]: [] }).success,
+    ).toBe(false);
+  }
+  expect(
+    serviceArticleMetadataSchema.safeParse({
+      title: "Fixture",
+      description: "Fixture",
+      approved: false,
+      extra: true,
+    }).success,
+  ).toBe(false);
+  expect(
+    serviceArticleSourceSchema.safeParse({
+      format: "json",
+      ...article,
+      reason: " ",
+    }).success,
+  ).toBe(false);
+});
