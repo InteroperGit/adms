@@ -38,8 +38,8 @@ UI task 171 is archived; delivery is deferred to task 173.
   complete; all E2E refactor tasks 189-194 passed acceptance. Final run:
   309/309 across Chromium, Firefox and WebKit; baseline contracts preserved.
 
-- [172 - Action rail and persistent chat](../docs/codex/tasks/todo/172-action-rail-visibility-and-chat.md):
-  implemented by Luna; await user decision before improvements.
+- [172 - Action rail and persistent chat](../docs/codex/tasks/fixed/20261116/172-action-rail-visibility-and-chat.md):
+  archived; see task handoff for acceptance and limitations.
 - [173](../docs/codex/tasks/backlog/173-enable-callback-delivery.md): backlog;
   awaiting owner decisions; keep delivery disabled.
 - [174 - Link component and anchor migration](../docs/codex/tasks/fixed/20261116/174-create-link-component-and-migrate-anchors.md):
