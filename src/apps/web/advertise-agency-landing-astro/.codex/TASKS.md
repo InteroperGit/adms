@@ -51,7 +51,7 @@ UI task 171 is archived; delivery is deferred to task 173.
 - [187 - Orchestrate test backlog 175-186](../docs/codex/tasks/fixed/20261116/187-automate-test-backlog-175-186.md):
   complete; tasks 175-186 and all final verification gates passed.
 - [204](../docs/codex/tasks/todo/204-automate-content-migration-161-170.md):
-  active; 161 baseline accepted and archived; 162 is next.
+  active; 161 baseline and 162 tooling are accepted and archived separately.
 - Content migration baseline: 52 runtime JSON/MDX hashes match the ignored
   snapshot; focused content, integration, build and Chromium E2E checks passed.
   Skip external asset reachability checks per the user's regional-access note.

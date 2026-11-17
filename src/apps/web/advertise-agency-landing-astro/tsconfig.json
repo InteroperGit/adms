@@ -5,6 +5,8 @@
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"],
+      "@/data/content/config/*": ["./tests/fixtures/content/site/config/*"],
+      "@/data/content/site/*": ["./tests/fixtures/content/site/*"],
       "@/data/*": ["./data/*"]
     }
   },

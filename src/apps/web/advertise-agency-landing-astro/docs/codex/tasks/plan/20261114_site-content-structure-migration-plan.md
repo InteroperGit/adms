@@ -83,11 +83,11 @@ configuration, даже если внутри есть `items` (например
 
 Серия запущена через задачу
 [204](../todo/204-automate-content-migration-161-170.md).
-Задача 161 принята; следующий шаг — tooling в задаче 162.
+Задачи 161 и 162 приняты; следующая — settings в задаче 163.
 
 - [161 — Исходное состояние миграции](../fixed/20261117/161-content-migration-baseline.md)
   — MIG-000.
-- [162 — Подготовка tooling и полных шаблонов](../backlog/162-content-migration-tooling.md) — MIG-001.
+- [162 — Подготовка tooling и полных шаблонов](../fixed/20261117/162-content-migration-tooling.md) — MIG-001.
 - [163 — Перенос общих настроек](../backlog/163-content-migration-settings.md) — MIG-002.
 - [164 — Перенос базовых секций](../backlog/164-content-migration-primary-sections.md) — MIG-003.
 - [165 — Перенос остальных секций главной](../backlog/165-content-migration-home-sections.md) — MIG-004.

@@ -13,7 +13,8 @@ scripts см. в `package.json`.
 - `verify-built-quality.mjs` — проверяет качество HTML после сборки.
 - `verify-content-boundaries.mjs` — проверяет границы runtime-контента, шаблонов
   и исходников.
-- `verify-content-invariants.mjs` — проверяет инварианты JSON в `data/content/`.
+- `verify-content-invariants.mjs` — проверяет инварианты JSON в
+  runtime-каталоге; в CI путь задаёт `CI_CONTENT_ROOT`.
 - `verify-coverage-thresholds.mjs` — проверяет пороги покрытия по отчёту Vitest.
 - `verify-external-assets.mjs` — проверяет доступность внешних медиа и стилей.
 - `verify-release-metadata.mjs` — проверяет production URL и SEO-метаданные.
@@ -22,8 +23,8 @@ scripts см. в `package.json`.
 
 - `generate-content-catalog.mjs` — генерирует базовый runtime-контент из
   шаблонов.
-- `prepare-ci-content.mjs` — помещает синтетический runtime-контент в чистую
-  CI-сборку.
+- `prepare-ci-content.mjs` — помещает manifest-driven fixtures в пустой
+  `output/ci-content`, не затрагивая авторский runtime.
 - `test-content-block-fixtures.mjs` — проверяет допустимые и отклоняемые
   fixtures блоков контента.
 - `test-content-catalog.mjs` — проверяет генерацию каталога контента.

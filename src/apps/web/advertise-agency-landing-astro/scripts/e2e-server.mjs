@@ -3,6 +3,10 @@ import { spawn } from "node:child_process";
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { preview } from "astro";
+import {
+  fixtureSourcePath,
+  validateContentManifest,
+} from "./lib/content-manifest.mjs";
 
 const root = resolve("output/playwright/content");
 const templates = JSON.parse(
@@ -11,13 +15,31 @@ const templates = JSON.parse(
 const overrides = JSON.parse(
   await readFile("tests/fixtures/content/e2e-overrides.json", "utf8"),
 );
-for (const entry of templates.files.filter((item) => item.kind === "json")) {
+for (const entry of validateContentManifest(templates)) {
   const path = entry.output ?? entry.path;
+  if (entry.kind === "mdx") {
+    const target = resolve(root, path);
+    await mkdir(dirname(target), { recursive: true });
+    await cp(
+      resolve("tests/fixtures/content", fixtureSourcePath(entry)),
+      target,
+    );
+    continue;
+  }
   const value = JSON.parse(
-    await readFile(resolve("tests/fixtures/content/site", path), "utf8"),
+    await readFile(
+      resolve("tests/fixtures/content", fixtureSourcePath(entry)),
+      "utf8",
+    ),
   );
-  if (path === "config/order-inquiry.json") value.submission.enabled = true;
-  if (path === "config/services.json") {
+  if (
+    ["config/order-inquiry.json", "site/pages/order-inquiry.json"].includes(
+      path,
+    )
+  ) {
+    value.submission.enabled = true;
+  }
+  if (["config/services.json", "site/lists/services.json"].includes(path)) {
     value.demoMode = overrides.services.demoMode;
     value.copyApproved = overrides.services.copyApproved;
     const itemOverride = overrides.services.item;
@@ -30,7 +52,7 @@ for (const entry of templates.files.filter((item) => item.kind === "json")) {
     service.image = { ...service.image, ...itemOverride.image };
     service.article = { ...service.article, ...itemOverride.article };
   }
-  if (path === "config/projects.json") {
+  if (["config/projects.json", "site/lists/projects.json"].includes(path)) {
     const project = value.find((item) => item.id === 1);
     if (!project) throw new Error("E2E project not found: 1");
     project.article.content.push(...overrides.projectBlocks);
@@ -38,9 +60,6 @@ for (const entry of templates.files.filter((item) => item.kind === "json")) {
   const target = resolve(root, path);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, JSON.stringify(value, null, 2));
-}
-for (const kind of ["services", "projects", "fixtures"]) {
-  await mkdir(resolve(root, "articles", kind), { recursive: true });
 }
 await mkdir(resolve(root, "fixtures/articles"), { recursive: true });
 await cp(

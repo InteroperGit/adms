@@ -2,7 +2,7 @@
 // This gives content editors a fast, dependency-free diagnostic command.
 import { readFile, readdir } from "node:fs/promises";
 
-const directory = "data/content";
+const directory = process.env.CI_CONTENT_ROOT ?? "data/content";
 // Invalid fixtures and historical snapshots have dedicated regression tests.
 // Recursively inspect all authored production JSON, including new subfolders.
 async function productionFiles(path) {

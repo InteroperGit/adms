@@ -5,7 +5,10 @@ import { serviceArticleMetadataSchema } from "./validation/service-articles";
 import { projectArticleMetadataSchema } from "./validation/projects";
 
 // E2E builds load only synthetic articles, never deployment content.
-const contentRoot = process.env.E2E_CONTENT_ROOT ?? "./data/content";
+const contentRoot =
+  process.env.E2E_CONTENT_ROOT ??
+  process.env.CI_CONTENT_ROOT ??
+  "./data/content";
 
 const serviceArticles = defineCollection({
   loader: glob({

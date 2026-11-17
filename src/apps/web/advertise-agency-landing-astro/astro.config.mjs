@@ -1,10 +1,15 @@
 import { defineConfig } from "astro/config";
+import { resolve } from "node:path";
 import mdx from "@astrojs/mdx";
 import { unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import remarkContentBlocks from "./src/content/mdx-blocks.mjs";
 
 const productionUrl = process.env.PUBLIC_SITE_URL?.trim();
+const contentRoot =
+  process.env.E2E_CONTENT_ROOT ??
+  process.env.CI_CONTENT_ROOT ??
+  "./data/content";
 
 export default defineConfig({
   integrations: [mdx()],
@@ -19,6 +24,14 @@ export default defineConfig({
   output: "static",
   server: { host: "127.0.0.1", port: 4340 },
   vite: {
+    resolve: {
+      alias: [
+        {
+          find: "@/data/content",
+          replacement: resolve(contentRoot),
+        },
+      ],
+    },
     plugins: [tailwindcss()],
     server: {
       fs: {

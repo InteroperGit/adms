@@ -44,7 +44,7 @@ inquiries/design читать при затрагивании соответст
 - [x] Проверить Git status, существующие изменения, доступность runtime,
       игнорирование output и предусловия 161; не присваивать чужие изменения.
 - [x] Выполнить [161 — baseline](../fixed/20261117/161-content-migration-baseline.md).
-- [ ] Выполнить [162 — tooling](../backlog/162-content-migration-tooling.md).
+- [x] Выполнить [162 — tooling](../fixed/20261117/162-content-migration-tooling.md).
 - [ ] Выполнить [163 — settings](../backlog/163-content-migration-settings.md).
 - [ ] Выполнить [164 — primary sections](../backlog/164-content-migration-primary-sections.md).
 - [ ] Выполнить [165 — home sections](../backlog/165-content-migration-home-sections.md).
@@ -61,7 +61,7 @@ inquiries/design читать при затрагивании соответст
       с его изменениями и task records; только затем начинать следующий.
 - [ ] Перед каждым переносом сохранить свежие backup и SHA-256 в ignored
       `output/content-migration/`; проверить пути и отказаться от перезаписи.
-- [ ] В 162 обеспечить отказ CI provisioning при непустом destination;
+- [x] В 162 обеспечить отказ CI provisioning при непустом destination;
       покрыть mixed layout, неизвестные пути, duplicate outputs и отсутствие
       runtime fallback. Проверять provisioning в изолированном checkout.
 - [ ] Обновлять существующие colocated tests loaders и компонентов,
@@ -102,14 +102,17 @@ inquiries/design читать при затрагивании соответст
 
 ## Handoff
 
-Создана 2026-11-16. Серия активна; 161 принята и архивирована в commit
-`97ee656e`. Node `26.13.1` и pnpm `10.7.0` доступны; для pnpm `TEMP`/`TMP`
+Создана 2026-11-16. Серия активна; 161 и 162 приняты и архивированы в отдельных
+локальных commits. 162 выполнила tooling для смешанных content paths; CI/E2E
+работают на isolated fixtures без перезаписи authored runtime. Full verification
+остаётся до явного запроса после серии.
+Node `26.13.1` и pnpm `10.7.0` доступны; для pnpm `TEMP`/`TMP`
 направлялись в ignored workspace output. Baseline содержит 52 runtime
 JSON/MDX; все SHA-256 совпадают со snapshot. Content/boundary, loader,
 integration, build и focused Chromium E2E gates прошли. Один запуск
 `verify:external` дал 403 для части `picsum.photos` и timeout для `t.me`;
 по указанию пользователя внешнюю доступность из РФ далее не проверять.
-Runtime, fixtures и templates не менялись. Полный verification не запрошен.
-После commit 161 начать 162; перед каждым переносом сохранять свежие hashes.
+Runtime не менялся; task 162 добавила synthetic fixtures и templates. Полный
+verification не запрошен. Перед каждым переносом сохранять свежие hashes.
 Откат требует согласованного возврата исходников и ignored runtime из свежей
 копии; одного Git revert недостаточно.

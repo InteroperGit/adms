@@ -22,6 +22,11 @@
       "output": "config/about.json"
     },
     {
+      "path": "config/action-rail.json",
+      "kind": "json",
+      "output": "config/action-rail.json"
+    },
+    {
       "path": "config/business-solutions.json",
       "kind": "json",
       "output": "config/business-solutions.json"

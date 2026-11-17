@@ -2,6 +2,7 @@
 import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
+import { validateContentManifest } from "./lib/content-manifest.mjs";
 
 const root = resolve(".");
 const templateRoot = resolve("data/templates");
@@ -51,24 +52,7 @@ if (!trackedTemplates.includes("data/templates/manifest.json")) {
 if (manifest.schemaVersion !== "1.0.0" || !Array.isArray(manifest.files)) {
   fail("template manifest must define schemaVersion 1.0.0 and files");
 }
-const entries = manifest.files;
-const outputs = new Set(entries.map((entry) => entry.output ?? entry.path));
-if (outputs.size !== entries.length) fail("template outputs must be unique");
-const json = entries.filter((entry) => entry.kind === "json");
-const mdx = entries.filter((entry) => entry.kind === "mdx");
-if (json.length !== 19 || mdx.length !== 2) {
-  fail("manifest must contain 19 JSON files and 2 MDX starters");
-}
-const starterKinds = mdx.map((entry) => entry.path.split("/")[1]);
-if (!starterKinds.includes("projects") || !starterKinds.includes("services")) {
-  fail("manifest must contain project and service starters");
-}
-if (
-  json.some((entry) => !entry.path.startsWith("config/")) ||
-  json.some((entry) => !entry.output.startsWith("config/"))
-) {
-  fail("JSON templates must use the config/ layout");
-}
+const entries = validateContentManifest(manifest);
 
 for (const entry of entries) {
   const source = await readFile(join(templateRoot, entry.path), "utf8");
