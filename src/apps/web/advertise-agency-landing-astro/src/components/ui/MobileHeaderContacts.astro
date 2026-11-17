@@ -93,12 +93,12 @@ const addressDetails = addressParts.join(",").trim();
     border: 1px solid var(--site-navigation-button);
     border-radius: var(--radius-field);
     color: var(--site-navigation-button);
-    background: #ffffff;
+    background: var(--color-base-100);
   }
 
-  /* Match the standalone Max action to its blue logo without shadows. */
+  /* Match the messaging action to the theme-aware settings surface. */
   .mobile-header-contacts :global(.contact-open-action) {
-    background-color: #ffffff;
+    background-color: var(--color-base-100);
     border: 1px solid var(--site-navigation-button);
     border-radius: var(--radius-field);
     color: var(--site-navigation-button);
@@ -108,7 +108,7 @@ const addressDetails = addressParts.join(",").trim();
   .mobile-header-contacts :global(.mobile-header-phone) {
     border-color: var(--site-navigation-button);
     color: var(--site-navigation-button);
-    background-color: #ffffff;
+    background-color: var(--color-base-100);
     box-shadow: none;
     filter: none;
   }
@@ -119,17 +119,33 @@ const addressDetails = addressParts.join(",").trim();
     outline-offset: 3px;
   }
 
-  /* Invert every mobile header action to the primary theme colors. */
+  /* Brighten the mobile actions while keeping their themed surface color. */
   @media (hover: hover) and (pointer: fine) {
     /* Keep the contact row's hover treatment consistent across actions. */
     .mobile-header-contacts :global(.mobile-header-action:hover),
     .mobile-header-contacts :global(.mobile-header-address:hover),
     .mobile-header-contacts :global(.contact-open-action:hover) {
-      background-color: #ffffff;
+      background-color: var(--color-base-100);
       border-color: var(--site-navigation-button-hover);
       color: var(--site-navigation-button-hover);
       box-shadow: var(--site-navigation-button-glow);
     }
+  }
+
+  /* Use a warm surface for the two mobile actions in the dark theme. */
+  :global([data-theme="dark"])
+    .mobile-header-contacts
+    :global(.mobile-header-action),
+  :global([data-theme="dark"])
+    .mobile-header-contacts
+    :global(.mobile-header-action:hover),
+  :global([data-theme="dark"])
+    .mobile-header-contacts
+    :global(.mobile-header-action:active) {
+    border-color: #18222d;
+    color: #18222d;
+    background: #ffd3a1;
+    box-shadow: none;
   }
 
   /* Keep the chat mark compact inside the square contact opener. */
