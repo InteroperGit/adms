@@ -53,6 +53,12 @@ UI task 171 is archived; delivery is deferred to task 173.
 - [204 - Content migration automation](../docs/codex/tasks/fixed/20261117/204-automate-content-migration-161-170.md):
   complete; tasks 161-170 have separate commits. Full Vitest: 881/881;
   build: 39 pages; Chromium E2E: 22/22. Full verification was not requested.
+- [205 - Content refactor](../docs/codex/tasks/fixed/20261117/205-content-refactor-master.md):
+  complete; tasks 206-211 accepted in separate local commits. Focused checks,
+  15-route build quality and Chromium E2E 48/48 passed; full verification was
+  not requested.
+- [206 - Content audit and baseline](../docs/codex/tasks/fixed/20261117/206-content-audit-baseline.md):
+  accepted; synthetic build and article timing evidence recorded.
 - Content migration: task 169 moved pages and normalized JSON filenames to
   camelCase with 30 SHA-256 matches; focused tests, isolated provisioning,
   E2E, check and build passed.

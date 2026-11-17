@@ -1,5 +1,10 @@
 # 173 - Enable callback delivery
 
+- **Executor:** Luna (`gpt-6-luna`), reasoning: `high`.
+- **Tester:** Luna (`gpt-6-luna`), reasoning: `high`.
+- **Reviewer:** Luna (`gpt-6-luna`), reasoning: `high`.
+- **Security:** Luna (`gpt-6-luna`), reasoning: `high`.
+
 **Статус:** backlog; deferred 2026-11-16 pending owner decisions and an
 approved receiver contract. Delivery remains disabled.
 
@@ -69,9 +74,7 @@ payload, реализовать серверную валидацию и ада�
 
 - Следовать `AGENTS.md`, workflow, code style, inquiries и verification.
 - Навыки: `ponytail`; Astro Best Practices при изменении Astro-компонента.
-- Основной исполнитель: Luna, low для документации и поиска; Sol, medium для
-  интеграции серверного и клиентского контрактов. Интеграция и проверки —
-  основной агент.
+- Все роли и исполнение: Luna high. Без делегации.
 
 ## Приемка
 

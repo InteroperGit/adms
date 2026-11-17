@@ -5,7 +5,7 @@
 - **Reviewer:** Luna (`gpt-6-luna`), reasoning: `high`.
 
 **Статус:** fixed. Создано и выполнено: 2026-11-17.
-**Мастер:** [205](../../todo/205-content-refactor-master.md).
+**Мастер:** [205](205-content-refactor-master.md).
 **Зависимость:** [206](206-content-audit-baseline.md),
 принята до начала этой задачи.
 
