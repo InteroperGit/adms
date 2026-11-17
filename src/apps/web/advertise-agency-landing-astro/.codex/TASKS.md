@@ -10,8 +10,8 @@ scope and verification belong to the linked task files.
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.
 UI task 171 is archived; delivery is deferred to task 173.
-Task [212](../docs/codex/tasks/backlog/212-responsive-agency-footer.md) is in
-backlog for responsive Footer implementation based on the local reference.
+Task [212](../docs/codex/tasks/todo/212-responsive-agency-footer.md) is
+implemented and accepted; focused tests and responsive theme checks passed.
 
 ## Recent completed work
 

@@ -1,31 +1,31 @@
 ---
-// Offer a dismissible cookie choice and remember it when storage permits.
-// Reserve space only while the fixed banner is visible.
-// Native policy links remain available beside the two local choices.
+// Offer three cookie choices and remember the selection when storage permits.
+// Reopen the same panel from footer settings to let visitors change it.
 import Link from "@/components/ui/Link.astro";
 ---
 
-{/* Native policy links remain available beside the two local choices. */}
+{/* Policy links remain available beside the three cookie choices. */}
 <aside
   id="cookie-banner"
   aria-label="Предпочтения cookie"
   hidden
   class:list={[
-    "cookie-banner fixed bottom-0 left-0 right-0 z-30",
-    "bg-base-100 border-t border-control-border",
+    "cookie-banner fixed z-30",
+    "bg-base-100 border border-control-border",
     "shadow-elevated",
   ]}
 >
-  <div class="site-container cookie-layout">
+  <div class="cookie-layout">
     <p class="text-sm">
       Мы используем файлы cookie. Продолжая, вы соглашаетесь с{" "}
+      <br class="cookie-mobile-break" />
       <Link
         href="/privacy-policy"
         class="link link-primary"
       >
         Политикой конфиденциальности
       </Link>{" "}
-      и{" "}
+      и <br class="cookie-mobile-break" />
       <Link
         href="/terms-of-use"
         class="link link-primary"
@@ -34,36 +34,50 @@ import Link from "@/components/ui/Link.astro";
       </Link>
       .
     </p>
-    {/* Both choices dismiss locally; persistence is best effort. */}
+    {/* Each choice dismisses locally; persistence is best effort. */}
     <div class="cookie-actions">
       <button
         type="button"
-        data-cookie-choice="declined"
-        class="btn btn-outline btn-primary site-button"
+        data-cookie-choice="accepted"
+        class="btn btn-success site-button"
       >
-        Отклонить
+        Все куки
       </button>
       <button
         type="button"
-        data-cookie-choice="accepted"
-        class="btn btn-primary site-button"
+        data-cookie-choice="site"
+        class="btn site-button cookie-choice--site"
       >
-        Принять
+        Только куки сайта
+      </button>
+      <button
+        type="button"
+        data-cookie-choice="declined"
+        class="btn btn-error site-button"
+      >
+        Отказаться
       </button>
     </div>
   </div>
 </aside>
 
 <style>
-  /* Keep a fixed banner bounded and independently scrollable. */
+  /* Keep the confirmation panel near the lower-right screen corner. */
   .cookie-banner {
+    right: 1rem;
+    bottom: 1rem;
+    left: auto;
+    box-sizing: border-box;
+    width: min(36rem, calc(100vw - 2rem));
     padding-block: 1rem;
+    padding-inline: 1rem;
     max-height: 50dvh;
     overflow-y: auto;
     overscroll-behavior: contain;
+    border-radius: 0.5rem;
   }
 
-  /* Arrange policy text and actions for the available width. */
+  /* Keep copy above the choices in a compact, readable panel. */
   .cookie-layout {
     display: grid;
     gap: 1rem;
@@ -75,28 +89,50 @@ import Link from "@/components/ui/Link.astro";
     overflow-wrap: anywhere;
   }
 
-  /* Let both cookie choices wrap without losing reachability. */
+  /* Keep all three consent choices aligned inside the panel. */
   .cookie-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
   }
 
-  /* Keep cookie action labels and targets unclipped. */
+  /* Keep all consent labels readable within their touch targets. */
   .cookie-actions button {
-    flex: 1 1 auto;
     min-height: 44px;
     height: auto;
     white-space: normal;
     padding-block: 0.5rem;
   }
 
-  /* Place cookie actions beside policy text when the desktop width permits. */
-  @media (min-width: 64rem) {
-    /* Reserve a flexible copy column alongside naturally sized actions. */
-    .cookie-layout {
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
+  /* Keep the site-only choice visibly white in both page themes. */
+  .cookie-choice--site {
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #172b36;
+  }
+
+  .cookie-mobile-break {
+    display: none;
+  }
+
+  @media (max-width: 37.999rem) {
+    .cookie-banner {
+      right: 0.5rem;
+      bottom: var(--cookie-bottom-offset, 0.5rem);
+      width: calc(100vw - 1rem);
+      border-radius: 0.375rem;
+    }
+
+    .cookie-actions {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cookie-actions button {
+      width: 100%;
+    }
+
+    .cookie-mobile-break {
+      display: block;
     }
   }
 </style>
@@ -113,25 +149,66 @@ import Link from "@/components/ui/Link.astro";
       // Storage may be blocked; still let visitors dismiss the banner.
     }
     banner.hidden = Boolean(consent);
+    const footer = document.querySelector<HTMLElement>(".site-footer");
+    const mobileQuery = window.matchMedia?.("(max-width: 37.999rem)");
+    const isMobile = () => mobileQuery?.matches ?? false;
+
+    // Keep the mobile panel inside the footer's lower edge without extending
+    // the document with extra bottom padding.
+    const updatePosition = () => {
+      if (!isMobile() || !footer) {
+        banner.style.removeProperty("--cookie-bottom-offset");
+        return;
+      }
+      const footerBottom = footer.getBoundingClientRect().bottom;
+      const bottomOffset = Math.max(8, window.innerHeight - footerBottom + 8);
+      banner.style.setProperty("--cookie-bottom-offset", `${bottomOffset}px`);
+    };
 
     // Reserve its actual bounded height so the final footer actions can scroll
-    // above the fixed banner. Body padding does not change the banner's width.
+    // above the fixed banner on desktop. Mobile placement stays within footer.
     const reserveSpace = () => {
-      document.body.style.paddingBottom = banner.hidden
-        ? ""
-        : `${Math.ceil(banner.getBoundingClientRect().height)}px`;
+      updatePosition();
+      const bounds = banner.getBoundingClientRect();
+      const reservedHeight = bounds.height + window.innerHeight - bounds.bottom;
+      document.body.style.paddingBottom =
+        banner.hidden || isMobile() ? "" : `${Math.ceil(reservedHeight)}px`;
     };
     reserveSpace();
+    window.addEventListener("scroll", updatePosition, { passive: true });
+    window.addEventListener("resize", reserveSpace);
+    mobileQuery?.addEventListener("change", reserveSpace);
     // Hidden banners need no layout observation; older browsers can still
     // dismiss the notice without ResizeObserver support.
-    const sizeObserver =
-      !banner.hidden && typeof ResizeObserver !== "undefined"
-        ? new ResizeObserver(reserveSpace)
-        : undefined;
-    sizeObserver?.observe(banner);
+    let sizeObserver: ResizeObserver | undefined;
+    const observeBanner = () => {
+      if (!sizeObserver && typeof ResizeObserver !== "undefined") {
+        sizeObserver = new ResizeObserver(reserveSpace);
+      }
+      sizeObserver?.observe(banner);
+      if (footer) sizeObserver?.observe(footer);
+    };
+    if (!banner.hidden) {
+      observeBanner();
+    }
     window.addEventListener("pagehide", () => sizeObserver?.disconnect(), {
       once: true,
     });
+
+    let settingsOpener: HTMLButtonElement | null = null;
+    document
+      .querySelectorAll<HTMLButtonElement>("[data-cookie-settings-trigger]")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          settingsOpener = button;
+          banner.hidden = false;
+          observeBanner();
+          reserveSpace();
+          banner
+            .querySelector<HTMLButtonElement>("[data-cookie-choice]")
+            ?.focus();
+        });
+      });
 
     // Keep dismissal usable even when writing the preference is blocked.
     banner
@@ -146,6 +223,9 @@ import Link from "@/components/ui/Link.astro";
           banner.hidden = true;
           reserveSpace();
           sizeObserver?.disconnect();
+          sizeObserver = undefined;
+          settingsOpener?.focus();
+          settingsOpener = null;
         });
       });
   }

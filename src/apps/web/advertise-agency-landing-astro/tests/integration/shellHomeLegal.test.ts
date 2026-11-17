@@ -106,14 +106,22 @@ function expectPage(document: Document) {
     actionRail?.querySelector("[data-action-rail-restore]"),
   ).toHaveAttribute("aria-controls", "quick-actions");
   expect(cookieBanner).toHaveAttribute("hidden");
-  expect(cookieBanner?.querySelectorAll("[data-cookie-choice]")).toHaveLength(
-    2,
-  );
   expect(
-    [...(footer?.querySelectorAll("nav a") ?? [])].map((link) =>
-      link.getAttribute("href"),
-    ),
-  ).toEqual(site.legal.map((item) => item.href));
+    [
+      ...(cookieBanner?.querySelectorAll<HTMLButtonElement>(
+        "[data-cookie-choice]",
+      ) ?? []),
+    ].map((button) => button.dataset.cookieChoice),
+  ).toEqual(["accepted", "site", "declined"]);
+  expect(
+    [
+      ...(footer?.querySelectorAll('nav[aria-label="Правовая информация"] a') ??
+        []),
+    ].map((link) => link.getAttribute("href")),
+  ).toEqual([...site.legal.map((item) => item.href), "/sitemap.xml"]);
+  expect(
+    footer?.querySelector("[data-cookie-settings-trigger]"),
+  ).toHaveTextContent("Настройки cookie");
 
   const ids = [...document.querySelectorAll("[id]")].map(
     (element) => element.id,
@@ -219,7 +227,7 @@ it("composes cookie choices and legal links", async () => {
   const body = await render(CookieBanner);
 
   expect(body.querySelector("#cookie-banner")).toBeInTheDocument();
-  expect(body.querySelectorAll("[data-cookie-choice]")).toHaveLength(2);
+  expect(body.querySelectorAll("[data-cookie-choice]")).toHaveLength(3);
   expect(body.querySelector('a[href="/privacy-policy"]')).toBeInTheDocument();
   expect(body.querySelector('a[href="/terms-of-use"]')).toBeInTheDocument();
   expect(body.querySelector("#cookie-banner")).toHaveAttribute("hidden");

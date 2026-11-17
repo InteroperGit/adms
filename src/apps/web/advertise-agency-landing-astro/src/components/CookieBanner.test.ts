@@ -45,8 +45,12 @@ async function setup(
   });
   const banner =
     dom.window.document.querySelector<HTMLElement>("#cookie-banner")!;
+  const settingsTrigger = dom.window.document.createElement("button");
+  settingsTrigger.dataset.cookieSettingsTrigger = "";
+  dom.window.document.body.append(settingsTrigger);
   let height = 72;
-  banner.getBoundingClientRect = () => ({ height }) as DOMRect;
+  banner.getBoundingClientRect = () =>
+    ({ height, bottom: dom.window.innerHeight - 16 }) as DOMRect;
   if (consent) dom.window.localStorage.setItem("cookieConsent", consent);
   configureStorage?.(dom.window.localStorage);
   Object.defineProperty(dom.window, "ResizeObserver", {
@@ -57,6 +61,7 @@ async function setup(
   return {
     dom,
     banner,
+    settingsTrigger,
     get height() {
       return height;
     },
@@ -92,8 +97,9 @@ it("renders policy links and choices without a focus trap", async () => {
   expect(banner?.getAttribute("role")).toBeNull();
   expect(banner?.hasAttribute("tabindex")).toBe(false);
   expect(choices.map((button) => button.dataset.cookieChoice)).toEqual([
-    "declined",
     "accepted",
+    "site",
+    "declined",
   ]);
   expect(banner?.querySelector('a[href="/privacy-policy"]')).not.toBeNull();
   expect(banner?.querySelector('a[href="/terms-of-use"]')).not.toBeNull();
@@ -104,13 +110,13 @@ it("renders policy links and choices without a focus trap", async () => {
 it("shows a fresh banner and reserves its measured height", async () => {
   const state = await setup();
   expect(state.banner.hidden).toBe(false);
-  expect(state.dom.window.document.body.style.paddingBottom).toBe("72px");
+  expect(state.dom.window.document.body.style.paddingBottom).toBe("88px");
   expect(observers).toHaveLength(1);
   expect(observers[0]?.observed).toEqual([state.banner]);
   state.dom.window.close();
 });
 
-it.each(["accepted", "declined"])(
+it.each(["accepted", "site", "declined"])(
   "suppresses the banner for a saved %s choice",
   async (choice) => {
     const state = await setup(choice);
@@ -121,7 +127,33 @@ it.each(["accepted", "declined"])(
   },
 );
 
-it.each(["accepted", "declined"])(
+it("reopens saved cookie choices from the footer settings action", async () => {
+  const state = await setup("accepted");
+  expect(state.banner.hidden).toBe(true);
+  expect(observers).toHaveLength(0);
+
+  fireEvent.click(state.settingsTrigger);
+
+  expect(state.banner.hidden).toBe(false);
+  expect(state.dom.window.document.activeElement).toBe(
+    state.choice("accepted"),
+  );
+  expect(state.dom.window.document.body.style.paddingBottom).toBe("88px");
+  expect(observers).toHaveLength(1);
+
+  fireEvent.click(state.choice("declined"));
+
+  expect(state.dom.window.localStorage.getItem("cookieConsent")).toBe(
+    "declined",
+  );
+  expect(state.banner.hidden).toBe(true);
+  expect(state.dom.window.document.activeElement).toBe(state.settingsTrigger);
+  expect(state.dom.window.document.body.style.paddingBottom).toBe("");
+  expect(observers[0]?.disconnect).toHaveBeenCalledOnce();
+  state.dom.window.close();
+});
+
+it.each(["accepted", "site", "declined"])(
   "saves a %s choice and releases reserved space",
   async (choice) => {
     const state = await setup();
@@ -144,7 +176,7 @@ it("continues when storage reads and writes are blocked", async () => {
     });
   });
   expect(state.banner.hidden).toBe(false);
-  expect(state.dom.window.document.body.style.paddingBottom).toBe("72px");
+  expect(state.dom.window.document.body.style.paddingBottom).toBe("88px");
   expect(() => fireEvent.click(state.choice("accepted"))).not.toThrow();
   expect(state.banner.hidden).toBe(true);
   expect(state.dom.window.document.body.style.paddingBottom).toBe("");
@@ -170,7 +202,7 @@ it("updates reserved space when the banner height changes", async () => {
   const state = await setup();
   state.height = 96;
   observers[0]?.callback([], observers[0] as unknown as ResizeObserver);
-  expect(state.dom.window.document.body.style.paddingBottom).toBe("96px");
+  expect(state.dom.window.document.body.style.paddingBottom).toBe("112px");
   state.dom.window.close();
 });
 
@@ -186,7 +218,7 @@ it("disconnects its observer when the page is hidden", async () => {
 it("still allows dismissal when ResizeObserver is unavailable", async () => {
   const state = await setup(undefined, false);
   expect(state.banner.hidden).toBe(false);
-  expect(state.dom.window.document.body.style.paddingBottom).toBe("72px");
+  expect(state.dom.window.document.body.style.paddingBottom).toBe("88px");
   expect(observers).toHaveLength(0);
   fireEvent.click(state.choice("accepted"));
   expect(state.banner.hidden).toBe(true);
