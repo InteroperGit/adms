@@ -1,12 +1,14 @@
 ---
+// Compose production guidance and approved evidence for the home page.
+
 import Button from "@/components/ui/Button.astro";
+import PhotoGrid from "@/components/ui/PhotoGrid.astro";
 import Section from "@/components/ui/Section.astro";
 // prettier-ignore
 import { productionAndGuarantees as content } from
   "@/content/productionAndGuarantees";
 import type { ProductionItem } from "@/types/productionAndGuarantees";
 import ProductionGuidance from "./ProductionGuidance.astro";
-import ProductionPhotos from "./ProductionPhotos.astro";
 import ProductionEvidenceGroup from "./evidence/ProductionEvidenceGroup.astro";
 import WarrantyTerms from "./warranty/WarrantyTerms.astro";
 import MaintenanceDetails from "./MaintenanceDetails.astro";
@@ -43,7 +45,10 @@ const maintenanceReady =
   ariaLabel="Гарантии и сопровождение заказа"
 >
   <ProductionGuidance items={content.guidance} />
-  <ProductionPhotos photos={photos} />
+  <PhotoGrid
+    photos={photos}
+    class="production-photos"
+  />
   <div class="production-groups">
     {groups.map(
       ({ title, items }) =>
@@ -68,6 +73,11 @@ const maintenanceReady =
 </Section>
 
 <style>
+  /* Leave room between the production photos and the evidence groups. */
+  .production-photos {
+    margin-bottom: 3rem;
+  }
+
   /* Keep evidence groups separated while preserving their source order. */
   .production-groups {
     display: grid;

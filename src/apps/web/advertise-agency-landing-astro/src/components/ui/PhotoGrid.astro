@@ -1,17 +1,27 @@
 ---
-import type { ProductionPhoto } from "@/types/productionAndGuarantees";
+// Render captioned photos with intrinsic dimensions and lazy loading.
 
 interface Props {
-  photos: ProductionPhoto[];
+  photos: readonly {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    caption?: string;
+  }[];
+  class?: string;
 }
 
-const { photos } = Astro.props;
+const { photos, class: className, ...attributes } = Astro.props;
 ---
 
 {photos.length > 0 && (
-  <div class="production-photos">
+  <div
+    class:list={["photo-grid", className]}
+    {...attributes}
+  >
     {photos.map((photo) => (
-      <figure class="production-photo">
+      <figure class="photo-grid-item">
         <img
           src={photo.src}
           alt={photo.alt}
@@ -20,28 +30,29 @@ const { photos } = Astro.props;
           loading="lazy"
           decoding="async"
         />
-        <figcaption>{photo.caption}</figcaption>
+        {photo.caption !== undefined && (
+          <figcaption>{photo.caption}</figcaption>
+        )}
       </figure>
     ))}
   </div>
 )}
 
 <style>
-  /* Keep approved workshop images in a stable responsive grid. */
-  .production-photos {
+  /* Fit as many readable photos per row as the available width permits. */
+  .photo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
     gap: 1rem;
-    margin-bottom: 3rem;
   }
 
   /* Keep captions tied to their documentary image. */
-  .production-photo {
+  .photo-grid-item {
     margin: 0;
   }
 
-  /* Prevent approved images from exceeding their layout column. */
-  .production-photo img {
+  /* Prevent images from exceeding their layout column. */
+  .photo-grid-item img {
     display: block;
     width: 100%;
     height: auto;
@@ -49,7 +60,7 @@ const { photos } = Astro.props;
   }
 
   /* Make image context available to every reader. */
-  .production-photo figcaption {
+  .photo-grid-item figcaption {
     margin-top: 0.5rem;
     color: var(--site-muted);
   }

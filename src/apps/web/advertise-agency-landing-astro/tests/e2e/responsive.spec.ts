@@ -38,6 +38,12 @@ for (const route of routes) {
           if (await banner.isVisible()) {
             await banner.locator('[data-cookie-choice="declined"]').click();
           }
+          const stats = page.locator("#about dl");
+          await expect(stats).toHaveCSS("grid-auto-flow", "row");
+          const columns = await stats.evaluate((list) =>
+            getComputedStyle(list).gridTemplateColumns.split(" "),
+          );
+          expect(columns).toHaveLength(width === 1440 ? 3 : 1);
         }
 
         await expect(page.locator("main")).toBeVisible();

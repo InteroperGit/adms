@@ -7,7 +7,7 @@ import Section from "@/components/ui/Section.astro";
 import { site } from "@/content/site";
 import { about } from "@/content/about";
 import AboutIntroduction from "./AboutIntroduction.astro";
-import AboutStats from "./AboutStats.astro";
+import Stats from "@/components/ui/Stats.astro";
 import ImageCarousel from "@/components/ui/carousel/ImageCarousel.astro";
 import { aboutCarousel } from "@/content/aboutCarousel";
 const hasImages =
@@ -55,10 +55,21 @@ const contacts = site.menu.find((item) => item.href === "/#contacts");
       </figure>
     )}
   </div>
-  <AboutStats items={about.stats} />
+  <Stats
+    items={about.stats}
+    class="opening-stats"
+  />
 </Section>
 
 <style>
+  /* Separate the statistics from the company introduction. */
+  .opening-stats {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-base-300);
+    max-width: 56rem;
+  }
+
   /* Keep copy and media in one responsive introduction area. */
   .opening-row {
     display: grid;

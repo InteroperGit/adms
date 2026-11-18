@@ -1,7 +1,4 @@
-export interface Stat {
-  value: string;
-  label: string;
-}
+import type { Stat } from "./stat";
 
 export interface AboutContent {
   description1: string;

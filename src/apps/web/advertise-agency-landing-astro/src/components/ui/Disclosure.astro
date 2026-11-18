@@ -1,0 +1,20 @@
+---
+// Render an initially closed disclosure with a native keyboard control.
+
+interface Props {
+  summary: string;
+  id?: string;
+  class?: string;
+}
+
+const { summary, id, class: className, ...attributes } = Astro.props;
+---
+
+<details
+  id={id}
+  class={className}
+  {...attributes}
+>
+  <summary>{summary}</summary>
+  <slot />
+</details>

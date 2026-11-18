@@ -1,16 +1,20 @@
 ---
-// Render the supplied agency statistics as a responsive definition list.
+// Render ordered statistic labels and values as a responsive definition list.
 
-import type { Stat } from "@/types/about";
+import type { Stat } from "@/types/stat";
 
 interface Props {
-  items: Stat[];
+  items: readonly Stat[];
+  class?: string;
 }
 
-const { items } = Astro.props;
+const { items, class: className, ...attributes } = Astro.props;
 ---
 
-<dl class="opening-stats">
+<dl
+  class:list={["stat-list", className]}
+  {...attributes}
+>
   {items.map((stat) => (
     <div>
       <dt>{stat.label}</dt>
@@ -21,31 +25,27 @@ const { items } = Astro.props;
 
 <style>
   /* Separate supplied statistics in a responsive grid. */
-  .opening-stats {
+  .stat-list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-base-300);
-    max-width: 56rem;
   }
 
   /* Keep each statistic and its label together. */
-  .opening-stats div {
+  .stat-list div {
     display: flex;
     flex-direction: column;
     min-width: 0;
   }
 
   /* Wrap long statistic labels using muted text. */
-  .opening-stats dt {
+  .stat-list dt {
     color: var(--site-muted);
     overflow-wrap: anywhere;
   }
 
   /* Lead each statistic with its supplied brand-colored value. */
-  .opening-stats dd {
+  .stat-list dd {
     order: -1;
     font-size: 2rem;
     line-height: 1.2;
@@ -58,20 +58,20 @@ const { items } = Astro.props;
   /* Stack statistics when three readable columns no longer fit. */
   @media (max-width: 35rem) {
     /* Give each statistic the complete narrow-screen width. */
-    .opening-stats {
+    .stat-list {
       grid-template-columns: 1fr;
       gap: 1rem;
     }
 
     /* Pair each value and label on one wrapping row. */
-    .opening-stats div {
+    .stat-list div {
       flex-direction: row;
       align-items: baseline;
       gap: 1rem;
     }
 
     /* Align values with a shared minimum measure. */
-    .opening-stats dd {
+    .stat-list dd {
       margin-bottom: 0;
       min-width: 5ch;
     }

@@ -1,6 +1,7 @@
 ---
 // Render authored video with stable geometry, native controls and a fallback.
 import type { VideoBlock as VideoContent } from "@/types/contentBlocks";
+import Disclosure from "@/components/ui/Disclosure.astro";
 import Link from "@/components/ui/Link.astro";
 
 interface Props {
@@ -46,10 +47,12 @@ const mime =
   </p>
   {block.caption && <figcaption>{block.caption}</figcaption>}
   {block.transcript && (
-    <details class="video-transcript">
-      <summary>Текстовая расшифровка</summary>
+    <Disclosure
+      class="video-transcript"
+      summary="Текстовая расшифровка"
+    >
       <p>{block.transcript}</p>
-    </details>
+    </Disclosure>
   )}
 </figure>
 

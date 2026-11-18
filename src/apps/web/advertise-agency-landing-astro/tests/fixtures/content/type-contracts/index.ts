@@ -48,7 +48,8 @@ export type LegalDocument = AssertContract<
   SameContract<Public.LegalDocument, legal.LegalDocument>
 >;
 import type * as about from "@/types/about";
-export type Stat = AssertContract<SameContract<Public.Stat, about.Stat>>;
+import type * as stat from "@/types/stat";
+export type Stat = AssertContract<SameContract<Public.Stat, stat.Stat>>;
 export type AboutContent = AssertContract<
   SameContract<Public.AboutContent, about.AboutContent>
 >;

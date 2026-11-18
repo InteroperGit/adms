@@ -1,8 +1,8 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import { getByText } from "@testing-library/dom";
-import Component from "./AboutStats.astro";
-import { render } from "../../../../tests/helpers/render";
+import Component from "./Stats.astro";
+import { render } from "../../../tests/helpers/render";
 
 it("keeps values paired with labels in order", async () => {
   const body = await render(Component, {

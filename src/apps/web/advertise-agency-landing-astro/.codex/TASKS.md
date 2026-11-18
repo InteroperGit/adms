@@ -7,6 +7,10 @@ scope and verification belong to the linked task files.
 
 ## Active tasks
 
+Task [229](../docs/codex/tasks/todo/229-extract-reusable-section-components.md)
+is implemented and accepted; focused checks and browser acceptance passed. Full
+verification was not requested; the task remains in `todo` pending an explicit
+archive request.
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.
 UI task 171 is archived; delivery is deferred to task 173.

@@ -19,9 +19,12 @@ it("renders native video metadata and an optional transcript", async () => {
   expect(body.querySelector("video")).toHaveAttribute("controls");
   expect(body.querySelector("source")).toHaveAttribute("type", "video/mp4");
   expect(body.querySelector("figcaption")).toHaveTextContent("Caption");
-  expect(body.querySelector(".video-transcript")).toHaveTextContent(
-    "Transcript",
+  const transcript = body.querySelector("details.video-transcript");
+  expect(transcript).not.toHaveAttribute("open");
+  expect(transcript?.querySelector("summary")).toHaveTextContent(
+    "Текстовая расшифровка",
   );
+  expect(transcript?.querySelector("p")).toHaveTextContent("Transcript");
 });
 
 it("selects webm MIME metadata, poster and native fallback links", async () => {

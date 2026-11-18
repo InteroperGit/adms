@@ -5,7 +5,7 @@
 
 import Section from "@/components/ui/Section.astro";
 import Link from "@/components/ui/Link.astro";
-import FaqItem from "./FaqItem.astro";
+import Disclosure from "@/components/ui/Disclosure.astro";
 import { faq } from "@/content/faq";
 import { getVisibleFaqItems } from "@/validation/policies/faqPublication";
 
@@ -26,7 +26,13 @@ const items = getVisibleFaqItems(faq);
       {/* Native disclosures keep every full answer after its question. */}
       <div class="faq-list">
         {items.map((item) => (
-          <FaqItem item={item} />
+          <Disclosure
+            id={`faq-${item.id}`}
+            class="faq-item"
+            summary={item.question}
+          >
+            <p class="faq-answer">{item.answer}</p>
+          </Disclosure>
         ))}
       </div>
       {/* A native inquiry link offers a project-specific conversation. */}
@@ -79,5 +85,50 @@ const items = getVisibleFaqItems(faq);
   :global(.faq-inquiry:focus-visible) {
     outline: 2px solid var(--color-primary);
     outline-offset: 4px;
+  }
+
+  /* Theme tokens distinguish each disclosure from the section surface. */
+  .faq-list :global(.faq-item) {
+    min-width: 0;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    color: var(--color-base-content);
+  }
+
+  /* Retain the native marker and a generous wrapping activation target. */
+  .faq-list :global(.faq-item > summary) {
+    padding: clamp(1rem, 3vw, 1.5rem);
+    min-height: 2.75rem;
+    font-weight: 600;
+    line-height: 1.6;
+    cursor: pointer;
+  }
+
+  /* Highlight a question under a precise pointer without affecting touch. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Use the raised surface token to distinguish the hovered question. */
+    .faq-list :global(.faq-item > summary:hover) {
+      background: var(--color-base-200);
+    }
+  }
+
+  /* An inset ring keeps keyboard focus visible within the rounded panel. */
+  .faq-list :global(.faq-item > summary:focus-visible) {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -4px;
+    border-radius: var(--radius-field);
+  }
+
+  /* Opening a disclosure separates its question from the complete answer. */
+  .faq-list :global(.faq-item[open] > summary) {
+    border-bottom: 1px solid var(--color-base-300);
+  }
+
+  /* Content-driven answers expand without clipping text or adding motion. */
+  .faq-answer {
+    padding: clamp(1rem, 3vw, 1.5rem);
+    margin: 0;
+    line-height: 1.7;
   }
 </style>

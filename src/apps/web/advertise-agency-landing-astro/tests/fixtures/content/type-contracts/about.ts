@@ -1,5 +1,6 @@
 // Compile-only examples; this file is never executed.
 import type * as Domain from "@/types/about";
+import type { Stat } from "@/types/stat";
 
 export const value = {
   description1: "TEST_DESCRIPTION1",
@@ -13,7 +14,7 @@ export const value = {
   icon: "TEST_ICON",
 } satisfies Domain.AboutContent;
 
-export const Stat = value.stats[0] satisfies Domain.Stat;
+export const statistic = value.stats[0] satisfies Stat;
 
 export const invalid = {
   ...value,

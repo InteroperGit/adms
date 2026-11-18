@@ -15,7 +15,8 @@ export type {
 } from "./offer";
 export type { MenuItem, LegalItem, SectionContent, SiteConfig } from "./site";
 export { type LegalSection, type LegalDocument } from "./legal";
-export type { Stat, AboutContent } from "./about";
+export type { AboutContent } from "./about";
+export type { Stat } from "./stat";
 export type { Icons } from "./icons";
 export type { OrderInquiryContent, InquiryField } from "./orderInquiry";
 export type {
