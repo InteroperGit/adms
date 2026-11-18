@@ -549,12 +549,17 @@ const agencyLinks = site.menu.filter((item) => item.href !== "/#services");
     min-width: 0;
   }
 
-  /* Retain the legal links' generous targets and underline affordance. */
+  /* Retain the footer links' generous targets and underline affordance. */
   :global(.footer-link) {
     display: flex;
     align-items: center;
     min-height: 44px;
     text-decoration: none;
+  }
+
+  /* Limit these navigation links' pointer targets to their text width. */
+  .footer-group :global(.footer-link) {
+    display: inline-flex;
   }
 
   /* Reinforce hover without changing the readable foreground. */
