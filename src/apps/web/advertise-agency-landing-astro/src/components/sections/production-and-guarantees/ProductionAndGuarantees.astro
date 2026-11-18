@@ -1,0 +1,90 @@
+---
+import Button from "@/components/ui/Button.astro";
+import Section from "@/components/ui/Section.astro";
+// prettier-ignore
+import { productionAndGuarantees as content } from
+  "@/content/productionAndGuarantees";
+import type { ProductionItem } from "@/types/productionAndGuarantees";
+import ProductionGuidance from "./ProductionGuidance.astro";
+import ProductionPhotos from "./ProductionPhotos.astro";
+import ProductionEvidenceGroup from "./evidence/ProductionEvidenceGroup.astro";
+import WarrantyTerms from "./warranty/WarrantyTerms.astro";
+import MaintenanceDetails from "./MaintenanceDetails.astro";
+
+const agencyCopyReady = content.copyApproved && !content.demoMode;
+const approvedItems = (items: ProductionItem[]) =>
+  agencyCopyReady ? items.filter((item) => item.approval === "approved") : [];
+const groups = [
+  {
+    title: "Производство",
+    items: approvedItems(content.productionOperations),
+  },
+  { title: "Материалы", items: approvedItems(content.materials) },
+  {
+    title: "Проверки качества",
+    items: approvedItems(content.qualityChecks),
+  },
+];
+const warranties = content.warrantyTerms.filter(
+  (term) => agencyCopyReady && term.approval === "approved",
+);
+const photos = content.photos.filter(
+  (photo) => agencyCopyReady && photo.approval === "approved",
+);
+const maintenanceReady =
+  agencyCopyReady && content.maintenance.approval === "approved";
+---
+
+<Section
+  id="production-and-guarantees"
+  title={content.heading}
+  subtitle={content.introduction}
+  background="none"
+  ariaLabel="Гарантии и сопровождение заказа"
+>
+  <ProductionGuidance items={content.guidance} />
+  <ProductionPhotos photos={photos} />
+  <div class="production-groups">
+    {groups.map(
+      ({ title, items }) =>
+        items.length > 0 && (
+          <ProductionEvidenceGroup
+            title={title}
+            items={items}
+          />
+        ),
+    )}
+  </div>
+  <WarrantyTerms terms={warranties} />
+  {maintenanceReady && <MaintenanceDetails maintenance={content.maintenance} />}
+  <div class="production-action">
+    <Button
+      href={content.inquiryHref}
+      size="lg"
+    >
+      Задать вопрос
+    </Button>
+  </div>
+</Section>
+
+<style>
+  /* Keep evidence groups separated while preserving their source order. */
+  .production-groups {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  /* Align the final question action with the section reading flow. */
+  .production-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  /* Let the inquiry command wrap in enlarged narrow layouts. */
+  .production-action :global(.site-button) {
+    max-width: 100%;
+    white-space: normal;
+  }
+</style>

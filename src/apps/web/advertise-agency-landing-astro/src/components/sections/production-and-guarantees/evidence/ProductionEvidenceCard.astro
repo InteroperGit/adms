@@ -1,0 +1,84 @@
+---
+import type { ProductionItem } from "@/types/productionAndGuarantees";
+
+interface Props {
+  item: ProductionItem;
+}
+
+const { item } = Astro.props;
+---
+
+<article
+  class="production-card"
+  tabindex="0"
+>
+  <h4>{item.title}</h4>
+  <p>{item.description}</p>
+  <p class="production-evidence">{item.evidence}</p>
+</article>
+
+<style>
+  /* Contain each evidence statement in a readable panel. */
+  .production-card {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    padding: 1.25rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-panel);
+    background: var(--color-base-100);
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  /* Focus selects the claim for keyboard and touch exploration. */
+  .production-card:focus {
+    border-color: var(--color-primary);
+    background: color-mix(
+      in srgb,
+      var(--color-primary) 8%,
+      var(--color-base-100)
+    );
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+
+  /* Keep keyboard location distinct from the selected surface. */
+  .production-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  /* Highlight the explored item only on devices with reliable hover. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Keep hover feedback visible without shifting content. */
+    .production-card:hover {
+      border-color: var(--color-primary);
+      background: color-mix(
+        in srgb,
+        var(--color-primary) 8%,
+        var(--color-base-100)
+      );
+      box-shadow: inset 0 0 0 1px var(--color-primary);
+    }
+  }
+
+  /* Respect motion preferences while preserving immediate selection. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Remove animated feedback without removing focus state. */
+    .production-card {
+      transition: none;
+    }
+  }
+
+  /* Keep card titles subordinate to their group heading. */
+  .production-card h4 {
+    font-size: 1.125rem;
+  }
+
+  /* Distinguish evidence references from the primary description. */
+  .production-evidence {
+    margin-top: 0.75rem;
+    color: var(--site-muted);
+  }
+</style>

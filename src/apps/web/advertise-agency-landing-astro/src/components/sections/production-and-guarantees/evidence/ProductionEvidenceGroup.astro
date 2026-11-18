@@ -1,0 +1,44 @@
+---
+import type { ProductionItem } from "@/types/productionAndGuarantees";
+import ProductionEvidenceCard from "./ProductionEvidenceCard.astro";
+
+interface Props {
+  title: string;
+  items: ProductionItem[];
+}
+
+const { title, items } = Astro.props;
+const headingId = `${title}-heading`;
+---
+
+<section
+  class="production-group"
+  aria-labelledby={headingId}
+>
+  <h3 id={headingId}>{title}</h3>
+  <div class="production-cards">
+    {items.map((item) => (
+      <ProductionEvidenceCard item={item} />
+    ))}
+  </div>
+</section>
+
+<style>
+  /* Keep each evidence group distinct and in source order. */
+  .production-group {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  /* Give each evidence group a clear heading anchor. */
+  .production-group h3 {
+    font-size: 1.5rem;
+  }
+
+  /* Fit cards to the available reading width without fixed heights. */
+  .production-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+  }
+</style>

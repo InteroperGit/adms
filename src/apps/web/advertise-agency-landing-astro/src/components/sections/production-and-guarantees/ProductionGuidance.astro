@@ -1,0 +1,82 @@
+---
+// prettier-ignore
+import type { ProductionAndGuaranteesContent } from
+  "@/types/productionAndGuarantees";
+
+interface Props {
+  items: ProductionAndGuaranteesContent["guidance"];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="production-guidance">
+  {items.map((item) => (
+    <article
+      class="production-card"
+      tabindex="0"
+    >
+      <span
+        class="production-card-icon"
+        style={{ "--production-icon": `url(${item.icon})` }}
+        aria-hidden="true"
+      ></span>
+      <h3>{item.title}</h3>
+      <p>{item.description}</p>
+    </article>
+  ))}
+</div>
+
+<style>
+  /* Lay out general guidance in columns sized by their readable content. */
+  .production-guidance {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+  }
+
+  /* Keep each friendly guarantee card aligned across its grid row. */
+  .production-card {
+    height: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    padding: 1.25rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-panel);
+    background: var(--color-base-100);
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  /* Keep keyboard focus visible against either theme. */
+  .production-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  /* Respect motion preferences while preserving immediate focus. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Remove card transitions when motion is reduced. */
+    .production-card {
+      transition: none;
+    }
+  }
+
+  /* Keep card headings subordinate to the section title. */
+  .production-card h3 {
+    font-size: 1.125rem;
+  }
+
+  /* Make each guidance icon visible without adding textual decoration. */
+  .production-card-icon {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.75rem;
+    background: var(--color-primary);
+    -webkit-mask: var(--production-icon) center / contain no-repeat;
+    mask: var(--production-icon) center / contain no-repeat;
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+import type { WarrantyTerm } from "@/types/productionAndGuarantees";
+import WarrantyCard from "./WarrantyCard.astro";
+
+interface Props {
+  terms: WarrantyTerm[];
+}
+
+const { terms } = Astro.props;
+---
+
+{terms.length > 0 && (
+  <section
+    class="warranty-group"
+    aria-labelledby="warranty-heading"
+  >
+    <h3 id="warranty-heading">Гарантия</h3>
+    <div class="warranty-cards">
+      {terms.map((term) => (
+        <WarrantyCard term={term} />
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  /* Separate warranty terms from the production evidence above. */
+  .warranty-group {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  /* Give the warranty group a clear heading anchor. */
+  .warranty-group h3 {
+    font-size: 1.5rem;
+  }
+
+  /* Keep approved warranty terms scannable at varied widths. */
+  .warranty-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+  }
+</style>

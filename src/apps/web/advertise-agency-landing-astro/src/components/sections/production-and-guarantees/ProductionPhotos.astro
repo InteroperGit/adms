@@ -1,0 +1,56 @@
+---
+import type { ProductionPhoto } from "@/types/productionAndGuarantees";
+
+interface Props {
+  photos: ProductionPhoto[];
+}
+
+const { photos } = Astro.props;
+---
+
+{photos.length > 0 && (
+  <div class="production-photos">
+    {photos.map((photo) => (
+      <figure class="production-photo">
+        <img
+          src={photo.src}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>{photo.caption}</figcaption>
+      </figure>
+    ))}
+  </div>
+)}
+
+<style>
+  /* Keep approved workshop images in a stable responsive grid. */
+  .production-photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Keep captions tied to their documentary image. */
+  .production-photo {
+    margin: 0;
+  }
+
+  /* Prevent approved images from exceeding their layout column. */
+  .production-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-panel);
+  }
+
+  /* Make image context available to every reader. */
+  .production-photo figcaption {
+    margin-top: 0.5rem;
+    color: var(--site-muted);
+  }
+</style>

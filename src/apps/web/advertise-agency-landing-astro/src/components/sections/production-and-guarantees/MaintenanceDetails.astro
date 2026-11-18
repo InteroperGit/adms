@@ -1,0 +1,59 @@
+---
+// prettier-ignore
+import type { MaintenanceContent as MaintenanceData } from
+  "@/types/productionAndGuarantees";
+
+interface Props {
+  maintenance: MaintenanceData;
+}
+
+const { maintenance } = Astro.props;
+---
+
+<section
+  class="maintenance-group"
+  aria-labelledby="maintenance-heading"
+>
+  <h3 id="maintenance-heading">Обслуживание</h3>
+  <ul>
+    {maintenance.scope.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+  <h4>Что требуется от заказчика</h4>
+  <ul>
+    {maintenance.customerResponsibilities.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+  <p>{maintenance.pricing}</p>
+  <p>{maintenance.requestRoute}</p>
+</section>
+
+<style>
+  /* Keep maintenance content distinct from evidence and warranty terms. */
+  .maintenance-group {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  /* Give maintenance its own heading anchor. */
+  .maintenance-group h3 {
+    font-size: 1.5rem;
+  }
+
+  /* Keep maintenance lists readable and visibly associated with headings. */
+  .maintenance-group ul {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  /* Keep maintenance explanation paragraphs at a readable measure. */
+  .maintenance-group p {
+    max-width: 65ch;
+  }
+</style>

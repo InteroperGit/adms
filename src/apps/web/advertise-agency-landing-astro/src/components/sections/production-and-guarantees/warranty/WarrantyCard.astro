@@ -1,0 +1,142 @@
+---
+import type { WarrantyTerm } from "@/types/productionAndGuarantees";
+
+interface Props {
+  term: WarrantyTerm;
+}
+
+const { term } = Astro.props;
+---
+
+<article
+  class="warranty-card"
+  tabindex="0"
+>
+  <h4>{term.title}</h4>
+  <dl>
+    <div>
+      <dt>Покрытие</dt>
+      <dd>{term.coverage}</dd>
+    </div>
+    <div>
+      <dt>Срок</dt>
+      <dd>{term.duration}</dd>
+    </div>
+    <div>
+      <dt>Начало</dt>
+      <dd>{term.starts}</dd>
+    </div>
+  </dl>
+  <h5>Условия</h5>
+  <ul>
+    {term.conditions.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+  <h5>Исключения</h5>
+  <ul>
+    {term.exclusions.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+  <p class="warranty-claim">{term.claimRoute}</p>
+</article>
+
+<style>
+  /* Keep warranty details inside a readable and focusable panel. */
+  .warranty-card {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    padding: 1.25rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-panel);
+    background: var(--color-base-100);
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  /* Focus selects warranty terms with a theme-visible boundary. */
+  .warranty-card:focus {
+    border-color: var(--color-primary);
+    background: color-mix(
+      in srgb,
+      var(--color-primary) 8%,
+      var(--color-base-100)
+    );
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+
+  /* Keep keyboard location distinct from the selected surface. */
+  .warranty-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  /* Highlight the explored term only on devices with reliable hover. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Keep hover feedback visible without shifting content. */
+    .warranty-card:hover {
+      border-color: var(--color-primary);
+      background: color-mix(
+        in srgb,
+        var(--color-primary) 8%,
+        var(--color-base-100)
+      );
+      box-shadow: inset 0 0 0 1px var(--color-primary);
+    }
+  }
+
+  /* Respect motion preferences while preserving immediate selection. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Remove animated feedback without removing focus state. */
+    .warranty-card {
+      transition: none;
+    }
+  }
+
+  /* Keep the card title subordinate to its warranty group. */
+  .warranty-card h4 {
+    font-size: 1.125rem;
+  }
+
+  /* Align warranty facts as labelled pairs. */
+  .warranty-card dl {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  /* Pair warranty labels and values without relying on colour. */
+  .warranty-card dl div {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  /* Mark warranty labels as supporting metadata. */
+  .warranty-card dt,
+  .warranty-card h5 {
+    color: var(--site-muted);
+    font-weight: 700;
+  }
+
+  /* Keep warranty lists associated with their headings. */
+  .warranty-card ul {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  /* Separate warranty subgroups from preceding facts. */
+  .warranty-card h5 {
+    margin-top: 1rem;
+  }
+
+  /* Keep the claim route visible after conditions and exclusions. */
+  .warranty-claim {
+    margin-top: 1rem;
+  }
+</style>
