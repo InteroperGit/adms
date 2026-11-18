@@ -49,18 +49,18 @@ Primary координирует общий diff и приёмку. Luna medium 
 
 ## Дочерние задачи
 
-- [216. О компании](../fixed/20261118/216-refactor-about-section.md)
-- [217. Решения для бизнеса](../fixed/20261118/217-refactor-business-solutions-section.md)
-- [218. Контакты](../fixed/20261118/218-refactor-contacts-section.md)
-- [219. Частые вопросы](../fixed/20261118/219-refactor-faq-section.md)
-- [220. Первый экран](../fixed/20261118/220-refactor-introduction-section.md)
-- [221. Карусель предложений](../fixed/20261118/221-refactor-offers-carousel-section.md)
-- [222. Форма заявки](../fixed/20261118/222-refactor-order-inquiry-section.md)
-- [223. Процесс заказа](../fixed/20261118/223-refactor-ordering-process-section.md)
-- [224. Производство и гарантии](../fixed/20261119/224-refactor-production-and-guarantees-section.md)
-- [225. Проекты](../fixed/20261119/225-refactor-projects-section.md)
-- [226. Отзывы](../fixed/20261119/226-refactor-reviews-section.md)
-- [227. Услуги](../fixed/20261119/227-refactor-services-section.md)
+- [216. О компании](../20261118/216-refactor-about-section.md)
+- [217. Решения для бизнеса](../20261118/217-refactor-business-solutions-section.md)
+- [218. Контакты](../20261118/218-refactor-contacts-section.md)
+- [219. Частые вопросы](../20261118/219-refactor-faq-section.md)
+- [220. Первый экран](../20261118/220-refactor-introduction-section.md)
+- [221. Карусель предложений](../20261118/221-refactor-offers-carousel-section.md)
+- [222. Форма заявки](../20261118/222-refactor-order-inquiry-section.md)
+- [223. Процесс заказа](../20261118/223-refactor-ordering-process-section.md)
+- [224. Производство и гарантии](224-refactor-production-and-guarantees-section.md)
+- [225. Проекты](225-refactor-projects-section.md)
+- [226. Отзывы](226-refactor-reviews-section.md)
+- [227. Услуги](227-refactor-services-section.md)
 
 ## Acceptance
 
@@ -73,17 +73,19 @@ Primary координирует общий diff и приёмку. Luna medium 
 
 ## Handoff
 
-Задачи 216–227 приняты по отдельным Acceptance и зафиксированы коммитами.
-Для задач 216–221 использованы отдельные коммиты, перечисленные в истории
-репозитория; дополнительно секция FAQ перенесена в `sections/faq/` по запросу.
+Задачи 216–227 приняты по отдельным Acceptance и зафиксированы локальными
+коммитами: `39885f36` (216), `90d332c1` (217), `8b6b2386` (218), `f06c6a36`
+(219), `0fc87069` (220), `7fd6bb2e` (221), `6d0aaea9` (222), `6c0ed1bb`
+(223), `d55e85f6` (224), `3cb1f179` (225), `4ff8bdda` (226) и `846bd74a`
+(227). Дополнительно секция FAQ перенесена в `sections/faq/` по запросу
+(`d222db67`).
 Задача 225 оставляет секцию `Projects` в корне, так как её структура не
 декомпозировалась. `Reviews` и `Services` также остались в корне; их состав
 не требовал новых подкомпонентов. Структурно декомпозированные секции 216–220
 и 222–224 находятся в собственных каталогах.
 
-Коммиты этого этапа: `6d0aaea9` (222), `6c0ed1bb` (223), `d55e85f6` (224),
-`3cb1f179` (225) и `4ff8bdda` (226 вместе с исправлением расположения 225).
-Задача 227 фиксируется следующим отдельным коммитом.
+Коммит `4ff8bdda` также закрепил правило размещения секций: компонент остаётся
+в корне, если его собственная структура не декомпозируется.
 
 Проверки детей включали colocated unit/component тесты и затронутые integration
 тесты, `astro check`, style, Prettier, content boundaries и component test
@@ -93,5 +95,5 @@ FAQ/секции. На последней проверке Astro сообщил 
 одна существующая подсказка указывает на deprecation `z.number().finite()` в
 `src/validation/contentBlocks.ts:129`. Полный общий прогон не выполнялся.
 
-[task-214]: ../backlog/214-offers-carousel-neighbor-previews.md
-[task-215]: ../todo/215-reorganize-components-by-responsibility.md
+[task-214]: ../../backlog/214-offers-carousel-neighbor-previews.md
+[task-215]: ../../todo/215-reorganize-components-by-responsibility.md

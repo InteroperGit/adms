@@ -1,14 +1,11 @@
 # Codex Task Handoff
 
-Updated: 2026-11-18
+Updated: 2026-11-19
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal. Detailed
 scope and verification belong to the linked task files.
 
 ## Active tasks
-
-- [228 - Home section refactor](../docs/codex/tasks/todo/228-home-section-refactor-master.md):
-  in progress; tasks 216–226 accepted, task 227 remains in backlog.
 
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.
@@ -20,6 +17,11 @@ implemented and browser-checked; `pnpm check` fails in `@emnapi`, and colocated
 component tests remain outstanding.
 
 ## Recent completed work
+
+- [228 - Home section refactor](../docs/codex/tasks/fixed/20261119/228-home-section-refactor-master.md):
+  complete; children 216–227 accepted in separate commits. Focused component,
+  integration, Astro, boundary and Chromium checks passed. Full verification was
+  not requested.
 
 - [215 - Reorganize components by responsibility](../docs/codex/tasks/todo/215-reorganize-components-by-responsibility.md):
   implemented; 369 focused unit/integration tests passed, Astro and architecture
