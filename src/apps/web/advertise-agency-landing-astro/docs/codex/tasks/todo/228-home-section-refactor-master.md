@@ -30,7 +30,8 @@ Primary координирует общий diff и приёмку. Luna medium 
 - [x] Принять задачу 217 после выполнения её Scope, проверок и Acceptance.
 - [x] Принять задачу 218 после выполнения её Scope, проверок и Acceptance.
 - [x] Принять задачу 219 после выполнения её Scope, проверок и Acceptance.
-- [ ] Выполнить задачи 220–227 по их Scope и Execution. Перед началом 221
+- [x] Принять задачу 220 после выполнения её Scope, проверок и Acceptance.
+- [ ] Выполнить задачи 221–227 по их Scope и Execution. Перед началом 221
       сверить состояние карусели в задаче 214.
 - [ ] Принять каждую задачу по её Acceptance и записать результаты
       компонентных и применимых браузерных проверок в её Handoff.
@@ -46,7 +47,7 @@ Primary координирует общий diff и приёмку. Luna medium 
 - [217. Решения для бизнеса](../fixed/20261118/217-refactor-business-solutions-section.md)
 - [218. Контакты](../fixed/20261118/218-refactor-contacts-section.md)
 - [219. Частые вопросы](../fixed/20261118/219-refactor-faq-section.md)
-- [220. Первый экран](220-refactor-introduction-section.md)
+- [220. Первый экран](../fixed/20261118/220-refactor-introduction-section.md)
 - [221. Карусель предложений](221-refactor-offers-carousel-section.md)
 - [222. Форма заявки](222-refactor-order-inquiry-section.md)
 - [223. Процесс заказа](223-refactor-ordering-process-section.md)
@@ -66,8 +67,8 @@ Primary координирует общий diff и приёмку. Luna medium 
 
 ## Handoff
 
-Выполнение начато 2026-11-18. Задачи 216–219 приняты и перенесены в fixed.
-Задачи 220–227 остаются в backlog.
+Выполнение начато 2026-11-18. Задачи 216–220 приняты и перенесены в fixed.
+Задачи 221–227 остаются в backlog.
 
 [task-214]: 214-offers-carousel-neighbor-previews.md
 [task-215]: ../todo/215-reorganize-components-by-responsibility.md
