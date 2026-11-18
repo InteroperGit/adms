@@ -5,6 +5,7 @@
 
 import Section from "@/components/ui/Section.astro";
 import Link from "@/components/ui/Link.astro";
+import FaqItem from "@/components/sections/faq/FaqItem.astro";
 import { faq } from "@/content/faq";
 import { getVisibleFaqItems } from "@/validation/policies/faqPublication";
 
@@ -25,13 +26,7 @@ const items = getVisibleFaqItems(faq);
       {/* Native disclosures keep every full answer after its question. */}
       <div class="faq-list">
         {items.map((item) => (
-          <details
-            class="faq-item"
-            id={`faq-${item.id}`}
-          >
-            <summary class="faq-question">{item.question}</summary>
-            <p class="faq-answer">{item.answer}</p>
-          </details>
+          <FaqItem item={item} />
         ))}
       </div>
       {/* A native inquiry link offers a project-specific conversation. */}
@@ -65,51 +60,6 @@ const items = getVisibleFaqItems(faq);
     display: grid;
     gap: 1rem;
     margin-top: 2rem;
-  }
-
-  /* Theme tokens distinguish each disclosure from the section surface. */
-  .faq-item {
-    min-width: 0;
-    border: 1px solid var(--site-control-border);
-    border-radius: var(--radius-field);
-    background: var(--color-base-100);
-    color: var(--color-base-content);
-  }
-
-  /* Retain the native marker and a generous wrapping activation target. */
-  .faq-question {
-    padding: clamp(1rem, 3vw, 1.5rem);
-    min-height: 2.75rem;
-    font-weight: 600;
-    line-height: 1.6;
-    cursor: pointer;
-  }
-
-  /* Highlight a question under a precise pointer without affecting touch. */
-  @media (hover: hover) and (pointer: fine) {
-    /* Use the raised surface token to distinguish the hovered question. */
-    .faq-question:hover {
-      background: var(--color-base-200);
-    }
-  }
-
-  /* An inset ring keeps keyboard focus visible within the rounded panel. */
-  .faq-question:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: -4px;
-    border-radius: var(--radius-field);
-  }
-
-  /* Opening a disclosure separates its question from the complete answer. */
-  .faq-item[open] > .faq-question {
-    border-bottom: 1px solid var(--color-base-300);
-  }
-
-  /* Content-driven answers expand without clipping text or adding motion. */
-  .faq-answer {
-    padding: clamp(1rem, 3vw, 1.5rem);
-    margin: 0;
-    line-height: 1.7;
   }
 
   /* A wrapping native link remains distinct and usable at enlarged sizes. */
