@@ -1,0 +1,97 @@
+---
+// Explain the draft customer journey as a static, accessible sequence.
+// The content contract keeps agency approval and open inputs explicit.
+// The section has no browser behavior, so it remains available without JS.
+
+import Button from "@/components/ui/Button.astro";
+import { orderingProcess } from "@/content/orderingProcess";
+import OrderingStep from "./OrderingStep.astro";
+---
+
+<section
+  id="ordering-process"
+  class="site-section ordering-process"
+  aria-labelledby="ordering-process-heading"
+>
+  <div class="site-container">
+    {/* Keep the sequence introduction separate from its ordered list. */}
+    <div class="ordering-introduction">
+      <h2
+        id="ordering-process-heading"
+        class="site-section-title"
+      >
+        {orderingProcess.heading}
+      </h2>
+      <p class="site-section-subtitle ordering-summary">
+        {orderingProcess.introduction}
+      </p>
+    </div>
+
+    {/* Native list semantics preserve the customer's five-step sequence. */}
+    <ol class="ordering-steps">
+      {orderingProcess.steps.map((step, index) => (
+        <OrderingStep
+          step={step}
+          number={index + 1}
+        />
+      ))}
+    </ol>
+
+    {/* Keep the next action adjacent to the final process explanation. */}
+    <div class="ordering-action">
+      <Button
+        href="/#order-inquiry"
+        size="lg"
+      >
+        Обсудить задачу
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Keep the heading readable above the five process cards. */
+  .ordering-introduction {
+    max-width: 60ch;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep the process introduction distinct from the card details. */
+  .ordering-summary {
+    margin-bottom: 0;
+  }
+
+  /* Use a native ordered list while laying cards out responsively. */
+  .ordering-steps {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: ordering-step;
+  }
+
+  /* Keep the inquiry action aligned with the section's reading container. */
+  .ordering-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  /* Fit two cards per row once each card has enough reading width. */
+  @media (min-width: 48rem) {
+    .ordering-steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Use three columns on wide screens while keeping the final row balanced. */
+  @media (min-width: 75rem) {
+    .ordering-steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

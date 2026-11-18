@@ -1,0 +1,54 @@
+---
+interface Props {
+  customerProvides: string[];
+  agencyHandles: string[];
+}
+
+const { customerProvides, agencyHandles } = Astro.props;
+---
+
+<div class="ordering-responsibilities">
+  <div>
+    <h4>Что нужно от клиента</h4>
+    <ul>
+      {customerProvides.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </div>
+  <div>
+    <h4>Что делает агентство</h4>
+    <ul>
+      {agencyHandles.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  /* Separate responsibility details from the stage's main explanation. */
+  .ordering-responsibilities {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Keep group labels subordinate to the step heading. */
+  .ordering-responsibilities h4 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  /* Associate native lists with their labels using consistent spacing. */
+  .ordering-responsibilities ul {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+    color: var(--site-muted);
+  }
+</style>
