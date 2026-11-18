@@ -1,0 +1,166 @@
+---
+// Render the offer carousel's navigation and live announcement.
+import CarouselControl from "@/components/ui/CarouselControl.astro";
+import CarouselDot from "./CarouselDot.astro";
+
+interface Props {
+  dotCount: number;
+  showArrows: boolean;
+  showDots: boolean;
+  manualNavigation: boolean;
+}
+
+const { dotCount, showArrows, showDots, manualNavigation } = Astro.props;
+const hasControls = showArrows || showDots;
+---
+
+{hasControls && (
+  <div
+    class="carousel-controls"
+    hidden
+  >
+    {showArrows && (
+      <CarouselControl
+        direction="previous"
+        className="carousel-arrow"
+        dataDirection="-1"
+        label="Предыдущее предложение"
+      />
+    )}
+
+    {showDots && (
+      <div
+        class="carousel-dots"
+        role={manualNavigation ? "group" : undefined}
+        aria-label={manualNavigation ? "Выбор предложения" : undefined}
+        aria-hidden={manualNavigation ? undefined : "true"}
+      >
+        {Array.from({ length: dotCount }, (_, index) => (
+          <CarouselDot
+            index={index}
+            current={index === 0}
+            itemName="Предложение"
+            manualNavigation={manualNavigation}
+            slideId="offers-carousel-active"
+          />
+        ))}
+      </div>
+    )}
+
+    {showArrows && (
+      <CarouselControl
+        direction="next"
+        className="carousel-arrow"
+        dataDirection="1"
+        label="Следующее предложение"
+      />
+    )}
+
+    {manualNavigation && (
+      <span
+        class="sr-only"
+        role="status"
+        aria-atomic="true"
+      ></span>
+    )}
+  </div>
+)}
+
+<style>
+  /* Cover the frame while leaving only revealed controls interactive. */
+  .carousel-controls {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    color: #e5e7eb;
+    pointer-events: none;
+  }
+
+  /* Keep the controls hidden until the runtime initializes. */
+  .carousel-controls[hidden] {
+    display: none;
+  }
+
+  /* Place large arrow targets over the photo edges. */
+  .carousel-controls :global(.carousel-arrow) {
+    position: absolute;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    width: var(--arrow-size);
+    height: var(--arrow-size);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    filter: drop-shadow(0 0 2px #000);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition:
+      opacity 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 160ms ease,
+      filter 160ms ease;
+  }
+
+  /* Center the previous arrow on the main image's left edge. */
+  .carousel-controls :global(.carousel-arrow[data-direction="-1"]) {
+    left: var(--arrow-inset);
+  }
+
+  /* Center the next arrow on the main image's right edge. */
+  .carousel-controls :global(.carousel-arrow[data-direction="1"]) {
+    right: var(--arrow-inset);
+  }
+
+  /* Keep arrow feedback legible on varied photos. */
+  .carousel-controls :global(.carousel-arrow:hover) {
+    color: #fff;
+    background: transparent;
+    filter: drop-shadow(0 0 2px #000)
+      drop-shadow(0 0 6px rgb(255 255 255 / 75%));
+  }
+
+  /* Center the dots above the lower frame edge. */
+  .carousel-dots {
+    position: absolute;
+    bottom: clamp(0.5rem, 1vw, 0.75rem);
+    left: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: max-content;
+    max-width: calc(100% - 2rem);
+    transform: translateX(-50%);
+    pointer-events: auto;
+  }
+
+  /* Reveal both arrows when the pointer enters any part of the frame. */
+  @media (hover: hover) and (pointer: fine) {
+    :global(offers-image-carousel:hover)
+      .carousel-controls
+      :global(.carousel-arrow),
+    :global(offers-image-carousel:focus-within)
+      .carousel-controls
+      :global(.carousel-arrow) {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  /* Keep arrows visible on touch-only devices. */
+  @media (hover: none) {
+    .carousel-controls :global(.carousel-arrow) {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  /* Honor the visitor's reduced-motion setting for the arrows. */
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-controls :global(.carousel-arrow) {
+      transition: none;
+    }
+  }
+</style>

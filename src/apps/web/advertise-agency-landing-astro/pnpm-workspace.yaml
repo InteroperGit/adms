@@ -1,3 +1,7 @@
 allowBuilds:
   esbuild: true
   sharp: true
+packageExtensions:
+  "@astrojs/astro2tsx@0.1.2":
+    dependencies:
+      "@emnapi/runtime": 1.11.3

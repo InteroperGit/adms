@@ -1,0 +1,85 @@
+---
+import type { CarouselItem, CarouselOptions } from "@/types/imageCarousel";
+import CarouselCard from "./CarouselCard.astro";
+
+interface Props {
+  items: CarouselItem[];
+  options: CarouselOptions;
+}
+
+const { items, options } = Astro.props;
+const count = items.length;
+const offsets = count > 1 ? [-2, -1, 0, 1, 2] : [0];
+---
+
+<div class="offers-track">
+  {offsets.map((offset) => {
+    const activeIndex = (offset + count) % count;
+    const active = offset === 0;
+
+    return (
+      <div
+        class:list={["offers-track-slot", `offers-track-offset-${offset}`]}
+        data-track-offset={offset}
+        data-active={active ? "true" : undefined}
+        role="group"
+        aria-label={`Предложение ${activeIndex + 1} из ${count}`}
+        aria-hidden={!active ? "true" : undefined}
+        inert={!active ? true : undefined}
+        id={active ? "offers-carousel-active" : undefined}
+      >
+        {items.map((item, index) => (
+          <CarouselCard
+            item={item}
+            index={index}
+            activeIndex={activeIndex}
+            offset={offset}
+            options={options}
+          />
+        ))}
+      </div>
+    );
+  })}
+</div>
+
+<style>
+  .offers-track {
+    position: absolute;
+    top: var(--offers-slide-inset-y);
+    left: calc(
+      var(--offers-slide-edge) - var(--offers-slide-width) -
+        var(--offers-slide-width) - 2rem
+    );
+    display: flex;
+    gap: 1rem;
+    width: max-content;
+    height: var(--offers-slide-height);
+    transform: translateX(var(--offers-drag-offset, 0px));
+    transition: transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .offers-track-slot {
+    position: relative;
+    flex: 0 0 var(--offers-slide-width);
+    width: var(--offers-slide-width);
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .offers-track-slot[data-active] {
+    pointer-events: auto;
+  }
+
+  :global(.offers-carousel[data-single]) .offers-track {
+    left: var(--offers-slide-edge);
+  }
+
+  @media (max-width: 47.999rem) {
+    .offers-track {
+      top: 0;
+      height: 100%;
+    }
+  }
+</style>

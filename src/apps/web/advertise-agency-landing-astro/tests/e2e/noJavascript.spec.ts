@@ -5,20 +5,23 @@ import { expectThemeStyles } from "./support/themeStyles";
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 
-  test("carousel starts with only its first slide visible", async ({
+  test("carousel keeps its first card visible without controls", async ({
     page,
   }) => {
     await page.goto("/");
 
     const carousel = page.locator("#offers-carousel");
-    const slides = carousel.locator(".carousel-slide");
+    const activeSlot = carousel.locator(
+      '.offers-track-slot[data-track-offset="0"]',
+    );
+    const activeCard = activeSlot.locator(".offers-track-card:not([hidden])");
 
-    await expect(slides).toHaveCount(3);
+    await expect(activeCard).toHaveCount(1);
+    await expect(activeCard.locator(".offers-track-copy")).toBeVisible();
+    await expect(carousel.locator(".carousel-controls")).toBeHidden();
     await expect(
-      carousel.locator(".carousel-slide:not([aria-hidden])"),
-    ).toHaveCount(1);
-    await expect(slides.nth(1)).toHaveCSS("visibility", "hidden");
-    await expect(slides.nth(2)).toHaveCSS("visibility", "hidden");
+      carousel.locator('.offers-track-slot[aria-hidden="true"][inert]'),
+    ).toHaveCount(4);
   });
 
   for (const theme of ["light", "dark"] as const) {

@@ -7,6 +7,10 @@ scope and verification belong to the linked task files.
 
 ## Active tasks
 
+- [214 - Offers carousel neighbor previews](../docs/codex/tasks/backlog/214-offers-carousel-neighbor-previews.md):
+  standalone feature rebuilt and decomposed; full static, unit, build-quality,
+  and 321-case cross-browser verification passed; local commit is pending.
+
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.
 UI task 171 is archived; delivery is deferred to task 173.

@@ -200,14 +200,14 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
     visibility: hidden;
   }
 
-  /* Keep the rail compact and themed without covering a large content area. */
+  /* Let page controls receive clicks in the empty rail track. */
   .action-rail {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
     width: 3.25rem;
-    pointer-events: auto;
+    pointer-events: none;
   }
 
   /* Keep chat fixed at the viewport edge outside rail visibility rules. */
@@ -264,6 +264,7 @@ const reminderInterval = actionRail.callReminderIntervalSeconds + "s";
     background: var(--color-base-100);
     color: var(--color-base-content);
     cursor: pointer;
+    pointer-events: auto;
     text-decoration: none;
     box-shadow: var(--shadow-panel);
     transition:

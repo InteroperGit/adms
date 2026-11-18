@@ -73,12 +73,15 @@ and [Luna guidance](https://developers.openai.com/api/docs/models/gpt-6-luna).
 
 ## Tasks and handoff
 
-After completing and accepting each task, create a separate local Git commit
-before starting the next task, including during automatic task series. Include
-only that task's changes and its updated task records; preserve unrelated user
-changes. Follow the commit format in [code style](code-style.md#commits). Commit
-only after required checks and review pass. An explicit user instruction to skip
-commits overrides this default; never push without authorization.
+Create automatic commits only in automatic task execution mode. In that mode,
+after completing and accepting each task, create a separate local Git commit
+before starting the next task, unless the user explicitly asks to skip commits.
+Creating or editing task records and manually executing tasks do not authorize a
+commit: outside automatic execution, commit only on the user's explicit request.
+Include only that task's changes and its updated task records; preserve
+unrelated user changes. Follow the commit format in
+[code style](code-style.md#commits). Commit only after required checks and
+review pass; never push without authorization.
 
 Inspect `.codex/`, `harness/` and `docs/codex/tasks/` before creating work;
 avoid duplicates. Keep agent files in the project or `~/dev/`, never Documents,

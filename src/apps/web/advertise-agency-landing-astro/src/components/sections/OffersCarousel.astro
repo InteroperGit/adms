@@ -1,6 +1,6 @@
 ---
 // The offers section owns publication/data; shared UI owns carousel behavior.
-import ImageCarousel from "@/components/ui/ImageCarousel.astro";
+import OffersImageCarousel from "../features/offersCarousel/Carousel.astro";
 import { offers, enabledOffers } from "@/content/offers";
 ---
 
@@ -11,11 +11,7 @@ import { offers, enabledOffers } from "@/content/offers";
     class="offers-section"
     aria-label="Предложения"
   >
-    <ImageCarousel
-      id="offers-carousel"
-      label="Предложения"
-      itemLabel="Предложение"
-      slideIdPrefix="offer"
+    <OffersImageCarousel
       items={enabledOffers}
       options={{ autoplay: offers.autoplay, intervalMs: offers.intervalMs }}
     />

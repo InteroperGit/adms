@@ -43,11 +43,12 @@ it("renders the configured footer content", async () => {
       link.getAttribute("aria-label"),
       link.getAttribute("href"),
       link.querySelector("img")?.getAttribute("src"),
+      link.querySelector("img")?.getAttribute("loading"),
     ]),
   ).toEqual([
-    ["ВКонтакте", "https://vk.com/", "/icons/social/vk.svg"],
-    ["MAX", "https://max.ru/", "/icons/social/max.svg"],
-    ["Telegram", "https://t.me/", "/icons/social/telegram.svg"],
+    ["ВКонтакте", "https://vk.com/", "/icons/social/vk.svg", "lazy"],
+    ["MAX", "https://max.ru/", "/icons/social/max.svg", "lazy"],
+    ["Telegram", "https://t.me/", "/icons/social/telegram.svg", "lazy"],
   ]);
   expect(footer?.querySelector('a[href="/#services"]')).toHaveTextContent(
     "Все услуги",
@@ -76,7 +77,9 @@ it("renders the configured footer content", async () => {
     "Карта сайта",
   );
   const disclosures = [
-    ...(footer?.querySelectorAll("details[data-footer-group]") ?? []),
+    ...(footer?.querySelectorAll<HTMLDetailsElement>(
+      "details[data-footer-group]",
+    ) ?? []),
   ];
   expect(disclosures.map((item) => item.open)).toEqual([false, false]);
   expect(

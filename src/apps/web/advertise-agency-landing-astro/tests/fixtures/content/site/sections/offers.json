@@ -22,10 +22,10 @@
           "y": 1
         }
       },
-      "image": "/favicon.svg",
-      "imageAlt": "TEST_IMAGEALT",
-      "imageWidth": 400,
-      "imageHeight": 300,
+      "image": "/images/carousel/neon-sign.webp",
+      "imageAlt": "Synthetic neon sign preview",
+      "imageWidth": 1100,
+      "imageHeight": 733,
       "linkLabel": "TEST_LINKLABEL",
       "href": "/#order-inquiry"
     },
@@ -48,10 +48,10 @@
           "y": 1
         }
       },
-      "image": "/favicon.svg",
-      "imageAlt": "TEST_IMAGEALT",
-      "imageWidth": 400,
-      "imageHeight": 300,
+      "image": "/images/carousel/storefront.webp",
+      "imageAlt": "Synthetic storefront preview",
+      "imageWidth": 1081,
+      "imageHeight": 646,
       "linkLabel": "TEST_LINKLABEL",
       "href": "/#order-inquiry"
     },
@@ -74,10 +74,10 @@
           "y": 1
         }
       },
-      "image": "/favicon.svg",
-      "imageAlt": "TEST_IMAGEALT",
-      "imageWidth": 400,
-      "imageHeight": 300,
+      "image": "/images/carousel/vyveski-demo.png",
+      "imageAlt": "Synthetic signage preview",
+      "imageWidth": 1200,
+      "imageHeight": 900,
       "linkLabel": "TEST_LINKLABEL",
       "href": "/#order-inquiry"
     }
