@@ -1,0 +1,94 @@
+---
+// Render agency introduction, configured section actions and supplied stats.
+// Resolve actions from the menu so unavailable destinations stay omitted.
+// Description and statistics remain static content, not browser state.
+
+import Section from "@/components/ui/Section.astro";
+import { site } from "@/content/site";
+import { about } from "@/content/about";
+import AboutIntroduction from "./AboutIntroduction.astro";
+import AboutStats from "./AboutStats.astro";
+import ImageCarousel from "@/components/ui/carousel/ImageCarousel.astro";
+import { aboutCarousel } from "@/content/aboutCarousel";
+const hasImages =
+  aboutCarousel.options.enabled &&
+  aboutCarousel.items.some((item) => item.enabled);
+const projects = site.menu.find((item) => item.href === "/#projects");
+const contacts = site.menu.find((item) => item.href === "/#contacts");
+---
+
+{/* Description and statistics remain static content, not browser state. */}
+<Section
+  id="about"
+  background="default"
+  class="opening"
+>
+  <h2 class="site-section-title opening-section-title">
+    {site.sections.about.title}
+  </h2>
+  {/* Copy and images share a desktop row, then stack in reading order. */}
+  <div class:list={["opening-row", { "opening-with-images": hasImages }]}>
+    <AboutIntroduction
+      description1={about.description1}
+      description2={about.description2}
+      contacts={
+        contacts && {
+          href: contacts.href,
+          label: site.sections.contacts.panelTitle,
+        }
+      }
+      projects={
+        projects && {
+          href: projects.href,
+          label: site.sections.projects.title,
+        }
+      }
+    />
+    {hasImages && (
+      <figure class="opening-media">
+        <ImageCarousel
+          id="about-carousel"
+          label="Иллюстрации наружной рекламы"
+          items={aboutCarousel.items}
+          options={aboutCarousel.options}
+        />
+      </figure>
+    )}
+  </div>
+  <AboutStats items={about.stats} />
+</Section>
+
+<style>
+  /* Keep copy and media in one responsive introduction area. */
+  .opening-row {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  /* Prevent the image column from pushing narrow-screen copy outward. */
+  .opening-media {
+    min-width: 0;
+    margin: 0;
+  }
+
+  /* A quiet frame contains the local artwork without cropping its subject. */
+  .opening-media :global(.image-carousel) {
+    overflow: hidden;
+    border-radius: var(--radius-field);
+  }
+
+  /* Introduce a right-hand image only when readable columns both fit. */
+  @media (min-width: 64rem) {
+    /* The text keeps slightly more width than the supporting artwork. */
+    .opening-with-images {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 3rem;
+    }
+  }
+
+  /* Place the section heading above both copy and supporting media. */
+  .opening-section-title {
+    margin-bottom: 1.5rem;
+  }
+</style>

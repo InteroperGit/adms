@@ -1,0 +1,79 @@
+---
+// Render the supplied agency statistics as a responsive definition list.
+
+import type { Stat } from "@/types/about";
+
+interface Props {
+  items: Stat[];
+}
+
+const { items } = Astro.props;
+---
+
+<dl class="opening-stats">
+  {items.map((stat) => (
+    <div>
+      <dt>{stat.label}</dt>
+      <dd>{stat.value}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  /* Separate supplied statistics in a responsive grid. */
+  .opening-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-base-300);
+    max-width: 56rem;
+  }
+
+  /* Keep each statistic and its label together. */
+  .opening-stats div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* Wrap long statistic labels using muted text. */
+  .opening-stats dt {
+    color: var(--site-muted);
+    overflow-wrap: anywhere;
+  }
+
+  /* Lead each statistic with its supplied brand-colored value. */
+  .opening-stats dd {
+    order: -1;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--color-brand);
+    margin-bottom: 0.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Stack statistics when three readable columns no longer fit. */
+  @media (max-width: 35rem) {
+    /* Give each statistic the complete narrow-screen width. */
+    .opening-stats {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    /* Pair each value and label on one wrapping row. */
+    .opening-stats div {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    /* Align values with a shared minimum measure. */
+    .opening-stats dd {
+      margin-bottom: 0;
+      min-width: 5ch;
+    }
+  }
+</style>

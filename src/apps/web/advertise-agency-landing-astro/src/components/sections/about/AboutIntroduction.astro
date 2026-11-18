@@ -1,0 +1,75 @@
+---
+// Render agency copy and configured section actions.
+
+import Button from "@/components/ui/Button.astro";
+
+interface Action {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  description1: string;
+  description2: string;
+  contacts?: Action;
+  projects?: Action;
+}
+
+const { description1, description2, contacts, projects } = Astro.props;
+---
+
+<div class="opening-introduction">
+  <p class="opening-lead">{description1}</p>
+  <p class="opening-detail">{description2}</p>
+  <div class="opening-actions">
+    {contacts && <Button href={contacts.href}>{contacts.label}</Button>}
+    {projects && (
+      <Button
+        variant="outline"
+        href={projects.href}
+      >
+        {projects.label}
+      </Button>
+    )}
+  </div>
+</div>
+
+<style>
+  /* Limit introduction copy to a readable measure. */
+  .opening-introduction {
+    max-width: 56rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep the first description as regular body copy. */
+  .opening-lead {
+    font-size: clamp(1.25rem, 2.4vw, 1.875rem);
+    line-height: 1.45;
+    max-width: 48ch;
+  }
+
+  /* Separate supporting copy with muted, readable text. */
+  .opening-detail {
+    max-width: 64ch;
+    margin-top: 1.25rem;
+    color: var(--site-muted);
+    font-size: 1.125rem;
+  }
+
+  /* Let native introduction actions wrap at narrow widths. */
+  .opening-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  /* Allow action labels to grow without clipping. */
+  .opening-actions :global(a) {
+    height: auto;
+    min-height: 3rem;
+    padding-block: 0.75rem;
+    white-space: normal;
+    max-width: 100%;
+  }
+</style>

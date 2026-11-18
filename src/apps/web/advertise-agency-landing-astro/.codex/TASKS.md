@@ -7,9 +7,8 @@ scope and verification belong to the linked task files.
 
 ## Active tasks
 
-- [214 - Offers carousel neighbor previews](../docs/codex/tasks/backlog/214-offers-carousel-neighbor-previews.md):
-  standalone feature rebuilt and decomposed; full static, unit, build-quality,
-  and 321-case cross-browser verification passed; local commit is pending.
+- [228 - Home section refactor](../docs/codex/tasks/todo/228-home-section-refactor-master.md):
+  in progress; task 216 accepted, tasks 217–227 remain in backlog.
 
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.
