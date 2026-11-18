@@ -15,10 +15,7 @@ import { site } from "@/content/site";
   background="default"
 >
   <YandexReviews
-    enabled={site.yandexReviews.enabled}
-    organizationId={site.yandexReviews.organizationId}
+    {...site.yandexReviews}
     companyName={site.logoText}
-    reviewsUrl={site.yandexReviews.reviewsUrl}
-    placeholder={site.yandexReviews.placeholder}
   />
 </Section>
