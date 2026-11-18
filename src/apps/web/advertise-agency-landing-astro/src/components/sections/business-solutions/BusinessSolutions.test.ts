@@ -6,7 +6,7 @@ import fixture
   from "@/../tests/fixtures/content/site/sections/businessSolutions.json";
 import { businessSolutionsSchema } from "@/validation/businessSolutions";
 import Component from "./BusinessSolutions.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 const businessSolutions = businessSolutionsSchema.parse(fixture);
 

@@ -6,8 +6,8 @@
 
 Статус — fixed. Создана и выполнена 2026-11-18.
 
-- [Секция](../../../../../src/components/sections/OffersCarousel.astro)
-- [Тест секции](../../../../../src/components/sections/OffersCarousel.test.ts)
+- [Секция](../../../../../src/components/sections/offers-carousel/OffersCarousel.astro)
+- [Тест секции](../../../../../src/components/sections/offers-carousel/OffersCarousel.test.ts)
 - [Структура компонентов из задачи 215](../../todo/215-reorganize-components-by-responsibility.md)
 - [Задача 214](../../backlog/214-offers-carousel-neighbor-previews.md)
 
@@ -16,11 +16,11 @@
 - Сохранить `OffersCarousel.astro` точкой композиции и привести импорт feature к
   принятому пути через `@/components/`. Секция владеет `offers.enabled` и
   `enabledOffers`, feature — отображением и взаимодействием.
-- Согласовать результат с задачей 214. Компоненты трека, управления и карточек
-  принадлежат `features/offers-carousel/`. Текущий адаптер достаточно оставить
-  одним файлом.
+- Согласовать результат с задачей 214. Трек, управление, карточки и browser
+  runtime сгруппированы в `sections/offers-carousel/` рядом с секцией.
 - Пути в плане указаны относительно `src/components/`. Точку входа
-  `sections/OffersCarousel.astro` использует `src/pages/index.astro`.
+  `sections/offers-carousel/OffersCarousel.astro` использует
+  `src/pages/index.astro`.
 - Сохранить внешние контракты секции и текущие границы контента и фикстур.
 
 ## Execution
@@ -56,13 +56,18 @@
 
 Выполнено 2026-11-18 Luna (`gpt-6-luna`), reasoning medium.
 
-Секция импортирует `features/offers-carousel/Carousel.astro` через
-`@/components/`. Она продолжает владеть `offers.enabled` и
-`enabledOffers`; feature управляет отображением и взаимодействием. Код
-карусели не дублирован в секции.
+Секция владеет `offers.enabled` и `enabledOffers`; трек, карточки, управление
+и browser runtime сгруппированы в `sections/offers-carousel/` рядом с ней.
+Функциональность карусели сохраняет свои colocated тесты и границы данных.
 
 Прошли 18 целевых тестов, включая homepage integration. Также прошли
 Astro check, `check:style`, content boundaries, component-test placement и
 Prettier. E2E `tests/e2e/media/carousel.spec.ts` прошёл 8/8 в Chromium.
 Ранее принятые responsive, keyboard, reduced-motion и no-JS контракты задачи
-214 подтверждены этим прогоном.
+214 подтверждены этим прогоном. После приёмки по запросу пользователя секция и
+вся реализация карусели перенесены в `src/components/sections/offers-carousel/`.
+
+После переноса прошли 45 целевых unit/integration тестов, Astro check (0 ошибок,
+0 предупреждений, 1 существующая подсказка), style, content boundaries,
+component-test placement и Prettier. Chromium сообщил об успехе всех 8 E2E,
+но завис при завершении процесса; прогон был остановлен после результата тестов.

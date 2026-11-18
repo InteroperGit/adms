@@ -95,17 +95,17 @@
 - `CookieBanner.astro`
   → `features/cookies/CookieBanner.astro`.
 - `features/offersCarousel/Carousel.astro`
-  → `features/offers-carousel/Carousel.astro`.
+  → `sections/offers-carousel/Carousel.astro`.
 - `features/offersCarousel/CarouselCard.astro`
-  → `features/offers-carousel/CarouselCard.astro`.
+  → `sections/offers-carousel/CarouselCard.astro`.
 - `features/offersCarousel/CarouselControls.astro`
-  → `features/offers-carousel/CarouselControls.astro`.
+  → `sections/offers-carousel/CarouselControls.astro`.
 - `features/offersCarousel/CarouselDot.astro`
-  → `features/offers-carousel/CarouselDot.astro`.
+  → `sections/offers-carousel/CarouselDot.astro`.
 - `features/offersCarousel/CarouselTrack.astro`
-  → `features/offers-carousel/CarouselTrack.astro`.
+  → `sections/offers-carousel/CarouselTrack.astro`.
 - `features/offersCarousel/offersImageCarouselRuntime.ts`
-  → `features/offers-carousel/offersImageCarouselRuntime.ts`.
+  → `sections/offers-carousel/offersImageCarouselRuntime.ts`.
 - `ui/ServiceVisual.astro`
   → `services/ServiceVisual.astro`.
 - `cards/ServiceCard.astro`

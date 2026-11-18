@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import Component from "./OffersCarousel.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 it("renders enabled offers through the feature carousel", async () => {
   const body = await render(Component, {});

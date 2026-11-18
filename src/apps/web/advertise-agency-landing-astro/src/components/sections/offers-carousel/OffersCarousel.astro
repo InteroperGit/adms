@@ -1,8 +1,6 @@
 ---
-// The offers section owns publication/data; shared UI owns carousel behavior.
-// prettier-ignore
-import OffersImageCarousel from
-  "@/components/features/offers-carousel/Carousel.astro";
+// The section owns publication data and composes its carousel implementation.
+import OffersImageCarousel from "./Carousel.astro";
 import { offers, enabledOffers } from "@/content/offers";
 ---
 

@@ -6,8 +6,8 @@
 
 Статус — fixed. Создана и выполнена 2026-11-18.
 
-- [Секция](../../../../../src/components/sections/Introduction.astro)
-- [Тест секции](../../../../../src/components/sections/Introduction.test.ts)
+- [Секция](../../../../../src/components/sections/introduction/Introduction.astro)
+- [Тест секции](../../../../../src/components/sections/introduction/Introduction.test.ts)
 - [Структура компонентов из задачи 215](../../todo/215-reorganize-components-by-responsibility.md)
 
 ## Scope
@@ -17,7 +17,7 @@
 - Оставить выбор фото через `getVisibleIntroductionPhoto`, условие
   двухколоночной сетки, `h1` и действие в `Introduction.astro`.
 - Пути в плане указаны относительно `src/components/`. Точку входа
-  `sections/Introduction.astro` использует `src/pages/index.astro`.
+  `sections/introduction/Introduction.astro` использует `src/pages/index.astro`.
 - Сохранить внешние контракты секции и текущие границы контента и фикстур.
 
 ## Execution

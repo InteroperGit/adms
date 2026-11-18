@@ -6,8 +6,8 @@
 
 Статус — fixed. Создана и выполнена 2026-11-18.
 
-- [Секция](../../../../../src/components/sections/Faq.astro)
-- [Тест секции](../../../../../src/components/sections/Faq.test.ts)
+- [Секция](../../../../../src/components/sections/faq/Faq.astro)
+- [Тест секции](../../../../../src/components/sections/faq/Faq.test.ts)
 - [Структура компонентов из задачи 215](../../todo/215-reorganize-components-by-responsibility.md)
 
 ## Scope

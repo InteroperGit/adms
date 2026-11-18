@@ -2,7 +2,7 @@
 import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
 import Component from "./Introduction.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 it("renders heading, location, action and optional photo", async () => {
   const body = await render(Component, {});
