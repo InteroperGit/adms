@@ -1,0 +1,49 @@
+---
+// Render one solution's contextual carousel and source-rights caption.
+
+import ImageCarousel from "@/components/ui/carousel/ImageCarousel.astro";
+import type { BusinessSolutionCarousel } from "@/types/businessSolutions";
+
+interface Props {
+  solutionId: string;
+  carousel: BusinessSolutionCarousel;
+}
+
+const { solutionId, carousel } = Astro.props;
+---
+
+{/* Pair each business type with contextual, rights-recorded media. */}
+<figure class="solution-gallery">
+  <ImageCarousel
+    id={`business-solutions-${solutionId}`}
+    label={carousel.itemLabel}
+    itemLabel={carousel.itemLabel}
+    items={carousel.items}
+    options={carousel.options}
+  />
+  <figcaption>
+    {carousel.mediaSource} {carousel.mediaRights}
+  </figcaption>
+</figure>
+
+<style>
+  /* Keep the contextual gallery inside its solution panel. */
+  .solution-gallery {
+    min-width: 0;
+    margin: 1.5rem 0 0;
+  }
+
+  /* Keep media corners aligned with the surrounding solution panel. */
+  .solution-gallery :global(.image-carousel) {
+    overflow: hidden;
+    border-radius: var(--radius-field);
+  }
+
+  /* Expose provenance without presenting media as project proof. */
+  .solution-gallery figcaption {
+    margin-top: 0.75rem;
+    color: var(--site-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+</style>

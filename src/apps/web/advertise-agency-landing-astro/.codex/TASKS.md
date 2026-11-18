@@ -8,7 +8,7 @@ scope and verification belong to the linked task files.
 ## Active tasks
 
 - [228 - Home section refactor](../docs/codex/tasks/todo/228-home-section-refactor-master.md):
-  in progress; task 216 accepted, tasks 217–227 remain in backlog.
+  in progress; tasks 216–217 accepted, tasks 218–227 remain in backlog.
 
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.

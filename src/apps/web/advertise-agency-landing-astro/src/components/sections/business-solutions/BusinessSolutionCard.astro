@@ -1,0 +1,142 @@
+---
+// Render one business solution with its evidence and inquiry action.
+
+import Button from "@/components/ui/Button.astro";
+import Link from "@/components/ui/Link.astro";
+import BusinessSolutionGallery from "./media/BusinessSolutionGallery.astro";
+import type { BusinessSolutionItem } from "@/types/businessSolutions";
+
+interface Props {
+  item: BusinessSolutionItem;
+}
+
+const { item } = Astro.props;
+---
+
+<article
+  class="solution-item"
+  aria-labelledby={`solution-${item.id}`}
+>
+  <div class="solution-heading">
+    <h3 id={`solution-${item.id}`}>{item.title}</h3>
+    <p class="solution-summary">{item.summary}</p>
+  </div>
+  <BusinessSolutionGallery
+    solutionId={item.id}
+    carousel={item.carousel}
+  />
+  <div class="solution-copy">
+    <div>
+      <h4>Задача клиента</h4>
+      <p>{item.customerTask}</p>
+    </div>
+    <div>
+      <h4>Подходящее решение</h4>
+      <p>{item.solution}</p>
+    </div>
+    <div>
+      <h4>{item.example.title}</h4>
+      <p>{item.example.text}</p>
+    </div>
+  </div>
+  {/* Omit attribution unless complete evidence metadata is available. */}
+  {item.attribution.customerName && item.attribution.evidence && (
+    <div class="solution-attribution">
+      <p>
+        Реализовано для: {item.attribution.customerName}.{" "}
+        {item.attribution.evidence}
+      </p>
+      {item.attribution.href && (
+        <Link href={item.attribution.href}>Смотреть проект</Link>
+      )}
+    </div>
+  )}
+  <Button
+    href={item.inquiryHref}
+    variant="outline"
+    class="solution-inquiry"
+    aria-label={item.inquiryLabel}
+  >
+    {item.inquiryLabel}
+  </Button>
+</article>
+
+<style>
+  /* Use a bordered panel to separate long, content-driven examples. */
+  .solution-item {
+    min-width: 0;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-box);
+    background: var(--color-base-100);
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep the category name and its summary visually grouped. */
+  .solution-heading h3 {
+    font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+    font-weight: 700;
+  }
+
+  /* Treat the summary as supporting context while retaining contrast. */
+  .solution-summary {
+    margin-top: 0.5rem;
+    color: var(--site-muted);
+    line-height: 1.6;
+  }
+
+  /* Let each labelled paragraph expand naturally at every text size. */
+  .solution-copy {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  /* Make the short labels easy to scan above their complete copy. */
+  .solution-copy h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  /* Preserve readable separation between labels and wrapped paragraphs. */
+  .solution-copy p {
+    margin-top: 0.4rem;
+    color: var(--site-muted);
+    line-height: 1.65;
+  }
+
+  /* Keep verified customer evidence distinct from reusable category copy. */
+  .solution-attribution {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--site-control-border);
+    color: var(--site-muted);
+  }
+
+  /* Retain a visible cue for an available project evidence link. */
+  .solution-attribution :global(a) {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Keep the inquiry action reachable and wrapping at enlarged text sizes. */
+  .solution-inquiry {
+    max-width: 100%;
+    height: auto;
+    min-height: 2.75rem;
+    margin-top: 1.5rem;
+    padding-block: 0.7rem;
+    white-space: normal;
+  }
+
+  /* Use columns only when each labelled paragraph remains readable. */
+  @media (min-width: 48rem) {
+    .solution-copy {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+</style>
