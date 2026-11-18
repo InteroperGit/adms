@@ -1,0 +1,47 @@
+---
+// Render the supplied project collection in the shared responsive section.
+// Each card retains a uniquely named native link to its static detail page.
+// Section titles and descriptions come from the site configuration.
+
+import ProjectCard from "@/components/projects/ProjectCard.astro";
+import Section from "@/components/ui/Section.astro";
+import Button from "@/components/ui/Button.astro";
+import { site } from "@/content/site";
+import { projects } from "@/content/projects";
+
+// Keep the homepage concise while the catalogue remains the complete source.
+const featuredProjects = projects.slice(0, 3);
+---
+
+<Section
+  id="projects"
+  title={site.sections.projects.title}
+  subtitle={site.sections.projects.subtitle}
+  background="dark"
+>
+  {featuredProjects.length > 0 ? (
+    <div class="grid min-w-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {featuredProjects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  ) : (
+    <p>Кейсы пока не опубликованы.</p>
+  )}
+  {/* Keep the complete catalogue reachable, including when no cards exist. */}
+  <div class="projects-catalog-link">
+    <Button
+      href="/projects/"
+      variant="outline"
+    >
+      Все проекты
+    </Button>
+  </div>
+</Section>
+
+<style>
+  /* Separate the complete catalogue action from the featured cards. */
+  .projects-catalog-link {
+    margin-top: 1.5rem;
+  }
+</style>
