@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import Component from "./Faq.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 it("omits the FAQ section when no approved answers are visible", async () => {
   const body = await render(Component, {});
