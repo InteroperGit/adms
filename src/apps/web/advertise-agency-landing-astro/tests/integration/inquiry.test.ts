@@ -3,7 +3,7 @@
 import { afterEach, expect, it, vi } from "vitest";
 import OrderInquiry from "../../src/components/sections/OrderInquiry.astro";
 import OrderFormBlock from "../../src/components/content/OrderFormBlock.astro";
-import ContactMenu from "../../src/components/ui/ContactMenu.astro";
+import ContactMenu from "@/components/site-shell/header/ContactMenu.astro";
 import type { OrderInquiryContent } from "../../src/types/orderInquiry";
 import { render } from "../helpers/render";
 

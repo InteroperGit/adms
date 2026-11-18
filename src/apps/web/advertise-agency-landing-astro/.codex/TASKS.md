@@ -22,6 +22,12 @@ component tests remain outstanding.
 
 ## Recent completed work
 
+- [215 - Reorganize components by responsibility](../docs/codex/tasks/todo/215-reorganize-components-by-responsibility.md):
+  implemented; 369 focused unit/integration tests passed, Astro and architecture
+  checks passed. Targeted E2E passed after fixing WebKit theme event handling;
+  Preferences rerun passed 24/24 across three browsers. Kept in `todo` pending
+  an explicit archive request.
+
 - [171 - Header navigation and contact menu](../docs/codex/tasks/fixed/20261115/171-header-navigation-and-contact-menu.md):
   UI complete; menus, keyboard navigation and callback modal verified; global
   verification limitations recorded; delivery deferred to task 173.

@@ -2,9 +2,9 @@
 // @vitest-environment node
 import { beforeEach, expect, it, vi } from "vitest";
 import { getByRole } from "@testing-library/dom";
-import Header from "../../src/components/Header.astro";
+import Header from "../../src/components/site-shell/header/Header.astro";
 import Homepage from "../../src/pages/index.astro";
-import CookieBanner from "../../src/components/CookieBanner.astro";
+import CookieBanner from "@/components/features/cookies/CookieBanner.astro";
 import type { ServicesContent } from "../../src/types/services";
 import type { LegalDocument } from "../../src/types/legal";
 import Layout from "../../src/layouts/Layout.astro";

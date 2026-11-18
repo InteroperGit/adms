@@ -3,12 +3,12 @@
 // Optional metadata overrides site defaults; noindex defaults to false.
 // The default slot belongs inside main; ThemeInit must stay in the head.
 
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import CookieBanner from "@/components/CookieBanner.astro";
-import ActionRail from "@/components/ui/ActionRail.astro";
-import MobileBottomNav from "@/components/ui/MobileBottomNav.astro";
-import ThemeInit from "@/components/ui/ThemeInit.astro";
+import Header from "@/components/site-shell/header/Header.astro";
+import Footer from "@/components/site-shell/footer/Footer.astro";
+import CookieBanner from "@/components/features/cookies/CookieBanner.astro";
+import ActionRail from "@/components/site-shell/contacts/ActionRail.astro";
+import MobileBottomNav from "@/components/navigation/MobileBottomNav.astro";
+import ThemeInit from "@/components/site-shell/preferences/ThemeInit.astro";
 import { site } from "@/content/site";
 import "/src/styles/global.css";
 

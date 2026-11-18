@@ -2,7 +2,7 @@
 // @vitest-environment node
 import { beforeEach, expect, it, vi } from "vitest";
 import ContentBlocks from "../../src/components/content/ContentBlocks.astro";
-import ServiceArticle from "../../src/components/sections/ServiceArticle.astro";
+import ServiceArticle from "../../src/components/services/ServiceArticle.astro";
 import fixture from "../fixtures/content/contentBlocks.json";
 import type { ContentBlock } from "../../src/types/contentBlocks";
 import type { Project } from "../../src/types/project";

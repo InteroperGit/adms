@@ -1,0 +1,254 @@
+---
+// Render supplied destinations in a semantic list for desktop and mobile.
+// Keep link targets single-sourced while mobile adds themed route icons.
+
+import type { MenuItem } from "@/types";
+import Button from "@/components/ui/Button.astro";
+import MaxLogo from "@/components/site-shell/contacts/MaxLogo.astro";
+import Link from "@/components/ui/Link.astro";
+import {
+  FolderKanban,
+  Link as LinkIcon,
+  MapPin,
+  Star,
+  UsersRound,
+  Wrench,
+} from "@lucide/astro";
+
+// Caller-supplied data and presentation options for this component.
+type Props =
+  | { items: MenuItem[]; variant: "desktop"; phone: string }
+  | { items: MenuItem[]; variant: "mobile"; phone?: string };
+
+const { items, variant, phone } = Astro.props;
+const isDesktop = variant === "desktop";
+const phoneHref = phone ? `tel:${phone.replace(/\s/g, "")}` : "#";
+const mobileIcons = {
+  "/#about": UsersRound,
+  "/#services": Wrench,
+  "/#projects": FolderKanban,
+  "/#reviews": Star,
+  "/#contacts": MapPin,
+};
+---
+
+{/* One list keeps desktop and mobile navigation order identical. */}
+<nav
+  aria-label="Основная навигация"
+  class:list={["nav-shell", { "desktop-nav": isDesktop }]}
+>
+  <ul
+    class:list={[
+      "nav-list",
+      {
+        "mobile-links menu": !isDesktop,
+      },
+    ]}
+  >
+    {items.map((item, index) => {
+      const Icon =
+        mobileIcons[item.href as keyof typeof mobileIcons] ?? LinkIcon;
+
+      return (
+        <li class="nav-item">
+          {/* Include mobile links in WebKit's native keyboard traversal. */}
+          <Link
+            underline={false}
+            href={item.href}
+            tabindex={isDesktop ? undefined : 0}
+            class:list={[{ "section-link link link-hover": isDesktop }]}
+          >
+            {!isDesktop && (
+              <Icon
+                class="mobile-link-icon"
+                size={24}
+                aria-hidden="true"
+              />
+            )}
+            <span>{item.label}</span>
+          </Link>
+          {!isDesktop && index < items.length - 1 && (
+            <hr
+              class="mobile-link-divider"
+              aria-hidden="true"
+            />
+          )}
+        </li>
+      );
+    })}
+    {/* Keep desktop contact actions alongside the wide navigation links. */}
+    {isDesktop && (
+      <>
+        <li class="nav-item">
+          <Button
+            variant="outline"
+            size="sm"
+            href={phoneHref}
+            class="header-phone"
+          >
+            {phone}
+          </Button>
+        </li>
+        <li class="nav-item">
+          <Link
+            underline={false}
+            href="https://max.ru/"
+            class="max-contact btn btn-sm"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Написать в Макс"
+          >
+            <MaxLogo />
+            <span>Написать в Макс</span>
+          </Link>
+        </li>
+      </>
+    )}
+  </ul>
+</nav>
+
+<style>
+  /* Show the wide navigation only when its breakpoint permits. */
+  .desktop-nav {
+    display: none;
+  }
+
+  /* Show wide navigation when header space can accommodate its links. */
+  @media (min-width: 64rem) {
+    /* Wrap wide links and align the contact action at the row end. */
+    .desktop-nav {
+      display: block;
+      flex: 0 1 auto;
+      max-width: 100%;
+    }
+
+    /* Arrange wide links and contact actions in one wrapping row. */
+    .desktop-nav .nav-list {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.5rem 1.25rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
+
+  /* Keep each desktop list item aligned without changing list semantics. */
+  .desktop-nav .nav-item {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  /* Keep section links wrappable with generous native targets. */
+  :global(.section-link) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Allow the telephone button label to wrap without clipping. */
+  .desktop-nav :global(.header-phone) {
+    white-space: normal;
+    height: auto;
+    min-height: var(--size);
+    padding-block: 0.25rem;
+  }
+
+  /* Align the Макс mark and label as a single compact contact action. */
+  :global(.max-contact) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: normal;
+    height: auto;
+    min-height: var(--size);
+    padding-block: 0.25rem;
+    background-color: var(--site-messenger-surface);
+    border: 1px solid var(--site-messenger-border);
+    color: var(--site-messenger-content);
+    box-shadow: none;
+  }
+
+  /* Invert the Max action colors only for a mouse pointer. */
+  @media (hover: hover) and (pointer: fine) {
+    /* Keep the hover state shadow-free while reversing its contrast. */
+    :global(.max-contact:hover) {
+      background-color: var(--site-messenger-hover);
+      border-color: var(--site-messenger-hover);
+      color: var(--site-messenger-hover-content);
+      box-shadow: none;
+    }
+  }
+
+  /* Retain a clear keyboard focus ring without adding a shadow. */
+  :global(.max-contact:focus-visible) {
+    outline: 2px solid var(--site-messenger-focus);
+    outline-offset: 3px;
+    box-shadow: none;
+  }
+
+  /* Fill the drawer width with the supplied navigation list. */
+  .mobile-links {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    min-height: 0;
+    padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom));
+    overflow-y: auto;
+    color: var(--color-base-content);
+    background: var(--color-base-100);
+  }
+
+  /* Keep the mobile list semantics while removing browser list markers. */
+  .mobile-links .nav-item {
+    width: 100%;
+    list-style: none;
+  }
+
+  /* Make each mobile destination a large icon and label touch target. */
+  .mobile-links .nav-item > :global(a) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    min-height: 3.5rem;
+    padding: 0.75rem 0.5rem;
+    border-radius: 0;
+    color: var(--color-base-content);
+    font-size: 1.25rem;
+    font-weight: 600;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep the route icon orange and fixed beside wrapped link text. */
+  .mobile-link-icon {
+    flex: none;
+    color: var(--color-primary);
+  }
+
+  /* Separate neighboring mobile destinations with the theme primary. */
+  .mobile-link-divider {
+    width: 100%;
+    height: 0;
+    margin: 0;
+    border: 0;
+    border-top: 1px solid var(--color-primary);
+  }
+
+  /* Give mobile links a subtle theme hover without hiding their labels. */
+  .mobile-links .nav-item > :global(a:hover) {
+    color: var(--color-base-content);
+    background: color-mix(
+      in srgb,
+      var(--color-primary) 8%,
+      var(--color-base-100)
+    );
+  }
+</style>

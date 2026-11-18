@@ -1,0 +1,42 @@
+---
+import { site } from "@/content/site";
+import Logo from "@/components/site-shell/branding/Logo.astro";
+import Link from "@/components/ui/Link.astro";
+---
+
+<div class="header-brand-wrap">
+  <Link
+    underline={false}
+    href="/"
+    class="header-brand text-2xl font-bold"
+  >
+    <Logo />
+    <span>{site.logoText}</span>
+  </Link>
+</div>
+
+<style>
+  .header-brand-wrap {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  :global(.header-brand) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    color: var(--color-primary);
+  }
+
+  :global(.header-brand span) {
+    min-width: 0;
+  }
+
+  @media (max-width: 374px) {
+    :global(.header-brand) {
+      font-size: 1.125rem;
+      overflow-wrap: anywhere;
+    }
+  }
+</style>

@@ -52,8 +52,6 @@ export default getViteConfig({
         "src/scripts/projectCatalog.ts",
         "src/scripts/chartRuntime.ts",
         "src/components/forms/orderInquiry.ts",
-        "src/components/ui/{Button,Section,Breadcrumbs,ContactInfo}.astro",
-        "src/components/cards/*.astro",
         // Colocated tests keep every component in the coverage report.
         "src/components/**/*.{astro,ts,tsx}",
       ],

@@ -16,6 +16,10 @@ Keep the dependency direction: domain types → validation → loaders → consu
 Change a shared contract with its validators, callers and tests. Keep authored
 content out of source objects and markup; see [content](content.md).
 
+Keep `src/components/ui/` for domain-neutral primitives that receive display
+data through props or slots. Keep site content, domain types, and feature
+composition in their owning component groups.
+
 ## Rendering and state
 
 Render readable semantic HTML in Astro. Add browser code only for interactions
