@@ -1,0 +1,65 @@
+---
+import type { OrderInquiryContent } from "@/types/orderInquiry";
+import InquiryTextField from "./fields/InquiryTextField.astro";
+import InquiryCaptcha from "./fields/InquiryCaptcha.astro";
+import InquiryConsent from "./fields/InquiryConsent.astro";
+
+interface Props {
+  content: OrderInquiryContent;
+}
+
+const { content } = Astro.props;
+const smartCaptchaSiteKey =
+  import.meta.env.PUBLIC_YANDEX_SMARTCAPTCHA_SITE_KEY ?? "";
+const inputs = [
+  { key: "name", type: "text", autocomplete: "name" },
+  { key: "email", type: "email", autocomplete: "email" },
+  { key: "phone", type: "tel", autocomplete: "tel" },
+] as const;
+---
+
+<fieldset
+  class="inquiry-fields"
+  disabled
+>
+  {inputs.map(({ key, type, autocomplete }) => (
+    <InquiryTextField
+      name={key}
+      type={type}
+      autocomplete={autocomplete}
+      className={key === "phone" ? "inquiry-phone" : undefined}
+      field={content.fields[key]}
+    />
+  ))}
+  <InquiryTextField
+    name="message"
+    field={content.fields.message}
+  />
+  <InquiryCaptcha siteKey={smartCaptchaSiteKey} />
+  <InquiryConsent content={content} />
+</fieldset>
+
+<style>
+  /* Protect the complete input group until submission handlers are ready. */
+  .inquiry-fields {
+    min-width: 0;
+    display: grid;
+    gap: 1.5rem;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Pair shorter contact fields when labels fit comfortably. */
+  @media (min-width: 48rem) {
+    /* Two columns preserve room for labels and validation text. */
+    .inquiry-fields {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Keep the phone control from leaving a half-empty row. */
+    .inquiry-phone {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

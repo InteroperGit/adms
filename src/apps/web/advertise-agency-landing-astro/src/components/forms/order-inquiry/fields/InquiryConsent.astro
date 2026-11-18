@@ -1,0 +1,80 @@
+---
+import type { OrderInquiryContent } from "@/types/orderInquiry";
+import { site } from "@/content/site";
+import Link from "@/components/ui/Link.astro";
+
+interface Props {
+  content: OrderInquiryContent;
+}
+
+const { content } = Astro.props;
+const privacy = site.legal.find((item) => item.href === "/privacy-policy");
+---
+
+<div class="inquiry-consent">
+  <label
+    for="inquiry-consent"
+    class="inquiry-consent-label"
+  >
+    <input
+      id="inquiry-consent"
+      name="consent"
+      type="checkbox"
+      required
+      aria-describedby="inquiry-consent-error"
+    />
+    <span>
+      {content.consent.label} <span aria-hidden="true">*</span>
+    </span>
+  </label>
+  <Link
+    class="inquiry-link"
+    href={privacy?.href ?? "/privacy-policy"}
+  >
+    {content.privacyLabel}
+  </Link>
+  <p
+    id="inquiry-consent-error"
+    class="inquiry-error"
+    hidden
+  ></p>
+</div>
+
+<style>
+  /* Separate the required agreement from field entry and submission. */
+  .inquiry-consent {
+    grid-column: 1 / -1;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Keep the checkbox and wrapping agreement text in one generous target. */
+  .inquiry-consent-label {
+    display: flex;
+    gap: 0.75rem;
+    align-items: start;
+    min-height: 2.75rem;
+  }
+
+  /* Align the native checkbox with the first consent line. */
+  .inquiry-consent-label input {
+    flex: 0 0 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.125rem;
+    accent-color: var(--color-primary);
+  }
+
+  /* Keep the privacy destination aligned with the agreement copy. */
+  :global(.inquiry-link) {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    max-width: calc(100% - 2.25rem);
+    margin-left: 2.25rem;
+    min-height: 2.75rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+</style>

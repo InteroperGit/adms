@@ -1,0 +1,31 @@
+---
+interface Props {
+  siteKey: string;
+}
+
+const { siteKey } = Astro.props;
+---
+
+<div
+  class="inquiry-captcha"
+  data-smartcaptcha
+  data-sitekey={siteKey}
+  role="group"
+  aria-label="Проверка защиты формы"
+  tabindex="-1"
+>
+  {siteKey && (
+    <p class="inquiry-note">
+      Проверка формы использует Яндекс SmartCaptcha, который обрабатывает
+      технические данные взаимодействия.
+    </p>
+  )}
+</div>
+
+<style>
+  /* Reserve space for the provider challenge and its data notice. */
+  .inquiry-captcha {
+    grid-column: 1 / -1;
+    min-height: 100px;
+  }
+</style>

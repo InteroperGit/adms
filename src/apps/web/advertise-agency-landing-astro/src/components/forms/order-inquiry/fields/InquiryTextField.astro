@@ -1,0 +1,132 @@
+---
+import type { InquiryField } from "@/types/orderInquiry";
+
+interface Props {
+  name: "name" | "email" | "phone" | "message";
+  field: InquiryField;
+  type?: "text" | "email" | "tel";
+  autocomplete?: string;
+  className?: string;
+}
+
+const { name, field, type, autocomplete, className } = Astro.props;
+const id = `inquiry-${name}`;
+---
+
+<div
+  class:list={[
+    "inquiry-field",
+    className,
+    { "inquiry-message": name === "message" },
+  ]}
+>
+  <label for={id}>
+    {field.label} {field.required && <span aria-hidden="true">*</span>}
+  </label>
+  {name === "message" ? (
+    <textarea
+      id={id}
+      name={name}
+      rows="6"
+      required={field.required}
+      maxlength={field.maxLength}
+      aria-describedby={`${id}-hint ${id}-error`}
+    ></textarea>
+  ) : (
+    <input
+      id={id}
+      name={name}
+      type={type}
+      autocomplete={autocomplete}
+      required={field.required}
+      maxlength={field.maxLength}
+      aria-describedby={`${id}-hint ${id}-error`}
+    />
+  )}
+  <p
+    id={`${id}-hint`}
+    class="inquiry-note"
+  >
+    {field.hint} (≤ {field.maxLength})
+  </p>
+  <p
+    id={`${id}-error`}
+    class="inquiry-error"
+    hidden
+  ></p>
+</div>
+
+<style>
+  /* Keep labels, controls and feedback in a readable vertical rhythm. */
+  .inquiry-field {
+    min-width: 0;
+    display: grid;
+    gap: 0.625rem;
+    align-content: start;
+  }
+
+  /* Give labels a clear emphasis above each control. */
+  .inquiry-field label {
+    font-weight: 600;
+    color: var(--color-base-content);
+  }
+
+  /* Keep required markers distinct from label copy. */
+  .inquiry-field label span {
+    color: var(--color-primary);
+  }
+
+  /* Writable controls use a contrasting surface and comfortable height. */
+  .inquiry-field input,
+  .inquiry-field textarea {
+    min-width: 0;
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-field);
+    background: var(--color-base-100);
+    color: var(--color-base-content);
+    font: inherit;
+  }
+
+  /* Keyboard focus stays visible while visitors enter details. */
+  .inquiry-field input:focus-visible,
+  .inquiry-field textarea:focus-visible {
+    border-color: var(--color-primary);
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Let visitors enlarge the message without widening the form. */
+  .inquiry-field textarea {
+    min-height: 10rem;
+    resize: vertical;
+  }
+
+  /* Validation combines a strong boundary with readable error text. */
+  .inquiry-field [aria-invalid="true"] {
+    border: 2px solid var(--color-primary);
+  }
+
+  /* Hints stay secondary while retaining the shared contrast baseline. */
+  .inquiry-note {
+    color: var(--site-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  /* Error copy stays legible in either theme. */
+  .inquiry-error {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  /* The message occupies the full desktop row. */
+  @media (min-width: 48rem) {
+    /* Long answers need the complete writing width. */
+    .inquiry-message {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
