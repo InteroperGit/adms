@@ -4,7 +4,7 @@
 - **Tester:** Luna (`gpt-6-luna`), reasoning: `medium`.
 - **Reviewer:** Luna (`gpt-6-luna`), reasoning: `medium`.
 
-**Status:** implemented; acceptance checks passed; archival not requested.
+**Status:** archived 2026-11-20; acceptance checks passed.
 
 **Цель:** обновить Footer по композиции референса
 `http://localhost:4330/`: показать услуги, социальные кнопки и навигацию

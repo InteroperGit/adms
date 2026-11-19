@@ -3,9 +3,9 @@
 import { expect, it } from "vitest";
 import { getAllByRole, getByRole, queryByRole } from "@testing-library/dom";
 import ContentBlocks from "./ContentBlocks.astro";
-import fixture from "../../../tests/fixtures/content/contentBlocks.json";
-import type { ContentBlock } from "../../../src/types/contentBlocks";
-import { render } from "../../../tests/helpers/render";
+import fixture from "../../../../tests/fixtures/content/contentBlocks.json";
+import type { ContentBlock } from "@/types/contentBlocks";
+import { render } from "../../../../tests/helpers/render";
 
 const blocks = fixture as ContentBlock[];
 

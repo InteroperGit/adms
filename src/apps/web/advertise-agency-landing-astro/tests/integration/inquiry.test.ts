@@ -2,7 +2,9 @@
 // @vitest-environment node
 import { afterEach, expect, it, vi } from "vitest";
 import OrderInquiry from "../../src/components/sections/OrderInquiry.astro";
-import OrderFormBlock from "@/components/content/blocks/OrderFormBlock.astro";
+// prettier-ignore
+import OrderFormBlock from
+  "@/components/features/articles/blocks/OrderFormBlock.astro";
 import ContactMenu from "@/components/site-shell/header/ContactMenu.astro";
 import { site } from "@/content/site";
 import type { OrderInquiryContent } from "../../src/types/orderInquiry";

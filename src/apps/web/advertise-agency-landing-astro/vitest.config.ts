@@ -47,7 +47,7 @@ export default getViteConfig({
         "src/content/orderFormRegistry.ts",
         "src/content/paragraphLinks.ts",
         "src/content/contentBlockLabels.ts",
-        "src/components/content/media/resolveImage.ts",
+        "src/components/ui/media/resolveImage.ts",
         "src/server/inquiryPayload.ts",
         "src/scripts/projectCatalog.ts",
         "src/scripts/chartRuntime.ts",

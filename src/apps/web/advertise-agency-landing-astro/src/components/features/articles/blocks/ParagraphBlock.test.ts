@@ -2,7 +2,7 @@
 // Paragraph links are generated as native anchors from authored text.
 import { expect, it } from "vitest";
 import ParagraphBlock from "./ParagraphBlock.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders paragraphs and safe authored links", async () => {
   const body = await render(ParagraphBlock, {

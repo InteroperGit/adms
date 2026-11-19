@@ -2,7 +2,7 @@
 // Quotes expose authored text and attribution with figure semantics.
 import { expect, it } from "vitest";
 import QuoteBlock from "./QuoteBlock.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders quotation attribution when supplied", async () => {
   const body = await render(QuoteBlock, {

@@ -2,7 +2,7 @@
 // Video blocks keep native controls and transcript content available.
 import { expect, it } from "vitest";
 import VideoBlock from "./VideoBlock.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders native video metadata and an optional transcript", async () => {
   const body = await render(VideoBlock, {

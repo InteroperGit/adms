@@ -1,7 +1,9 @@
 // Static HTML composition; browser scripts remain covered by E2E.
 // @vitest-environment node
 import { beforeEach, expect, it, vi } from "vitest";
-import ContentBlocks from "../../src/components/content/ContentBlocks.astro";
+// prettier-ignore
+import ContentBlocks from
+  "@/components/features/articles/ContentBlocks.astro";
 // prettier-ignore
 import ServiceArticle
   from "@/components/features/services/ServiceArticle.astro";

@@ -2,7 +2,7 @@
 // Image blocks keep captions adjacent to their responsive media.
 import { expect, it } from "vitest";
 import ImageBlock from "./ImageBlock.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders image alt text, caption and service crop state", async () => {
   const body = await render(ImageBlock, {

@@ -1,6 +1,6 @@
 # Codex Task Handoff
 
-Updated: 2026-11-19
+Updated: 2026-11-20
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal. Detailed
 scope and verification belong to the linked task files.
@@ -10,21 +10,19 @@ scope and verification belong to the linked task files.
 Task [232 - Group components by feature](../docs/codex/tasks/todo/232-group-components-by-feature.md)
 is in `todo`. See its handoff for implementation and verification results.
 
-Task [229](../docs/codex/tasks/todo/229-extract-reusable-section-components.md)
-is implemented and accepted; focused checks and browser acceptance passed. Full
-verification was not requested; the task remains in `todo` pending an explicit
-archive request.
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.
 UI task 171 is archived; delivery is deferred to task 173.
-Task [212](../docs/codex/tasks/todo/212-responsive-agency-footer.md) is
-implemented and accepted; focused tests and responsive theme checks passed.
 Task [213](../docs/codex/tasks/todo/213-mobile-bottom-navigation.md) is
 implemented and browser-checked; `pnpm check` fails in `@emnapi`, and colocated
 component tests remain outstanding.
 
 ## Recent completed work
 
+- Tasks [212](../docs/codex/tasks/fixed/20261120/212-responsive-agency-footer.md),
+  [229](../docs/codex/tasks/fixed/20261120/229-extract-reusable-section-components.md)
+  and [235](../docs/codex/tasks/fixed/20261120/235-move-article-renderers-to-features.md)
+  are accepted and archived; verification results are in their handoffs.
 - [234 - Remove validation and bundle warnings](../docs/codex/tasks/fixed/20261119/234-remove-build-warnings.md): focused tests, Astro checks, build and Chromium chart/no-JavaScript checks passed.
 - [214][task214], [230][task230] and [231][task231]:
   implemented and accepted; focused checks are recorded in their handoffs. Full
@@ -46,11 +44,10 @@ component tests remain outstanding.
   integration, Astro, boundary and Chromium checks passed. Full verification was
   not requested.
 
-- [215 - Reorganize components by responsibility](../docs/codex/tasks/todo/215-reorganize-components-by-responsibility.md):
+- [215 - Reorganize components by responsibility](../docs/codex/tasks/fixed/20261120/215-reorganize-components-by-responsibility.md):
   implemented; 369 focused unit/integration tests passed, Astro and architecture
   checks passed. Targeted E2E passed after fixing WebKit theme event handling;
-  Preferences rerun passed 24/24 across three browsers. Kept in `todo` pending
-  an explicit archive request.
+  Preferences rerun passed 24/24 across three browsers. Complete and archived.
 
 - [171 - Header navigation and contact menu](../docs/codex/tasks/fixed/20261115/171-header-navigation-and-contact-menu.md):
   UI complete; menus, keyboard navigation and callback modal verified; global

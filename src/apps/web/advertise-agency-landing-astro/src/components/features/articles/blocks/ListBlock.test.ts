@@ -2,7 +2,7 @@
 // List blocks select native ordered or unordered semantics from the type.
 import { expect, it } from "vitest";
 import ListBlock from "./ListBlock.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders ordered items with native list semantics", async () => {
   const body = await render(ListBlock, {

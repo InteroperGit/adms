@@ -2,7 +2,7 @@
 // Chart output keeps a readable data table when scripts are unavailable.
 import { expect, it } from "vitest";
 import ChartBlock from "./ChartBlock.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders chart legend, bars and an accessible data table", async () => {
   const body = await render(ChartBlock, {

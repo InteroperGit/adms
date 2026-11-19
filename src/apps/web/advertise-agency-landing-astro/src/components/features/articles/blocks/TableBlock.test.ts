@@ -2,7 +2,7 @@
 // Tables retain headers and a labelled keyboard-scroll region.
 import { expect, it } from "vitest";
 import TableBlock from "./TableBlock.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders captioned columns and row values", async () => {
   const body = await render(TableBlock, {
