@@ -107,6 +107,22 @@ it("composes navigation, settings, menu, and brand children", async () => {
     `tel:${site.phone.replace(/\s/g, "")}`,
   );
   expect(header?.querySelector(".header-call .lucide-phone")).not.toBeNull();
+  expect(header?.querySelector(".mobile-header-contacts")).toBeNull();
+  const contactOpener = header?.querySelector<HTMLButtonElement>(
+    ".contact-menu-opener-mobile",
+  );
+  expect(contactOpener).toHaveAccessibleName("Связаться");
+  expect(contactOpener?.querySelector(".lucide-phone")).not.toBeNull();
+  expect(contactOpener?.querySelector(".lucide-message-circle")).not.toBeNull();
+  expect(
+    header?.querySelector(
+      ".contact-menu-opener-desktop .lucide-message-circle",
+    ),
+  ).not.toBeNull();
+  const followsContactOpener =
+    contactOpener!.compareDocumentPosition(settings!) &
+    contactOpener!.ownerDocument.defaultView!.Node.DOCUMENT_POSITION_FOLLOWING;
+  expect(followsContactOpener).toBeTruthy();
   expect(
     header?.querySelector("#mobile-menu-open .lucide-menu"),
   ).not.toBeNull();

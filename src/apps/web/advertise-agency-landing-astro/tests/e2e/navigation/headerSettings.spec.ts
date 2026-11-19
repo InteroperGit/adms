@@ -1,6 +1,21 @@
 // Header and settings browser contracts.
 import { expect, test } from "../fixtures";
 
+test("mobile header hides down and returns up while scrolling", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto("/");
+  await page.locator('[data-cookie-choice="declined"]').click();
+
+  const header = page.locator(".site-header");
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await expect.poll(() => header.getAttribute("data-hidden")).toBe("true");
+
+  await page.evaluate(() => window.scrollTo(0, 400));
+  await expect.poll(() => header.getAttribute("data-hidden")).toBe("false");
+});
+
 test("mobile menu shows themed links without contact action buttons", async ({
   page,
 }) => {
@@ -163,7 +178,7 @@ test("tablet header has navigation and a nonmodal contact menu", async ({
   );
   await expect(call).toHaveCSS("background-color", callColors.background);
   await expect(call).toHaveCSS("color", callColors.color);
-  const opener = page.locator(".header-layout [data-contact-menu-opener]");
+  const opener = page.locator(".contact-menu-opener-desktop");
   await opener.click();
   const menu = page.locator("#contact-menu");
   await expect(menu).toBeVisible();

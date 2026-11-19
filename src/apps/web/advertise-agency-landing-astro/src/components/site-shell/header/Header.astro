@@ -8,7 +8,6 @@ import DesktopNavigation from "@/components/navigation/DesktopNavigation.astro";
 import ContactMenu from "./ContactMenu.astro";
 import HeaderAddress from "./HeaderAddress.astro";
 import HeaderCall from "./HeaderCall.astro";
-import MobileHeaderContacts from "./MobileHeaderContacts.astro";
 import MobileMenuDialog from "./MobileMenuDialog.astro";
 import Settings from "../preferences/Settings.astro";
 import HeaderBrand from "./HeaderBrand.astro";
@@ -28,12 +27,7 @@ import HeaderMenuOpener from "./HeaderMenuOpener.astro";
     <Settings />
     <HeaderMenuOpener />
   </div>
-  {/* Keep key contact actions visible below the mobile header row. */}
   <DesktopNavigation items={site.menu} />
-  <MobileHeaderContacts
-    phone={site.phone}
-    address={site.address}
-  />
   <MobileMenuDialog items={site.menu} />
 </header>
 
@@ -61,9 +55,9 @@ import HeaderMenuOpener from "./HeaderMenuOpener.astro";
     padding-block: 0.625rem;
   }
 
-  /* Reserve contact controls for desktop while mobile has its own row. */
+  /* Keep contact actions alongside settings at every header width. */
   .header-layout :global(.contact-menu) {
-    display: none;
+    display: block;
     flex: none;
   }
 
@@ -108,7 +102,14 @@ import HeaderMenuOpener from "./HeaderMenuOpener.astro";
 
   /* Reserve room for settings and the mobile opener on narrow screens. */
   @media (max-width: 47.999rem) {
-    /* Keep compact controls at the end of the wrapping header row. */
+    /* Separate the mobile header from page content with a theme shadow. */
+    .site-header {
+      border: 0;
+      border-radius: 0;
+      box-shadow: var(--shadow-panel);
+    }
+
+    /* Keep compact controls together at the end of the header row. */
     .header-layout {
       justify-content: flex-end;
       gap: 0.25rem 0.5rem;

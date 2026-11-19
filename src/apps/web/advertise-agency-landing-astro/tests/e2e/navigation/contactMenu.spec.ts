@@ -54,16 +54,20 @@ test("desktop contacts preserve choices and control alignment", async ({
       .locator("[data-theme-settings] .settings-surface")
       .evaluate((element) => element.clientHeight),
     page
-      .locator(".header-layout [data-contact-menu-opener]")
+      .locator(".contact-menu-opener-desktop")
       .evaluate((element) => element.clientHeight),
   ]);
   expect(new Set(heights).size).toBe(1);
 
-  const opener = page.locator(".header-layout [data-contact-menu-opener]");
+  const opener = page.locator(".contact-menu-opener-desktop");
+  await expect(opener.locator(".lucide-message-circle")).toBeVisible();
+  await expect(opener.locator(".lucide-phone")).toHaveCount(0);
   await opener.click();
   const dialog = page.locator("#contact-menu");
   await expect(dialog).toBeVisible();
-  await expect(dialog.locator("[data-contact-options] a")).toHaveCount(3);
+  await expect(
+    dialog.locator("[data-contact-options] .mobile-call-option"),
+  ).toBeHidden();
   await dialog.locator("[data-callback-start]").click();
   await expect(dialog).toBeHidden();
   await expect(opener).toHaveAttribute("aria-expanded", "false");

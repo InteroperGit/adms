@@ -5,6 +5,7 @@ import { afterEach, expect, it, vi } from "vitest";
 import { fireEvent } from "@testing-library/dom";
 import { JSDOM } from "jsdom";
 import { transpile } from "typescript";
+import { site } from "@/content/site";
 import Component from "./ContactMenu.astro";
 import { render } from "../../../../tests/helpers/render";
 
@@ -20,7 +21,7 @@ afterEach(() => {
 });
 
 async function setup() {
-  const body = await render(Component);
+  const body = await render(Component, { phone: site.phone });
   const dom = new JSDOM(body.innerHTML, {
     url: "https://site.example/",
     runScripts: "outside-only",
@@ -30,9 +31,14 @@ async function setup() {
     dom.window.document.querySelector<HTMLDialogElement>("#contact-menu")!;
   const callbackDialog =
     dom.window.document.querySelector<HTMLDialogElement>("#callback-dialog")!;
-  const openers = dom.window.document.querySelectorAll<HTMLElement>(
-    "[data-contact-menu-opener]",
-  );
+  const openers = [
+    dom.window.document.querySelector<HTMLElement>(
+      ".contact-menu-opener-mobile",
+    )!,
+    dom.window.document.querySelector<HTMLElement>(
+      ".contact-menu-opener-desktop",
+    )!,
+  ];
   dialog.show = vi.fn(() => {
     dialog.open = true;
   });
@@ -56,17 +62,28 @@ async function setup() {
   return { dom, dialog, callbackDialog, openers };
 }
 
-it("renders four contact choices with local social assets", async () => {
-  const body = await render(Component);
+it("renders five contact choices with local social assets", async () => {
+  const body = await render(Component, { phone: site.phone });
   const dialog = body.querySelector<HTMLDialogElement>("#contact-menu")!;
 
   expect(
     dialog.querySelectorAll("[data-contact-options] a, [data-callback-start]"),
-  ).toHaveLength(4);
-  expect(
-    body.querySelector(".contact-menu-opener .lucide-message-circle"),
-  ).not.toBeNull();
-  expect(dialog.querySelectorAll("[data-contact-options] a")).toHaveLength(3);
+  ).toHaveLength(5);
+  const mobileOpener = body.querySelector(".contact-menu-opener-mobile");
+  const desktopOpener = body.querySelector(".contact-menu-opener-desktop");
+  expect(mobileOpener?.querySelector(".lucide-phone")).not.toBeNull();
+  expect(mobileOpener?.querySelector(".lucide-message-circle")).not.toBeNull();
+  expect(mobileOpener).toHaveAccessibleName("Связаться");
+  expect(desktopOpener?.querySelector(".lucide-message-circle")).not.toBeNull();
+  expect(desktopOpener?.querySelector(".lucide-phone")).toBeNull();
+  expect(dialog.querySelectorAll("[data-contact-options] a")).toHaveLength(4);
+  expect(dialog.querySelector("[data-contact-options] a")).toHaveTextContent(
+    "Позвонить",
+  );
+  expect(dialog.querySelector("[data-contact-options] a")).toHaveAttribute(
+    "href",
+    `tel:${site.phone.replace(/\s/g, "")}`,
+  );
   const callbackDialog =
     body.querySelector<HTMLDialogElement>("#callback-dialog")!;
   expect(callbackDialog).toHaveAttribute("aria-labelledby", "callback-title");
@@ -172,6 +189,22 @@ it("restores opener focus when contacts close", async () => {
   expect(dialog.close).toHaveBeenCalledOnce();
   expect(opener).toHaveAttribute("aria-expanded", "false");
   expect(dom.window.document.activeElement).toBe(opener);
+});
+
+it("closes the mobile sheet after a downward swipe on its handle", async () => {
+  const { dom, dialog, openers } = await setup();
+  dom.window.matchMedia = vi.fn(() => ({ matches: true }) as MediaQueryList);
+  const opener = openers[0]!;
+  fireEvent.click(opener);
+  const handle = dialog.querySelector<HTMLElement>(
+    "[data-contact-menu-close]",
+  )!;
+  fireEvent.pointerDown(handle, { pointerType: "touch", clientY: 100 });
+  fireEvent.pointerUp(handle, { pointerType: "touch", clientY: 160 });
+
+  expect(dialog.close).toHaveBeenCalledOnce();
+  expect(dialog.open).toBe(false);
+  expect(opener.ownerDocument.activeElement).toBe(opener);
 });
 
 it("dismisses contacts from outside pointer actions", async () => {

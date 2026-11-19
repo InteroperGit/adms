@@ -2,9 +2,15 @@
 // Keep contact choices separate from the unavailable callback request.
 import { site } from "@/content/site";
 import { orderInquiry } from "@/content/orderInquiry";
-import { MessageCircle, PhoneCall, X } from "@lucide/astro";
+import { MessageCircle, PhoneCall, Phone, X } from "@lucide/astro";
 import Link from "@/components/ui/Link.astro";
 
+interface Props {
+  phone: string;
+}
+
+const { phone } = Astro.props;
+const phoneHref = `tel:${phone.replace(/\s/g, "")}`;
 const privacyPhrase = "политикой конфиденциальности";
 const callbackConsentLabel = orderInquiry.consent.label.replace(
   privacyPhrase,
@@ -15,7 +21,7 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
 <div class="contact-menu">
   <button
     type="button"
-    class="contact-menu-opener"
+    class="contact-menu-opener contact-menu-opener-desktop"
     data-contact-menu-opener
     aria-label={site.sections.contacts.panelTitle}
     aria-controls="contact-menu"
@@ -25,6 +31,28 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
       size={20}
       aria-hidden="true"
     />
+  </button>
+  <button
+    type="button"
+    class="contact-menu-opener contact-menu-opener-mobile"
+    data-contact-menu-opener
+    aria-label="Связаться"
+    aria-controls="contact-menu"
+    aria-expanded="false"
+  >
+    <span
+      class="contact-menu-mark"
+      aria-hidden="true"
+    >
+      <Phone
+        class="contact-menu-phone"
+        size={24}
+      />
+      <MessageCircle
+        class="contact-menu-chat"
+        size={12}
+      />
+    </span>
   </button>
   <dialog
     id="contact-menu"
@@ -38,6 +66,17 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
     ></button>
     <section data-contact-options>
       <h2>{site.sections.contacts.panelTitle}</h2>
+      <Link
+        underline={false}
+        href={phoneHref}
+        class="mobile-call-option"
+      >
+        <Phone
+          size={20}
+          aria-hidden="true"
+        />
+        Позвонить
+      </Link>
       <button
         type="button"
         data-callback-start
@@ -179,10 +218,40 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
     cursor: pointer;
   }
 
-  /* Keep the conversation mark compact within the control surface. */
-  .contact-menu-opener svg {
-    width: 1.25rem;
-    height: 1.25rem;
+  /* Reserve the legacy chat button for tablet and desktop layouts. */
+  .contact-menu-opener-desktop {
+    display: none;
+  }
+
+  /* Keep the handset and conversation marks legible in one control. */
+  .contact-menu-mark {
+    position: relative;
+    display: block;
+    width: 1.625rem;
+    height: 1.625rem;
+  }
+
+  /* Make the handset the dominant shape in the contact action. */
+  .contact-menu-phone {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    stroke-width: 2.25;
+  }
+
+  /* Align the smaller chat mark with the handset's upper curve. */
+  .contact-menu-chat {
+    position: absolute;
+    inset-inline-end: 0;
+    inset-block-start: 0;
+    width: 0.75rem;
+    height: 0.75rem;
+    padding: 1px;
+    border-radius: 50%;
+    background-color: var(--color-base-100);
+    stroke-width: 2.5;
   }
 
   .contact-menu-opener:hover {
@@ -225,6 +294,7 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
     border: 0;
     background: transparent;
     cursor: pointer;
+    touch-action: none;
   }
 
   .contact-handle:focus-visible {
@@ -284,6 +354,20 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
     width: 1.5rem;
     height: 1.5rem;
     flex: none;
+  }
+
+  /* Keep the direct-call action exclusive to the mobile contact sheet. */
+  @media (min-width: 48rem) {
+    /* Hide the phone-specific trigger and option on larger layouts. */
+    .contact-menu-opener-mobile,
+    [data-contact-options] .mobile-call-option {
+      display: none;
+    }
+
+    /* Restore the original chat-only trigger on tablet and desktop. */
+    .contact-menu-opener-desktop {
+      display: grid;
+    }
   }
 
   /* Group callback labels, fields and action in a readable form flow. */
@@ -517,7 +601,10 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
 
   if (dialog && callbackDialog && options && openers.length) {
     let activeOpener: HTMLElement | null = null;
+    let swipeStartY: number | null = null;
+    let suppressHandleClick = false;
     const close = () => dialog.close();
+    const swipeCloseThreshold = 48;
 
     // Match the settings popup's vertical anchor on desktop and tablet.
     const placeDialog = () => {
@@ -544,9 +631,42 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
         event.preventDefault();
       });
 
-    dialog
-      .querySelector("[data-contact-menu-close]")
-      ?.addEventListener("click", close);
+    const handle = dialog.querySelector<HTMLElement>(
+      "[data-contact-menu-close]",
+    );
+    handle?.addEventListener("pointerdown", (event: PointerEvent) => {
+      if (
+        event.pointerType === "touch" ||
+        window.matchMedia("(max-width: 47.999rem)").matches
+      ) {
+        swipeStartY = event.clientY;
+      }
+    });
+    window.addEventListener("pointerup", (event: PointerEvent) => {
+      if (swipeStartY === null) {
+        return;
+      }
+      const swipeDistance = event.clientY - swipeStartY;
+      swipeStartY = null;
+      if (Math.abs(swipeDistance) < swipeCloseThreshold) {
+        return;
+      }
+      suppressHandleClick = handle?.contains(event.target as Node) ?? false;
+      if (swipeDistance > 0) {
+        close();
+      }
+    });
+    window.addEventListener("pointercancel", () => {
+      swipeStartY = null;
+    });
+    handle?.addEventListener("click", (event) => {
+      if (suppressHandleClick) {
+        suppressHandleClick = false;
+        event.preventDefault();
+        return;
+      }
+      close();
+    });
 
     // Nonmodal desktop dialogs need an explicit Escape dismissal path.
     dialog.addEventListener("keydown", (event) => {
@@ -565,10 +685,6 @@ const callbackConsentLabel = orderInquiry.consent.label.replace(
         }
         activeOpener = opener;
         options.hidden = false;
-        opener.setAttribute(
-          "aria-label",
-          dialog.getAttribute("aria-label") ?? "Contact options",
-        );
         opener.setAttribute("aria-expanded", "true");
         document
           .querySelector("header")

@@ -5,9 +5,28 @@ test("mobile contact opener presents a full-width sheet", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 800 });
   await page.goto("/");
   await page.locator('[data-cookie-choice="declined"]').click();
-  const opener = page.locator(
-    ".mobile-header-contacts [data-contact-menu-opener]",
+  const header = page.locator(".site-header");
+  const headerColors = await header.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      borderWidth: style.borderBottomWidth,
+      radius: style.borderBottomLeftRadius,
+      shadow: style.boxShadow,
+    };
+  });
+  expect(headerColors.borderWidth).toBe("0px");
+  expect(headerColors.radius).toBe("0px");
+  expect(headerColors.shadow).not.toBe("none");
+  await page.locator("html").evaluate((element) => {
+    element.setAttribute("data-theme", "dark");
+  });
+  const darkHeaderShadow = await header.evaluate(
+    (element) => getComputedStyle(element).boxShadow,
   );
+  expect(darkHeaderShadow).not.toBe("none");
+  const opener = page.locator(".contact-menu-opener-mobile");
+  await expect(opener.locator(".contact-menu-phone")).toBeVisible();
+  await expect(opener.locator(".contact-menu-chat")).toBeVisible();
   await opener.click();
 
   const dialog = page.locator("#contact-menu");
@@ -20,7 +39,10 @@ test("mobile contact opener presents a full-width sheet", async ({ page }) => {
   const bounds = await dialog.boundingBox();
   expect(bounds?.x).toBe(0);
   expect(bounds?.width).toBe(375);
-  await expect(dialog.locator("[data-contact-options] a")).toHaveCount(3);
+  await expect(dialog.locator("[data-contact-options] a")).toHaveCount(4);
+  const call = dialog.locator("[data-contact-options] a").first();
+  await expect(call).toHaveText("Позвонить");
+  await expect(call).toHaveAttribute("href", "tel:TEST_PHONE");
   await dialog.locator("[data-callback-start]").click();
   await expect(dialog).toBeHidden();
   await expect(opener).toHaveAttribute("aria-expanded", "false");
@@ -88,6 +110,23 @@ test("mobile contact opener presents a full-width sheet", async ({ page }) => {
   await opener.click();
   await expect(dialog).toBeVisible();
   await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(opener).toBeFocused();
+
+  await opener.click();
+  await expect(dialog).toBeVisible();
+  const handle = dialog.locator(".contact-handle");
+  const handleBounds = await handle.boundingBox();
+  await page.mouse.move(
+    handleBounds!.x + handleBounds!.width / 2,
+    handleBounds!.y + handleBounds!.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    handleBounds!.x + handleBounds!.width / 2,
+    handleBounds!.y + handleBounds!.height / 2 + 72,
+  );
+  await page.mouse.up();
   await expect(dialog).toBeHidden();
   await expect(opener).toBeFocused();
 
