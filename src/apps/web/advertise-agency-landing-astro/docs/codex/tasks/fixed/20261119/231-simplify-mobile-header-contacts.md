@@ -4,7 +4,7 @@
 - **Tester:** Luna (`gpt-6-luna`), reasoning: `medium`.
 - **Reviewer:** Luna (`gpt-6-luna`), reasoning: `medium`.
 
-**Статус** — implemented, awaiting explicit archive request
+**Статус** — fixed. Выполнена и принята 2026-11-19.
 
 **Создана** — 2026-11-19
 
@@ -36,7 +36,7 @@
 - [x] В браузере проверить мобильную ширину 375 и 320 px, планшетную 768 px,
       темы, прокрутку, свайп, закрытие меню и возврат фокуса.
 - [x] Сверить изменения с критериями приёмки и записать команды и результаты
-      в итог задачи. Оставить запись в backlog до явного запроса на архив.
+      в Handoff. Обновить индекс, статус и ссылки по workflow.
 
 Основной агент последовательно выполняет реализацию, тестирование и ревью
 с настройками из заголовка. Делегирование не запланировано.
@@ -69,4 +69,4 @@
 - `pnpm check` — passed with one existing Zod deprecation hint.
 - `pnpm verify:component-tests` — passed. Targeted ESLint and Prettier checks passed.
 - Direct visual inspection of `https://zub.ru/` was unavailable because the site returned HTTP 403.
-- Full verification was not requested. `.codex/TASKS.md` is read-only in this workspace and was not updated.
+- Full verification was not requested.

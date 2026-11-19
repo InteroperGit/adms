@@ -24,7 +24,7 @@ Primary координирует общий diff и приёмку. Luna medium 
 Навыки: `grilling` для уточнения границ, `ponytail` для минимального объёма
 изменений, `astro-best-practices` для работы с Astro-компонентами.
 
-- [x] Сверить [правила проекта](../../rules/index.md), текущий diff и
+- [x] Сверить [правила проекта](../../../rules/index.md), текущий diff и
       зависимости 214 и 215 перед началом работы.
 - [x] Принять задачу 216 после выполнения её Scope, проверок и Acceptance.
 - [x] Принять задачу 217 после выполнения её Scope, проверок и Acceptance.
@@ -98,5 +98,5 @@ FAQ/секции. На последней проверке Astro сообщил 
 одна существующая подсказка указывает на deprecation `z.number().finite()` в
 `src/validation/contentBlocks.ts:129`. Полный общий прогон не выполнялся.
 
-[task-214]: ../../backlog/214-offers-carousel-neighbor-previews.md
+[task-214]: 214-offers-carousel-neighbor-previews.md
 [task-215]: ../../todo/215-reorganize-components-by-responsibility.md

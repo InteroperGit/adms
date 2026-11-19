@@ -9,7 +9,7 @@
 - [Секция](../../../../../src/components/sections/offers-carousel/OffersCarousel.astro)
 - [Тест секции](../../../../../src/components/sections/offers-carousel/OffersCarousel.test.ts)
 - [Структура компонентов из задачи 215](../../todo/215-reorganize-components-by-responsibility.md)
-- [Задача 214](../../backlog/214-offers-carousel-neighbor-previews.md)
+- [Задача 214](../20261119/214-offers-carousel-neighbor-previews.md)
 
 ## Scope
 

@@ -10,9 +10,6 @@ scope and verification belong to the linked task files.
 Task [232 - Group components by feature](../docs/codex/tasks/todo/232-group-components-by-feature.md)
 is in `todo`. See its handoff for implementation and verification results.
 
-Task [230 - Reusable cylinder carousel](../docs/codex/tasks/backlog/230-create-cylinder-carousel.md)
-is implemented and browser-checked; focused checks passed. It remains in
-`backlog` pending an explicit archive request.
 Task [229](../docs/codex/tasks/todo/229-extract-reusable-section-components.md)
 is implemented and accepted; focused checks and browser acceptance passed. Full
 verification was not requested; the task remains in `todo` pending an explicit
@@ -27,6 +24,17 @@ implemented and browser-checked; `pnpm check` fails in `@emnapi`, and colocated
 component tests remain outstanding.
 
 ## Recent completed work
+
+- [214][task214], [230][task230] and [231][task231]:
+  implemented and accepted; focused checks are recorded in their handoffs. Full
+  verification was not requested.
+
+[task214]:
+  ../docs/codex/tasks/fixed/20261119/214-offers-carousel-neighbor-previews.md
+[task230]:
+  ../docs/codex/tasks/fixed/20261119/230-create-cylinder-carousel.md
+[task231]:
+  ../docs/codex/tasks/fixed/20261119/231-simplify-mobile-header-contacts.md
 
 - [233 - Shared media and catalog card](../docs/codex/tasks/fixed/20261119/233-extract-shared-media-and-catalog-card.md):
   complete; 75 focused unit/integration tests and 26 Chromium scenarios passed;
