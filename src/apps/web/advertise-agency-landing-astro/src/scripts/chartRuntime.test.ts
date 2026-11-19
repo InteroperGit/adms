@@ -11,11 +11,9 @@ const runtime = vi.hoisted(() => ({
 }));
 
 vi.mock("echarts/core", () => runtime);
-vi.mock("echarts/charts", () => ({
-  BarChart: "bar",
-  LineChart: "line",
-  PieChart: "pie",
-}));
+vi.mock("echarts/lib/chart/bar", () => ({}));
+vi.mock("echarts/lib/chart/line", () => ({}));
+vi.mock("echarts/lib/chart/pie", () => ({}));
 vi.mock("echarts/components", () => ({
   GridComponent: "grid",
   LegendComponent: "legend",
@@ -55,30 +53,24 @@ function lastOptions() {
   return chart.setOption.mock.lastCall![0];
 }
 
-it(
-  "registers the supported charts, com" + "ponents and canvas renderer",
-  async () => {
-    // Re-import to observe registration independently of test execution order.
-    vi.resetModules();
-    await import("./chartRuntime");
-    expect(runtime.use).toHaveBeenCalledWith([
-      "bar",
-      "line",
-      "pie",
-      "grid",
-      "legend",
-      "tooltip",
-      "canvas",
-    ]);
-  },
-);
+it("registers shared components and the canvas renderer", async () => {
+  // Re-import to observe registration independently of test execution order.
+  vi.resetModules();
+  await import("./chartRuntime");
+  expect(runtime.use).toHaveBeenCalledWith([
+    "grid",
+    "legend",
+    "tooltip",
+    "canvas",
+  ]);
+});
 
 it.each(["bar", "line"])(
   "aligns %s series with shared ordered labels",
-  (chartType) => {
+  async (chartType) => {
     const browser = installBrowserMocks();
     const element = target({ ...fixture, chartType });
-    renderChart(element);
+    await renderChart(element);
     expect(runtime.init).toHaveBeenCalledWith(element, undefined, {
       renderer: "canvas",
     });
@@ -103,9 +95,9 @@ it.each(["bar", "line"])(
   },
 );
 
-it("omits the legend for a single series and respects reduced motion", () => {
+it("omits the single-series legend and respects reduced motion", async () => {
   installBrowserMocks({ reducedMotion: true });
-  renderChart(target({ ...fixture, series: [fixture.series[0]] }, 519));
+  await renderChart(target({ ...fixture, series: [fixture.series[0]] }, 519));
   expect(lastOptions()).toMatchObject({
     animation: false,
     legend: undefined,
@@ -114,9 +106,9 @@ it("omits the legend for a single series and respects reduced motion", () => {
   });
 });
 
-it("maps pie points directly and omits Cartesian axes", () => {
+it("maps pie points directly and omits Cartesian axes", async () => {
   installBrowserMocks();
-  renderChart(
+  await renderChart(
     target({
       ...fixture,
       chartType: "pie",
@@ -142,9 +134,9 @@ it("maps pie points directly and omits Cartesian axes", () => {
   });
 });
 
-it.each(["bar", "pie"])("renders empty %s series safely", (chartType) => {
+it.each(["bar", "pie"])("renders empty %s series safely", async (chartType) => {
   installBrowserMocks();
-  renderChart(target({ chartType, series: [] }));
+  await renderChart(target({ chartType, series: [] }));
   expect(lastOptions().series).toEqual(
     chartType === "pie"
       ? [{ type: "pie", radius: ["35%", "70%"], data: [] }]
@@ -152,23 +144,23 @@ it.each(["bar", "pie"])("renders empty %s series safely", (chartType) => {
   );
 });
 
-it("skips detached elements and existing chart instances", () => {
+it("skips detached elements and existing chart instances", async () => {
   const browser = installBrowserMocks();
   const element = target();
   element.remove();
-  renderChart(element);
+  await renderChart(element);
   expect(runtime.getInstanceByDom).not.toHaveBeenCalled();
   document.body.append(element);
   runtime.getInstanceByDom.mockReturnValue(chart);
-  renderChart(element);
+  await renderChart(element);
   expect(runtime.init).not.toHaveBeenCalled();
   expect(browser.resizeObservers).toHaveLength(0);
 });
 
-it("resizes Cartesian charts and updates labels at the width boundary", () => {
+it("resizes Cartesian charts and updates labels", async () => {
   const browser = installBrowserMocks();
   const element = target(fixture, 519);
-  renderChart(element);
+  await renderChart(element);
   Object.defineProperty(element, "clientWidth", { value: 520 });
   browser.resizeObservers[0].trigger([]);
   expect(chart.resize).toHaveBeenCalledOnce();
@@ -182,18 +174,18 @@ it("resizes Cartesian charts and updates labels at the width boundary", () => {
   });
 });
 
-it("resizes pie charts without adding Cartesian options", () => {
+it("resizes pie charts without adding Cartesian options", async () => {
   const browser = installBrowserMocks();
-  renderChart(target({ ...fixture, chartType: "pie" }));
+  await renderChart(target({ ...fixture, chartType: "pie" }));
   browser.resizeObservers[0].trigger([]);
   expect(chart.resize).toHaveBeenCalledOnce();
   expect(chart.setOption).toHaveBeenCalledOnce();
 });
 
-it("preserves cached charts and disposes on a final page exit", () => {
+it("preserves cached charts and disposes on a final page exit", async () => {
   const browser = installBrowserMocks();
   const element = target();
-  renderChart(element);
+  await renderChart(element);
   window.dispatchEvent(
     new PageTransitionEvent("pagehide", {
       persisted: true,
@@ -208,32 +200,32 @@ it("preserves cached charts and disposes on a final page exit", () => {
 
 it.each(["{", "null", "{}", '{"series":null}'])(
   "propagates malformed data %s to the caller fallback",
-  (raw) => {
+  async (raw) => {
     const browser = installBrowserMocks();
     const element = target();
     element.dataset.chart = raw;
-    expect(() => renderChart(element)).toThrow();
+    await expect(renderChart(element)).rejects.toThrow();
     expect(chart.setOption).not.toHaveBeenCalled();
     expect(browser.resizeObservers).toHaveLength(0);
     expect(browser.fetch).not.toHaveBeenCalled();
   },
 );
 
-it("propagates missing data to the caller fallback", () => {
+it("propagates missing data to the caller fallback", async () => {
   installBrowserMocks();
   const element = target();
   delete element.dataset.chart;
-  expect(() => renderChart(element)).toThrow();
+  await expect(renderChart(element)).rejects.toThrow();
 });
 
 it(
   "propagates an unavailable canvas ru" + "ntime without installing observers",
-  () => {
+  async () => {
     const browser = installBrowserMocks();
     runtime.init.mockImplementation(() => {
       throw new Error("Canvas unavailable");
     });
-    expect(() => renderChart(target())).toThrow("Canvas unavailable");
+    await expect(renderChart(target())).rejects.toThrow("Canvas unavailable");
     expect(browser.resizeObservers).toHaveLength(0);
     expect(browser.fetch).not.toHaveBeenCalled();
   },

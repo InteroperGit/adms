@@ -1,5 +1,4 @@
 // Loaded only for visible charts; the native data table is always available.
-import { BarChart, LineChart, PieChart } from "echarts/charts";
 import {
   GridComponent,
   LegendComponent,
@@ -24,20 +23,23 @@ interface ChartData {
   series: ChartSeries[];
 }
 
-// Register only the components used by the supported article chart contract.
-echarts.use([
-  BarChart,
-  LineChart,
-  PieChart,
-  GridComponent,
-  LegendComponent,
-  TooltipComponent,
-  CanvasRenderer,
-]);
+// Register shared components; chart types load only for the visible chart.
+echarts.use([GridComponent, LegendComponent, TooltipComponent, CanvasRenderer]);
 
-export function renderChart(element: HTMLElement): void {
+export async function renderChart(element: HTMLElement): Promise<void> {
   if (!element.isConnected || echarts.getInstanceByDom(element)) return;
   const data: ChartData = JSON.parse(element.dataset.chart ?? "{}");
+  switch (data.chartType) {
+    case "bar":
+      await import("echarts/lib/chart/bar");
+      break;
+    case "line":
+      await import("echarts/lib/chart/line");
+      break;
+    case "pie":
+      await import("echarts/lib/chart/pie");
+      break;
+  }
   const chart = echarts.init(element, undefined, { renderer: "canvas" });
   const labels = [
     ...new Set(

@@ -73,6 +73,19 @@ describe("content block boundaries", () => {
     expect(contentBlockSchema.safeParse(block).success).toBe(false);
   });
 
+  it.each([NaN, Infinity, -Infinity])(
+    "rejects a non-finite chart value: %s",
+    (value) => {
+      expect(
+        chartBlock.safeParse({
+          type: "chart",
+          chartType: "bar",
+          series: [{ name: "Series", points: [{ label: "A", value }] }],
+        }).success,
+      ).toBe(false);
+    },
+  );
+
   it("rejects unknown keys and unsafe media URLs", () => {
     expect(
       contentBlockSchema.safeParse({

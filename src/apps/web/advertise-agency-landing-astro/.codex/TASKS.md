@@ -25,6 +25,7 @@ component tests remain outstanding.
 
 ## Recent completed work
 
+- [234 - Remove validation and bundle warnings](../docs/codex/tasks/fixed/20261119/234-remove-build-warnings.md): focused tests, Astro checks, build and Chromium chart/no-JavaScript checks passed.
 - [214][task214], [230][task230] and [231][task231]:
   implemented and accepted; focused checks are recorded in their handoffs. Full
   verification was not requested.
@@ -66,10 +67,6 @@ component tests remain outstanding.
   complete.
 
 ## Task index
-
-- [234 - Remove validation and bundle warnings](../docs/codex/tasks/backlog/234-remove-build-warnings.md):
-  backlog; remove the Zod deprecation hint and >500 kB chunk warning while
-  retaining the current bundle threshold.
 
 - [195 - Integration test automation](../docs/codex/tasks/fixed/20261116/195-automate-integration-test-improvements.md):
   complete; children 196-203 accepted and committed separately. Integration:

@@ -264,7 +264,7 @@ const labels = [
   const enhance = async (element: HTMLElement) => {
     try {
       const { renderChart } = await import("@/scripts/chartRuntime");
-      renderChart(element);
+      await renderChart(element);
       element
         .closest<HTMLElement>("[data-chart-figure]")
         ?.setAttribute("data-chart-enhanced", "true");

@@ -126,7 +126,7 @@ export const tableBlock = z
 const chartPoint = z
   .object({
     label: text,
-    value: z.number().finite(),
+    value: z.number(),
   })
   .strict();
 
