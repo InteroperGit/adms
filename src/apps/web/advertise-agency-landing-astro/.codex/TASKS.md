@@ -7,6 +7,9 @@ scope and verification belong to the linked task files.
 
 ## Active tasks
 
+Task [232 - Group components by feature](../docs/codex/tasks/todo/232-group-components-by-feature.md)
+is in `todo`. See its handoff for implementation and verification results.
+
 Task [230 - Reusable cylinder carousel](../docs/codex/tasks/backlog/230-create-cylinder-carousel.md)
 is implemented and browser-checked; focused checks passed. It remains in
 `backlog` pending an explicit archive request.

@@ -1,7 +1,7 @@
 // Verify both initial catalog and filtered search empty states.
 // @vitest-environment node
 import { expect, it } from "vitest";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 import Component from "./ProjectCatalogEmpty.astro";
 
 it("renders the catalog empty message by default", async () => {

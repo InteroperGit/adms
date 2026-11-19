@@ -2,9 +2,9 @@
 import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
 import ServiceCard from "./ServiceCard.astro";
-import { createServicesSchema } from "../../validation/services";
-import fixtures from "../../../tests/fixtures/content/unitContracts.json";
-import { render } from "../../../tests/helpers/render";
+import { createServicesSchema } from "../../../validation/services";
+import fixtures from "../../../../tests/fixtures/content/unitContracts.json";
+import { render } from "../../../../tests/helpers/render";
 
 const service = () =>
   createServicesSchema(["/services/sample/"]).parse(fixtures.services).items[0];

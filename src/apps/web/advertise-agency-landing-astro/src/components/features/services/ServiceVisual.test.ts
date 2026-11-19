@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import ServiceVisual from "./ServiceVisual.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 const image = {
   src: "/fixture.webp",

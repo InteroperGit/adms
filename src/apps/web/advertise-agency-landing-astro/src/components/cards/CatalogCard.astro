@@ -3,6 +3,7 @@
 // Domain components pass validated copy, media, metadata and native routes.
 
 import ContentImage from "@/components/content/ContentImage.astro";
+import Card from "@/components/ui/Card.astro";
 import Link from "@/components/ui/Link.astro";
 import type { ContentImage as ContentImageData } from "@/types/contentBlocks";
 
@@ -35,7 +36,8 @@ const {
 ---
 
 {/* Keep content in a shared image, title and action reading order. */}
-<article
+<Card
+  as="article"
   class="catalog-card"
   aria-labelledby={titleId}
 >
@@ -84,24 +86,16 @@ const {
       </Link>
     )}
   </div>
-</article>
+</Card>
 
 <style>
-  /* Distinguish each card surface from its alternating section background. */
+  /* Stack the catalog image and copy within a single grid item. */
   .catalog-card {
     min-width: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     overflow-wrap: anywhere;
-    background: color-mix(
-      in srgb,
-      var(--color-base-100) 90%,
-      var(--color-primary)
-    );
-    border: 1px solid var(--color-base-300);
-    border-radius: var(--radius-field);
-    box-shadow: var(--shadow-panel);
     transition:
       border-color 180ms ease,
       background-color 180ms ease,

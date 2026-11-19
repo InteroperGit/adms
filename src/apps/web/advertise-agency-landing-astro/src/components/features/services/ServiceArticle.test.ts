@@ -2,7 +2,7 @@
 import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
 import Component from "./ServiceArticle.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 it("renders demo article blocks with a disclosure", async () => {
   const body = await render(Component, { serviceId: "svetovye-bukvy" });

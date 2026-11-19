@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it, vi } from "vitest";
 import Component from "./PricingExamples.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 vi.mock("@/content/pricing", () => ({
   pricing: {

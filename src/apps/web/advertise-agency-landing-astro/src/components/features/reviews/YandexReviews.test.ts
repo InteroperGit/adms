@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import YandexReviews from "./YandexReviews.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 const props = {
   organizationId: "123456",

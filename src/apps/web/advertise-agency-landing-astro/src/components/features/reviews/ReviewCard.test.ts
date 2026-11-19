@@ -2,8 +2,8 @@
 import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
 import ReviewCard from "./ReviewCard.astro";
-import fixtures from "../../../tests/fixtures/content/unitContracts.json";
-import { render } from "../../../tests/helpers/render";
+import fixtures from "../../../../tests/fixtures/content/unitContracts.json";
+import { render } from "../../../../tests/helpers/render";
 
 it("renders an attributed quote and sized portrait", async () => {
   const review = fixtures.reviews[0];

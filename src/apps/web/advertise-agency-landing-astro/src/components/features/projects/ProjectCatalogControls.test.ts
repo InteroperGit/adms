@@ -1,7 +1,7 @@
 // Verify the rendered search and category controls contract.
 // @vitest-environment node
 import { expect, it } from "vitest";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 import { projectCategories } from "@/content/projectCategories";
 import Component from "./ProjectCatalogControls.astro";
 

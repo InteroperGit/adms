@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
-import Card from "./Card.astro";
+import CatalogCard from "./CatalogCard.astro";
 import type { ContentImage } from "@/types/contentBlocks";
 import { render } from "../../../tests/helpers/render";
 
@@ -20,7 +20,7 @@ const image: ContentImage = {
 };
 
 it("renders accessible text-only content", async () => {
-  const body = await render(Card, baseProps);
+  const body = await render(CatalogCard, baseProps);
   const article = getByRole(body, "article", {
     name: baseProps.title,
   });
@@ -36,7 +36,7 @@ it("renders accessible text-only content", async () => {
 });
 
 it("renders optional image, category colors and metadata", async () => {
-  const body = await render(Card, {
+  const body = await render(CatalogCard, {
     ...baseProps,
     image,
     category: {
@@ -64,7 +64,7 @@ it("renders optional image, category colors and metadata", async () => {
 });
 
 it("renders linked titles and project actions", async () => {
-  const body = await render(Card, {
+  const body = await render(CatalogCard, {
     ...baseProps,
     href: "/projects/sample/",
     actionLabel: "View project",
@@ -87,7 +87,7 @@ it("renders linked titles and project actions", async () => {
 });
 
 it("keeps an unmarked action for ordinary linked content", async () => {
-  const body = await render(Card, {
+  const body = await render(CatalogCard, {
     ...baseProps,
     href: "/services/sample/",
     projectLink: false,

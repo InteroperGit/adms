@@ -5,17 +5,19 @@ import Layout from "@/layouts/Layout.astro";
 import Breadcrumbs from "@/components/ui/Breadcrumbs.astro";
 // prettier-ignore
 import ProjectCatalogControls from
-  '@/components/projects/ProjectCatalogControls.astro';
+  '@/components/features/projects/ProjectCatalogControls.astro';
 // prettier-ignore
 import ProjectCatalogCount from
-  '@/components/projects/ProjectCatalogCount.astro';
-import ProjectCatalogGrid from "@/components/projects/ProjectCatalogGrid.astro";
+  '@/components/features/projects/ProjectCatalogCount.astro';
+// prettier-ignore
+import ProjectCatalogGrid
+  from "@/components/features/projects/ProjectCatalogGrid.astro";
 // prettier-ignore
 import ProjectCatalogEmpty from
-  '@/components/projects/ProjectCatalogEmpty.astro';
+  '@/components/features/projects/ProjectCatalogEmpty.astro';
 // prettier-ignore
 import ProjectCatalogPagination from
-  '@/components/projects/ProjectCatalogPagination.astro';
+  '@/components/features/projects/ProjectCatalogPagination.astro';
 import { availableProjectCategories, projects } from "@/content/projects";
 import { projectCatalogSettings } from "@/content/projectCatalog";
 const catalogProjects = projects;

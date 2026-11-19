@@ -2,9 +2,9 @@
 import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
 import ProjectCard from "./ProjectCard.astro";
-import type { Project } from "../../types/project";
-import type { ImageBlock } from "../../types/contentBlocks";
-import { render } from "../../../tests/helpers/render";
+import type { Project } from "../../../types/project";
+import type { ImageBlock } from "../../../types/contentBlocks";
+import { render } from "../../../../tests/helpers/render";
 
 const image: ImageBlock = {
   type: "image",

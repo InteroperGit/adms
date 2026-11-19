@@ -3,19 +3,19 @@
 import { beforeEach, expect, it, vi } from "vitest";
 // prettier-ignore
 import ProjectCatalogControls
-  from '../../src/components/projects/ProjectCatalogControls.astro';
+  from '@/components/features/projects/ProjectCatalogControls.astro';
 // prettier-ignore
 import ProjectCatalogCount
-  from '../../src/components/projects/ProjectCatalogCount.astro';
+  from '@/components/features/projects/ProjectCatalogCount.astro';
 // prettier-ignore
 import ProjectCatalogGrid
-  from '../../src/components/projects/ProjectCatalogGrid.astro';
+  from '@/components/features/projects/ProjectCatalogGrid.astro';
 // prettier-ignore
 import ProjectCatalogEmpty
-  from '../../src/components/projects/ProjectCatalogEmpty.astro';
+  from '@/components/features/projects/ProjectCatalogEmpty.astro';
 // prettier-ignore
 import ProjectCatalogPagination
-  from '../../src/components/projects/ProjectCatalogPagination.astro';
+  from '@/components/features/projects/ProjectCatalogPagination.astro';
 import type { ContentBlock } from "../../src/types/contentBlocks";
 import type { Project } from "../../src/types/project";
 import ProjectsIndex from "../../src/pages/projects/index.astro";

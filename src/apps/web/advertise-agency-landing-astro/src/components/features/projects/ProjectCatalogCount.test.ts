@@ -1,7 +1,7 @@
 // Verify the live result count contract rendered for screen readers.
 // @vitest-environment node
 import { expect, it } from "vitest";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 import Component from "./ProjectCatalogCount.astro";
 
 it("renders the supplied count in a polite status region", async () => {

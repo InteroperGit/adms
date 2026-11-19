@@ -1,7 +1,7 @@
 // Verify native return and contact actions for project article pages.
 // @vitest-environment node
 import { expect, it } from "vitest";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 import Component from "./ProjectArticleActions.astro";
 
 it("renders the catalog fallback and supplied contact label", async () => {

@@ -1,8 +1,8 @@
 // Verify project title, attribution fields, and optional milestone date.
 // @vitest-environment node
 import { expect, it } from "vitest";
-import { buildProject } from "../../../tests/helpers/fixtures";
-import { render } from "../../../tests/helpers/render";
+import { buildProject } from "../../../../tests/helpers/fixtures";
+import { render } from "../../../../tests/helpers/render";
 import Component from "./ProjectDetailHeader.astro";
 
 it("renders the supplied title, client, and valid date metadata", async () => {
