@@ -2,8 +2,8 @@
 import { expect, it } from "vitest";
 import { getByRole } from "@testing-library/dom";
 import CatalogCard from "./CatalogCard.astro";
-import type { ContentImage } from "@/types/contentBlocks";
-import { render } from "../../../tests/helpers/render";
+import type { MediaImage } from "@/components/ui/media/types";
+import { render } from "../../../../tests/helpers/render";
 
 const baseProps = {
   title: "Sample project",
@@ -11,7 +11,7 @@ const baseProps = {
   description: "A concise project summary.",
 };
 
-const image: ContentImage = {
+const image: MediaImage = {
   src: "/sample-project.webp",
   alt: "Illuminated storefront sign",
   width: 800,
@@ -30,7 +30,7 @@ it("renders accessible text-only content", async () => {
   expect(heading).toHaveTextContent(baseProps.title);
   expect(article).toHaveAttribute("aria-labelledby", baseProps.titleId);
   expect(article).toHaveTextContent(baseProps.description);
-  expect(article.querySelector("a, img, .content-media-frame")).toBeNull();
+  expect(article.querySelector("a, img, .responsive-image-frame")).toBeNull();
   expect(article.querySelector(".catalog-category")).toBeNull();
   expect(article.querySelector(".catalog-client")).toBeNull();
 });
@@ -53,7 +53,7 @@ it("renders optional image, category colors and metadata", async () => {
   expect(photo).toHaveAttribute("width", String(image.width));
   expect(photo).toHaveAttribute("height", String(image.height));
   expect(photo).toHaveAttribute("loading", "lazy");
-  expect(photo.parentElement).toHaveClass("content-media-service");
+  expect(photo.parentElement).toHaveClass("responsive-image-cover-4-3");
   expect(category).toHaveTextContent("Retail");
   expect(category).toHaveStyle(
     "--category-background: #123456; --category-text: #ffffff",
@@ -69,7 +69,7 @@ it("renders linked titles and project actions", async () => {
     href: "/projects/sample/",
     actionLabel: "View project",
     actionName: "View Sample project case study",
-    projectLink: true,
+    actionAttributes: { "data-project-link": true },
   });
   const heading = getByRole(body, "heading", { level: 3 });
   const titleLink = getByRole(heading, "link", {
@@ -90,7 +90,7 @@ it("keeps an unmarked action for ordinary linked content", async () => {
   const body = await render(CatalogCard, {
     ...baseProps,
     href: "/services/sample/",
-    projectLink: false,
+    actionAttributes: {},
   });
   const action = getByRole(body, "link", {
     name: `Подробнее: ${baseProps.title}`,

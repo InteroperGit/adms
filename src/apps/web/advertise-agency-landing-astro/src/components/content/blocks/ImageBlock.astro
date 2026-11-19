@@ -1,25 +1,28 @@
 ---
 // Render authored media with a production URL and reserved intrinsic space.
 import type { ImageBlock as ImageContent } from "@/types/contentBlocks";
-import ContentImage from "../media/ContentImage.astro";
+import ImageGallery from "@/components/ui/media/ImageGallery.astro";
+import type { ImageCrop } from "@/components/ui/media/types";
 
 interface Props {
   block: ImageContent;
   priority?: boolean;
-  serviceCrop?: boolean;
+  crop?: ImageCrop;
 }
-const { block, priority = false, serviceCrop = false } = Astro.props as Props;
+const { block, priority = false, crop } = Astro.props as Props;
 ---
 
 {/* Captions retain the author's qualification of the image. */}
-<figure class="content-image">
-  <ContentImage
-    image={block}
+<div class="content-image">
+  <ImageGallery
+    images={[block]}
+    id={block.id}
+    caption={block.caption}
     priority={priority}
-    serviceCrop={serviceCrop}
+    layout="single"
+    crop={crop}
   />
-  {block.caption && <figcaption>{block.caption}</figcaption>}
-</figure>
+</div>
 
 <style>
   /* Keep a standalone image as one responsive media group in the stream. */
@@ -30,8 +33,8 @@ const { block, priority = false, serviceCrop = false } = Astro.props as Props;
     overflow-wrap: anywhere;
   }
 
-  /* Keep captions readable below the reserved media frame. */
-  figcaption {
+  /* Keep article captions readable below the reserved media frame. */
+  .content-image :global(.media-gallery-caption) {
     margin-block-start: var(--content-block-caption-gap);
     color: var(--content-block-caption);
     line-height: 1.5;

@@ -2,10 +2,11 @@
 // Provide the shared semantic structure and presentation for catalog cards.
 // Domain components pass validated copy, media, metadata and native routes.
 
-import ContentImage from "./media/ContentImage.astro";
+import ResponsiveImage from "@/components/ui/media/ResponsiveImage.astro";
 import Card from "@/components/ui/Card.astro";
 import Link from "@/components/ui/Link.astro";
-import type { ContentImage as ContentImageData } from "@/types/contentBlocks";
+import type { HTMLAttributes } from "astro/types";
+import type { MediaImage } from "@/components/ui/media/types";
 
 // Callers supply one card's presentation-ready content.
 export interface Props {
@@ -13,12 +14,12 @@ export interface Props {
   titleId: string;
   description: string;
   href?: string;
-  image?: ContentImageData;
+  image?: MediaImage;
   category?: { label: string; color: string; textColor: string };
   metadata?: string;
   actionLabel?: string;
   actionName?: string;
-  projectLink?: boolean;
+  actionAttributes?: HTMLAttributes<"a">;
 }
 
 const {
@@ -31,7 +32,7 @@ const {
   metadata,
   actionLabel = "Подробнее",
   actionName = `Подробнее: ${title}`,
-  projectLink = false,
+  actionAttributes,
 } = Astro.props;
 ---
 
@@ -42,9 +43,9 @@ const {
   aria-labelledby={titleId}
 >
   {image && (
-    <ContentImage
-      image={image}
-      serviceCrop
+    <ResponsiveImage
+      {...image}
+      crop="cover-4:3"
       sizes="(min-width: 68rem) 368px, (min-width: 42rem) 46vw, 94vw"
     />
   )}
@@ -77,10 +78,10 @@ const {
     <p class="catalog-description">{description}</p>
     {href && (
       <Link
+        {...actionAttributes}
         class="catalog-action"
         href={href}
         aria-label={actionName}
-        data-project-link={projectLink ? true : undefined}
       >
         {actionLabel}
       </Link>
@@ -117,7 +118,7 @@ const {
   }
 
   /* Keep the image flush with the top of the shared card. */
-  .catalog-card :global(.content-media-frame) {
+  .catalog-card :global(.responsive-image-frame) {
     border-radius: 0;
     background: var(--color-base-300);
   }

@@ -7,7 +7,7 @@ test.describe("touch gallery", () => {
   test("touch controls work with reduced motion", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/projects/1/");
-    const gallery = page.locator("[data-gallery]");
+    const gallery = page.locator('[data-gallery-layout="tiles"]');
     const dialog = gallery.locator("[data-gallery-dialog]");
     const tile = gallery.locator(".gallery-tile").first();
     await tile.tap();
@@ -29,7 +29,7 @@ test("gallery navigation wraps and returns focus to the first tile", async ({
   page,
 }) => {
   await page.goto("/projects/1/");
-  const gallery = page.locator("[data-gallery]");
+  const gallery = page.locator('[data-gallery-layout="tiles"]');
   const dialog = gallery.locator("[data-gallery-dialog]");
   const image = gallery.locator("[data-gallery-image]");
 
@@ -54,7 +54,7 @@ test("gallery navigation wraps and returns focus to the first tile", async ({
 
 test("second gallery tile opens and restores its focus", async ({ page }) => {
   await page.goto("/projects/1/");
-  const gallery = page.locator("[data-gallery]");
+  const gallery = page.locator('[data-gallery-layout="tiles"]');
   const tile = gallery.locator('[data-gallery-open="1"]');
   const dialog = gallery.locator("[data-gallery-dialog]");
 
@@ -69,11 +69,34 @@ test("second gallery tile opens and restores its focus", async ({ page }) => {
   await expect(tile).toBeFocused();
 });
 
+test("single article image opens without gallery navigation", async ({
+  page,
+}) => {
+  await page.goto("/projects/1/");
+  const gallery = page.locator('[data-gallery-layout="single"]').first();
+  const tile = gallery.locator(".gallery-tile");
+  const dialog = gallery.locator("[data-gallery-dialog]");
+
+  await tile.click();
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator("[data-gallery-image]")).toHaveAttribute(
+    "alt",
+    "Single image",
+  );
+  await expect(dialog.locator("[data-gallery-previous]")).toHaveCount(0);
+  await expect(dialog.locator("[data-gallery-next]")).toHaveCount(0);
+  await expect(dialog.locator(".gallery-position")).toHaveCount(0);
+
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(tile).toBeFocused();
+});
+
 test("nine-image article gallery opens every tile in the lightbox", async ({
   page,
 }) => {
   await page.goto("/projects/2/");
-  const gallery = page.locator("[data-gallery]").first();
+  const gallery = page.locator('[data-gallery-layout="tiles"]').first();
   const tiles = gallery.locator(".gallery-tile");
   const dialog = gallery.locator("[data-gallery-dialog]");
 
@@ -91,8 +114,10 @@ test("nine-image article gallery opens every tile in the lightbox", async ({
 
 test("gallery tiles highlight when hovered by a mouse", async ({ page }) => {
   await page.goto("/projects/2/");
-  const tile = page.locator("[data-gallery] .gallery-tile").first();
-  const image = tile.locator(".content-media-image");
+  const tile = page
+    .locator('[data-gallery-layout="tiles"] .gallery-tile')
+    .first();
+  const image = tile.locator(".responsive-image");
 
   await tile.hover();
 
@@ -109,7 +134,7 @@ for (const scenario of [
   test(`article tile gallery uses ${scenario.name}`, async ({ page }) => {
     await page.setViewportSize({ width: scenario.width, height: 900 });
     await page.goto("/projects/2/");
-    const gallery = page.locator("[data-gallery]").first();
+    const gallery = page.locator('[data-gallery-layout="tiles"]').first();
     const grid = gallery.locator(".gallery-grid");
     const firstTile = gallery.locator(".gallery-tile").first();
     const columns = await grid.evaluate(
@@ -135,7 +160,7 @@ test("gallery keyboard controls keep focus inside the native dialog", async ({
   page,
 }) => {
   await page.goto("/projects/1/");
-  const gallery = page.locator("[data-gallery]");
+  const gallery = page.locator('[data-gallery-layout="tiles"]');
   const dialog = gallery.locator("[data-gallery-dialog]");
   const image = gallery.locator("[data-gallery-image]");
   const lightboxThumbs = dialog.locator("[data-gallery-lightbox-thumb]");
@@ -177,7 +202,7 @@ for (const scenario of [
       await page.emulateMedia({ reducedMotion: "reduce" });
     }
     await page.goto("/projects/1/");
-    const gallery = page.locator("[data-gallery]");
+    const gallery = page.locator('[data-gallery-layout="tiles"]');
     const dialog = gallery.locator("[data-gallery-dialog]");
 
     await gallery.locator(".gallery-tile").first().click();

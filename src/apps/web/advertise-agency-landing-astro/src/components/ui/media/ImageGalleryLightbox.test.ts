@@ -2,7 +2,7 @@
 // The gallery modal renders an accessible shell before browser enhancement.
 import { expect, it } from "vitest";
 import ImageGalleryLightbox from "./ImageGalleryLightbox.astro";
-import type { GalleryImage } from "./gallery.types";
+import type { GalleryImage } from "./types";
 import { render } from "../../../../tests/helpers/render";
 
 const images: GalleryImage[] = [
@@ -76,4 +76,16 @@ it("renders the empty lightbox shell without thumbnail choices", async () => {
   expect(image).not.toHaveAttribute("height");
   expect(body.querySelectorAll(".gallery-lightbox-thumbnail")).toHaveLength(0);
   expect(body.querySelector("[aria-live='polite']")).toBeInTheDocument();
+});
+
+it("omits image navigation for a single image", async () => {
+  const body = await render(ImageGalleryLightbox, {
+    images: [images[0]],
+    layout: "single",
+  });
+
+  expect(body.querySelector("[data-gallery-close]")).toBeInTheDocument();
+  expect(body.querySelector("[data-gallery-previous]")).toBeNull();
+  expect(body.querySelector("[data-gallery-next]")).toBeNull();
+  expect(body.querySelector(".gallery-position")).toBeNull();
 });

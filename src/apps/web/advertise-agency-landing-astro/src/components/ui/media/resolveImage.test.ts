@@ -2,7 +2,7 @@
 // Astro performs encoding; this boundary owns lookup, limits and metadata.
 import { beforeEach, expect, it, vi } from "vitest";
 import { getImage } from "astro:assets";
-import { getContentImageMetadata, resolveContentImage } from "./resolveImage";
+import { getImageMetadata, resolveImage } from "./resolveImage";
 
 vi.mock("astro:assets", () => ({
   getImage: vi.fn().mockResolvedValue({ src: "/optimized.webp" }),
@@ -35,15 +35,15 @@ it(
   async () => {
     for (const src of ["/image.png", "https://example.test/a.png"]) {
       const image = { src, alt: "Fixture", width: 100, height: 50 };
-      expect(await resolveContentImage(image)).toBe(image);
-      expect(getContentImageMetadata(src)).toBeUndefined();
+      expect(await resolveImage(image)).toBe(image);
+      expect(getImageMetadata(src)).toBeUndefined();
     }
     expect(getImage).not.toHaveBeenCalled();
-    expect(() => getContentImageMetadata("/src/assets/missing.png")).toThrow(
-      "Content image not found",
+    expect(() => getImageMetadata("/src/assets/missing.png")).toThrow(
+      "Image asset not found",
     );
     await expect(
-      resolveContentImage({
+      resolveImage({
         src: "/src/assets/missing.png",
         alt: "Missing",
         width: 1,
@@ -56,7 +56,7 @@ it(
 
 it("caps width and preserves editorial image metadata", async () => {
   const src = "/src/assets/introduction/storefront-sign.webp";
-  const original = getContentImageMetadata(src)!;
+  const original = getImageMetadata(src)!;
   expect(original.width).toBeGreaterThan(0);
   for (const width of [50, 5000]) {
     const image = {
@@ -71,7 +71,7 @@ it("caps width and preserves editorial image metadata", async () => {
       mobileFocalPoint: { x: 60, y: 50 },
     };
     const before = structuredClone(image);
-    expect(await resolveContentImage(image)).toEqual({
+    expect(await resolveImage(image)).toEqual({
       ...image,
       src: "/optimized.webp",
     });
@@ -86,23 +86,23 @@ it("caps width and preserves editorial image metadata", async () => {
 
 it("returns stable bundled metadata from the Astro asset pipeline", () => {
   const src = "/src/assets/introduction/storefront-sign.webp";
-  const metadata = getContentImageMetadata(src)!;
+  const metadata = getImageMetadata(src)!;
   expect(metadata).toMatchObject({
     width: 1200,
     height: 900,
     format: "webp",
   });
   expect(metadata.src).toEqual(expect.any(String));
-  expect(getContentImageMetadata(src)).toBe(metadata);
+  expect(getImageMetadata(src)).toBe(metadata);
   expect(getImage).not.toHaveBeenCalled();
 });
 
 it("caps a large bundled image at 1440px", async () => {
   const src = "/src/assets/services/vyveski-demo.png";
-  const original = getContentImageMetadata(src)!;
+  const original = getImageMetadata(src)!;
   expect(original.width).toBeGreaterThan(1440);
   const image = { src, alt: "Fixture", width: 5000, height: 3000 };
-  expect(await resolveContentImage(image)).toEqual({
+  expect(await resolveImage(image)).toEqual({
     ...image,
     src: "/optimized.webp",
   });
@@ -117,7 +117,7 @@ it("preserves image optimization failures for the build caller", async () => {
   const failure = new Error("Fixture encoding failure");
   vi.mocked(getImage).mockRejectedValueOnce(failure);
   await expect(
-    resolveContentImage({
+    resolveImage({
       src: "/src/assets/introduction/storefront-sign.webp",
       alt: "Fixture",
       width: 600,

@@ -1,5 +1,5 @@
 // Compile-only examples for the private gallery renderer and public block.
-import type { GalleryImage } from "@/components/content/media/gallery.types";
+import type { GalleryImage } from "@/components/ui/media/types";
 import type { ImageGalleryBlock } from "@/types";
 
 export const galleryImage = {

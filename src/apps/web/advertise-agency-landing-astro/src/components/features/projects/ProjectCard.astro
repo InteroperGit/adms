@@ -2,7 +2,7 @@
 // Adapt project evidence and category data to the shared card presentation.
 // Draft images stay hidden according to the shared content publication rules.
 
-import CatalogCard from "@/components/content/CatalogCard.astro";
+import CatalogCard from "@/components/features/catalog/CatalogCard.astro";
 import { getProjectCategory } from "@/content/projectCategories";
 import { getVisibleBlocks } from "@/validation/policies/blockPublication";
 import type { Project } from "@/types/project";
@@ -35,5 +35,5 @@ const metadata = `${project.client}${project.date ? `, ${project.date}` : ""}`;
   category={category}
   metadata={metadata}
   actionName={`Подробнее: ${project.title}`}
-  projectLink
+  actionAttributes={{ "data-project-link": true }}
 />

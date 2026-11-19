@@ -33,6 +33,14 @@
               "height": 300
             }
           ]
+        },
+        {
+          "type": "image",
+          "id": "single-image",
+          "src": "/favicon.svg",
+          "alt": "Single image",
+          "width": 400,
+          "height": 300
         }
       ]
     }

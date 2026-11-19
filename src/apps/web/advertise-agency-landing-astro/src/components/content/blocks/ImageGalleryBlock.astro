@@ -1,7 +1,7 @@
 ---
 // Give image galleries the same full-width visual weight as chart surfaces.
 import type { ImageGalleryBlock as GalleryBlock } from "@/types/contentBlocks";
-import ImageGallery from "../media/ImageGallery.astro";
+import ImageGallery from "@/components/ui/media/ImageGallery.astro";
 
 interface Props {
   block: GalleryBlock;
@@ -13,8 +13,11 @@ const { block, priority = false } = Astro.props as Props;
 
 <div class="image-gallery-block">
   <ImageGallery
-    block={block}
+    images={block.images}
+    id={block.id}
+    caption={block.caption}
     priority={priority}
+    layout="tiles"
   />
 </div>
 
@@ -30,7 +33,7 @@ const { block, priority = false } = Astro.props as Props;
   }
 
   /* Let the tile layout use the full width of the reading surface. */
-  .image-gallery-block :global(.content-gallery) {
+  .image-gallery-block :global(.media-gallery) {
     width: 100%;
     margin-inline: auto;
   }

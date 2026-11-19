@@ -53,7 +53,15 @@ test.describe("without JavaScript", () => {
     page,
   }) => {
     await page.goto("/projects/1/");
-    const gallery = page.locator("[data-gallery]");
+    const singleImage = page.locator(
+      '[data-gallery-layout="single"] .gallery-tile',
+    );
+    await expect(singleImage).toHaveAttribute("href", "/favicon.svg");
+    await singleImage.click();
+    await expect(page).toHaveURL(/\/favicon\.svg$/);
+
+    await page.goto("/projects/1/");
+    const gallery = page.locator('[data-gallery-layout="tiles"]');
     await expect(gallery.locator("[data-gallery-dialog]")).toBeHidden();
     await gallery.locator('[data-gallery-open="1"]').click();
     await expect(page).toHaveURL(/\/favicon\.svg$/);

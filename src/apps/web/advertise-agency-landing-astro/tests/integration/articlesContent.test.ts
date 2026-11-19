@@ -517,7 +517,7 @@ it.each(["project", "service"] as const)(
       "/media/fixture.jpg",
     );
     expect(
-      article.querySelector('.content-media-error[role="status"]'),
+      article.querySelector('.responsive-image-error[role="status"]'),
     ).toBeInTheDocument();
     expect(article.querySelector(".video-native-fallback a")).toHaveAttribute(
       "href",

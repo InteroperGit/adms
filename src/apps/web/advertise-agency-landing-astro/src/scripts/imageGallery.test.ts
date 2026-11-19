@@ -204,18 +204,24 @@ describe("initializeImageGalleries", () => {
     },
   );
 
-  it("hides directional controls for a single image", () => {
+  it("opens a single image without directional controls", () => {
     const gallery = renderGallery(1);
+    gallery.querySelector("[data-gallery-previous]")?.remove();
+    gallery.querySelector("[data-gallery-next]")?.remove();
+    gallery
+      .querySelectorAll("[data-gallery-lightbox-thumb]")
+      .forEach((item) => {
+        item.remove();
+      });
     initializeImageGalleries();
+    const dialog = gallery.querySelector<HTMLDialogElement>(
+      "[data-gallery-dialog]",
+    )!;
 
-    expect(gallery.querySelector("[data-gallery-previous]")).toHaveProperty(
-      "hidden",
-      true,
-    );
-    expect(gallery.querySelector("[data-gallery-next]")).toHaveProperty(
-      "hidden",
-      true,
-    );
+    expect(gallery.querySelector("[data-gallery-previous]")).toBeNull();
+    expect(gallery.querySelector("[data-gallery-next]")).toBeNull();
+    click(gallery.querySelector("a")!);
+    expect(dialog.open).toBe(true);
   });
 
   it("wraps forward and backward Tab at the dialog boundaries", () => {

@@ -1,0 +1,84 @@
+﻿---
+// Render neutral image data as native links with optional lightbox enhancement.
+import type { ImageCrop, MediaImage } from "./types";
+import { resolveImage } from "./resolveImage";
+import ImageGalleryTiles from "./ImageGalleryTiles.astro";
+import ImageGalleryLightbox from "./ImageGalleryLightbox.astro";
+import type { GalleryImage } from "./types";
+
+interface Props {
+  images: MediaImage[];
+  id?: string;
+  caption?: string;
+  priority?: boolean;
+  layout?: "tiles" | "single";
+  crop?: ImageCrop;
+}
+
+const {
+  images: sourceImages,
+  id,
+  caption,
+  priority = false,
+  layout = "tiles",
+  crop,
+} = Astro.props as Props;
+const images: GalleryImage[] = await Promise.all(
+  sourceImages.map(async (image) => ({
+    image,
+    src: (await resolveImage(image)).src,
+  })),
+);
+const galleryId = id ?? `gallery-${crypto.randomUUID()}`;
+---
+
+{images.length > 0 && (
+  <figure
+    class="media-gallery"
+    id={galleryId}
+    data-gallery
+    data-gallery-layout={layout}
+  >
+    {/* Keep every tile as a native link when JavaScript is unavailable. */}
+    <ImageGalleryTiles
+      images={images}
+      priority={priority}
+      layout={layout}
+      crop={crop}
+    />
+
+    {/* Native modal dialog provides browser focus containment. */}
+    <ImageGalleryLightbox
+      images={images}
+      layout={layout}
+    />
+    {caption && (
+      <figcaption class="media-gallery-caption">{caption}</figcaption>
+    )}
+  </figure>
+)}
+
+<script>
+  import { initializeImageGalleries } from "@/scripts/imageGallery";
+
+  initializeImageGalleries();
+</script>
+
+<style>
+  /* Keep the gallery aligned with the enclosing local surface. */
+  .media-gallery {
+    display: grid;
+    gap: 0.875rem;
+    min-width: 0;
+    margin: 0;
+  }
+
+  /* Keep caller-provided captions visually secondary to the media. */
+  .media-gallery-caption {
+    max-width: 65ch;
+    margin: 0;
+    color: var(--site-muted);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+</style>

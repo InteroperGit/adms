@@ -1,7 +1,7 @@
-// Resolve bundled content images to emitted URLs for figures and galleries.
+// Resolve bundled media to emitted URLs without depending on content schemas.
 import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import type { ContentImage } from "@/types/contentBlocks";
+import type { MediaImage } from "./types";
 
 const originals = import.meta.glob<ImageMetadata>(
   "/src/assets/**/*.{avif,jpeg,jpg,png,webp}",
@@ -9,19 +9,19 @@ const originals = import.meta.glob<ImageMetadata>(
 );
 
 /** Share asset lookup with responsive media and full-size gallery links. */
-export function getContentImageMetadata(src: string) {
+export function getImageMetadata(src: string) {
   const original = originals[src];
   if (src.startsWith("/src/assets/") && !original) {
-    throw new Error(`Content image not found: ${src}`);
+    throw new Error(`Image asset not found: ${src}`);
   }
   return original;
 }
 
 /** Remote and public images retain their URL; missing bundled media fails. */
-export async function resolveContentImage(image: ContentImage) {
+export async function resolveImage(image: MediaImage) {
   if (!image.src.startsWith("/src/assets/")) return image;
-  const original = getContentImageMetadata(image.src);
-  if (!original) throw new Error(`Content image not found: ${image.src}`);
+  const original = getImageMetadata(image.src);
+  if (!original) throw new Error(`Image asset not found: ${image.src}`);
   const optimized = await getImage({
     src: original,
     width: Math.min(original.width, image.width, 1440),

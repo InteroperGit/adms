@@ -60,7 +60,7 @@ it("passes a gallery caption through to the interactive surface", async () => {
       ],
     },
   });
-  expect(body.querySelector(".content-gallery > figcaption")).toHaveTextContent(
+  expect(body.querySelector(".media-gallery > figcaption")).toHaveTextContent(
     "Project views",
   );
 });

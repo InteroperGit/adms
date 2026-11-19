@@ -1,13 +1,14 @@
 ﻿---
 // Render the modal viewer and thumbnail rail for a nonempty parent gallery.
-import type { GalleryImage } from "./gallery.types";
+import type { GalleryImage } from "./types";
 import CarouselControl from "@/components/ui/carousel/CarouselControl.astro";
 
 interface Props {
   images: GalleryImage[];
+  layout?: "tiles" | "single";
 }
 
-const { images } = Astro.props;
+const { images, layout = "tiles" } = Astro.props;
 const firstImage = images[0]?.image;
 ---
 
@@ -26,12 +27,14 @@ const firstImage = images[0]?.image;
 
   {/* Overlay navigation and captions within the uncropped image frame. */}
   <figure class="gallery-view">
-    <CarouselControl
-      className="gallery-navigation gallery-previous"
-      direction="previous"
-      label="Предыдущее изображение"
-      dataGallery="previous"
-    />
+    {layout === "tiles" && (
+      <CarouselControl
+        className="gallery-navigation gallery-previous"
+        direction="previous"
+        label="Предыдущее изображение"
+        dataGallery="previous"
+      />
+    )}
     <img
       class="gallery-image"
       data-gallery-image
@@ -45,42 +48,48 @@ const firstImage = images[0]?.image;
       class="gallery-caption"
       data-gallery-caption
     ></figcaption>
-    <CarouselControl
-      className="gallery-navigation gallery-next"
-      direction="next"
-      label="Следующее изображение"
-      dataGallery="next"
-    />
+    {layout === "tiles" && (
+      <CarouselControl
+        className="gallery-navigation gallery-next"
+        direction="next"
+        label="Следующее изображение"
+        dataGallery="next"
+      />
+    )}
   </figure>
 
-  {/* Announce selection changes and provide a horizontally scrollable rail. */}
-  <div class="gallery-position">
-    <span
-      class="gallery-announcement sr-only"
-      data-gallery-announcement
-      aria-live="polite"
-    ></span>
-    <div class="gallery-lightbox-thumbnails">
-      {images.map(({ image, src }, index) => (
-        <button
-          class="gallery-lightbox-thumbnail"
-          type="button"
-          aria-label={`Показать изображение ${index + 1}`}
-          aria-current={index === 0 ? "true" : undefined}
-          data-gallery-lightbox-thumb={index}
-        >
-          <img
-            src={src}
-            alt=""
-            width={image.width}
-            height={image.height}
-            loading="lazy"
-            decoding="async"
-          />
-        </button>
-      ))}
+  {/* Keep the live region available even when a gallery has one image. */}
+  <span
+    class="gallery-announcement sr-only"
+    data-gallery-announcement
+    aria-live="polite"
+  ></span>
+
+  {/* Provide a horizontally scrollable rail for multi-image galleries. */}
+  {layout === "tiles" && (
+    <div class="gallery-position">
+      <div class="gallery-lightbox-thumbnails">
+        {images.map(({ image, src }, index) => (
+          <button
+            class="gallery-lightbox-thumbnail"
+            type="button"
+            aria-label={`Показать изображение ${index + 1}`}
+            aria-current={index === 0 ? "true" : undefined}
+            data-gallery-lightbox-thumb={index}
+          >
+            <img
+              src={src}
+              alt=""
+              width={image.width}
+              height={image.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+        ))}
+      </div>
     </div>
-  </div>
+  )}
 </dialog>
 
 <style>

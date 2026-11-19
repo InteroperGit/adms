@@ -28,6 +28,10 @@ component tests remain outstanding.
 
 ## Recent completed work
 
+- [233 - Shared media and catalog card](../docs/codex/tasks/fixed/20261119/233-extract-shared-media-and-catalog-card.md):
+  complete; 75 focused unit/integration tests and 26 Chromium scenarios passed;
+  Astro, types, boundaries, test placement and build passed.
+
 - [228 - Home section refactor](../docs/codex/tasks/fixed/20261119/228-home-section-refactor-master.md):
   complete; children 216–227 accepted in separate commits. Focused component,
   integration, Astro, boundary and Chromium checks passed. Full verification was
@@ -54,6 +58,10 @@ component tests remain outstanding.
   complete.
 
 ## Task index
+
+- [234 - Remove validation and bundle warnings](../docs/codex/tasks/backlog/234-remove-build-warnings.md):
+  backlog; remove the Zod deprecation hint and >500 kB chunk warning while
+  retaining the current bundle threshold.
 
 - [195 - Integration test automation](../docs/codex/tasks/fixed/20261116/195-automate-integration-test-improvements.md):
   complete; children 196-203 accepted and committed separately. Integration:

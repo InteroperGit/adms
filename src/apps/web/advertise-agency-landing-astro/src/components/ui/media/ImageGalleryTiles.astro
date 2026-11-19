@@ -1,20 +1,24 @@
 ---
 // Render responsive native image links; the parent owns lightbox enhancement.
-import type { GalleryImage } from "./gallery.types";
-import ContentImage from "./ContentImage.astro";
+import type { GalleryImage, ImageCrop } from "./types";
+import ResponsiveImage from "./ResponsiveImage.astro";
 import Link from "@/components/ui/Link.astro";
 
 interface Props {
   images: GalleryImage[];
   // Only the first tile receives the parent gallery's loading priority.
   priority?: boolean;
+  layout?: "tiles" | "single";
+  crop?: ImageCrop;
 }
 
-const { images, priority = false } = Astro.props;
+const { images, priority = false, layout = "tiles", crop } = Astro.props;
 ---
 
 {/* Native links preserve access to each full-size image without JavaScript. */}
-<div class="gallery-grid">
+<div
+  class:list={["gallery-grid", { "gallery-grid-single": layout === "single" }]}
+>
   {images.map(({ image, src }, index) => (
     <Link
       class="gallery-tile"
@@ -23,23 +27,30 @@ const { images, priority = false } = Astro.props;
       data-gallery-open={index}
       aria-current={index === 0 ? "true" : undefined}
     >
-      <ContentImage
-        image={image}
-        thumbnail
+      <ResponsiveImage
+        {...image}
+        crop={crop ?? (layout === "single" ? "contain" : "cover-3:2")}
         priority={index === 0 && priority}
+        sizes={layout === "single" ? "94vw" : undefined}
       />
     </Link>
   ))}
 </div>
 
 <style>
-  /* Arrange article images as the approved responsive tile composition. */
+  /* Arrange multi-image sets as a responsive tile composition. */
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-auto-rows: clamp(12rem, 19vw, 15.5rem);
     gap: 0.875rem;
     min-width: 0;
+  }
+
+  /* Keep a single selected image in its original aspect ratio. */
+  .gallery-grid-single {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
   }
 
   /* Make each whole tile a large, stable target for lightbox activation. */
@@ -57,20 +68,33 @@ const { images, priority = false } = Astro.props;
   }
 
   /* Give the first photo two adjacent places in the wide layout. */
-  :global(.gallery-tile:first-child) {
+  :global(.gallery-grid:not(.gallery-grid-single) .gallery-tile:first-child) {
     grid-column: span 2;
   }
 
   /* Fill each tile with a crop while preserving its intrinsic image ratio. */
-  .gallery-tile :global(.content-media-frame) {
+  .gallery-tile :global(.responsive-image-frame) {
     width: 100%;
     height: 100%;
     aspect-ratio: auto;
     border-radius: inherit;
   }
 
+  /* Let single-image links follow the intrinsic media dimensions. */
+  .gallery-grid-single :global(.gallery-tile) {
+    height: auto;
+  }
+
+  /* Keep the single image uncropped within its original proportions. */
+  .gallery-grid-single .gallery-tile :global(.responsive-image-frame) {
+    height: auto;
+    aspect-ratio: auto;
+  }
+
   /* Crop tile imagery to its stable frame without stretching it. */
-  .gallery-tile :global(.content-media-image) {
+  .gallery-grid:not(.gallery-grid-single)
+    .gallery-tile
+    :global(.responsive-image) {
     object-fit: cover;
     transition:
       transform 180ms ease,
@@ -79,7 +103,7 @@ const { images, priority = false } = Astro.props;
 
   /* Keep the image target clear during keyboard navigation. */
   :global(.gallery-tile:focus-visible) {
-    outline: 3px solid var(--content-block-accent);
+    outline: 3px solid var(--color-primary);
     outline-offset: 3px;
   }
 
@@ -92,7 +116,7 @@ const { images, priority = false } = Astro.props;
     }
 
     /* Bring the hovered image forward with a slight zoom and dim. */
-    :global(.gallery-tile:hover .content-media-image) {
+    :global(.gallery-tile:hover .responsive-image) {
       transform: scale(1.035);
       filter: brightness(0.92);
     }
@@ -100,7 +124,7 @@ const { images, priority = false } = Astro.props;
 
   /* Remove hover animation when visitors prefer reduced motion. */
   @media (prefers-reduced-motion: reduce) {
-    :global(.gallery-tile .content-media-image) {
+    :global(.gallery-tile .responsive-image) {
       transition: none;
     }
   }
@@ -121,7 +145,7 @@ const { images, priority = false } = Astro.props;
       gap: 0.75rem;
     }
 
-    :global(.gallery-tile:first-child) {
+    :global(.gallery-grid:not(.gallery-grid-single) .gallery-tile:first-child) {
       grid-column: auto;
     }
   }

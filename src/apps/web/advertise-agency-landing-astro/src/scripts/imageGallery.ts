@@ -86,8 +86,6 @@ function initializeGallery(gallery: HTMLElement): void {
     !caption ||
     !announcement ||
     !closeButton ||
-    !previousButton ||
-    !nextButton ||
     tiles.length === 0
   ) {
     return;
@@ -150,8 +148,8 @@ function initializeGallery(gallery: HTMLElement): void {
   };
 
   // The static image count determines whether directional controls are useful.
-  previousButton.hidden = items.length < 2;
-  nextButton.hidden = items.length < 2;
+  if (previousButton) previousButton.hidden = items.length < 2;
+  if (nextButton) nextButton.hidden = items.length < 2;
   tiles.forEach((tile, index) => {
     tile.addEventListener("click", (event) => {
       event.preventDefault();
@@ -162,11 +160,12 @@ function initializeGallery(gallery: HTMLElement): void {
     thumbnail.addEventListener("click", () => showImage(index));
   });
   closeButton.addEventListener("click", closeGallery);
-  previousButton.addEventListener("click", () => showImage(currentIndex - 1));
-  nextButton.addEventListener("click", () => showImage(currentIndex + 1));
+  previousButton?.addEventListener("click", () => showImage(currentIndex - 1));
+  nextButton?.addEventListener("click", () => showImage(currentIndex + 1));
 
   // Pointer activation must not leave a sticky focus highlight on controls.
   [closeButton, previousButton, nextButton].forEach((button) => {
+    if (!button) return;
     button.addEventListener("pointerup", () => button.blur());
   });
 
@@ -191,12 +190,16 @@ function initializeGallery(gallery: HTMLElement): void {
         wrapFocus(dialog, event);
         break;
       case "ArrowLeft":
-        event.preventDefault();
-        showImage(currentIndex - 1);
+        if (items.length > 1) {
+          event.preventDefault();
+          showImage(currentIndex - 1);
+        }
         break;
       case "ArrowRight":
-        event.preventDefault();
-        showImage(currentIndex + 1);
+        if (items.length > 1) {
+          event.preventDefault();
+          showImage(currentIndex + 1);
+        }
         break;
     }
   });

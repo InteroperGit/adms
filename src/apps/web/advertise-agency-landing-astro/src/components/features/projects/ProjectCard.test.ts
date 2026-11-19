@@ -39,7 +39,7 @@ it("renders text-only copy, category and named detail action", async () => {
     /^Sample client$/,
   );
   expect(body).toHaveTextContent("Summary");
-  expect(body.querySelector("img, .content-media-frame")).toBeNull();
+  expect(body.querySelector("img, .responsive-image-frame")).toBeNull();
 });
 
 it("selects a visible image after drafts and empty galleries", async () => {
@@ -59,7 +59,7 @@ it("selects a visible image after drafts and empty galleries", async () => {
   expect(photo).toHaveAttribute("width", "800");
   expect(photo).toHaveAttribute("height", "600");
   expect(photo).toHaveAttribute("loading", "lazy");
-  expect(photo.parentElement).toHaveClass("content-media-service");
+  expect(photo.parentElement).toHaveClass("responsive-image-cover-4-3");
   expect(photo.parentElement).toHaveAttribute("data-image-state", "loading");
   expect(body.querySelectorAll("img")).toHaveLength(1);
   expect(body.querySelector(".catalog-category")).toBeNull();
@@ -88,7 +88,7 @@ it("omits media when every supplied image is a draft", async () => {
   const item = project();
   item.content = [{ ...image, status: "draft" }];
   const body = await render(ProjectCard, { project: item });
-  expect(body.querySelector("img, .content-media-frame")).toBeNull();
+  expect(body.querySelector("img, .responsive-image-frame")).toBeNull();
   expect(body.querySelector(".catalog-action")).toHaveAttribute(
     "href",
     "/projects/42/",

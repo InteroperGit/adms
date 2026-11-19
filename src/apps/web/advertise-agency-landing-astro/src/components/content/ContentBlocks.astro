@@ -63,7 +63,7 @@ const wrapperId = (block: ContentBlock) =>
         <ImageBlock
           block={block}
           priority={index === firstMediaIndex}
-          serviceCrop={context?.kind === "service"}
+          crop={context?.kind === "service" ? "cover-4:3" : undefined}
         />
       )}
       {block.type === "image-gallery" && (
