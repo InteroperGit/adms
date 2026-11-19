@@ -7,6 +7,9 @@ scope and verification belong to the linked task files.
 
 ## Active tasks
 
+Task [230 - Reusable cylinder carousel](../docs/codex/tasks/backlog/230-create-cylinder-carousel.md)
+is implemented and browser-checked; focused checks passed. It remains in
+`backlog` pending an explicit archive request.
 Task [229](../docs/codex/tasks/todo/229-extract-reusable-section-components.md)
 is implemented and accepted; focused checks and browser acceptance passed. Full
 verification was not requested; the task remains in `todo` pending an explicit

@@ -10,18 +10,13 @@ test.describe("without JavaScript", () => {
   }) => {
     await page.goto("/");
 
-    const carousel = page.locator("#offers-carousel");
-    const activeSlot = carousel.locator(
-      '.offers-track-slot[data-track-offset="0"]',
-    );
-    const activeCard = activeSlot.locator(".offers-track-card:not([hidden])");
+    const carousel = page.locator("#offers cylinder-carousel");
+    const activeSlide = carousel.locator("[data-cylinder-slide]").first();
 
-    await expect(activeCard).toHaveCount(1);
-    await expect(activeCard.locator(".offers-track-copy")).toBeVisible();
-    await expect(carousel.locator(".carousel-controls")).toBeHidden();
-    await expect(
-      carousel.locator('.offers-track-slot[aria-hidden="true"][inert]'),
-    ).toHaveCount(4);
+    await expect(activeSlide).toBeVisible();
+    await expect(activeSlide.locator(".offers-track-copy")).toBeVisible();
+    await expect(carousel.locator(".cylinder-controls")).toBeHidden();
+    await expect(carousel.locator("[data-cylinder-slide]")).toHaveCount(3);
   });
 
   for (const theme of ["light", "dark"] as const) {

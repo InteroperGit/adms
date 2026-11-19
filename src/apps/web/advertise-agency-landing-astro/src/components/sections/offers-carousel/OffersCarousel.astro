@@ -1,6 +1,6 @@
 ---
 // The section owns publication data and composes its carousel implementation.
-import OffersImageCarousel from "./Carousel.astro";
+import OffersCarouselView from "./OffersCarouselView.astro";
 import { offers, enabledOffers } from "@/content/offers";
 ---
 
@@ -11,7 +11,7 @@ import { offers, enabledOffers } from "@/content/offers";
     class="offers-section"
     aria-label="Предложения"
   >
-    <OffersImageCarousel
+    <OffersCarouselView
       items={enabledOffers}
       options={{ autoplay: offers.autoplay, intervalMs: offers.intervalMs }}
     />

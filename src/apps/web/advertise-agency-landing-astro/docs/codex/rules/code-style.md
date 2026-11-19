@@ -35,6 +35,13 @@ review, and `pnpm format:check` alongside final tests.
 
 ## Syntax and comments
 
+- Name unexplained numeric thresholds, dimensions, offsets, limits, settings and
+  timing values with constants at the scope where they are used. Include units
+  such as `_MS`, `_SECONDS` or `_MINUTES` in time constant names. Use design
+  tokens for UI values when available. Do not name obvious arithmetic (`+ 1`,
+  `* 100`) or common technical values (`0`, `1`, `-1`) just to satisfy lint. The
+  TypeScript ESLint `no-magic-numbers` rule is an error; do not disable it
+  without a reason.
 - Wrap every `if`/`else if`/`else` body in braces with the body on its own line.
 - Put each HTML/Astro attribute on its own indented line when there are several;
   put closing `>` on its own line (`singleAttributePerLine`).

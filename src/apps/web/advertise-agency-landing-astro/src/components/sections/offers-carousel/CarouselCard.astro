@@ -6,12 +6,10 @@ import type { CarouselItem, CarouselOptions } from "@/types/imageCarousel";
 interface Props {
   item: CarouselItem;
   index: number;
-  activeIndex: number;
-  offset: number;
   options: CarouselOptions;
 }
 
-const { item, index, activeIndex, offset, options } = Astro.props;
+const { item, index, options } = Astro.props;
 const originals = import.meta.glob<ImageMetadata>(
   "/src/assets/**/*.{avif,jpeg,jpg,png,webp}",
   { eager: true, import: "default" },
@@ -36,13 +34,12 @@ const focalPoint =
 const mobileFocal = `${mobileFocalPoint.x}% ${mobileFocalPoint.y}%`;
 const visibleDescription = options.descriptions && item.description;
 const visibleLink = options.buttons && item.href && item.linkLabel;
-const loadEagerly = index === 0 && offset === 0 && options.eagerFirst;
+const loadEagerly = index === 0 && options.eagerFirst;
 ---
 
 <article
   class="offers-track-card"
   data-track-index={index}
-  hidden={index !== activeIndex}
   data-overlay={presentation.overlay}
   data-horizontal={presentation.horizontal}
   data-vertical={presentation.vertical}
@@ -100,10 +97,6 @@ const loadEagerly = index === 0 && offset === 0 && options.eagerFirst;
     overflow: hidden;
     border-radius: 10px;
     background: #000;
-  }
-
-  .offers-track-card[hidden] {
-    display: none;
   }
 
   .offers-track-card img {

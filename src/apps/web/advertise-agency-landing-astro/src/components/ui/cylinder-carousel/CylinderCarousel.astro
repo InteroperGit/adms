@@ -1,0 +1,291 @@
+---
+// Provide accessible controls and looping behavior for caller-rendered slides.
+interface Props {
+  label: string;
+  previousLabel: string;
+  nextLabel: string;
+  dotsLabel: string;
+  slideLabel: string;
+  announcementTemplate?: string;
+  /** Enable timed advancement. Defaults to false. */
+  autoplay?: boolean;
+  /** Positive autoplay delay in milliseconds. Defaults to 7000. */
+  intervalMs?: number;
+  /** Show neighboring slides. Defaults to true. */
+  preview?: boolean;
+  /** Visible neighbor width as a percentage from 0 to 45. Defaults to 4. */
+  peekPercent?: number;
+  /** Animate slide movement. Defaults to true. */
+  animation?: boolean;
+  /** Enable arrow-key navigation. Defaults to true. */
+  manualNavigation?: boolean;
+  /** Render arrow buttons. Defaults to true. */
+  controls?: boolean;
+  /** Render slide selection dots. Defaults to true. */
+  dots?: boolean;
+  /** Space between slides in pixels. Defaults to 16. */
+  gapPx?: number;
+  /** Hide previews below this viewport width in pixels; 0 disables it. */
+  hidePreviewBelow?: number;
+}
+
+const {
+  label,
+  previousLabel,
+  nextLabel,
+  dotsLabel,
+  slideLabel,
+  announcementTemplate = "Slide {current} of {total}",
+  autoplay = false,
+  intervalMs = 7000,
+  preview = true,
+  peekPercent = 4,
+  animation = true,
+  manualNavigation = true,
+  controls = true,
+  dots = true,
+  gapPx = 16,
+  hidePreviewBelow = 768,
+} = Astro.props;
+const validInterval = Number.isFinite(intervalMs) && intervalMs > 0;
+const validPeek =
+  Number.isFinite(peekPercent) && peekPercent >= 0 && peekPercent <= 45;
+const validGap = Number.isFinite(gapPx) && gapPx >= 0;
+const validPreviewBreakpoint =
+  Number.isFinite(hidePreviewBelow) && hidePreviewBelow >= 0;
+if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
+  throw new RangeError("Invalid cylinder carousel settings");
+}
+---
+
+<cylinder-carousel
+  class="cylinder-carousel"
+  role="region"
+  aria-label={label}
+  data-autoplay={autoplay}
+  data-interval={intervalMs}
+  data-preview={preview}
+  data-peek={peekPercent}
+  data-animation={animation}
+  data-manual={manualNavigation}
+  data-slide-label={slideLabel}
+  data-announcement={announcementTemplate}
+  data-preview-below={hidePreviewBelow}
+  style={{ "--cylinder-gap": `${gapPx}px` }}
+  tabindex="0"
+>
+  <div class="cylinder-slides">
+    <slot />
+  </div>
+  <div
+    class="cylinder-controls"
+    hidden
+  >
+    {controls && manualNavigation && (
+      <button
+        class="cylinder-arrow"
+        type="button"
+        data-cylinder-prev
+        aria-label={previousLabel}
+      >
+        <span aria-hidden="true">‹</span>
+      </button>
+    )}
+    {dots && (
+      <div
+        class="cylinder-dots"
+        role={manualNavigation ? "group" : undefined}
+        aria-label={dotsLabel}
+        aria-hidden={manualNavigation ? undefined : "true"}
+      ></div>
+    )}
+    {controls && manualNavigation && (
+      <button
+        class="cylinder-arrow"
+        type="button"
+        data-cylinder-next
+        aria-label={nextLabel}
+      >
+        <span aria-hidden="true">›</span>
+      </button>
+    )}
+    <span
+      class="sr-only"
+      role="status"
+      aria-live="polite"
+    ></span>
+  </div>
+</cylinder-carousel>
+
+<script>
+  import "./cylinderCarouselRuntime";
+</script>
+
+<style>
+  /* Keep slides overlaid so preview width never changes the frame geometry. */
+  .cylinder-carousel {
+    --cylinder-gap: 1rem;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    touch-action: pan-y;
+    cursor: grab;
+  }
+
+  /* Show the active drag state while preserving button and link cursors. */
+  .cylinder-carousel[data-dragging] {
+    cursor: grabbing;
+  }
+
+  /* Keep action and text-entry cursors native inside a draggable frame. */
+  .cylinder-carousel :global(input),
+  .cylinder-carousel :global(select),
+  .cylinder-carousel :global(textarea) {
+    cursor: auto;
+  }
+
+  /* Keep interactive actions identifiable over the slide. */
+  .cylinder-carousel :global(button),
+  .cylinder-carousel :global(a) {
+    cursor: pointer;
+  }
+
+  /* Stretch the slide coordinate space across the frame. */
+  .cylinder-slides {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Place one slide per coordinate, preserving the supplied DOM nodes. */
+  .cylinder-slides :global([data-cylinder-slide]) {
+    position: absolute;
+    top: var(--cylinder-inset-y, 0%);
+    left: 0;
+    height: calc(100% - var(--cylinder-inset-y, 0%) * 2);
+    will-change: transform;
+  }
+
+  /* Keep the first caller slide available before its browser enhancement. */
+  :global(
+    cylinder-carousel:not([data-ready]) [data-cylinder-slide]:not(:first-child)
+  ) {
+    display: none;
+  }
+
+  /* Size the initial slide so server-rendered content remains visible. */
+  :global(
+    cylinder-carousel:not([data-ready]) [data-cylinder-slide]:first-child
+  ) {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Keep text selectable except while a horizontal drag is active. */
+  .cylinder-carousel[data-swiping] {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Prevent selection from starting as soon as a drag begins. */
+  .cylinder-carousel[data-dragging] :global(*) {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Overlay controls while keeping the slide content interactive. */
+  .cylinder-controls {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Respect the hidden state until browser initialization completes. */
+  .cylinder-controls[hidden] {
+    display: none;
+  }
+
+  /* Keep navigation targets large enough for touch and pointer use. */
+  .cylinder-arrow,
+  :global(.cylinder-dot) {
+    display: grid;
+    place-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  /* Center previous navigation over the left edge. */
+  .cylinder-arrow[data-cylinder-prev] {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+  }
+
+  /* Center next navigation over the right edge. */
+  .cylinder-arrow[data-cylinder-next] {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+  }
+
+  /* Center slide selection along the lower frame edge. */
+  .cylinder-dots {
+    position: absolute;
+    right: 0;
+    bottom: 8px;
+    left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Render each dot as a stable circular target. */
+  :global(.cylinder-dot::after) {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+    opacity: 0.65;
+  }
+
+  /* Distinguish the selected slide and retain its focus indicator. */
+  :global(.cylinder-dot[aria-current="true"]::after) {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  /* Keep keyboard focus visible on generated dot controls. */
+  :global(.cylinder-dot:focus-visible) {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+  }
+
+  /* Reveal desktop arrows on hover or keyboard focus. */
+  @media (hover: hover) and (pointer: fine) {
+    .cylinder-arrow {
+      opacity: 0;
+    }
+
+    .cylinder-carousel:hover .cylinder-arrow,
+    .cylinder-carousel:focus-within .cylinder-arrow {
+      opacity: 1;
+    }
+  }
+
+  /* Remove transitions when visitors request reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    .cylinder-slides :global([data-cylinder-slide]) {
+      transition: none !important;
+    }
+  }
+</style>

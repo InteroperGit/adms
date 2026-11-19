@@ -30,8 +30,6 @@ it("renders the image, caption, and link as one card", async () => {
   const body = await render(CarouselCard, {
     item,
     index: 0,
-    activeIndex: 0,
-    offset: 0,
     options,
   });
   const card = body.querySelector(".offers-track-card");
@@ -51,8 +49,6 @@ it("omits disabled copy and action options", async () => {
   const body = await render(CarouselCard, {
     item,
     index: 0,
-    activeIndex: 0,
-    offset: 0,
     options: carouselOptionsSchema.parse({
       descriptions: false,
       buttons: false,
@@ -60,16 +56,4 @@ it("omits disabled copy and action options", async () => {
   });
 
   expect(body.querySelector(".offers-track-copy")).toBeNull();
-});
-
-it("hides cards outside the selected slot", async () => {
-  const body = await render(CarouselCard, {
-    item,
-    index: 0,
-    activeIndex: 1,
-    offset: -1,
-    options,
-  });
-
-  expect(body.querySelector(".offers-track-card")).toHaveAttribute("hidden");
 });

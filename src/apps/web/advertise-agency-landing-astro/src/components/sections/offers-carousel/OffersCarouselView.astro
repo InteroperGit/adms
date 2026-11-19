@@ -1,0 +1,114 @@
+---
+// Compose published offer cards inside the reusable cylinder carousel.
+import type { CarouselItem, CarouselOptions } from "@/types/imageCarousel";
+import { carouselOptionsSchema } from "@/validation/imageCarousel";
+import Carousel from "../../ui/cylinder-carousel/CylinderCarousel.astro";
+import CarouselCard from "./CarouselCard.astro";
+
+interface Props {
+  items: CarouselItem[];
+  options: Partial<CarouselOptions>;
+}
+
+const { items: suppliedItems, options: suppliedOptions } = Astro.props;
+const options = carouselOptionsSchema.parse(suppliedOptions);
+const items = suppliedItems.filter((item) => item.enabled);
+const renderCarousel = options.enabled && items.length > 0;
+---
+
+{renderCarousel && (
+  <div
+    id="offers-carousel"
+    class="offers-carousel"
+  >
+    <Carousel
+      label="Предложения"
+      previousLabel="Предыдущее предложение"
+      nextLabel="Следующее предложение"
+      dotsLabel="Выбор предложения"
+      slideLabel="Показать предложение"
+      announcementTemplate="Предложение {current} из {total}"
+      autoplay={options.autoplay}
+      intervalMs={options.intervalMs}
+      preview={items.length > 1}
+      peekPercent={3}
+      animation={options.animation}
+      manualNavigation={options.manualNavigation}
+      controls={items.length > 1 && options.manualNavigation && options.arrows}
+      dots={items.length > 1 && options.circles}
+    >
+      {items.map((item, index) => (
+        <div
+          data-cylinder-slide
+          aria-label={`Предложение ${index + 1} из ${items.length}`}
+          aria-hidden={index > 0 ? "true" : undefined}
+          inert={index > 0 ? true : undefined}
+        >
+          <CarouselCard
+            item={item}
+            index={index}
+            options={options}
+          />
+        </div>
+      ))}
+    </Carousel>
+  </div>
+)}
+
+<style>
+  /* Preserve the frame geometry used by the offers section. */
+  .offers-carousel {
+    --arrow-size: clamp(44px, calc(30px + 5.66vw), 144px);
+    --cylinder-inset-y: 1%;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: clamp(30.36rem, 47.5vw, 44.88rem);
+    min-width: 0;
+    overflow: hidden;
+    container-type: inline-size;
+    background: #70938f;
+  }
+
+  /* Separate the frame from the lower section in the dark theme. */
+  :global(html[data-theme="dark"]) .offers-carousel {
+    background: #1c3b3b;
+  }
+
+  /* Match the dark frame before the theme script selects a palette. */
+  @media (prefers-color-scheme: dark) {
+    :global(html:not([data-theme])) .offers-carousel {
+      background: #1c3b3b;
+    }
+  }
+
+  /* Size tablet cards close to 4:3 while respecting viewport height. */
+  @media (min-width: 48rem) and (max-width: 63.999rem) {
+    .offers-carousel {
+      --cylinder-inset-y: 1.6667%;
+      height: min(calc(73.174vw - 1.455rem), calc(100svh - 7rem));
+    }
+  }
+
+  /* Keep the desktop banner compact in a short viewport. */
+  @media (min-width: 64rem) and (max-height: 30rem) {
+    .offers-carousel {
+      height: 26.4rem;
+    }
+  }
+
+  /* Fit the carousel between the measured header and bottom navigation. */
+  @media (max-width: 47.999rem) {
+    .offers-carousel {
+      --cylinder-inset-y: 0%;
+      min-height: min(
+        31rem,
+        calc(
+          100svh - var(--site-header-clearance, 5rem) -
+            var(--site-mobile-bottom-nav-clearance, 4rem)
+            + 1rem
+        )
+      );
+    }
+  }
+</style>

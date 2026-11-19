@@ -59,6 +59,26 @@ export default defineConfig(
           ignoreRestSiblings: true,
         },
       ],
+      "no-magic-numbers": "off",
+    },
+  },
+  {
+    files: ["src/components/ui/cylinder-carousel/cylinderCarouselRuntime.ts"],
+    rules: {
+      "@typescript-eslint/no-magic-numbers": [
+        "error",
+        {
+          ignore: [0, 1, -1],
+          ignoreArrayIndexes: true,
+          ignoreDefaultValues: true,
+          ignoreEnums: true,
+          ignoreNumericLiteralTypes: true,
+          ignoreReadonlyClassProperties: true,
+          ignoreTypeIndexes: true,
+          enforceConst: true,
+          detectObjects: false,
+        },
+      ],
     },
   },
   prettier,

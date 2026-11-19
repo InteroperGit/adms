@@ -8,9 +8,9 @@ it("renders enabled offers through the feature carousel", async () => {
   expect(Component).toBeDefined();
   expect(body.querySelector("section#offers")).toBeInTheDocument();
   expect(
-    body.querySelector('offers-image-carousel[role="region"]'),
+    body.querySelector('cylinder-carousel[role="region"]'),
   ).toBeInTheDocument();
-  expect(body.querySelectorAll(".offers-track-slot")).toHaveLength(5);
-  expect(body.querySelectorAll(".offers-track-card")).not.toHaveLength(0);
-  expect(body.querySelectorAll(".carousel-arrow")).toHaveLength(2);
+  expect(body.querySelectorAll("[data-cylinder-slide]")).toHaveLength(3);
+  expect(body.querySelectorAll(".offers-track-card")).toHaveLength(3);
+  expect(body.querySelectorAll(".cylinder-arrow")).toHaveLength(2);
 });
