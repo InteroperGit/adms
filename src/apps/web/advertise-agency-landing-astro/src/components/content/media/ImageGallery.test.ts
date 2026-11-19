@@ -2,7 +2,7 @@
 // Gallery links remain usable when the client enhancement is unavailable.
 import { expect, it } from "vitest";
 import ImageGallery from "./ImageGallery.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 it("renders every image as a native link in the tile gallery", async () => {
   const image = (src: string) => ({

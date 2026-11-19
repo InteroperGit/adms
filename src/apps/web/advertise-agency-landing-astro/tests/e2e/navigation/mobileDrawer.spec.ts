@@ -13,6 +13,7 @@ test("mobile drawer opens below header and returns focus on Escape", async ({
   await expect(menu).toBeVisible();
   await expect(opener).toHaveAttribute("aria-expanded", "true");
   await expect(menu.locator("a").first()).toBeFocused();
+  await expect(menu).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 0)");
   const layout = page.locator(".header-layout");
   const menuBounds = await menu.boundingBox();
   const headerBounds = await layout.boundingBox();

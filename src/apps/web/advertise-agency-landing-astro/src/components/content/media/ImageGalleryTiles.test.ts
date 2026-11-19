@@ -2,8 +2,8 @@
 // Gallery tiles keep full-size links available without client enhancement.
 import { expect, it } from "vitest";
 import ImageGalleryTiles from "./ImageGalleryTiles.astro";
-import type { GalleryImage } from "./imageGallery.types";
-import { render } from "../../../tests/helpers/render";
+import type { GalleryImage } from "./gallery.types";
+import { render } from "../../../../tests/helpers/render";
 
 const images: GalleryImage[] = [
   {

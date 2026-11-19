@@ -2,7 +2,7 @@
 // Content media exposes intrinsic dimensions and authored focal points.
 import { expect, it } from "vitest";
 import ContentImage from "./ContentImage.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 it("renders public media with reserved geometry and metadata", async () => {
   const body = await render(ContentImage, {

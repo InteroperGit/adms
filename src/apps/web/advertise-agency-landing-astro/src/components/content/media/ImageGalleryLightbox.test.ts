@@ -2,8 +2,8 @@
 // The gallery modal renders an accessible shell before browser enhancement.
 import { expect, it } from "vitest";
 import ImageGalleryLightbox from "./ImageGalleryLightbox.astro";
-import type { GalleryImage } from "./imageGallery.types";
-import { render } from "../../../tests/helpers/render";
+import type { GalleryImage } from "./gallery.types";
+import { render } from "../../../../tests/helpers/render";
 
 const images: GalleryImage[] = [
   {

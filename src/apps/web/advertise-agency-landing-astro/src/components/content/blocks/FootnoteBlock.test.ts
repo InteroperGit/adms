@@ -2,7 +2,7 @@
 // Footnotes retain a native fragment link for keyboard and no-JS use.
 import { expect, it } from "vitest";
 import FootnoteBlock from "./FootnoteBlock.astro";
-import { render } from "../../../tests/helpers/render";
+import { render } from "../../../../tests/helpers/render";
 
 it("renders reference text and a backlink when a target exists", async () => {
   const body = await render(FootnoteBlock, {

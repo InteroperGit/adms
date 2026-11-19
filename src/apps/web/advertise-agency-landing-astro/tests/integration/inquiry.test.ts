@@ -2,8 +2,9 @@
 // @vitest-environment node
 import { afterEach, expect, it, vi } from "vitest";
 import OrderInquiry from "../../src/components/sections/OrderInquiry.astro";
-import OrderFormBlock from "../../src/components/content/OrderFormBlock.astro";
+import OrderFormBlock from "@/components/content/blocks/OrderFormBlock.astro";
 import ContactMenu from "@/components/site-shell/header/ContactMenu.astro";
+import { site } from "@/content/site";
 import type { OrderInquiryContent } from "../../src/types/orderInquiry";
 import { render } from "../helpers/render";
 
@@ -149,7 +150,7 @@ it("uses a native general inquiry link for unregistered form IDs", async () => {
 });
 
 it("keeps callback submission disabled with its privacy link", async () => {
-  const body = await render(ContactMenu);
+  const body = await render(ContactMenu, { phone: site.phone });
 
   const dialog = body.querySelector<HTMLDialogElement>("#callback-dialog")!;
   const form = dialog.querySelector("form")!;
