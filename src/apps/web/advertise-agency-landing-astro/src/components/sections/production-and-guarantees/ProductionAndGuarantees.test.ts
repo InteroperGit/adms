@@ -60,7 +60,7 @@ it("shows guidance and hides unapproved production evidence", async () => {
   expect(Component).toBeDefined();
   expect(getByRole(body, "heading", { level: 2 })).toBeInTheDocument();
   expect(
-    body.querySelectorAll(".production-guidance .production-card"),
+    body.querySelectorAll(".card-carousel .production-card"),
   ).not.toHaveLength(0);
   expect(body.querySelector(".production-photos")).toBeNull();
   expect(body.querySelector(".production-groups")).toBeInTheDocument();

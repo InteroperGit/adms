@@ -5,8 +5,18 @@
   "introduction": "TEST_INTRODUCTION",
   "guidance": [
     {
-      "title": "TEST_TITLE",
-      "description": "TEST_DESCRIPTION",
+      "title": "TEST_GUIDANCE_ONE",
+      "description": "TEST_GUIDANCE_DESCRIPTION_ONE",
+      "icon": "/images/guarantees/production.svg"
+    },
+    {
+      "title": "TEST_GUIDANCE_TWO",
+      "description": "TEST_GUIDANCE_DESCRIPTION_TWO",
+      "icon": "/images/guarantees/production.svg"
+    },
+    {
+      "title": "TEST_GUIDANCE_THREE",
+      "description": "TEST_GUIDANCE_DESCRIPTION_THREE",
       "icon": "/images/guarantees/production.svg"
     }
   ],

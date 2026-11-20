@@ -1,6 +1,6 @@
 # Codex Task Handoff
 
-Updated: 2026-11-20
+Updated: 2026-11-21
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal. Detailed
 scope and verification belong to the linked task files.
@@ -58,6 +58,8 @@ UI task 171 is archived; delivery is deferred to task 173.
   complete.
 
 ## Task index
+
+- [238 — CardCarousel][task238]: implemented; focused checks passed.
 
 - [237 — Общие компоненты каруселей](../docs/codex/tasks/fixed/20261120/237-share-carousel-controls.md):
   принята и архивирована; целевые проверки прошли.
@@ -127,3 +129,5 @@ UI task 171 is archived; delivery is deferred to task 173.
 - 187: `docs/codex/tasks/fixed/20261116/187-automate-test-backlog-175-186.md`
 
 [task236]: ../docs/codex/tasks/fixed/20261120/236-extract-shared-catalog.md
+[task238]:
+  ../docs/codex/tasks/fixed/20261121/238-create-card-carousel.md

@@ -63,3 +63,22 @@ it("does not emit a mismatched gallery marker", async () => {
   expect(control).not.toHaveAttribute("data-gallery-close");
   expect(control).not.toHaveAttribute("data-gallery-next");
 });
+
+it("adds circular appearance only when requested", async () => {
+  const defaultBody = await render(Component, {
+    direction: "next",
+    label: "Next image",
+  });
+  const circularBody = await render(Component, {
+    direction: "next",
+    label: "Next card",
+    appearance: "circle",
+  });
+
+  expect(defaultBody.querySelector("button")).not.toHaveClass(
+    "carousel-control-circle",
+  );
+  expect(circularBody.querySelector("button")).toHaveClass(
+    "carousel-control-circle",
+  );
+});

@@ -1,0 +1,147 @@
+---
+// Render caller-provided cards in a manually controlled scroll-snap region.
+import CarouselControl from "../common/CarouselControl.astro";
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+if (!label.trim()) {
+  throw new Error("CardCarousel needs an accessible label");
+}
+---
+
+<section
+  class="card-carousel"
+  role="region"
+  aria-label={label}
+  aria-roledescription="карусель"
+>
+  <div
+    class="card-carousel-controls"
+    hidden
+  >
+    <CarouselControl
+      direction="previous"
+      dataDirection="-1"
+      className="card-carousel-arrow"
+      appearance="circle"
+      label={`Предыдущие карточки: ${label}`}
+    />
+    <CarouselControl
+      direction="next"
+      dataDirection="1"
+      className="card-carousel-arrow"
+      appearance="circle"
+      label={`Следующие карточки: ${label}`}
+    />
+  </div>
+  <div
+    class="card-carousel-viewport"
+    tabindex="0"
+  >
+    <div class="card-carousel-track">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initializeCardCarousels } from "./cardCarouselRuntime";
+
+  initializeCardCarousels();
+</script>
+
+<style>
+  /* Let the viewport own horizontal overflow. */
+  .card-carousel {
+    min-width: 0;
+  }
+
+  /* Place manual controls above the cards without covering their content. */
+  .card-carousel-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Keep controls absent when every card fits or scripting is unavailable. */
+  .card-carousel-controls[hidden] {
+    display: none;
+  }
+
+  /* Make each arrow a stable, touch-sized circular control. */
+  .card-carousel :global(.card-carousel-arrow) {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Keep unavailable directions distinct while preserving their hit area. */
+  .card-carousel :global(.card-carousel-arrow:disabled) {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  /* Contain touch scrolling and preserve a keyboard focus destination. */
+  .card-carousel-viewport {
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  /* Hide only decorative scrollbar chrome, not scroll affordance or content. */
+  .card-carousel-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Keep keyboard focus visible on the horizontal scrolling surface. */
+  .card-carousel-viewport:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  /* Preserve card order and let the viewport clip only offscreen neighbors. */
+  .card-carousel-track {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  /* Snap caller cards consistently while retaining their intrinsic height. */
+  .card-carousel-track :global(> *) {
+    box-sizing: border-box;
+    flex: 0 0 min(86vw, 17rem);
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Let a single card use the whole region without an empty preview area. */
+  .card-carousel-track:has(:global(> :only-child)) :global(> *) {
+    flex-basis: 100%;
+  }
+
+  /* Fit compact cards side by side as the available container grows. */
+  @media (min-width: 48rem) {
+    /* Keep tablet cards compact and reveal only whole cards at each snap. */
+    .card-carousel-track :global(> *) {
+      flex-basis: min(100%, 16rem);
+    }
+  }
+
+  /* Remove programmatic and touch-scroll animation for reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    /* Keep swipe and button movement immediate for this scrolling region. */
+    .card-carousel-viewport {
+      scroll-behavior: auto;
+    }
+  }
+</style>

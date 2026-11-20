@@ -13,12 +13,14 @@ type Props = CommonProps &
         direction: "previous" | "next";
         dataDirection?: "-1" | "1";
         dataGallery?: "previous" | "next";
+        appearance?: "default" | "circle";
       }
     | {
         variant: "close";
         direction?: never;
         dataDirection?: never;
         dataGallery?: "close";
+        appearance?: never;
       }
   );
 
@@ -26,6 +28,8 @@ const props = Astro.props as Props;
 const variant = props.variant ?? "arrow";
 const direction = variant === "arrow" ? props.direction : undefined;
 const isClose = variant === "close";
+const appearance =
+  props.variant === "close" ? "default" : (props.appearance ?? "default");
 const controlVariant = isClose
   ? "carousel-control-close"
   : "carousel-control-arrow";
@@ -44,7 +48,12 @@ const galleryMarker = isClose
 
 <button
   type="button"
-  class:list={["carousel-control", controlVariant, props.className]}
+  class:list={[
+    "carousel-control",
+    controlVariant,
+    appearance === "circle" && "carousel-control-circle",
+    props.className,
+  ]}
   aria-label={props.label}
   data-direction={directionMarker}
   data-gallery-close={galleryMarker === "close" ? true : undefined}
@@ -87,6 +96,20 @@ const galleryMarker = isClose
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 1.8;
+  }
+
+  /* Give card carousel arrows a distinct surface without changing defaults. */
+  .carousel-control-circle {
+    border: 1px solid var(--site-control-border);
+    border-radius: 50%;
+    color: var(--color-base-content);
+    background: var(--color-base-100);
+  }
+
+  /* Keep circular arrows visible against either theme on hover. */
+  .carousel-control.carousel-control-circle:hover {
+    color: var(--color-base-content);
+    background: var(--color-base-200);
   }
 
   /* Double the V glyph while keeping gallery arrows at their base size. */

@@ -16,4 +16,16 @@ it("renders supplied general guidance and its decorative icon", async () => {
     "aria-hidden",
     "true",
   );
+  expect(body.querySelector(".card-carousel")).toHaveAttribute(
+    "aria-label",
+    "Наши гарантии",
+  );
+  expect(body.querySelectorAll(".production-card h3")).toHaveLength(
+    productionAndGuarantees.guidance.length,
+  );
+  expect(
+    [...body.querySelectorAll(".production-card h3")].map(
+      (heading) => heading.textContent,
+    ),
+  ).toEqual(productionAndGuarantees.guidance.map((item) => item.title));
 });

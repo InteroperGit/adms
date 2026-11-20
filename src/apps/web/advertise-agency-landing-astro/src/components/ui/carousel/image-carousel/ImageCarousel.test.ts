@@ -48,6 +48,9 @@ it("filters slides and maps controls to enabled slide IDs", async () => {
   expect(body.querySelector("#work-2")).not.toBeInTheDocument();
   expect(body.querySelector("#work-3")).toBeInTheDocument();
   expect(body.querySelectorAll(".carousel-dot")).toHaveLength(2);
+  expect(body.querySelector(".carousel-arrow")).not.toHaveClass(
+    "carousel-control-circle",
+  );
   expect(body.querySelector('[aria-controls="work-3"]')).toBeInTheDocument();
 });
 

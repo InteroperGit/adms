@@ -2,6 +2,7 @@
 // prettier-ignore
 import type { ProductionAndGuaranteesContent } from
   "@/types/productionAndGuarantees";
+import CardCarousel from "../../ui/carousel/card-carousel/CardCarousel.astro";
 
 interface Props {
   items: ProductionAndGuaranteesContent["guidance"];
@@ -10,7 +11,7 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="production-guidance">
+<CardCarousel label="Наши гарантии">
   {items.map((item) => (
     <article
       class="production-card"
@@ -25,19 +26,11 @@ const { items } = Astro.props;
       <p>{item.description}</p>
     </article>
   ))}
-</div>
+</CardCarousel>
 
 <style>
-  /* Lay out general guidance in columns sized by their readable content. */
-  .production-guidance {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-    gap: 1rem;
-  }
-
-  /* Keep each friendly guarantee card aligned across its grid row. */
+  /* Keep each friendly guarantee card readable within the carousel track. */
   .production-card {
-    height: 100%;
     min-width: 0;
     overflow-wrap: anywhere;
     padding: 1.25rem;
