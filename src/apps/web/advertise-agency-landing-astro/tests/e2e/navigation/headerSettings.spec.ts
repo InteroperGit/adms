@@ -7,12 +7,13 @@ test("mobile header hides down and returns up while scrolling", async ({
   await page.setViewportSize({ width: 375, height: 800 });
   await page.goto("/");
   await page.locator('[data-cookie-choice="declined"]').click();
+  await page.emulateMedia({ reducedMotion: "reduce" });
 
   const header = page.locator(".site-header");
-  await page.evaluate(() => window.scrollTo(0, 500));
+  await page.mouse.wheel(0, 500);
   await expect.poll(() => header.getAttribute("data-hidden")).toBe("true");
 
-  await page.evaluate(() => window.scrollTo(0, 400));
+  await page.mouse.wheel(0, -100);
   await expect.poll(() => header.getAttribute("data-hidden")).toBe("false");
 });
 

@@ -78,7 +78,10 @@ test("failed service image preserves loaded geometry", async ({ page }) => {
   const image = page.locator('.service-reading img[alt]:not([alt=""])').first();
   await expect(image).toHaveJSProperty("complete", true);
   await expect(image).toHaveJSProperty("naturalWidth", 0);
-  const failedBox = await image.boundingBox();
+  const failedFrame = page
+    .locator(".service-reading .responsive-image-frame")
+    .first();
+  const failedBox = await failedFrame.boundingBox();
   if (!failedBox) throw new Error("Failed image has no layout box");
   expect(failedBox.width).toBeGreaterThan(0);
   expect(failedBox.height).toBeGreaterThan(0);
@@ -103,7 +106,10 @@ test("failed service image preserves loaded geometry", async ({ page }) => {
       ),
     )
     .toBeGreaterThan(0);
-  const cleanBox = await cleanImage.boundingBox();
+  const cleanFrame = cleanPage
+    .locator(".service-reading .responsive-image-frame")
+    .first();
+  const cleanBox = await cleanFrame.boundingBox();
   if (!cleanBox) throw new Error("Loaded image has no layout box");
   expect(cleanBox.width).toBeGreaterThan(0);
   expect(cleanBox.height).toBeGreaterThan(0);

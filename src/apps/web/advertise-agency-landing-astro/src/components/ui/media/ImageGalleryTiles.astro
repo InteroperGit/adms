@@ -88,7 +88,7 @@ const { images, priority = false, layout = "tiles", crop } = Astro.props;
   /* Keep the single image uncropped within its original proportions. */
   .gallery-grid-single .gallery-tile :global(.responsive-image-frame) {
     height: auto;
-    aspect-ratio: auto;
+    aspect-ratio: var(--media-ratio);
   }
 
   /* Crop tile imagery to its stable frame without stretching it. */
