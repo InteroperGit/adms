@@ -65,6 +65,8 @@ component tests remain outstanding.
 
 ## Task index
 
+- [236 — Общий каталог и пагинация][task236] завершена и перенесена в `fixed`;
+  полный verification прошёл.
 - [195 - Integration test automation](../docs/codex/tasks/fixed/20261116/195-automate-integration-test-improvements.md):
   complete; children 196-203 accepted and committed separately. Integration:
   73/73 passed; focused static gates passed. Timing and full-verification
@@ -122,3 +124,5 @@ component tests remain outstanding.
 - 185: `docs/codex/tasks/fixed/20261116/185-shared-type-contract-tests.md`
 - 186: `docs/codex/tasks/fixed/20261116/186-logo-component-test-refactor.md`
 - 187: `docs/codex/tasks/fixed/20261116/187-automate-test-backlog-175-186.md`
+
+[task236]: ../docs/codex/tasks/fixed/20261120/236-extract-shared-catalog.md

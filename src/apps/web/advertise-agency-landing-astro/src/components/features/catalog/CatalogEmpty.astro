@@ -1,0 +1,66 @@
+---
+// Render either the unpublished-catalog or no-search-results state.
+interface Props {
+  id: string;
+  kind: "catalog" | "search";
+  labels: {
+    emptyTitle: string;
+    emptyMessage: string;
+    searchEmptyTitle: string;
+    searchEmptyMessage: string;
+    reset: string;
+  };
+}
+
+const { id, kind, labels } = Astro.props;
+const isSearch = kind === "search";
+const title = isSearch ? labels.searchEmptyTitle : labels.emptyTitle;
+const message = isSearch ? labels.searchEmptyMessage : labels.emptyMessage;
+const titleId = `${id}-title`;
+---
+
+<section
+  class:list={["catalog-empty", isSearch && "catalog-search-empty"]}
+  data-catalog-search-empty={isSearch ? true : undefined}
+  hidden={isSearch}
+  aria-labelledby={titleId}
+>
+  <h2 id={titleId}>{title}</h2>
+  <p>{message}</p>
+  {isSearch && (
+    <button
+      type="button"
+      data-catalog-reset
+    >
+      {labels.reset}
+    </button>
+  )}
+</section>
+
+<style>
+  /* Explain an entirely empty catalog without implying a failed search. */
+  .catalog-empty {
+    padding: clamp(2rem, 6vw, 4rem) 1rem;
+    text-align: center;
+    background: var(--color-base-200);
+    border-radius: var(--radius-field);
+  }
+
+  /* Keep the empty state heading distinct from the page heading. */
+  .catalog-empty h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* Give the no-match action a keyboard-sized target. */
+  .catalog-search-empty button {
+    min-height: 44px;
+    margin-top: 1rem;
+    padding: 0.625rem 1rem;
+    color: var(--color-primary-content);
+    background: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-field);
+    cursor: pointer;
+  }
+</style>

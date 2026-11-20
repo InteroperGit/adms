@@ -1,0 +1,110 @@
+---
+// Compose a searchable catalog around a caller-provided typed card component.
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import CatalogControls from "./CatalogControls.astro";
+import CatalogCount from "./CatalogCount.astro";
+import CatalogEmpty from "./CatalogEmpty.astro";
+import CatalogGrid from "./CatalogGrid.astro";
+import Pagination from "@/components/ui/pagination/Pagination.astro";
+
+interface Props {
+  Item: AstroComponentFactory;
+  basePath: string;
+  categories: { value: string; label: string }[];
+  currentPage: number;
+  id: string;
+  items: {
+    category: string;
+    props: Record<string, unknown>;
+    searchText: string;
+  }[];
+  labels: {
+    allCategories: string;
+    category: string;
+    count: string;
+    emptyMessage: string;
+    emptyTitle: string;
+    pagination: string;
+    reset: string;
+    results: string;
+    search: string;
+    searchEmptyMessage: string;
+    searchEmptyTitle: string;
+    searchPlaceholder: string;
+  };
+  pageCount: number;
+  pageHref: (page: number) => string;
+  pageSize: number;
+  resultsId: string;
+}
+
+const {
+  Item,
+  basePath,
+  categories,
+  currentPage,
+  id,
+  items,
+  labels,
+  pageCount,
+  pageHref,
+  pageSize,
+  resultsId,
+} = Astro.props;
+---
+
+<section
+  class="catalog"
+  id={id}
+  data-catalog
+  data-catalog-base-path={basePath}
+  data-catalog-page-size={pageSize}
+>
+  <CatalogControls
+    categories={categories}
+    categoryId={`${id}-category`}
+    searchId={`${id}-search`}
+    labels={labels}
+  />
+  <CatalogCount
+    count={items.length}
+    label={labels.count}
+  />
+  <h2 class="catalog-results-title">{labels.results}</h2>
+  {items.length > 0 ? (
+    <CatalogGrid
+      Item={Item}
+      items={items}
+      page={currentPage}
+      pageSize={pageSize}
+      resultsId={resultsId}
+      resultsLabel={labels.results}
+    />
+  ) : (
+    <CatalogEmpty
+      id={`${id}-empty`}
+      kind="catalog"
+      labels={labels}
+    />
+  )}
+  <CatalogEmpty
+    id={`${id}-search-empty`}
+    kind="search"
+    labels={labels}
+  />
+  <Pagination
+    currentPage={currentPage}
+    label={labels.pagination}
+    pageCount={pageCount}
+    pageHref={pageHref}
+  />
+</section>
+
+<style>
+  /* Establish the heading level used by catalog cards below. */
+  .catalog-results-title {
+    margin: 2rem 0 1rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+</style>

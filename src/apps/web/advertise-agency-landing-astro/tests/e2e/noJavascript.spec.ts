@@ -35,6 +35,8 @@ test.describe("without JavaScript", () => {
     page,
   }) => {
     await page.goto("/projects/");
+    await expect(page.locator("[data-catalog-controls]")).toBeHidden();
+    await expect(page.locator("[data-catalog-search-empty]")).toBeHidden();
     await page.locator("[data-project-link]").first().click();
     await expect(page).toHaveURL(/\/projects\/1\//);
     await expect(page.locator("main")).toBeVisible();

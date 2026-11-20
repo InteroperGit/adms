@@ -108,7 +108,7 @@ test("document focus and motion respect accessibility preferences", async ({
   await expect(page.locator("html")).toHaveCSS("scroll-behavior", "smooth");
   // All engines include form fields in Tab order; WebKit may skip links.
   // Use a field with the document ring, not Settings' local 2px offset.
-  const search = page.locator("#project-search");
+  const search = page.locator("#project-catalog-search");
   await expect(search).toBeVisible();
   await search.focus();
   await page.keyboard.press("Tab");

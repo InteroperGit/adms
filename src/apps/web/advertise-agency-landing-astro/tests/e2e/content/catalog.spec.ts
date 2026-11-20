@@ -18,7 +18,7 @@ test("catalog search, filter, pagination and history share URL state", async ({
   await expect(page).toHaveURL(/category=sample/);
   await page.goto("/projects/page/2/");
   await expect(
-    page.locator("[data-project-card]:visible [data-project-link]").first(),
+    page.locator("[data-catalog-item]:visible [data-project-link]").first(),
   ).toHaveAttribute("href", "/projects/2/");
 });
 
@@ -31,7 +31,7 @@ test("search and category filters show matching fixture projects", async ({
   const search = controls.locator('input[type="search"]');
   const category = controls.locator('select[name="category"]');
   const visibleLinks = page.locator(
-    "[data-project-card]:visible [data-project-link]",
+    "[data-catalog-item]:visible [data-project-link]",
   );
   const count = page.locator("[data-catalog-count-value]");
 
@@ -63,9 +63,9 @@ test("search and category filters show matching fixture projects", async ({
   await category.selectOption("sample");
   await expect(count).toHaveText("2");
   await expect(
-    page.locator('[data-project-card][data-category="sample"]'),
+    page.locator('[data-catalog-item][data-category="sample"]'),
   ).toHaveCount(2);
-  await expect(page.locator("[data-project-card]:visible")).toHaveCount(1);
+  await expect(page.locator("[data-catalog-item]:visible")).toHaveCount(1);
   await expect
     .poll(() => new URL(page.url()).searchParams.get("category"))
     .toBe("sample");
@@ -87,7 +87,7 @@ test("search and category filters show matching fixture projects", async ({
   await expect(search).toHaveValue("");
   await expect(category).toHaveValue("");
   await expect(count).toHaveText("3");
-  await expect(page.locator("[data-project-card]:visible")).toHaveCount(1);
+  await expect(page.locator("[data-catalog-item]:visible")).toHaveCount(1);
   await expect.poll(() => new URL(page.url()).pathname).toBe("/projects/");
   await expect.poll(() => new URL(page.url()).search).toBe("");
 });
@@ -104,7 +104,7 @@ test("direct URLs, reload and history restore catalog results", async ({
   );
   const count = page.locator("[data-catalog-count-value]");
   const visibleLinks = page.locator(
-    "[data-project-card]:visible [data-project-link]",
+    "[data-catalog-item]:visible [data-project-link]",
   );
   const empty = page.locator("[data-catalog-search-empty]");
 
@@ -145,4 +145,36 @@ test("direct URLs, reload and history restore catalog results", async ({
   await expect(empty).toBeVisible();
   await expect(visibleLinks).toHaveCount(0);
   await expect(count).toHaveText("0");
+});
+
+test("project article return restores filters and the catalog anchor", async ({
+  page,
+}) => {
+  await page.goto("/projects/?q=Synthetic%20project%202&category=sample");
+  await page.locator("[data-catalog-item]:visible [data-project-link]").click();
+  await expect(page).toHaveURL(/\/projects\/2\//);
+
+  await page.locator(".project-actions [data-project-catalog-return]").click();
+  await expect
+    .poll(() => {
+      const url = new URL(page.url());
+      return [
+        url.pathname,
+        url.searchParams.get("q"),
+        url.searchParams.get("category"),
+        url.hash,
+      ];
+    })
+    .toEqual([
+      "/projects/",
+      "Synthetic project 2",
+      "sample",
+      "#catalog-results",
+    ]);
+  await expect(
+    page.locator('[data-catalog-controls] input[name="q"]'),
+  ).toHaveValue("Synthetic project 2");
+  await expect(
+    page.locator("[data-catalog-item]:visible [data-project-link]"),
+  ).toHaveAttribute("href", "/projects/2/");
 });

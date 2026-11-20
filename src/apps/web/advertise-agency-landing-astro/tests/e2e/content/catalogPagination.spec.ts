@@ -8,7 +8,7 @@ test("pagination links navigate, reload and select the current page", async ({
 
   const pagination = page.locator("[data-catalog-pagination]");
   const visibleLinks = page.locator(
-    "[data-project-card]:visible [data-project-link]",
+    "[data-catalog-item]:visible [data-project-link]",
   );
 
   await pagination.getByRole("link", { name: "Page 2" }).click();
@@ -64,6 +64,19 @@ test("pagination boundaries expose disabled direction controls", async ({
   await expect(lastNext).toHaveAttribute("tabindex", "-1");
 });
 
+test("keyboard pagination moves focus to the result grid", async ({ page }) => {
+  await page.goto("/projects/");
+  const pageTwo = page
+    .locator("[data-catalog-pagination]")
+    .getByRole("link", { name: "Page 2" });
+
+  await pageTwo.focus();
+  await page.keyboard.press("Enter");
+
+  await expect(page).toHaveURL(/\/projects\/page\/2\//);
+  await expect(page.locator("#catalog-results")).toBeFocused();
+});
+
 test("category pagination preserves state through history navigation", async ({
   page,
 }) => {
@@ -71,7 +84,7 @@ test("category pagination preserves state through history navigation", async ({
 
   const pagination = page.locator("[data-catalog-pagination]");
   const visibleLinks = page.locator(
-    "[data-project-card]:visible [data-project-link]",
+    "[data-catalog-item]:visible [data-project-link]",
   );
 
   await pagination.getByRole("link", { name: "Last page" }).click();
@@ -110,7 +123,7 @@ test("a one-result search resets the current pagination route", async ({
   const search = page.locator('[data-catalog-controls] input[type="search"]');
   const pagination = page.locator("[data-catalog-pagination]");
   const visibleLinks = page.locator(
-    "[data-project-card]:visible [data-project-link]",
+    "[data-catalog-item]:visible [data-project-link]",
   );
 
   await search.fill("Synthetic project 2");

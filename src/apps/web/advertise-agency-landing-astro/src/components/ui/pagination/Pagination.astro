@@ -1,0 +1,177 @@
+---
+// Render accessible native pagination links for any static route family.
+import Link from "@/components/ui/Link.astro";
+import { getPaginationItems } from "./pagination";
+
+interface Props {
+  currentPage: number;
+  label: string;
+  pageCount: number;
+  pageHref: (page: number) => string;
+}
+
+const { currentPage, label, pageCount, pageHref } = Astro.props;
+const items = getPaginationItems(pageCount, currentPage);
+---
+
+<nav
+  class="catalog-pagination"
+  data-catalog-pagination
+  aria-label={label}
+  hidden={pageCount <= 1}
+>
+  <div class="catalog-pagination__panel">
+    <div
+      class="catalog-pagination__pages"
+      data-catalog-pages
+    >
+      <Link
+        class="catalog-pagination__link catalog-pagination__direction"
+        underline={false}
+        href={pageHref(Math.max(1, currentPage - 1))}
+        aria-label="Previous page"
+        aria-disabled={currentPage === 1 ? "true" : undefined}
+        tabindex={currentPage === 1 ? -1 : undefined}
+      >
+        &larr;
+      </Link>
+      {items.map((item) =>
+        item === "ellipsis" ? (
+          <span
+            class="catalog-pagination__ellipsis"
+            aria-hidden="true"
+          >
+            &hellip;
+          </span>
+        ) : (
+          <Link
+            class="catalog-pagination__link"
+            underline={false}
+            href={pageHref(item)}
+            aria-label={
+              item === 1
+                ? "First page"
+                : item === pageCount
+                  ? "Last page"
+                  : `Page ${item}`
+            }
+            aria-current={item === currentPage ? "page" : undefined}
+          >
+            {item}
+          </Link>
+        ),
+      )}
+      <Link
+        class="catalog-pagination__link catalog-pagination__direction"
+        underline={false}
+        href={pageHref(Math.min(pageCount, currentPage + 1))}
+        aria-label="Next page"
+        aria-disabled={currentPage === pageCount ? "true" : undefined}
+        tabindex={currentPage === pageCount ? -1 : undefined}
+      >
+        &rarr;
+      </Link>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* Separate pagination from the cards with a quiet, structured panel. */
+  .catalog-pagination {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Keep the control group aligned with the catalog grid. */
+  .catalog-pagination__panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  /* Keep controls together and allow wrapping on narrow screens. */
+  .catalog-pagination__pages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.375rem;
+  }
+
+  /* Give every link the same touch-friendly dimensions and baseline. */
+  .catalog-pagination__link {
+    display: inline-grid;
+    min-width: 44px;
+    min-height: 44px;
+    place-items: center;
+    padding: 0.5rem;
+    color: var(--color-base-content);
+    background: var(--color-base-100);
+    border: 1px solid var(--color-base-300);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  /* Distinguish direction arrows from numbered page controls. */
+  .catalog-pagination__direction {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  /* Make pointer feedback distinct while retaining the site focus treatment. */
+  .catalog-pagination__link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+
+  /* Keep the keyboard position visible against either site theme. */
+  .catalog-pagination__link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Make the active page clear to sighted and assistive technology users. */
+  .catalog-pagination__link[aria-current="page"] {
+    color: var(--color-primary-content);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  /* Explain unavailable edge controls without removing their context. */
+  .catalog-pagination__link[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+    transform: none;
+  }
+
+  /* Reserve a stable slot for skipped page ranges without adding a control. */
+  .catalog-pagination__ellipsis {
+    display: inline-grid;
+    min-width: 1.5rem;
+    min-height: 44px;
+    place-items: center;
+    color: var(--color-muted);
+  }
+
+  /* Stack page controls when narrow screens cannot fit one row. */
+  @media (max-width: 30rem) {
+    .catalog-pagination__panel {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .catalog-pagination__pages {
+      justify-content: center;
+    }
+  }
+</style>

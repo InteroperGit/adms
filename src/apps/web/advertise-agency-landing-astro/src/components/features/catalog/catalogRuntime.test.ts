@@ -3,17 +3,19 @@
 import { JSDOM } from "jsdom";
 import { fireEvent } from "@testing-library/dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import fixture from "../../tests/fixtures/content/projectCatalogRuntime.json";
+// prettier-ignore
+import fixture from
+  "../../../../tests/fixtures/content/projectCatalogRuntime.json";
 
 describe("catalog matching", () => {
   it("normalizes Russian letters, case, and whitespace", async () => {
-    const { normalizeSearch } = await import("./projectCatalog");
+    const { normalizeSearch } = await import("./catalogRuntime");
     expect(normalizeSearch(" \tЁЛКА\n Световая  ")).toBe("елка световая");
     expect(normalizeSearch(" \n\t ")).toBe("");
   });
 
   it("requires every query word but permits any word order", async () => {
-    const { matchesSearch } = await import("./projectCatalog");
+    const { matchesSearch } = await import("./catalogRuntime");
     expect(matchesSearch("Ёлка Световая вывеска", "ВЫВЕСКА елка")).toBe(true);
     expect(matchesSearch("Alpha bright sign", "sign alpha")).toBe(true);
     expect(matchesSearch("Alpha bright sign", "alpha missing")).toBe(false);
@@ -22,7 +24,7 @@ describe("catalog matching", () => {
   });
 
   it("filters records without mutation or reordering", async () => {
-    const { filterCatalog } = await import("./projectCatalog");
+    const { filterCatalog } = await import("./catalogRuntime");
     const records = fixture.records.map((record) => ({
       category: record.category ?? "",
       searchText: record.searchText ?? "",
@@ -52,7 +54,6 @@ describe("catalog browser state", () => {
     vi.stubGlobal("window", dom.window);
     vi.stubGlobal("document", dom.window.document);
     vi.stubGlobal("Element", dom.window.Element);
-    vi.stubGlobal("sessionStorage", dom.window.sessionStorage);
   });
 
   afterEach(() => {
@@ -64,16 +65,19 @@ describe("catalog browser state", () => {
 
   function markup(count = 24, pageSize = "2") {
     document.body.innerHTML = `
-      <form data-catalog-controls hidden>
-        <input id="project-search">
-        <select id="project-category"><option value="">All</option></select>
-      </form>
-      <div data-catalog-count><span data-catalog-count-value></span></div>
-      <section data-catalog-search-empty hidden>
-        <button type="button" data-catalog-reset>Reset</button>
-      </section>
-      <div data-catalog-results tabindex="-1"></div>
-      <nav data-catalog-pagination><div data-catalog-pages></div></nav>`;
+      <section data-catalog data-catalog-base-path="/projects/"
+        data-catalog-page-size="${pageSize}">
+        <form data-catalog-controls hidden>
+          <input name="q">
+          <select name="category"><option value="">All</option></select>
+        </form>
+        <div data-catalog-count><span data-catalog-count-value></span></div>
+        <section data-catalog-search-empty hidden>
+          <button type="button" data-catalog-reset>Reset</button>
+        </section>
+        <div data-catalog-results tabindex="-1"></div>
+        <nav data-catalog-pagination><div data-catalog-pages></div></nav>
+      </section>`;
     const form = document.querySelector("form")!;
     const input = document.querySelector("input")!;
     const category = document.querySelector("select")!;
@@ -81,7 +85,6 @@ describe("catalog browser state", () => {
     const results = document.querySelector<HTMLElement>(
       "[data-catalog-results]",
     )!;
-    pagination.dataset.pageSize = pageSize;
     fixture.categories.forEach((value) => {
       const option = document.createElement("option");
       option.value = value;
@@ -91,12 +94,11 @@ describe("catalog browser state", () => {
     const cards = Array.from({ length: count }, (_, index) => {
       const record = fixture.records[index % fixture.records.length];
       const card = document.createElement("article");
-      card.setAttribute("data-project-card", "");
+      card.setAttribute("data-catalog-item", "");
       if (record.category) card.dataset.category = record.category;
       if (record.searchText) card.dataset.search = record.searchText;
       const link = document.createElement("a");
       link.href = `/projects/${index + 1}/`;
-      link.setAttribute("data-project-link", "");
       // Nested targets verify delegated clicks from card contents.
       link.innerHTML = "<span>Project</span>";
       card.append(link);
@@ -121,7 +123,7 @@ describe("catalog browser state", () => {
   async function start(url = "/projects/", count = 24, pageSize = "2") {
     window.history.replaceState(null, "", url);
     const elements = markup(count, pageSize);
-    await import("./projectCatalog");
+    await import("./catalogRuntime");
     return elements;
   }
 
@@ -139,7 +141,6 @@ describe("catalog browser state", () => {
     const elements = await start();
     expect(elements.form.hidden).toBe(false);
     expect(elements.input.value).toBe("");
-    expect(sessionStorage.length).toBe(0);
     expect(visible(elements.cards)).toEqual([0, 1]);
     expect(elements.count.textContent).toBe("24");
     expect(elements.empty.hidden).toBe(true);
@@ -157,7 +158,7 @@ describe("catalog browser state", () => {
 
   it("does nothing on pages with incomplete catalog markup", async () => {
     document.body.innerHTML = "<form data-catalog-controls hidden></form>";
-    await import("./projectCatalog");
+    await import("./catalogRuntime");
     expect(document.querySelector("form")?.hidden).toBe(true);
   });
 
@@ -366,33 +367,5 @@ describe("catalog browser state", () => {
     expect(window.location.pathname).toBe("/projects/");
     expect(window.location.search).toBe("?keep=1&q=Alpha");
     expect(window.location.hash).toBe("#results");
-  });
-
-  it("saves card return URLs and tolerates blocked storage", async () => {
-    const elements = await start("/projects/page/2/?keep=1");
-    const target = elements.cards[2].querySelector("span")!;
-    // Cancel navigation; the delegated handler must still save its context.
-    target.addEventListener("click", (event) => event.preventDefault());
-    fireEvent.click(target);
-    expect(sessionStorage.getItem("project-catalog-return")).toBe(
-      "/projects/page/2/?keep=1#catalog-results",
-    );
-    vi.spyOn(dom.window.Storage.prototype, "setItem").mockImplementation(() => {
-      throw new Error("Blocked");
-    });
-    expect(() => fireEvent.click(target)).not.toThrow();
-    // Non-card and non-element click targets must not touch storage.
-    fireEvent.click(elements.count);
-    document.dispatchEvent(new dom.window.MouseEvent("click"));
-  });
-
-  it("preserves filtered state in card return URLs", async () => {
-    const elements = await start(
-      "/projects/?keep=1&q=Alpha&category=letters#results",
-    );
-    fireEvent.click(elements.cards[1].querySelector("span")!);
-    expect(sessionStorage.getItem("project-catalog-return")).toBe(
-      "/projects/?keep=1&q=Alpha&category=letters#catalog-results",
-    );
   });
 });

@@ -1,21 +1,8 @@
 // Static HTML composition; browser scripts remain covered by E2E.
 // @vitest-environment node
 import { beforeEach, expect, it, vi } from "vitest";
-// prettier-ignore
-import ProjectCatalogControls
-  from '@/components/features/projects/ProjectCatalogControls.astro';
-// prettier-ignore
-import ProjectCatalogCount
-  from '@/components/features/projects/ProjectCatalogCount.astro';
-// prettier-ignore
-import ProjectCatalogGrid
-  from '@/components/features/projects/ProjectCatalogGrid.astro';
-// prettier-ignore
-import ProjectCatalogEmpty
-  from '@/components/features/projects/ProjectCatalogEmpty.astro';
-// prettier-ignore
-import ProjectCatalogPagination
-  from '@/components/features/projects/ProjectCatalogPagination.astro';
+import Catalog from "@/components/features/catalog/Catalog.astro";
+import ProjectCard from "@/components/features/projects/ProjectCard.astro";
 import type { ContentBlock } from "../../src/types/contentBlocks";
 import type { Project } from "../../src/types/project";
 import ProjectsIndex from "../../src/pages/projects/index.astro";
@@ -69,7 +56,7 @@ beforeEach(() => {
   overrides.projects = undefined;
 });
 
-it("composes catalog controls, results and pagination", async () => {
+it("composes a caller card with controls, results and pagination", async () => {
   const project: Project = {
     id: 1,
     category: "sample",
@@ -80,40 +67,48 @@ it("composes catalog controls, results and pagination", async () => {
     description: "Fixture description",
     content: [],
   };
-  const body = await render(ProjectCatalogControls, {
-    categories: [
+  const body = await render(Catalog, {
+    Item: ProjectCard,
+    basePath: "/projects/",
+    categories: [{ value: "sample", label: "Sample" }],
+    currentPage: 1,
+    id: "project-catalog",
+    items: [
       {
-        slug: "sample",
-        label: "Sample",
-        color: "#000000",
-        textColor: "#ffffff",
+        category: "sample",
+        searchText: "Fixture project Fixture client Fixture description",
+        props: { project },
       },
     ],
-  });
-  const count = await render(ProjectCatalogCount, { count: 1 });
-  const grid = await render(ProjectCatalogGrid, {
-    projects: [project],
-    page: 1,
-    pageSize: 12,
-  });
-  const empty = await render(ProjectCatalogEmpty, { type: "search" });
-  const pagination = await render(ProjectCatalogPagination, {
-    items: [1, 2],
-    currentPage: 1,
+    labels: {
+      allCategories: "All projects",
+      category: "Category",
+      count: "Projects found",
+      emptyMessage: "No projects.",
+      emptyTitle: "No projects yet",
+      pagination: "Project pages",
+      reset: "Reset filters",
+      results: "Catalog results",
+      search: "Search projects",
+      searchEmptyMessage: "Change the search.",
+      searchEmptyTitle: "No matches",
+      searchPlaceholder: "Project or client",
+    },
     pageCount: 2,
+    pageHref: (page: number) => `/projects/page/${page}/`,
     pageSize: 1,
-    pageHref: (page: number) => `/projects/?page=${page}`,
+    resultsId: "catalog-results",
   });
 
   expect(body.querySelector("[data-catalog-controls]")).toBeInTheDocument();
-  expect(count.querySelector("[data-catalog-count]")).toBeInTheDocument();
-  expect(grid.querySelector("[data-project-card]")).toBeInTheDocument();
-  expect(
-    empty.querySelector("[data-catalog-search-empty]"),
-  ).toBeInTheDocument();
-  expect(
-    pagination.querySelector("[data-catalog-pagination]"),
-  ).toBeInTheDocument();
+  expect(body.querySelector("[data-catalog-count]")).toHaveTextContent("1");
+  expect(body.querySelector("#catalog-results h3")).toHaveTextContent(
+    "Fixture project",
+  );
+  expect(body.querySelector("[data-catalog-search-empty]")).toHaveAttribute(
+    "hidden",
+  );
+  expect(body.querySelector("[data-catalog-pagination]")).toBeInTheDocument();
 });
 
 function catalogProjects(count = 3): Project[] {
@@ -153,13 +148,13 @@ it.each(catalogRoutes)(
     expectCanonical(document, path);
     // A numbered path wins over a conflicting legacy page query.
     const current = page;
-    const cards = [...document.querySelectorAll("[data-project-card]")];
+    const cards = [...document.querySelectorAll("[data-catalog-item]")];
     expect(cards).toHaveLength(3);
     expect(cards.filter((card) => !card.hasAttribute("hidden"))).toHaveLength(
       1,
     );
     expect(
-      document.querySelector("[data-project-card]:not([hidden]) h3"),
+      document.querySelector("[data-catalog-item]:not([hidden]) h3"),
     ).toHaveTextContent(`Route project ${current}`);
     expect(
       [...document.querySelectorAll("[data-project-link]")].map((link) =>
@@ -227,7 +222,7 @@ it.each(catalogRoutes)(
       params: { page: "2" },
     });
     expectPage(document);
-    expect(document.querySelector("[data-project-card]")).toBeNull();
+    expect(document.querySelector("[data-catalog-item]")).toBeNull();
     expect(document.querySelector(".catalog-empty")).toBeInTheDocument();
     expect(document.querySelector("[data-catalog-count]")).toHaveTextContent(
       "0",
@@ -282,7 +277,7 @@ it("aligns public project routes, cards, count and categories", async () => {
     site: "https://production.test/",
   });
   const expectedPaths = publicProjects.map(({ id }) => `/projects/${id}/`);
-  expect(document.querySelectorAll("[data-project-card]")).toHaveLength(
+  expect(document.querySelectorAll("[data-catalog-item]")).toHaveLength(
     publicProjects.length,
   );
   expect(document.querySelector("[data-catalog-count]")).toHaveTextContent(
@@ -294,8 +289,8 @@ it("aligns public project routes, cards, count and categories", async () => {
     ),
   ).toEqual(expectedPaths);
   expect(
-    [...document.querySelectorAll("#project-category option")].map((option) =>
-      option.getAttribute("value"),
+    [...document.querySelectorAll("#project-catalog-category option")].map(
+      (option) => option.getAttribute("value"),
     ),
   ).toEqual(["", "sample", "other"]);
 });
@@ -314,7 +309,7 @@ it.each([
       url: `https://request.test/projects/?page=${query}`,
     });
     expect(
-      document.querySelector("[data-project-card]:not([hidden]) h3"),
+      document.querySelector("[data-catalog-item]:not([hidden]) h3"),
     ).toHaveTextContent(`Route project ${current}`);
     const edge = current === 1 ? "Previous page" : "Next page";
     expect(document.querySelector(`[aria-label="${edge}"]`)).toHaveAttribute(

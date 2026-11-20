@@ -1,9 +1,11 @@
 ---
+// Show the live number of matching catalog entries.
 interface Props {
   count: number;
+  label: string;
 }
 
-const { count } = Astro.props;
+const { count, label } = Astro.props;
 ---
 
 <div
@@ -12,7 +14,7 @@ const { count } = Astro.props;
   role="status"
   aria-live="polite"
 >
-  <span class="catalog-count__label">Найдено проектов</span>
+  <span class="catalog-count__label">{label}</span>
   <span
     class="catalog-count__value"
     data-catalog-count-value

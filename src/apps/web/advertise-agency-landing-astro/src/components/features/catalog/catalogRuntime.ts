@@ -1,5 +1,7 @@
 ﻿// Enhance the static catalogue with filtering, URL state and pagination.
 
+import { getPaginationItems } from "@/components/ui/pagination/pagination";
+
 const SEARCH_DELAY = 250;
 /** Normalize Russian text while preserving useful word boundaries. */
 export function normalizeSearch(value: string): string {
@@ -18,6 +20,7 @@ export function matchesSearch(text: string, query: string): boolean {
 }
 
 interface CatalogElements {
+  root: HTMLElement;
   form: HTMLFormElement;
   input: HTMLInputElement;
   category: HTMLSelectElement;
@@ -29,6 +32,7 @@ interface CatalogElements {
   pagination: HTMLElement;
   pages: HTMLElement;
   pageSize: number;
+  basePath: string;
   /** Cancel superseded input when a visitor commits another navigation. */
   searchTimer?: number;
 }
@@ -52,30 +56,29 @@ export function filterCatalog(
 }
 
 function getElements(): CatalogElements | undefined {
-  const form = document.querySelector<HTMLFormElement>(
-    "[data-catalog-controls]",
+  const root = document.querySelector<HTMLElement>("[data-catalog]");
+  if (!root) {
+    return undefined;
+  }
+  const form = root.querySelector<HTMLFormElement>("[data-catalog-controls]");
+  const input = root.querySelector<HTMLInputElement>('input[name="q"]');
+  const category = root.querySelector<HTMLSelectElement>(
+    'select[name="category"]',
   );
-  const input = document.querySelector<HTMLInputElement>("#project-search");
-  const category =
-    document.querySelector<HTMLSelectElement>("#project-category");
-  const count = document.querySelector<HTMLElement>("[data-catalog-count]");
-  const countValue = document.querySelector<HTMLElement>(
+  const count = root.querySelector<HTMLElement>("[data-catalog-count]");
+  const countValue = root.querySelector<HTMLElement>(
     "[data-catalog-count-value]",
   );
-  const empty = document.querySelector<HTMLElement>(
-    "[data-catalog-search-empty]",
-  );
-  const reset = document.querySelector<HTMLButtonElement>(
-    "[data-catalog-reset]",
-  );
-  const pagination = document.querySelector<HTMLElement>(
+  const empty = root.querySelector<HTMLElement>("[data-catalog-search-empty]");
+  const reset = root.querySelector<HTMLButtonElement>("[data-catalog-reset]");
+  const pagination = root.querySelector<HTMLElement>(
     "[data-catalog-pagination]",
   );
-  const pages = document.querySelector<HTMLElement>("[data-catalog-pages]");
-  const rawPageSize = pagination?.dataset.pageSize;
+  const pages = root.querySelector<HTMLElement>("[data-catalog-pages]");
+  const rawPageSize = root.dataset.catalogPageSize;
   const pageSize = Number(rawPageSize);
   const cards = Array.from(
-    document.querySelectorAll<HTMLElement>("[data-project-card]"),
+    root.querySelectorAll<HTMLElement>("[data-catalog-item]"),
   );
   if (
     !form ||
@@ -93,6 +96,7 @@ function getElements(): CatalogElements | undefined {
     return undefined;
   }
   return {
+    root,
     form,
     input,
     category,
@@ -104,15 +108,21 @@ function getElements(): CatalogElements | undefined {
     pagination,
     pages,
     pageSize,
+    basePath: root.dataset.catalogBasePath ?? "/projects/",
   };
 }
 
-function readState(): { query: string; category: string; page: number } {
+function readState(basePath: string): {
+  query: string;
+  category: string;
+  page: number;
+} {
   const params = new URLSearchParams(window.location.search);
-  // Static pagination uses a route segment; enhanced links may use a query.
-  const routePage = window.location.pathname.match(
-    /^\/projects\/page\/(\d+)\/?$/,
-  )?.[1];
+  const pagePrefix = `${basePath}page/`;
+  const routeSuffix = window.location.pathname.startsWith(pagePrefix)
+    ? window.location.pathname.slice(pagePrefix.length)
+    : "";
+  const routePage = routeSuffix.match(/^(\d+)\/?$/)?.[1];
   const rawPage = routePage ?? params.get("page") ?? "";
   const parsedPage = /^\d+$/.test(rawPage) ? Number(rawPage) : 1;
   return {
@@ -134,7 +144,8 @@ function writeState(
   const query = elements.input.value.trim();
   if (query) params.set("q", query);
   if (elements.category.value) params.set("category", elements.category.value);
-  const path = page > 1 ? `/projects/page/${page}/` : "/projects/";
+  const path =
+    page > 1 ? `${elements.basePath}page/${page}/` : elements.basePath;
   const suffix = params.toString();
   const hash = window.location.hash;
   const url = `${path}${suffix ? `?${suffix}` : ""}${hash}`;
@@ -159,7 +170,10 @@ function renderPagination(
     accessibleLabel = label,
   ) => {
     const link = document.createElement("a");
-    link.className = "catalog-pagination__link";
+    link.className =
+      label === "←" || label === "→"
+        ? "catalog-pagination__link catalog-pagination__direction"
+        : "catalog-pagination__link";
     link.textContent = label;
     link.setAttribute("aria-label", accessibleLabel);
     link.setAttribute("aria-disabled", String(disabled));
@@ -189,32 +203,7 @@ function renderPagination(
     elements.pages.append(link);
   };
   add("←", Math.max(1, current - 1), current === 1, "Previous page");
-  const siblings = 1;
-  const boundaries = 1;
-  const totalPageNumbers = boundaries * 2 + siblings * 2 + 3;
-  const paginationItems: Array<number | "ellipsis"> = [];
-  const leftDots = current > siblings + boundaries + 2;
-  const rightDots = current < total - siblings - boundaries - 1;
-  if (total <= totalPageNumbers) {
-    for (let page = 1; page <= total; page += 1) paginationItems.push(page);
-  } else if (!leftDots && rightDots) {
-    for (let page = 1; page <= totalPageNumbers - 2; page += 1) {
-      paginationItems.push(page);
-    }
-    paginationItems.push("ellipsis", total);
-  } else if (leftDots && !rightDots) {
-    paginationItems.push(1, "ellipsis");
-    for (let page = total - totalPageNumbers + 3; page <= total; page += 1) {
-      paginationItems.push(page);
-    }
-  } else {
-    paginationItems.push(1, "ellipsis");
-    for (let page = current - siblings; page <= current + siblings; page += 1) {
-      paginationItems.push(page);
-    }
-    paginationItems.push("ellipsis", total);
-  }
-  for (const page of paginationItems) {
+  for (const page of getPaginationItems(total, current)) {
     if (page === "ellipsis") {
       const ellipsis = document.createElement("span");
       ellipsis.className = "catalog-pagination__ellipsis";
@@ -238,7 +227,8 @@ function pageUrl(elements: CatalogElements, page: number): string {
   const query = elements.input.value.trim();
   if (query) params.set("q", query);
   if (elements.category.value) params.set("category", elements.category.value);
-  const path = page > 1 ? `/projects/page/${page}/` : "/projects/";
+  const path =
+    page > 1 ? `${elements.basePath}page/${page}/` : elements.basePath;
   const suffix = params.toString();
   return `${path}${suffix ? `?${suffix}` : ""}` + window.location.hash;
 }
@@ -282,7 +272,7 @@ function update(
   const actualPage = applyFilters(elements, page);
   writeState(elements, actualPage, push ? "push" : "replace");
   if (moveFocus) {
-    document.querySelector<HTMLElement>("[data-catalog-results]")?.focus();
+    elements.root.querySelector<HTMLElement>("[data-catalog-results]")?.focus();
   }
 }
 
@@ -291,21 +281,7 @@ function initializeCatalog(): void {
   const elements = getElements();
   if (!elements) return;
   elements.form.hidden = false;
-  // Preserve the filtered result tab when a visitor opens a project card.
-  document.addEventListener("click", (event) => {
-    if (!(event.target instanceof Element)) return;
-    const link = event.target.closest<HTMLAnchorElement>("[data-project-link]");
-    if (!link) return;
-    try {
-      sessionStorage.setItem(
-        "project-catalog-return",
-        `${window.location.pathname}${window.location.search}#catalog-results`,
-      );
-    } catch {
-      // Private browsing may block storage; the static fallback remains valid.
-    }
-  });
-  const state = readState();
+  const state = readState(elements.basePath);
   elements.input.value = state.query;
   elements.category.value = state.category;
   const resetPage = (push: boolean) => update(elements, 1, push);
@@ -331,7 +307,7 @@ function initializeCatalog(): void {
     // Restored history wins over input scheduled on the page being left.
     window.clearTimeout(elements.searchTimer);
     elements.searchTimer = undefined;
-    const next = readState();
+    const next = readState(elements.basePath);
     elements.input.value = next.query;
     elements.category.value = next.category;
     applyFilters(elements, next.page);

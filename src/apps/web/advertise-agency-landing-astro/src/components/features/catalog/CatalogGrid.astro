@@ -1,0 +1,67 @@
+---
+// Render caller-provided cards with searchable metadata and static paging.
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+interface Props {
+  Item: AstroComponentFactory;
+  items: {
+    category: string;
+    props: Record<string, unknown>;
+    searchText: string;
+  }[];
+  page: number;
+  pageSize: number;
+  resultsLabel: string;
+  resultsId: string;
+}
+
+const { Item, items, page, pageSize, resultsId, resultsLabel } = Astro.props;
+---
+
+<div
+  class="catalog-grid"
+  id={resultsId}
+  data-catalog-results
+  tabindex="-1"
+  aria-label={resultsLabel}
+>
+  {items.map((entry, index) => (
+    <div
+      data-catalog-item
+      data-category={entry.category}
+      data-search={entry.searchText}
+      hidden={index < (page - 1) * pageSize || index >= page * pageSize}
+    >
+      <Item {...entry.props} />
+    </div>
+  ))}
+</div>
+
+<style>
+  /* Keep cards in a stable responsive grid at all catalog sizes. */
+  .catalog-grid {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Let filtered cards leave the grid without reserving empty space. */
+  .catalog-grid [data-catalog-item][hidden] {
+    display: none;
+  }
+
+  /* Add columns only after cards have enough room to remain readable. */
+  @media (min-width: 48rem) {
+    .catalog-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Use three columns on wide screens while preserving stable card widths. */
+  @media (min-width: 64rem) {
+    .catalog-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
