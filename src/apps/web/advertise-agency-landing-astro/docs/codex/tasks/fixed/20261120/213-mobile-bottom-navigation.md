@@ -4,6 +4,8 @@
 - **Tester:** Luna (`gpt-6-luna`), reasoning: `medium`.
 - **Reviewer:** Luna (`gpt-6-luna`), reasoning: `medium`.
 
+Статус — `fixed`. Архивирована 2026-11-20 по запросу пользователя.
+
 ## Scope
 
 - Match the fixed mobile bottom navigation from `http://localhost:4330/` while using this site's existing theme and component conventions.

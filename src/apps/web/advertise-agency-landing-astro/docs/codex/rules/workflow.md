@@ -83,6 +83,11 @@ unrelated user changes. Follow the commit format in
 [code style](code-style.md#commits). Commit only after required checks and
 review pass; never push without authorization.
 
+Before committing a completed task, first move its task record to
+`docs/codex/tasks/fixed/yyyyMMdd/`, update its status and all references, and
+verify the move. Do not commit the completed task while its record remains in
+`todo` or `backlog`.
+
 Inspect `.codex/`, `harness/` and `docs/codex/tasks/` before creating work;
 avoid duplicates. Keep agent files in the project or `~/dev/`, never Documents,
 Desktop, OneDrive or another synchronized folder.

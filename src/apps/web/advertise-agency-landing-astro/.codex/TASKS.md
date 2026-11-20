@@ -7,15 +7,9 @@ scope and verification belong to the linked task files.
 
 ## Active tasks
 
-Task [232 - Group components by feature](../docs/codex/tasks/todo/232-group-components-by-feature.md)
-is in `todo`. See its handoff for implementation and verification results.
-
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.
 UI task 171 is archived; delivery is deferred to task 173.
-Task [213](../docs/codex/tasks/todo/213-mobile-bottom-navigation.md) is
-implemented and browser-checked; `pnpm check` fails in `@emnapi`, and colocated
-component tests remain outstanding.
 
 ## Recent completed work
 
@@ -64,6 +58,10 @@ component tests remain outstanding.
   complete.
 
 ## Task index
+
+- [213 — Mobile bottom navigation](../docs/codex/tasks/fixed/20261120/213-mobile-bottom-navigation.md)
+  and [232 — Group components by feature](../docs/codex/tasks/fixed/20261120/232-group-components-by-feature.md)
+  were archived on request. Their handoffs record incomplete verification.
 
 - [236 — Общий каталог и пагинация][task236] завершена и перенесена в `fixed`;
   полный verification прошёл.
