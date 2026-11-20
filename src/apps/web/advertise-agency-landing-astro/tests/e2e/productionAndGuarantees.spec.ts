@@ -91,6 +91,15 @@ test("guidance cards scroll while evidence is unapproved", async ({ page }) => {
       .toBeGreaterThanOrEqual(targetScroll - 1);
   }
   await expect(next).toBeDisabled();
+  await expect
+    .poll(() =>
+      cards.last().evaluate((card) => {
+        const viewport =
+          card.parentElement!.parentElement!.getBoundingClientRect();
+        return Math.abs(card.getBoundingClientRect().right - viewport.right);
+      }),
+    )
+    .toBeLessThanOrEqual(1);
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(
