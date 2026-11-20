@@ -1,7 +1,8 @@
 // Browser contracts for publication gates and guidance card states.
 import { expect, test } from "./fixtures";
 
-const GUIDANCE_CARD_COUNT = 3;
+const GUIDANCE_CARD_COUNT = 6;
+const DESKTOP_SCROLL_DELTA_PX = 2000;
 
 test("guidance cards scroll while evidence is unapproved", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -108,5 +109,22 @@ test("guidance cards scroll while evidence is unapproved", async ({ page }) => {
 
   await page.setViewportSize({ width: 1280, height: 900 });
   await expect(viewport).toBeVisible();
-  await expect(controls).toBeHidden();
+  await expect(controls).toBeVisible();
+  await viewport.evaluate((node) => {
+    node.scrollLeft = 0;
+  });
+  await expect(previous).toBeDisabled();
+
+  await viewport.hover();
+  await page.mouse.wheel(DESKTOP_SCROLL_DELTA_PX, 0);
+  await expect(next).toBeDisabled();
+  await expect
+    .poll(() =>
+      cards.last().evaluate((card) => {
+        const viewport =
+          card.parentElement!.parentElement!.getBoundingClientRect();
+        return Math.abs(card.getBoundingClientRect().right - viewport.right);
+      }),
+    )
+    .toBeLessThanOrEqual(1);
 });

@@ -18,6 +18,21 @@
       "title": "TEST_GUIDANCE_THREE",
       "description": "TEST_GUIDANCE_DESCRIPTION_THREE",
       "icon": "/images/guarantees/production.svg"
+    },
+    {
+      "title": "TEST_GUIDANCE_FOUR",
+      "description": "TEST_GUIDANCE_DESCRIPTION_FOUR",
+      "icon": "/images/guarantees/production.svg"
+    },
+    {
+      "title": "TEST_GUIDANCE_FIVE",
+      "description": "TEST_GUIDANCE_DESCRIPTION_FIVE",
+      "icon": "/images/guarantees/production.svg"
+    },
+    {
+      "title": "TEST_GUIDANCE_SIX",
+      "description": "TEST_GUIDANCE_DESCRIPTION_SIX",
+      "icon": "/images/guarantees/production.svg"
     }
   ],
   "copyApproved": false,
