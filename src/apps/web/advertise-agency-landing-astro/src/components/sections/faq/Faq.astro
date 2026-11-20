@@ -94,6 +94,21 @@ const items = getVisibleFaqItems(faq);
     border-radius: var(--radius-field);
     background: var(--color-base-100);
     color: var(--color-base-content);
+    interpolate-size: allow-keywords;
+  }
+
+  /* Animate answer visibility while allowing content to define its height. */
+  .faq-list :global(.faq-item::details-content) {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 220ms ease,
+      content-visibility 220ms allow-discrete;
+  }
+
+  /* Expand answers to their natural height when a question is opened. */
+  .faq-list :global(.faq-item[open]::details-content) {
+    block-size: auto;
   }
 
   /* Retain the native marker and a generous wrapping activation target. */
@@ -130,5 +145,12 @@ const items = getVisibleFaqItems(faq);
     padding: clamp(1rem, 3vw, 1.5rem);
     margin: 0;
     line-height: 1.7;
+  }
+
+  /* Keep disclosures immediate for visitors who request reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    .faq-list :global(.faq-item::details-content) {
+      transition: none;
+    }
   }
 </style>
