@@ -59,6 +59,9 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Task index
 
+- [237 — Общие компоненты каруселей](../docs/codex/tasks/fixed/20261120/237-share-carousel-controls.md):
+  принята и архивирована; целевые проверки прошли.
+
 - [213 — Mobile bottom navigation](../docs/codex/tasks/fixed/20261120/213-mobile-bottom-navigation.md)
   and [232 — Group components by feature](../docs/codex/tasks/fixed/20261120/232-group-components-by-feature.md)
   were archived on request. Their handoffs record incomplete verification.

@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import Component from "./CylinderCarousel.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders caller slides once and exposes optional controls", async () => {
   const body = await render(
@@ -30,4 +30,34 @@ it("renders caller slides once and exposes optional controls", async () => {
   expect(body.querySelector("[data-cylinder-prev]")).toBeNull();
   expect(body.querySelector("[data-cylinder-next]")).toBeNull();
   expect(body.querySelector(".cylinder-dots")).toBeNull();
+});
+
+it("renders common controls with a browser-managed dot template", async () => {
+  const body = await render(
+    Component,
+    {
+      label: "Gallery",
+      previousLabel: "Previous image",
+      nextLabel: "Next image",
+      dotsLabel: "Choose image",
+      slideLabel: "Show image",
+    },
+    {
+      default:
+        "<div data-cylinder-slide>One</div><div data-cylinder-slide>Two</div>",
+    },
+  );
+
+  expect(body.querySelector("[data-cylinder-prev]")).toHaveClass(
+    "carousel-control",
+    "cylinder-arrow",
+  );
+  expect(body.querySelector("[data-cylinder-next]")).toHaveClass(
+    "carousel-control",
+    "cylinder-arrow",
+  );
+  const template = body.querySelector<HTMLTemplateElement>(
+    "[data-cylinder-dot-template]",
+  );
+  expect(template?.content.querySelector(".carousel-dot")).not.toBeNull();
 });

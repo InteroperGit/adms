@@ -53,12 +53,11 @@ commands/results and risks. Use the least expensive reliable model per step:
   distilled problem, attempts, constraints and results; never use as a default
   reviewer or parallel worker.
 
-Start Luna medium for clear local work; use Sol first for architectural
-ambiguity. Escalate on a concrete failure/conflicting evidence, not uncertainty
-alone; return to Luna once design is settled. Do not duplicate a passing review
-or use a larger model for explicit checks. Record actual escalations in the
-task: failed step, evidence, chosen model/effort, decision and verification. Do
-not present speculative model comparisons/token estimates as facts.
+Escalate on concrete failures or conflicting evidence, not uncertainty alone;
+return to Luna once the design is settled. Do not repeat a passing review or use
+a larger model for explicit checks. Record escalations in the task with the
+failure, evidence, model/effort, decision and verification. Do not present
+speculative model comparisons or token estimates as facts.
 
 The primary agent owns scope, shared state, integration and acceptance. Delegate
 independent bounded work only when it saves time/context; prefer one focused
@@ -73,20 +72,12 @@ and [Luna guidance](https://developers.openai.com/api/docs/models/gpt-6-luna).
 
 ## Tasks and handoff
 
-Create automatic commits only in automatic task execution mode. In that mode,
-after completing and accepting each task, create a separate local Git commit
-before starting the next task, unless the user explicitly asks to skip commits.
-Creating or editing task records and manually executing tasks do not authorize a
-commit: outside automatic execution, commit only on the user's explicit request.
-Include only that task's changes and its updated task records; preserve
-unrelated user changes. Follow the commit format in
-[code style](code-style.md#commits). Commit only after required checks and
-review pass; never push without authorization.
-
-Before committing a completed task, first move its task record to
-`docs/codex/tasks/fixed/yyyyMMdd/`, update its status and all references, and
-verify the move. Do not commit the completed task while its record remains in
-`todo` or `backlog`.
+In automatic task execution, create a separate local Git commit after each task
+is accepted, unless the user asks to skip commits. Otherwise, commit only on the
+user's explicit request. Before any commit, required checks and review must pass
+and the task lifecycle below must be complete. Include only that task's changes
+and record; preserve unrelated changes. Follow the
+[commit format](code-style.md#commits); never push without authorization.
 
 Inspect `.codex/`, `harness/` and `docs/codex/tasks/` before creating work;
 avoid duplicates. Keep agent files in the project or `~/dev/`, never Documents,
@@ -95,20 +86,17 @@ Desktop, OneDrive or another synchronized folder.
 - `.codex/{agents,skills,prompts}/`: custom agent TOML basename matches its
   name.
 - `docs/codex/tasks/{plan,todo,backlog,learn}/`: plans, active tasks, queued
-  tasks and lessons. Create every task in `backlog`; move it to `todo` when
-  execution begins. Number task names with leading zeros in execution order
+  tasks and lessons. Number task names with leading zeros in execution order
   (`001-feature.md`); structured Plan-Todo-Learn records use
   `YYYYMMDD_HHMMSS_<type>.md` (e.g. `20231027_100000_plan.md`).
-- During automatic task execution, move each task from `backlog` to `todo`
-  before implementation starts. After all execution and acceptance checklist
-  items are resolved, required checks pass and review findings are addressed,
-  automatically move it to `docs/codex/tasks/fixed/yyyyMMdd/`. No separate
-  confirmation is required for these transitions. Keep unfinished or blocked
-  tasks in `todo` with their remaining work recorded.
-- Outside automatic execution, move tasks to `fixed` only when the user
-  explicitly requests it. On every move, preserve the numbered filename, update
-  the task status, relative links, plan references and `.codex/TASKS.md`. Use
-  the completion date in Europe/Moscow for the `fixed` directory.
+- Create tasks in `backlog`; at execution start, move them to `todo` before
+  implementation in both manual and automatic execution.
+- Once all execution and acceptance items are resolved, required checks pass and
+  review findings are addressed, move the task to `fixed` without separate
+  confirmation. Keep unfinished or blocked tasks in `todo` with remaining work
+  recorded. Use the completion date in Europe/Moscow for the `fixed` directory.
+- On every move, preserve the numbered filename and update status, relative
+  links, plan references and `.codex/TASKS.md`.
 - Optional phases: `harness/build/phase-01-name.md`; context:
   `harness/context/`.
 - Auxiliary names: descriptive lowercase hyphenated slugs, `.md` for Markdown;
@@ -124,14 +112,12 @@ Use a standalone `## Scope` section followed immediately by a standalone
 every Scope requirement as a Markdown bullet (`- `), with one distinct
 requirement or constraint per item. Do not bury requirements in prose
 paragraphs; wrap continuation lines under their bullet. Keep execution and
-acceptance checkboxes in their respective sections. Execution records applicable
-skills, primary and worker participants, model/effort per distinct step or
-explicitly no delegation, and an actionable checklist for instructions,
-implementation, focused checks, acceptance and handoff/archive. Keep execution
-details out of Scope and do not merge the two sections. Do not add inapplicable
-checks or weaken gates. Follow [testing](testing.md) for required colocated unit
-tests. Run full verification only when the user explicitly requests it after
-implementation.
+acceptance checklists in their respective sections. Execution records applicable
+skills, participants, model/effort per step or explicitly no delegation, and
+checklists for instructions, implementation, focused checks, acceptance and
+handoff. Keep execution details out of Scope and do not merge the sections. Do
+not add inapplicable checks or weaken gates. Follow [testing](testing.md) for
+colocated unit tests.
 
 ### Task header and role routing
 
@@ -156,35 +142,31 @@ creating or revising tasks, including backlog tasks.
 
 ### Task checklists
 
-Every task must contain Markdown checkboxes (`- [ ]`) for execution steps and
-observable acceptance criteria. Include implementation, applicable checks,
-review and handoff so the lists make completion verifiable. Keep distinct
-outcomes in separate items; name the affected files, behavior or check.
+Every task must have Markdown checkbox lists for execution and observable
+acceptance criteria. Cover implementation, applicable checks, review and
+handoff; keep distinct outcomes separate and name affected files, behavior or
+checks.
 
-Update the task file as work progresses: mark an item `- [x]` only after its
-work is complete and verified. Record supporting files, commands and results in
-the task handoff; for delegated work include the worker and stage. Running a
-command alone does not complete a passing-check item. Reopen checked items when
-later changes invalidate their evidence or a check fails again.
+Update the task as work progresses. Check items only after outcomes are verified
+and record supporting files, commands and results in the handoff. Include the
+worker and stage for delegated work. Reopen items when later changes invalidate
+their evidence or a check fails again.
 
 Leave failed, blocked and unperformed items unchecked and record the reason and
 next action. For conditional items, record why they do not apply before marking
 them resolved. Never silently delete or weaken a criterion to close a task. A
 task is complete only when every execution and acceptance item is resolved,
 required checks pass and review findings are addressed. Reconcile both lists
-before reporting completion or moving the task to `fixed`.
+before reporting completion.
 
-After verified acceptance record changes/results and update relative links and
-plan status. Explicitly deferred tasks keep filename, evidence and outstanding
-inputs when moved to backlog; update references on every move. User instructions
-can exclude task edits for a session.
+Preserve the filename, evidence and outstanding inputs when deferring a task to
+`backlog`. User instructions can exclude task edits for a session.
 
 `.codex/TASKS.md` is current state, not a journal: active links with short
 status/next action, blockers, resume constraints/decisions, optionally a useful
 recent-completion summary, and links to todo/backlog/fixed and these rules.
-Detailed scopes/history/logs belong to numbered tasks and Git. Update it for
-current work; remove old detail on archival/deferral. Aim below 80 lines and
-compact if it grows larger.
+Detailed scope and history belong to numbered tasks and Git. Keep the index
+below 80 lines and compact it if it grows larger.
 
 ## Servers and generated files
 

@@ -8,18 +8,29 @@ interface Props {
   // Manual navigation uses buttons; automatic-only dots remain passive.
   manualNavigation: boolean;
   // Associate each selectable dot with its corresponding slide.
-  slideId: string;
+  slideId?: string;
+  // Let browser-driven carousels supply the dot count after initialization.
+  runtimeManaged?: boolean;
 }
 
-const { index, itemName, manualNavigation, slideId } = Astro.props;
+const {
+  index,
+  itemName,
+  manualNavigation,
+  slideId,
+  runtimeManaged = false,
+} = Astro.props;
+const marker = runtimeManaged
+  ? { "data-cylinder-index": index }
+  : { "data-index": index };
 ---
 
 {/* Keep manual markers keyboard-accessible and passive markers inert. */}
 {manualNavigation ? (
   <button
     type="button"
-    class="carousel-dot"
-    data-index={index}
+    class:list={["carousel-dot", runtimeManaged && "cylinder-dot"]}
+    {...marker}
     aria-label={"Показать: " + itemName + " " + (index + 1)}
     aria-controls={slideId}
   >
@@ -27,8 +38,8 @@ const { index, itemName, manualNavigation, slideId } = Astro.props;
   </button>
 ) : (
   <span
-    class="carousel-dot"
-    data-index={index}
+    class:list={["carousel-dot", runtimeManaged && "cylinder-dot"]}
+    {...marker}
   >
     <span></span>
   </span>

@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import CarouselDot from "./CarouselDot.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders a labeled button linked to its slide", async () => {
   const body = await render(CarouselDot, {

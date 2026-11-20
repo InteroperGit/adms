@@ -42,13 +42,19 @@ function initialize(element: HTMLElement): () => void {
   }
 
   const dotsContainer = element.querySelector<HTMLElement>(".cylinder-dots");
+  const dotTemplate = element.querySelector<HTMLTemplateElement>(
+    "[data-cylinder-dot-template]",
+  );
   dotsContainer?.replaceChildren();
   const manualNavigation = element.dataset.manual === "true";
   const slideLabel = element.dataset.slideLabel || "Show slide";
   if (dotsContainer) {
     slides.forEach((_, index) => {
-      const dot = document.createElement(manualNavigation ? "button" : "span");
-      dot.className = "cylinder-dot";
+      const templateDot = dotTemplate?.content.firstElementChild;
+      const dot = templateDot
+        ? (templateDot.cloneNode(true) as HTMLElement)
+        : document.createElement(manualNavigation ? "button" : "span");
+      dot.classList.add("cylinder-dot");
       dot.dataset.cylinderIndex = String(index);
       if (manualNavigation && dot instanceof HTMLButtonElement) {
         dot.type = "button";

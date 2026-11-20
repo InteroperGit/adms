@@ -1,5 +1,7 @@
 ---
 // Provide accessible controls and looping behavior for caller-rendered slides.
+import CarouselControl from "../common/CarouselControl.astro";
+import CarouselDot from "../common/CarouselDot.astro";
 interface Props {
   label: string;
   previousLabel: string;
@@ -82,14 +84,14 @@ if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
     hidden
   >
     {controls && manualNavigation && (
-      <button
-        class="cylinder-arrow"
-        type="button"
-        data-cylinder-prev
-        aria-label={previousLabel}
+      <CarouselControl
+        className="cylinder-arrow carousel-arrow"
+        dataCylinder="previous"
+        label={previousLabel}
+        direction="previous"
       >
         <span aria-hidden="true">‹</span>
-      </button>
+      </CarouselControl>
     )}
     {dots && (
       <div
@@ -100,15 +102,23 @@ if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
       ></div>
     )}
     {controls && manualNavigation && (
-      <button
-        class="cylinder-arrow"
-        type="button"
-        data-cylinder-next
-        aria-label={nextLabel}
+      <CarouselControl
+        className="cylinder-arrow carousel-arrow"
+        dataCylinder="next"
+        label={nextLabel}
+        direction="next"
       >
         <span aria-hidden="true">›</span>
-      </button>
+      </CarouselControl>
     )}
+    <template data-cylinder-dot-template>
+      <CarouselDot
+        index={0}
+        itemName={slideLabel}
+        manualNavigation={manualNavigation}
+        runtimeManaged={true}
+      />
+    </template>
     <span
       class="sr-only"
       role="status"
@@ -125,6 +135,7 @@ if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
   /* Keep slides overlaid so preview width never changes the frame geometry. */
   .cylinder-carousel {
     --cylinder-gap: 1rem;
+    --dot-size: 2.75rem;
     position: relative;
     display: block;
     width: 100%;
@@ -208,7 +219,7 @@ if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
   }
 
   /* Keep navigation targets large enough for touch and pointer use. */
-  .cylinder-arrow,
+  :global(.cylinder-arrow),
   :global(.cylinder-dot) {
     display: grid;
     place-items: center;
@@ -222,7 +233,7 @@ if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
   }
 
   /* Center previous navigation over the left edge. */
-  .cylinder-arrow[data-cylinder-prev] {
+  :global(.cylinder-arrow[data-cylinder-prev]) {
     position: absolute;
     top: 50%;
     left: 8px;
@@ -230,7 +241,7 @@ if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
   }
 
   /* Center next navigation over the right edge. */
-  .cylinder-arrow[data-cylinder-next] {
+  :global(.cylinder-arrow[data-cylinder-next]) {
     position: absolute;
     top: 50%;
     right: 8px;
@@ -248,36 +259,14 @@ if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
     justify-content: center;
   }
 
-  /* Render each dot as a stable circular target. */
-  :global(.cylinder-dot::after) {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: currentColor;
-    content: "";
-    opacity: 0.65;
-  }
-
-  /* Distinguish the selected slide and retain its focus indicator. */
-  :global(.cylinder-dot[aria-current="true"]::after) {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-
-  /* Keep keyboard focus visible on generated dot controls. */
-  :global(.cylinder-dot:focus-visible) {
-    outline: 3px solid #fff;
-    outline-offset: 2px;
-  }
-
   /* Reveal desktop arrows on hover or keyboard focus. */
   @media (hover: hover) and (pointer: fine) {
-    .cylinder-arrow {
+    :global(.cylinder-arrow) {
       opacity: 0;
     }
 
-    .cylinder-carousel:hover .cylinder-arrow,
-    .cylinder-carousel:focus-within .cylinder-arrow {
+    .cylinder-carousel:hover :global(.cylinder-arrow),
+    .cylinder-carousel:focus-within :global(.cylinder-arrow) {
       opacity: 1;
     }
   }

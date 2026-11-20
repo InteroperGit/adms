@@ -3,6 +3,7 @@
 interface CommonProps {
   label: string;
   className?: string;
+  dataCylinder?: "previous" | "next";
 }
 
 type Props = CommonProps &
@@ -49,6 +50,8 @@ const galleryMarker = isClose
   data-gallery-close={galleryMarker === "close" ? true : undefined}
   data-gallery-previous={galleryMarker === "previous" ? true : undefined}
   data-gallery-next={galleryMarker === "next" ? true : undefined}
+  data-cylinder-prev={props.dataCylinder === "previous" ? true : undefined}
+  data-cylinder-next={props.dataCylinder === "next" ? true : undefined}
 >
   <svg
     viewBox="0 0 24 24"

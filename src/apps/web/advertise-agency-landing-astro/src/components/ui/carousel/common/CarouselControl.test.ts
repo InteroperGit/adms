@@ -2,7 +2,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import Component from "./CarouselControl.astro";
-import { render } from "../../../../tests/helpers/render";
+import { render } from "../../../../../tests/helpers/render";
 
 it("renders a previous arrow with its runtime markers", async () => {
   const body = await render(Component, {
