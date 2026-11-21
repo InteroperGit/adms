@@ -1,7 +1,7 @@
 ---
 // Shared image carousel: static HTML first, instance-local enhancement later.
 // Callers own content/section layout; options only control optional features.
-import ImageCarouselSlide from "./ImageCarouselSlide.astro";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import CarouselControl from "./CarouselControl.astro";
 import CarouselDots from "../common/CarouselDots.astro";
 import type {
@@ -15,6 +15,7 @@ import {
 } from "@/validation/imageCarousel";
 
 interface Props {
+  Item: AstroComponentFactory;
   // IDs must be unique on the page; they namespace slides and controls.
   id: string;
   label: string;
@@ -30,6 +31,7 @@ interface Props {
 }
 
 const {
+  Item,
   id,
   label,
   itemLabel = "Изображение",
@@ -37,15 +39,34 @@ const {
   items: suppliedItems,
   options: suppliedOptions = {},
 } = Astro.props;
+if (Astro.slots.has("default")) {
+  throw new Error(
+    "ImageCarousel accepts items and Item props, not slide slots",
+  );
+}
+if (typeof Item !== "function") {
+  throw new Error("ImageCarousel needs an Astro Item component");
+}
 if (!/^[a-zA-Z][\w-]*$/.test(id) || !label.trim()) {
   throw new Error("ImageCarousel needs a unique HTML id and a label");
 }
-const options = carouselOptionsSchema.parse(suppliedOptions);
+const options = (() => {
+  try {
+    return carouselOptionsSchema.parse(suppliedOptions);
+  } catch (error) {
+    throw new Error(`ImageCarousel options are invalid: ${String(error)}`);
+  }
+})();
+const parsedItems = (() => {
+  try {
+    return carouselItemsSchema.parse(suppliedItems);
+  } catch (error) {
+    throw new Error(`ImageCarousel items are invalid: ${String(error)}`);
+  }
+})();
 // Add ten percent to the existing one-third panel height increase.
 const panelRatio = options.aspectRatio * (0.75 / 1.1);
-const items = carouselItemsSchema
-  .parse(suppliedItems)
-  .filter((item) => item.enabled);
+const items = parsedItems.filter((item) => item.enabled);
 const itemName = itemLabel.toLowerCase();
 const multiple = items.length > 1;
 const arrows = multiple && options.manualNavigation && options.arrows;
@@ -107,7 +128,7 @@ const circles = multiple && options.circles;
     {/* All slides remain in editorial order in the static fallback. */}
     <div class="carousel-list">
       {items.map((item, index) => (
-        <ImageCarouselSlide
+        <Item
           id={`${slideIdPrefix}-${item.id}`}
           item={item}
           index={index}

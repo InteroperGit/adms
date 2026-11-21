@@ -11,6 +11,9 @@ import Stats from "@/components/ui/Stats.astro";
 // prettier-ignore
 import ImageCarousel from
   "../../ui/carousel/image-carousel/ImageCarousel.astro";
+// prettier-ignore
+import ImageCarouselSlide from
+  "../../ui/carousel/image-carousel/ImageCarouselSlide.astro";
 import { aboutCarousel } from "@/content/aboutCarousel";
 const hasImages =
   aboutCarousel.options.enabled &&
@@ -49,6 +52,7 @@ const contacts = site.menu.find((item) => item.href === "/#contacts");
     {hasImages && (
       <figure class="opening-media">
         <ImageCarousel
+          Item={ImageCarouselSlide}
           id="about-carousel"
           label="Иллюстрации наружной рекламы"
           items={aboutCarousel.items}

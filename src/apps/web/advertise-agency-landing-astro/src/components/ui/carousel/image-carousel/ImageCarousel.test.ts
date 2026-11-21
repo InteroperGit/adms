@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { expect, it } from "vitest";
 import ImageCarousel from "./ImageCarousel.astro";
+import ImageCarouselSlide from "./ImageCarouselSlide.astro";
 import { render } from "../../../../../tests/helpers/render";
 
 const items = [
@@ -32,6 +33,7 @@ const items = [
 
 it("filters slides and maps controls to enabled slide IDs", async () => {
   const body = await render(ImageCarousel, {
+    Item: ImageCarouselSlide,
     id: "work-carousel",
     label: "Selected work",
     slideIdPrefix: "work",
@@ -47,6 +49,8 @@ it("filters slides and maps controls to enabled slide IDs", async () => {
   expect(body.querySelector("#work-1")).toBeInTheDocument();
   expect(body.querySelector("#work-2")).not.toBeInTheDocument();
   expect(body.querySelector("#work-3")).toBeInTheDocument();
+  expect(body.querySelector("#work-1 img")).toHaveAttribute("alt", "First");
+  expect(body.querySelector("#work-3 img")).toHaveAttribute("alt", "Third");
   expect(body.querySelectorAll(".carousel-dot")).toHaveLength(2);
   expect(body.querySelector(".carousel-arrow")).not.toHaveClass(
     "carousel-control-circle",
@@ -56,6 +60,7 @@ it("filters slides and maps controls to enabled slide IDs", async () => {
 
 it("uses passive dots and omits hidden or disabled controls", async () => {
   const passive = await render(ImageCarousel, {
+    Item: ImageCarouselSlide,
     id: "passive",
     label: "Passive",
     items,
@@ -68,6 +73,7 @@ it("uses passive dots and omits hidden or disabled controls", async () => {
   );
 
   const disabled = await render(ImageCarousel, {
+    Item: ImageCarouselSlide,
     id: "disabled",
     label: "Disabled",
     items,
@@ -78,6 +84,7 @@ it("uses passive dots and omits hidden or disabled controls", async () => {
 
 it("uses the default slide prefix and omits one-slide controls", async () => {
   const body = await render(ImageCarousel, {
+    Item: ImageCarouselSlide,
     id: "single",
     label: "Single image",
     items: [items[0]],
@@ -89,6 +96,7 @@ it("uses the default slide prefix and omits one-slide controls", async () => {
 
 it("renders runtime options and independent control settings", async () => {
   const body = await render(ImageCarousel, {
+    Item: ImageCarouselSlide,
     id: "options",
     label: "Options",
     items,
@@ -122,16 +130,63 @@ it.each([
   { id: "", label: "Named carousel" },
   { id: "valid-id", label: "   " },
 ])("rejects invalid carousel identity %#", async ({ id, label }) => {
-  await expect(render(ImageCarousel, { id, label, items })).rejects.toThrow(
-    "unique HTML id and a label",
-  );
+  await expect(
+    render(ImageCarousel, { Item: ImageCarouselSlide, id, label, items }),
+  ).rejects.toThrow("unique HTML id and a label");
 });
 
 it("renders no carousel when every item is disabled", async () => {
   const body = await render(ImageCarousel, {
+    Item: ImageCarouselSlide,
     id: "empty",
     label: "Empty",
     items: [items[1]],
+  });
+  expect(body.querySelector("image-carousel")).toBeNull();
+});
+
+it("requires an Item factory and a valid items array", async () => {
+  const required = { id: "required", label: "Required" };
+  await expect(render(ImageCarousel, required)).rejects.toThrow(
+    "ImageCarousel needs an Astro Item component",
+  );
+  await expect(
+    render(ImageCarousel, { ...required, Item: {}, items }),
+  ).rejects.toThrow("ImageCarousel needs an Astro Item component");
+  await expect(
+    render(ImageCarousel, { ...required, Item: ImageCarouselSlide }),
+  ).rejects.toThrow("ImageCarousel items are invalid");
+  await expect(
+    render(ImageCarousel, {
+      ...required,
+      Item: ImageCarouselSlide,
+      items: [null],
+    }),
+  ).rejects.toThrow("ImageCarousel items are invalid");
+  await expect(
+    render(ImageCarousel, {
+      ...required,
+      Item: ImageCarouselSlide,
+      items: "not-an-array",
+    }),
+  ).rejects.toThrow("ImageCarousel items are invalid");
+  await expect(
+    render(
+      ImageCarousel,
+      { ...required, Item: ImageCarouselSlide, items },
+      { default: "<ul><li>Slide</li></ul>" },
+    ),
+  ).rejects.toThrow(
+    "ImageCarousel accepts items and Item props, not slide slots",
+  );
+});
+
+it("accepts an explicitly empty selection", async () => {
+  const body = await render(ImageCarousel, {
+    Item: ImageCarouselSlide,
+    id: "no-images",
+    label: "No images",
+    items: [],
   });
   expect(body.querySelector("image-carousel")).toBeNull();
 });

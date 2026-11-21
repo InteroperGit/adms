@@ -59,6 +59,9 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Task index
 
+- [242 - Explicit items for carousels](../docs/codex/tasks/fixed/20261121/242-pass-items-and-factories-to-carousels.md):
+  implementation accepted; 57 focused tests and 36 browser scenarios passed;
+  local commit awaits explicit Git metadata authorization after auto-review denial.
 - [239 - Ordering process carousel](../docs/codex/tasks/fixed/20261121/239-use-card-carousel-for-ordering-process.md):
   complete; mouse and touch drag vectors match pointer movement 1:1 in Chromium.
 - [238 — CardCarousel][task238]: implemented; focused checks passed.

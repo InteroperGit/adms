@@ -1,8 +1,12 @@
 ---
 // Provide accessible controls and looping behavior for caller-rendered slides.
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import { z } from "astro/zod";
 import CarouselControl from "./CarouselControl.astro";
 import CarouselDot from "../common/CarouselDot.astro";
 interface Props {
+  Item: AstroComponentFactory;
+  items: Record<string, unknown>[];
   label: string;
   previousLabel: string;
   nextLabel: string;
@@ -32,6 +36,8 @@ interface Props {
 }
 
 const {
+  Item,
+  items: suppliedItems,
   label,
   previousLabel,
   nextLabel,
@@ -49,6 +55,24 @@ const {
   gapPx = 16,
   hidePreviewBelow = 768,
 } = Astro.props;
+if (Astro.slots.has("default")) {
+  throw new Error(
+    "CylinderCarousel accepts items and Item props, not slide slots",
+  );
+}
+if (typeof Item !== "function") {
+  throw new Error("CylinderCarousel needs an Astro Item component");
+}
+const items = (() => {
+  try {
+    return z
+      .array(z.record(z.string(), z.unknown()))
+      .min(1, "CylinderCarousel needs at least one item")
+      .parse(suppliedItems);
+  } catch (error) {
+    throw new Error(`CylinderCarousel items are invalid: ${String(error)}`);
+  }
+})();
 const validInterval = Number.isFinite(intervalMs) && intervalMs > 0;
 const validPeek =
   Number.isFinite(peekPercent) && peekPercent >= 0 && peekPercent <= 45;
@@ -77,7 +101,16 @@ if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
   tabindex="0"
 >
   <div class="cylinder-slides">
-    <slot />
+    {items.map((item, index) => (
+      <div
+        data-cylinder-slide
+        aria-label={`${label} ${index + 1} из ${items.length}`}
+        aria-hidden={index > 0 ? "true" : undefined}
+        inert={index > 0 ? true : undefined}
+      >
+        <Item {...item} />
+      </div>
+    ))}
   </div>
   <div
     class="cylinder-controls"

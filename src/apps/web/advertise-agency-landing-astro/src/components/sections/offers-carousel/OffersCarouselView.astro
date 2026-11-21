@@ -24,6 +24,8 @@ const renderCarousel = options.enabled && items.length > 0;
     class="offers-carousel"
   >
     <Carousel
+      Item={CarouselCard}
+      items={items.map((item, index) => ({ item, index, options }))}
       label="Предложения"
       previousLabel="Предыдущее предложение"
       nextLabel="Следующее предложение"
@@ -38,22 +40,7 @@ const renderCarousel = options.enabled && items.length > 0;
       manualNavigation={options.manualNavigation}
       controls={items.length > 1 && options.manualNavigation && options.arrows}
       dots={items.length > 1 && options.circles}
-    >
-      {items.map((item, index) => (
-        <div
-          data-cylinder-slide
-          aria-label={`Предложение ${index + 1} из ${items.length}`}
-          aria-hidden={index > 0 ? "true" : undefined}
-          inert={index > 0 ? true : undefined}
-        >
-          <CarouselCard
-            item={item}
-            index={index}
-            options={options}
-          />
-        </div>
-      ))}
-    </Carousel>
+    />
   </div>
 )}
 
