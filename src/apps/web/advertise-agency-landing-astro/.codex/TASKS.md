@@ -7,6 +7,8 @@ scope and verification belong to the linked task files.
 
 ## Active tasks
 
+- [244 - Ignore public and rewrite Git history](../docs/codex/tasks/todo/244-ignore-public-and-rewrite-history.md):
+  active; asset sourcing and target refs need resolution.
 - [240 - Pricing examples carousel](../docs/codex/tasks/todo/240-use-card-carousel-for-pricing-examples.md): implemented; focused checks pass; enlarged-text/no-JavaScript acceptance remains.
 
 Task 174 is implemented; verification follow-up is pending the user's explicit

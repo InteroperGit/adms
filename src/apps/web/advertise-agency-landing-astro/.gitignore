@@ -39,3 +39,11 @@ data/content-runtime/
 .secrets/
 release-export/
 .codex/config.toml
+
+# Keep only public assets permitted by the repository policy.
+public/*
+!public/favicon.ico
+!public/favicon.svg
+!public/images/
+public/images/*
+!public/images/social/
