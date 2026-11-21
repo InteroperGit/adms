@@ -24,6 +24,10 @@ it("embeds the live reviews widget and keeps its direct link", async () => {
   expect(body.querySelector("iframe")).toHaveAttribute("loading", "lazy");
   expect(body.querySelector("img")).toBeNull();
   expect(body.querySelector("a")).toHaveAttribute("href", props.reviewsUrl);
+  expect(body.querySelector(".yandex-reviews-link a")).toHaveClass(
+    "btn-primary",
+    "btn-lg",
+  );
 });
 
 it("renders the local placeholder when the widget is disabled", async () => {

@@ -62,4 +62,8 @@ it("shows draft answers and the notice in explicit demo mode", async () => {
   expect(body.querySelector(".faq-notice")).toHaveTextContent(
     "TEST_DEMONOTICE",
   );
+  expect(body.querySelector(".faq-inquiry a")).toHaveClass(
+    "btn-primary",
+    "btn-lg",
+  );
 });

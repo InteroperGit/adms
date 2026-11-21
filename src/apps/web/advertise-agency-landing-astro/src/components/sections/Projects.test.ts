@@ -47,3 +47,11 @@ it("handles an empty project collection", async () => {
   expect(section.querySelector(".grid")).toBeNull();
   expect(section.querySelector('a[href="/projects/"]')).toBeInTheDocument();
 });
+
+it("styles the catalogue link as a large primary action", async () => {
+  const body = await render(Component, {});
+  const link = body.querySelector('a[href="/projects/"]');
+
+  expect(link).toHaveClass("btn-primary", "btn-lg");
+  expect(link).not.toHaveClass("btn-outline");
+});

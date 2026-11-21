@@ -42,6 +42,33 @@ vi.mock("@/content/pricing", () => ({
         verifiedAt: null,
       },
     },
+    {
+      id: "second",
+      title: "Second scope",
+      description: "Another description",
+      dimensions: "3m",
+      materials: ["Steel"],
+      includedWork: ["Installation"],
+      exclusions: ["Electrical work"],
+      source: "Fixture",
+      href: undefined,
+      image: null,
+      price: {
+        type: "exact",
+        amount: 2000,
+        currency: "RUB",
+        context: "demo",
+        asOf: null,
+        conditions: "Fixture only",
+      },
+      approval: {
+        specifications: false,
+        copy: false,
+        price: false,
+        reference: null,
+        verifiedAt: null,
+      },
+    },
   ],
 }));
 
@@ -50,6 +77,10 @@ it("renders visible pricing guidance and demo disclosure", async () => {
   expect(Component).toBeDefined();
   expect(body.querySelector("section#pricing")).toBeInTheDocument();
   expect(body.querySelector(".pricing-demo")).toHaveTextContent("Demo prices");
-  expect(body.querySelectorAll(".pricing-example")).toHaveLength(1);
+  expect(body.querySelector("#pricing .card-carousel")).toHaveAttribute(
+    "aria-label",
+    "Pricing",
+  );
+  expect(body.querySelectorAll(".pricing-example")).toHaveLength(2);
   expect(body.querySelector(".pricing-guidance")).toBeInTheDocument();
 });

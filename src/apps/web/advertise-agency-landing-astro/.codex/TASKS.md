@@ -7,6 +7,8 @@ scope and verification belong to the linked task files.
 
 ## Active tasks
 
+- [240 - Pricing examples carousel](../docs/codex/tasks/todo/240-use-card-carousel-for-pricing-examples.md): implemented; focused checks pass; enlarged-text/no-JavaScript acceptance remains.
+
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.
 UI task 171 is archived; delivery is deferred to task 173.

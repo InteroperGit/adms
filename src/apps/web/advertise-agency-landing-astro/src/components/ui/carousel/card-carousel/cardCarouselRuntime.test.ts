@@ -189,6 +189,21 @@ it("drags with the mouse without selecting text or clicking a card", () => {
   expect(cardClick).not.toHaveBeenCalled();
 });
 
+it("prevents native image dragging inside the carousel", () => {
+  const { carousel } = createCarousel();
+  const image = document.createElement("img");
+  carousel.querySelector("article")?.append(image);
+  initializeCardCarousel(carousel);
+
+  const dragStart = new Event("dragstart", {
+    bubbles: true,
+    cancelable: true,
+  });
+  image.dispatchEvent(dragStart);
+
+  expect(dragStart.defaultPrevented).toBe(true);
+});
+
 it("keeps touch-dragged cards under the pointer", () => {
   const { carousel, viewport } = createCarousel();
   initializeCardCarousel(carousel);

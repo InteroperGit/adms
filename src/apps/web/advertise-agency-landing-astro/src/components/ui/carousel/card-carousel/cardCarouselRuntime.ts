@@ -153,8 +153,15 @@ function initializeCardCarousel(carousel: HTMLElement) {
     event.stopPropagation();
   };
 
+  const preventImageDrag = (event: DragEvent) => {
+    if (event.target instanceof HTMLImageElement) {
+      event.preventDefault();
+    }
+  };
+
   previous.addEventListener("click", () => scrollByCard(-1), { signal });
   next.addEventListener("click", () => scrollByCard(1), { signal });
+  viewport.addEventListener("dragstart", preventImageDrag, { signal });
   viewport.addEventListener("keydown", handleViewportKeydown, { signal });
   viewport.addEventListener("pointerdown", startPointerDrag, { signal });
   window.addEventListener("pointermove", movePointerDrag, { signal });

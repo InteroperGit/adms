@@ -4,7 +4,7 @@
 // Explicit demo mode exposes drafts without changing agency approvals.
 
 import Section from "@/components/ui/Section.astro";
-import Link from "@/components/ui/Link.astro";
+import Button from "@/components/ui/Button.astro";
 import Disclosure from "@/components/ui/Disclosure.astro";
 import { faq } from "@/content/faq";
 import { getVisibleFaqItems } from "@/validation/policies/faqPublication";
@@ -36,12 +36,14 @@ const items = getVisibleFaqItems(faq);
         ))}
       </div>
       {/* A native inquiry link offers a project-specific conversation. */}
-      <Link
-        class="faq-inquiry"
-        href={faq.inquiryHref}
-      >
-        {faq.inquiryLabel}
-      </Link>
+      <div class="faq-inquiry">
+        <Button
+          href={faq.inquiryHref}
+          size="lg"
+        >
+          {faq.inquiryLabel}
+        </Button>
+      </div>
     </div>
   </Section>
 )}
@@ -68,23 +70,11 @@ const items = getVisibleFaqItems(faq);
     margin-top: 2rem;
   }
 
-  /* A wrapping native link remains distinct and usable at enlarged sizes. */
-  :global(.faq-inquiry) {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
-    max-width: 100%;
+  /* Center the project inquiry action below all answers. */
+  .faq-inquiry {
+    display: flex;
+    justify-content: center;
     margin-top: 1.5rem;
-    color: var(--color-primary);
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-
-  /* Keep the inquiry destination apparent during keyboard navigation. */
-  :global(.faq-inquiry:focus-visible) {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 4px;
   }
 
   /* Theme tokens distinguish each disclosure from the section surface. */

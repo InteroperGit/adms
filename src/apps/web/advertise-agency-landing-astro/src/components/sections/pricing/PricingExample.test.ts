@@ -91,7 +91,7 @@ it("renders bundled photos responsively with focal points", async () => {
   const body = await render(PricingExample, { example: item, ...labels });
   const image = getByRole(body, "img");
   expect(image.getAttribute("srcset")).toContain("320w");
-  expect(image.getAttribute("sizes")).toContain("360px");
+  expect(image.getAttribute("sizes")).toContain("34vw");
   expect(image.parentElement?.getAttribute("style")).toContain(
     "--desktop-focal-point:1% 1%",
   );

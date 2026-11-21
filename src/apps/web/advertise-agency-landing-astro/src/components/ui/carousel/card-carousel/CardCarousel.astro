@@ -213,11 +213,6 @@ const { items, label, ordered: isOrdered } = props;
     scroll-snap-align: end;
   }
 
-  /* Let a single card use the whole region without an empty preview area. */
-  .card-carousel-track:has(:global(> :only-child)) :global(> *) {
-    flex-basis: 100%;
-  }
-
   /* Remove programmatic and touch-scroll animation for reduced motion. */
   @media (prefers-reduced-motion: reduce) {
     /* Keep swipe and button movement immediate for this scrolling region. */

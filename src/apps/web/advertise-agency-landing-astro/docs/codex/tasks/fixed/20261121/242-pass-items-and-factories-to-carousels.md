@@ -143,7 +143,7 @@
 [business-gallery]:
   ../../../../src/components/sections/business-solutions/media/BusinessSolutionGallery.astro
 [task239]: ../fixed/20261121/239-use-card-carousel-for-ordering-process.md
-[task240]: 240-use-card-carousel-for-pricing-examples.md
+[task240]: ../../todo/240-use-card-carousel-for-pricing-examples.md
 [task241]: 241-use-card-carousel-for-business-solutions.md
 [e2e-carousel]: ../../../../tests/e2e/media/carousel.spec.ts
 [e2e-no-js]: ../../../../tests/e2e/noJavascript.spec.ts

@@ -4,6 +4,7 @@ import { expect, test } from "./fixtures";
 const routes = ["/", "/projects/", "/projects/1/", "/services/neon/"];
 const widths = [320, 375, 1440];
 const themes = ["light", "dark"] as const;
+const CENTER_ALIGNMENT_TOLERANCE_PX = 1;
 
 for (const colorScheme of themes) {
   test(`article reflows at 200% text in ${colorScheme}`, async ({ page }) => {
@@ -44,6 +45,24 @@ for (const route of routes) {
             getComputedStyle(list).gridTemplateColumns.split(" "),
           );
           expect(columns).toHaveLength(width === 1440 ? 3 : 1);
+
+          const action = page.locator("#projects .projects-catalog-link");
+          const button = action.locator('a[href="/projects/"]');
+          const [actionBounds, buttonBounds] = await Promise.all([
+            action.boundingBox(),
+            button.boundingBox(),
+          ]);
+          if (!actionBounds || !buttonBounds) {
+            throw new Error("Project catalogue action has no layout box");
+          }
+          expect(
+            Math.abs(
+              actionBounds.x +
+                actionBounds.width / 2 -
+                buttonBounds.x -
+                buttonBounds.width / 2,
+            ),
+          ).toBeLessThan(CENTER_ALIGNMENT_TOLERANCE_PX);
         }
 
         await expect(page.locator("main")).toBeVisible();

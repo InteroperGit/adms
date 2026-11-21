@@ -53,6 +53,28 @@ for (const entry of validateContentManifest(templates)) {
     if (!project) throw new Error("E2E project not found: 1");
     project.article.content.push(...overrides.projectBlocks);
   }
+  if (path === "site/sections/pricing.json") {
+    value.demoMode = true;
+    const example = value.items[0];
+    example.image.src = "/src/assets/introduction/storefront-sign.webp";
+    value.items.push(
+      ...Array.from({ length: 4 }, (_, index) => ({
+        ...structuredClone(example),
+        id: `sample-${index + 2}`,
+        title: `${example.title} ${index + 2}`,
+        description: `${example.description} ${"Additional scope. ".repeat(
+          index + 1,
+        )}`,
+        includedWork: [
+          ...example.includedWork,
+          ...Array.from(
+            { length: index + 1 },
+            (_, item) => `Additional work ${item + 1}`,
+          ),
+        ],
+      })),
+    );
+  }
   const target = resolve(root, path);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, JSON.stringify(value, null, 2));

@@ -28,8 +28,8 @@ if (image?.src.startsWith("/src/assets/") && !original) {
 }
 const focalPoint = (point: { x: number; y: number }) =>
   `${point.x}% ${point.y}%`;
-// The desktop image occupies one third of the shared container.
-const sizes = "(min-width: 64rem) 360px, (min-width: 42rem) 40vw, 94vw";
+// Match image requests to one card in the responsive carousel.
+const sizes = "(min-width: 75rem) 34vw, (min-width: 48rem) 44vw, 80vw";
 // Genuine prices keep their reference date and context next to the amount.
 const priceContext =
   price.context === "historical"
@@ -157,10 +157,13 @@ const referenceDate = price.asOf
 <style>
   /* Divide complete scopes rather than enclosing them in decorated cards. */
   .pricing-example {
-    display: grid;
-    gap: 2rem;
-    padding-block: 2.5rem;
-    border-top: 1px solid var(--site-control-border);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    border: 1px solid var(--site-control-border);
+    border-radius: var(--radius-panel);
+    background: var(--color-base-100);
     overflow-wrap: anywhere;
   }
 
@@ -173,8 +176,9 @@ const referenceDate = price.asOf
   .pricing-photo {
     aspect-ratio: 4 / 3;
     overflow: hidden;
-    margin-bottom: 1.25rem;
-    border-radius: var(--radius-field);
+    width: calc(100% + 2.5rem);
+    margin: -1.25rem -1.25rem 1.25rem;
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
     background: var(--color-base-300);
   }
 
@@ -218,6 +222,9 @@ const referenceDate = price.asOf
 
   /* Let the price and work scope occupy the remaining reading space. */
   .pricing-details {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     min-width: 0;
   }
 
@@ -270,8 +277,10 @@ const referenceDate = price.asOf
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: auto;
+    padding-top: 2rem;
   }
 
   /* Allow long inquiry copy to wrap within even the narrowest viewport. */
@@ -290,22 +299,8 @@ const referenceDate = price.asOf
     text-underline-offset: 0.2em;
   }
 
-  /* Put the illustrated scope alongside the quote once both remain readable. */
-  @media (min-width: 42rem) {
-    /* Use a smaller image column to leave room for the work specification. */
-    .pricing-example {
-      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    }
-  }
-
-  /* Use wider screens for side-by-side included and excluded work. */
+  /* Pair work lists only when a carousel card has enough reading width. */
   @media (min-width: 64rem) {
-    /* Align all three examples with the shared desktop container. */
-    .pricing-example {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-      gap: 3rem;
-    }
-
     /* Make scope comparisons compact without shortening their copy. */
     .pricing-scope {
       grid-template-columns: repeat(2, minmax(0, 1fr));

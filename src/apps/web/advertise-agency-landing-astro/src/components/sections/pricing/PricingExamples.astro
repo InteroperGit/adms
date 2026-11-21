@@ -3,6 +3,7 @@
 // Empty collections omit the section. The loader owns demo/approval gates;
 // this section owns visible demo disclosure and the section heading.
 import PricingExample from "@/components/sections/pricing/PricingExample.astro";
+import CardCarousel from "../../ui/carousel/card-carousel/CardCarousel.astro";
 import { pricing, visiblePricingExamples } from "@/content/pricing";
 ---
 
@@ -26,15 +27,17 @@ import { pricing, visiblePricingExamples } from "@/content/pricing";
         </p>
         {pricing.demoMode && <p class="pricing-demo">{pricing.demoNotice}</p>}
       </div>
-      {/* Every complete scope includes its own adjacent inquiry link. */}
+      {/* Keep each complete scope and its inquiry link inside one card. */}
       <div class="pricing-examples">
-        {visiblePricingExamples.map((example) => (
-          <PricingExample
-            example={example}
-            demoPriceLabel={pricing.demoPriceLabel}
-            inquiryLabel={pricing.inquiryLabel}
-          />
-        ))}
+        <CardCarousel
+          Item={PricingExample}
+          items={visiblePricingExamples.map((example) => ({
+            example,
+            demoPriceLabel: pricing.demoPriceLabel,
+            inquiryLabel: pricing.inquiryLabel,
+          }))}
+          label={pricing.heading}
+        />
       </div>
       {/* Answer cost questions immediately after the example comparisons. */}
       <div class="pricing-guidance">
@@ -88,9 +91,34 @@ import { pricing, visiblePricingExamples } from "@/content/pricing";
   .pricing-guidance {
     display: grid;
     gap: 2rem;
+    margin-top: 2.5rem;
     padding-top: 2.5rem;
     border-top: 1px solid var(--site-control-border);
     overflow-wrap: anywhere;
+  }
+
+  /* Show one mobile card and a preview of the next example. */
+  .pricing-examples :global(.card-carousel-track > *) {
+    flex-basis: calc(100% / 1.2);
+  }
+
+  /* Give a lone example the full region instead of reserving a preview. */
+  .pricing-examples :global(.card-carousel-track:has(> :only-child) > *) {
+    flex-basis: 100%;
+  }
+
+  /* Keep a partial next card visible at tablet widths. */
+  @media (min-width: 48rem) {
+    .pricing-examples :global(.card-carousel-track > *) {
+      flex-basis: calc((100% - 1rem) / 2.2);
+    }
+  }
+
+  /* Show two cards and part of the third on wide screens. */
+  @media (min-width: 75rem) {
+    .pricing-examples :global(.card-carousel-track > *) {
+      flex-basis: calc((100% - 2rem) / 2.5);
+    }
   }
 
   /* Make the two practical buyer questions easy to locate. */

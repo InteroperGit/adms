@@ -66,12 +66,13 @@ const headingId = `${step.id}-heading`;
   .ordering-icon {
     display: block;
     box-sizing: border-box;
+    pointer-events: none;
     width: 3rem;
     height: 3rem;
     margin-bottom: 0.75rem;
     background: var(--color-primary);
-    -webkit-mask: var(--ordering-icon) left bottom / contain no-repeat;
-    mask: var(--ordering-icon) left bottom / contain no-repeat;
+    -webkit-mask: var(--ordering-icon) left top / contain no-repeat;
+    mask: var(--ordering-icon) left top / contain no-repeat;
   }
 
   /* Give each step a clear heading that anchors its article. */
