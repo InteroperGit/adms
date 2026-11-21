@@ -1,15 +1,11 @@
 # Codex Task Handoff
 
-Updated: 2026-11-21
+Updated: 2026-11-22
 
 `.codex/TASKS.md` is a compact handoff, not a historical task journal. Detailed
 scope and verification belong to the linked task files.
 
 ## Active tasks
-
-- [244 - Ignore public and rewrite Git history](../docs/codex/tasks/todo/244-ignore-public-and-rewrite-history.md):
-  active; asset sourcing and target refs need resolution.
-- [240 - Pricing examples carousel](../docs/codex/tasks/todo/240-use-card-carousel-for-pricing-examples.md): implemented; focused checks pass; enlarged-text/no-JavaScript acceptance remains.
 
 Task 174 is implemented; verification follow-up is pending the user's explicit
 request to run the full checks.
@@ -17,6 +13,9 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Recent completed work
 
+- [240 - Pricing examples carousel](../docs/codex/tasks/fixed/20261122/240-use-card-carousel-for-pricing-examples.md):
+  all acceptance checks passed; 30 focused tests and 12 E2E scenarios across
+  Chromium, Firefox and WebKit passed.
 - [241 - Business solutions carousel](../docs/codex/tasks/fixed/20261121/241-use-card-carousel-for-business-solutions.md):
   responsive widths, aligned image-first card sections, spaced centered bottom
   actions, matching pricing CTA sizing and taller galleries without visible
@@ -67,6 +66,11 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Task index
 
+- [244 - Ignore public and rewrite Git history](../docs/codex/tasks/fixed/20261122/244-ignore-public-and-rewrite-history.md):
+  archived at the user's request; implementation remains incomplete and no
+  tests or verification were run.
+- [240 - Pricing examples carousel](../docs/codex/tasks/fixed/20261122/240-use-card-carousel-for-pricing-examples.md):
+  complete; acceptance and focused checks passed across all three browsers.
 - [242 - Explicit items for carousels](../docs/codex/tasks/fixed/20261121/242-pass-items-and-factories-to-carousels.md):
   implementation accepted; 57 focused tests and 36 browser scenarios passed;
   local commit awaits explicit Git metadata authorization after auto-review denial.

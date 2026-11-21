@@ -4,7 +4,7 @@
 - **Tester:** Luna (`gpt-6-luna`), reasoning: `medium`.
 - **Reviewer:** Luna (`gpt-6-luna`), reasoning: `medium`.
 
-Статус: todo.
+Статус: fixed по запросу пользователя; выполнение отложено.
 
 ## Scope
 
@@ -48,6 +48,10 @@
 
 ## Handoff
 
+- Task record archived on 2026-11-22 at the user's request. Implementation is
+  incomplete: unchecked execution and acceptance items remain. No tests or
+  verification commands were run; resume the outstanding ref approval, clean
+  build source, and publication approval before applying the history rewrite.
 - Текущая сборка прошла: `pnpm.cmd run build`, 39 страниц. Она использовала
   отслеживаемые ресурсы из рабочей копии; чистую сборку после фильтрации это
   не подтверждает.

@@ -1,4 +1,4 @@
-// Add manual controls only when the caller's cards overflow their viewport.
+// Support scrolling gestures and optional arrows for overflowing cards.
 const SCROLL_TOLERANCE_PX = 1;
 const MOUSE_DRAG_THRESHOLD_PX = 4;
 
@@ -10,14 +10,14 @@ function initializeCardCarousel(carousel: HTMLElement) {
   const controls = carousel.querySelector<HTMLElement>(
     ".card-carousel-controls",
   );
-  const previous = carousel.querySelector<HTMLButtonElement>(
+  const previous = controls?.querySelector<HTMLButtonElement>(
     '[data-direction="-1"]',
   );
-  const next = carousel.querySelector<HTMLButtonElement>(
+  const next = controls?.querySelector<HTMLButtonElement>(
     '[data-direction="1"]',
   );
 
-  if (!viewport || !track || !controls || !previous || !next) {
+  if (!viewport || !track) {
     return;
   }
 
@@ -29,16 +29,6 @@ function initializeCardCarousel(carousel: HTMLElement) {
   const abort = new AbortController();
   const { signal } = abort;
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-  const updateControls = () => {
-    const maximumScroll = viewport.scrollWidth - viewport.clientWidth;
-    const overflows = maximumScroll > SCROLL_TOLERANCE_PX;
-    controls.hidden = !overflows;
-    previous.disabled =
-      !overflows || viewport.scrollLeft <= SCROLL_TOLERANCE_PX;
-    next.disabled =
-      !overflows || viewport.scrollLeft >= maximumScroll - SCROLL_TOLERANCE_PX;
-  };
 
   const scrollByCard = (direction: -1 | 1) => {
     const firstCard = cards[0] as HTMLElement;
@@ -159,8 +149,6 @@ function initializeCardCarousel(carousel: HTMLElement) {
     }
   };
 
-  previous.addEventListener("click", () => scrollByCard(-1), { signal });
-  next.addEventListener("click", () => scrollByCard(1), { signal });
   viewport.addEventListener("dragstart", preventImageDrag, { signal });
   viewport.addEventListener("keydown", handleViewportKeydown, { signal });
   viewport.addEventListener("pointerdown", startPointerDrag, { signal });
@@ -171,15 +159,30 @@ function initializeCardCarousel(carousel: HTMLElement) {
     capture: true,
     signal,
   });
-  viewport.addEventListener("scroll", updateControls, { signal });
-  window.addEventListener("resize", updateControls, { signal });
-  motion.addEventListener("change", updateControls, { signal });
-
   let resizeObserver: ResizeObserver | undefined;
-  if (typeof ResizeObserver === "function") {
-    resizeObserver = new ResizeObserver(updateControls);
-    resizeObserver.observe(viewport);
-    resizeObserver.observe(track);
+  if (controls && previous && next) {
+    const updateControls = () => {
+      const maximumScroll = viewport.scrollWidth - viewport.clientWidth;
+      const overflows = maximumScroll > SCROLL_TOLERANCE_PX;
+      controls.hidden = !overflows;
+      previous.disabled =
+        !overflows || viewport.scrollLeft <= SCROLL_TOLERANCE_PX;
+      next.disabled =
+        !overflows ||
+        viewport.scrollLeft >= maximumScroll - SCROLL_TOLERANCE_PX;
+    };
+
+    previous.addEventListener("click", () => scrollByCard(-1), { signal });
+    next.addEventListener("click", () => scrollByCard(1), { signal });
+    viewport.addEventListener("scroll", updateControls, { signal });
+    window.addEventListener("resize", updateControls, { signal });
+    motion.addEventListener("change", updateControls, { signal });
+    if (typeof ResizeObserver === "function") {
+      resizeObserver = new ResizeObserver(updateControls);
+      resizeObserver.observe(viewport);
+      resizeObserver.observe(track);
+    }
+    updateControls();
   }
 
   window.addEventListener(
@@ -190,7 +193,6 @@ function initializeCardCarousel(carousel: HTMLElement) {
     },
     { once: true },
   );
-  updateControls();
 }
 
 export function initializeCardCarousels() {

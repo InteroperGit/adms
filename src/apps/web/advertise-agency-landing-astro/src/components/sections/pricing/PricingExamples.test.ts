@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { expect, it, vi } from "vitest";
+import { visiblePricingExamples } from "@/content/pricing";
 import Component from "./PricingExamples.astro";
 import { render } from "../../../../tests/helpers/render";
 
@@ -83,4 +84,19 @@ it("renders visible pricing guidance and demo disclosure", async () => {
   );
   expect(body.querySelectorAll(".pricing-example")).toHaveLength(2);
   expect(body.querySelector(".pricing-guidance")).toBeInTheDocument();
+  expect(
+    Array.from(body.querySelectorAll(".pricing-example")).map(
+      (card) => card.querySelector(".pricing-title")?.textContent,
+    ),
+  ).toEqual(["Demo scope", "Second scope"]);
+});
+
+it("omits the section when no pricing examples are visible", async () => {
+  const examples = visiblePricingExamples.splice(0);
+  try {
+    const body = await render(Component, {});
+    expect(body.querySelector("section#pricing")).toBeNull();
+  } finally {
+    visiblePricingExamples.push(...examples);
+  }
 });

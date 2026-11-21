@@ -4,7 +4,7 @@
 - **Tester:** Luna (`gpt-6-luna`), reasoning: `medium`.
 - **Reviewer:** Luna (`gpt-6-luna`), reasoning: `medium`.
 
-Статус `todo`. Создана 2026-11-21; начата 2026-11-21.
+Статус `fixed`. Создана 2026-11-21; завершена 2026-11-22.
 
 ## Scope
 
@@ -44,19 +44,19 @@
 
 - [x] На телефоне, планшете и десктопе примеры отображаются в одной
       горизонтальной карусели с карточками одинаковой ширины.
-- [ ] В начале и после листания, пока справа остаются примеры, хотя бы одна
+- [x] В начале и после листания, пока справа остаются примеры, хотя бы одна
       карточка видна целиком, а после полностью видимых карточек справа виден
       фрагмент следующей. Проверены промежуточные ширины и границы режимов.
-- [ ] Последняя карточка целиком доступна в конце прокрутки. При одном
+- [x] Последняя карточка целиком доступна в конце прокрутки. При одном
       примере карточка занимает доступную ширину. Лента не создаёт
       горизонтальной прокрутки всей страницы.
-- [ ] Содержимое карточек читаемо на узком экране и при увеличении текста.
+- [x] Содержимое карточек читаемо на узком экране и при увеличении текста.
       Цена, её контекст и условия остаются рядом, ссылки доступны с клавиатуры
       и имеют видимый фокус.
-- [ ] Свайп, мышь и клавиатура позволяют дойти до последней карточки.
+- [x] Свайп, мышь и клавиатура позволяют дойти до последней карточки.
       Нативная прокрутка доступна без JavaScript, настройка уменьшенного
       движения учитывается.
-- [ ] Сохранились порядок, фильтрация и демонстрационные отметки, при пустой
+- [x] Сохранились порядок, фильтрация и демонстрационные отметки, при пустой
       выборке секция скрыта. Общие пояснения остаются под каруселью,
       поведение остальных потребителей `CardCarousel` сохранено.
 
@@ -80,13 +80,23 @@ uses the same primary large button style as the ordering-process CTA.
 Projects, Yandex reviews and FAQ actions now share that centered large primary
 button style. Ordering-step masks align at the top edge and ignore pointer
 input; Chromium mouse/touch navigation passes.
-`pnpm.cmd check:style` and `pnpm.cmd check` passed; Astro reported 456 files,
-0 errors, 0 warnings and 0 hints. Changed-file Prettier checks and `git diff --check` passed. Full verification gates and manual enlarged-text/no-JavaScript
-checks were not run.
+Acceptance checks on 2026-11-22 passed. The focused Vitest run passed 30 tests
+in 6 files. Pricing E2E passed 12/12 across Chromium, Firefox and WebKit,
+including six viewport widths, mouse and touch navigation to the last card,
+keyboard navigation, enlarged text, one-card layout, reduced motion and native
+scrolling to the last card without JavaScript. The pricing component test also
+confirms source order and omission of an empty section. The content-loader tests
+cover publication filtering and demo status.
 
-[section]: ../../../../src/components/sections/pricing/PricingExamples.astro
-[card]: ../../../../src/components/sections/pricing/PricingExample.astro
+`pnpm.cmd check:style` passed for 7 changed files. `pnpm.cmd check` passed for
+457 Astro files with 0 errors, warnings or hints. Changed-file Prettier and
+`git diff --check` passed. The related CardCarousel consumer E2E run passed
+16/16 Chromium scenarios. Full verification gates were not run.
+
+[section]:
+  ../../../../../src/components/sections/pricing/PricingExamples.astro
+[card]: ../../../../../src/components/sections/pricing/PricingExample.astro
 [carousel]:
-  ../../../../src/components/ui/carousel/card-carousel/CardCarousel.astro
-[task239]: ../fixed/20261121/239-use-card-carousel-for-ordering-process.md
-[verification]: ../../rules/verification.md
+  ../../../../../src/components/ui/carousel/card-carousel/CardCarousel.astro
+[task239]: ../20261121/239-use-card-carousel-for-ordering-process.md
+[verification]: ../../../rules/verification.md

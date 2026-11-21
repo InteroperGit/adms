@@ -11,7 +11,6 @@ it("renders caller cards in an accessible scroll region", async () => {
     label: "Guarantees",
   });
   const region = body.querySelector(".card-carousel");
-  const controls = body.querySelector(".card-carousel-controls");
 
   expect(region).toHaveAttribute("role", "region");
   expect(region).toHaveAttribute("aria-label", "Guarantees");
@@ -21,6 +20,17 @@ it("renders caller cards in an accessible scroll region", async () => {
     "0",
   );
   expect(body.querySelectorAll(".card-carousel-track > a")).toHaveLength(2);
+  expect(body.querySelector(".card-carousel-controls")).toBeNull();
+});
+
+it("renders accessible arrow buttons when controls are enabled", async () => {
+  const body = await render(Component, {
+    Item: Button,
+    items: [{ href: "/first" }, { href: "/second" }],
+    label: "Guarantees",
+    showControls: true,
+  });
+  const controls = body.querySelector(".card-carousel-controls");
   expect(controls).toHaveAttribute("hidden");
   expect(body.querySelectorAll(".card-carousel-arrow")).toHaveLength(2);
   expect(body.querySelectorAll(".carousel-control-circle")).toHaveLength(2);

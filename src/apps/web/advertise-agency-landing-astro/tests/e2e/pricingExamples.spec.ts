@@ -3,10 +3,19 @@ import { expect, test } from "./fixtures";
 
 const GEOMETRY_TOLERANCE_PX = 1;
 const DESKTOP_MIN_WIDTH_PX = 1200;
+const MOUSE_DRAG_DISTANCE_PX = 280;
+const MOUSE_DRAG_COUNT = 5;
+const TOUCH_DRAG_DISTANCE_PX = 280;
+const TOUCH_DRAG_COUNT = 5;
+const TOUCH_POINTER_ID = 1;
 
-test("pricing carousel cards fit across breakpoints", async ({ page }) => {
+test("pricing carousel cards fit across breakpoints", async ({
+  page,
+  browserName,
+}) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
+  await page.locator("#cookie-banner [data-cookie-choice='accepted']").click();
 
   const carousel = page.locator("#pricing .card-carousel");
   const viewport = carousel.locator(".card-carousel-viewport");
@@ -21,30 +30,6 @@ test("pricing carousel cards fit across breakpoints", async ({ page }) => {
     ).backgroundColor,
   }));
   expect(textSurfaceColors.pricing).toBe(textSurfaceColors.project);
-
-  const image = cards.first().locator("img");
-  await image.scrollIntoViewIfNeeded();
-  const imageBounds = await image.boundingBox();
-  expect(imageBounds).not.toBeNull();
-  await page.mouse.move(
-    imageBounds!.x + imageBounds!.width / 2,
-    imageBounds!.y + imageBounds!.height / 2,
-  );
-  await page.mouse.down();
-  await page.mouse.move(
-    imageBounds!.x + imageBounds!.width / 2 - 80,
-    imageBounds!.y + imageBounds!.height / 2,
-    { steps: 4 },
-  );
-  await page.mouse.up();
-  await expect
-    .poll(() => viewport.evaluate((node) => node.scrollLeft))
-    .toBeGreaterThan(0);
-  await viewport.evaluate((node) => {
-    node.style.scrollBehavior = "auto";
-    node.scrollLeft = 0;
-    node.style.removeProperty("scroll-behavior");
-  });
 
   for (const width of [390, 767, 768, 1199, DESKTOP_MIN_WIDTH_PX, 1440]) {
     await page.setViewportSize({ width, height: 844 });
@@ -163,10 +148,116 @@ test("pricing carousel cards fit across breakpoints", async ({ page }) => {
     )
     .toBe(true);
 
+  await page.setViewportSize({ width: 390, height: 844 });
+  await viewport.evaluate((node) => {
+    node.style.scrollBehavior = "auto";
+    node.style.scrollSnapType = "none";
+    node.scrollLeft = 0;
+  });
+  const viewportBounds = await viewport.boundingBox();
+  if (!viewportBounds) {
+    throw new Error("Pricing carousel viewport is not visible");
+  }
+  for (let drag = 0; drag < MOUSE_DRAG_COUNT; drag += 1) {
+    const scrollStart = await viewport.evaluate((node) => node.scrollLeft);
+    const startX = viewportBounds.x + viewportBounds.width - 20;
+    const y = viewportBounds.y + viewportBounds.height / 2;
+    await page.mouse.move(startX, y);
+    await page.mouse.down();
+    await page.mouse.move(startX - MOUSE_DRAG_DISTANCE_PX, y, {
+      steps: 4,
+    });
+    await page.mouse.up();
+    await expect
+      .poll(() => viewport.evaluate((node) => node.scrollLeft))
+      .toBeGreaterThan(scrollStart);
+  }
+  await expect
+    .poll(() =>
+      cards.last().evaluate((card, tolerance) => {
+        const cardBounds = card.getBoundingClientRect();
+        const viewportBounds =
+          card.parentElement!.parentElement!.getBoundingClientRect();
+        return (
+          cardBounds.left >= viewportBounds.left - tolerance &&
+          cardBounds.right <= viewportBounds.right + tolerance
+        );
+      }, GEOMETRY_TOLERANCE_PX),
+    )
+    .toBe(true);
+  if (browserName === "chromium") {
+    await viewport.evaluate((node) => {
+      node.scrollLeft = 0;
+    });
+    await expect
+      .poll(() => viewport.evaluate((node) => node.scrollLeft))
+      .toBe(0);
+    const touchSession = await page.context().newCDPSession(page);
+    await touchSession.send("Emulation.setTouchEmulationEnabled", {
+      enabled: true,
+      maxTouchPoints: 1,
+    });
+    const touchBounds = await viewport.boundingBox();
+    if (!touchBounds) {
+      throw new Error("Pricing carousel viewport is not visible");
+    }
+    const touchY = Math.round(touchBounds.y + touchBounds.height / 2);
+    const touchStartX = Math.round(touchBounds.x + touchBounds.width - 20);
+    const touchPoint = (x: number) => ({
+      id: TOUCH_POINTER_ID,
+      x,
+      y: touchY,
+    });
+    for (let swipe = 0; swipe < TOUCH_DRAG_COUNT; swipe += 1) {
+      const scrollStart = await viewport.evaluate((node) => node.scrollLeft);
+      await touchSession.send("Input.dispatchTouchEvent", {
+        type: "touchStart",
+        touchPoints: [touchPoint(touchStartX)],
+      });
+      await touchSession.send("Input.dispatchTouchEvent", {
+        type: "touchMove",
+        touchPoints: [touchPoint(touchStartX - TOUCH_DRAG_DISTANCE_PX / 2)],
+      });
+      await touchSession.send("Input.dispatchTouchEvent", {
+        type: "touchMove",
+        touchPoints: [touchPoint(touchStartX - TOUCH_DRAG_DISTANCE_PX)],
+      });
+      await touchSession.send("Input.dispatchTouchEvent", {
+        type: "touchEnd",
+        touchPoints: [],
+      });
+      await expect
+        .poll(() => viewport.evaluate((node) => node.scrollLeft))
+        .toBeGreaterThan(scrollStart);
+    }
+    await touchSession.detach();
+    await expect
+      .poll(() =>
+        cards.last().evaluate((card, tolerance) => {
+          const cardBounds = card.getBoundingClientRect();
+          const viewportBounds =
+            card.parentElement!.parentElement!.getBoundingClientRect();
+          return (
+            cardBounds.left >= viewportBounds.left - tolerance &&
+            cardBounds.right <= viewportBounds.right + tolerance
+          );
+        }, GEOMETRY_TOLERANCE_PX),
+      )
+      .toBe(true);
+  }
+  await viewport.evaluate((node) => {
+    node.style.removeProperty("scroll-behavior");
+    node.style.removeProperty("scroll-snap-type");
+  });
+
   const inquiry = cards.first().locator(".pricing-inquiry");
   await inquiry.focus();
-  await page.keyboard.press("Tab");
-  await page.keyboard.press("Shift+Tab");
+  if (browserName === "firefox") {
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Shift+Tab");
+  } else {
+    await page.keyboard.press("ArrowRight");
+  }
   await expect(inquiry).toBeFocused();
   await expect
     .poll(() => inquiry.evaluate((node) => node.matches(":focus-visible")))
@@ -206,14 +297,26 @@ test("a single pricing card fills the carousel with reduced motion", async ({
   await carousel.locator(".pricing-example").evaluateAll((cards) => {
     cards.slice(1).forEach((card) => card.remove());
   });
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) => requestAnimationFrame(() => resolve())),
+  );
 
-  const geometry = await viewport.evaluate((node) => ({
-    viewportWidth: node.clientWidth,
-    cardWidth: node.querySelector(".pricing-example")?.getBoundingClientRect()
-      .width,
-    scrollBehavior: getComputedStyle(node).scrollBehavior,
-  }));
-  expect(geometry.cardWidth).toBe(geometry.viewportWidth);
+  const geometry = await viewport.evaluate((node) => {
+    const track = node.querySelector<HTMLElement>(".card-carousel-track")!;
+    const card = node.querySelector<HTMLElement>(".pricing-example")!;
+    return {
+      viewportWidth: node.clientWidth,
+      cardWidth: card.getBoundingClientRect().width,
+      cardBasis: getComputedStyle(card).flexBasis,
+      hasOnlyChild: track.matches(":has(> :only-child)"),
+      trackChildren: track.children.length,
+      scrollBehavior: getComputedStyle(node).scrollBehavior,
+    };
+  });
+  expect(geometry.cardWidth, JSON.stringify(geometry)).toBe(
+    geometry.viewportWidth,
+  );
   expect(geometry.scrollBehavior).toBe("auto");
 });
 
@@ -236,5 +339,27 @@ test.describe("pricing without JavaScript", () => {
     }));
     expect(nativeScroll.overflowX).toBe("auto");
     expect(nativeScroll.canScroll).toBe(true);
+    await carousel
+      .locator(".pricing-example")
+      .last()
+      .evaluate((card) => {
+        card.scrollIntoView({ inline: "end", block: "nearest" });
+      });
+    await expect
+      .poll(() =>
+        carousel
+          .locator(".pricing-example")
+          .last()
+          .evaluate((card, tolerance) => {
+            const cardBounds = card.getBoundingClientRect();
+            const viewportBounds =
+              card.parentElement!.parentElement!.getBoundingClientRect();
+            return (
+              cardBounds.left >= viewportBounds.left - tolerance &&
+              cardBounds.right <= viewportBounds.right + tolerance
+            );
+          }, GEOMETRY_TOLERANCE_PX),
+      )
+      .toBe(true);
   });
 });

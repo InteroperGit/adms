@@ -117,8 +117,9 @@ it("moves one card and honors reduced motion", () => {
   });
 });
 
-it("supports arrow and edge keyboard navigation", () => {
+it("supports arrow and edge keyboard navigation without controls", () => {
   const { carousel, viewport } = createCarousel();
+  carousel.querySelector(".card-carousel-controls")?.remove();
   initializeCardCarousel(carousel);
 
   const right = new KeyboardEvent("keydown", {
@@ -158,6 +159,7 @@ it("keeps controls hidden when all cards fit", () => {
 
 it("drags with the mouse without selecting text or clicking a card", () => {
   const { carousel, viewport } = createCarousel();
+  carousel.querySelector(".card-carousel-controls")?.remove();
   initializeCardCarousel(carousel);
   const firstCard = carousel.querySelector("article")!;
   const cardClick = vi.fn();

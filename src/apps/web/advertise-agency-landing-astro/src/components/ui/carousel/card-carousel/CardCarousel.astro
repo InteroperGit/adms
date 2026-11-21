@@ -9,6 +9,8 @@ interface Props {
   items: Record<string, unknown>[];
   label: string;
   ordered?: boolean;
+  // Opt in to arrow buttons when the cards overflow on desktop.
+  showControls?: boolean;
 }
 
 const {
@@ -16,6 +18,7 @@ const {
   items: suppliedItems,
   label: suppliedLabel,
   ordered,
+  showControls,
 } = Astro.props;
 if (Astro.slots.has("default")) {
   throw new Error("CardCarousel accepts items and Item props, not slot cards");
@@ -30,8 +33,9 @@ const props = z
       .min(1, "CardCarousel needs at least one item"),
     label: z.string().trim().min(1, "CardCarousel needs an accessible label"),
     ordered: z.boolean().default(false),
+    showControls: z.boolean().default(false),
   })
-  .parse({ items: suppliedItems, label: suppliedLabel, ordered });
+  .parse({ items: suppliedItems, label: suppliedLabel, ordered, showControls });
 const { items, label, ordered: isOrdered } = props;
 ---
 
@@ -61,25 +65,27 @@ const { items, label, ordered: isOrdered } = props;
       </div>
     )}
   </div>
-  <div
-    class="card-carousel-controls"
-    hidden
-  >
-    <CarouselControl
-      direction="previous"
-      dataDirection="-1"
-      className="card-carousel-arrow"
-      appearance="circle"
-      label={`Предыдущие карточки: ${label}`}
-    />
-    <CarouselControl
-      direction="next"
-      dataDirection="1"
-      className="card-carousel-arrow"
-      appearance="circle"
-      label={`Следующие карточки: ${label}`}
-    />
-  </div>
+  {props.showControls && (
+    <div
+      class="card-carousel-controls"
+      hidden
+    >
+      <CarouselControl
+        direction="previous"
+        dataDirection="-1"
+        className="card-carousel-arrow"
+        appearance="circle"
+        label={`Предыдущие карточки: ${label}`}
+      />
+      <CarouselControl
+        direction="next"
+        dataDirection="1"
+        className="card-carousel-arrow"
+        appearance="circle"
+        label={`Следующие карточки: ${label}`}
+      />
+    </div>
+  )}
 </section>
 
 <script>
