@@ -138,6 +138,7 @@ test("ordering steps scroll in one accessible horizontal carousel", async ({
     .poll(() => viewport.evaluate((node) => node.scrollLeft))
     .toBeGreaterThan(0);
   await viewport.evaluate((node) => {
+    node.style.scrollBehavior = "auto";
     node.scrollLeft = 0;
   });
 
@@ -161,6 +162,12 @@ test("ordering steps scroll in one accessible horizontal carousel", async ({
       x,
       y: touchY,
     });
+    const firstItemLeft = await items
+      .first()
+      .evaluate((item) => item.getBoundingClientRect().left);
+    const touchStartingScrollLeft = await viewport.evaluate(
+      (node) => node.scrollLeft,
+    );
     await touchSession.send("Input.dispatchTouchEvent", {
       type: "touchStart",
       touchPoints: [touchPoint(touchStartX)],
@@ -173,10 +180,29 @@ test("ordering steps scroll in one accessible horizontal carousel", async ({
       type: "touchMove",
       touchPoints: [touchPoint(touchStartX - TOUCH_DRAG_DISTANCE_PX)],
     });
+    const touchDrag = await viewport.evaluate(
+      (node, initial) => node.scrollLeft - initial,
+      touchStartingScrollLeft,
+    );
+    const touchItemDelta = await items
+      .first()
+      .evaluate(
+        (item, initialLeft) => item.getBoundingClientRect().left - initialLeft,
+        firstItemLeft,
+      );
+    const isDragging = await viewport.evaluate((node) =>
+      node.classList.contains("is-dragging"),
+    );
+    expect({ touchDrag, touchItemDelta, isDragging }).toEqual({
+      touchDrag: TOUCH_DRAG_DISTANCE_PX,
+      touchItemDelta: -TOUCH_DRAG_DISTANCE_PX,
+      isDragging: true,
+    });
     await touchSession.send("Input.dispatchTouchEvent", {
       type: "touchEnd",
       touchPoints: [],
     });
+    await expect(viewport).not.toHaveClass(/is-dragging/);
     await touchSession.detach();
     await expect
       .poll(() => viewport.evaluate((node) => node.scrollLeft))
@@ -195,6 +221,9 @@ test("ordering steps scroll in one accessible horizontal carousel", async ({
   }
   const startX = bounds.x + bounds.width / 2;
   const startY = bounds.y + bounds.height / 2;
+  const firstItemLeft = await items
+    .first()
+    .evaluate((item) => item.getBoundingClientRect().left);
   await page.mouse.move(startX, startY);
   await page.mouse.down();
   await expect(viewport).toHaveClass(/is-mouse-pressed/);
@@ -202,13 +231,22 @@ test("ordering steps scroll in one accessible horizontal carousel", async ({
     steps: 5,
   });
   await expect
-    .poll(() => viewport.evaluate((node) => node.scrollLeft))
-    .toBeGreaterThan(0);
+    .poll(() =>
+      items
+        .first()
+        .evaluate(
+          (item, initialLeft) =>
+            item.getBoundingClientRect().left - initialLeft,
+          firstItemLeft,
+        ),
+    )
+    .toBeCloseTo(-MOUSE_DRAG_DISTANCE_PX, 0);
   expect(
     await page.evaluate(() => window.getSelection()?.toString() ?? ""),
   ).toBe("");
   await page.mouse.up();
   await expect(viewport).not.toHaveClass(/is-mouse-pressed/);
+  await expect(viewport).not.toHaveClass(/is-dragging/);
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(viewport).toHaveCSS("scroll-behavior", "auto");

@@ -4,7 +4,7 @@
 - **Tester:** Luna (`gpt-6-luna`), reasoning: `medium`.
 - **Reviewer:** Luna (`gpt-6-luna`), reasoning: `medium`.
 
-Статус — `fixed`. Принята 2026-11-21.
+Статус — `complete`. Завершена 2026-11-21 после проверки точности drag-вектора.
 
 ## Scope
 
@@ -23,6 +23,8 @@
 - Убрать фон карточки при наведении и клике, сохранив видимый клавиатурный
   фокус; выровнять маскированные иконки по общей верхней левой области и нижнему
   краю.
+- При перетаскивании мышью и touch input лента должна смещаться в том же
+  направлении и на ту же длину, что и вектор указателя.
 
 ## Execution
 
@@ -40,6 +42,9 @@
 - [x] Выполнить целевые тесты и `pnpm check:style`, `pnpm check`. Проверить
       [правила проверки][verification], гарантии и адаптивные состояния в
       Chromium.
+- [x] Проверить точность смещения мышиного и touch drag до завершения жеста;
+      во время захвата отключить smooth scrolling и scroll snap, чтобы карточки
+      следовали координатам указателя 1:1.
 - [x] Сверить diff с критериями, записать результаты и завершить задачу по
       workflow.
 
@@ -63,6 +68,9 @@
       завершаются явной ошибкой.
 - [x] Hover и click не меняют фон карточки; клавиатурный focus остаётся видимым.
       Иконки имеют общую геометрию и нижнее выравнивание внутри своей области.
+- [x] Во время мышиного и touch drag положение карточек совпадает с вектором
+      указателя по направлению и длине; scroll snap восстанавливается после
+      отпускания.
 
 ## Handoff
 
@@ -80,16 +88,29 @@
 паттерн `AstroComponentFactory` из Catalog и проверена документация Astro по
 `Astro.slots.has()` через Context7.
 
+Во время drag runtime рассчитывает горизонтальное смещение от начальной
+координаты указателя и начального `scrollLeft`. Для mouse и touch на время
+захвата отключаются smooth scrolling и scroll snap; `touch-action: pan-y
+pinch-zoom` сохраняет вертикальную прокрутку страницы и масштабирование.
+Вертикальный touch жест остаётся нативным. После отпускания drag-состояние
+снимается, и snapping возобновляется.
+
 Проверки:
 
 - `pnpm check:style` прошёл для 12 файлов.
 - `pnpm check` прошёл: 455 Astro-файлов, 0 ошибок, 0 warnings, 0 hints.
 - Целевые Vitest-проверки прошли: 8 файлов, 19 тестов.
+- После follow-up `pnpm check:style` прошёл для 4 изменённых файлов, `pnpm check`
+  повторно прошёл для 455 Astro-файлов без diagnostics; 3 затронутых Vitest-файла
+  прошли, 16 тестов.
 - Chromium E2E прошёл для ordering process (2 сценария) и guarantees (1
   сценарий): адаптивная геометрия, desktop controls, wheel, touch, mouse drag,
   keyboard, reduced motion, no-JavaScript scroll, focus, hover/click и grid.
 - Полные unit, coverage, multi-browser E2E и остальные verification gates не
   запускались.
+- Обновлённый Chromium E2E прошёл оба сценария ordering process. До отпускания
+  жеста проверено перемещение карточек на 240 px мышью и 180 px touch в том же
+  направлении; после отпускания проверено снятие drag-состояния.
 
 [card-carousel]:
   ../../../../../src/components/ui/carousel/card-carousel/CardCarousel.astro

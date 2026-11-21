@@ -74,45 +74,70 @@ function initializeCardCarousel(carousel: HTMLElement) {
   };
 
   let activePointerId: number | null = null;
+  let pointerStartY = 0;
   let pointerStartX = 0;
   let scrollStartLeft = 0;
   let didDrag = false;
+  let isTouchDragging = false;
   let suppressNextClick = false;
 
-  const startMouseDrag = (event: PointerEvent) => {
-    if (event.pointerType !== "mouse" || event.button !== 0) {
+  const startPointerDrag = (event: PointerEvent) => {
+    if (
+      (event.pointerType !== "mouse" && event.pointerType !== "touch") ||
+      event.button !== 0
+    ) {
       return;
     }
 
     activePointerId = event.pointerId;
+    pointerStartY = event.clientY;
     pointerStartX = event.clientX;
     scrollStartLeft = viewport.scrollLeft;
     didDrag = false;
+    isTouchDragging = false;
     suppressNextClick = false;
-    viewport.classList.add("is-mouse-pressed");
+    viewport.classList.add("is-dragging");
+    if (event.pointerType === "mouse") {
+      viewport.classList.add("is-mouse-pressed");
+    }
   };
 
-  const moveMouseDrag = (event: PointerEvent) => {
+  const movePointerDrag = (event: PointerEvent) => {
     if (event.pointerId !== activePointerId) {
       return;
     }
 
     const distance = event.clientX - pointerStartX;
-    if (Math.abs(distance) < MOUSE_DRAG_THRESHOLD_PX) {
+    const verticalDistance = event.clientY - pointerStartY;
+    if (
+      event.pointerType === "touch" &&
+      !isTouchDragging &&
+      (Math.abs(distance) < MOUSE_DRAG_THRESHOLD_PX ||
+        Math.abs(distance) < Math.abs(verticalDistance))
+    ) {
+      return;
+    }
+    if (
+      event.pointerType === "mouse" &&
+      Math.abs(distance) < MOUSE_DRAG_THRESHOLD_PX
+    ) {
       return;
     }
 
-    didDrag = true;
+    isTouchDragging ||= event.pointerType === "touch";
+    didDrag = Math.abs(distance) >= MOUSE_DRAG_THRESHOLD_PX;
     viewport.scrollLeft = scrollStartLeft - distance;
     event.preventDefault();
   };
 
-  const finishMouseDrag = (event: PointerEvent) => {
+  const finishPointerDrag = (event: PointerEvent) => {
     if (event.pointerId !== activePointerId) {
       return;
     }
 
     activePointerId = null;
+    isTouchDragging = false;
+    viewport.classList.remove("is-dragging");
     viewport.classList.remove("is-mouse-pressed");
     suppressNextClick = didDrag;
     didDrag = false;
@@ -131,10 +156,10 @@ function initializeCardCarousel(carousel: HTMLElement) {
   previous.addEventListener("click", () => scrollByCard(-1), { signal });
   next.addEventListener("click", () => scrollByCard(1), { signal });
   viewport.addEventListener("keydown", handleViewportKeydown, { signal });
-  viewport.addEventListener("pointerdown", startMouseDrag, { signal });
-  window.addEventListener("pointermove", moveMouseDrag, { signal });
-  window.addEventListener("pointerup", finishMouseDrag, { signal });
-  window.addEventListener("pointercancel", finishMouseDrag, { signal });
+  viewport.addEventListener("pointerdown", startPointerDrag, { signal });
+  window.addEventListener("pointermove", movePointerDrag, { signal });
+  window.addEventListener("pointerup", finishPointerDrag, { signal });
+  window.addEventListener("pointercancel", finishPointerDrag, { signal });
   viewport.addEventListener("click", suppressDragClick, {
     capture: true,
     signal,

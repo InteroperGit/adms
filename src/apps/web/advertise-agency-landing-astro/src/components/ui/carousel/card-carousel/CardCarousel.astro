@@ -157,6 +157,13 @@ const { items, label, ordered: isOrdered } = props;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  /* Keep cards under an active pointer; resume snapping on release. */
+  .card-carousel-viewport.is-dragging {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
   }
 
   /* Prevent card text selection while the mouse button is held. */

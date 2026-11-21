@@ -14,6 +14,7 @@ function createPointerEvent(
   type: string,
   pointerType: string,
   clientX: number,
+  clientY = 0,
 ) {
   const event = new Event(type, { bubbles: true, cancelable: true });
   Object.defineProperties(event, {
@@ -21,6 +22,7 @@ function createPointerEvent(
     pointerType: { value: pointerType },
     button: { value: 0 },
     clientX: { value: clientX },
+    clientY: { value: clientY },
   });
   return event as PointerEvent;
 }
@@ -187,17 +189,49 @@ it("drags with the mouse without selecting text or clicking a card", () => {
   expect(cardClick).not.toHaveBeenCalled();
 });
 
-it("leaves touch pointer scrolling to the browser", () => {
+it("keeps touch-dragged cards under the pointer", () => {
   const { carousel, viewport } = createCarousel();
   initializeCardCarousel(carousel);
 
   viewport.dispatchEvent(
     createPointerEvent("pointerdown", "touch", TEST_POINTER_START_X_PX),
   );
-  window.dispatchEvent(
-    createPointerEvent("pointermove", "touch", TEST_POINTER_END_X_PX),
+  const move = createPointerEvent(
+    "pointermove",
+    "touch",
+    TEST_POINTER_END_X_PX,
   );
+  window.dispatchEvent(move);
+
+  expect(viewport.scrollLeft).toBe(
+    TEST_POINTER_START_X_PX - TEST_POINTER_END_X_PX,
+  );
+  expect(move.defaultPrevented).toBe(true);
+  expect(viewport.classList.contains("is-dragging")).toBe(true);
+  expect(viewport.classList.contains("is-mouse-pressed")).toBe(false);
+
+  window.dispatchEvent(
+    createPointerEvent("pointerup", "touch", TEST_POINTER_END_X_PX),
+  );
+  expect(viewport.classList.contains("is-dragging")).toBe(false);
+});
+
+it("leaves predominantly vertical touch gestures to the page", () => {
+  const { carousel, viewport } = createCarousel();
+  initializeCardCarousel(carousel);
+
+  viewport.dispatchEvent(
+    createPointerEvent("pointerdown", "touch", TEST_POINTER_START_X_PX),
+  );
+  const move = createPointerEvent(
+    "pointermove",
+    "touch",
+    TEST_POINTER_START_X_PX - 2,
+    10,
+  );
+  window.dispatchEvent(move);
 
   expect(viewport.scrollLeft).toBe(0);
-  expect(viewport.classList.contains("is-mouse-pressed")).toBe(false);
+  expect(move.defaultPrevented).toBe(false);
+  expect(viewport.classList.contains("is-dragging")).toBe(true);
 });
