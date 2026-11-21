@@ -1,0 +1,86 @@
+---
+interface Props {
+  direction: "previous" | "next";
+  label: string;
+  className?: string;
+  dataDirection?: "-1" | "1";
+  appearance?: "default" | "circle";
+}
+
+const {
+  direction,
+  label,
+  className,
+  dataDirection,
+  appearance = "default",
+} = Astro.props;
+const path = direction === "previous" ? "m15 5-7 7 7 7" : "m9 5 7 7-7 7";
+---
+
+<button
+  type="button"
+  class:list={[
+    "carousel-control",
+    "carousel-control-arrow",
+    appearance === "circle" && "carousel-control-circle",
+    className,
+  ]}
+  aria-label={label}
+  data-direction={dataDirection}
+>
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d={path} />
+  </svg>
+</button>
+
+<style>
+  .carousel-control {
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    color: var(--color-base-content);
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .carousel-control svg {
+    display: block;
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .carousel-control-circle {
+    border: 1px solid var(--site-control-border);
+    border-radius: 50%;
+    background: var(--color-base-100);
+  }
+
+  .carousel-control-circle:hover {
+    background: var(--color-base-200);
+  }
+
+  .carousel-control:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-control {
+      transition: none;
+    }
+  }
+</style>

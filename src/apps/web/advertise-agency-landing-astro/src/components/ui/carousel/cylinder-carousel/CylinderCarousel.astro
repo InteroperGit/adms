@@ -1,6 +1,6 @@
 ---
 // Provide accessible controls and looping behavior for caller-rendered slides.
-import CarouselControl from "../common/CarouselControl.astro";
+import CarouselControl from "./CarouselControl.astro";
 import CarouselDot from "../common/CarouselDot.astro";
 interface Props {
   label: string;
@@ -263,10 +263,16 @@ if (!validInterval || !validPeek || !validGap || !validPreviewBreakpoint) {
   @media (hover: hover) and (pointer: fine) {
     :global(.cylinder-arrow) {
       opacity: 0;
+      transition: opacity 160ms ease;
     }
 
     .cylinder-carousel:hover :global(.cylinder-arrow),
     .cylinder-carousel:focus-within :global(.cylinder-arrow) {
+      opacity: 0.5;
+    }
+
+    .cylinder-carousel :global(.cylinder-arrow:hover),
+    .cylinder-carousel :global(.cylinder-arrow:focus-visible) {
       opacity: 1;
     }
   }

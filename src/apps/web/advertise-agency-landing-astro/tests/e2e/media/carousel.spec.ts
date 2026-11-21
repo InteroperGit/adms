@@ -51,7 +51,20 @@ test("moves existing slides with keyboard and pointer controls", async ({
   await dots.nth(2).click();
   await expect(slides.nth(2)).toHaveAttribute("data-active", "true");
   await expect(slides.nth(2)).toHaveCSS("transition", /^none/);
-  await next.click();
+  await expect(next).toHaveCSS("opacity", "0.5");
+  const nextBounds = await next.boundingBox();
+  if (!nextBounds) {
+    throw new Error("The next carousel control should be visible");
+  }
+  await page.mouse.move(
+    nextBounds.x + nextBounds.width / 2,
+    nextBounds.y + nextBounds.height / 2,
+  );
+  await expect(next).toHaveCSS("opacity", "1");
+  await expect(next).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await page.mouse.down();
+  await expect(next).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await page.mouse.up();
   await expect(slides.nth(0)).toHaveAttribute("data-active", "true");
 });
 

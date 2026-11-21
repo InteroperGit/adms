@@ -11,24 +11,48 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<CardCarousel label="Наши гарантии">
-  {items.map((item) => (
-    <article
-      class="production-card"
-      tabindex="0"
-    >
-      <span
-        class="production-card-icon"
-        style={{ "--production-icon": `url(${item.icon})` }}
-        aria-hidden="true"
-      ></span>
-      <h3>{item.title}</h3>
-      <p>{item.description}</p>
-    </article>
-  ))}
-</CardCarousel>
+<div class="production-guidance">
+  <CardCarousel label="Наши гарантии">
+    {items.map((item) => (
+      <article
+        class="production-card"
+        tabindex="0"
+      >
+        <span
+          class="production-card-icon"
+          style={{ "--production-icon": `url(${item.icon})` }}
+          aria-hidden="true"
+        ></span>
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+      </article>
+    ))}
+  </CardCarousel>
+</div>
 
 <style>
+  /* Restore the original guidance grid outside the mobile carousel layout. */
+  @media (min-width: 48rem) {
+    .production-guidance :global(.card-carousel-viewport) {
+      cursor: auto;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+
+    .production-guidance :global(.card-carousel-track) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .production-guidance :global(.card-carousel-track > *) {
+      flex: initial;
+      height: 100%;
+      scroll-snap-align: none;
+    }
+  }
+
   /* Keep each friendly guarantee card readable within the carousel track. */
   .production-card {
     min-width: 0;

@@ -5,6 +5,24 @@ import { initializeCardCarousel } from "./cardCarouselRuntime";
 const VIEWPORT_WIDTH_PX = 300;
 const OVERFLOW_WIDTH_PX = 420;
 const CARD_WIDTH_PX = 120;
+const TEST_POINTER_START_X_PX = 200;
+const TEST_POINTER_END_X_PX = 100;
+const MOUSE_POINTER_ID = 1;
+
+function createPointerEvent(
+  type: string,
+  pointerType: string,
+  clientX: number,
+) {
+  const event = new Event(type, { bubbles: true, cancelable: true });
+  Object.defineProperties(event, {
+    pointerId: { value: MOUSE_POINTER_ID },
+    pointerType: { value: pointerType },
+    button: { value: 0 },
+    clientX: { value: clientX },
+  });
+  return event as PointerEvent;
+}
 
 function createCarousel() {
   document.body.innerHTML = `
@@ -103,4 +121,52 @@ it("keeps controls hidden when all cards fit", () => {
   expect(
     carousel.querySelector<HTMLElement>(".card-carousel-controls")?.hidden,
   ).toBe(true);
+});
+
+it("drags with the mouse without selecting text or clicking a card", () => {
+  const { carousel, viewport } = createCarousel();
+  initializeCardCarousel(carousel);
+  const firstCard = carousel.querySelector("article")!;
+  const cardClick = vi.fn();
+  firstCard.addEventListener("click", cardClick);
+
+  viewport.dispatchEvent(
+    createPointerEvent("pointerdown", "mouse", TEST_POINTER_START_X_PX),
+  );
+  expect(viewport.classList.contains("is-mouse-pressed")).toBe(true);
+
+  const move = createPointerEvent(
+    "pointermove",
+    "mouse",
+    TEST_POINTER_END_X_PX,
+  );
+  window.dispatchEvent(move);
+  expect(viewport.scrollLeft).toBe(
+    TEST_POINTER_START_X_PX - TEST_POINTER_END_X_PX,
+  );
+  expect(move.defaultPrevented).toBe(true);
+
+  window.dispatchEvent(
+    createPointerEvent("pointerup", "mouse", TEST_POINTER_END_X_PX),
+  );
+  expect(viewport.classList.contains("is-mouse-pressed")).toBe(false);
+  firstCard.dispatchEvent(
+    new MouseEvent("click", { bubbles: true, cancelable: true }),
+  );
+  expect(cardClick).not.toHaveBeenCalled();
+});
+
+it("leaves touch pointer scrolling to the browser", () => {
+  const { carousel, viewport } = createCarousel();
+  initializeCardCarousel(carousel);
+
+  viewport.dispatchEvent(
+    createPointerEvent("pointerdown", "touch", TEST_POINTER_START_X_PX),
+  );
+  window.dispatchEvent(
+    createPointerEvent("pointermove", "touch", TEST_POINTER_END_X_PX),
+  );
+
+  expect(viewport.scrollLeft).toBe(0);
+  expect(viewport.classList.contains("is-mouse-pressed")).toBe(false);
 });

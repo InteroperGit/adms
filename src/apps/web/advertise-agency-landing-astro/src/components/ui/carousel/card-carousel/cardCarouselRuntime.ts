@@ -1,5 +1,6 @@
 // Add manual controls only when the caller's cards overflow their viewport.
 const SCROLL_TOLERANCE_PX = 1;
+const MOUSE_DRAG_THRESHOLD_PX = 4;
 
 function initializeCardCarousel(carousel: HTMLElement) {
   const viewport = carousel.querySelector<HTMLElement>(
@@ -49,8 +50,71 @@ function initializeCardCarousel(carousel: HTMLElement) {
     });
   };
 
+  let activePointerId: number | null = null;
+  let pointerStartX = 0;
+  let scrollStartLeft = 0;
+  let didDrag = false;
+  let suppressNextClick = false;
+
+  const startMouseDrag = (event: PointerEvent) => {
+    if (event.pointerType !== "mouse" || event.button !== 0) {
+      return;
+    }
+
+    activePointerId = event.pointerId;
+    pointerStartX = event.clientX;
+    scrollStartLeft = viewport.scrollLeft;
+    didDrag = false;
+    suppressNextClick = false;
+    viewport.classList.add("is-mouse-pressed");
+  };
+
+  const moveMouseDrag = (event: PointerEvent) => {
+    if (event.pointerId !== activePointerId) {
+      return;
+    }
+
+    const distance = event.clientX - pointerStartX;
+    if (Math.abs(distance) < MOUSE_DRAG_THRESHOLD_PX) {
+      return;
+    }
+
+    didDrag = true;
+    viewport.scrollLeft = scrollStartLeft - distance;
+    event.preventDefault();
+  };
+
+  const finishMouseDrag = (event: PointerEvent) => {
+    if (event.pointerId !== activePointerId) {
+      return;
+    }
+
+    activePointerId = null;
+    viewport.classList.remove("is-mouse-pressed");
+    suppressNextClick = didDrag;
+    didDrag = false;
+  };
+
+  const suppressDragClick = (event: MouseEvent) => {
+    if (!suppressNextClick) {
+      return;
+    }
+
+    suppressNextClick = false;
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   previous.addEventListener("click", () => scrollByCard(-1), { signal });
   next.addEventListener("click", () => scrollByCard(1), { signal });
+  viewport.addEventListener("pointerdown", startMouseDrag, { signal });
+  window.addEventListener("pointermove", moveMouseDrag, { signal });
+  window.addEventListener("pointerup", finishMouseDrag, { signal });
+  window.addEventListener("pointercancel", finishMouseDrag, { signal });
+  viewport.addEventListener("click", suppressDragClick, {
+    capture: true,
+    signal,
+  });
   viewport.addEventListener("scroll", updateControls, { signal });
   window.addEventListener("resize", updateControls, { signal });
   motion.addEventListener("change", updateControls, { signal });

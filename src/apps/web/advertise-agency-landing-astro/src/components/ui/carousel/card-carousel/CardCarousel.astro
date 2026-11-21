@@ -1,6 +1,6 @@
 ---
 // Render caller-provided cards in a manually controlled scroll-snap region.
-import CarouselControl from "../common/CarouselControl.astro";
+import CarouselControl from "./CarouselControl.astro";
 
 interface Props {
   label: string;
@@ -18,6 +18,14 @@ if (!label.trim()) {
   aria-label={label}
   aria-roledescription="карусель"
 >
+  <div
+    class="card-carousel-viewport"
+    tabindex="0"
+  >
+    <div class="card-carousel-track">
+      <slot />
+    </div>
+  </div>
   <div
     class="card-carousel-controls"
     hidden
@@ -37,14 +45,6 @@ if (!label.trim()) {
       label={`Следующие карточки: ${label}`}
     />
   </div>
-  <div
-    class="card-carousel-viewport"
-    tabindex="0"
-  >
-    <div class="card-carousel-track">
-      <slot />
-    </div>
-  </div>
 </section>
 
 <script>
@@ -54,17 +54,36 @@ if (!label.trim()) {
 </script>
 
 <style>
-  /* Let the viewport own horizontal overflow. */
+  /* Anchor the overlay arrows to the visible scrolling region. */
   .card-carousel {
     min-width: 0;
+    position: relative;
   }
 
-  /* Place manual controls above the cards without covering their content. */
+  /* Center arrows at the viewport edges without changing its layout. */
   .card-carousel-controls {
+    align-items: center;
     display: flex;
-    justify-content: flex-end;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
+    inset-inline: 0.75rem;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  /* Hide the panel and let wheel gestures pass between the arrows. */
+  .card-carousel-controls {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  /* Reveal arrows on hover or while keyboard-visible focus is inside. */
+  .card-carousel:hover .card-carousel-controls,
+  .card-carousel:has(:focus-visible) .card-carousel-controls {
+    opacity: 1;
+    visibility: visible;
   }
 
   /* Keep controls absent when every card fits or scripting is unavailable. */
@@ -72,9 +91,18 @@ if (!label.trim()) {
     display: none;
   }
 
-  /* Make each arrow a stable, touch-sized circular control. */
+  /* Preserve card space and swipe scrolling on mobile. */
+  @media (max-width: 47.999rem) {
+    /* Keep mobile swipe unobstructed and leave buttons out of the layout. */
+    .card-carousel-controls {
+      display: none;
+    }
+  }
+
+  /* Keep each arrow targetable without blocking gestures across the panel. */
   .card-carousel :global(.card-carousel-arrow) {
     flex: 0 0 44px;
+    pointer-events: auto;
     width: 44px;
     height: 44px;
   }
@@ -87,12 +115,20 @@ if (!label.trim()) {
 
   /* Contain touch scrolling and preserve a keyboard focus destination. */
   .card-carousel-viewport {
+    cursor: grab;
     min-width: 0;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+  }
+
+  /* Prevent card text selection while the mouse button is held. */
+  .card-carousel-viewport.is-mouse-pressed,
+  .card-carousel-viewport.is-mouse-pressed :global(*) {
+    cursor: grabbing;
+    user-select: none;
   }
 
   /* Hide only decorative scrollbar chrome, not scroll affordance or content. */
@@ -131,14 +167,6 @@ if (!label.trim()) {
   /* Let a single card use the whole region without an empty preview area. */
   .card-carousel-track:has(:global(> :only-child)) :global(> *) {
     flex-basis: 100%;
-  }
-
-  /* Fit compact cards side by side as the available container grows. */
-  @media (min-width: 48rem) {
-    /* Keep tablet cards compact and reveal only whole cards at each snap. */
-    .card-carousel-track :global(> *) {
-      flex-basis: min(100%, 16rem);
-    }
   }
 
   /* Remove programmatic and touch-scroll animation for reduced motion. */

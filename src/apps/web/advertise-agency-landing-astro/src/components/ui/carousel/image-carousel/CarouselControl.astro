@@ -1,0 +1,100 @@
+---
+interface CommonProps {
+  label: string;
+  className?: string;
+  dataGallery?: "previous" | "next" | "close";
+}
+
+type Props = CommonProps &
+  (
+    | {
+        variant?: "arrow";
+        direction: "previous" | "next";
+        dataDirection?: "-1" | "1";
+      }
+    | {
+        variant: "close";
+        direction?: never;
+        dataDirection?: never;
+      }
+  );
+
+const props = Astro.props as Props;
+const isClose = props.variant === "close";
+const iconPath = isClose
+  ? "M6 6l12 12M18 6L6 18"
+  : props.direction === "previous"
+    ? "m15 5-7 7 7 7"
+    : "m9 5 7 7-7 7";
+---
+
+<button
+  type="button"
+  class:list={[
+    "carousel-control",
+    isClose ? "carousel-control-close" : "carousel-control-arrow",
+    props.className,
+  ]}
+  aria-label={props.label}
+  data-direction={isClose ? undefined : props.dataDirection}
+  data-gallery-close={
+    isClose && props.dataGallery === "close" ? true : undefined
+  }
+  data-gallery-previous={
+    !isClose && props.dataGallery === "previous" ? true : undefined
+  }
+  data-gallery-next={
+    !isClose && props.dataGallery === "next" ? true : undefined
+  }
+>
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d={iconPath} />
+  </svg>
+</button>
+
+<style>
+  .carousel-control {
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .carousel-control svg {
+    display: block;
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .carousel-control:hover {
+    color: #111827;
+    background: #fff;
+  }
+
+  .carousel-control:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 8px rgb(0 0 0 / 80%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-control {
+      transition: none;
+    }
+  }
+</style>
