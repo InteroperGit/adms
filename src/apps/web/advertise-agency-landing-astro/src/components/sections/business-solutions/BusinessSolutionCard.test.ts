@@ -20,10 +20,12 @@ it("renders the labelled solution and its inquiry action", async () => {
   const heading = getByRole(article, "heading", { level: 3 });
   const action = article.querySelector(".solution-inquiry");
 
+  expect(article.firstElementChild).toHaveClass("solution-gallery");
   expect(heading).toHaveAttribute("id", `solution-${item.id}`);
   expect(article).toHaveAttribute("aria-labelledby", heading.id);
   expect(action).toHaveAccessibleName(item.inquiryLabel);
   expect(action).toHaveAttribute("href", item.inquiryHref);
+  expect(action).toHaveClass("btn-primary", "btn-md");
 });
 
 it("requires name and evidence for customer attribution", async () => {

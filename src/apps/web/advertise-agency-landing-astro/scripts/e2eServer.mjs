@@ -75,6 +75,49 @@ for (const entry of validateContentManifest(templates)) {
       })),
     );
   }
+  if (path === "site/sections/businessSolutions.json") {
+    const fixture = overrides.businessSolutions;
+    const item = value.items[0];
+    value.items = Array.from({ length: fixture.solutionCount }, (_, index) => {
+      const solution = structuredClone(item);
+      solution.id = `e2e-solution-${index + 1}`;
+      solution.title = `Synthetic solution ${index + 1}`;
+      solution.summary = [`Synthetic summary ${index + 1}`];
+      solution.customerTask = [`Synthetic customer task ${index + 1}`];
+      solution.solution = [`Synthetic response ${index + 1}`];
+      solution.example.title = `Synthetic example ${index + 1}`;
+      solution.example.text = [`Synthetic example details ${index + 1}`];
+      if (index === fixture.solutionCount - 1) {
+        solution.summary = ["Synthetic extended summary. ".repeat(3)];
+        solution.customerTask = [
+          "Synthetic extended customer task. ".repeat(2),
+        ];
+        solution.solution = ["Synthetic extended solution. ".repeat(2)];
+        solution.example.text = [
+          "Synthetic extended example details. ".repeat(2),
+        ];
+      }
+      solution.carousel.options.enabled = true;
+      solution.carousel.options.manualNavigation = true;
+      solution.carousel.options.arrows = true;
+      solution.carousel.itemLabel = "Synthetic solution image";
+      solution.carousel.mediaSource = "Synthetic E2E fixture";
+      solution.carousel.mediaRights = "Test-only image rights";
+      solution.carousel.items = Array.from(
+        { length: fixture.imageCount },
+        (_, imageIndex) => ({
+          ...structuredClone(item.carousel.items[0]),
+          id: imageIndex + 1,
+          enabled: true,
+          image: fixture.image,
+          imageAlt: `Synthetic solution image ${imageIndex + 1}`,
+          imageWidth: fixture.imageWidth,
+          imageHeight: fixture.imageHeight,
+        }),
+      );
+      return solution;
+    });
+  }
   const target = resolve(root, path);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, JSON.stringify(value, null, 2));

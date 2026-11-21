@@ -38,6 +38,13 @@
       }
     }
   },
+  "businessSolutions": {
+    "solutionCount": 4,
+    "imageCount": 2,
+    "image": "/favicon.svg",
+    "imageWidth": 512,
+    "imageHeight": 512
+  },
   "projectBlocks": [
     {
       "type": "chart",

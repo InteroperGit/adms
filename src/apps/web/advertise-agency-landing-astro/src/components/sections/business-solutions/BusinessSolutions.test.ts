@@ -14,6 +14,13 @@ it("renders ordered solutions, captions and inquiry actions", async () => {
   const body = await render(Component, {});
   expect(Component).toBeDefined();
   expect(getByRole(body, "heading", { level: 2 })).toBeInTheDocument();
+  expect(body.querySelector(".card-carousel")).toHaveAttribute(
+    "aria-label",
+    businessSolutions.heading,
+  );
+  expect(body.querySelectorAll(".card-carousel-list > li")).toHaveLength(
+    businessSolutions.items.length,
+  );
   expect(body.querySelectorAll(".solution-item")).not.toHaveLength(0);
   expect(body.querySelectorAll(".solution-gallery figcaption").length).toBe(
     body.querySelectorAll(".solution-item").length,

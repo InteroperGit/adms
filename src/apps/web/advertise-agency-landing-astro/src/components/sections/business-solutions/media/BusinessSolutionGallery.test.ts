@@ -21,9 +21,10 @@ it("renders the labelled carousel and rights caption", async () => {
   });
 
   expect(body.querySelector("figure")).toBeInTheDocument();
-  expect(body.querySelector("figcaption")).toHaveTextContent(
-    carousel.mediaRights,
-  );
+  const caption = body.querySelector("figcaption");
+  expect(caption).toHaveClass("sr-only");
+  expect(caption).toHaveTextContent(carousel.mediaSource);
+  expect(caption).toHaveTextContent(carousel.mediaRights);
   expect(body.querySelector("image-carousel")).toBeNull();
 });
 

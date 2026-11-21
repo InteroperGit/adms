@@ -15,6 +15,10 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Recent completed work
 
+- [241 - Business solutions carousel](../docs/codex/tasks/fixed/20261121/241-use-card-carousel-for-business-solutions.md):
+  responsive widths, aligned image-first card sections, spaced centered bottom
+  actions, matching pricing CTA sizing and taller galleries without visible
+  captions passed.
 - Tasks [212](../docs/codex/tasks/fixed/20261120/212-responsive-agency-footer.md),
   [229](../docs/codex/tasks/fixed/20261120/229-extract-reusable-section-components.md)
   and [235](../docs/codex/tasks/fixed/20261120/235-move-article-renderers-to-features.md)

@@ -15,6 +15,7 @@ interface Props {
 }
 
 const { solutionId, carousel } = Astro.props;
+const SOLUTION_GALLERY_ASPECT_RATIO = 2.9;
 ---
 
 {/* Pair each business type with contextual, rights-recorded media. */}
@@ -25,9 +26,13 @@ const { solutionId, carousel } = Astro.props;
     label={carousel.itemLabel}
     itemLabel={carousel.itemLabel}
     items={carousel.items}
-    options={carousel.options}
+    options={{
+      ...carousel.options,
+      layout: "panel",
+      aspectRatio: SOLUTION_GALLERY_ASPECT_RATIO,
+    }}
   />
-  <figcaption>
+  <figcaption class="sr-only">
     {carousel.mediaSource} {carousel.mediaRights}
   </figcaption>
 </figure>
@@ -36,7 +41,8 @@ const { solutionId, carousel } = Astro.props;
   /* Keep the contextual gallery inside its solution panel. */
   .solution-gallery {
     min-width: 0;
-    margin: 1.5rem 0 0;
+    position: relative;
+    margin: 0;
   }
 
   /* Keep media corners aligned with the surrounding solution panel. */
@@ -51,5 +57,14 @@ const { solutionId, carousel } = Astro.props;
     color: var(--site-muted);
     font-size: 0.9rem;
     line-height: 1.5;
+  }
+
+  /* Reclaim mobile space without returning images to their former height. */
+  @media (max-width: 47.999rem) {
+    /* Keep mobile artwork taller than the prior panel ratio. */
+    .solution-gallery
+      :global(.image-carousel[data-layout="panel"] .carousel-slide) {
+      aspect-ratio: 2.3;
+    }
   }
 </style>

@@ -1,8 +1,9 @@
 ---
-// Present validated solutions for four business types without client code.
+// Present validated business solutions in an ordered, native-scroll carousel.
 // Optional attribution and media render only when supplied with evidence.
 
 import Section from "@/components/ui/Section.astro";
+import CardCarousel from "../../ui/carousel/card-carousel/CardCarousel.astro";
 import SolutionCard from "./BusinessSolutionCard.astro";
 import { businessSolutions } from "@/content/businessSolutions";
 ---
@@ -14,17 +15,49 @@ import { businessSolutions } from "@/content/businessSolutions";
   subtitle={businessSolutions.introduction}
   ariaLabel={businessSolutions.heading}
 >
-  <div class="solutions-list">
-    {businessSolutions.items.map((item) => (
-      <SolutionCard item={item} />
-    ))}
-  </div>
+  <CardCarousel
+    Item={SolutionCard}
+    items={businessSolutions.items.map((item) => ({ item }))}
+    label={businessSolutions.heading}
+    ordered
+  />
 </Section>
 
 <style>
-  /* Stack each business type so its complete example stays together. */
-  .solutions-list {
+  /* Share section row heights while keeping the horizontal card track. */
+  :global(#business-solutions .card-carousel-list) {
+    --solution-section-count: 8;
     display: grid;
-    gap: 2rem;
+    grid-auto-flow: column;
+    grid-auto-columns: calc(100% / 1.15);
+    grid-template-rows: repeat(var(--solution-section-count), auto);
+  }
+
+  /* Let every list item inherit the shared eight section tracks. */
+  :global(#business-solutions .card-carousel-list > li) {
+    display: grid;
+    grid-row: 1 / span var(--solution-section-count);
+    grid-template-rows: subgrid;
+  }
+
+  /* Show one card and a preview on phones. */
+  @media (max-width: 47.999rem) {
+    :global(#business-solutions .card-carousel-list) {
+      grid-auto-columns: calc(100% / 1.15);
+    }
+  }
+
+  /* Match tablet card width to standard desktop and show two full cards. */
+  @media (min-width: 48rem) {
+    :global(#business-solutions .card-carousel-list) {
+      grid-auto-columns: calc((100% - 1rem) / 2.2);
+    }
+  }
+
+  /* Fit three cards and part of the next across wide desktop screens. */
+  @media (min-width: 75rem) {
+    :global(#business-solutions .card-carousel-list) {
+      grid-auto-columns: calc((100% - 2rem) / 3.2);
+    }
   }
 </style>
