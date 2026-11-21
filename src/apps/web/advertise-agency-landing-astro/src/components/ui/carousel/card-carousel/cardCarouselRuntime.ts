@@ -50,6 +50,29 @@ function initializeCardCarousel(carousel: HTMLElement) {
     });
   };
 
+  const scrollToEdge = (edge: "start" | "end") => {
+    const left =
+      edge === "start" ? 0 : viewport.scrollWidth - viewport.clientWidth;
+    viewport.scrollTo({
+      left,
+      behavior: motion.matches ? "auto" : "smooth",
+    });
+  };
+
+  const handleViewportKeydown = (event: KeyboardEvent) => {
+    if (event.altKey || event.ctrlKey || event.metaKey) {
+      return;
+    }
+
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      scrollByCard(event.key === "ArrowLeft" ? -1 : 1);
+    } else if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+      scrollToEdge(event.key === "Home" ? "start" : "end");
+    }
+  };
+
   let activePointerId: number | null = null;
   let pointerStartX = 0;
   let scrollStartLeft = 0;
@@ -107,6 +130,7 @@ function initializeCardCarousel(carousel: HTMLElement) {
 
   previous.addEventListener("click", () => scrollByCard(-1), { signal });
   next.addEventListener("click", () => scrollByCard(1), { signal });
+  viewport.addEventListener("keydown", handleViewportKeydown, { signal });
   viewport.addEventListener("pointerdown", startMouseDrag, { signal });
   window.addEventListener("pointermove", moveMouseDrag, { signal });
   window.addEventListener("pointerup", finishMouseDrag, { signal });

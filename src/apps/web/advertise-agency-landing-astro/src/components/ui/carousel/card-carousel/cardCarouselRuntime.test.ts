@@ -8,6 +8,7 @@ const CARD_WIDTH_PX = 120;
 const TEST_POINTER_START_X_PX = 200;
 const TEST_POINTER_END_X_PX = 100;
 const MOUSE_POINTER_ID = 1;
+const MAXIMUM_SCROLL_PX = OVERFLOW_WIDTH_PX - VIEWPORT_WIDTH_PX;
 
 function createPointerEvent(
   type: string,
@@ -47,6 +48,10 @@ function createCarousel() {
     scrollWidth: { configurable: true, value: OVERFLOW_WIDTH_PX },
   });
   Object.defineProperty(viewport, "scrollBy", {
+    configurable: true,
+    value: vi.fn(),
+  });
+  Object.defineProperty(viewport, "scrollTo", {
     configurable: true,
     value: vi.fn(),
   });
@@ -107,6 +112,32 @@ it("moves one card and honors reduced motion", () => {
   expect(viewport.scrollBy).toHaveBeenCalledWith({
     left: CARD_WIDTH_PX,
     behavior: "auto",
+  });
+});
+
+it("supports arrow and edge keyboard navigation", () => {
+  const { carousel, viewport } = createCarousel();
+  initializeCardCarousel(carousel);
+
+  const right = new KeyboardEvent("keydown", {
+    key: "ArrowRight",
+    bubbles: true,
+    cancelable: true,
+  });
+  viewport.dispatchEvent(right);
+
+  expect(right.defaultPrevented).toBe(true);
+  expect(viewport.scrollBy).toHaveBeenCalledWith({
+    left: CARD_WIDTH_PX,
+    behavior: "smooth",
+  });
+
+  viewport.dispatchEvent(
+    new KeyboardEvent("keydown", { key: "End", bubbles: true }),
+  );
+  expect(viewport.scrollTo).toHaveBeenCalledWith({
+    left: MAXIMUM_SCROLL_PX,
+    behavior: "smooth",
   });
 });
 

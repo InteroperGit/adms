@@ -4,6 +4,7 @@
 // The section has no browser behavior, so it remains available without JS.
 
 import Button from "@/components/ui/Button.astro";
+import CardCarousel from "../../ui/carousel/card-carousel/CardCarousel.astro";
 import { orderingProcess } from "@/content/orderingProcess";
 import OrderingStep from "./OrderingStep.astro";
 ---
@@ -27,15 +28,16 @@ import OrderingStep from "./OrderingStep.astro";
       </p>
     </div>
 
-    {/* Native list semantics preserve the customer's five-step sequence. */}
-    <ol class="ordering-steps">
-      {orderingProcess.steps.map((step, index) => (
-        <OrderingStep
-          step={step}
-          number={index + 1}
-        />
-      ))}
-    </ol>
+    {/* Keep native list semantics inside the horizontal process carousel. */}
+    <CardCarousel
+      Item={OrderingStep}
+      items={orderingProcess.steps.map((step, index) => ({
+        step,
+        number: index + 1,
+      }))}
+      label="Как проходит заказ"
+      ordered
+    />
 
     {/* Keep the next action adjacent to the final process explanation. */}
     <div class="ordering-action">
@@ -64,14 +66,17 @@ import OrderingStep from "./OrderingStep.astro";
     margin-bottom: 0;
   }
 
-  /* Use a native ordered list while laying cards out responsively. */
-  .ordering-steps {
-    display: grid;
-    gap: 1rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    counter-reset: ordering-step;
+  /* Show one full mobile card and a preview of the next step. */
+  .ordering-process :global(.card-carousel-list > li) {
+    box-sizing: border-box;
+    flex: 0 0 calc(100% / 1.2);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Align the end of the carousel with the final process card. */
+  .ordering-process :global(.card-carousel-list > li:last-child) {
+    scroll-snap-align: end;
   }
 
   /* Keep the inquiry action aligned with the section's reading container. */
@@ -81,17 +86,17 @@ import OrderingStep from "./OrderingStep.astro";
     margin-top: 2rem;
   }
 
-  /* Fit two cards per row once each card has enough reading width. */
+  /* Show two full tablet cards and a preview of the following step. */
   @media (min-width: 48rem) {
-    .ordering-steps {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .ordering-process :global(.card-carousel-list > li) {
+      flex-basis: calc((100% - 1rem) / 2.2);
     }
   }
 
-  /* Use three columns on wide screens while keeping the final row balanced. */
+  /* Show three full desktop cards and a preview of the following step. */
   @media (min-width: 75rem) {
-    .ordering-steps {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .ordering-process :global(.card-carousel-list > li) {
+      flex-basis: calc((100% - 2rem) / 3.2);
     }
   }
 </style>

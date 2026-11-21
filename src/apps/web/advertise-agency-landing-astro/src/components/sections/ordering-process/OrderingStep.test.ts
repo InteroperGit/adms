@@ -7,9 +7,9 @@ import { render } from "../../../../tests/helpers/render";
 it("renders a numbered list item with its configured heading", async () => {
   const step = orderingProcess.steps[0];
   const body = await render(Component, { step, number: 1 });
-  const item = body.querySelector(":scope > li")!;
+  const item = body.querySelector(":scope > article")!;
 
-  expect(item.querySelector("article")).toHaveAttribute("tabindex", "0");
+  expect(item).toHaveAttribute("tabindex", "0");
   expect(item.querySelector(".ordering-step-number")).toHaveTextContent("01");
   expect(item.querySelector("h3")).toHaveTextContent(step.title);
   expect(item.querySelectorAll(".ordering-responsibilities ul")).toHaveLength(

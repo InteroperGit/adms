@@ -11,38 +11,31 @@ const { step, number } = Astro.props;
 const headingId = `${step.id}-heading`;
 ---
 
-<li class="ordering-step">
-  <article
-    class="ordering-card"
-    tabindex="0"
-    aria-labelledby={headingId}
+<article
+  class="ordering-card"
+  tabindex="0"
+  aria-labelledby={headingId}
+>
+  <span
+    class="ordering-icon"
+    style={{ "--ordering-icon": `url(${step.icon})` }}
+    aria-hidden="true"
+  ></span>
+  <p
+    class="ordering-step-number"
+    aria-hidden="true"
   >
-    <span
-      class="ordering-icon"
-      style={{ "--ordering-icon": `url(${step.icon})` }}
-      aria-hidden="true"
-    ></span>
-    <p
-      class="ordering-step-number"
-      aria-hidden="true"
-    >
-      {String(number).padStart(2, "0")}
-    </p>
-    <h3 id={headingId}>{step.title}</h3>
-    <p class="ordering-description">{step.description}</p>
-    <OrderingResponsibilities
-      customerProvides={step.customerProvides}
-      agencyHandles={step.agencyHandles}
-    />
-  </article>
-</li>
+    {String(number).padStart(2, "0")}
+  </p>
+  <h3 id={headingId}>{step.title}</h3>
+  <p class="ordering-description">{step.description}</p>
+  <OrderingResponsibilities
+    customerProvides={step.customerProvides}
+    agencyHandles={step.agencyHandles}
+  />
+</article>
 
 <style>
-  /* Keep each step's content inside one stable reading unit. */
-  .ordering-step {
-    min-width: 0;
-  }
-
   /* Separate cards from the section surface while preserving theme tokens. */
   .ordering-card {
     height: 100%;
@@ -52,46 +45,12 @@ const headingId = `${step.id}-heading`;
     background: var(--color-base-100);
     box-shadow: var(--shadow-panel);
     overflow-wrap: anywhere;
-    transition:
-      border-color 180ms ease,
-      background-color 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  /* Match keyboard focus to the established card emphasis. */
-  .ordering-card:focus {
-    border-color: var(--color-primary);
-    background: color-mix(
-      in srgb,
-      var(--color-primary) 8%,
-      var(--color-base-100)
-    );
-    box-shadow: inset 0 0 0 1px var(--color-primary);
   }
 
   /* Keep keyboard location distinct from the focused card surface. */
   .ordering-card:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 4px;
-  }
-
-  /* Highlight hover without moving surrounding content. */
-  .ordering-card:hover {
-    border-color: var(--color-primary);
-    background: color-mix(
-      in srgb,
-      var(--color-primary) 8%,
-      var(--color-base-100)
-    );
-    box-shadow: inset 0 0 0 1px var(--color-primary);
-  }
-
-  /* Respect motion preferences while keeping feedback immediate. */
-  @media (prefers-reduced-motion: reduce) {
-    /* Remove the transition without removing focus or hover indication. */
-    .ordering-card {
-      transition: none;
-    }
   }
 
   /* Keep the number visible without changing ordered-list semantics. */
@@ -106,12 +65,13 @@ const headingId = `${step.id}-heading`;
   /* Align each decorative mark with the step's heading. */
   .ordering-icon {
     display: block;
+    box-sizing: border-box;
     width: 3rem;
     height: 3rem;
     margin-bottom: 0.75rem;
     background: var(--color-primary);
-    -webkit-mask: var(--ordering-icon) center / contain no-repeat;
-    mask: var(--ordering-icon) center / contain no-repeat;
+    -webkit-mask: var(--ordering-icon) left bottom / contain no-repeat;
+    mask: var(--ordering-icon) left bottom / contain no-repeat;
   }
 
   /* Give each step a clear heading that anchors its article. */

@@ -1,15 +1,38 @@
 ---
 // Render caller-provided cards in a manually controlled scroll-snap region.
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import { z } from "astro/zod";
 import CarouselControl from "./CarouselControl.astro";
 
 interface Props {
+  Item: AstroComponentFactory;
+  items: Record<string, unknown>[];
   label: string;
+  ordered?: boolean;
 }
 
-const { label } = Astro.props;
-if (!label.trim()) {
-  throw new Error("CardCarousel needs an accessible label");
+const {
+  Item,
+  items: suppliedItems,
+  label: suppliedLabel,
+  ordered,
+} = Astro.props;
+if (Astro.slots.has("default")) {
+  throw new Error("CardCarousel accepts items and Item props, not slot cards");
 }
+if (typeof Item !== "function") {
+  throw new Error("CardCarousel needs an Astro Item component");
+}
+const props = z
+  .object({
+    items: z
+      .array(z.record(z.string(), z.unknown()))
+      .min(1, "CardCarousel needs at least one item"),
+    label: z.string().trim().min(1, "CardCarousel needs an accessible label"),
+    ordered: z.boolean().default(false),
+  })
+  .parse({ items: suppliedItems, label: suppliedLabel, ordered });
+const { items, label, ordered: isOrdered } = props;
 ---
 
 <section
@@ -22,9 +45,21 @@ if (!label.trim()) {
     class="card-carousel-viewport"
     tabindex="0"
   >
-    <div class="card-carousel-track">
-      <slot />
-    </div>
+    {isOrdered ? (
+      <ol class="card-carousel-track card-carousel-list">
+        {items.map((item) => (
+          <li>
+            <Item {...item} />
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <div class="card-carousel-track">
+        {items.map((item) => (
+          <Item {...item} />
+        ))}
+      </div>
+    )}
   </div>
   <div
     class="card-carousel-controls"
@@ -148,6 +183,13 @@ if (!label.trim()) {
     align-items: stretch;
     gap: 1rem;
     min-width: 100%;
+  }
+
+  /* Reset native list spacing when the track carries ordered semantics. */
+  .card-carousel-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   /* Snap caller cards consistently while retaining their intrinsic height. */

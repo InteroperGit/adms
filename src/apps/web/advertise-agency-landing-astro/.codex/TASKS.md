@@ -59,6 +59,8 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Task index
 
+- [239 - Ordering process carousel](../docs/codex/tasks/fixed/20261121/239-use-card-carousel-for-ordering-process.md):
+  implemented; focused component, Astro and Chromium checks passed.
 - [238 — CardCarousel][task238]: implemented; focused checks passed.
 
 - [237 — Общие компоненты каруселей](../docs/codex/tasks/fixed/20261120/237-share-carousel-controls.md):
