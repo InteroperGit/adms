@@ -1,25 +1,31 @@
 ---
-// Provide consistent section spacing, container and optional heading copy.
+// Provide a semantic section, optional heading copy, content and action slot.
 // Background defaults to default; id/class pass through to the section.
-// The default slot follows optional h2/subtitle content inside the container.
+// Callers may customize heading presentation or opt out of standard spacing.
 
 // Caller-supplied data and presentation options for this component.
 export interface Props {
   id?: string;
   title?: string;
   subtitle?: string;
+  headingClass?: string;
   background?: "default" | "gradient" | "dark" | "none";
   class?: string;
   ariaLabel?: string;
+  container?: boolean;
+  bare?: boolean;
 }
 
 const {
   id,
   title,
   subtitle,
+  headingClass = "",
   background = "default",
   class: className = "",
   ariaLabel,
+  container = true,
+  bare = false,
 } = Astro.props;
 
 // Map the public background variants to existing shared theme utilities.
@@ -30,7 +36,11 @@ const bgClasses = {
   none: "",
 };
 
-const sectionClasses = ["site-section", bgClasses[background], className]
+const sectionClasses = [
+  bare ? "" : "site-section",
+  bgClasses[background],
+  className,
+]
   .filter(Boolean)
   .join(" ");
 ---
@@ -42,11 +52,25 @@ const sectionClasses = ["site-section", bgClasses[background], className]
   id={id}
   class={sectionClasses}
   aria-label={ariaLabel}
+  aria-labelledby={!ariaLabel && title && id ? `${id}-heading` : undefined}
 >
-  <div class="site-container">
-    {title && <h2 class="site-section-title">{title}</h2>}
-    {subtitle && <p class="site-section-subtitle">{subtitle}</p>}
+  <div class:list={{ "site-container": container }}>
+    {(title || subtitle) && (
+      <header class={headingClass || undefined}>
+        {title && (
+          <h2
+            id={id ? `${id}-heading` : undefined}
+            class="site-section-title"
+          >
+            {title}
+          </h2>
+        )}
+        {subtitle && <p class="site-section-subtitle">{subtitle}</p>}
+      </header>
+    )}
     {/* Page content follows the optional section heading and subtitle. */}
     <slot />
+    {/* Optional actions follow section content without an empty wrapper. */}
+    <slot name="action" />
   </div>
 </section>

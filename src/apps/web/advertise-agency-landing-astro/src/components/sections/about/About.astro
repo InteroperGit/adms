@@ -25,12 +25,11 @@ const contacts = site.menu.find((item) => item.href === "/#contacts");
 {/* Description and statistics remain static content, not browser state. */}
 <Section
   id="about"
+  title={site.sections.about.title}
+  headingClass="opening-section-title"
   background="default"
   class="opening"
 >
-  <h2 class="site-section-title opening-section-title">
-    {site.sections.about.title}
-  </h2>
   {/* Copy and images share a desktop row, then stack in reading order. */}
   <div class:list={["opening-row", { "opening-with-images": hasImages }]}>
     <AboutIntroduction
@@ -105,7 +104,7 @@ const contacts = site.menu.find((item) => item.href === "/#contacts");
   }
 
   /* Place the section heading above both copy and supporting media. */
-  .opening-section-title {
+  :global(.opening-section-title) {
     margin-bottom: 1.5rem;
   }
 </style>

@@ -1,9 +1,10 @@
 ---
 // Render the service catalog only when at least one item is available.
 // Optional items default to the validated visibleServices collection.
-// Demo disclosure uses shared content and does not claim approved work.
 
 import ServiceCard from "@/components/features/services/ServiceCard.astro";
+import Section from "@/components/ui/Section.astro";
+import Button from "@/components/ui/Button.astro";
 import { services, visibleServices } from "@/content/services";
 import type { Service } from "@/types/services";
 
@@ -16,58 +17,48 @@ const { items = visibleServices } = Astro.props;
 ---
 
 {items.length > 0 && (
-  <section
+  <Section
     id="services"
-    class="site-section services"
-    aria-labelledby="services-heading"
+    title={services.heading}
+    subtitle={services.introduction}
+    headingClass="services-introduction"
+    background="none"
+    class="services"
   >
-    <div class="site-container">
-      <header class="services-introduction">
-        <h2
-          id="services-heading"
-          class="site-section-title"
-        >
-          {services.heading}
-        </h2>
-        <p class="site-section-subtitle services-summary">
-          {services.introduction}
-        </p>
-        {services.demoMode && (
-          <p class="services-demo">{services.demoNotice}</p>
-        )}
-      </header>
-      {/*
+    {/*
         Cards share the filtered catalog order without client-side rendering.
       */}
-      <div class="services-grid">
-        {items.map((service) => (
-          <ServiceCard service={service} />
-        ))}
-      </div>
+    <div class="services-grid">
+      {items.map((service) => (
+        <ServiceCard service={service} />
+      ))}
     </div>
-  </section>
+    <div
+      slot="action"
+      class="services-action"
+    >
+      <Button
+        href="/#order-inquiry"
+        size="lg"
+      >
+        Заказать услугу
+      </Button>
+    </div>
+  </Section>
 )}
 
 <style>
   /* Center the service heading and copy as one readable introduction. */
-  .services-introduction {
+  :global(.services-introduction) {
     max-width: 60ch;
     margin: 0 auto 2.5rem;
     text-align: center;
     overflow-wrap: anywhere;
   }
 
-  /* Keep the disclosure near the shared service subtitle. */
-  .services-summary {
+  /* Keep service cards close to the shared subtitle. */
+  :global(.services-introduction .site-section-subtitle) {
     margin-bottom: 1rem;
-  }
-
-  /* Identify the sample catalog without claiming real agency work. */
-  .services-demo {
-    margin-top: 1rem;
-    padding-left: 1rem;
-    border-left: 3px solid var(--color-primary);
-    color: var(--site-muted);
   }
 
   /* Keep each service fully readable in a narrow single-column layout. */
@@ -76,5 +67,11 @@ const { items = visibleServices } = Astro.props;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     align-items: stretch;
     gap: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .services-action {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--site-section-action-space);
   }
 </style>

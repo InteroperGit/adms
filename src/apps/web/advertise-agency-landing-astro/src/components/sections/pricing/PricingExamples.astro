@@ -1,70 +1,57 @@
 ---
 // Render eligible pricing scopes and shared estimate guidance as static HTML.
 // Empty collections omit the section. The loader owns demo/approval gates;
-// this section owns visible demo disclosure and the section heading.
+// this section owns the shared heading and price examples.
 import PricingExample from "@/components/sections/pricing/PricingExample.astro";
+import Section from "@/components/ui/Section.astro";
 import CardCarousel from "../../ui/carousel/card-carousel/CardCarousel.astro";
 import { pricing, visiblePricingExamples } from "@/content/pricing";
 ---
 
 {visiblePricingExamples.length > 0 && (
-  <section
+  <Section
     id="pricing"
-    class="site-section pricing"
-    aria-labelledby="pricing-heading"
+    title={pricing.heading}
+    subtitle={pricing.introduction}
+    headingClass="pricing-introduction"
+    background="none"
+    class="pricing"
   >
-    <div class="site-container">
-      {/* Explain the examples and disclose their demonstration status. */}
-      <div class="pricing-introduction">
-        <h2
-          id="pricing-heading"
-          class="site-section-title"
-        >
-          {pricing.heading}
-        </h2>
-        <p class="site-section-subtitle pricing-summary">
-          {pricing.introduction}
-        </p>
-        {pricing.demoMode && <p class="pricing-demo">{pricing.demoNotice}</p>}
+    {/* Keep each complete scope and its inquiry link inside one card. */}
+    <div class="pricing-examples">
+      <CardCarousel
+        Item={PricingExample}
+        items={visiblePricingExamples.map((example) => ({
+          example,
+          demoPriceLabel: pricing.demoPriceLabel,
+          inquiryLabel: pricing.inquiryLabel,
+        }))}
+        label={pricing.heading}
+      />
+    </div>
+    {/* Answer cost questions immediately after the example comparisons. */}
+    <div class="pricing-guidance">
+      <div>
+        <h3 class="pricing-guidance-heading">{pricing.costFactors.heading}</h3>
+        <ul class="pricing-factors">
+          {pricing.costFactors.items.map((factor) => (
+            <li>{factor}</li>
+          ))}
+        </ul>
       </div>
-      {/* Keep each complete scope and its inquiry link inside one card. */}
-      <div class="pricing-examples">
-        <CardCarousel
-          Item={PricingExample}
-          items={visiblePricingExamples.map((example) => ({
-            example,
-            demoPriceLabel: pricing.demoPriceLabel,
-            inquiryLabel: pricing.inquiryLabel,
-          }))}
-          label={pricing.heading}
-        />
-      </div>
-      {/* Answer cost questions immediately after the example comparisons. */}
-      <div class="pricing-guidance">
-        <div>
-          <h3 class="pricing-guidance-heading">
-            {pricing.costFactors.heading}
-          </h3>
-          <ul class="pricing-factors">
-            {pricing.costFactors.items.map((factor) => (
-              <li>{factor}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 class="pricing-guidance-heading">
-            {pricing.estimateGuidance.heading}
-          </h3>
-          <p class="pricing-estimate">{pricing.estimateGuidance.text}</p>
-        </div>
+      <div>
+        <h3 class="pricing-guidance-heading">
+          {pricing.estimateGuidance.heading}
+        </h3>
+        <p class="pricing-estimate">{pricing.estimateGuidance.text}</p>
       </div>
     </div>
-  </section>
+  </Section>
 )}
 
 <style>
   /* Center the pricing heading and subtitle above the examples. */
-  .pricing-introduction {
+  :global(.pricing-introduction) {
     max-width: 60ch;
     margin: 0 auto 2.5rem;
     text-align: center;
@@ -72,19 +59,8 @@ import { pricing, visiblePricingExamples } from "@/content/pricing";
   }
 
   /* Keep the demo notice close to the shared pricing subtitle. */
-  .pricing-summary {
+  :global(.pricing-introduction .site-section-subtitle) {
     margin-bottom: 1rem;
-  }
-
-  /* Keep the fictional-content notice prominent above all example amounts. */
-  .pricing-demo {
-    margin-top: 1rem;
-    margin-inline: auto;
-    max-width: 60ch;
-    padding-left: 1rem;
-    border-left: 3px solid var(--color-primary);
-    font-weight: 600;
-    text-align: left;
   }
 
   /* Separate shared estimate guidance from the final example. */

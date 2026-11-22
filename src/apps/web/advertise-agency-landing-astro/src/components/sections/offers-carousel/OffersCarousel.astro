@@ -1,19 +1,23 @@
 ---
 // The section owns publication data and composes its carousel implementation.
 import OffersCarouselView from "./OffersCarouselView.astro";
+import Section from "@/components/ui/Section.astro";
 import { offers, enabledOffers } from "@/content/offers";
 ---
 
 {/* Preserve the public section anchor and offers' configured presentation. */}
 {offers.enabled && enabledOffers.length > 0 && (
-  <section
+  <Section
     id="offers"
     class="offers-section"
     aria-label="Предложения"
+    background="none"
+    container={false}
+    bare
   >
     <OffersCarouselView
       items={enabledOffers}
       options={{ autoplay: offers.autoplay, intervalMs: offers.intervalMs }}
     />
-  </section>
+  </Section>
 )}

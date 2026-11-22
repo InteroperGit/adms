@@ -17,7 +17,7 @@ import HeaderMenuOpener from "./HeaderMenuOpener.astro";
 {/* Keep focused or expanded controls visible while scrolling. */}
 <header
   data-auto-hide-header
-  class="site-header sticky top-0 z-40"
+  class="site-header z-40"
 >
   <div class="header-layout site-container">
     <HeaderBrand />
@@ -102,6 +102,12 @@ import HeaderMenuOpener from "./HeaderMenuOpener.astro";
 
   /* Reserve room for settings and the mobile opener on narrow screens. */
   @media (max-width: 47.999rem) {
+    /* Keep the scroll-aware header attached only on mobile screens. */
+    .site-header {
+      position: sticky;
+      top: 0;
+    }
+
     /* Separate the mobile header from page content with a theme shadow. */
     .site-header {
       border: 0;
@@ -169,6 +175,7 @@ import HeaderMenuOpener from "./HeaderMenuOpener.astro";
   const header = document.querySelector<HTMLElement>("[data-auto-hide-header]");
   if (header) {
     const overlaySelector = "dialog[open], [data-settings-open]";
+    const mobileViewport = window.matchMedia("(max-width: 47.999rem)");
     const hideThreshold = 24;
     const revealThreshold = 48;
     const hasOpenOverlay = () =>
@@ -181,7 +188,7 @@ import HeaderMenuOpener from "./HeaderMenuOpener.astro";
       const firstRow = header.querySelector<HTMLElement>(".header-layout");
       document.documentElement.style.setProperty(
         "--site-header-clearance",
-        `${header.offsetHeight + 16}px`,
+        mobileViewport.matches ? `${header.offsetHeight + 16}px` : "0px",
       );
       document.documentElement.style.setProperty(
         "--site-header-first-row-height",
@@ -227,6 +234,11 @@ import HeaderMenuOpener from "./HeaderMenuOpener.astro";
       distance = 0;
       direction = 0;
     };
+    mobileViewport.addEventListener("change", () => {
+      previousY = Math.max(0, window.scrollY);
+      setClearance();
+      reveal();
+    });
 
     // Clamp overscroll and keep active header interactions on screen.
     const update = () => {
@@ -238,6 +250,11 @@ import HeaderMenuOpener from "./HeaderMenuOpener.astro";
       const y = Math.min(maxY, Math.max(0, window.scrollY));
       const delta = y - previousY;
       previousY = y;
+
+      if (!mobileViewport.matches) {
+        reveal();
+        return;
+      }
 
       if (
         y <= header.offsetHeight ||

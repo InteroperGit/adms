@@ -42,6 +42,7 @@ const maintenanceReady =
   title={content.heading}
   subtitle={content.introduction}
   background="none"
+  headingClass="production-introduction"
   ariaLabel="Гарантии и сопровождение заказа"
 >
   <ProductionGuidance items={content.guidance} />
@@ -62,7 +63,10 @@ const maintenanceReady =
   </div>
   <WarrantyTerms terms={warranties} />
   {maintenanceReady && <MaintenanceDetails maintenance={content.maintenance} />}
-  <div class="production-action">
+  <div
+    slot="action"
+    class="production-action"
+  >
     <Button
       href={content.inquiryHref}
       size="lg"
@@ -89,7 +93,7 @@ const maintenanceReady =
   .production-action {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: var(--site-section-action-space);
   }
 
   /* Let the inquiry command wrap in enlarged narrow layouts. */

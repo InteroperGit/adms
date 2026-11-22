@@ -29,7 +29,10 @@ const featuredProjects = projects.slice(0, 3);
     <p>Кейсы пока не опубликованы.</p>
   )}
   {/* Keep the complete catalogue reachable, including when no cards exist. */}
-  <div class="projects-catalog-link">
+  <div
+    slot="action"
+    class="projects-catalog-link"
+  >
     <Button
       href="/projects/"
       size="lg"
@@ -44,6 +47,6 @@ const featuredProjects = projects.slice(0, 3);
   .projects-catalog-link {
     display: flex;
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: var(--site-section-action-space);
   }
 </style>

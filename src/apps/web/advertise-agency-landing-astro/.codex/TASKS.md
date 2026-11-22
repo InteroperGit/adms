@@ -13,6 +13,9 @@ UI task 171 is archived; delivery is deferred to task 173.
 
 ## Recent completed work
 
+- [243 - Унифицировать секции главной страницы](../docs/codex/tasks/fixed/20261122/243-unify-homepage-sections.md):
+  sections share the common component; mobile header behavior, service CTA,
+  spacing and responsive layouts passed focused checks.
 - [240 - Pricing examples carousel](../docs/codex/tasks/fixed/20261122/240-use-card-carousel-for-pricing-examples.md):
   all acceptance checks passed; 30 focused tests and 12 E2E scenarios across
   Chromium, Firefox and WebKit passed.

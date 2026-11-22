@@ -36,7 +36,10 @@ const items = getVisibleFaqItems(faq);
         ))}
       </div>
       {/* A native inquiry link offers a project-specific conversation. */}
-      <div class="faq-inquiry">
+      <div
+        slot="action"
+        class="faq-inquiry"
+      >
         <Button
           href={faq.inquiryHref}
           size="lg"
@@ -74,7 +77,7 @@ const items = getVisibleFaqItems(faq);
   .faq-inquiry {
     display: flex;
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: var(--site-section-action-space);
   }
 
   /* Theme tokens distinguish each disclosure from the section surface. */

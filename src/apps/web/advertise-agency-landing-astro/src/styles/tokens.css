@@ -16,6 +16,7 @@
   --site-container: 75rem;
   --site-gutter: clamp(1rem, 3vw, 2rem);
   --site-section-space: clamp(3rem, 6vw, 5rem);
+  --site-section-action-space: 2rem;
   --site-heading-size: clamp(1.75rem, 2.8vw, 2.5rem);
   --site-reading-width: 68ch;
   --site-focus-ring: 2px solid var(--color-primary);

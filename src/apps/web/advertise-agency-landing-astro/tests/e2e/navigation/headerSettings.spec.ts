@@ -10,11 +10,31 @@ test("mobile header hides down and returns up while scrolling", async ({
   await page.emulateMedia({ reducedMotion: "reduce" });
 
   const header = page.locator(".site-header");
+  await expect(header).toHaveCSS("position", "sticky");
   await page.mouse.wheel(0, 500);
   await expect.poll(() => header.getAttribute("data-hidden")).toBe("true");
 
   await page.mouse.wheel(0, -100);
   await expect.poll(() => header.getAttribute("data-hidden")).toBe("false");
+});
+
+test("tablet and desktop headers stay in document flow", async ({ page }) => {
+  for (const width of [768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    const decline = page.locator('[data-cookie-choice="declined"]');
+    if (await decline.isVisible()) {
+      await decline.click();
+    }
+
+    const header = page.locator(".site-header");
+    await expect(header).toHaveCSS("position", "static");
+    await page.mouse.wheel(0, 600);
+    await expect.poll(() => header.getAttribute("data-hidden")).toBe("false");
+
+    await page.mouse.wheel(0, -120);
+    await expect.poll(() => header.getAttribute("data-hidden")).toBe("false");
+  }
 });
 
 test("mobile menu shows themed links without contact action buttons", async ({

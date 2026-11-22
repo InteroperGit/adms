@@ -34,7 +34,7 @@ beforeEach(() => {
   ResizeObserverMock.instances = [];
 });
 
-async function fixture(hash = "") {
+async function fixture(hash = "", mobile = true) {
   if (!script) throw new Error("Header script was not found");
   const body = await render(Component);
   const dom = new JSDOM(body.innerHTML, {
@@ -46,6 +46,13 @@ async function fixture(hash = "") {
     "[data-auto-hide-header]",
   )!;
   const frames: FrameRequestCallback[] = [];
+  const mobileViewport = {
+    matches: mobile,
+    addEventListener: vi.fn(),
+  };
+  Object.defineProperty(dom.window, "matchMedia", {
+    value: vi.fn(() => mobileViewport),
+  });
   Object.defineProperty(dom.window, "ResizeObserver", {
     value: ResizeObserverMock,
   });
@@ -174,6 +181,27 @@ it("uses separate hide and reveal thresholds while scrolling", async () => {
   dom.window.dispatchEvent(new dom.window.Event("scroll"));
   state.flushFrame();
   expect(header.dataset.hidden).toBe("false");
+  dom.window.close();
+});
+
+it("keeps header visible beyond mobile width", async () => {
+  const { dom, header, frames } = await fixture("", false);
+  expect(
+    dom.window.document.documentElement.style.getPropertyValue(
+      "--site-header-clearance",
+    ),
+  ).toBe("0px");
+
+  Object.defineProperty(dom.window, "scrollY", { value: 120 });
+  dom.window.dispatchEvent(new dom.window.Event("scroll"));
+  frames.shift()?.(0);
+  expect(header.dataset.hidden).toBe("false");
+
+  Object.defineProperty(dom.window, "scrollY", { value: 72 });
+  dom.window.dispatchEvent(new dom.window.Event("scroll"));
+  frames.shift()?.(0);
+  expect(header.dataset.hidden).toBe("false");
+
   dom.window.close();
 });
 

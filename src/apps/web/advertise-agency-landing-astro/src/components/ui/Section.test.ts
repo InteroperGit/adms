@@ -30,12 +30,36 @@ it("places a named section heading and subtitle before its slot", async () => {
   expect(getByRole(section, "heading", { level: 2 })).toHaveTextContent(
     "Services",
   );
-  const children = section.querySelector(".site-container")!.children;
-  expect([...children].map((child) => child.textContent)).toEqual([
-    "Services",
-    "Our work",
-    "Details",
-  ]);
+  expect(section.querySelector("header")).toHaveTextContent("ServicesOur work");
+  expect(
+    section.querySelector(".site-container > [data-slot]"),
+  ).toHaveTextContent("Details");
+});
+
+it("renders a trailing action only when supplied", async () => {
+  const body = await render(
+    Section,
+    {
+      id: "introduction",
+      title: "Main heading",
+      subtitle: "Summary",
+    },
+    {
+      default: "<p>Body</p>",
+      action: '<a href="/#order-inquiry">Discuss a project</a>',
+    },
+  );
+  const section = body.querySelector("section");
+  expect(getByRole(section!, "heading", { level: 2 })).toHaveAttribute(
+    "id",
+    "introduction-heading",
+  );
+  expect(section).toHaveAttribute("aria-labelledby", "introduction-heading");
+  expect(
+    getByRole(section!, "link", { name: "Discuss a project" }),
+  ).toHaveAttribute("href", "/#order-inquiry");
+  expect(section?.querySelector("header")).toHaveTextContent("Summary");
+  expect(body.querySelector(".site-section-action")).toBeNull();
 });
 
 it.each([

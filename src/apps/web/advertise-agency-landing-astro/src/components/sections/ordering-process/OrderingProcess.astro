@@ -4,56 +4,48 @@
 // The section has no browser behavior, so it remains available without JS.
 
 import Button from "@/components/ui/Button.astro";
+import Section from "@/components/ui/Section.astro";
 import CardCarousel from "../../ui/carousel/card-carousel/CardCarousel.astro";
 import { orderingProcess } from "@/content/orderingProcess";
 import OrderingStep from "./OrderingStep.astro";
 ---
 
-<section
+<Section
   id="ordering-process"
-  class="site-section ordering-process"
-  aria-labelledby="ordering-process-heading"
+  title={orderingProcess.heading}
+  subtitle={orderingProcess.introduction}
+  headingClass="ordering-introduction"
+  background="none"
+  class="ordering-process"
 >
-  <div class="site-container">
-    {/* Keep the sequence introduction separate from its ordered list. */}
-    <div class="ordering-introduction">
-      <h2
-        id="ordering-process-heading"
-        class="site-section-title"
-      >
-        {orderingProcess.heading}
-      </h2>
-      <p class="site-section-subtitle ordering-summary">
-        {orderingProcess.introduction}
-      </p>
-    </div>
+  {/* Keep native list semantics inside the horizontal process carousel. */}
+  <CardCarousel
+    Item={OrderingStep}
+    items={orderingProcess.steps.map((step, index) => ({
+      step,
+      number: index + 1,
+    }))}
+    label="Как проходит заказ"
+    ordered
+  />
 
-    {/* Keep native list semantics inside the horizontal process carousel. */}
-    <CardCarousel
-      Item={OrderingStep}
-      items={orderingProcess.steps.map((step, index) => ({
-        step,
-        number: index + 1,
-      }))}
-      label="Как проходит заказ"
-      ordered
-    />
-
-    {/* Keep the next action adjacent to the final process explanation. */}
-    <div class="ordering-action">
-      <Button
-        href="/#order-inquiry"
-        size="lg"
-      >
-        Обсудить задачу
-      </Button>
-    </div>
+  {/* Keep the next action adjacent to the final process explanation. */}
+  <div
+    slot="action"
+    class="ordering-action"
+  >
+    <Button
+      href="/#order-inquiry"
+      size="lg"
+    >
+      Обсудить задачу
+    </Button>
   </div>
-</section>
+</Section>
 
 <style>
   /* Keep the heading readable above the five process cards. */
-  .ordering-introduction {
+  :global(.ordering-introduction) {
     max-width: 60ch;
     margin-inline: auto;
     margin-bottom: 2rem;
@@ -62,12 +54,12 @@ import OrderingStep from "./OrderingStep.astro";
   }
 
   /* Keep the process introduction distinct from the card details. */
-  .ordering-summary {
+  :global(.ordering-introduction .site-section-subtitle) {
     margin-bottom: 0;
   }
 
   /* Show one full mobile card and a preview of the next step. */
-  .ordering-process :global(.card-carousel-list > li) {
+  :global(.ordering-process .card-carousel-list > li) {
     box-sizing: border-box;
     flex: 0 0 calc(100% / 1.2);
     scroll-snap-align: start;
@@ -75,7 +67,7 @@ import OrderingStep from "./OrderingStep.astro";
   }
 
   /* Align the end of the carousel with the final process card. */
-  .ordering-process :global(.card-carousel-list > li:last-child) {
+  :global(.ordering-process .card-carousel-list > li:last-child) {
     scroll-snap-align: end;
   }
 
@@ -83,20 +75,20 @@ import OrderingStep from "./OrderingStep.astro";
   .ordering-action {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: var(--site-section-action-space);
   }
 
-  /* Show two full tablet cards and a preview of the following step. */
+  /* Show one full tablet card and a larger preview of the next step. */
   @media (min-width: 48rem) {
-    .ordering-process :global(.card-carousel-list > li) {
-      flex-basis: calc((100% - 1rem) / 2.2);
+    :global(.ordering-process .card-carousel-list > li) {
+      flex-basis: calc((100% - 1rem) / 1.8);
     }
   }
 
-  /* Show three full desktop cards and a preview of the following step. */
+  /* Show two full desktop cards and a preview of the next step. */
   @media (min-width: 75rem) {
-    .ordering-process :global(.card-carousel-list > li) {
-      flex-basis: calc((100% - 2rem) / 3.2);
+    :global(.ordering-process .card-carousel-list > li) {
+      flex-basis: calc((100% - 2rem) / 2.5);
     }
   }
 </style>

@@ -85,6 +85,49 @@ for (const route of routes) {
   }
 }
 
+test("homepage keeps alternating surfaces and shared action spacing", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const actionSelectors = [
+    "#projects .projects-catalog-link",
+    "#ordering-process .ordering-action",
+    "#production-and-guarantees .production-action",
+    "#faq .faq-inquiry",
+  ];
+  const actionMargins = [];
+  for (const selector of actionSelectors) {
+    const action = page.locator(selector);
+    if (await action.count()) {
+      actionMargins.push(
+        await action.evaluate((element) => getComputedStyle(element).marginTop),
+      );
+    }
+  }
+  expect(actionMargins.length).toBeGreaterThan(0);
+  expect(new Set(actionMargins).size).toBe(1);
+
+  const offers = page.locator(".homepage-sections > #offers");
+  await expect(offers).toBeVisible();
+  const sectionCount = await page
+    .locator(".homepage-sections > section")
+    .count();
+  await offers.evaluate((section) => section.remove());
+  const surfaces = await page
+    .locator(".homepage-sections > section")
+    .evaluateAll((sections) =>
+      sections.map((section) => getComputedStyle(section).backgroundColor),
+    );
+
+  expect(surfaces).toHaveLength(sectionCount - 1);
+  for (let index = 1; index < surfaces.length; index += 1) {
+    expect(surfaces[index]).not.toBe(surfaces[index - 1]);
+  }
+});
+
 test("failed service image preserves loaded geometry", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 800 });
   await page.emulateMedia({

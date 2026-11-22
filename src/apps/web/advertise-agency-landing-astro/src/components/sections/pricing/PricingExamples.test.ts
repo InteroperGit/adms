@@ -73,11 +73,11 @@ vi.mock("@/content/pricing", () => ({
   ],
 }));
 
-it("renders visible pricing guidance and demo disclosure", async () => {
+it("renders visible pricing examples and shared guidance", async () => {
   const body = await render(Component, {});
   expect(Component).toBeDefined();
   expect(body.querySelector("section#pricing")).toBeInTheDocument();
-  expect(body.querySelector(".pricing-demo")).toHaveTextContent("Demo prices");
+  expect(body.querySelector(".pricing-demo")).toBeNull();
   expect(body.querySelector("#pricing .card-carousel")).toHaveAttribute(
     "aria-label",
     "Pricing",
